@@ -2,11 +2,11 @@ module AIXM
   module Horizontal
     class Border < Point
 
-      attr_reader :mid, :name
+      attr_reader :name, :mid
 
       ##
-      # Defines a (border) transition +mid+/+name+ starting at +xy+
-      def initialize(xy:, mid:, name:)
+      # Defines a (border) transition +name+/+mid+ starting at +xy+
+      def initialize(xy:, name:, mid: nil)
         super(xy: xy)
         @mid, @name = mid, name
       end
@@ -17,7 +17,7 @@ module AIXM
           avx.codeType('FNT')
           avx.geoLat(xy.lat(:AIXM))
           avx.geoLong(xy.long(:AIXM))
-          avx.GbrUid(mid: mid) do |gbruid|
+          avx.GbrUid({ mid: mid }.compact) do |gbruid|
             gbruid.txtName('foobar')
           end
         end
