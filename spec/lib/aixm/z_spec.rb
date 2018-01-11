@@ -42,10 +42,18 @@ describe AIXM::Z do
   end
 
   describe :base do
-    it "must return correct base" do
+    it "must return the correct base" do
       AIXM::Z.new(alt: 0, code: :QFE).base.must_equal :ASFC
       AIXM::Z.new(alt: 0, code: :QNH).base.must_equal :AMSL
       AIXM::Z.new(alt: 0, code: :QNE).base.must_equal :AMSL
+    end
+  end
+
+  describe :unit do
+    it "must return the correct unit" do
+      AIXM::Z.new(alt: 0, code: :QFE).unit.must_equal :FT
+      AIXM::Z.new(alt: 0, code: :QNH).unit.must_equal :FT
+      AIXM::Z.new(alt: 0, code: :QNE).unit.must_equal :FL
     end
   end
 end

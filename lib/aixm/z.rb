@@ -30,6 +30,10 @@ module AIXM
       @code == :QFE ? :ASFC : :AMSL
     end
 
+    def unit
+      @code == :QNE ? :FL : :FT
+    end
+
   end
 
 end
