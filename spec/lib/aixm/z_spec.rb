@@ -1,14 +1,13 @@
 require_relative '../../spec_helper'
 
 describe AIXM::Z do
-
   it "must parse valid Q code" do
     subject = AIXM::Z.new(alt: 111, code: :QNH)
     subject.alt.must_equal 111
     subject.code.must_equal :QNH
   end
 
-  it "must not parse invalid Q code" do
+  it "won't parse invalid Q code" do
     -> { AIXM::Z.new(alt: 111, code: :FOO) }.must_raise ArgumentError
   end
 
@@ -41,5 +40,4 @@ describe AIXM::Z do
     AIXM::Z.new(alt: 0, code: :QNH).base.must_equal :AMSL
     AIXM::Z.new(alt: 0, code: :QNE).base.must_equal :AMSL
   end
-
 end

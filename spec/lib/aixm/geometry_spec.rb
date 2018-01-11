@@ -1,7 +1,6 @@
 require_relative '../../spec_helper'
 
 describe AIXM::Geometry do
-
   subject do
     AIXM::Geometry.new.tap do |geometry|
       geometry << AIXM::Horizontal::Point.new(xy: AIXM::XY.new(lat: 11, long: 22))
@@ -18,5 +17,4 @@ describe AIXM::Geometry do
     subject << AIXM::Horizontal::Point.new(xy: AIXM::XY.new(lat: 11, long: 22))
     subject.must_be :closed?
   end
-
 end
