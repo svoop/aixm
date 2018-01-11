@@ -10,6 +10,7 @@ require_relative 'aixm/horizontal/point'
 require_relative 'aixm/horizontal/arc'
 require_relative 'aixm/horizontal/border'
 require_relative 'aixm/horizontal/circle'
+require_relative 'aixm/vertical/limits'
 
 require_relative 'aixm/constants'
 require_relative 'aixm/geometry'
