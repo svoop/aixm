@@ -16,12 +16,20 @@ module AIXM
       fail(ArgumentError, "illegal longitude") unless (-180..180).include? @long
     end
 
-    def lat
-      @lat.round(8)
+    def lat(format=:DD)
+      case format
+        when :DD then @lat.round(8)
+        when :AIXM then ("%.8f" % @lat.abs.round(8)) + (@lat < 0 ? 'S' : 'N')
+        else fail(ArgumentError, "format `#{format}' not recognized")
+      end
     end
 
-    def long
-      @long.round(8)
+    def long(format=:DD)
+      case format
+        when :DD then @long.round(8)
+        when :AIXM then ("%.8f" % @long.abs.round(8)) + (@long < 0 ? 'W' : 'E')
+        else fail(ArgumentError, "format `#{format}' not recognized")
+      end
     end
 
     def ==(other)
@@ -31,8 +39,10 @@ module AIXM
     private
 
     def float_for(value)
-      return value.to_f if value.is_a? Numeric
-      if value.to_s =~ /^\s*(\d+)[° ]+(\d+)[' ]+([\d.]+)[" ]*(?:(N|E)|(S|W))\s*$/
+      case
+      when value.is_a?(Numeric)
+        value.to_f
+      when value.to_s =~ /^\s*(\d+)[° ]+(\d+)[' ]+([\d.]+)[" ]*(?:(N|E)|(S|W))\s*$/
         ($1.to_f + ($2.to_f/60) + ($3.to_f/3600)) * ($4 ? 1 : -1)
       else
         fail(ArgumentError, "illegal value `#{value}'")
