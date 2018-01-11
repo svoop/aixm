@@ -32,15 +32,15 @@ describe AIXM::XY do
       subject.long.must_equal 22.562375
     end
 
-    it "must not parse invalid latitude" do
+    it "won't parse invalid latitude" do
       -> { AIXM::XY.new(lat: 91, long: 22.3344) }.must_raise ArgumentError
     end
 
-    it "must not parse invalid longitude" do
+    it "won't parse invalid longitude" do
       -> { AIXM::XY.new(lat: 11.2233, long: 181) }.must_raise ArgumentError
     end
 
-    it "must not parse invalid DMS" do
+    it "won't parse invalid DMS" do
       -> { AIXM::XY.new(lat: "foo", long: "bar") }.must_raise ArgumentError
     end
   end
@@ -92,5 +92,4 @@ describe AIXM::XY do
       a.wont_equal b
     end
   end
-
 end
