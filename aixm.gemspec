@@ -8,8 +8,8 @@ Gem::Specification.new do |spec|
   spec.version       = AIXM::VERSION
   spec.authors       = ['Sven Schwyn']
   spec.email         = ['ruby@bitcetera.com']
-  spec.description   = %q(Aeronautical Information Exchange Model (AIXM).)
-  spec.summary       = %q(Aeronautical Information Exchange Model (AIXM).)
+  spec.description   = %q(Aeronautical Information Exchange Model (AIXM 4.5).)
+  spec.summary       = %q(Aeronautical Information Exchange Model (AIXM 4.5).)
   spec.homepage      = 'http://www.bitcetera.com/products/aixm'
   spec.license       = 'MIT'
 

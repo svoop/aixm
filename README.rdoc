@@ -1,11 +1,13 @@
 = AIXM
 
-Partial implementation of the {Aeronautical Information Exchange Model (AIXM)}[http://aixm.aero]
+Partial implementation of the {Aeronautical Information Exchange Model (AIXM 4.5)}[http://aixm.aero]
 for Ruby.
 
 For now, only the parts needed to automize the AIP import of {Open Flightmaps}[https://openflightmaps.org]
-are part of this gem. Feel free to submit pull requests implementing further
-bits of AIXM.
+are part of this gem. Most notably, the gem is only a builder and does not
+parse AIXM 4.5 files.
+
+Feel free to submit pull requests implementing further bits of AIXM 4.5.
 
 * Homepage: https://github.com/svoop/aixm
 * Author: Sven Schwyn (http://www.bitcetera.com)
@@ -17,6 +19,8 @@ Add this to your <tt>Gemfile</tt>:
   gem aixm
 
 == Usage
+
+TODO
 
 == References
 
