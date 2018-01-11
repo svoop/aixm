@@ -9,7 +9,7 @@ module AIXM
   # * QNE - altitude as flight level
   class Z
 
-    CODES = %i(QFE QNH QNE)
+    CODES = %i(QFE QNH QNE).freeze
 
     attr_reader :alt, :code
 
