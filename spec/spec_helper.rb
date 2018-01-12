@@ -13,6 +13,7 @@ require 'minitest/reporters'
 Minitest::Reporters.use! [Minitest::Reporters::SpecReporter.new, Minitest::Sound::Reporter.new]
 
 require 'minitest/matchers'
+require Pathname(__dir__).join('factory')
 
 module AIXM
   def self.root

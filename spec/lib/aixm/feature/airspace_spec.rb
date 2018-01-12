@@ -19,19 +19,7 @@ describe AIXM::Feature::Airspace do
 
   context "complete" do
     subject do
-      AIXM::Feature::Airspace.new(name: 'foobar', type: 'D').tap do |airspace|
-        airspace.vertical_limits = AIXM::Vertical::Limits.new(
-          upper_z: AIXM::Z.new(alt: 65, code: :QNE),
-          lower_z: AIXM::Z.new(alt: 45, code: :QNE),
-          max_z: AIXM::Z.new(alt: 6000, code: :QNH),
-          min_z: AIXM::Z.new(alt: 3000, code: :QFE)
-        )
-        airspace.geometry << AIXM::Horizontal::Point.new(xy: AIXM::XY.new(lat: 11, long: 22))
-        airspace.geometry << AIXM::Horizontal::Point.new(xy: AIXM::XY.new(lat: 22, long: 33))
-        airspace.geometry << AIXM::Horizontal::Point.new(xy: AIXM::XY.new(lat: 33, long: 44))
-        airspace.geometry << AIXM::Horizontal::Point.new(xy: AIXM::XY.new(lat: 11, long: 22))
-        airspace.remarks = 'airborn pink elephants'
-      end
+      AIXM::Factory.airspace
     end
 
     it "must pass validation" do
