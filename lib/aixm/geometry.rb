@@ -14,6 +14,10 @@ module AIXM
       circle? || closed_shape?
     end
 
+    def to_xml
+      @result_array.map(&:to_xml).join
+    end
+
     private
 
     def circle?
