@@ -13,6 +13,8 @@ module AIXM
     # Use +AIXM::GROUND+ as a shortcut for surface aka zero height.
     class Limits
 
+      using AIXM::Refinement::Digest
+
       TAGS = { upper: :Upper, lower: :Lower, max: :Max, min: :Mnm }.freeze
       CODES = { QFE: :HEI, QNH: :ALT, QNE: :STD }.freeze
 
@@ -24,6 +26,12 @@ module AIXM
         fail(ArgumentError, "invalid max_z") unless max_z.nil? || max_z.is_a?(AIXM::Z)
         fail(ArgumentError, "invalid min_z") unless min_z.nil? || min_z.is_a?(AIXM::Z)
         @upper_z, @lower_z, @max_z, @min_z = upper_z, lower_z, max_z, min_z
+      end
+
+      ##
+      # Digest to identify the payload
+      def to_digest
+        [upper_z.alt, upper_z.code, lower_z.alt, lower_z.code, max_z&.alt, max_z&.code, min_z&.alt, min_z&.code].to_digest
       end
 
       def to_xml

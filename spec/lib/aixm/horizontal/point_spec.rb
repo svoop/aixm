@@ -7,6 +7,13 @@ describe AIXM::Horizontal::Point do
     end
   end
 
+  describe :to_digest do
+    it "must return digest of payload" do
+      subject = AIXM::Horizontal::Point.new(xy: AIXM::XY.new(lat: 11.1, long: 22.2))
+      subject.to_digest.must_equal '215d7cba'
+    end
+  end
+
   describe :to_xml do
     it "must build correct XML for N/E points" do
       subject = AIXM::Horizontal::Point.new(xy: AIXM::XY.new(lat: 11.1, long: 22.2))

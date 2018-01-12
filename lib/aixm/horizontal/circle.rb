@@ -2,6 +2,8 @@ module AIXM
   module Horizontal
     class Circle
 
+      using AIXM::Refinement::Digest
+
       attr_reader :center_xy, :radius
 
       ##
@@ -9,6 +11,12 @@ module AIXM
       def initialize(center_xy:, radius:)
         fail(ArgumentError, "invalid center xy") unless center_xy.is_a? AIXM::XY
         @center_xy, @radius = center_xy, radius
+      end
+
+      ##
+      # Digest to identify the payload
+      def to_digest
+        [center_xy.lat, center_xy.long, radius].to_digest
       end
 
       def to_xml

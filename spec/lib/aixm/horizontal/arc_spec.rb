@@ -18,6 +18,17 @@ describe AIXM::Horizontal::Arc do
     end
   end
 
+  describe :to_digest do
+    it "must return digest of payload" do
+      subject = AIXM::Horizontal::Arc.new(
+        xy: AIXM::XY.new(lat: 11.1, long: 33.3),
+        center_xy: AIXM::XY.new(lat: 22.2, long: 33.3),
+        clockwise: true
+      )
+      subject.to_digest.must_equal '35b2e1af'
+    end
+  end
+
   describe :to_xml do
     it "must build correct XML for clockwise arcs" do
       subject = AIXM::Horizontal::Arc.new(

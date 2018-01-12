@@ -17,6 +17,16 @@ describe AIXM::Horizontal::Circle do
     end
   end
 
+  describe :to_digest do
+    it "must return digest of payload" do
+      subject = AIXM::Horizontal::Circle.new(
+        center_xy: AIXM::XY.new(lat: 12.12345678, long: -23.12345678),
+        radius: 15
+      )
+      subject.to_digest.must_equal '914c5f08'
+    end
+  end
+
   describe :to_xml do
     it "must build correct XML for circles not near the equator" do
       subject = AIXM::Horizontal::Circle.new(

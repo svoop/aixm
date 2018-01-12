@@ -2,6 +2,8 @@ module AIXM
   module Horizontal
     class Point
 
+      using AIXM::Refinement::Digest
+
       attr_reader :xy
 
       ##
@@ -9,6 +11,12 @@ module AIXM
       def initialize(xy:)
         fail(ArgumentError, "invalid xy") unless xy.is_a? AIXM::XY
         @xy = xy
+      end
+
+      ##
+      # Digest to identify the payload
+      def to_digest
+        [xy.lat, xy.long].to_digest
       end
 
       def to_xml

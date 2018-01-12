@@ -1,6 +1,7 @@
 require_relative '../../spec_helper'
 
 describe AIXM::Geometry do
+
   context "singularity" do
     subject do
       AIXM::Geometry.new
@@ -67,6 +68,10 @@ describe AIXM::Geometry do
       subject.horizontals.count.must_equal 2
     end
 
+    it "must return digest of payload" do
+      subject.to_digest.must_equal '37e900df'
+    end
+
     it "must build valid XML" do
       subject.to_xml.must_equal '<Avx><codeType>GRC</codeType><geoLat>11.00000000N</geoLat><geoLong>22.00000000E</geoLong></Avx><Avx><codeType>GRC</codeType><geoLat>22.00000000N</geoLat><geoLong>33.00000000E</geoLong></Avx>'
     end
@@ -96,6 +101,10 @@ describe AIXM::Geometry do
     it "must build valid XML" do
       subject.to_xml.must_equal '<Avx><codeType>CWA</codeType><geoLat>11.00000000N</geoLat><geoLong>22.00000000E</geoLong><geoLatArc>10.00000000N</geoLatArc><geoLongArc>20.00000000E</geoLongArc></Avx><Avx><codeType>GRC</codeType><geoLat>22.00000000N</geoLat><geoLong>33.00000000E</geoLong></Avx>'
     end
+
+    it "must return digest of payload" do
+      subject.to_digest.must_equal '240d7b10'
+    end
   end
 
   context "border" do
@@ -122,6 +131,10 @@ describe AIXM::Geometry do
     it "must build valid XML" do
       subject.to_xml.must_equal '<Avx><codeType>FNT</codeType><geoLat>11.00000000N</geoLat><geoLong>22.00000000E</geoLong><GbrUid><txtName>foobar</txtName></GbrUid></Avx><Avx><codeType>GRC</codeType><geoLat>22.00000000N</geoLat><geoLong>33.00000000E</geoLong></Avx>'
     end
+
+    it "must return digest of payload" do
+      subject.to_digest.must_equal '6a1d5c22'
+    end
   end
 
   context "circle" do
@@ -146,6 +159,10 @@ describe AIXM::Geometry do
 
     it "must build valid XML" do
       subject.to_xml.must_equal '<Avx><codeType>CWA</codeType><geoLat>11.08993216N</geoLat><geoLong>22.00000000E</geoLong><geoLatArc>11.00000000N</geoLatArc><geoLongArc>22.00000000E</geoLongArc></Avx>'
+    end
+
+    it "must return digest of payload" do
+      subject.to_digest.must_equal '6db689c4'
     end
   end
 end

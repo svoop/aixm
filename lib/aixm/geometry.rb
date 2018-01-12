@@ -3,6 +3,7 @@ module AIXM
 
     include Enumerable
     extend Forwardable
+    using AIXM::Refinement::Digest
 
     def_delegators :@result_array, :each, :<<
 
@@ -16,6 +17,12 @@ module AIXM
 
     def valid?
       circle? || closed_shape?
+    end
+
+    ##
+    # Digest to identify the payload
+    def to_digest
+      horizontals.map(&:to_digest).to_digest
     end
 
     def to_xml

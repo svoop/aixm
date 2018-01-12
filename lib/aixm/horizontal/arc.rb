@@ -2,6 +2,8 @@ module AIXM
   module Horizontal
     class Arc < Point
 
+      using AIXM::Refinement::Digest
+
       attr_reader :center_xy
 
       ##
@@ -16,6 +18,12 @@ module AIXM
 
       def clockwise?
         @clockwise
+      end
+
+      ##
+      # Digest to identify the payload
+      def to_digest
+        [xy.lat, xy.long, center_xy.lat, center_xy.long, clockwise?].to_digest
       end
 
       def to_xml

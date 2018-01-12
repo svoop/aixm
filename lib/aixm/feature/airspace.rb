@@ -2,6 +2,8 @@ module AIXM
   module Feature
     class Airspace
 
+      using AIXM::Refinement::Digest
+
       attr_reader :name, :type
       attr_reader :vertical_limits
       attr_accessor :geometry, :remarks
@@ -20,8 +22,14 @@ module AIXM
         name && type && vertical_limits && geometry.valid?
       end
 
+      ##
+      # Digest to identify the payload
+      def to_digest
+        [name, type, vertical_limits.to_digest, geometry.to_digest, remarks].to_digest
+      end
+
       def to_xml(mid: nil)
-        mid ||= SecureRandom.hex(4)
+        mid = to_digest
         builder = Builder::XmlMarkup.new
         builder.Ase(AIXM.ofm? ? { xt_classLayersAvail: false } : {}) do |ase|
           ase.AseUid(mid: mid, newEntity: true) do |aseuid|
@@ -40,6 +48,10 @@ module AIXM
           end
           abd << geometry.to_xml
         end
+      end
+
+      def hash
+
       end
 
     end

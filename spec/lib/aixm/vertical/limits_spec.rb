@@ -11,6 +11,16 @@ describe AIXM::Vertical::Limits do
     end
   end
 
+  describe :to_digest do
+    it "must return digest of payload" do
+      subject = AIXM::Vertical::Limits.new(
+        upper_z: AIXM::Z.new(alt: 2000, code: :QNH),
+        lower_z: AIXM::GROUND
+      )
+      subject.to_digest.must_equal 'abf2a04f'
+    end
+  end
+
   describe :to_xml do
     it "must build correct XML with only upper_z and lower_z" do
       subject = AIXM::Vertical::Limits.new(

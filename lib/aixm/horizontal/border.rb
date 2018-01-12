@@ -2,6 +2,8 @@ module AIXM
   module Horizontal
     class Border < Point
 
+      using AIXM::Refinement::Digest
+
       attr_reader :name, :name_mid
 
       ##
@@ -9,6 +11,12 @@ module AIXM
       def initialize(xy:, name:, name_mid: nil)
         super(xy: xy)
         @name_mid, @name = name_mid, name
+      end
+
+      ##
+      # Digest to identify the payload
+      def to_digest
+        [xy.lat, xy.long, name, name_mid].to_digest
       end
 
       def to_xml
