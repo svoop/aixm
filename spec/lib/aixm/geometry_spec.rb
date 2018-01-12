@@ -63,6 +63,10 @@ describe AIXM::Geometry do
       subject.must_be :valid?
     end
 
+    it "must return elements" do
+      subject.horizontals.count.must_equal 2
+    end
+
     it "must build valid XML" do
       subject.to_xml.must_equal '<Avx><codeType>GRC</codeType><geoLat>11.00000000N</geoLat><geoLong>22.00000000E</geoLong></Avx><Avx><codeType>GRC</codeType><geoLat>22.00000000N</geoLat><geoLong>33.00000000E</geoLong></Avx>'
     end
@@ -144,5 +148,4 @@ describe AIXM::Geometry do
       subject.to_xml.must_equal '<Avx><codeType>CWA</codeType><geoLat>11.08993216N</geoLat><geoLong>22.00000000E</geoLong><geoLatArc>11.00000000N</geoLatArc><geoLongArc>22.00000000E</geoLongArc></Avx>'
     end
   end
-
 end

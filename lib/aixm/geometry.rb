@@ -10,6 +10,10 @@ module AIXM
       @result_array = horizontals
     end
 
+    def horizontals
+      @result_array
+    end
+
     def valid?
       circle? || closed_shape?
     end
