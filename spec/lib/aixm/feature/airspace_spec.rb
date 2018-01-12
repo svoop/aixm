@@ -1,0 +1,45 @@
+require_relative '../../../spec_helper'
+
+describe AIXM::Feature::Airspace do
+  context "incomplete" do
+    subject do
+      AIXM::Feature::Airspace.new(name: 'foobar', type: 'D')
+    end
+
+    it "must fail validation" do
+      subject.wont_be :valid?
+    end
+
+    describe :vertical_limits= do
+      it "won't accept invalid vertical limits" do
+        -> { subject.vertical_limits=0 }.must_raise ArgumentError
+      end
+    end
+  end
+
+  context "complete" do
+    subject do
+      AIXM::Feature::Airspace.new(name: 'foobar', type: 'D').tap do |airspace|
+        airspace.vertical_limits = AIXM::Vertical::Limits.new(
+          upper_z: AIXM::Z.new(alt: 65, code: :QNE),
+          lower_z: AIXM::Z.new(alt: 45, code: :QNE),
+          max_z: AIXM::Z.new(alt: 6000, code: :QNH),
+          min_z: AIXM::Z.new(alt: 3000, code: :QFE)
+        )
+        airspace.geometry << AIXM::Horizontal::Point.new(xy: AIXM::XY.new(lat: 11, long: 22))
+        airspace.geometry << AIXM::Horizontal::Point.new(xy: AIXM::XY.new(lat: 22, long: 33))
+        airspace.geometry << AIXM::Horizontal::Point.new(xy: AIXM::XY.new(lat: 33, long: 44))
+        airspace.geometry << AIXM::Horizontal::Point.new(xy: AIXM::XY.new(lat: 11, long: 22))
+        airspace.remarks = 'airborn pink elephants'
+      end
+    end
+
+    it "must pass validation" do
+      subject.must_be :valid?
+    end
+
+    it "must build correct XML" do
+      subject.to_xml(mid: 'xxxxxxxx').must_equal '<Ase xt_classLayersAvail="false"><AseUid mid="xxxxxxxx" newEntity="true"><codeType>D</codeType></AseUid><txtName>foobar</txtName><codeDistVerUpper>STD</codeDistVerUpper><valDistVerUpper>65</valDistVerUpper><uomDistVerUpper>FL</uomDistVerUpper><codeDistVerLower>STD</codeDistVerLower><valDistVerLower>45</valDistVerLower><uomDistVerLower>FL</uomDistVerLower><codeDistVerMax>ALT</codeDistVerMax><valDistVerMax>6000</valDistVerMax><uomDistVerMax>FT</uomDistVerMax><codeDistVerMnm>HEI</codeDistVerMnm><valDistVerMnm>3000</valDistVerMnm><uomDistVerMnm>FT</uomDistVerMnm><xt_txtRmk>airborn pink elephants</xt_txtRmk><xt_selAvail>false</xt_selAvail></Ase><Abd><AbdUid><AseUid mid="xxxxxxxx" newEntity="true"><codeType>D</codeType></AseUid></AbdUid><Avx><codeType>GRC</codeType><geoLat>11.00000000N</geoLat><geoLong>22.00000000E</geoLong></Avx><Avx><codeType>GRC</codeType><geoLat>22.00000000N</geoLat><geoLong>33.00000000E</geoLong></Avx><Avx><codeType>GRC</codeType><geoLat>33.00000000N</geoLat><geoLong>44.00000000E</geoLong></Avx><Avx><codeType>GRC</codeType><geoLat>11.00000000N</geoLat><geoLong>22.00000000E</geoLong></Avx></Abd>'
+    end
+  end
+end
