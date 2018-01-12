@@ -2,7 +2,7 @@ module AIXM
   module Horizontal
     class Circle
 
-      using AIXM::Refinement::Digest
+      using AIXM::Refinements
 
       attr_reader :center_xy, :radius
 
@@ -19,8 +19,8 @@ module AIXM
         [center_xy.lat, center_xy.long, radius].to_digest
       end
 
-      def to_xml
-        builder = Builder::XmlMarkup.new
+      def to_xml(*extensions)
+        builder = Builder::XmlMarkup.new(indent: 2)
         builder.Avx do |avx|
           avx.codeType('CWA')
           avx.geoLat(north_xy.lat(:AIXM))

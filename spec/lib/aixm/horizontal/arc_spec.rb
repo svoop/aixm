@@ -36,7 +36,15 @@ describe AIXM::Horizontal::Arc do
         center_xy: AIXM::XY.new(lat: 22.2, long: 33.3),
         clockwise: true
       )
-      subject.to_xml.must_equal "<Avx><codeType>CWA</codeType><geoLat>11.10000000N</geoLat><geoLong>33.30000000E</geoLong><geoLatArc>22.20000000N</geoLatArc><geoLongArc>33.30000000E</geoLongArc></Avx>"
+      subject.to_xml.must_equal <<~END
+        <Avx>
+          <codeType>CWA</codeType>
+          <geoLat>11.10000000N</geoLat>
+          <geoLong>33.30000000E</geoLong>
+          <geoLatArc>22.20000000N</geoLatArc>
+          <geoLongArc>33.30000000E</geoLongArc>
+        </Avx>
+      END
     end
 
     it "must build correct XML for counter-clockwise arcs" do
@@ -45,7 +53,15 @@ describe AIXM::Horizontal::Arc do
         center_xy: AIXM::XY.new(lat: 22.2, long: 33.3),
         clockwise: false
       )
-      subject.to_xml.must_equal "<Avx><codeType>CCA</codeType><geoLat>11.10000000N</geoLat><geoLong>33.30000000E</geoLong><geoLatArc>22.20000000N</geoLatArc><geoLongArc>33.30000000E</geoLongArc></Avx>"
+      subject.to_xml.must_equal <<~END
+        <Avx>
+          <codeType>CCA</codeType>
+          <geoLat>11.10000000N</geoLat>
+          <geoLong>33.30000000E</geoLong>
+          <geoLatArc>22.20000000N</geoLatArc>
+          <geoLongArc>33.30000000E</geoLongArc>
+        </Avx>
+      END
     end
   end
 end

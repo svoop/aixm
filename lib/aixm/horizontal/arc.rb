@@ -2,7 +2,7 @@ module AIXM
   module Horizontal
     class Arc < Point
 
-      using AIXM::Refinement::Digest
+      using AIXM::Refinements
 
       attr_reader :center_xy
 
@@ -26,8 +26,8 @@ module AIXM
         [xy.lat, xy.long, center_xy.lat, center_xy.long, clockwise?].to_digest
       end
 
-      def to_xml
-        builder = Builder::XmlMarkup.new
+      def to_xml(*extensions)
+        builder = Builder::XmlMarkup.new(indent: 2)
         builder.Avx do |avx|
           avx.codeType(clockwise? ? 'CWA' : 'CCA')
           avx.geoLat(xy.lat(:AIXM))

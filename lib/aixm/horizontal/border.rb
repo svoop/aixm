@@ -2,7 +2,7 @@ module AIXM
   module Horizontal
     class Border < Point
 
-      using AIXM::Refinement::Digest
+      using AIXM::Refinements
 
       attr_reader :name, :name_mid
 
@@ -19,8 +19,8 @@ module AIXM
         [xy.lat, xy.long, name, name_mid].to_digest
       end
 
-      def to_xml
-        builder = Builder::XmlMarkup.new
+      def to_xml(*extensions)
+        builder = Builder::XmlMarkup.new(indent: 2)
         builder.Avx do |avx|
           avx.codeType('FNT')
           avx.geoLat(xy.lat(:AIXM))

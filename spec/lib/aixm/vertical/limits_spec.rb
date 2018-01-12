@@ -27,7 +27,14 @@ describe AIXM::Vertical::Limits do
         upper_z: AIXM::Z.new(alt: 2000, code: :QNH),
         lower_z: AIXM::GROUND
       )
-      subject.to_xml.must_equal "<codeDistVerUpper>ALT</codeDistVerUpper><valDistVerUpper>2000</valDistVerUpper><uomDistVerUpper>FT</uomDistVerUpper><codeDistVerLower>HEI</codeDistVerLower><valDistVerLower>0</valDistVerLower><uomDistVerLower>FT</uomDistVerLower>"
+      subject.to_xml.must_equal <<~END
+        <codeDistVerUpper>ALT</codeDistVerUpper>
+        <valDistVerUpper>2000</valDistVerUpper>
+        <uomDistVerUpper>FT</uomDistVerUpper>
+        <codeDistVerLower>HEI</codeDistVerLower>
+        <valDistVerLower>0</valDistVerLower>
+        <uomDistVerLower>FT</uomDistVerLower>
+      END
     end
 
     it "must build correct XML with additional max_z" do
@@ -36,7 +43,17 @@ describe AIXM::Vertical::Limits do
         lower_z: AIXM::Z.new(alt: 1000, code: :QFE),
         max_z: AIXM::Z.new(alt: 6000, code: :QNH)
       )
-      subject.to_xml.must_equal "<codeDistVerUpper>STD</codeDistVerUpper><valDistVerUpper>65</valDistVerUpper><uomDistVerUpper>FL</uomDistVerUpper><codeDistVerLower>HEI</codeDistVerLower><valDistVerLower>1000</valDistVerLower><uomDistVerLower>FT</uomDistVerLower><codeDistVerMax>ALT</codeDistVerMax><valDistVerMax>6000</valDistVerMax><uomDistVerMax>FT</uomDistVerMax>"
+      subject.to_xml.must_equal <<~END
+        <codeDistVerUpper>STD</codeDistVerUpper>
+        <valDistVerUpper>65</valDistVerUpper>
+        <uomDistVerUpper>FL</uomDistVerUpper>
+        <codeDistVerLower>HEI</codeDistVerLower>
+        <valDistVerLower>1000</valDistVerLower>
+        <uomDistVerLower>FT</uomDistVerLower>
+        <codeDistVerMax>ALT</codeDistVerMax>
+        <valDistVerMax>6000</valDistVerMax>
+        <uomDistVerMax>FT</uomDistVerMax>
+      END
     end
 
     it "must build correct XML with additional min_z" do
@@ -45,7 +62,17 @@ describe AIXM::Vertical::Limits do
         lower_z: AIXM::Z.new(alt: 45, code: :QNE),
         min_z: AIXM::Z.new(alt: 3000, code: :QNH)
       )
-      subject.to_xml.must_equal "<codeDistVerUpper>STD</codeDistVerUpper><valDistVerUpper>65</valDistVerUpper><uomDistVerUpper>FL</uomDistVerUpper><codeDistVerLower>STD</codeDistVerLower><valDistVerLower>45</valDistVerLower><uomDistVerLower>FL</uomDistVerLower><codeDistVerMnm>ALT</codeDistVerMnm><valDistVerMnm>3000</valDistVerMnm><uomDistVerMnm>FT</uomDistVerMnm>"
+      subject.to_xml.must_equal <<~END
+        <codeDistVerUpper>STD</codeDistVerUpper>
+        <valDistVerUpper>65</valDistVerUpper>
+        <uomDistVerUpper>FL</uomDistVerUpper>
+        <codeDistVerLower>STD</codeDistVerLower>
+        <valDistVerLower>45</valDistVerLower>
+        <uomDistVerLower>FL</uomDistVerLower>
+        <codeDistVerMnm>ALT</codeDistVerMnm>
+        <valDistVerMnm>3000</valDistVerMnm>
+        <uomDistVerMnm>FT</uomDistVerMnm>
+      END
     end
   end
 end

@@ -2,7 +2,7 @@ module AIXM
   module Horizontal
     class Point
 
-      using AIXM::Refinement::Digest
+      using AIXM::Refinements
 
       attr_reader :xy
 
@@ -19,8 +19,8 @@ module AIXM
         [xy.lat, xy.long].to_digest
       end
 
-      def to_xml
-        builder = Builder::XmlMarkup.new
+      def to_xml(*extensions)
+        builder = Builder::XmlMarkup.new(indent: 2)
         builder.Avx do |avx|
           avx.codeType('GRC')
           avx.geoLat(xy.lat(:AIXM))

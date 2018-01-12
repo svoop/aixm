@@ -19,7 +19,16 @@ describe AIXM::Horizontal::Border do
         name: 'foobar',
         name_mid: 123
       )
-      subject.to_xml.must_equal "<Avx><codeType>FNT</codeType><geoLat>11.10000000N</geoLat><geoLong>22.20000000E</geoLong><GbrUid mid=\"123\"><txtName>foobar</txtName></GbrUid></Avx>"
+      subject.to_xml.must_equal <<~END
+        <Avx>
+          <codeType>FNT</codeType>
+          <geoLat>11.10000000N</geoLat>
+          <geoLong>22.20000000E</geoLong>
+          <GbrUid mid=\"123\">
+            <txtName>foobar</txtName>
+          </GbrUid>
+        </Avx>
+      END
     end
 
     it "must build correct XML without name_mid" do
@@ -27,7 +36,16 @@ describe AIXM::Horizontal::Border do
         xy: AIXM::XY.new(lat: 11.1, long: 22.2),
         name: 'foobar'
       )
-      subject.to_xml.must_equal "<Avx><codeType>FNT</codeType><geoLat>11.10000000N</geoLat><geoLong>22.20000000E</geoLong><GbrUid><txtName>foobar</txtName></GbrUid></Avx>"
+      subject.to_xml.must_equal <<~END
+        <Avx>
+          <codeType>FNT</codeType>
+          <geoLat>11.10000000N</geoLat>
+          <geoLong>22.20000000E</geoLong>
+          <GbrUid>
+            <txtName>foobar</txtName>
+          </GbrUid>
+        </Avx>
+      END
     end
   end
 end

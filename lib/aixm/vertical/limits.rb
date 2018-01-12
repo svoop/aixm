@@ -13,7 +13,7 @@ module AIXM
     # Use +AIXM::GROUND+ as a shortcut for surface aka zero height.
     class Limits
 
-      using AIXM::Refinement::Digest
+      using AIXM::Refinements
 
       TAGS = { upper: :Upper, lower: :Lower, max: :Max, min: :Mnm }.freeze
       CODES = { QFE: :HEI, QNH: :ALT, QNE: :STD }.freeze
@@ -34,12 +34,12 @@ module AIXM
         [upper_z.alt, upper_z.code, lower_z.alt, lower_z.code, max_z&.alt, max_z&.code, min_z&.alt, min_z&.code].to_digest
       end
 
-      def to_xml
-        %i(upper lower max min).each_with_object(Builder::XmlMarkup.new) do |limit, builder|
+      def to_xml(*extensions)
+        %i(upper lower max min).each_with_object(Builder::XmlMarkup.new(indent: 2)) do |limit, builder|
           if z = send(:"#{limit}_z")
-            builder.tag!(:"codeDistVer#{TAGS[limit]}") { |t| t.text! CODES[z.code].to_s }
-            builder.tag!(:"valDistVer#{TAGS[limit]}") { |t| t.text! z.alt.to_s }
-            builder.tag!(:"uomDistVer#{TAGS[limit]}") { |t| t.text! z.unit.to_s }
+            builder.tag!(:"codeDistVer#{TAGS[limit]}", CODES[z.code].to_s)
+            builder.tag!(:"valDistVer#{TAGS[limit]}", z.alt.to_s)
+            builder.tag!(:"uomDistVer#{TAGS[limit]}", z.unit.to_s)
           end
         end.target!   # see https://github.com/jimweirich/builder/issues/42
       end

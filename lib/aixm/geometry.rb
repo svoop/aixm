@@ -3,7 +3,7 @@ module AIXM
 
     include Enumerable
     extend Forwardable
-    using AIXM::Refinement::Digest
+    using AIXM::Refinements
 
     def_delegators :@result_array, :each, :<<
 
@@ -25,8 +25,8 @@ module AIXM
       horizontals.map(&:to_digest).to_digest
     end
 
-    def to_xml
-      @result_array.map(&:to_xml).join
+    def to_xml(*extensions)
+      @result_array.map { |h| h.to_xml(extensions) }.join
     end
 
     private

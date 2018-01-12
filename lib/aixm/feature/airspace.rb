@@ -2,7 +2,7 @@ module AIXM
   module Feature
     class Airspace
 
-      using AIXM::Refinement::Digest
+      using AIXM::Refinements
 
       attr_reader :name, :type
       attr_reader :vertical_limits
@@ -28,17 +28,17 @@ module AIXM
         [name, type, vertical_limits.to_digest, geometry.to_digest, remarks].to_digest
       end
 
-      def to_xml(mid: nil)
+      def to_xml(*extensions)
         mid = to_digest
-        builder = Builder::XmlMarkup.new
-        builder.Ase(AIXM.ofm? ? { xt_classLayersAvail: false } : {}) do |ase|
+        builder = Builder::XmlMarkup.new(indent: 2)
+        builder.Ase(extensions.include?(:ofm) ? { xt_classLayersAvail: false } : {}) do |ase|
           ase.AseUid(mid: mid, newEntity: true) do |aseuid|
             aseuid.codeType(type)
           end
           ase.txtName(name)
-          ase << vertical_limits.to_xml
-          ase.xt_txtRmk(remarks) if AIXM.ofm? && remarks
-          ase.xt_selAvail(false) if AIXM.ofm?
+          ase << vertical_limits.to_xml(extensions).indent(2)
+          ase.xt_txtRmk(remarks) if extensions.include?(:ofm) && remarks
+          ase.xt_selAvail(false) if extensions.include?(:ofm)
         end
         builder.Abd do |abd|
           abd.AbdUid do |abduid|
@@ -46,7 +46,7 @@ module AIXM
               aseuid.codeType(type)
             end
           end
-          abd << geometry.to_xml
+          abd << geometry.to_xml(extensions).indent(2)
         end
       end
 
