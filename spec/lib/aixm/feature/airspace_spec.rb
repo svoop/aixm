@@ -32,7 +32,7 @@ describe AIXM::Feature::Airspace do
 
     describe :to_digest do
       it "must return digest of payload" do
-        subject.to_digest.must_equal '5b8e650b'
+        subject.to_digest.must_equal 'B022C1B8'
       end
     end
 
@@ -40,10 +40,11 @@ describe AIXM::Feature::Airspace do
       it "must build correct XML with OFM extensions" do
         subject.to_xml(:ofm).must_equal <<~END
           <Ase xt_classLayersAvail="false">
-            <AseUid mid="5b8e650b" newEntity="true">
+            <AseUid mid="B022C1B8" newEntity="true">
               <codeType>D</codeType>
+              <codeId>B022C1B8</codeId>
             </AseUid>
-            <txtName>foobar</txtName>
+            <txtName>FOOBAR</txtName>
             <codeDistVerUpper>STD</codeDistVerUpper>
             <valDistVerUpper>65</valDistVerUpper>
             <uomDistVerUpper>FL</uomDistVerUpper>
@@ -56,34 +57,40 @@ describe AIXM::Feature::Airspace do
             <codeDistVerMnm>HEI</codeDistVerMnm>
             <valDistVerMnm>3000</valDistVerMnm>
             <uomDistVerMnm>FT</uomDistVerMnm>
+            <txtRmk>airborn pink elephants</txtRmk>
             <xt_txtRmk>airborn pink elephants</xt_txtRmk>
             <xt_selAvail>false</xt_selAvail>
           </Ase>
           <Abd>
             <AbdUid>
-              <AseUid mid="5b8e650b" newEntity="true">
+              <AseUid mid="B022C1B8" newEntity="true">
                 <codeType>D</codeType>
+                <codeId>B022C1B8</codeId>
               </AseUid>
             </AbdUid>
             <Avx>
               <codeType>GRC</codeType>
-              <geoLat>11.00000000N</geoLat>
-              <geoLong>22.00000000E</geoLong>
+              <geoLat>110000.00N</geoLat>
+              <geoLong>0220000.00E</geoLong>
+              <codeDatum>WGE</codeDatum>
             </Avx>
             <Avx>
               <codeType>GRC</codeType>
-              <geoLat>22.00000000N</geoLat>
-              <geoLong>33.00000000E</geoLong>
+              <geoLat>220000.00N</geoLat>
+              <geoLong>0330000.00E</geoLong>
+              <codeDatum>WGE</codeDatum>
             </Avx>
             <Avx>
               <codeType>GRC</codeType>
-              <geoLat>33.00000000N</geoLat>
-              <geoLong>44.00000000E</geoLong>
+              <geoLat>330000.00N</geoLat>
+              <geoLong>0440000.00E</geoLong>
+              <codeDatum>WGE</codeDatum>
             </Avx>
             <Avx>
               <codeType>GRC</codeType>
-              <geoLat>11.00000000N</geoLat>
-              <geoLong>22.00000000E</geoLong>
+              <geoLat>110000.00N</geoLat>
+              <geoLong>0220000.00E</geoLong>
+              <codeDatum>WGE</codeDatum>
             </Avx>
           </Abd>
         END

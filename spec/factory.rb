@@ -24,6 +24,14 @@ module AIXM
         end
       end
 
+      def document
+        time = Time.parse('2018-01-18 12:00:00 +0100')
+        AIXM::Document.new(created_at: time, effective_at: time).tap do |document|
+          document << AIXM::Factory.airspace
+          document << AIXM::Factory.airspace
+        end
+      end
+
     end
   end
 end

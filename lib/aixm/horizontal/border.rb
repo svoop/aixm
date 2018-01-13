@@ -25,6 +25,7 @@ module AIXM
           avx.codeType('FNT')
           avx.geoLat(xy.lat(:AIXM))
           avx.geoLong(xy.long(:AIXM))
+          avx.codeDatum('WGE')
           avx.GbrUid({ mid: name_mid }.compact) do |gbruid|
             gbruid.txtName('foobar')
           end

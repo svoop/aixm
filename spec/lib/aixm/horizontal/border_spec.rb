@@ -8,7 +8,7 @@ describe AIXM::Horizontal::Border do
         name: 'foobar',
         name_mid: 123
       )
-      subject.to_digest.must_equal '8955450f'
+      subject.to_digest.must_equal '8955450F'
     end
   end
 
@@ -22,9 +22,10 @@ describe AIXM::Horizontal::Border do
       subject.to_xml.must_equal <<~END
         <Avx>
           <codeType>FNT</codeType>
-          <geoLat>11.10000000N</geoLat>
-          <geoLong>22.20000000E</geoLong>
-          <GbrUid mid=\"123\">
+          <geoLat>110560.00N</geoLat>
+          <geoLong>0221160.00E</geoLong>
+          <codeDatum>WGE</codeDatum>
+          <GbrUid mid="123">
             <txtName>foobar</txtName>
           </GbrUid>
         </Avx>
@@ -37,14 +38,15 @@ describe AIXM::Horizontal::Border do
         name: 'foobar'
       )
       subject.to_xml.must_equal <<~END
-        <Avx>
-          <codeType>FNT</codeType>
-          <geoLat>11.10000000N</geoLat>
-          <geoLong>22.20000000E</geoLong>
-          <GbrUid>
-            <txtName>foobar</txtName>
-          </GbrUid>
-        </Avx>
+      <Avx>
+        <codeType>FNT</codeType>
+        <geoLat>110560.00N</geoLat>
+        <geoLong>0221160.00E</geoLong>
+        <codeDatum>WGE</codeDatum>
+        <GbrUid>
+          <txtName>foobar</txtName>
+        </GbrUid>
+      </Avx>
       END
     end
   end

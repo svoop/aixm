@@ -17,7 +17,7 @@ describe AIXM::Vertical::Limits do
         upper_z: AIXM::Z.new(alt: 2000, code: :QNH),
         lower_z: AIXM::GROUND
       )
-      subject.to_digest.must_equal 'abf2a04f'
+      subject.to_digest.must_equal 'ABF2A04F'
     end
   end
 

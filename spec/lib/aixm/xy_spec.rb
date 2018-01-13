@@ -9,27 +9,15 @@ describe AIXM::XY do
     end
 
     it "must parse valid DMS N/E"  do
-      subject = AIXM::XY.new(lat: "11 22 33 N", long: "22 33 44 E")
-      subject.lat.must_equal 11.37583333
-      subject.long.must_equal 22.56222222
-    end
-
-    it "must parse valid DMS S/W"  do
-      subject = AIXM::XY.new(lat: "11 22 33 S", long: "22 33 44 W")
-      subject.lat.must_equal(-11.37583333)
-      subject.long.must_equal(-22.56222222)
-    end
-
-    it "must parse valid DMS with symbols"  do
       subject = AIXM::XY.new(lat: %q(11°22'33"N), long: %q(22°33'44"E))
       subject.lat.must_equal 11.37583333
       subject.long.must_equal 22.56222222
     end
 
-    it "must parse valid DMS with fractions"  do
-      subject = AIXM::XY.new(lat: "11 22 33.44 N", long: "22 33 44.55 E")
-      subject.lat.must_equal 11.37595556
-      subject.long.must_equal 22.562375
+    it "must parse valid DMS S/W"  do
+      subject = AIXM::XY.new(lat: %q(11°22'33"S), long: %q(22°33'44"W))
+      subject.lat.must_equal(-11.37583333)
+      subject.long.must_equal(-22.56222222)
     end
 
     it "won't parse invalid latitude" do
@@ -46,48 +34,96 @@ describe AIXM::XY do
   end
 
   describe :lat do
-    it "must format north latitude correctly" do
-      subject = AIXM::XY.new(lat: 12.1234, long: 0)
-      subject.lat.must_equal 12.1234
-      subject.lat(:AIXM).must_equal '12.12340000N'
+    context "north" do
+      subject do
+        AIXM::XY.new(lat: 1.1234, long: 0)
+      end
+
+      it "must format DD (default) correctly" do
+        subject.lat.must_equal 1.1234
+      end
+
+      it "must format AIXM correctly" do
+        subject.lat(:AIXM).must_equal %q(010724.24N)
+      end
+
+      it "must format OFM correctly" do
+        subject.lat(:OFM).must_equal '1.12340000N'
+      end
     end
 
-    it "must format south latitude correctly" do
-      subject = AIXM::XY.new(lat: -12.1234, long: 0)
-      subject.lat.must_equal -12.1234
-      subject.lat(:AIXM).must_equal '12.12340000S'
+    context "south" do
+      subject do
+        AIXM::XY.new(lat: -1.1234, long: 0)
+      end
+
+      it "must format DD (default) correctly" do
+        subject.lat.must_equal(-1.1234)
+      end
+
+      it "must format AIXM correctly" do
+        subject.lat(:AIXM).must_equal %q(010724.24S)
+      end
+
+      it "must format OFM correctly" do
+        subject.lat(:OFM).must_equal '1.12340000S'
+      end
     end
   end
 
   describe :long do
-    it "must format east longitude correctly" do
-      subject = AIXM::XY.new(lat: 0, long: 23.123456789)
-      subject.long.must_equal 23.12345679
-      subject.long(:AIXM).must_equal '23.12345679E'
+    context "east" do
+      subject do
+        AIXM::XY.new(lat: 0, long: 1.1234)
+      end
+
+      it "must format DD (default) correctly" do
+        subject.long.must_equal 1.1234
+      end
+
+      it "must format AIXM correctly" do
+        subject.long(:AIXM).must_equal %q(0010724.24E)
+      end
+
+      it "must format OFM correctly" do
+        subject.long(:OFM).must_equal '1.12340000E'
+      end
     end
 
-    it "must format west longitude correctly" do
-      subject = AIXM::XY.new(lat: 0, long: -23.123456789)
-      subject.long.must_equal -23.12345679
-      subject.long(:AIXM).must_equal '23.12345679W'
+    context "west" do
+      subject do
+        AIXM::XY.new(lat: 0, long: -1.1234)
+      end
+
+      it "must format DD (default) correctly" do
+        subject.long.must_equal(-1.1234)
+      end
+
+      it "must format AIXM correctly" do
+        subject.long(:AIXM).must_equal %q(0010724.24W)
+      end
+
+      it "must format OFM correctly" do
+        subject.long(:OFM).must_equal '1.12340000W'
+      end
     end
   end
 
   describe :== do
     it "recognizes objects with identical latitude and longitude as equal" do
-      a = AIXM::XY.new(lat: "11 22 33 N", long: "22 33 44 E")
+      a = AIXM::XY.new(lat: "112233N", long: "0223344E")
       b = AIXM::XY.new(lat: 11.37583333, long: 22.56222222)
       a.must_equal b
     end
 
     it "recognizes objects with different latitude or longitude as unequal" do
-      a = AIXM::XY.new(lat: "11 22 33.44 N", long: "22 33 44.55 E")
+      a = AIXM::XY.new(lat: "112233.44N", long: "0223344.55E")
       b = AIXM::XY.new(lat: 11, long: 22)
       a.wont_equal b
     end
 
     it "recognizes objects of different class as unequal" do
-      a = AIXM::XY.new(lat: "11 22 33.44 N", long: "22 33 44.55 E")
+      a = AIXM::XY.new(lat: "112233.44N", long: "0223344.55E")
       b = :oggy
       a.wont_equal b
     end

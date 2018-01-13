@@ -4,11 +4,11 @@ module AIXM
   # Geographical coordinates
   #
   # The following notations for longitude and latitude are recognized:
-  # * DD - see https://en.wikipedia.org/wiki/Decimal_degrees
-  #        examples: 12.12345678 (north or east), -12.12345678 (south or west)
-  # * DMS - see https://en.wikipedia.org/wiki/Degree_(angle)
-  #         examples: 11°22'33.44"N, 111 22 33.44 W
+  # * DD - examples: 12.12345678 (north or east), -12.12345678 (south or west)
+  # * DMS - examples: 11°22'33.44"N, 1112233.44W
   class XY
+
+    using AIXM::Refinements
 
     def initialize(lat:, long:)
       @lat, @long = float_for(lat), float_for(long)
@@ -16,19 +16,19 @@ module AIXM
       fail(ArgumentError, "illegal longitude") unless (-180..180).include? @long
     end
 
-    def lat(format=:DD)
+    def lat(format=nil)
       case format
-        when :DD then @lat.round(8)
-        when :AIXM then ("%.8f" % @lat.abs.round(8)) + (@lat < 0 ? 'S' : 'N')
-        else fail(ArgumentError, "format `#{format}' not recognized")
+        when :OFM then ("%.8f" % @lat.abs.round(8)) + (@lat.negative? ? 'S' : 'N')
+        when :AIXM then @lat.to_dms(2).gsub(/[^\d.]/, '') + (@lat.negative? ? 'S' : 'N')
+        else @lat.round(8)
       end
     end
 
-    def long(format=:DD)
+    def long(format=nil)
       case format
-        when :DD then @long.round(8)
-        when :AIXM then ("%.8f" % @long.abs.round(8)) + (@long < 0 ? 'W' : 'E')
-        else fail(ArgumentError, "format `#{format}' not recognized")
+        when :OFM then ("%.8f" % @long.abs.round(8)) + (@long.negative? ? 'W' : 'E')
+        when :AIXM then @long.to_dms(3).gsub(/[^\d.]/, '') + (@long.negative? ? 'W' : 'E')
+        else @long.round(8)
       end
     end
 
@@ -39,14 +39,13 @@ module AIXM
     private
 
     def float_for(value)
-      case
-      when value.is_a?(Numeric)
-        value.to_f
-      when value.to_s =~ /^\s*(\d+)[° ]+(\d+)[' ]+([\d.]+)[" ]*(?:(N|E)|(S|W))\s*$/
-        ($1.to_f + ($2.to_f/60) + ($3.to_f/3600)) * ($4 ? 1 : -1)
-      else
-        fail(ArgumentError, "illegal value `#{value}'")
+      case value
+        when Numeric then value.to_f
+        when String then value[0..-2].to_dd * (value =~ /[SW]$/ ? -1 : 1)
+        else fail(ArgumentError, "illegal value class `#{value.class}'")
       end
+    rescue
+      fail(ArgumentError, "illegal value `#{value}'")
     end
 
   end

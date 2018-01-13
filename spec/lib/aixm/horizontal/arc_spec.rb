@@ -25,7 +25,7 @@ describe AIXM::Horizontal::Arc do
         center_xy: AIXM::XY.new(lat: 22.2, long: 33.3),
         clockwise: true
       )
-      subject.to_digest.must_equal '35b2e1af'
+      subject.to_digest.must_equal '35B2E1AF'
     end
   end
 
@@ -39,10 +39,11 @@ describe AIXM::Horizontal::Arc do
       subject.to_xml.must_equal <<~END
         <Avx>
           <codeType>CWA</codeType>
-          <geoLat>11.10000000N</geoLat>
-          <geoLong>33.30000000E</geoLong>
-          <geoLatArc>22.20000000N</geoLatArc>
-          <geoLongArc>33.30000000E</geoLongArc>
+          <geoLat>110560.00N</geoLat>
+          <geoLong>0331760.00E</geoLong>
+          <geoLatArc>221160.00N</geoLatArc>
+          <geoLongArc>0331760.00E</geoLongArc>
+          <codeDatum>WGE</codeDatum>
         </Avx>
       END
     end
@@ -56,10 +57,11 @@ describe AIXM::Horizontal::Arc do
       subject.to_xml.must_equal <<~END
         <Avx>
           <codeType>CCA</codeType>
-          <geoLat>11.10000000N</geoLat>
-          <geoLong>33.30000000E</geoLong>
-          <geoLatArc>22.20000000N</geoLatArc>
-          <geoLongArc>33.30000000E</geoLongArc>
+          <geoLat>110560.00N</geoLat>
+          <geoLong>0331760.00E</geoLong>
+          <geoLatArc>221160.00N</geoLatArc>
+          <geoLongArc>0331760.00E</geoLongArc>
+          <codeDatum>WGE</codeDatum>
         </Avx>
       END
     end

@@ -25,6 +25,7 @@ module AIXM
           avx.codeType('GRC')
           avx.geoLat(xy.lat(:AIXM))
           avx.geoLong(xy.long(:AIXM))
+          avx.codeDatum('WGE')
         end
       end
 

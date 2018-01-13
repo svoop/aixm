@@ -69,20 +69,22 @@ describe AIXM::Geometry do
     end
 
     it "must return digest of payload" do
-      subject.to_digest.must_equal '37e900df'
+      subject.to_digest.must_equal '281EE1FA'
     end
 
     it "must build valid XML" do
       subject.to_xml.must_equal <<~END
         <Avx>
           <codeType>GRC</codeType>
-          <geoLat>11.00000000N</geoLat>
-          <geoLong>22.00000000E</geoLong>
+          <geoLat>110000.00N</geoLat>
+          <geoLong>0220000.00E</geoLong>
+          <codeDatum>WGE</codeDatum>
         </Avx>
         <Avx>
           <codeType>GRC</codeType>
-          <geoLat>22.00000000N</geoLat>
-          <geoLong>33.00000000E</geoLong>
+          <geoLat>220000.00N</geoLat>
+          <geoLong>0330000.00E</geoLong>
+          <codeDatum>WGE</codeDatum>
         </Avx>
       END
     end
@@ -113,21 +115,23 @@ describe AIXM::Geometry do
       subject.to_xml.must_equal <<~END
         <Avx>
           <codeType>CWA</codeType>
-          <geoLat>11.00000000N</geoLat>
-          <geoLong>22.00000000E</geoLong>
-          <geoLatArc>10.00000000N</geoLatArc>
-          <geoLongArc>20.00000000E</geoLongArc>
+          <geoLat>110000.00N</geoLat>
+          <geoLong>0220000.00E</geoLong>
+          <geoLatArc>100000.00N</geoLatArc>
+          <geoLongArc>0200000.00E</geoLongArc>
+          <codeDatum>WGE</codeDatum>
         </Avx>
         <Avx>
           <codeType>GRC</codeType>
-          <geoLat>22.00000000N</geoLat>
-          <geoLong>33.00000000E</geoLong>
+          <geoLat>220000.00N</geoLat>
+          <geoLong>0330000.00E</geoLong>
+          <codeDatum>WGE</codeDatum>
         </Avx>
       END
     end
 
     it "must return digest of payload" do
-      subject.to_digest.must_equal '240d7b10'
+      subject.to_digest.must_equal '8DC81708'
     end
   end
 
@@ -156,22 +160,24 @@ describe AIXM::Geometry do
       subject.to_xml.must_equal <<~END
         <Avx>
           <codeType>FNT</codeType>
-          <geoLat>11.00000000N</geoLat>
-          <geoLong>22.00000000E</geoLong>
+          <geoLat>110000.00N</geoLat>
+          <geoLong>0220000.00E</geoLong>
+          <codeDatum>WGE</codeDatum>
           <GbrUid>
             <txtName>foobar</txtName>
           </GbrUid>
         </Avx>
         <Avx>
           <codeType>GRC</codeType>
-          <geoLat>22.00000000N</geoLat>
-          <geoLong>33.00000000E</geoLong>
+          <geoLat>220000.00N</geoLat>
+          <geoLong>0330000.00E</geoLong>
+          <codeDatum>WGE</codeDatum>
         </Avx>
       END
     end
 
     it "must return digest of payload" do
-      subject.to_digest.must_equal '6a1d5c22'
+      subject.to_digest.must_equal 'F208007C'
     end
   end
 
@@ -199,16 +205,17 @@ describe AIXM::Geometry do
       subject.to_xml.must_equal <<~END
         <Avx>
           <codeType>CWA</codeType>
-          <geoLat>11.08993216N</geoLat>
-          <geoLong>22.00000000E</geoLong>
-          <geoLatArc>11.00000000N</geoLatArc>
-          <geoLongArc>22.00000000E</geoLongArc>
+          <geoLat>110523.76N</geoLat>
+          <geoLong>0220000.00E</geoLong>
+          <geoLatArc>110000.00N</geoLatArc>
+          <geoLongArc>0220000.00E</geoLongArc>
+          <codeDatum>WGE</codeDatum>
         </Avx>
       END
     end
 
     it "must return digest of payload" do
-      subject.to_digest.must_equal '6db689c4'
+      subject.to_digest.must_equal 'CCBB63FD'
     end
   end
 end

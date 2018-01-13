@@ -23,7 +23,7 @@ describe AIXM::Horizontal::Circle do
         center_xy: AIXM::XY.new(lat: 12.12345678, long: -23.12345678),
         radius: 15
       )
-      subject.to_digest.must_equal '914c5f08'
+      subject.to_digest.must_equal '914C5F08'
     end
   end
 
@@ -36,10 +36,11 @@ describe AIXM::Horizontal::Circle do
       subject.to_xml.must_equal <<~END
         <Avx>
           <codeType>CWA</codeType>
-          <geoLat>11.32483040N</geoLat>
-          <geoLong>22.20000000E</geoLong>
-          <geoLatArc>11.10000000N</geoLatArc>
-          <geoLongArc>22.20000000E</geoLongArc>
+          <geoLat>111929.39N</geoLat>
+          <geoLong>0221160.00E</geoLong>
+          <geoLatArc>110560.00N</geoLatArc>
+          <geoLongArc>0221160.00E</geoLongArc>
+          <codeDatum>WGE</codeDatum>
         </Avx>
       END
     end
@@ -52,10 +53,11 @@ describe AIXM::Horizontal::Circle do
       subject.to_xml.must_equal <<~END
         <Avx>
           <codeType>CWA</codeType>
-          <geoLat>0.44916080N</geoLat>
-          <geoLong>22.20000000W</geoLong>
-          <geoLatArc>0.00050000S</geoLatArc>
-          <geoLongArc>22.20000000W</geoLongArc>
+          <geoLat>002656.98N</geoLat>
+          <geoLong>0221160.00W</geoLong>
+          <geoLatArc>000001.80S</geoLatArc>
+          <geoLongArc>0221160.00W</geoLongArc>
+          <codeDatum>WGE</codeDatum>
         </Avx>
       END
     end
