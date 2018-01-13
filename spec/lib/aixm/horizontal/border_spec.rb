@@ -22,8 +22,8 @@ describe AIXM::Horizontal::Border do
       subject.to_xml.must_equal <<~END
         <Avx>
           <codeType>FNT</codeType>
-          <geoLat>110560.00N</geoLat>
-          <geoLong>0221160.00E</geoLong>
+          <geoLat>110600.00N</geoLat>
+          <geoLong>0221200.00E</geoLong>
           <codeDatum>WGE</codeDatum>
           <GbrUid mid="123">
             <txtName>foobar</txtName>
@@ -40,8 +40,8 @@ describe AIXM::Horizontal::Border do
       subject.to_xml.must_equal <<~END
       <Avx>
         <codeType>FNT</codeType>
-        <geoLat>110560.00N</geoLat>
-        <geoLong>0221160.00E</geoLong>
+        <geoLat>110600.00N</geoLat>
+        <geoLong>0221200.00E</geoLong>
         <codeDatum>WGE</codeDatum>
         <GbrUid>
           <txtName>foobar</txtName>

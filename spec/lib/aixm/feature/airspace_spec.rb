@@ -21,7 +21,7 @@ describe AIXM::Feature::Airspace do
 
   context "complete" do
     subject do
-      AIXM::Factory.airspace
+      AIXM::Factory.polygon_airspace
     end
 
     describe :valid? do
@@ -32,7 +32,7 @@ describe AIXM::Feature::Airspace do
 
     describe :to_digest do
       it "must return digest of payload" do
-        subject.to_digest.must_equal 'B022C1B8'
+        subject.to_digest.must_equal '7F466CA0'
       end
     end
 
@@ -40,11 +40,11 @@ describe AIXM::Feature::Airspace do
       it "must build correct XML with OFM extensions" do
         subject.to_xml(:OFM).must_equal <<~END
           <Ase xt_classLayersAvail="false">
-            <AseUid mid="B022C1B8" newEntity="true">
+            <AseUid mid="7F466CA0" newEntity="true">
               <codeType>D</codeType>
-              <codeId>B022C1B8</codeId>
+              <codeId>7F466CA0</codeId>
             </AseUid>
-            <txtName>FOOBAR</txtName>
+            <txtName>POLYGON AIRSPACE</txtName>
             <codeDistVerUpper>STD</codeDistVerUpper>
             <valDistVerUpper>65</valDistVerUpper>
             <uomDistVerUpper>FL</uomDistVerUpper>
@@ -57,39 +57,38 @@ describe AIXM::Feature::Airspace do
             <codeDistVerMnm>HEI</codeDistVerMnm>
             <valDistVerMnm>3000</valDistVerMnm>
             <uomDistVerMnm>FT</uomDistVerMnm>
-            <txtRmk>airborn pink elephants</txtRmk>
-            <xt_txtRmk>airborn pink elephants</xt_txtRmk>
+            <txtRmk>polygon airspace</txtRmk>
+            <xt_txtRmk>polygon airspace</xt_txtRmk>
             <xt_selAvail>false</xt_selAvail>
           </Ase>
           <Abd>
             <AbdUid>
-              <AseUid mid="B022C1B8" newEntity="true">
+              <AseUid mid="7F466CA0" newEntity="true">
                 <codeType>D</codeType>
-                <codeId>B022C1B8</codeId>
+                <codeId>7F466CA0</codeId>
               </AseUid>
             </AbdUid>
             <Avx>
-              <codeType>GRC</codeType>
-              <geoLat>110000.00N</geoLat>
-              <geoLong>0220000.00E</geoLong>
+              <codeType>CWA</codeType>
+              <geoLat>475133.00N</geoLat>
+              <geoLong>0073336.00E</geoLong>
               <codeDatum>WGE</codeDatum>
+              <geoLatArc>475415.00N</geoLatArc>
+              <geoLongArc>0073348.00E</geoLongArc>
+            </Avx>
+            <Avx>
+              <codeType>FNT</codeType>
+              <geoLat>475637.00N</geoLat>
+              <geoLong>0073545.00E</geoLong>
+              <codeDatum>WGE</codeDatum>
+              <GbrUid>
+                <txtName>foobar</txtName>
+              </GbrUid>
             </Avx>
             <Avx>
               <codeType>GRC</codeType>
-              <geoLat>220000.00N</geoLat>
-              <geoLong>0330000.00E</geoLong>
-              <codeDatum>WGE</codeDatum>
-            </Avx>
-            <Avx>
-              <codeType>GRC</codeType>
-              <geoLat>330000.00N</geoLat>
-              <geoLong>0440000.00E</geoLong>
-              <codeDatum>WGE</codeDatum>
-            </Avx>
-            <Avx>
-              <codeType>GRC</codeType>
-              <geoLat>110000.00N</geoLat>
-              <geoLong>0220000.00E</geoLong>
+              <geoLat>475133.00N</geoLat>
+              <geoLong>0073336.00E</geoLong>
               <codeDatum>WGE</codeDatum>
             </Avx>
           </Abd>

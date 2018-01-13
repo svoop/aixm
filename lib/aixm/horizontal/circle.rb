@@ -25,9 +25,9 @@ module AIXM
           avx.codeType('CWA')
           avx.geoLat(north_xy.lat(:AIXM))
           avx.geoLong(north_xy.long(:AIXM))
+          avx.codeDatum('WGE')
           avx.geoLatArc(center_xy.lat(:AIXM))
           avx.geoLongArc(center_xy.long(:AIXM))
-          avx.codeDatum('WGE')
         end
       end
 

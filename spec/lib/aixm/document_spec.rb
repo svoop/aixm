@@ -29,11 +29,11 @@ describe AIXM::Document do
         <?xml version="1.0" encoding="UTF-8"?>
         <AIXM-Snapshot xmlns:xsi="http://www.aixm.aero/schema/4.5/AIXM-Snapshot.xsd" version="4.5" origin="AIXM 0.1.0 Ruby gem" created="2018-01-18T12:00:00+01:00" effective="2018-01-18T12:00:00+01:00">
           <Ase>
-            <AseUid mid="B022C1B8">
+            <AseUid mid="7F466CA0">
               <codeType>D</codeType>
-              <codeId>B022C1B8</codeId>
+              <codeId>7F466CA0</codeId>
             </AseUid>
-            <txtName>FOOBAR</txtName>
+            <txtName>POLYGON AIRSPACE</txtName>
             <codeDistVerUpper>STD</codeDistVerUpper>
             <valDistVerUpper>65</valDistVerUpper>
             <uomDistVerUpper>FL</uomDistVerUpper>
@@ -46,46 +46,45 @@ describe AIXM::Document do
             <codeDistVerMnm>HEI</codeDistVerMnm>
             <valDistVerMnm>3000</valDistVerMnm>
             <uomDistVerMnm>FT</uomDistVerMnm>
-            <txtRmk>airborn pink elephants</txtRmk>
+            <txtRmk>polygon airspace</txtRmk>
           </Ase>
           <Abd>
             <AbdUid>
-              <AseUid mid="B022C1B8">
+              <AseUid mid="7F466CA0">
                 <codeType>D</codeType>
-                <codeId>B022C1B8</codeId>
+                <codeId>7F466CA0</codeId>
               </AseUid>
             </AbdUid>
             <Avx>
-              <codeType>GRC</codeType>
-              <geoLat>110000.00N</geoLat>
-              <geoLong>0220000.00E</geoLong>
+              <codeType>CWA</codeType>
+              <geoLat>475133.00N</geoLat>
+              <geoLong>0073336.00E</geoLong>
               <codeDatum>WGE</codeDatum>
+              <geoLatArc>475415.00N</geoLatArc>
+              <geoLongArc>0073348.00E</geoLongArc>
+            </Avx>
+            <Avx>
+              <codeType>FNT</codeType>
+              <geoLat>475637.00N</geoLat>
+              <geoLong>0073545.00E</geoLong>
+              <codeDatum>WGE</codeDatum>
+              <GbrUid>
+                <txtName>foobar</txtName>
+              </GbrUid>
             </Avx>
             <Avx>
               <codeType>GRC</codeType>
-              <geoLat>220000.00N</geoLat>
-              <geoLong>0330000.00E</geoLong>
-              <codeDatum>WGE</codeDatum>
-            </Avx>
-            <Avx>
-              <codeType>GRC</codeType>
-              <geoLat>330000.00N</geoLat>
-              <geoLong>0440000.00E</geoLong>
-              <codeDatum>WGE</codeDatum>
-            </Avx>
-            <Avx>
-              <codeType>GRC</codeType>
-              <geoLat>110000.00N</geoLat>
-              <geoLong>0220000.00E</geoLong>
+              <geoLat>475133.00N</geoLat>
+              <geoLong>0073336.00E</geoLong>
               <codeDatum>WGE</codeDatum>
             </Avx>
           </Abd>
           <Ase>
-            <AseUid mid="B022C1B8">
+            <AseUid mid="E1115E8A">
               <codeType>D</codeType>
-              <codeId>B022C1B8</codeId>
+              <codeId>E1115E8A</codeId>
             </AseUid>
-            <txtName>FOOBAR</txtName>
+            <txtName>CIRCLE AIRSPACE</txtName>
             <codeDistVerUpper>STD</codeDistVerUpper>
             <valDistVerUpper>65</valDistVerUpper>
             <uomDistVerUpper>FL</uomDistVerUpper>
@@ -98,38 +97,22 @@ describe AIXM::Document do
             <codeDistVerMnm>HEI</codeDistVerMnm>
             <valDistVerMnm>3000</valDistVerMnm>
             <uomDistVerMnm>FT</uomDistVerMnm>
-            <txtRmk>airborn pink elephants</txtRmk>
+            <txtRmk>circle airspace</txtRmk>
           </Ase>
           <Abd>
             <AbdUid>
-              <AseUid mid="B022C1B8">
+              <AseUid mid="E1115E8A">
                 <codeType>D</codeType>
-                <codeId>B022C1B8</codeId>
+                <codeId>E1115E8A</codeId>
               </AseUid>
             </AbdUid>
             <Avx>
-              <codeType>GRC</codeType>
-              <geoLat>110000.00N</geoLat>
-              <geoLong>0220000.00E</geoLong>
+              <codeType>CWA</codeType>
+              <geoLat>474023.76N</geoLat>
+              <geoLong>0045300.00E</geoLong>
               <codeDatum>WGE</codeDatum>
-            </Avx>
-            <Avx>
-              <codeType>GRC</codeType>
-              <geoLat>220000.00N</geoLat>
-              <geoLong>0330000.00E</geoLong>
-              <codeDatum>WGE</codeDatum>
-            </Avx>
-            <Avx>
-              <codeType>GRC</codeType>
-              <geoLat>330000.00N</geoLat>
-              <geoLong>0440000.00E</geoLong>
-              <codeDatum>WGE</codeDatum>
-            </Avx>
-            <Avx>
-              <codeType>GRC</codeType>
-              <geoLat>110000.00N</geoLat>
-              <geoLong>0220000.00E</geoLong>
-              <codeDatum>WGE</codeDatum>
+              <geoLatArc>473500.00N</geoLatArc>
+              <geoLongArc>0045300.00E</geoLongArc>
             </Avx>
           </Abd>
         </AIXM-Snapshot>
@@ -141,11 +124,11 @@ describe AIXM::Document do
         <?xml version="1.0" encoding="UTF-8"?>
         <AIXM-Snapshot xmlns:xsi="http://www.aixm.aero/schema/4.5/AIXM-Snapshot.xsd" version="4.5 + OFM extensions of version 0.1" origin="AIXM 0.1.0 Ruby gem" created="2018-01-18T12:00:00+01:00" effective="2018-01-18T12:00:00+01:00">
           <Ase>
-            <AseUid mid="B022C1B8">
+            <AseUid mid="7F466CA0">
               <codeType>D</codeType>
-              <codeId>B022C1B8</codeId>
+              <codeId>7F466CA0</codeId>
             </AseUid>
-            <txtName>FOOBAR</txtName>
+            <txtName>POLYGON AIRSPACE</txtName>
             <codeDistVerUpper>STD</codeDistVerUpper>
             <valDistVerUpper>65</valDistVerUpper>
             <uomDistVerUpper>FL</uomDistVerUpper>
@@ -158,46 +141,45 @@ describe AIXM::Document do
             <codeDistVerMnm>HEI</codeDistVerMnm>
             <valDistVerMnm>3000</valDistVerMnm>
             <uomDistVerMnm>FT</uomDistVerMnm>
-            <txtRmk>airborn pink elephants</txtRmk>
+            <txtRmk>polygon airspace</txtRmk>
           </Ase>
           <Abd>
             <AbdUid>
-              <AseUid mid="B022C1B8">
+              <AseUid mid="7F466CA0">
                 <codeType>D</codeType>
-                <codeId>B022C1B8</codeId>
+                <codeId>7F466CA0</codeId>
               </AseUid>
             </AbdUid>
             <Avx>
-              <codeType>GRC</codeType>
-              <geoLat>110000.00N</geoLat>
-              <geoLong>0220000.00E</geoLong>
+              <codeType>CWA</codeType>
+              <geoLat>475133.00N</geoLat>
+              <geoLong>0073336.00E</geoLong>
               <codeDatum>WGE</codeDatum>
+              <geoLatArc>475415.00N</geoLatArc>
+              <geoLongArc>0073348.00E</geoLongArc>
+            </Avx>
+            <Avx>
+              <codeType>FNT</codeType>
+              <geoLat>475637.00N</geoLat>
+              <geoLong>0073545.00E</geoLong>
+              <codeDatum>WGE</codeDatum>
+              <GbrUid>
+                <txtName>foobar</txtName>
+              </GbrUid>
             </Avx>
             <Avx>
               <codeType>GRC</codeType>
-              <geoLat>220000.00N</geoLat>
-              <geoLong>0330000.00E</geoLong>
-              <codeDatum>WGE</codeDatum>
-            </Avx>
-            <Avx>
-              <codeType>GRC</codeType>
-              <geoLat>330000.00N</geoLat>
-              <geoLong>0440000.00E</geoLong>
-              <codeDatum>WGE</codeDatum>
-            </Avx>
-            <Avx>
-              <codeType>GRC</codeType>
-              <geoLat>110000.00N</geoLat>
-              <geoLong>0220000.00E</geoLong>
+              <geoLat>475133.00N</geoLat>
+              <geoLong>0073336.00E</geoLong>
               <codeDatum>WGE</codeDatum>
             </Avx>
           </Abd>
           <Ase>
-            <AseUid mid="B022C1B8">
+            <AseUid mid="E1115E8A">
               <codeType>D</codeType>
-              <codeId>B022C1B8</codeId>
+              <codeId>E1115E8A</codeId>
             </AseUid>
-            <txtName>FOOBAR</txtName>
+            <txtName>CIRCLE AIRSPACE</txtName>
             <codeDistVerUpper>STD</codeDistVerUpper>
             <valDistVerUpper>65</valDistVerUpper>
             <uomDistVerUpper>FL</uomDistVerUpper>
@@ -210,38 +192,22 @@ describe AIXM::Document do
             <codeDistVerMnm>HEI</codeDistVerMnm>
             <valDistVerMnm>3000</valDistVerMnm>
             <uomDistVerMnm>FT</uomDistVerMnm>
-            <txtRmk>airborn pink elephants</txtRmk>
+            <txtRmk>circle airspace</txtRmk>
           </Ase>
           <Abd>
             <AbdUid>
-              <AseUid mid="B022C1B8">
+              <AseUid mid="E1115E8A">
                 <codeType>D</codeType>
-                <codeId>B022C1B8</codeId>
+                <codeId>E1115E8A</codeId>
               </AseUid>
             </AbdUid>
             <Avx>
-              <codeType>GRC</codeType>
-              <geoLat>110000.00N</geoLat>
-              <geoLong>0220000.00E</geoLong>
+              <codeType>CWA</codeType>
+              <geoLat>474023.76N</geoLat>
+              <geoLong>0045300.00E</geoLong>
               <codeDatum>WGE</codeDatum>
-            </Avx>
-            <Avx>
-              <codeType>GRC</codeType>
-              <geoLat>220000.00N</geoLat>
-              <geoLong>0330000.00E</geoLong>
-              <codeDatum>WGE</codeDatum>
-            </Avx>
-            <Avx>
-              <codeType>GRC</codeType>
-              <geoLat>330000.00N</geoLat>
-              <geoLong>0440000.00E</geoLong>
-              <codeDatum>WGE</codeDatum>
-            </Avx>
-            <Avx>
-              <codeType>GRC</codeType>
-              <geoLat>110000.00N</geoLat>
-              <geoLong>0220000.00E</geoLong>
-              <codeDatum>WGE</codeDatum>
+              <geoLatArc>473500.00N</geoLatArc>
+              <geoLongArc>0045300.00E</geoLongArc>
             </Avx>
           </Abd>
         </AIXM-Snapshot>

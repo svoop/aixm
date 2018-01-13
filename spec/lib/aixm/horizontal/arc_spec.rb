@@ -39,11 +39,11 @@ describe AIXM::Horizontal::Arc do
       subject.to_xml.must_equal <<~END
         <Avx>
           <codeType>CWA</codeType>
-          <geoLat>110560.00N</geoLat>
-          <geoLong>0331760.00E</geoLong>
-          <geoLatArc>221160.00N</geoLatArc>
-          <geoLongArc>0331760.00E</geoLongArc>
+          <geoLat>110600.00N</geoLat>
+          <geoLong>0331800.00E</geoLong>
           <codeDatum>WGE</codeDatum>
+          <geoLatArc>221200.00N</geoLatArc>
+          <geoLongArc>0331800.00E</geoLongArc>
         </Avx>
       END
     end
@@ -57,11 +57,11 @@ describe AIXM::Horizontal::Arc do
       subject.to_xml.must_equal <<~END
         <Avx>
           <codeType>CCA</codeType>
-          <geoLat>110560.00N</geoLat>
-          <geoLong>0331760.00E</geoLong>
-          <geoLatArc>221160.00N</geoLatArc>
-          <geoLongArc>0331760.00E</geoLongArc>
+          <geoLat>110600.00N</geoLat>
+          <geoLong>0331800.00E</geoLong>
           <codeDatum>WGE</codeDatum>
+          <geoLatArc>221200.00N</geoLatArc>
+          <geoLongArc>0331800.00E</geoLongArc>
         </Avx>
       END
     end

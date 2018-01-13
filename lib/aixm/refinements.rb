@@ -26,7 +26,7 @@ module AIXM
       # * {-}{DD}DMMSS{.SS}
       def to_dd
         if self =~ /\A(-)?(\d{1,3})[° ]?(\d{2})[' ]?(\d{2}\.?\d{0,2})"?\z/
-          ("#{$1}1".to_i * ($2.to_f + ($3.to_f/60) + ($4.to_f/3600))).round(8)
+          ("#{$1}1".to_i * ($2.to_f + ($3.to_f/60) + ($4.to_f/3600)))
         end
       end
     end
@@ -39,18 +39,21 @@ module AIXM
       end
 
       ##
-      # Convert DD angle to DMS with the degree zero padded to +padding+ length
+      # Convert DD angle to DMS with the degrees zero padded to +padding+ length
       #
       # Output format:
       # * {-}D°MM'SS.SS"
       def to_dms(padding=3)
-        minutes = (self.abs % 1) * 60
-        seconds = (minutes % 1) * 60
+        degrees = self.abs.floor
+        minutes = ((self.abs - degrees) * 60).floor
+        seconds = (self.abs - degrees - minutes.to_f / 60) * 3600
+        minutes, seconds = minutes + 1, 0 if seconds.round(2) == 60
+        degrees, minutes = degrees + 1, 0 if minutes == 60
         %Q(%s%0#{padding}d°%02d'%05.2f") % [
           ('-' if self.negative?),
           self.abs.truncate,
-          minutes.truncate,
-          seconds
+          minutes.abs.truncate,
+          seconds.abs
         ]
       end
     end

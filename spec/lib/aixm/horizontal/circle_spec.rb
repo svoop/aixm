@@ -37,10 +37,10 @@ describe AIXM::Horizontal::Circle do
         <Avx>
           <codeType>CWA</codeType>
           <geoLat>111929.39N</geoLat>
-          <geoLong>0221160.00E</geoLong>
-          <geoLatArc>110560.00N</geoLatArc>
-          <geoLongArc>0221160.00E</geoLongArc>
+          <geoLong>0221200.00E</geoLong>
           <codeDatum>WGE</codeDatum>
+          <geoLatArc>110600.00N</geoLatArc>
+          <geoLongArc>0221200.00E</geoLongArc>
         </Avx>
       END
     end
@@ -54,10 +54,10 @@ describe AIXM::Horizontal::Circle do
         <Avx>
           <codeType>CWA</codeType>
           <geoLat>002656.98N</geoLat>
-          <geoLong>0221160.00W</geoLong>
-          <geoLatArc>000001.80S</geoLatArc>
-          <geoLongArc>0221160.00W</geoLongArc>
+          <geoLong>0221200.00W</geoLong>
           <codeDatum>WGE</codeDatum>
+          <geoLatArc>000001.80S</geoLatArc>
+          <geoLongArc>0221200.00W</geoLongArc>
         </Avx>
       END
     end

@@ -20,8 +20,8 @@ describe AIXM::Horizontal::Point do
       subject.to_xml.must_equal <<~END
         <Avx>
           <codeType>GRC</codeType>
-          <geoLat>110560.00N</geoLat>
-          <geoLong>0221160.00E</geoLong>
+          <geoLat>110600.00N</geoLat>
+          <geoLong>0221200.00E</geoLong>
           <codeDatum>WGE</codeDatum>
         </Avx>
       END
@@ -32,8 +32,8 @@ describe AIXM::Horizontal::Point do
       subject.to_xml.must_equal <<~END
         <Avx>
           <codeType>GRC</codeType>
-          <geoLat>110560.00S</geoLat>
-          <geoLong>0221160.00W</geoLong>
+          <geoLat>110600.00S</geoLat>
+          <geoLong>0221200.00W</geoLong>
           <codeDatum>WGE</codeDatum>
         </Avx>
       END

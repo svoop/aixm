@@ -117,9 +117,9 @@ describe AIXM::Geometry do
           <codeType>CWA</codeType>
           <geoLat>110000.00N</geoLat>
           <geoLong>0220000.00E</geoLong>
+          <codeDatum>WGE</codeDatum>
           <geoLatArc>100000.00N</geoLatArc>
           <geoLongArc>0200000.00E</geoLongArc>
-          <codeDatum>WGE</codeDatum>
         </Avx>
         <Avx>
           <codeType>GRC</codeType>
@@ -207,9 +207,9 @@ describe AIXM::Geometry do
           <codeType>CWA</codeType>
           <geoLat>110523.76N</geoLat>
           <geoLong>0220000.00E</geoLong>
+          <codeDatum>WGE</codeDatum>
           <geoLatArc>110000.00N</geoLatArc>
           <geoLongArc>0220000.00E</geoLongArc>
-          <codeDatum>WGE</codeDatum>
         </Avx>
       END
     end
