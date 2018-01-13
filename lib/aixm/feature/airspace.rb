@@ -31,22 +31,22 @@ module AIXM
       def to_xml(*extensions)
         mid = to_digest
         builder = Builder::XmlMarkup.new(indent: 2)
-        builder.Ase(extensions.include?(:ofm) ? { xt_classLayersAvail: false } : {}) do |ase|
-          ase.AseUid(extensions.include?(:ofm) ? { mid: mid, newEntity: true } : { mid: mid }) do |aseuid|
+        builder.Ase(extensions.include?(:OFM) ? { xt_classLayersAvail: false } : {}) do |ase|
+          ase.AseUid(extensions.include?(:OFM) ? { mid: mid, newEntity: true } : { mid: mid }) do |aseuid|
             aseuid.codeType(type)
             aseuid.codeId(mid)   # TODO: verify
           end
           ase.txtName(name)
           ase << vertical_limits.to_xml(extensions).indent(2)
           ase.txtRmk(remarks) if remarks
-          if extensions.include?(:ofm)
+          if extensions.include?(:OFM)
             ase.xt_txtRmk(remarks)
             ase.xt_selAvail(false)
           end
         end
         builder.Abd do |abd|
           abd.AbdUid do |abduid|
-            abduid.AseUid(extensions.include?(:ofm) ? { mid: mid, newEntity: true } : { mid: mid }) do |aseuid|
+            abduid.AseUid(extensions.include?(:OFM) ? { mid: mid, newEntity: true } : { mid: mid }) do |aseuid|
               aseuid.codeType(type)
               aseuid.codeId(mid)   # TODO: verify
             end

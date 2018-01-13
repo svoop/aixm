@@ -36,7 +36,7 @@ module AIXM
         created: @created_at&.xmlschema || now,
         effective: @effective_at&.xmlschema || now
       }
-      meta[:version] += ' + OFM extensions of version 0.1' if extensions.include?(:ofm)
+      meta[:version] += ' + OFM extensions of version 0.1' if extensions.include?(:OFM)
       builder = Builder::XmlMarkup.new(indent: 2)
       builder.instruct!
       builder.tag!('AIXM-Snapshot', meta) do |aixm_snapshot|

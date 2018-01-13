@@ -38,7 +38,7 @@ describe AIXM::Feature::Airspace do
 
     describe :to_xml do
       it "must build correct XML with OFM extensions" do
-        subject.to_xml(:ofm).must_equal <<~END
+        subject.to_xml(:OFM).must_equal <<~END
           <Ase xt_classLayersAvail="false">
             <AseUid mid="B022C1B8" newEntity="true">
               <codeType>D</codeType>
