@@ -14,7 +14,7 @@ are part of this gem. Most notably, the gem is only a builder of AIXM 4.5
 snapshot files and does not parse them.
 
 * [Homepage](https://github.com/svoop/aixm)
-* Author: [Sven Schwyn @ Bitcetera](http://www.bitcetera.com)
+* Author: [Sven Schwyn - Bitcetera](http://www.bitcetera.com)
 
 ## Install
 
