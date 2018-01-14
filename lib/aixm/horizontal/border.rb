@@ -26,8 +26,11 @@ module AIXM
           avx.geoLat(xy.lat(:AIXM))
           avx.geoLong(xy.long(:AIXM))
           avx.codeDatum('WGE')
-          avx.GbrUid({ mid: name_mid }.compact) do |gbruid|
-            gbruid.txtName('foobar')
+          # TODO: Find examples how to do this with vanilla AIXM 
+          if extensions.include?(:OFM)
+            avx.GbrUid({ mid: name_mid }.compact) do |gbruid|
+              gbruid.txtName('foobar')
+            end
           end
         end
       end

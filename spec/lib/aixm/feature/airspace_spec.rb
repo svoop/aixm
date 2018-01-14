@@ -81,9 +81,6 @@ describe AIXM::Feature::Airspace do
               <geoLat>475637.00N</geoLat>
               <geoLong>0073545.00E</geoLong>
               <codeDatum>WGE</codeDatum>
-              <GbrUid>
-                <txtName>foobar</txtName>
-              </GbrUid>
             </Avx>
             <Avx>
               <codeType>GRC</codeType>

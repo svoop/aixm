@@ -25,9 +25,6 @@ describe AIXM::Horizontal::Border do
           <geoLat>110600.00N</geoLat>
           <geoLong>0221200.00E</geoLong>
           <codeDatum>WGE</codeDatum>
-          <GbrUid mid="123">
-            <txtName>foobar</txtName>
-          </GbrUid>
         </Avx>
       END
     end
@@ -43,9 +40,6 @@ describe AIXM::Horizontal::Border do
         <geoLat>110600.00N</geoLat>
         <geoLong>0221200.00E</geoLong>
         <codeDatum>WGE</codeDatum>
-        <GbrUid>
-          <txtName>foobar</txtName>
-        </GbrUid>
       </Avx>
       END
     end

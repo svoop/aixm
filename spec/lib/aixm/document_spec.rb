@@ -68,9 +68,6 @@ describe AIXM::Document do
               <geoLat>475637.00N</geoLat>
               <geoLong>0073545.00E</geoLong>
               <codeDatum>WGE</codeDatum>
-              <GbrUid>
-                <txtName>foobar</txtName>
-              </GbrUid>
             </Avx>
             <Avx>
               <codeType>GRC</codeType>
@@ -163,9 +160,6 @@ describe AIXM::Document do
               <geoLat>475637.00N</geoLat>
               <geoLong>0073545.00E</geoLong>
               <codeDatum>WGE</codeDatum>
-              <GbrUid>
-                <txtName>foobar</txtName>
-              </GbrUid>
             </Avx>
             <Avx>
               <codeType>GRC</codeType>
