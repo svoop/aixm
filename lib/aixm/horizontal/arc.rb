@@ -16,6 +16,8 @@ module AIXM
         @center_xy, @clockwise = center_xy, clockwise
       end
 
+      ##
+      # Whether the arc is going clockwise (true) or not (false)
       def clockwise?
         @clockwise
       end
@@ -26,6 +28,11 @@ module AIXM
         [xy.lat, xy.long, center_xy.lat, center_xy.long, clockwise?].to_digest
       end
 
+      ##
+      # Render AIXM
+      #
+      # Extensions:
+      # * +:OFM+ - Open Flightmaps
       def to_xml(*extensions)
         builder = Builder::XmlMarkup.new(indent: 2)
         builder.Avx do |avx|

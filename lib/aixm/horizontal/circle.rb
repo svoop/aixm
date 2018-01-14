@@ -19,6 +19,11 @@ module AIXM
         [center_xy.lat, center_xy.long, radius].to_digest
       end
 
+      ##
+      # Render AIXM
+      #
+      # Extensions:
+      # * +:OFM+ - Open Flightmaps
       def to_xml(*extensions)
         builder = Builder::XmlMarkup.new(indent: 2)
         builder.Avx do |avx|
@@ -33,6 +38,9 @@ module AIXM
 
       private
 
+      ##
+      # Coordinates of the point which is both strictly north of the center
+      # and on the circumference of the circle
       def north_xy
         AIXM::XY.new(
           lat: center_xy.lat + radius.to_f / 6371 * 180 / Math::PI,

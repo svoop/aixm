@@ -9,24 +9,41 @@ module AIXM
 
     attr_reader :created_at, :effective_at
 
+    ##
+    # Define a AIXM-Snapshot document
+    #
+    # Options:
+    # * +created_at+ - creation date (default: now)
+    # * +effective_at+ - snapshot effective after date (default: now)
     def initialize(created_at: nil, effective_at: nil)
       @created_at, @effective_at = created_at, effective_at
       @result_array = []
     end
 
+    ##
+    # Array of features defined by this document
     def features
       @result_array
     end
 
+    ##
+    # Validate against the XSD and return an array of errors
     def errors
       xsd = Nokogiri::XML::Schema(File.open(AIXM::SCHEMA))
       xsd.validate(Nokogiri::XML(to_xml))
     end
 
+    ##
+    # Check whether the document is valid (extensions excluded)
     def valid?
       any? && reduce(true) { |b, f| b && f.valid? } && errors.none?
     end
 
+    ##
+    # Render AIXM
+    #
+    # Extensions:
+    # * +:OFM+ - Open Flightmaps
     def to_xml(*extensions)
       now = Time.now.xmlschema
       meta = {

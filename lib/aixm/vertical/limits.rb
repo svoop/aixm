@@ -20,6 +20,12 @@ module AIXM
 
       attr_reader :upper_z, :lower_z, :max_z, :min_z
 
+      ##
+      # Defines vertical limits +upper_z+ and +lower_z+
+      #
+      # Options:
+      # * +max_z+ - alternative upper limit "whichever is higher"
+      # * +min_z+ - alternative lower limit "whichever is lower"
       def initialize(upper_z:, lower_z:, max_z: nil, min_z: nil)
         fail(ArgumentError, "invalid upper_z") unless upper_z.is_a? AIXM::Z
         fail(ArgumentError, "invalid lower_z") unless lower_z.is_a? AIXM::Z
@@ -34,6 +40,11 @@ module AIXM
         [upper_z.alt, upper_z.code, lower_z.alt, lower_z.code, max_z&.alt, max_z&.code, min_z&.alt, min_z&.code].to_digest
       end
 
+      ##
+      # Render AIXM
+      #
+      # Extensions:
+      # * +:OFM+ - Open Flightmaps
       def to_xml(*extensions)
         %i(upper lower max min).each_with_object(Builder::XmlMarkup.new(indent: 2)) do |limit, builder|
           if z = send(:"#{limit}_z")

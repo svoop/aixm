@@ -19,6 +19,11 @@ module AIXM
         [xy.lat, xy.long, name, name_mid].to_digest
       end
 
+      ##
+      # Render AIXM
+      #
+      # Extensions:
+      # * +:OFM+ - Open Flightmaps
       def to_xml(*extensions)
         builder = Builder::XmlMarkup.new(indent: 2)
         builder.Avx do |avx|
@@ -26,7 +31,7 @@ module AIXM
           avx.geoLat(xy.lat(:AIXM))
           avx.geoLong(xy.long(:AIXM))
           avx.codeDatum('WGE')
-          # TODO: Find examples how to do this with vanilla AIXM 
+          # TODO: Find examples how to do this with vanilla AIXM
           if extensions.include?(:OFM)
             avx.GbrUid({ mid: name_mid }.compact) do |gbruid|
               gbruid.txtName('foobar')

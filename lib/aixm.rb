@@ -23,7 +23,3 @@ require_relative 'aixm/constants'
 require_relative 'aixm/document'
 
 require_relative 'aixm/feature/airspace'
-
-# TODO: testing only
-# puts AIXM::Factory.document.errors
-require_relative '../spec/factory'

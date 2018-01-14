@@ -8,16 +8,26 @@ module AIXM
       attr_reader :vertical_limits
       attr_accessor :geometry, :remarks
 
+      ##
+      # Airspace feature
+      #
+      # Options:
+      # * +name+ - name of the airspace (will be converted to uppercase)
+      # * +type+ - airspace type (e.g. +TMA+ or +P+)
       def initialize(name:, type:)
         @geometry = AIXM::Geometry.new
         @name, @type = name.upcase, type
       end
 
+      ##
+      # Assign a +Vertical::Limits+ object
       def vertical_limits=(value)
         fail(ArgumentError, "invalid vertical limit") unless value.is_a?(AIXM::Vertical::Limits)
         @vertical_limits = value
       end
 
+      ##
+      # Check whether the airspace is valid
       def valid?
         name && type && vertical_limits && geometry.valid?
       end
@@ -28,6 +38,11 @@ module AIXM
         [name, type, vertical_limits.to_digest, geometry.to_digest, remarks].to_digest
       end
 
+      ##
+      # Render AIXM
+      #
+      # Extensions:
+      # * +:OFM+ - Open Flightmaps
       def to_xml(*extensions)
         mid = to_digest
         builder = Builder::XmlMarkup.new(indent: 2)
@@ -54,11 +69,6 @@ module AIXM
           abd << geometry.to_xml(extensions).indent(2)
         end
       end
-
-      def hash
-
-      end
-
     end
   end
 end
