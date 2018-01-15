@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
   spec.email         = ['ruby@bitcetera.com']
   spec.description   = %q(Aeronautical Information Exchange Model (AIXM 4.5).)
   spec.summary       = %q(Aeronautical Information Exchange Model (AIXM 4.5).)
-  spec.homepage      = 'http://www.bitcetera.com/products/aixm'
+  spec.homepage      = 'https://github.com/svoop/aixm'
   spec.license       = 'MIT'
 
   spec.files         = `git ls-files`.split($/)
