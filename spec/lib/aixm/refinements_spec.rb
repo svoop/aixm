@@ -177,4 +177,23 @@ describe AIXM::Refinements do
       1.37595556.to_dms(0).must_equal %q(1°22'33.44")
     end
   end
+
+  describe 'Float#to_km' do
+    it "must convert km to km" do
+      10.3.to_km(from: :km).must_equal 10.3
+    end
+
+    it "must convert m to km" do
+      10700.0.to_km(from: :m).must_be_close_to 10.7
+    end
+
+    it "must convert nm to km" do
+      3.7.to_km(from: :nm).must_be_close_to 6.8524
+    end
+
+    it "must convert ft to km" do
+      3200.0.to_km(from: :ft).must_be_close_to 0.97536
+    end
+  end
+
 end

@@ -1,6 +1,13 @@
 module AIXM
   module Refinements
 
+    KM_FACTORS = {
+      km: 1,
+      m: 0.001,
+      nm: 1.852,
+      ft: 0.0003048
+    }
+
     refine Array do
       ##
       # Build 8 character upcase hex digest from payload (one or more strings)
@@ -55,6 +62,14 @@ module AIXM
           minutes.abs.truncate,
           seconds.abs
         ]
+      end
+
+      ##
+      # Convert a distance +from+ unit (+:km+, +:m+, +:nm+ or +:ft+) to kilometers
+      def to_km(from:)
+        self * KM_FACTORS.fetch(from.downcase.to_sym)
+      rescue KeyError
+        raise(ArgumentError, "unit `#{from}' not supported")
       end
     end
   end

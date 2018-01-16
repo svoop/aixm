@@ -69,6 +69,7 @@ By `using AIXM::Refinements` you get the following general purpose methods:
 * <tt>String#to_dd</tt><br>Convert DMS angle to DD or <tt>nil</tt> if the format is not recognized
 * <tt>Float#to_dms(padding)</tt><br>Convert DD angle to DMS with the degrees zero padded to *padding* length
 * <tt>Float#trim</tt><br>Convert whole numbers to Integer and leave all other untouched
+* <tt>Float#to_km(from: unit)</tt><br>Convert a distance from *unit* (:km, :m, :nm or :ft) to km
 
 ## References
 

@@ -1,3 +1,7 @@
+## 0.1.1
+
+* Add refinement Float#to_km
+
 ## 0.1.0
 
 * Initial implementation to import D/R/P zones to OFM
