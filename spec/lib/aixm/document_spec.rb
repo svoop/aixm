@@ -25,9 +25,9 @@ describe AIXM::Document do
     end
 
     it "must build correct XML without extensions" do
-      subject.to_xml.must_equal <<~END
+      subject.to_xml.must_equal <<~"END"
         <?xml version="1.0" encoding="UTF-8"?>
-        <AIXM-Snapshot xmlns:xsi="http://www.aixm.aero/schema/4.5/AIXM-Snapshot.xsd" version="4.5" origin="AIXM 0.1.0 Ruby gem" created="2018-01-18T12:00:00+01:00" effective="2018-01-18T12:00:00+01:00">
+        <AIXM-Snapshot xmlns:xsi="http://www.aixm.aero/schema/4.5/AIXM-Snapshot.xsd" version="4.5" origin="AIXM #{AIXM::VERSION} Ruby gem" created="2018-01-18T12:00:00+01:00" effective="2018-01-18T12:00:00+01:00">
           <Ase>
             <AseUid mid="7F466CA0">
               <codeType>D</codeType>
@@ -117,9 +117,9 @@ describe AIXM::Document do
     end
 
     it "must build correct XML with OFM extensions" do
-      subject.to_xml(:OFM).must_equal <<~END
+      subject.to_xml(:OFM).must_equal <<~"END"
         <?xml version="1.0" encoding="UTF-8"?>
-        <AIXM-Snapshot xmlns:xsi="http://www.aixm.aero/schema/4.5/AIXM-Snapshot.xsd" version="4.5 + OFM extensions of version 0.1" origin="AIXM 0.1.0 Ruby gem" created="2018-01-18T12:00:00+01:00" effective="2018-01-18T12:00:00+01:00">
+        <AIXM-Snapshot xmlns:xsi="http://www.aixm.aero/schema/4.5/AIXM-Snapshot.xsd" version="4.5 + OFM extensions of version 0.1" origin="AIXM #{AIXM::VERSION} Ruby gem" created="2018-01-18T12:00:00+01:00" effective="2018-01-18T12:00:00+01:00">
           <Ase>
             <AseUid mid="7F466CA0">
               <codeType>D</codeType>
