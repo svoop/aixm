@@ -115,15 +115,19 @@ describe AIXM::Refinements do
     end
 
     it "must do all possible roundtrip conversions" do
-      2.times.with_index do |degrees|
-        60.times.with_index do |minutes|
-          60.times.with_index do |seconds|
-            100.times.with_index do |fractions|
-              subject = %q(%03d°%02d'%02d.%02d") % [degrees, minutes, seconds, fractions]
-              subject.to_dd.to_dms.must_equal subject
+      if ENV['SPEC_SCOPE'] == 'all'
+        2.times.with_index do |degrees|
+          60.times.with_index do |minutes|
+            60.times.with_index do |seconds|
+              100.times.with_index do |fractions|
+                subject = %q(%03d°%02d'%02d.%02d") % [degrees, minutes, seconds, fractions]
+                subject.to_dd.to_dms.must_equal subject
+              end
             end
           end
         end
+      else
+        skip
       end
     end
   end

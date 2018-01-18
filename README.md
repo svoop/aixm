@@ -78,6 +78,15 @@ By `using AIXM::Refinements` you get the following general purpose methods:
 * [AIXM on Wikipedia](https://en.wikipedia.org/wiki/AIXM)
 * [Open Flightmaps](https://openflightmaps.org)
 
+## Tests
+
+Some tests are very time consuming and therefore skipped by default. To run the
+full test suite, set the environment variable:
+
+```
+export SPEC_SCOPE=all
+```
+
 ## Development
 
 To install the development dependencies and then run the test suite:
