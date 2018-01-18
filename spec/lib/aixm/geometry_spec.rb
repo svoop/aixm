@@ -174,7 +174,7 @@ describe AIXM::Geometry do
     end
 
     it "must return digest of payload" do
-      subject.to_digest.must_equal 'F208007C'
+      subject.to_digest.must_equal 'E3F3533D'
     end
   end
 

@@ -32,7 +32,7 @@ describe AIXM::Feature::Airspace do
 
     describe :to_digest do
       it "must return digest of payload" do
-        subject.to_digest.must_equal '7F466CA0'
+        subject.to_digest.must_equal 'DEA8827A'
       end
     end
 
@@ -40,9 +40,9 @@ describe AIXM::Feature::Airspace do
       it "must build correct XML with OFM extensions" do
         subject.to_xml(:OFM).must_equal <<~END
           <Ase xt_classLayersAvail="false">
-            <AseUid mid="7F466CA0" newEntity="true">
+            <AseUid mid="DEA8827A" newEntity="true">
               <codeType>D</codeType>
-              <codeId>7F466CA0</codeId>
+              <codeId>DEA8827A</codeId>
             </AseUid>
             <txtName>POLYGON AIRSPACE</txtName>
             <codeDistVerUpper>STD</codeDistVerUpper>
@@ -63,9 +63,9 @@ describe AIXM::Feature::Airspace do
           </Ase>
           <Abd>
             <AbdUid>
-              <AseUid mid="7F466CA0" newEntity="true">
+              <AseUid mid="DEA8827A" newEntity="true">
                 <codeType>D</codeType>
-                <codeId>7F466CA0</codeId>
+                <codeId>DEA8827A</codeId>
               </AseUid>
             </AbdUid>
             <Avx>

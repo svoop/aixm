@@ -4,19 +4,19 @@ module AIXM
 
       using AIXM::Refinements
 
-      attr_reader :name, :name_mid
+      attr_reader :name
 
       ##
-      # Defines a (border) transition +name+/+mid+ starting at +xy+
-      def initialize(xy:, name:, name_mid: nil)
+      # Defines a (border) transition +name+ starting at +xy+
+      def initialize(xy:, name:)
         super(xy: xy)
-        @name_mid, @name = name_mid, name
+        @name = name
       end
 
       ##
       # Digest to identify the payload
       def to_digest
-        [xy.lat, xy.long, name, name_mid].to_digest
+        [xy.lat, xy.long, name].to_digest
       end
 
       ##
@@ -33,8 +33,8 @@ module AIXM
           avx.codeDatum('WGE')
           # TODO: Find examples how to do this with vanilla AIXM
           if extensions.include?(:OFM)
-            avx.GbrUid({ mid: name_mid }.compact) do |gbruid|
-              gbruid.txtName('foobar')
+            avx.GbrUid do |gbruid|
+              gbruid.txtName(name)
             end
           end
         end

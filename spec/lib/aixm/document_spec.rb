@@ -29,9 +29,9 @@ describe AIXM::Document do
         <?xml version="1.0" encoding="UTF-8"?>
         <AIXM-Snapshot xmlns:xsi="http://www.aixm.aero/schema/4.5/AIXM-Snapshot.xsd" version="4.5" origin="AIXM #{AIXM::VERSION} Ruby gem" created="2018-01-18T12:00:00+01:00" effective="2018-01-18T12:00:00+01:00">
           <Ase>
-            <AseUid mid="7F466CA0">
+            <AseUid mid="DEA8827A\">
               <codeType>D</codeType>
-              <codeId>7F466CA0</codeId>
+              <codeId>DEA8827A\</codeId>
             </AseUid>
             <txtName>POLYGON AIRSPACE</txtName>
             <codeDistVerUpper>STD</codeDistVerUpper>
@@ -50,9 +50,9 @@ describe AIXM::Document do
           </Ase>
           <Abd>
             <AbdUid>
-              <AseUid mid="7F466CA0">
+              <AseUid mid="DEA8827A\">
                 <codeType>D</codeType>
-                <codeId>7F466CA0</codeId>
+                <codeId>DEA8827A\</codeId>
               </AseUid>
             </AbdUid>
             <Avx>
@@ -121,9 +121,9 @@ describe AIXM::Document do
         <?xml version="1.0" encoding="UTF-8"?>
         <AIXM-Snapshot xmlns:xsi="http://www.aixm.aero/schema/4.5/AIXM-Snapshot.xsd" version="4.5 + OFM extensions of version 0.1" origin="AIXM #{AIXM::VERSION} Ruby gem" created="2018-01-18T12:00:00+01:00" effective="2018-01-18T12:00:00+01:00">
           <Ase>
-            <AseUid mid="7F466CA0">
+            <AseUid mid="DEA8827A\">
               <codeType>D</codeType>
-              <codeId>7F466CA0</codeId>
+              <codeId>DEA8827A\</codeId>
             </AseUid>
             <txtName>POLYGON AIRSPACE</txtName>
             <codeDistVerUpper>STD</codeDistVerUpper>
@@ -142,9 +142,9 @@ describe AIXM::Document do
           </Ase>
           <Abd>
             <AbdUid>
-              <AseUid mid="7F466CA0">
+              <AseUid mid="DEA8827A\">
                 <codeType>D</codeType>
-                <codeId>7F466CA0</codeId>
+                <codeId>DEA8827A\</codeId>
               </AseUid>
             </AbdUid>
             <Avx>
