@@ -54,10 +54,7 @@ module AIXM
           ase.txtName(name)
           ase << vertical_limits.to_xml(extensions).indent(2)
           ase.txtRmk(remarks) if remarks
-          if extensions.include?(:OFM)
-            ase.xt_txtRmk(remarks)
-            ase.xt_selAvail(false)
-          end
+          ase.xt_selAvail(false) if extensions.include?(:OFM)
         end
         builder.Abd do |abd|
           abd.AbdUid do |abduid|

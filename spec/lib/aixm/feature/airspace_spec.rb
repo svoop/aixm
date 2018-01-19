@@ -58,7 +58,6 @@ describe AIXM::Feature::Airspace do
             <valDistVerMnm>3000</valDistVerMnm>
             <uomDistVerMnm>FT</uomDistVerMnm>
             <txtRmk>polygon airspace</txtRmk>
-            <xt_txtRmk>polygon airspace</xt_txtRmk>
             <xt_selAvail>false</xt_selAvail>
           </Ase>
           <Abd>
