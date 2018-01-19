@@ -2,11 +2,11 @@
 
 * Additions:
   * Schedule (all but TIMSH)
-  * Refinement Float#to_km
+  * Refinement Float#to_km and String#uptrans
   * Constants AIXM::UNLIMITED and AIXM::H24
   * Airspace#short_name
 * Minor changes:
-  * Document#created_at and #effective_at accept Time, Date, String or nil 
+  * Document#created_at and #effective_at accept Time, Date, String or nil
 
 ## 0.1.0
 

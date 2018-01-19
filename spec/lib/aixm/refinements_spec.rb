@@ -41,6 +41,12 @@ describe AIXM::Refinements do
     end
   end
 
+  describe 'String#uptrans' do
+    it "must transliterate illegal characters" do
+      'DÉJÀ SCHÖN'.uptrans.must_equal 'DEJA SCHOEN'
+    end
+  end
+
   describe 'String#to_dd' do
     it "must convert +6.2 DMS to DD" do
       %q(12°34'56.78").to_dd.must_equal 12.58243888888889

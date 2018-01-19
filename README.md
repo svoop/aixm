@@ -68,6 +68,7 @@ document.to_xml(:OFM)   # render AIXM 4.5 + OFM extensions XML
 By `using AIXM::Refinements` you get the following general purpose methods:
 
 * <tt>String#indent(number)</tt><br>Indent every line of a string with *number* spaces
+* <tt>String#uptrans</tt><br>upcase and transliterate to match the reduced character set for names
 * <tt>String#to_dd</tt><br>Convert DMS angle to DD or <tt>nil</tt> if the format is not recognized
 * <tt>Float#to_dms(padding)</tt><br>Convert DD angle to DMS with the degrees zero padded to *padding* length
 * <tt>Float#trim</tt><br>Convert whole numbers to Integer and leave all other untouched

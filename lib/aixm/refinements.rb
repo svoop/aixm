@@ -1,12 +1,24 @@
 module AIXM
   module Refinements
 
+    UPTRANS_FILTER = %r{[^A-Z0-9, !"&#$%'\(\)\*\+\-\./:;<=>\?@\[\\\]\^_\|\{\}]}.freeze
+
+    UPTRANS_MAP = {
+      'Ä' => 'AE',
+      'Ö' => 'OE',
+      'Ü' => 'UE',
+      'Æ' => 'AE',
+      'Œ' => 'OE',
+      "Å" => "Aa",
+      "Ø" => "Oe"
+    }.freeze
+
     KM_FACTORS = {
       km: 1,
       m: 0.001,
       nm: 1.852,
       ft: 0.0003048
-    }
+    }.freeze
 
     refine Array do
       ##
@@ -22,6 +34,18 @@ module AIXM
       def indent(number)
         whitespace = ' ' * number
         gsub(/^/, whitespace)
+      end
+
+      ##
+      # Upcase and transliterate to match the reduced character set for
+      # AIXM names and titles
+      def uptrans
+        self.dup.tap do |string|
+          string.upcase!
+          string.gsub!(/(#{UPTRANS_MAP.keys.join('|')})/, UPTRANS_MAP)
+          string.unicode_normalize!(:nfd)
+          string.gsub!(UPTRANS_FILTER, '')
+        end
       end
 
       ##

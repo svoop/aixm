@@ -18,7 +18,7 @@ module AIXM
       #                  uppercase, e.g. +LF P 81 CHERBOURG+)
       # * +type+ - airspace type (e.g. +TMA+ or +P+)
       def initialize(name:, short_name: nil, type:)
-        @name, @short_name, @type = name.upcase, short_name&.upcase, type
+        @name, @short_name, @type = name.uptrans, short_name&.uptrans, type
         @schedule = nil
         @geometry = AIXM::Geometry.new
       end
