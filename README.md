@@ -72,6 +72,19 @@ By `using AIXM::Refinements` you get the following general purpose methods:
 * <tt>Float#trim</tt><br>Convert whole numbers to Integer and leave all other untouched
 * <tt>Float#to_km(from: unit)</tt><br>Convert a distance from *unit* (:km, :m, :nm or :ft) to km
 
+## Extensions
+
+### OFM
+
+This extension adds proprietary tags and attributes (most of which are prefixed
+with `xt_`) aiming to improve importing the resulting AIXM into the OGN
+originative suite:
+
+* `<AIXM-Snapshot version="4.5 + OFM extensions of version 0.1" (...) />`<br>root node with extended version string
+* `<Ase xt_classLayersAvail="(true|false)">`<br>true when multiple class layers and therefore an Adg-node is present
+* `<xt_selAvail>(true|false)</xt_selAvail>`<br>enables conditional airspaces feature
+* `<AseUid newEntity="(true|false)">`<br>tell the importer whether adding a new or updating an existing entity
+
 ## References
 
 * [AIXM](http://aixm.aero)
