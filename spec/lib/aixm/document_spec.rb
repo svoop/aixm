@@ -33,6 +33,7 @@ describe AIXM::Document do
               <codeType>D</codeType>
               <codeId>DEA8827A\</codeId>
             </AseUid>
+            <txtLocalType>POLYGON</txtLocalType>
             <txtName>POLYGON AIRSPACE</txtName>
             <codeDistVerUpper>STD</codeDistVerUpper>
             <valDistVerUpper>65</valDistVerUpper>
@@ -81,6 +82,7 @@ describe AIXM::Document do
               <codeType>D</codeType>
               <codeId>E1115E8A</codeId>
             </AseUid>
+            <txtLocalType>CIRCLE</txtLocalType>
             <txtName>CIRCLE AIRSPACE</txtName>
             <codeDistVerUpper>STD</codeDistVerUpper>
             <valDistVerUpper>65</valDistVerUpper>
@@ -125,6 +127,7 @@ describe AIXM::Document do
               <codeType>D</codeType>
               <codeId>DEA8827A\</codeId>
             </AseUid>
+            <txtLocalType>POLYGON</txtLocalType>
             <txtName>POLYGON AIRSPACE</txtName>
             <codeDistVerUpper>STD</codeDistVerUpper>
             <valDistVerUpper>65</valDistVerUpper>
@@ -173,6 +176,7 @@ describe AIXM::Document do
               <codeType>D</codeType>
               <codeId>E1115E8A</codeId>
             </AseUid>
+            <txtLocalType>CIRCLE</txtLocalType>
             <txtName>CIRCLE AIRSPACE</txtName>
             <codeDistVerUpper>STD</codeDistVerUpper>
             <valDistVerUpper>65</valDistVerUpper>

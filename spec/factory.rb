@@ -31,22 +31,30 @@ module AIXM
       def circle_geometry
         AIXM::Geometry.new.tap do |geometry|
           geometry << AIXM::Horizontal::Circle.new(
-            center_xy: AIXM::XY.new(lat: %q(47°35'00"N), long: %q(004°53'00"E)), 
+            center_xy: AIXM::XY.new(lat: %q(47°35'00"N), long: %q(004°53'00"E)),
             radius: 10
           )
         end
       end
 
-      def polygon_airspace
-        AIXM::Feature::Airspace.new(name: 'POLYGON AIRSPACE', type: 'D').tap do |airspace|
+      def polygon_airspace(short_name: 'POLYGON')
+        AIXM::Feature::Airspace.new(
+          name: 'POLYGON AIRSPACE',
+          short_name: short_name,
+          type: 'D'
+        ).tap do |airspace|
           airspace.vertical_limits = vertical_limits
           airspace.geometry = polygon_geometry
           airspace.remarks = 'polygon airspace'
         end
       end
 
-      def circle_airspace
-        AIXM::Feature::Airspace.new(name: 'CIRCLE AIRSPACE', type: 'D').tap do |airspace|
+      def circle_airspace(short_name: 'CIRCLE')
+        AIXM::Feature::Airspace.new(
+          name: 'CIRCLE AIRSPACE',
+          short_name: short_name,
+          type: 'D'
+        ).tap do |airspace|
           airspace.vertical_limits = vertical_limits
           airspace.geometry = circle_geometry
           airspace.remarks = 'circle airspace'

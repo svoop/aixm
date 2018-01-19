@@ -4,7 +4,7 @@ module AIXM
 
       using AIXM::Refinements
 
-      attr_reader :name, :type
+      attr_reader :name, :short_name, :type
       attr_reader :vertical_limits
       attr_accessor :geometry, :remarks
 
@@ -12,11 +12,14 @@ module AIXM
       # Airspace feature
       #
       # Options:
-      # * +name+ - name of the airspace (will be converted to uppercase)
+      # * +name+ - full name of the airspace (will be converted to uppercase,
+      #            e.g. +LF P 81+)
+      # * +short_name+ - short name of the airspace (will be converted to
+      #                  uppercase, e.g. +LF P 81 CHERBOURG+)
       # * +type+ - airspace type (e.g. +TMA+ or +P+)
-      def initialize(name:, type:)
+      def initialize(name:, short_name: nil, type:)
         @geometry = AIXM::Geometry.new
-        @name, @type = name.upcase, type
+        @name, @short_name, @type = name.upcase, short_name&.upcase, type
       end
 
       ##
@@ -51,6 +54,7 @@ module AIXM
             aseuid.codeType(type)
             aseuid.codeId(mid)   # TODO: verify
           end
+          ase.txtLocalType(short_name) if short_name && short_name != name
           ase.txtName(name)
           ase << vertical_limits.to_xml(extensions).indent(2)
           ase.txtRmk(remarks) if remarks

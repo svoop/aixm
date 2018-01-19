@@ -14,7 +14,7 @@ describe AIXM::Feature::Airspace do
 
     describe :vertical_limits= do
       it "won't accept invalid vertical limits" do
-        -> { subject.vertical_limits=0 }.must_raise ArgumentError
+        -> { subject.vertical_limits = 0 }.must_raise ArgumentError
       end
     end
   end
@@ -38,12 +38,14 @@ describe AIXM::Feature::Airspace do
 
     describe :to_xml do
       it "must build correct XML with OFM extensions" do
-        subject.to_xml(:OFM).must_equal <<~END
+        digest = subject.to_digest
+        subject.to_xml(:OFM).must_equal <<~"END"
           <Ase xt_classLayersAvail="false">
-            <AseUid mid="DEA8827A" newEntity="true">
+            <AseUid mid="#{digest}" newEntity="true">
               <codeType>D</codeType>
-              <codeId>DEA8827A</codeId>
+              <codeId>#{digest}</codeId>
             </AseUid>
+            <txtLocalType>POLYGON</txtLocalType>
             <txtName>POLYGON AIRSPACE</txtName>
             <codeDistVerUpper>STD</codeDistVerUpper>
             <valDistVerUpper>65</valDistVerUpper>
@@ -62,9 +64,9 @@ describe AIXM::Feature::Airspace do
           </Ase>
           <Abd>
             <AbdUid>
-              <AseUid mid="DEA8827A" newEntity="true">
+              <AseUid mid="#{digest}" newEntity="true">
                 <codeType>D</codeType>
-                <codeId>DEA8827A</codeId>
+                <codeId>#{digest}</codeId>
               </AseUid>
             </AbdUid>
             <Avx>
@@ -89,6 +91,16 @@ describe AIXM::Feature::Airspace do
             </Avx>
           </Abd>
         END
+      end
+
+      it "must build correct XML without short name" do
+        subject = AIXM::Factory.polygon_airspace(short_name: nil)
+        subject.to_xml.wont_match(/txtLocalType/)
+      end
+
+      it "must build correct XML with identical name and short name" do
+        subject = AIXM::Factory.polygon_airspace(short_name: 'POLYGON AIRSPACE')
+        subject.to_xml.wont_match(/txtLocalType/)
       end
     end
   end
