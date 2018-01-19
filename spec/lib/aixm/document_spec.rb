@@ -159,9 +159,9 @@ describe AIXM::Document do
     it "must build correct XML with OFM extensions" do
       subject.to_xml(:OFM).must_equal <<~"END"
         <?xml version="1.0" encoding="UTF-8"?>
-        <AIXM-Snapshot xmlns:xsi="http://www.aixm.aero/schema/4.5/AIXM-Snapshot.xsd" version="4.5 + OFM extensions of version 0.1" origin="AIXM #{AIXM::VERSION} Ruby gem" created="2018-01-18T12:00:00+01:00" effective="2018-01-18T12:00:00+01:00">
-          <Ase>
-            <AseUid mid="B8B2E175">
+        <AIXM-Snapshot xmlns:xsi="http://www.aixm.aero/schema/4.5/AIXM-Snapshot.xsd" version="4.5 + OFM extensions of version 0.1" origin="AIXM 0.1.1 Ruby gem" created="2018-01-18T12:00:00+01:00" effective="2018-01-18T12:00:00+01:00">
+          <Ase xt_classLayersAvail="false">
+            <AseUid mid="B8B2E175" newEntity="true">
               <codeType>D</codeType>
               <codeId>B8B2E175</codeId>
             </AseUid>
@@ -183,37 +183,41 @@ describe AIXM::Document do
               <codeWorkHr>H24</codeWorkHr>
             </Att>
             <txtRmk>polygon airspace</txtRmk>
+            <xt_selAvail>false</xt_selAvail>
           </Ase>
           <Abd>
             <AbdUid>
-              <AseUid mid="B8B2E175">
+              <AseUid mid="B8B2E175" newEntity="true">
                 <codeType>D</codeType>
                 <codeId>B8B2E175</codeId>
               </AseUid>
             </AbdUid>
             <Avx>
               <codeType>CWA</codeType>
-              <geoLat>475133.00N</geoLat>
-              <geoLong>0073336.00E</geoLong>
+              <geoLat>47.85916667N</geoLat>
+              <geoLong>7.56000000E</geoLong>
               <codeDatum>WGE</codeDatum>
-              <geoLatArc>475415.00N</geoLatArc>
-              <geoLongArc>0073348.00E</geoLongArc>
+              <geoLatArc>47.90416667N</geoLatArc>
+              <geoLongArc>7.56333333E</geoLongArc>
             </Avx>
             <Avx>
               <codeType>FNT</codeType>
-              <geoLat>475637.00N</geoLat>
-              <geoLong>0073545.00E</geoLong>
+              <geoLat>47.94361111N</geoLat>
+              <geoLong>7.59583333E</geoLong>
               <codeDatum>WGE</codeDatum>
+              <GbrUid>
+                <txtName>FRANCE_GERMANY</txtName>
+              </GbrUid>
             </Avx>
             <Avx>
               <codeType>GRC</codeType>
-              <geoLat>475133.00N</geoLat>
-              <geoLong>0073336.00E</geoLong>
+              <geoLat>47.85916667N</geoLat>
+              <geoLong>7.56000000E</geoLong>
               <codeDatum>WGE</codeDatum>
             </Avx>
           </Abd>
-          <Ase>
-            <AseUid mid="B8FB9540">
+          <Ase xt_classLayersAvail="false">
+            <AseUid mid="B8FB9540" newEntity="true">
               <codeType>D</codeType>
               <codeId>B8FB9540</codeId>
             </AseUid>
@@ -235,21 +239,22 @@ describe AIXM::Document do
               <codeWorkHr>H24</codeWorkHr>
             </Att>
             <txtRmk>circle airspace</txtRmk>
+            <xt_selAvail>false</xt_selAvail>
           </Ase>
           <Abd>
             <AbdUid>
-              <AseUid mid="B8FB9540">
+              <AseUid mid="B8FB9540" newEntity="true">
                 <codeType>D</codeType>
                 <codeId>B8FB9540</codeId>
               </AseUid>
             </AbdUid>
             <Avx>
               <codeType>CWA</codeType>
-              <geoLat>474023.76N</geoLat>
-              <geoLong>0045300.00E</geoLong>
+              <geoLat>47.67326549N</geoLat>
+              <geoLong>4.88333333E</geoLong>
               <codeDatum>WGE</codeDatum>
-              <geoLatArc>473500.00N</geoLatArc>
-              <geoLongArc>0045300.00E</geoLongArc>
+              <geoLatArc>47.58333333N</geoLatArc>
+              <geoLongArc>4.88333333E</geoLongArc>
             </Avx>
           </Abd>
         </AIXM-Snapshot>

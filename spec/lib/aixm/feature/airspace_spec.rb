@@ -74,22 +74,25 @@ describe AIXM::Feature::Airspace do
             </AbdUid>
             <Avx>
               <codeType>CWA</codeType>
-              <geoLat>475133.00N</geoLat>
-              <geoLong>0073336.00E</geoLong>
+              <geoLat>47.85916667N</geoLat>
+              <geoLong>7.56000000E</geoLong>
               <codeDatum>WGE</codeDatum>
-              <geoLatArc>475415.00N</geoLatArc>
-              <geoLongArc>0073348.00E</geoLongArc>
+              <geoLatArc>47.90416667N</geoLatArc>
+              <geoLongArc>7.56333333E</geoLongArc>
             </Avx>
             <Avx>
               <codeType>FNT</codeType>
-              <geoLat>475637.00N</geoLat>
-              <geoLong>0073545.00E</geoLong>
+              <geoLat>47.94361111N</geoLat>
+              <geoLong>7.59583333E</geoLong>
               <codeDatum>WGE</codeDatum>
+              <GbrUid>
+                <txtName>FRANCE_GERMANY</txtName>
+              </GbrUid>
             </Avx>
             <Avx>
               <codeType>GRC</codeType>
-              <geoLat>475133.00N</geoLat>
-              <geoLong>0073336.00E</geoLong>
+              <geoLat>47.85916667N</geoLat>
+              <geoLong>7.56000000E</geoLong>
               <codeDatum>WGE</codeDatum>
             </Avx>
           </Abd>

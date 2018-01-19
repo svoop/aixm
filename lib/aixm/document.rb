@@ -63,7 +63,7 @@ module AIXM
       builder = Builder::XmlMarkup.new(indent: 2)
       builder.instruct!
       builder.tag!('AIXM-Snapshot', meta) do |aixm_snapshot|
-        aixm_snapshot << @result_array.map { |f| f.to_xml(extensions) }.join.indent(2)
+        aixm_snapshot << @result_array.map { |f| f.to_xml(*extensions) }.join.indent(2)
       end
     end
 

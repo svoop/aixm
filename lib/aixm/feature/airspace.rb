@@ -64,7 +64,7 @@ module AIXM
           end
           ase.txtLocalType(short_name.to_s) if short_name && short_name != name
           ase.txtName(name.to_s)
-          ase << vertical_limits.to_xml(extensions).indent(2)
+          ase << vertical_limits.to_xml(*extensions).indent(2)
           if schedule
             ase.Att do |att|
               att << schedule.to_xml.indent(4)
@@ -80,7 +80,7 @@ module AIXM
               aseuid.codeId(mid)   # TODO: verify
             end
           end
-          abd << geometry.to_xml(extensions).indent(2)
+          abd << geometry.to_xml(*extensions).indent(2)
         end
       end
     end
