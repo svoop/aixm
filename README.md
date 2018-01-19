@@ -61,6 +61,7 @@ document.to_xml(:OFM)   # render AIXM 4.5 + OFM extensions XML
 
 * <tt>AIXM::GROUND</tt> - height: 0ft above ground
 * <tt>AIXM::UNLIMITED</tt> - altitude: FL 999
+* <tt>AIXM::H24</tt> - continuous schedule
 
 ## Refinements
 

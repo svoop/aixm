@@ -29,9 +29,9 @@ describe AIXM::Document do
         <?xml version="1.0" encoding="UTF-8"?>
         <AIXM-Snapshot xmlns:xsi="http://www.aixm.aero/schema/4.5/AIXM-Snapshot.xsd" version="4.5" origin="AIXM #{AIXM::VERSION} Ruby gem" created="2018-01-18T12:00:00+01:00" effective="2018-01-18T12:00:00+01:00">
           <Ase>
-            <AseUid mid="DEA8827A\">
+            <AseUid mid="B8B2E175">
               <codeType>D</codeType>
-              <codeId>DEA8827A\</codeId>
+              <codeId>B8B2E175</codeId>
             </AseUid>
             <txtLocalType>POLYGON</txtLocalType>
             <txtName>POLYGON AIRSPACE</txtName>
@@ -47,13 +47,16 @@ describe AIXM::Document do
             <codeDistVerMnm>HEI</codeDistVerMnm>
             <valDistVerMnm>3000</valDistVerMnm>
             <uomDistVerMnm>FT</uomDistVerMnm>
+            <Att>
+              <codeWorkHr>H24</codeWorkHr>
+            </Att>
             <txtRmk>polygon airspace</txtRmk>
           </Ase>
           <Abd>
             <AbdUid>
-              <AseUid mid="DEA8827A\">
+              <AseUid mid="B8B2E175">
                 <codeType>D</codeType>
-                <codeId>DEA8827A\</codeId>
+                <codeId>B8B2E175</codeId>
               </AseUid>
             </AbdUid>
             <Avx>
@@ -78,9 +81,9 @@ describe AIXM::Document do
             </Avx>
           </Abd>
           <Ase>
-            <AseUid mid="E1115E8A">
+            <AseUid mid="B8FB9540">
               <codeType>D</codeType>
-              <codeId>E1115E8A</codeId>
+              <codeId>B8FB9540</codeId>
             </AseUid>
             <txtLocalType>CIRCLE</txtLocalType>
             <txtName>CIRCLE AIRSPACE</txtName>
@@ -96,13 +99,16 @@ describe AIXM::Document do
             <codeDistVerMnm>HEI</codeDistVerMnm>
             <valDistVerMnm>3000</valDistVerMnm>
             <uomDistVerMnm>FT</uomDistVerMnm>
+            <Att>
+              <codeWorkHr>H24</codeWorkHr>
+            </Att>
             <txtRmk>circle airspace</txtRmk>
           </Ase>
           <Abd>
             <AbdUid>
-              <AseUid mid="E1115E8A">
+              <AseUid mid="B8FB9540">
                 <codeType>D</codeType>
-                <codeId>E1115E8A</codeId>
+                <codeId>B8FB9540</codeId>
               </AseUid>
             </AbdUid>
             <Avx>
@@ -123,9 +129,9 @@ describe AIXM::Document do
         <?xml version="1.0" encoding="UTF-8"?>
         <AIXM-Snapshot xmlns:xsi="http://www.aixm.aero/schema/4.5/AIXM-Snapshot.xsd" version="4.5 + OFM extensions of version 0.1" origin="AIXM #{AIXM::VERSION} Ruby gem" created="2018-01-18T12:00:00+01:00" effective="2018-01-18T12:00:00+01:00">
           <Ase>
-            <AseUid mid="DEA8827A\">
+            <AseUid mid="B8B2E175">
               <codeType>D</codeType>
-              <codeId>DEA8827A\</codeId>
+              <codeId>B8B2E175</codeId>
             </AseUid>
             <txtLocalType>POLYGON</txtLocalType>
             <txtName>POLYGON AIRSPACE</txtName>
@@ -141,13 +147,16 @@ describe AIXM::Document do
             <codeDistVerMnm>HEI</codeDistVerMnm>
             <valDistVerMnm>3000</valDistVerMnm>
             <uomDistVerMnm>FT</uomDistVerMnm>
+            <Att>
+              <codeWorkHr>H24</codeWorkHr>
+            </Att>
             <txtRmk>polygon airspace</txtRmk>
           </Ase>
           <Abd>
             <AbdUid>
-              <AseUid mid="DEA8827A\">
+              <AseUid mid="B8B2E175">
                 <codeType>D</codeType>
-                <codeId>DEA8827A\</codeId>
+                <codeId>B8B2E175</codeId>
               </AseUid>
             </AbdUid>
             <Avx>
@@ -172,9 +181,9 @@ describe AIXM::Document do
             </Avx>
           </Abd>
           <Ase>
-            <AseUid mid="E1115E8A">
+            <AseUid mid="B8FB9540">
               <codeType>D</codeType>
-              <codeId>E1115E8A</codeId>
+              <codeId>B8FB9540</codeId>
             </AseUid>
             <txtLocalType>CIRCLE</txtLocalType>
             <txtName>CIRCLE AIRSPACE</txtName>
@@ -190,13 +199,16 @@ describe AIXM::Document do
             <codeDistVerMnm>HEI</codeDistVerMnm>
             <valDistVerMnm>3000</valDistVerMnm>
             <uomDistVerMnm>FT</uomDistVerMnm>
+            <Att>
+              <codeWorkHr>H24</codeWorkHr>
+            </Att>
             <txtRmk>circle airspace</txtRmk>
           </Ase>
           <Abd>
             <AbdUid>
-              <AseUid mid="E1115E8A">
+              <AseUid mid="B8FB9540">
                 <codeType>D</codeType>
-                <codeId>E1115E8A</codeId>
+                <codeId>B8FB9540</codeId>
               </AseUid>
             </AbdUid>
             <Avx>

@@ -5,7 +5,7 @@ module AIXM
       using AIXM::Refinements
 
       attr_reader :name, :short_name, :type
-      attr_reader :vertical_limits
+      attr_reader :schedule, :vertical_limits
       attr_accessor :geometry, :remarks
 
       ##
@@ -18,8 +18,16 @@ module AIXM
       #                  uppercase, e.g. +LF P 81 CHERBOURG+)
       # * +type+ - airspace type (e.g. +TMA+ or +P+)
       def initialize(name:, short_name: nil, type:)
-        @geometry = AIXM::Geometry.new
         @name, @short_name, @type = name.upcase, short_name&.upcase, type
+        @schedule = nil
+        @geometry = AIXM::Geometry.new
+      end
+
+      ##
+      # Assign a +Schedule+ object or +nil+
+      def schedule=(value)
+        fail(ArgumentError, "invalid schedule") unless value.nil? || value.is_a?(AIXM::Schedule)
+        @schedule = value
       end
 
       ##
@@ -38,7 +46,7 @@ module AIXM
       ##
       # Digest to identify the payload
       def to_digest
-        [name, type, vertical_limits.to_digest, geometry.to_digest, remarks].to_digest
+        [name, short_name, type, schedule&.to_digest, vertical_limits.to_digest, geometry.to_digest, remarks].to_digest
       end
 
       ##
@@ -57,6 +65,11 @@ module AIXM
           ase.txtLocalType(short_name) if short_name && short_name != name
           ase.txtName(name)
           ase << vertical_limits.to_xml(extensions).indent(2)
+          if schedule
+            ase.Att do |att|
+              att << schedule.to_xml.indent(4)
+            end
+          end
           ase.txtRmk(remarks) if remarks
           ase.xt_selAvail(false) if extensions.include?(:OFM)
         end

@@ -37,24 +37,26 @@ module AIXM
         end
       end
 
-      def polygon_airspace(short_name: 'POLYGON')
+      def polygon_airspace(short_name: 'POLYGON', schedule: :H24)
         AIXM::Feature::Airspace.new(
           name: 'POLYGON AIRSPACE',
           short_name: short_name,
           type: 'D'
         ).tap do |airspace|
+          airspace.schedule = AIXM::Schedule.new(code: schedule) if schedule
           airspace.vertical_limits = vertical_limits
           airspace.geometry = polygon_geometry
           airspace.remarks = 'polygon airspace'
         end
       end
 
-      def circle_airspace(short_name: 'CIRCLE')
+      def circle_airspace(short_name: 'CIRCLE', schedule: :H24)
         AIXM::Feature::Airspace.new(
           name: 'CIRCLE AIRSPACE',
           short_name: short_name,
           type: 'D'
         ).tap do |airspace|
+          airspace.schedule = AIXM::Schedule.new(code: schedule) if schedule
           airspace.vertical_limits = vertical_limits
           airspace.geometry = circle_geometry
           airspace.remarks = 'circle airspace'

@@ -32,7 +32,7 @@ describe AIXM::Feature::Airspace do
 
     describe :to_digest do
       it "must return digest of payload" do
-        subject.to_digest.must_equal 'DEA8827A'
+        subject.to_digest.must_equal 'B8B2E175'
       end
     end
 
@@ -59,6 +59,9 @@ describe AIXM::Feature::Airspace do
             <codeDistVerMnm>HEI</codeDistVerMnm>
             <valDistVerMnm>3000</valDistVerMnm>
             <uomDistVerMnm>FT</uomDistVerMnm>
+            <Att>
+              <codeWorkHr>H24</codeWorkHr>
+            </Att>
             <txtRmk>polygon airspace</txtRmk>
             <xt_selAvail>false</xt_selAvail>
           </Ase>
@@ -92,7 +95,9 @@ describe AIXM::Feature::Airspace do
           </Abd>
         END
       end
+    end
 
+    context "partially complete" do
       it "must build correct XML without short name" do
         subject = AIXM::Factory.polygon_airspace(short_name: nil)
         subject.to_xml.wont_match(/txtLocalType/)
@@ -101,6 +106,11 @@ describe AIXM::Feature::Airspace do
       it "must build correct XML with identical name and short name" do
         subject = AIXM::Factory.polygon_airspace(short_name: 'POLYGON AIRSPACE')
         subject.to_xml.wont_match(/txtLocalType/)
+      end
+
+      it "must build correct XML without schedule" do
+        subject = AIXM::Factory.polygon_airspace(schedule: nil)
+        subject.to_xml.wont_match(/codeWorkHr/)
       end
     end
   end

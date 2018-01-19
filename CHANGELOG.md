@@ -1,6 +1,7 @@
 ## 0.1.1
 
 * Additions:
+  * Schedule (all but TIMSH)
   * Add refinement Float#to_km
   * Add constant AIXM::UNLIMITED
   * Add short_name to Airspace
