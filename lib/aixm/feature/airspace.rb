@@ -59,24 +59,24 @@ module AIXM
         builder = Builder::XmlMarkup.new(indent: 2)
         builder.Ase(extensions.include?(:OFM) ? { xt_classLayersAvail: false } : {}) do |ase|
           ase.AseUid(extensions.include?(:OFM) ? { mid: mid, newEntity: true } : { mid: mid }) do |aseuid|
-            aseuid.codeType(type)
+            aseuid.codeType(type.to_s)
             aseuid.codeId(mid)   # TODO: verify
           end
-          ase.txtLocalType(short_name) if short_name && short_name != name
-          ase.txtName(name)
+          ase.txtLocalType(short_name.to_s) if short_name && short_name != name
+          ase.txtName(name.to_s)
           ase << vertical_limits.to_xml(extensions).indent(2)
           if schedule
             ase.Att do |att|
               att << schedule.to_xml.indent(4)
             end
           end
-          ase.txtRmk(remarks) if remarks
+          ase.txtRmk(remarks.to_s) if remarks
           ase.xt_selAvail(false) if extensions.include?(:OFM)
         end
         builder.Abd do |abd|
           abd.AbdUid do |abduid|
             abduid.AseUid(extensions.include?(:OFM) ? { mid: mid, newEntity: true } : { mid: mid }) do |aseuid|
-              aseuid.codeType(type)
+              aseuid.codeType(type.to_s)
               aseuid.codeId(mid)   # TODO: verify
             end
           end

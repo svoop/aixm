@@ -34,7 +34,7 @@ module AIXM
           # TODO: Find examples how to do this with vanilla AIXM
           if extensions.include?(:OFM)
             avx.GbrUid do |gbruid|
-              gbruid.txtName(name)
+              gbruid.txtName(name.to_s)
             end
           end
         end
