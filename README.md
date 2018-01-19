@@ -50,6 +50,13 @@ AIXM::Z.new(alt: 45, code: :QNE)     # altitude: flight level 45
 
 See <tt>spec/factory.rb</tt> for examples.
 
+## Validation
+
+* Use `AIXM::Document#complete?` to check whether all mandatory information is
+present. Airspaces, geometries etc have `complete?` methods as well.
+* Use `AIXM::Document#valid?` to validate the resulting AIXM against the XSD
+schema. If any, you find the errors in `AIXM::Document#errors`.
+
 ## Rendering
 
 ```ruby

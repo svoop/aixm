@@ -38,9 +38,9 @@ module AIXM
       end
 
       ##
-      # Check whether the airspace is valid
-      def valid?
-        name && type && vertical_limits && geometry.valid?
+      # Check whether the airspace is complete
+      def complete?
+        !!name && !!type && !!vertical_limits && geometry.complete?
       end
 
       ##

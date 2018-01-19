@@ -10,7 +10,7 @@ describe AIXM::Geometry do
     it "must fail validation" do
       subject.wont_be :circle?
       subject.wont_be :closed_shape?
-      subject.wont_be :valid?
+      subject.wont_be :complete?
     end
   end
 
@@ -24,7 +24,7 @@ describe AIXM::Geometry do
     it "must fail validation" do
       subject.wont_be :circle?
       subject.wont_be :closed_shape?
-      subject.wont_be :valid?
+      subject.wont_be :complete?
     end
   end
 
@@ -39,7 +39,7 @@ describe AIXM::Geometry do
     it "must fail validation" do
       subject.wont_be :circle?
       subject.wont_be :closed_shape?
-      subject.wont_be :valid?
+      subject.wont_be :complete?
     end
   end
 
@@ -54,14 +54,14 @@ describe AIXM::Geometry do
     it "must recognize unclosed" do
       subject.wont_be :circle?
       subject.wont_be :closed_shape?
-      subject.wont_be :valid?
+      subject.wont_be :complete?
     end
 
     it "must recognize closed" do
       subject << AIXM::Horizontal::Point.new(xy: AIXM::XY.new(lat: 11, long: 22))
       subject.wont_be :circle?
       subject.must_be :closed_shape?
-      subject.must_be :valid?
+      subject.must_be :complete?
     end
 
     it "must return elements" do
@@ -101,14 +101,14 @@ describe AIXM::Geometry do
     it "must recognize unclosed" do
       subject.wont_be :circle?
       subject.wont_be :closed_shape?
-      subject.wont_be :valid?
+      subject.wont_be :complete?
     end
 
     it "must recognize closed" do
       subject << AIXM::Horizontal::Point.new(xy: AIXM::XY.new(lat: 11, long: 22))
       subject.wont_be :circle?
       subject.must_be :closed_shape?
-      subject.must_be :valid?
+      subject.must_be :complete?
     end
 
     it "must build valid XML" do
@@ -146,14 +146,14 @@ describe AIXM::Geometry do
     it "must recognize unclosed" do
       subject.wont_be :circle?
       subject.wont_be :closed_shape?
-      subject.wont_be :valid?
+      subject.wont_be :complete?
     end
 
     it "must recognize closed" do
       subject << AIXM::Horizontal::Point.new(xy: AIXM::XY.new(lat: 11, long: 22))
       subject.wont_be :circle?
       subject.must_be :closed_shape?
-      subject.must_be :valid?
+      subject.must_be :complete?
     end
 
     it "must build valid XML" do
@@ -188,14 +188,14 @@ describe AIXM::Geometry do
     it "must pass validation" do
       subject.must_be :circle?
       subject.wont_be :closed_shape?
-      subject.must_be :valid?
+      subject.must_be :complete?
     end
 
     it "must fail validation when additional elements are present" do
       subject << AIXM::Horizontal::Point.new(xy: AIXM::XY.new(lat: 11, long: 22))
       subject.wont_be :circle?
       subject.wont_be :closed_shape?
-      subject.wont_be :valid?
+      subject.wont_be :complete?
     end
 
     it "must build valid XML" do

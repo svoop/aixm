@@ -27,16 +27,22 @@ module AIXM
     end
 
     ##
+    # Check whether the document is complete (extensions excluded)
+    def complete?
+      any? && none? { |f| !f.complete? }
+    end
+
+    ##
+    # Validate atainst the XSD and return +true+ if no errors were found
+    def valid?
+      errors.none?
+    end
+
+    ##
     # Validate against the XSD and return an array of errors
     def errors
       xsd = Nokogiri::XML::Schema(File.open(AIXM::SCHEMA))
       xsd.validate(Nokogiri::XML(to_xml))
-    end
-
-    ##
-    # Check whether the document is valid (extensions excluded)
-    def valid?
-      any? && reduce(true) { |b, f| b && f.valid? } && errors.none?
     end
 
     ##

@@ -6,9 +6,9 @@ describe AIXM::Feature::Airspace do
       AIXM::Feature::Airspace.new(name: 'foobar', type: 'D')
     end
 
-    describe :valid? do
+    describe :complete? do
       it "must fail validation" do
-        subject.wont_be :valid?
+        subject.wont_be :complete?
       end
     end
 
@@ -24,9 +24,9 @@ describe AIXM::Feature::Airspace do
       AIXM::Factory.polygon_airspace
     end
 
-    describe :valid? do
+    describe :complete? do
       it "must pass validation" do
-        subject.must_be :valid?
+        subject.must_be :complete?
       end
     end
 

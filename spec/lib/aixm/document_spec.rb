@@ -39,7 +39,7 @@ describe AIXM::Document do
     end
 
     it "must fail validation" do
-      subject.wont_be :valid?
+      subject.wont_be :complete?
     end
   end
 
@@ -53,7 +53,7 @@ describe AIXM::Document do
     end
 
     it "must pass validation" do
-      subject.must_be :valid?
+      subject.must_be :complete?
     end
 
     it "must build correct XML without extensions" do

@@ -7,6 +7,7 @@
   * Airspace#short_name
 * Minor changes:
   * Document#created_at and #effective_at accept Time, Date, String or nil
+  * Separate AIXM::Document#valid? from #complete?
 
 ## 0.1.0
 

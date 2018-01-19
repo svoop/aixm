@@ -33,8 +33,8 @@ module AIXM
     end
 
     ##
-    # Check whether the geometry is valid
-    def valid?
+    # Check whether the geometry is complete
+    def complete?
       circle? || closed_shape?
     end
 
