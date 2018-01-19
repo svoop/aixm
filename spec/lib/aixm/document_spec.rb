@@ -1,6 +1,38 @@
 require_relative '../../spec_helper'
 
 describe AIXM::Document do
+  describe :initialize do
+    it "won't accept invalid arguments" do
+      -> { AIXM::Document.new(created_at: 0) }.must_raise ArgumentError
+      -> { AIXM::Document.new(created_at: 'foobar') }.must_raise ArgumentError
+      -> { AIXM::Document.new(effective_at: 0) }.must_raise ArgumentError
+      -> { AIXM::Document.new(effective_at: 'foobar') }.must_raise ArgumentError
+    end
+
+    it "must accept strings" do
+      string = '2018-01-01 12:00:00 +0100'
+      AIXM::Document.new(created_at: string).created_at.must_equal Time.parse(string)
+      AIXM::Document.new(effective_at: string).effective_at.must_equal Time.parse(string)
+    end
+
+    it "must accept dates" do
+      date = Date.parse('2018-01-01')
+      AIXM::Document.new(created_at: date).created_at.must_equal date.to_time
+      AIXM::Document.new(effective_at: date).effective_at.must_equal date.to_time
+    end
+
+    it "must accept times" do
+      time = Time.parse('2018-01-01 12:00:00 +0100')
+      AIXM::Document.new(created_at: time).created_at.must_equal time
+      AIXM::Document.new(effective_at: time).effective_at.must_equal time
+    end
+
+    it "must accept nils" do
+      AIXM::Document.new(created_at: nil).created_at.must_be :nil?
+      AIXM::Document.new(effective_at: nil).effective_at.must_be :nil?
+    end
+  end
+
   context "incomplete" do
     subject do
       AIXM::Document.new

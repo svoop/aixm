@@ -13,10 +13,10 @@ module AIXM
     # Define a AIXM-Snapshot document
     #
     # Options:
-    # * +created_at+ - creation date (default: now)
-    # * +effective_at+ - snapshot effective after date (default: now)
+    # * +created_at+ - creation date and time (default: now)
+    # * +effective_at+ - snapshot effective after date and time (default: now)
     def initialize(created_at: nil, effective_at: nil)
-      @created_at, @effective_at = created_at, effective_at
+      @created_at, @effective_at = parse_time(created_at), parse_time(effective_at)
       @result_array = []
     end
 
@@ -59,6 +59,20 @@ module AIXM
       builder.tag!('AIXM-Snapshot', meta) do |aixm_snapshot|
         aixm_snapshot << @result_array.map { |f| f.to_xml(extensions) }.join.indent(2)
       end
+    end
+
+    private
+
+    def parse_time(value)
+      case value
+        when String then Time.parse(value)
+        when Date then value.to_time
+        when Time then value
+        when nil then nil
+        else fail ArgumentError
+      end
+    rescue ArgumentError
+      raise(ArgumentError, "`#{value}' is not a valid date and time")
     end
 
   end
