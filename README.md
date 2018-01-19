@@ -86,7 +86,7 @@ By `using AIXM::Refinements` you get the following general purpose methods:
 ### OFM
 
 This extension adds proprietary tags and attributes (most of which are prefixed
-with `xt_`) aiming to improve importing the resulting AIXM into the OGN
+with `xt_`) aiming to improve importing the resulting AIXM into the OFM
 originative suite:
 
 * `<AIXM-Snapshot version="4.5 + OFM extensions of version 0.1" (...) />`<br>root node with extended version string

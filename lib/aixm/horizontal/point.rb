@@ -25,11 +25,12 @@ module AIXM
       # Extensions:
       # * +:OFM+ - Open Flightmaps
       def to_xml(*extensions)
+        format = extensions.include?(:OFM) ? :OFM : :AIXM
         builder = Builder::XmlMarkup.new(indent: 2)
         builder.Avx do |avx|
           avx.codeType('GRC')
-          avx.geoLat(xy.lat(:AIXM))
-          avx.geoLong(xy.long(:AIXM))
+          avx.geoLat(xy.lat(format))
+          avx.geoLong(xy.long(format))
           avx.codeDatum('WGE')
         end
       end
