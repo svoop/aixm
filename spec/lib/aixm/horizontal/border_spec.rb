@@ -7,7 +7,7 @@ describe AIXM::Horizontal::Border do
         xy: AIXM::XY.new(lat: 11.1, long: 22.2),
         name: 'foobar'
       )
-      subject.to_digest.must_equal '2EC881C3'
+      subject.to_digest.must_equal 813052011
     end
   end
 

@@ -22,9 +22,9 @@ module AIXM
 
     refine Array do
       ##
-      # Build 8 character upcase hex digest from payload (one or more strings)
+      # Build a 1 to 9 digit integer digest (which fits in signed 32bit) from payload
       def to_digest
-        ::Digest::MD5.hexdigest(join('|'))[0, 8].upcase
+        ::Digest::SHA512.hexdigest(join('|')).gsub(/\D/, '')[0, 9].to_i
       end
     end
 

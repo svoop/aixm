@@ -69,7 +69,7 @@ describe AIXM::Geometry do
     end
 
     it "must return digest of payload" do
-      subject.to_digest.must_equal '281EE1FA'
+      subject.to_digest.must_equal 310635400
     end
 
     it "must build valid XML" do
@@ -131,7 +131,7 @@ describe AIXM::Geometry do
     end
 
     it "must return digest of payload" do
-      subject.to_digest.must_equal '8DC81708'
+      subject.to_digest.must_equal 8205396
     end
   end
 
@@ -174,7 +174,7 @@ describe AIXM::Geometry do
     end
 
     it "must return digest of payload" do
-      subject.to_digest.must_equal 'E3F3533D'
+      subject.to_digest.must_equal 376662362
     end
   end
 
@@ -212,7 +212,7 @@ describe AIXM::Geometry do
     end
 
     it "must return digest of payload" do
-      subject.to_digest.must_equal 'CCBB63FD'
+      subject.to_digest.must_equal 141059998
     end
   end
 end

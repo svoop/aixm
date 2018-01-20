@@ -9,6 +9,7 @@
   * Document#created_at and #effective_at accept Time, Date, String or nil
   * Separate AIXM::Document#valid? from #complete?
   * Write coordinates in DD if extension :OFM is set
+  * Array#to_digest returns integer which fits in signed 32bit
 
 ## 0.1.0
 

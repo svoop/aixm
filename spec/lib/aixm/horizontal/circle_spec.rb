@@ -23,7 +23,7 @@ describe AIXM::Horizontal::Circle do
         center_xy: AIXM::XY.new(lat: 12.12345678, long: -23.12345678),
         radius: 15
       )
-      subject.to_digest.must_equal '914C5F08'
+      subject.to_digest.must_equal 386055945
     end
   end
 

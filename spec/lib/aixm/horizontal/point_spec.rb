@@ -10,7 +10,7 @@ describe AIXM::Horizontal::Point do
   describe :to_digest do
     it "must return digest of payload" do
       subject = AIXM::Horizontal::Point.new(xy: AIXM::XY.new(lat: 11.1, long: 22.2))
-      subject.to_digest.must_equal '215D7CBA'
+      subject.to_digest.must_equal 167706171
     end
   end
 

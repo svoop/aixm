@@ -6,27 +6,27 @@ describe AIXM::Refinements do
 
   describe 'Array#to_digest' do
     it "must digest single string" do
-      %w(a).to_digest.must_equal Digest::MD5.hexdigest('a')[0, 8].upcase
+      %w(a).to_digest.must_equal 140922416
     end
 
     it "must digest double string" do
-      %w(a b).to_digest.must_equal Digest::MD5.hexdigest('a|b')[0, 8].upcase
+      %w(a b).to_digest.must_equal 307557246
     end
 
     it "must digest integer" do
-      [5].to_digest.must_equal Digest::MD5.hexdigest('5')[0, 8].upcase
+      [5].to_digest.must_equal 60537198
     end
 
     it "must digest float" do
-      [5.0].to_digest.must_equal Digest::MD5.hexdigest('5.0')[0, 8].upcase
+      [5.0].to_digest.must_equal 786519620
     end
 
     it "must digest boolean" do
-      [true, false].to_digest.must_equal Digest::MD5.hexdigest('true|false')[0, 8].upcase
+      [true, false].to_digest.must_equal 796799143
     end
 
     it "must digest nil" do
-      [nil].to_digest.must_equal Digest::MD5.hexdigest('')[0, 8].upcase
+      [nil].to_digest.must_equal 831357815
     end
   end
 

@@ -18,7 +18,7 @@ describe AIXM::Schedule do
   describe :to_digest do
     it "must return digest of payload" do
       subject = AIXM::Schedule.new(code: :H24)
-      subject.to_digest.must_equal 'BE568B61'
+      subject.to_digest.must_equal 962036587
     end
   end
 
