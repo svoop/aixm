@@ -67,7 +67,7 @@ module AIXM
           ase << vertical_limits.to_xml(*extensions).indent(2)
           if schedule
             ase.Att do |att|
-              att << schedule.to_xml.indent(4)
+              att << schedule.to_xml(*extensions).indent(4)
             end
           end
           ase.txtRmk(remarks.to_s) if remarks
