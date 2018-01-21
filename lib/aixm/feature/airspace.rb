@@ -51,6 +51,7 @@ module AIXM
       def to_xml(*extensions)
         mid = to_digest
         builder = Builder::XmlMarkup.new(indent: 2)
+        builder.comment! "Airspace: #{name}"
         builder.Ase({ xt_classLayersAvail: ((class_layers.count > 1) if extensions >> :OFM) }.compact) do |ase|
           ase.AseUid({ mid: mid, newEntity: (true if extensions >> :OFM) }.compact) do |aseuid|
             aseuid.codeType(type.to_s)

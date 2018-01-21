@@ -60,6 +60,7 @@ describe AIXM::Document do
       subject.to_xml.must_equal <<~"END"
         <?xml version="1.0" encoding="UTF-8"?>
         <AIXM-Snapshot xmlns:xsi="http://www.aixm.aero/schema/4.5/AIXM-Snapshot.xsd" version="4.5" origin="AIXM #{AIXM::VERSION} Ruby gem" created="2018-01-18T12:00:00+01:00" effective="2018-01-18T12:00:00+01:00">
+          <!-- Airspace: POLYGON AIRSPACE -->
           <Ase>
             <AseUid mid="202650074">
               <codeType>D</codeType>
@@ -113,6 +114,7 @@ describe AIXM::Document do
               <codeDatum>WGE</codeDatum>
             </Avx>
           </Abd>
+          <!-- Airspace: CIRCLE AIRSPACE -->
           <Ase>
             <AseUid mid="646302629">
               <codeType>D</codeType>
@@ -161,7 +163,8 @@ describe AIXM::Document do
     it "must build correct XML with OFM extensions" do
       subject.to_xml(:OFM).must_equal <<~"END"
         <?xml version="1.0" encoding="UTF-8"?>
-        <AIXM-Snapshot xmlns:xsi="http://www.aixm.aero/schema/4.5/AIXM-Snapshot.xsd" version="4.5 + OFM extensions of version 0.1" origin="AIXM 0.1.1 Ruby gem" created="2018-01-18T12:00:00+01:00" effective="2018-01-18T12:00:00+01:00">
+        <AIXM-Snapshot xmlns:xsi="http://www.aixm.aero/schema/4.5/AIXM-Snapshot.xsd" version="4.5 + OFM extensions of version 0.1" origin="AIXM #{AIXM::VERSION} Ruby gem" created="2018-01-18T12:00:00+01:00" effective="2018-01-18T12:00:00+01:00">
+          <!-- Airspace: POLYGON AIRSPACE -->
           <Ase xt_classLayersAvail="false">
             <AseUid mid="202650074" newEntity="true">
               <codeType>D</codeType>
@@ -219,6 +222,7 @@ describe AIXM::Document do
               <codeDatum>WGE</codeDatum>
             </Avx>
           </Abd>
+          <!-- Airspace: CIRCLE AIRSPACE -->
           <Ase xt_classLayersAvail="false">
             <AseUid mid="646302629" newEntity="true">
               <codeType>D</codeType>
