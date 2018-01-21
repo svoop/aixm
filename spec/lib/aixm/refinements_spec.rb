@@ -17,6 +17,10 @@ describe AIXM::Refinements do
       [5].to_digest.must_equal 60537198
     end
 
+    it "must digest nested array" do
+      [1, [2, 3]].to_digest.must_equal 960981551
+    end
+
     it "must digest float" do
       [5.0].to_digest.must_equal 786519620
     end
