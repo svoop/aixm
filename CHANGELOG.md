@@ -1,3 +1,8 @@
+## 0.1.2
+
+* Breaking additions:
+  * Class layers
+
 ## 0.1.1
 
 * Additions:

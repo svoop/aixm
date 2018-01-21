@@ -5,8 +5,8 @@ module AIXM
       using AIXM::Refinements
 
       attr_reader :name, :short_name, :type
-      attr_reader :schedule, :vertical_limits
-      attr_accessor :geometry, :remarks
+      attr_reader :schedule
+      attr_accessor :geometry, :class_layers, :remarks
 
       ##
       # Airspace feature
@@ -21,6 +21,7 @@ module AIXM
         @name, @short_name, @type = name.uptrans, short_name&.uptrans, type
         @schedule = nil
         @geometry = AIXM::Geometry.new
+        @class_layers = []
       end
 
       ##
@@ -31,22 +32,15 @@ module AIXM
       end
 
       ##
-      # Assign a +Vertical::Limits+ object
-      def vertical_limits=(value)
-        fail(ArgumentError, "invalid vertical limit") unless value.is_a?(AIXM::Vertical::Limits)
-        @vertical_limits = value
-      end
-
-      ##
       # Check whether the airspace is complete
       def complete?
-        !!name && !!type && !!vertical_limits && geometry.complete?
+        !!name && !!type && class_layers.any? && geometry.complete?
       end
 
       ##
       # Digest to identify the payload
       def to_digest
-        [name, short_name, type, schedule&.to_digest, vertical_limits.to_digest, geometry.to_digest, remarks].to_digest
+        [name, short_name, type, schedule&.to_digest, class_layers.map(&:to_digest), geometry.to_digest, remarks].to_digest
       end
 
       ##
@@ -57,31 +51,53 @@ module AIXM
       def to_xml(*extensions)
         mid = to_digest
         builder = Builder::XmlMarkup.new(indent: 2)
-        builder.Ase(extensions.include?(:OFM) ? { xt_classLayersAvail: false } : {}) do |ase|
-          ase.AseUid(extensions.include?(:OFM) ? { mid: mid, newEntity: true } : { mid: mid }) do |aseuid|
+        builder.Ase({ xt_classLayersAvail: ((class_layers.count > 1) if extensions >> :OFM) }.compact) do |ase|
+          ase.AseUid({ mid: mid, newEntity: (true if extensions >> :OFM) }.compact) do |aseuid|
             aseuid.codeType(type.to_s)
             aseuid.codeId(mid)   # TODO: verify
           end
           ase.txtLocalType(short_name.to_s) if short_name && short_name != name
           ase.txtName(name.to_s)
-          ase << vertical_limits.to_xml(*extensions).indent(2)
+          ase << class_layers.first.to_xml(*extensions).indent(2)
           if schedule
             ase.Att do |att|
               att << schedule.to_xml(*extensions).indent(4)
             end
           end
           ase.txtRmk(remarks.to_s) if remarks
-          ase.xt_selAvail(false) if extensions.include?(:OFM)
+          ase.xt_selAvail(false) if extensions >> :OFM
         end
         builder.Abd do |abd|
           abd.AbdUid do |abduid|
-            abduid.AseUid(extensions.include?(:OFM) ? { mid: mid, newEntity: true } : { mid: mid }) do |aseuid|
+            abduid.AseUid({ mid: mid, newEntity: (true if extensions >> :OFM) }.compact) do |aseuid|
               aseuid.codeType(type.to_s)
               aseuid.codeId(mid)   # TODO: verify
             end
           end
           abd << geometry.to_xml(*extensions).indent(2)
         end
+        if class_layers.count > 1
+          builder.Adg do |adg|
+            class_layers.each.with_index do |class_layer, index|
+              adg.AdgUid do |adguid|
+                adguid.AseUid(mid: "#{mid}.#{index + 1}") do |aseuid|
+                  aseuid.codeType("CLASS")
+                end
+              end
+            end
+            adg.AseUidSameExtent(mid: mid)
+          end
+          class_layers.each.with_index do |class_layer, index|
+            builder.Ase do |ase|
+              ase.AseUid(mid: "#{mid}.#{index + 1}") do |aseuid|
+                aseuid.codeType("CLASS")
+              end
+              ase.txtName(name.to_s)
+              ase << class_layers[index].to_xml(*extensions).indent(2)
+            end
+          end
+        end
+        builder.target!   # see https://github.com/jimweirich/builder/issues/42
       end
     end
   end

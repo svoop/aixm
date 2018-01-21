@@ -12,6 +12,7 @@ require_relative 'aixm/refinements'
 require_relative 'aixm/xy'
 require_relative 'aixm/z'
 require_relative 'aixm/geometry'
+require_relative 'aixm/class_layer'
 require_relative 'aixm/schedule'
 
 require_relative 'aixm/horizontal/point'

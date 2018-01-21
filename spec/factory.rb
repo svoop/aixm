@@ -11,6 +11,13 @@ module AIXM
         )
       end
 
+      def class_layer
+        AIXM::ClassLayer.new(
+          class: :C,
+          vertical_limits: vertical_limits
+        )
+      end
+
       def polygon_geometry
         AIXM::Geometry.new.tap do |geometry|
           geometry << AIXM::Horizontal::Arc.new(
@@ -44,7 +51,7 @@ module AIXM
           type: 'D'
         ).tap do |airspace|
           airspace.schedule = AIXM::Schedule.new(code: schedule) if schedule
-          airspace.vertical_limits = vertical_limits
+          airspace.class_layers << class_layer
           airspace.geometry = polygon_geometry
           airspace.remarks = 'polygon airspace'
         end
@@ -57,7 +64,7 @@ module AIXM
           type: 'D'
         ).tap do |airspace|
           airspace.schedule = AIXM::Schedule.new(code: schedule) if schedule
-          airspace.vertical_limits = vertical_limits
+          airspace.class_layers << class_layer
           airspace.geometry = circle_geometry
           airspace.remarks = 'circle airspace'
         end

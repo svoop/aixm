@@ -1,0 +1,46 @@
+module AIXM
+  class ClassLayer
+
+    using AIXM::Refinements
+
+    CLASSES = %i(A B C D E F G)
+
+    attr_reader :vertical_limits
+
+    ##
+    # Define a class layer
+    def initialize(class: nil, vertical_limits:)
+      @klass, @vertical_limits = binding.local_variable_get(:class)&.to_sym, vertical_limits
+      fail(ArgumentError, "invalid class `#{@klass}'") unless @klass.nil? || CLASSES.include?(@klass)
+      fail(ArgumentError, "invalid vertical limits") unless @vertical_limits.is_a? AIXM::Vertical::Limits
+    end
+
+    ##
+    # Read the airspace class
+    #
+    # This and other workarounds in the initializer are necessary due to "class"
+    # being a reserved keyword in Ruby.
+    def class
+      @klass
+    end
+
+    ##
+    # Digest to identify the payload
+    def to_digest
+      [self.class, vertical_limits.to_digest].to_digest
+    end
+
+    ##
+    # Render AIXM
+    #
+    # Extensions:
+    # * +:OFM+ - Open Flightmaps
+    def to_xml(*extensions)
+      builder = Builder::XmlMarkup.new(indent: 2)
+      builder.codeClass(self.class.to_s) if self.class
+      builder << vertical_limits.to_xml(*extensions)
+      builder.target!   # see https://github.com/jimweirich/builder/issues/42
+    end
+
+  end
+end
