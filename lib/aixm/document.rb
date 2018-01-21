@@ -1,13 +1,10 @@
 module AIXM
   class Document
 
-    include Enumerable
-    extend Forwardable
     using AIXM::Refinements
 
-    def_delegators :@result_array, :each, :<<
-
     attr_reader :created_at, :effective_at
+    attr_accessor :features
 
     ##
     # Define a AIXM-Snapshot document
@@ -17,19 +14,13 @@ module AIXM
     # * +effective_at+ - snapshot effective after date and time (default: now)
     def initialize(created_at: nil, effective_at: nil)
       @created_at, @effective_at = parse_time(created_at), parse_time(effective_at)
-      @result_array = []
-    end
-
-    ##
-    # Array of features defined by this document
-    def features
-      @result_array
+      @features = []
     end
 
     ##
     # Check whether the document is complete (extensions excluded)
     def complete?
-      any? && none? { |f| !f.complete? }
+      features.any? && features.none? { |f| !f.complete? }
     end
 
     ##
@@ -63,7 +54,7 @@ module AIXM
       builder = Builder::XmlMarkup.new(indent: 2)
       builder.instruct!
       builder.tag!('AIXM-Snapshot', meta) do |aixm_snapshot|
-        aixm_snapshot << @result_array.map { |f| f.to_xml(*extensions) }.join.indent(2)
+        aixm_snapshot << features.map { |f| f.to_xml(*extensions) }.join.indent(2)
       end
     end
 

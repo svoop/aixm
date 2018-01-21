@@ -2,6 +2,8 @@
 
 * Breaking additions:
   * Class layers
+* Breaking minor changes:
+  * Use `document.features << (feature)` instead of `document << (feature)`
 
 ## 0.1.1
 

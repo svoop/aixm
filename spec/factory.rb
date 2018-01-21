@@ -73,8 +73,8 @@ module AIXM
       def document
         time = Time.parse('2018-01-18 12:00:00 +0100')
         AIXM::Document.new(created_at: time, effective_at: time).tap do |document|
-          document << AIXM::Factory.polygon_airspace
-          document << AIXM::Factory.circle_airspace
+          document.features << AIXM::Factory.polygon_airspace
+          document.features << AIXM::Factory.circle_airspace
         end
       end
 
