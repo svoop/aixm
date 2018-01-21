@@ -4,6 +4,13 @@ using AIXM::Refinements
 
 describe AIXM::Refinements do
 
+  describe 'Array#>>' do
+    it "must be a shortcut of include?" do
+      ([0] >> 1).must_equal [0].include?(1)
+      ([1] >> 1).must_equal [1].include?(1)
+    end
+  end
+
   describe 'Array#to_digest' do
     it "must digest single string" do
       %w(a).to_digest.must_equal 140922416
