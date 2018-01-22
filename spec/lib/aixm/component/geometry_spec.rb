@@ -1,7 +1,6 @@
 require_relative '../../../spec_helper'
 
 describe AIXM::Component::Geometry do
-
   context "singularity" do
     subject do
       AIXM::Component::Geometry.new

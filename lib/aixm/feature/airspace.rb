@@ -51,11 +51,11 @@ module AIXM
       def to_xml(*extensions)
         mid = to_digest
         builder = Builder::XmlMarkup.new(indent: 2)
-        builder.comment! "Airspace: #{name}"
+        builder.comment! "Airspace: [#{type}] #{name}"
         builder.Ase({ xt_classLayersAvail: ((class_layers.count > 1) if extensions >> :OFM) }.compact) do |ase|
           ase.AseUid({ mid: mid, newEntity: (true if extensions >> :OFM) }.compact) do |aseuid|
             aseuid.codeType(type.to_s)
-            aseuid.codeId(mid)   # TODO: verify
+            aseuid.codeId(mid)
           end
           ase.txtLocalType(short_name.to_s) if short_name && short_name != name
           ase.txtName(name.to_s)
@@ -72,7 +72,7 @@ module AIXM
           abd.AbdUid do |abduid|
             abduid.AseUid({ mid: mid, newEntity: (true if extensions >> :OFM) }.compact) do |aseuid|
               aseuid.codeType(type.to_s)
-              aseuid.codeId(mid)   # TODO: verify
+              aseuid.codeId(mid)
             end
           end
           abd << geometry.to_xml(*extensions).indent(2)
