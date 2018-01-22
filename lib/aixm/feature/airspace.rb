@@ -20,14 +20,14 @@ module AIXM
       def initialize(name:, short_name: nil, type:)
         @name, @short_name, @type = name.uptrans, short_name&.uptrans, type
         @schedule = nil
-        @geometry = AIXM::Geometry.new
+        @geometry = AIXM.geometry
         @class_layers = []
       end
 
       ##
       # Assign a +Schedule+ object or +nil+
       def schedule=(value)
-        fail(ArgumentError, "invalid schedule") unless value.nil? || value.is_a?(AIXM::Schedule)
+        fail(ArgumentError, "invalid schedule") unless value.nil? || value.is_a?(AIXM::Component::Schedule)
         @schedule = value
       end
 

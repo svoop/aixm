@@ -1,16 +1,16 @@
-require_relative '../../spec_helper'
+require_relative '../../../spec_helper'
 
-describe AIXM::ClassLayer do
+describe AIXM::Component::ClassLayer do
   describe :initialize do
     it "won't accept invalid arguments" do
-      -> { AIXM::ClassLayer.new(class: 'X', vertical_limits: AIXM::Factory.vertical_limits ) }.must_raise ArgumentError
-      -> { AIXM::ClassLayer.new(class: 'A', vertical_limits: 'foobar') }.must_raise ArgumentError
+      -> { AIXM::Component::ClassLayer.new(class: 'X', vertical_limits: AIXM::Factory.vertical_limits ) }.must_raise ArgumentError
+      -> { AIXM::Component::ClassLayer.new(class: 'A', vertical_limits: 'foobar') }.must_raise ArgumentError
     end
   end
 
   context "with class" do
     subject do
-      AIXM::ClassLayer.new(class: :C, vertical_limits: AIXM::Factory.vertical_limits)
+      AIXM::Component::ClassLayer.new(class: :C, vertical_limits: AIXM::Factory.vertical_limits)
     end
 
     describe :to_digest do
@@ -42,7 +42,7 @@ describe AIXM::ClassLayer do
 
   context "without class" do
     subject do
-      AIXM::ClassLayer.new(vertical_limits: AIXM::Factory.vertical_limits)
+      AIXM::Component::ClassLayer.new(vertical_limits: AIXM::Factory.vertical_limits)
     end
 
     describe :to_digest do

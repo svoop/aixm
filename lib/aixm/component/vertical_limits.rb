@@ -1,18 +1,18 @@
 module AIXM
-  module Vertical
+  module Component
 
     ##
-    # Vertical limits
-    #
-    # Normally noted as:
+    # Vertical limits define a 3D airspace vertically. They are normally noted
+    # as follows:
     #
     #   +upper z+ (or +max_z+ whichever is higher)
     #   ---------
     #   +lower_z+ (or +min_z+ whichever is lower)
     #
-    # Use +AIXM::GROUND+ as a shortcut for surface aka zero height.
-    class Limits
-
+    # Shortcuts:
+    # * +AIXM::GROUND+ - surface (aka: 0ft QFE)
+    # * +AIXM::UNLIMITED+ - no upper limit (aka: FL 999)
+    class VerticalLimits < Base
       using AIXM::Refinements
 
       TAGS = { upper: :Upper, lower: :Lower, max: :Max, min: :Mnm }.freeze
@@ -20,13 +20,7 @@ module AIXM
 
       attr_reader :upper_z, :lower_z, :max_z, :min_z
 
-      ##
-      # Defines vertical limits +upper_z+ and +lower_z+
-      #
-      # Options:
-      # * +max_z+ - alternative upper limit "whichever is higher"
-      # * +min_z+ - alternative lower limit "whichever is lower"
-      def initialize(upper_z:, lower_z:, max_z: nil, min_z: nil)
+      def initialize(max_z: nil, upper_z:, lower_z:, min_z: nil)
         fail(ArgumentError, "invalid upper_z") unless upper_z.is_a? AIXM::Z
         fail(ArgumentError, "invalid lower_z") unless lower_z.is_a? AIXM::Z
         fail(ArgumentError, "invalid max_z") unless max_z.nil? || max_z.is_a?(AIXM::Z)
@@ -55,5 +49,6 @@ module AIXM
         end.target!   # see https://github.com/jimweirich/builder/issues/42
       end
     end
+
   end
 end

@@ -1,19 +1,19 @@
 require_relative '../../../spec_helper'
 
-describe AIXM::Vertical::Limits do
+describe AIXM::Component::VerticalLimits do
   describe :initialize do
     it "won't accept invalid arguments" do
       z = AIXM::Z.new(alt: 1000, code: :QNH)
-      -> { AIXM::Vertical::Limits.new(upper_z: 0, lower_z: z, max_z: z, min_z: z) }.must_raise ArgumentError
-      -> { AIXM::Vertical::Limits.new(upper_z: z, lower_z: 0, max_z: z, min_z: z) }.must_raise ArgumentError
-      -> { AIXM::Vertical::Limits.new(upper_z: z, lower_z: z, max_z: 0, min_z: z) }.must_raise ArgumentError
-      -> { AIXM::Vertical::Limits.new(upper_z: z, lower_z: z, max_z: z, min_z: 0) }.must_raise ArgumentError
+      -> { AIXM::Component::VerticalLimits.new(upper_z: 0, lower_z: z, max_z: z, min_z: z) }.must_raise ArgumentError
+      -> { AIXM::Component::VerticalLimits.new(upper_z: z, lower_z: 0, max_z: z, min_z: z) }.must_raise ArgumentError
+      -> { AIXM::Component::VerticalLimits.new(upper_z: z, lower_z: z, max_z: 0, min_z: z) }.must_raise ArgumentError
+      -> { AIXM::Component::VerticalLimits.new(upper_z: z, lower_z: z, max_z: z, min_z: 0) }.must_raise ArgumentError
     end
   end
 
   describe :to_digest do
     it "must return digest of payload" do
-      subject = AIXM::Vertical::Limits.new(
+      subject = AIXM::Component::VerticalLimits.new(
         upper_z: AIXM::Z.new(alt: 2000, code: :QNH),
         lower_z: AIXM::GROUND
       )
@@ -23,7 +23,7 @@ describe AIXM::Vertical::Limits do
 
   describe :to_xml do
     it "must build correct XML with only upper_z and lower_z" do
-      subject = AIXM::Vertical::Limits.new(
+      subject = AIXM::Component::VerticalLimits.new(
         upper_z: AIXM::Z.new(alt: 2000, code: :QNH),
         lower_z: AIXM::GROUND
       )
@@ -38,7 +38,7 @@ describe AIXM::Vertical::Limits do
     end
 
     it "must build correct XML with additional max_z" do
-      subject = AIXM::Vertical::Limits.new(
+      subject = AIXM::Component::VerticalLimits.new(
         upper_z: AIXM::Z.new(alt: 65, code: :QNE),
         lower_z: AIXM::Z.new(alt: 1000, code: :QFE),
         max_z: AIXM::Z.new(alt: 6000, code: :QNH)
@@ -57,7 +57,7 @@ describe AIXM::Vertical::Limits do
     end
 
     it "must build correct XML with additional min_z" do
-      subject = AIXM::Vertical::Limits.new(
+      subject = AIXM::Component::VerticalLimits.new(
         upper_z: AIXM::Z.new(alt: 65, code: :QNE),
         lower_z: AIXM::Z.new(alt: 45, code: :QNE),
         min_z: AIXM::Z.new(alt: 3000, code: :QNH)

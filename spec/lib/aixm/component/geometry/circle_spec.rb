@@ -1,15 +1,15 @@
-require_relative '../../../spec_helper'
+require_relative '../../../../spec_helper'
 
-describe AIXM::Horizontal::Circle do
+describe AIXM::Component::Geometry::Circle do
   describe :initialize do
     it "won't accept invalid arguments" do
-      -> { AIXM::Horizontal::Circle.new(center_xy: 0, radius: 0) }.must_raise ArgumentError
+      -> { AIXM::Component::Geometry::Circle.new(center_xy: 0, radius: 0) }.must_raise ArgumentError
     end
   end
 
   describe :north_xy do
     it "must calculate approximation of northmost point on the circumference" do
-      subject = AIXM::Horizontal::Circle.new(
+      subject = AIXM::Component::Geometry::Circle.new(
         center_xy: AIXM::XY.new(lat: 12.12345678, long: -23.12345678),
         radius: 15
       )
@@ -19,7 +19,7 @@ describe AIXM::Horizontal::Circle do
 
   describe :to_digest do
     it "must return digest of payload" do
-      subject = AIXM::Horizontal::Circle.new(
+      subject = AIXM::Component::Geometry::Circle.new(
         center_xy: AIXM::XY.new(lat: 12.12345678, long: -23.12345678),
         radius: 15
       )
@@ -29,7 +29,7 @@ describe AIXM::Horizontal::Circle do
 
   describe :to_xml do
     it "must build correct XML for circles not near the equator" do
-      subject = AIXM::Horizontal::Circle.new(
+      subject = AIXM::Component::Geometry::Circle.new(
         center_xy: AIXM::XY.new(lat: 11.1, long: 22.2),
         radius: 25
       )
@@ -46,7 +46,7 @@ describe AIXM::Horizontal::Circle do
     end
 
     it "must build correct XML for circles near the equator" do
-      subject = AIXM::Horizontal::Circle.new(
+      subject = AIXM::Component::Geometry::Circle.new(
         center_xy: AIXM::XY.new(lat: -0.0005, long: -22.2),
         radius: 50
       )

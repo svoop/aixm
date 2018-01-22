@@ -14,11 +14,12 @@ are part of this gem. Most notably, the gem is only a builder of AIXM 4.5
 snapshot files and does not parse them.
 
 * [Homepage](https://github.com/svoop/aixm)
+* [API](http://www.rubydoc.info/gems/aixm)
 * Author: [Sven Schwyn - Bitcetera](http://www.bitcetera.com)
 
 ## Install
 
-Add this to your <tt>Gemfile</tt>:
+Add this to your `Gemfile`:
 
 ```ruby
 gem aixm
@@ -26,29 +27,124 @@ gem aixm
 
 ## Usage
 
-### Types
+You can initialize all elements either traditionally or by use of shorter
+AIXM class methods:
+
+```ruby
+AIXM::Feature::Airspace.new(...)
+AIXM.airspace(...)
+```
+
+### Fundamentals
+
+All fundamentals are bundled at the root of the module `AIXM`.
+
+### Document
+
+The document is the root container of the AIXM snapshot file to be generated.
+It's essentially a collection of features:
+
+```ruby
+document = AIXM.document(created_at: Time.now, effective_at: Time.now)
+document.features << AIXM.airspace(...)
+```
+
+To give an overview of the AIXM building blocks, the remainder of this guide
+will list initializer arguments with colons (`name: class`) and attribute
+writers with equal or push signs (`name = class` or `name << class`):
+
+* AIXM.document
+  * created_at: Time, Date or String
+  * effective_at: Time, Date or String
+  * features << AIXM::Feature
+
+See [the API documentation](http://www.rubydoc.info/gems/aixm) for details and
+[spec/factory.rb](https://github.com/svoop/aixm/blob/master/spec/factory.rb) for
+examples.
 
 #### Coordinate
 
 All of the below are equivalent:
 
 ```ruby
-AIXM::XY.new(lat: %q(11°22'33.44"), long: %q(-111°22'33.44"))
-AIXM::XY.new(lat: '112233.44N', long: '1112233.44W')
-AIXM::XY.new(lat: 11.375955555555556, long: -111.37595555555555)
+AIXM.xy(lat: %q(11°22'33.44"), long: %q(-111°22'33.44"))
+AIXM.xy(lat: '112233.44N', long: '1112233.44W')
+AIXM.xy(lat: 11.375955555555556, long: -111.37595555555555)
 ```
 
-#### Altitude
+#### Altitude and Heights
+
+Altitudes and heights exist in three different forms:
 
 ```ruby
-AIXM::Z.new(alt: 1000, code: :QFE)   # height: 1000ft above ground
-AIXM::Z.new(alt: 2000, code: :QNH)   # altitude: of 2000ft above mean sea level
-AIXM::Z.new(alt: 45, code: :QNE)     # altitude: flight level 45
+AIXM.z(alt: 1000, code: :QFE)   # height: 1000ft above ground
+AIXM.z(alt: 2000, code: :QNH)   # altitude: of 2000ft above mean sea level
+AIXM.z(alt: 45, code: :QNE)     # altitude: flight level 45
 ```
 
-### Document
+### Features
 
-See <tt>spec/factory.rb</tt> for examples.
+All features are subclasses of `AIXM::Feature`.
+
+#### Airspace
+
+* AIXM.airspace
+  * name: String
+  * short_name: String or *nil*
+  * type: String or Symbol
+  * schedule = AIXM.schedule
+  * geometry << AIXM.point, AIXM.arc, AIXM.border or AIXM.circle
+  * class_layers << AIXM.class_layer
+  * remarks = String
+
+### Components
+
+All components are subclasses of `AIXM::Component`.
+
+#### Schedule
+
+* AIXM.schedule
+  * code: String or Symbol
+
+#### Class Layer
+
+* AIXM.class_layer
+  * class: String or *nil*
+  * vertical_limits: AIXM.vertical_limits
+
+#### Vertical Limits
+
+* AIXM.vertical_limits
+  * max_z: AIXM.z or *nil*
+  * upper_z: AIXM.z
+  * lower_z: AIXM.z
+  * min_z: AIXM.z or *nil*
+
+#### Point, Arc, Border and Circle
+
+* AIXM.point
+  * xy: AIXM.xy
+* AIXM.arc
+  * xy: AIXM.xy
+  * center_xy: AIXM.xy
+  * cloclwise: *true* or *false*
+* AIXM.border
+  * xy: AIXM.xy
+  * name: String
+* AIXM.circle
+  * center_xy: AIXM.xy
+  * radius: Numeric
+
+#### Geometry
+
+* AIXM.geometry
+  * << AIXM.point, AIXM.arc, AIXM.border or AIXM.circle
+
+For a geometry to be complete, it must be comprised of either:
+
+* exactly one circle
+* at least three points, arcs or borders (the last of which a point with
+  identical coordinates as the first)
 
 ## Validation
 
@@ -66,20 +162,20 @@ document.to_xml(:OFM)   # render AIXM 4.5 + OFM extensions XML
 
 ## Constants
 
-* <tt>AIXM::GROUND</tt> - height: 0ft above ground
-* <tt>AIXM::UNLIMITED</tt> - altitude: FL 999
-* <tt>AIXM::H24</tt> - continuous schedule
+* `AIXM::GROUND` - height: 0ft above ground
+* `AIXM::UNLIMITED` - altitude: FL 999
+* `AIXM::H24` - continuous schedule
 
 ## Refinements
 
 By `using AIXM::Refinements` you get the following general purpose methods:
 
-* <tt>String#indent(number)</tt><br>Indent every line of a string with *number* spaces
-* <tt>String#uptrans</tt><br>upcase and transliterate to match the reduced character set for names
-* <tt>String#to_dd</tt><br>Convert DMS angle to DD or <tt>nil</tt> if the format is not recognized
-* <tt>Float#to_dms(padding)</tt><br>Convert DD angle to DMS with the degrees zero padded to *padding* length
-* <tt>Float#trim</tt><br>Convert whole numbers to Integer and leave all other untouched
-* <tt>Float#to_km(from: unit)</tt><br>Convert a distance from *unit* (:km, :m, :nm or :ft) to km
+* `String#indent(number)`<br>Indent every line of a string with *number* spaces
+* `String#uptrans`<br>upcase and transliterate to match the reduced character set for names
+* `String#to_dd`<br>Convert DMS angle to DD or `nil` if the format is not recognized
+* `Float#to_dms(padding)`<br>Convert DD angle to DMS with the degrees zero padded to *padding* length
+* `Float#trim`<br>Convert whole numbers to Integer and leave all other untouched
+* `Float#to_km(from: unit)`<br>Convert a distance from *unit* (:km, :m, :nm or :ft) to km
 
 ## Extensions
 

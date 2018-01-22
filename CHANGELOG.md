@@ -1,3 +1,10 @@
+## 0.1.3
+
+* Breaking major changes:
+  * Re-organization of classes in features and components
+* Additions:
+  * Shortcut initializers e.g. `AIXM.airspace(...)`
+
 ## 0.1.2
 
 * Breaking additions:
@@ -8,15 +15,15 @@
 ## 0.1.1
 
 * Additions:
-  * Schedule (all but TIMSH)
-  * Refinement Float#to_km and String#uptrans
-  * Constants AIXM::UNLIMITED and AIXM::H24
-  * Airspace#short_name
+  * Schedule (all but `TIMSH`)
+  * Refinement `Float#to_km` and `String#uptrans`
+  * Shortcut constants `AIXM::UNLIMITED` and `AIXM::H24`
+  * `Airspace#short_name`
 * Minor changes:
-  * Document#created_at and #effective_at accept Time, Date, String or nil
-  * Separate AIXM::Document#valid? from #complete?
-  * Write coordinates in DD if extension :OFM is set
-  * Array#to_digest returns integer which fits in signed 32bit
+  * `Document#created_at` and `#effective_at` accept Time, Date, String or *nil*
+  * Separate `AIXM::Document#valid?` from `#complete?`
+  * Write coordinates in DD if extension `:OFM` is set
+  * `Array#to_digest` returns Integer which fits in signed 32bit
 
 ## 0.1.0
 
@@ -31,5 +38,5 @@
     * Arc
     * Border
     * Circle
-  * Constant AIXM::GROUND
+  * Shortcut constant `AIXM::GROUND`
   * Refinements

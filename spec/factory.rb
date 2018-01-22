@@ -3,54 +3,54 @@ module AIXM
     class << self
 
       def vertical_limits
-        AIXM::Vertical::Limits.new(
-          upper_z: AIXM::Z.new(alt: 65, code: :QNE),
-          lower_z: AIXM::Z.new(alt: 45, code: :QNE),
-          max_z: AIXM::Z.new(alt: 6000, code: :QNH),
-          min_z: AIXM::Z.new(alt: 3000, code: :QFE)
+        AIXM.vertical_limits(
+          upper_z: AIXM.z(alt: 65, code: :QNE),
+          lower_z: AIXM.z(alt: 45, code: :QNE),
+          max_z: AIXM.z(alt: 6000, code: :QNH),
+          min_z: AIXM.z(alt: 3000, code: :QFE)
         )
       end
 
       def class_layer
-        AIXM::ClassLayer.new(
+        AIXM.class_layer(
           class: :C,
           vertical_limits: vertical_limits
         )
       end
 
       def polygon_geometry
-        AIXM::Geometry.new.tap do |geometry|
-          geometry << AIXM::Horizontal::Arc.new(
-            xy: AIXM::XY.new(lat: %q(47°51'33"N), long: %q(007°33'36"E)),
-            center_xy: AIXM::XY.new(lat: %q(47°54'15"N), long: %q(007°33'48"E)),
+        AIXM.geometry.tap do |geometry|
+          geometry << AIXM.arc(
+            xy: AIXM.xy(lat: %q(47°51'33"N), long: %q(007°33'36"E)),
+            center_xy: AIXM.xy(lat: %q(47°54'15"N), long: %q(007°33'48"E)),
             clockwise: true
           )
-          geometry << AIXM::Horizontal::Border.new(
-            xy: AIXM::XY.new(lat: %q(47°56'37"N), long: %q(007°35'45"E)),
+          geometry << AIXM.border(
+            xy: AIXM.xy(lat: %q(47°56'37"N), long: %q(007°35'45"E)),
             name: 'FRANCE_GERMANY'
           )
-          geometry << AIXM::Horizontal::Point.new(
-            xy: AIXM::XY.new(lat: %q(47°51'33"N), long: %q(007°33'36"E))
+          geometry << AIXM.point(
+            xy: AIXM.xy(lat: %q(47°51'33"N), long: %q(007°33'36"E))
           )
         end
       end
 
       def circle_geometry
-        AIXM::Geometry.new.tap do |geometry|
-          geometry << AIXM::Horizontal::Circle.new(
-            center_xy: AIXM::XY.new(lat: %q(47°35'00"N), long: %q(004°53'00"E)),
+        AIXM.geometry.tap do |geometry|
+          geometry << AIXM.circle(
+            center_xy: AIXM.xy(lat: %q(47°35'00"N), long: %q(004°53'00"E)),
             radius: 10
           )
         end
       end
 
       def polygon_airspace(short_name: 'POLYGON', schedule: :H24)
-        AIXM::Feature::Airspace.new(
+        AIXM.airspace(
           name: 'POLYGON AIRSPACE',
           short_name: short_name,
           type: 'D'
         ).tap do |airspace|
-          airspace.schedule = AIXM::Schedule.new(code: schedule) if schedule
+          airspace.schedule = AIXM.schedule(code: schedule) if schedule
           airspace.class_layers << class_layer
           airspace.geometry = polygon_geometry
           airspace.remarks = 'polygon airspace'
@@ -58,12 +58,12 @@ module AIXM
       end
 
       def circle_airspace(short_name: 'CIRCLE', schedule: :H24)
-        AIXM::Feature::Airspace.new(
+        AIXM.airspace(
           name: 'CIRCLE AIRSPACE',
           short_name: short_name,
           type: 'D'
         ).tap do |airspace|
-          airspace.schedule = AIXM::Schedule.new(code: schedule) if schedule
+          airspace.schedule = AIXM.schedule(code: schedule) if schedule
           airspace.class_layers << class_layer
           airspace.geometry = circle_geometry
           airspace.remarks = 'circle airspace'
@@ -72,7 +72,7 @@ module AIXM
 
       def document
         time = Time.parse('2018-01-18 12:00:00 +0100')
-        AIXM::Document.new(created_at: time, effective_at: time).tap do |document|
+        AIXM.document(created_at: time, effective_at: time).tap do |document|
           document.features << AIXM::Factory.polygon_airspace
           document.features << AIXM::Factory.circle_airspace
         end
