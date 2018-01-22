@@ -3,7 +3,7 @@ require_relative '../../../spec_helper'
 describe AIXM::Feature::Airspace do
   context "incomplete" do
     subject do
-      AIXM::Feature::Airspace.new(name: 'foobar', type: 'D')
+      AIXM.airspace(name: 'foobar', type: 'D')
     end
 
     describe :complete? do

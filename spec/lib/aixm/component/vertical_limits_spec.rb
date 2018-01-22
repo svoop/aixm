@@ -3,11 +3,11 @@ require_relative '../../../spec_helper'
 describe AIXM::Component::VerticalLimits do
   describe :initialize do
     it "won't accept invalid arguments" do
-      z = AIXM::Z.new(alt: 1000, code: :QNH)
-      -> { AIXM::Component::VerticalLimits.new(upper_z: 0, lower_z: z, max_z: z, min_z: z) }.must_raise ArgumentError
-      -> { AIXM::Component::VerticalLimits.new(upper_z: z, lower_z: 0, max_z: z, min_z: z) }.must_raise ArgumentError
-      -> { AIXM::Component::VerticalLimits.new(upper_z: z, lower_z: z, max_z: 0, min_z: z) }.must_raise ArgumentError
-      -> { AIXM::Component::VerticalLimits.new(upper_z: z, lower_z: z, max_z: z, min_z: 0) }.must_raise ArgumentError
+      z = AIXM.z(1000, :QNH)
+      -> { AIXM.vertical_limits(upper_z: 0, lower_z: z, max_z: z, min_z: z) }.must_raise ArgumentError
+      -> { AIXM.vertical_limits(upper_z: z, lower_z: 0, max_z: z, min_z: z) }.must_raise ArgumentError
+      -> { AIXM.vertical_limits(upper_z: z, lower_z: z, max_z: 0, min_z: z) }.must_raise ArgumentError
+      -> { AIXM.vertical_limits(upper_z: z, lower_z: z, max_z: z, min_z: 0) }.must_raise ArgumentError
     end
   end
 

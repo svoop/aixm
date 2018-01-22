@@ -31,7 +31,7 @@ You can initialize all elements either traditionally or by use of shorter
 AIXM class methods:
 
 ```ruby
-AIXM::Feature::Airspace.new(...)
+AIXM.airspace(...)
 AIXM.airspace(...)
 ```
 

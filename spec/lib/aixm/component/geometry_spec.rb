@@ -3,7 +3,7 @@ require_relative '../../../spec_helper'
 describe AIXM::Component::Geometry do
   context "singularity" do
     subject do
-      AIXM::Component::Geometry.new
+      AIXM.geometry
     end
 
     it "must fail validation" do
@@ -15,8 +15,8 @@ describe AIXM::Component::Geometry do
 
   context "point" do
     subject do
-      AIXM::Component::Geometry.new.tap do |geometry|
-        geometry << AIXM::Component::Geometry::Point.new(xy: AIXM::XY.new(lat: 11, long: 22))
+      AIXM.geometry.tap do |geometry|
+        geometry << AIXM.point(xy: AIXM.xy(lat: 11, long: 22))
       end
     end
 
@@ -29,9 +29,9 @@ describe AIXM::Component::Geometry do
 
   context "line" do
     subject do
-      AIXM::Component::Geometry.new.tap do |geometry|
-        geometry << AIXM::Component::Geometry::Point.new(xy: AIXM::XY.new(lat: 11, long: 22))
-        geometry << AIXM::Component::Geometry::Point.new(xy: AIXM::XY.new(lat: 22, long: 33))
+      AIXM.geometry.tap do |geometry|
+        geometry << AIXM.point(xy: AIXM.xy(lat: 11, long: 22))
+        geometry << AIXM.point(xy: AIXM.xy(lat: 22, long: 33))
       end
     end
 
@@ -44,9 +44,9 @@ describe AIXM::Component::Geometry do
 
   context "polygon" do
     subject do
-      AIXM::Component::Geometry.new.tap do |geometry|
-        geometry << AIXM::Component::Geometry::Point.new(xy: AIXM::XY.new(lat: 11, long: 22))
-        geometry << AIXM::Component::Geometry::Point.new(xy: AIXM::XY.new(lat: 22, long: 33))
+      AIXM.geometry.tap do |geometry|
+        geometry << AIXM.point(xy: AIXM.xy(lat: 11, long: 22))
+        geometry << AIXM.point(xy: AIXM.xy(lat: 22, long: 33))
       end
     end
 
@@ -57,7 +57,7 @@ describe AIXM::Component::Geometry do
     end
 
     it "must recognize closed" do
-      subject << AIXM::Component::Geometry::Point.new(xy: AIXM::XY.new(lat: 11, long: 22))
+      subject << AIXM.point(xy: AIXM.xy(lat: 11, long: 22))
       subject.wont_be :circle?
       subject.must_be :closed_shape?
       subject.must_be :complete?
@@ -91,9 +91,9 @@ describe AIXM::Component::Geometry do
 
   context "arc" do
     subject do
-      AIXM::Component::Geometry.new.tap do |geometry|
-        geometry << AIXM::Component::Geometry::Arc.new(xy: AIXM::XY.new(lat: 11, long: 22), center_xy: AIXM::XY.new(lat: 10, long: 20), clockwise: true)
-        geometry << AIXM::Component::Geometry::Point.new(xy: AIXM::XY.new(lat: 22, long: 33))
+      AIXM.geometry.tap do |geometry|
+        geometry << AIXM.arc(xy: AIXM.xy(lat: 11, long: 22), center_xy: AIXM.xy(lat: 10, long: 20), clockwise: true)
+        geometry << AIXM.point(xy: AIXM.xy(lat: 22, long: 33))
       end
     end
 
@@ -104,7 +104,7 @@ describe AIXM::Component::Geometry do
     end
 
     it "must recognize closed" do
-      subject << AIXM::Component::Geometry::Point.new(xy: AIXM::XY.new(lat: 11, long: 22))
+      subject << AIXM.point(xy: AIXM.xy(lat: 11, long: 22))
       subject.wont_be :circle?
       subject.must_be :closed_shape?
       subject.must_be :complete?
@@ -136,9 +136,9 @@ describe AIXM::Component::Geometry do
 
   context "border" do
     subject do
-      AIXM::Component::Geometry.new.tap do |geometry|
-        geometry << AIXM::Component::Geometry::Border.new(xy: AIXM::XY.new(lat: 11, long: 22), name: 'foobar')
-        geometry << AIXM::Component::Geometry::Point.new(xy: AIXM::XY.new(lat: 22, long: 33))
+      AIXM.geometry.tap do |geometry|
+        geometry << AIXM.border(xy: AIXM.xy(lat: 11, long: 22), name: 'foobar')
+        geometry << AIXM.point(xy: AIXM.xy(lat: 22, long: 33))
       end
     end
 
@@ -149,7 +149,7 @@ describe AIXM::Component::Geometry do
     end
 
     it "must recognize closed" do
-      subject << AIXM::Component::Geometry::Point.new(xy: AIXM::XY.new(lat: 11, long: 22))
+      subject << AIXM.point(xy: AIXM.xy(lat: 11, long: 22))
       subject.wont_be :circle?
       subject.must_be :closed_shape?
       subject.must_be :complete?
@@ -179,8 +179,8 @@ describe AIXM::Component::Geometry do
 
   context "circle" do
     subject do
-      AIXM::Component::Geometry.new.tap do |geometry|
-        geometry << AIXM::Component::Geometry::Circle.new(center_xy: AIXM::XY.new(lat: 11, long: 22), radius: 10)
+      AIXM.geometry.tap do |geometry|
+        geometry << AIXM.circle(center_xy: AIXM.xy(lat: 11, long: 22), radius: 10)
       end
     end
 
@@ -191,7 +191,7 @@ describe AIXM::Component::Geometry do
     end
 
     it "must fail validation when additional elements are present" do
-      subject << AIXM::Component::Geometry::Point.new(xy: AIXM::XY.new(lat: 11, long: 22))
+      subject << AIXM.point(xy: AIXM.xy(lat: 11, long: 22))
       subject.wont_be :circle?
       subject.wont_be :closed_shape?
       subject.wont_be :complete?
