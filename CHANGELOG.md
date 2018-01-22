@@ -1,3 +1,8 @@
+## 0.1.4
+
+* Breaking minor changes:
+  * `AIXM.z(alt: 123, code: :QNE)` is now `AIXM.z(123, :QNE)`
+
 ## 0.1.3
 
 * Breaking major changes:

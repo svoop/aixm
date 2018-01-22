@@ -13,7 +13,7 @@ module AIXM
 
     attr_reader :alt, :code
 
-    def initialize(alt:, code:)
+    def initialize(alt, code)
       fail(ArgumentError, "unrecognized Q code `#{code}'") unless CODES.include? code
       @alt, @code = alt, code
     end

@@ -13,8 +13,8 @@ describe AIXM::Component::VerticalLimits do
 
   describe :to_digest do
     it "must return digest of payload" do
-      subject = AIXM::Component::VerticalLimits.new(
-        upper_z: AIXM::Z.new(alt: 2000, code: :QNH),
+      subject = AIXM.vertical_limits(
+        upper_z: AIXM.z(2000, :QNH),
         lower_z: AIXM::GROUND
       )
       subject.to_digest.must_equal 929399130
@@ -23,8 +23,8 @@ describe AIXM::Component::VerticalLimits do
 
   describe :to_xml do
     it "must build correct XML with only upper_z and lower_z" do
-      subject = AIXM::Component::VerticalLimits.new(
-        upper_z: AIXM::Z.new(alt: 2000, code: :QNH),
+      subject = AIXM.vertical_limits(
+        upper_z: AIXM.z(2000, :QNH),
         lower_z: AIXM::GROUND
       )
       subject.to_xml.must_equal <<~END
@@ -38,10 +38,10 @@ describe AIXM::Component::VerticalLimits do
     end
 
     it "must build correct XML with additional max_z" do
-      subject = AIXM::Component::VerticalLimits.new(
-        upper_z: AIXM::Z.new(alt: 65, code: :QNE),
-        lower_z: AIXM::Z.new(alt: 1000, code: :QFE),
-        max_z: AIXM::Z.new(alt: 6000, code: :QNH)
+      subject = AIXM.vertical_limits(
+        upper_z: AIXM.z(65, :QNE),
+        lower_z: AIXM.z(1000, :QFE),
+        max_z: AIXM.z(6000, :QNH)
       )
       subject.to_xml.must_equal <<~END
         <codeDistVerUpper>STD</codeDistVerUpper>
@@ -57,10 +57,10 @@ describe AIXM::Component::VerticalLimits do
     end
 
     it "must build correct XML with additional min_z" do
-      subject = AIXM::Component::VerticalLimits.new(
-        upper_z: AIXM::Z.new(alt: 65, code: :QNE),
-        lower_z: AIXM::Z.new(alt: 45, code: :QNE),
-        min_z: AIXM::Z.new(alt: 3000, code: :QNH)
+      subject = AIXM.vertical_limits(
+        upper_z: AIXM.z(65, :QNE),
+        lower_z: AIXM.z(45, :QNE),
+        min_z: AIXM.z(3000, :QNH)
       )
       subject.to_xml.must_equal <<~END
         <codeDistVerUpper>STD</codeDistVerUpper>

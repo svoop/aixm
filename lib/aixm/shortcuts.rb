@@ -2,10 +2,6 @@ module AIXM
 
   SCHEMA = Pathname(__dir__).join('schemas', '4.5', 'AIXM-Snapshot.xsd').freeze
 
-  GROUND = Z.new(alt: 0, code: :QFE).freeze
-  UNLIMITED = Z.new(alt: 999, code: :QNE).freeze
-  H24 = Component::Schedule.new(code: :H24).freeze
-
   ELEMENTS = {
     document: Document,
     xy: XY,
@@ -26,5 +22,9 @@ module AIXM
       klass.new(*arguments)
     end
   end
+
+  GROUND = z(0, :QFE).freeze
+  UNLIMITED = z(999, :QNE).freeze
+  H24 = schedule(code: :H24).freeze
 
 end

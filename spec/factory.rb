@@ -4,10 +4,10 @@ module AIXM
 
       def vertical_limits
         AIXM.vertical_limits(
-          upper_z: AIXM.z(alt: 65, code: :QNE),
-          lower_z: AIXM.z(alt: 45, code: :QNE),
-          max_z: AIXM.z(alt: 6000, code: :QNH),
-          min_z: AIXM.z(alt: 3000, code: :QFE)
+          upper_z: AIXM.z(65, :QNE),
+          lower_z: AIXM.z(45, :QNE),
+          max_z: AIXM.z(6000, :QNH),
+          min_z: AIXM.z(3000, :QFE)
         )
       end
 
