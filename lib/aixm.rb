@@ -11,6 +11,7 @@ require_relative 'aixm/refinements'
 require_relative 'aixm/document'
 require_relative 'aixm/xy'
 require_relative 'aixm/z'
+require_relative 'aixm/f'
 
 require_relative 'aixm/component/base'
 require_relative 'aixm/component/geometry'

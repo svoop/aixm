@@ -82,6 +82,12 @@ AIXM.z(2000, :QNH)   # altitude: of 2000ft above mean sea level
 AIXM.z(45, :QNE)     # altitude: flight level 45
 ```
 
+#### Frequency
+
+```ruby
+AIXM.f(123.35, :MHZ)
+```
+
 ### Features
 
 All features are subclasses of `AIXM::Feature`.

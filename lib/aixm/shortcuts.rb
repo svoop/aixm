@@ -6,6 +6,7 @@ module AIXM
     document: Document,
     xy: XY,
     z: Z,
+    f: F,
     airspace: Feature::Airspace,
     class_layer: Component::ClassLayer,
     geometry: Component::Geometry,

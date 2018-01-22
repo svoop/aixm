@@ -1,3 +1,8 @@
+## 0.2.0
+
+* Additions:
+  * Frequency
+
 ## 0.1.4
 
 * Breaking minor changes:
