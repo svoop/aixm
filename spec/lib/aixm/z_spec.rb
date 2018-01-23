@@ -3,7 +3,7 @@ require_relative '../../spec_helper'
 describe AIXM::Z do
   describe :initialize do
     it "must parse valid Q code" do
-      subject = AIXM.z(111, :QNH)
+      subject = AIXM.z(111, 'QNH')
       subject.alt.must_equal 111
       subject.code.must_equal :QNH
     end
@@ -30,6 +30,16 @@ describe AIXM::Z do
       a = AIXM.z(111, :QNH)
       b = :oggy
       a.wont_equal b
+    end
+  end
+
+  describe :QFE? do
+    it "recognizes same Q code" do
+      AIXM.z(111, :QFE).must_be :QFE?
+    end
+
+    it "doesn't recognize different Q code" do
+      AIXM.z(111, :QNH).wont_be :QFE?
     end
   end
 
