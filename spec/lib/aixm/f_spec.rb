@@ -13,6 +13,12 @@ describe AIXM::F do
     end
   end
 
+  describe :to_digest do
+    it "must return digest of payload" do
+      AIXM.f(111, :MHZ).to_digest.must_equal 332212551
+    end
+  end
+
   describe :== do
     it "recognizes objects with identical frequency and unit as equal" do
       a = AIXM.f(123.0, :MHZ)

@@ -8,6 +8,7 @@ module AIXM
   # * QNH - altitude in feet
   # * QNE - altitude as flight level
   class Z
+    using AIXM::Refinements
 
     CODES = %i(QFE QNH QNE).freeze
 
@@ -16,6 +17,12 @@ module AIXM
     def initialize(alt, code)
       @alt, @code = alt, code&.to_sym&.upcase
       fail(ArgumentError, "unrecognized Q code `#{code}'") unless CODES.include? @code
+    end
+
+    ##
+    # Digest to identify the payload
+    def to_digest
+      [alt, code].to_digest
     end
 
     def ==(other)

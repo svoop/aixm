@@ -7,7 +7,6 @@ module AIXM
   # * DD - examples: 12.12345678 (north or east), -12.12345678 (south or west)
   # * DMS - examples: 11°22'33.44"N, 1112233.44W
   class XY
-
     using AIXM::Refinements
 
     def initialize(lat:, long:)
@@ -30,6 +29,10 @@ module AIXM
         when :AIXM then @long.to_dms(3).gsub(/[^\d.]/, '') + (@long.negative? ? 'W' : 'E')
         else @long.round(8)
       end
+    end
+
+    def to_digest
+      [lat, long].to_digest
     end
 
     def ==(other)

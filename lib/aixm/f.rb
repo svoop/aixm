@@ -7,6 +7,7 @@ module AIXM
   # * +:MHZ+ - megahertz
   # * +:KHZ+ - kilohertz
   class F
+    using AIXM::Refinements
 
     UNITS = %i(MHZ KHZ).freeze
 
@@ -15,6 +16,12 @@ module AIXM
     def initialize(freq, unit)
       @freq, @unit = freq.to_f, unit&.to_sym&.upcase
       fail(ArgumentError, "unrecognized unit `#{@unit}'") unless UNITS.include? @unit
+    end
+
+    ##
+    # Digest to identify the payload
+    def to_digest
+      [freq, unit].to_digest
     end
 
     ##
