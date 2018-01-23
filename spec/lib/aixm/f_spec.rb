@@ -32,4 +32,21 @@ describe AIXM::F do
       a.wont_equal b
     end
   end
+
+  describe :between? do
+    subject do
+      AIXM.f(100, :MHZ)
+    end
+
+    it "detect frequencies within a frequency band" do
+      subject.between?(90, 110, :MHZ).must_equal true
+      subject.between?(90, 100, :MHZ).must_equal true
+      subject.between?(100.0, 100.1, :MHZ).must_equal true
+    end
+
+    it "detect frequencies outside of a frequency band" do
+      subject.between?(90, 110, :KHZ).must_equal false
+      subject.between?(90, 95, :MHZ).must_equal false
+    end
+  end
 end

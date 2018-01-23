@@ -17,8 +17,16 @@ module AIXM
       fail(ArgumentError, "unrecognized unit `#{@unit}'") unless UNITS.include? @unit
     end
 
+    ##
+    # Check whether two frequencies are identical
     def ==(other)
       other.is_a?(F) && freq == other.freq && unit == other.unit
+    end
+
+    ##
+    # Check whether this frequency is part of a frequency band
+    def between?(lower_freq, upper_freq, unit)
+      freq.between?(lower_freq, upper_freq) && self.unit == unit
     end
 
   end
