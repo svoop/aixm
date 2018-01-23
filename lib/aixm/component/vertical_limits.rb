@@ -36,9 +36,6 @@ module AIXM
 
       ##
       # Render AIXM
-      #
-      # Extensions:
-      # * +:OFM+ - Open Flightmaps
       def to_xml(*extensions)
         %i(upper lower max min).each_with_object(Builder::XmlMarkup.new(indent: 2)) do |limit, builder|
           if z = send(:"#{limit}_z")

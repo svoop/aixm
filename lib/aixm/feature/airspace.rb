@@ -45,9 +45,6 @@ module AIXM
 
       ##
       # Render AIXM
-      #
-      # Extensions:
-      # * +:OFM+ - Open Flightmaps
       def to_xml(*extensions)
         mid = to_digest
         builder = Builder::XmlMarkup.new(indent: 2)

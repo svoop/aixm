@@ -47,9 +47,6 @@ module AIXM
 
       ##
       # Render AIXM
-      #
-      # Extensions:
-      # * +:OFM+ - Open Flightmaps
       def to_xml(*extensions)
         @result_array.map { |h| h.to_xml(*extensions) }.join
       end
