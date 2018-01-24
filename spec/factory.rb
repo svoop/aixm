@@ -8,10 +8,10 @@ module AIXM
 
       def vertical_limits
         AIXM.vertical_limits(
-          upper_z: AIXM.z(65, :QNE),
-          lower_z: AIXM.z(45, :QNE),
-          max_z: AIXM.z(6000, :QNH),
-          min_z: AIXM.z(3000, :QFE)
+          upper_z: AIXM.z(65, :qne),
+          lower_z: AIXM.z(45, :qne),
+          max_z: AIXM.z(6000, :qnh),
+          min_z: AIXM.z(3000, :qfe)
         )
       end
 
@@ -79,7 +79,7 @@ module AIXM
           id: 'DPN',
           name: 'DESIGNATED POINT NAVAID',
           xy: AIXM.xy(lat: %q(47°51'33"N), long: %q(007°33'36"E)),
-          z: AIXM.z(500, :QNH),
+          z: AIXM.z(500, :qnh),
           type: :ICAO
         ).tap do |designated_point|
           designated_point.remarks = 'designated point navaid'
@@ -91,7 +91,7 @@ module AIXM
           id: 'DME',
           name: 'DME NAVAID',
           xy: AIXM.xy(lat: %q(47°51'33"N), long: %q(007°33'36"E)),
-          z: AIXM.z(500, :QNH),
+          z: AIXM.z(500, :qnh),
           channel: '95X'
         ).tap do |dme|
           dme.remarks = 'dme navaid'
@@ -103,7 +103,7 @@ module AIXM
           id: '---',
           name: 'MARKER NAVAID',
           xy: AIXM.xy(lat: %q(47°51'33"N), long: %q(007°33'36"E)),
-          z: AIXM.z(500, :QNH)
+          z: AIXM.z(500, :qnh)
         ).tap do |marker|
           marker.remarks = 'marker navaid'
         end
@@ -114,7 +114,7 @@ module AIXM
           id: 'NDB',
           name: 'NDB NAVAID',
           xy: AIXM.xy(lat: %q(47°51'33"N), long: %q(007°33'36"E)),
-          z: AIXM.z(500, :QNH),
+          z: AIXM.z(500, :qnh),
           f: AIXM.f(555, :KHZ)
         ).tap do |ndb|
           ndb.remarks = 'ndb navaid'
@@ -126,7 +126,7 @@ module AIXM
           id: 'TCN',
           name: 'TACAN NAVAID',
           xy: AIXM.xy(lat: %q(47°51'33"N), long: %q(007°33'36"E)),
-          z: AIXM.z(500, :QNH),
+          z: AIXM.z(500, :qnh),
           channel: '29X'
         ).tap do |tacan|
           tacan.remarks = 'tacan navaid'
@@ -138,7 +138,7 @@ module AIXM
           id: 'VOR',
           name: 'VOR NAVAID',
           xy: AIXM.xy(lat: %q(47°51'33"N), long: %q(007°33'36"E)),
-          z: AIXM.z(500, :QNH),
+          z: AIXM.z(500, :qnh),
           type: :VOR,
           f: AIXM.f(111, :MHZ),
           north: :geographic

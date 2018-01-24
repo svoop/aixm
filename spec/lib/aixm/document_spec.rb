@@ -62,9 +62,9 @@ describe AIXM::Document do
         <AIXM-Snapshot xmlns:xsi="http://www.aixm.aero/schema/4.5/AIXM-Snapshot.xsd" version="4.5" origin="AIXM #{AIXM::VERSION} Ruby gem" created="2018-01-18T12:00:00+01:00" effective="2018-01-18T12:00:00+01:00">
           <!-- Airspace: [D] POLYGON AIRSPACE -->
           <Ase>
-            <AseUid mid="202650074">
+            <AseUid mid="374360102">
               <codeType>D</codeType>
-              <codeId>202650074</codeId>
+              <codeId>374360102</codeId>
             </AseUid>
             <txtLocalType>POLYGON</txtLocalType>
             <txtName>POLYGON AIRSPACE</txtName>
@@ -88,9 +88,9 @@ describe AIXM::Document do
           </Ase>
           <Abd>
             <AbdUid>
-              <AseUid mid="202650074">
+              <AseUid mid="374360102">
                 <codeType>D</codeType>
-                <codeId>202650074</codeId>
+                <codeId>374360102</codeId>
               </AseUid>
             </AbdUid>
             <Avx>
@@ -116,9 +116,9 @@ describe AIXM::Document do
           </Abd>
           <!-- Airspace: [D] CIRCLE AIRSPACE -->
           <Ase>
-            <AseUid mid="646302629">
+            <AseUid mid="784524586">
               <codeType>D</codeType>
-              <codeId>646302629</codeId>
+              <codeId>784524586</codeId>
             </AseUid>
             <txtLocalType>CIRCLE</txtLocalType>
             <txtName>CIRCLE AIRSPACE</txtName>
@@ -142,9 +142,9 @@ describe AIXM::Document do
           </Ase>
           <Abd>
             <AbdUid>
-              <AseUid mid="646302629">
+              <AseUid mid="784524586">
                 <codeType>D</codeType>
-                <codeId>646302629</codeId>
+                <codeId>784524586</codeId>
               </AseUid>
             </AbdUid>
             <Avx>
@@ -261,9 +261,9 @@ describe AIXM::Document do
         <AIXM-Snapshot xmlns:xsi="http://www.aixm.aero/schema/4.5/AIXM-Snapshot.xsd" version="4.5 + OFM extensions of version 0.1" origin="AIXM #{AIXM::VERSION} Ruby gem" created="2018-01-18T12:00:00+01:00" effective="2018-01-18T12:00:00+01:00">
           <!-- Airspace: [D] POLYGON AIRSPACE -->
           <Ase xt_classLayersAvail="false">
-            <AseUid mid="202650074" newEntity="true">
+            <AseUid mid="374360102" newEntity="true">
               <codeType>D</codeType>
-              <codeId>202650074</codeId>
+              <codeId>374360102</codeId>
             </AseUid>
             <txtLocalType>POLYGON</txtLocalType>
             <txtName>POLYGON AIRSPACE</txtName>
@@ -288,9 +288,9 @@ describe AIXM::Document do
           </Ase>
           <Abd>
             <AbdUid>
-              <AseUid mid="202650074" newEntity="true">
+              <AseUid mid="374360102" newEntity="true">
                 <codeType>D</codeType>
-                <codeId>202650074</codeId>
+                <codeId>374360102</codeId>
               </AseUid>
             </AbdUid>
             <Avx>
@@ -319,9 +319,9 @@ describe AIXM::Document do
           </Abd>
           <!-- Airspace: [D] CIRCLE AIRSPACE -->
           <Ase xt_classLayersAvail="false">
-            <AseUid mid="646302629" newEntity="true">
+            <AseUid mid="784524586" newEntity="true">
               <codeType>D</codeType>
-              <codeId>646302629</codeId>
+              <codeId>784524586</codeId>
             </AseUid>
             <txtLocalType>CIRCLE</txtLocalType>
             <txtName>CIRCLE AIRSPACE</txtName>
@@ -346,9 +346,9 @@ describe AIXM::Document do
           </Ase>
           <Abd>
             <AbdUid>
-              <AseUid mid="646302629" newEntity="true">
+              <AseUid mid="784524586" newEntity="true">
                 <codeType>D</codeType>
-                <codeId>646302629</codeId>
+                <codeId>784524586</codeId>
               </AseUid>
             </AbdUid>
             <Avx>

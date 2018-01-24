@@ -9,7 +9,7 @@ describe AIXM::Feature::NavigationalAid::Base do
     it "won't accept invalid arguments" do
       -> { base.send(:new, id: 'id', name: 'name', xy: 0) }.must_raise ArgumentError
       -> { base.send(:new, id: 'id', name: 'name', xy: AIXM::Factory.xy, z: 0) }.must_raise ArgumentError
-      -> { base.send(:new, id: 'id', name: 'name', xy: AIXM::Factory.xy, z: AIXM.z(1, :QNE)) }.must_raise ArgumentError
+      -> { base.send(:new, id: 'id', name: 'name', xy: AIXM::Factory.xy, z: AIXM.z(1, :qne)) }.must_raise ArgumentError
     end
 
     context "downcase attributes" do
@@ -29,8 +29,8 @@ describe AIXM::Feature::NavigationalAid::Base do
 
   describe :to_digest do
     it "must return digest of payload" do
-      subject = base.send(:new, id: 'id', name: 'name', xy: AIXM::Factory.xy, z: AIXM.z(100, :QNH))
-      subject.to_digest.must_equal 516629436
+      subject = base.send(:new, id: 'id', name: 'name', xy: AIXM::Factory.xy, z: AIXM.z(100, :qnh))
+      subject.to_digest.must_equal 711143170
     end
   end
 

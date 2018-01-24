@@ -16,7 +16,7 @@ module AIXM
       using AIXM::Refinements
 
       TAGS = { upper: :Upper, lower: :Lower, max: :Max, min: :Mnm }.freeze
-      CODES = { QFE: :HEI, QNH: :ALT, QNE: :STD }.freeze
+      CODES = { qfe: :HEI, qnh: :ALT, qne: :STD }.freeze
 
       attr_reader :upper_z, :lower_z, :max_z, :min_z
 

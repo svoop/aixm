@@ -77,9 +77,9 @@ AIXM.xy(lat: 11.375955555555556, long: -111.37595555555555)
 Altitudes and heights exist in three different forms:
 
 ```ruby
-AIXM.z(1000, :QFE)   # height: 1000ft above ground
-AIXM.z(2000, :QNH)   # altitude: of 2000ft above mean sea level
-AIXM.z(45, :QNE)     # altitude: flight level 45
+AIXM.z(1000, :qfe)   # height: 1000ft above ground
+AIXM.z(2000, :qnh)   # altitude: of 2000ft above mean sea level
+AIXM.z(45, :qne)     # altitude: flight level 45
 ```
 
 #### Frequency

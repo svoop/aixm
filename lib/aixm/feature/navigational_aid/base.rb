@@ -5,7 +5,7 @@ module AIXM
       ##
       # Implements common attributes of all navigational aids
       #
-      # Please note that the optional elevation +z+ must be in +:QNH+.
+      # Please note that the optional elevation +z+ must be in +:qnh+.
       class Base < AIXM::Component::Base
         using AIXM::Refinements
 
@@ -17,7 +17,7 @@ module AIXM
         def initialize(id:, name:, xy:, z: nil)
           @id, @name, @xy, @z = id&.upcase, name&.upcase, xy, z
           fail(ArgumentError, "invalid xy") unless xy.is_a? AIXM::XY
-          fail(ArgumentError, "invalid z") unless z.nil? || (z.is_a?(AIXM::Z) && z.QNH?)
+          fail(ArgumentError, "invalid z") unless z.nil? || (z.is_a?(AIXM::Z) && z.qnh?)
         end
 
         ##

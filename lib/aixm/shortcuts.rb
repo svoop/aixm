@@ -30,8 +30,8 @@ module AIXM
     end
   end
 
-  GROUND = z(0, :QFE).freeze
-  UNLIMITED = z(999, :QNE).freeze
+  GROUND = z(0, :qfe).freeze
+  UNLIMITED = z(999, :qne).freeze
   H24 = schedule(code: :H24).freeze
 
 end

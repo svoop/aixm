@@ -4,18 +4,18 @@ module AIXM
   # Elevation or altitude
   #
   # The following Q codes are recognized:
-  # * QFE - height in feet
-  # * QNH - altitude in feet
-  # * QNE - altitude as flight level
+  # * +:qfe+ - height in feet
+  # * +:qnh+ - altitude in feet
+  # * +:qne+ - altitude as flight level
   class Z
     using AIXM::Refinements
 
-    CODES = %i(QFE QNH QNE).freeze
+    CODES = %i(qfe qnh qne).freeze
 
     attr_reader :alt, :code
 
     def initialize(alt, code)
-      @alt, @code = alt, code&.to_sym&.upcase
+      @alt, @code = alt, code&.to_sym&.downcase
       fail(ArgumentError, "unrecognized Q code `#{code}'") unless CODES.include? @code
     end
 
@@ -34,15 +34,15 @@ module AIXM
     end
 
     def ground?
-      QFE? && @alt == 0
+      qfe? && @alt == 0
     end
 
     def base
-      QFE? ? :ASFC : :AMSL
+      qfe? ? :ASFC : :AMSL
     end
 
     def unit
-      QNE? ? :FL : :FT
+      qne? ? :FL : :FT
     end
 
   end
