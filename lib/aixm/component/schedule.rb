@@ -12,20 +12,18 @@ module AIXM
       using AIXM::Refinements
 
       CODES = {
-        continuous: :H24,
-        sunrise_to_sunset: :HJ,
-        sunset_to_sunrise: :HN,
-        unspecified: :HX,
-        operational_request: :HO,
-        notam: :NOTAM
+        H24: :continuous,
+        HJ: :sunrise_to_sunset,
+        HN: :sunset_to_sunrise,
+        HX: :unspecified,
+        HO: :operational_request,
+        NOTAM: :notam
       }.freeze
 
       attr_reader :code
 
       def initialize(code:)
-        @code = code&.to_sym
-        @code = CODES[code] unless CODES.has_value? code
-        fail(ArgumentError, "code `#{code}' not recognized") unless @code
+        @code = CODES.lookup(code&.to_sym, nil) || fail(ArgumentError, "invalid code")
       end
 
       ##
@@ -37,7 +35,7 @@ module AIXM
       ##
       # Render AIXM
       def to_xml(*extensions)
-        Builder::XmlMarkup.new(indent: 2).codeWorkHr(code.to_s)
+        Builder::XmlMarkup.new(indent: 2).codeWorkHr(CODES.key(code).to_s)
       end
     end
 
