@@ -103,6 +103,69 @@ All features are subclasses of `AIXM::Feature`.
   * class_layers << AIXM.class_layer
   * remarks = String
 
+#### Navigational Aids
+
+##### Designated Point
+
+* AIXM.designated_point
+  * id: String
+  * name: String
+  * xy: AIXM.xy
+  * z: AIXM.z or *nil*
+  * type: :icao, :adhp, :coordinates or :other
+  * remarks = String
+
+##### DME
+
+* AIXM.dme
+  * id: String
+  * name: String
+  * xy: AIXM.xy
+  * z: AIXM.z or *nil*
+  * channel: String
+  * remarks = String
+
+##### NDB
+
+* AIXM.ndb
+  * id: String
+  * name: String
+  * xy: AIXM.xy
+  * z: AIXM.z or *nil*
+  * f: AIXM.f
+  * remarks = String
+
+##### Marker
+
+* AIXM.marker
+  * id: String
+  * name: String
+  * xy: AIXM.xy
+  * z: AIXM.z or *nil*
+  * remarks = String
+
+##### TACAN
+
+* AIXM.tacan
+  * id: String
+  * name: String
+  * xy: AIXM.xy
+  * z: AIXM.z or *nil*
+  * channel: String
+  * remarks = String
+
+##### VOR and DVOR
+
+* AIXM.vor
+  * id: String
+  * name: String
+  * xy: AIXM.xy
+  * z: AIXM.z or *nil*
+  * type: :vor or :vordme
+  * f: AIXM.f
+  * north: :geographic or :magnetic
+  * remarks = String
+
 ### Components
 
 All components are subclasses of `AIXM::Component`.
@@ -154,10 +217,15 @@ For a geometry to be complete, it must be comprised of either:
 
 ## Validation
 
-* Use `AIXM::Document#complete?` to check whether all mandatory information is
+Use `AIXM::Document#complete?` to check whether all mandatory information is
 present. Airspaces, geometries etc have `complete?` methods as well.
-* Use `AIXM::Document#valid?` to validate the resulting AIXM against the XSD
-schema. If any, you find the errors in `AIXM::Document#errors`.
+
+Use `AIXM::Document#valid?` to validate the resulting AIXM against the XSD
+schema. If any, you find the errors in `AIXM::Document#errors`. Since the data
+model is not fully implemented, some associations cannot be assigned and have
+to be left empty. The resulting validation errors are silently ignored:
+
+* OrgUid - organizations may be empty tags
 
 ## Rendering
 

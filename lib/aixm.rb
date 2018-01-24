@@ -24,5 +24,12 @@ require_relative 'aixm/component/vertical_limits'
 require_relative 'aixm/component/schedule'
 
 require_relative 'aixm/feature/airspace'
+require_relative 'aixm/feature/navigational_aid/base'
+require_relative 'aixm/feature/navigational_aid/designated_point'
+require_relative 'aixm/feature/navigational_aid/dme'
+require_relative 'aixm/feature/navigational_aid/marker'
+require_relative 'aixm/feature/navigational_aid/ndb'
+require_relative 'aixm/feature/navigational_aid/tacan'
+require_relative 'aixm/feature/navigational_aid/vor'
 
 require_relative 'aixm/shortcuts'

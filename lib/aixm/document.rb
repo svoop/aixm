@@ -1,7 +1,8 @@
 module AIXM
   class Document
-
     using AIXM::Refinements
+
+    IGNORE_ERROR_PATTERN = %r(OrgUid)
 
     attr_reader :created_at, :effective_at
     attr_accessor :features
@@ -20,7 +21,7 @@ module AIXM
     ##
     # Check whether the document is complete (extensions excluded)
     def complete?
-      features.any? && features.none? { |f| !f.complete? }
+      features.any? && features.none? { |f| f.respond_to?(:complete?) && !f.complete? }
     end
 
     ##
@@ -33,7 +34,9 @@ module AIXM
     # Validate against the XSD and return an array of errors
     def errors
       xsd = Nokogiri::XML::Schema(File.open(AIXM::SCHEMA))
-      xsd.validate(Nokogiri::XML(to_xml))
+      xsd.validate(Nokogiri::XML(to_xml)).reject do |error|
+        error.message =~ IGNORE_ERROR_PATTERN
+      end
     end
 
     ##

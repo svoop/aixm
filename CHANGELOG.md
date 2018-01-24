@@ -2,6 +2,7 @@
 
 * Additions:
   * Frequency
+  * Navigational aids
   * `AIXM::Z#QFE?` and friends
 
 ## 0.1.4

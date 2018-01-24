@@ -15,7 +15,13 @@ module AIXM
     arc: Component::Geometry::Arc,
     border: Component::Geometry::Border,
     circle: Component::Geometry::Circle,
-    point: Component::Geometry::Point
+    point: Component::Geometry::Point,
+    dme: Feature::NavigationalAid::DME,
+    designated_point: Feature::NavigationalAid::DesignatedPoint,
+    marker: Feature::NavigationalAid::Marker,
+    tacan: Feature::NavigationalAid::TACAN,
+    ndb: Feature::NavigationalAid::NDB,
+    vor: Feature::NavigationalAid::VOR
   }.freeze
 
   ELEMENTS.each do |element, klass|
