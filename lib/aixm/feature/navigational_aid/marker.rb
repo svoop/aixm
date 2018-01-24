@@ -18,8 +18,8 @@ module AIXM
           builder.Mkr do |mkr|
             mkr.MkrUid({ newEntity: (true if extensions >> :ofm) }.compact) do |mkruid|
               mkruid.codeId(id)
-              mkruid.geoLat(xy.lat(@format))
-              mkruid.geoLong(xy.long(@format))
+              mkruid.geoLat(xy.lat(format_for(*extensions)))
+              mkruid.geoLong(xy.long(format_for(*extensions)))
             end
             mkr.OrgUid
             mkr.valFreq(75)

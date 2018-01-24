@@ -37,7 +37,7 @@ AIXM.airspace(...)
 
 ### Fundamentals
 
-All fundamentals are bundled at the root of the module `AIXM`.
+All fundamentals are subclasses of `AIXM::Base`.
 
 ### Document
 
@@ -90,7 +90,7 @@ AIXM.f(123.35, :mhz)
 
 ### Features
 
-All features are subclasses of `AIXM::Feature`.
+All features are subclasses of `AIXM::Feature::Base`.
 
 #### Airspace
 
@@ -168,7 +168,7 @@ All features are subclasses of `AIXM::Feature`.
 
 ### Components
 
-All components are subclasses of `AIXM::Component`.
+All components are subclasses of `AIXM::Component::Base`.
 
 #### Schedule
 

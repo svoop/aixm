@@ -7,7 +7,7 @@ module AIXM
   # * +:qfe+ - height in feet
   # * +:qnh+ - altitude in feet
   # * +:qne+ - altitude as flight level
-  class Z
+  class Z < Base
     using AIXM::Refinements
 
     CODES = %i(qfe qnh qne).freeze

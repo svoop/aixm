@@ -24,14 +24,12 @@ module AIXM
         ##
         # Render AIXM
         def to_xml(*extensions)
-          @format = extensions >> :ofm ? :ofm : :aixm
           builder = Builder::XmlMarkup.new(indent: 2)
           builder.Avx do |avx|
             avx.codeType('FNT')
-            avx.geoLat(xy.lat(@format))
-            avx.geoLong(xy.long(@format))
+            avx.geoLat(xy.lat(format_for(*extensions)))
+            avx.geoLong(xy.long(format_for(*extensions)))
             avx.codeDatum('WGE')
-            # TODO: Find examples how to do this with vanilla AIXM
             if extensions >> :ofm
               avx.GbrUid do |gbruid|
                 gbruid.txtName(name.to_s)

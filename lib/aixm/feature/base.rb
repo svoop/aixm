@@ -1,5 +1,5 @@
 module AIXM
-  module Component
+  module Feature
     class Base < AIXM::Base
     end
   end

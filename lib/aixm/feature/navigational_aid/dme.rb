@@ -32,8 +32,8 @@ module AIXM
           builder.Dme do |dme|
             dme.DmeUid({ newEntity: (true if extensions >> :ofm) }.compact) do |dmeuid|
               dmeuid.codeId(id)
-              dmeuid.geoLat(xy.lat(@format))
-              dmeuid.geoLong(xy.long(@format))
+              dmeuid.geoLat(xy.lat(format_for(*extensions)))
+              dmeuid.geoLong(xy.long(format_for(*extensions)))
             end
             dme.OrgUid
             dme.txtName(name)

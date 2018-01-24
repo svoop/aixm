@@ -4,7 +4,7 @@ module AIXM
 
       ##
       # Points are defined by +xy+ coordinates.
-      class Point
+      class Point < Base
         extend Forwardable
         using AIXM::Refinements
 
@@ -20,12 +20,11 @@ module AIXM
         ##
         # Render AIXM
         def to_xml(*extensions)
-          @format = extensions >> :ofm ? :ofm : :aixm
           builder = Builder::XmlMarkup.new(indent: 2)
           builder.Avx do |avx|
             avx.codeType('GRC')
-            avx.geoLat(xy.lat(@format))
-            avx.geoLong(xy.long(@format))
+            avx.geoLat(xy.lat(format_for(*extensions)))
+            avx.geoLong(xy.long(format_for(*extensions)))
             avx.codeDatum('WGE')
           end
         end

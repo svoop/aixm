@@ -32,8 +32,8 @@ module AIXM
           builder.Tcn do |tcn|
             tcn.TcnUid({ newEntity: (true if extensions >> :ofm) }.compact) do |tcnuid|
               tcnuid.codeId(id)
-              tcnuid.geoLat(xy.lat(@format))
-              tcnuid.geoLong(xy.long(@format))
+              tcnuid.geoLat(xy.lat(format_for(*extensions)))
+              tcnuid.geoLong(xy.long(format_for(*extensions)))
             end
             tcn.OrgUid
             tcn.txtName(name)

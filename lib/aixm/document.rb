@@ -1,5 +1,5 @@
 module AIXM
-  class Document
+  class Document < Base
     using AIXM::Refinements
 
     IGNORE_ERROR_PATTERN = %r(OrgUid)

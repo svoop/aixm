@@ -6,7 +6,7 @@ module AIXM
       # Implements common attributes of all navigational aids
       #
       # Please note that the optional elevation +z+ must be in +:qnh+.
-      class Base < AIXM::Component::Base
+      class Base < AIXM::Feature::Base
         using AIXM::Refinements
 
         attr_reader :id, :name, :xy, :z
@@ -35,7 +35,6 @@ module AIXM
         ##
         # Create builder to render AIXM in subclasses
         def to_builder(*extensions)
-          @format = extensions >> :ofm ? :ofm : :aixm
           builder = Builder::XmlMarkup.new(indent: 2)
           builder.comment! "Navigational aid: [#{kind}] #{name}"
           builder

@@ -33,8 +33,8 @@ module AIXM
           builder.Ndb do |ndb|
             ndb.NdbUid({ newEntity: (true if extensions >> :ofm) }.compact) do |ndbuid|
               ndbuid.codeId(id)
-              ndbuid.geoLat(xy.lat(@format))
-              ndbuid.geoLong(xy.long(@format))
+              ndbuid.geoLat(xy.lat(format_for(*extensions)))
+              ndbuid.geoLong(xy.long(format_for(*extensions)))
             end
             ndb.OrgUid
             ndb.txtName(name)

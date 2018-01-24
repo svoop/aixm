@@ -43,8 +43,8 @@ module AIXM
           builder.Dpn do |dpn|
             dpn.DpnUid({ newEntity: (true if extensions >> :ofm) }.compact) do |dpnuid|
               dpnuid.codeId(id)
-              dpnuid.geoLat(xy.lat(@format))
-              dpnuid.geoLong(xy.long(@format))
+              dpnuid.geoLat(xy.lat(format_for(*extensions)))
+              dpnuid.geoLong(xy.long(format_for(*extensions)))
             end
             dpn.OrgUid
             dpn.txtName(name)

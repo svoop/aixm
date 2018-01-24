@@ -59,8 +59,8 @@ module AIXM
           builder.Vor do |vor|
             vor.VorUid({ newEntity: (true if extensions >> :ofm) }.compact) do |voruid|
               voruid.codeId(id)
-              voruid.geoLat(xy.lat(@format))
-              voruid.geoLong(xy.long(@format))
+              voruid.geoLat(xy.lat(format_for(*extensions)))
+              voruid.geoLong(xy.long(format_for(*extensions)))
             end
             vor.OrgUid
             vor.txtName(name)

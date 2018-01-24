@@ -4,7 +4,7 @@ module AIXM
 
       ##
       # Circles are defined by a +center_xy+ and a +radius+ in kilometers.
-      class Circle
+      class Circle < Base
         using AIXM::Refinements
 
         attr_reader :center_xy, :radius
@@ -23,15 +23,14 @@ module AIXM
         ##
         # Render AIXM
         def to_xml(*extensions)
-          @format = extensions >> :ofm ? :ofm : :aixm
           builder = Builder::XmlMarkup.new(indent: 2)
           builder.Avx do |avx|
             avx.codeType('CWA')
-            avx.geoLat(north_xy.lat(@format))
-            avx.geoLong(north_xy.long(@format))
+            avx.geoLat(north_xy.lat(format_for(*extensions)))
+            avx.geoLong(north_xy.long(format_for(*extensions)))
             avx.codeDatum('WGE')
-            avx.geoLatArc(center_xy.lat(@format))
-            avx.geoLongArc(center_xy.long(@format))
+            avx.geoLatArc(center_xy.lat(format_for(*extensions)))
+            avx.geoLongArc(center_xy.long(format_for(*extensions)))
           end
         end
 

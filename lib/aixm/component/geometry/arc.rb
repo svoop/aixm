@@ -32,15 +32,14 @@ module AIXM
         ##
         # Render AIXM
         def to_xml(*extensions)
-          @format = extensions >> :ofm ? :ofm : :aixm
           builder = Builder::XmlMarkup.new(indent: 2)
           builder.Avx do |avx|
             avx.codeType(clockwise? ? 'CWA' : 'CCA')
-            avx.geoLat(xy.lat(@format))
-            avx.geoLong(xy.long(@format))
+            avx.geoLat(xy.lat(format_for(*extensions)))
+            avx.geoLong(xy.long(format_for(*extensions)))
             avx.codeDatum('WGE')
-            avx.geoLatArc(center_xy.lat(@format))
-            avx.geoLongArc(center_xy.long(@format))
+            avx.geoLatArc(center_xy.lat(format_for(*extensions)))
+            avx.geoLongArc(center_xy.long(format_for(*extensions)))
           end
         end
       end

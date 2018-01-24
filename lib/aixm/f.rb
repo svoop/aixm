@@ -6,7 +6,7 @@ module AIXM
   # The following units are recognized:
   # * +:mhz+ - megahertz
   # * +:khz+ - kilohertz
-  class F
+  class F < Base
     using AIXM::Refinements
 
     UNITS = %i(mhz khz).freeze
