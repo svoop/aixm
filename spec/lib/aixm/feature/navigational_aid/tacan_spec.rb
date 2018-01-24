@@ -14,7 +14,7 @@ describe AIXM::Feature::NavigationalAid::TACAN do
 
     describe :to_digest do
       it "must return digest of payload" do
-        subject.to_digest.must_equal 574534896
+        subject.to_digest.must_equal 518546211
       end
     end
 

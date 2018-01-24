@@ -24,7 +24,7 @@ describe AIXM::Feature::NavigationalAid::NDB do
 
     describe :to_digest do
       it "must return digest of payload" do
-        subject.to_digest.must_equal 481905930
+        subject.to_digest.must_equal 251142755
       end
     end
 

@@ -15,7 +15,7 @@ describe AIXM::Component::ClassLayer do
 
     describe :to_digest do
       it "must return digest of payload" do
-        subject.to_digest.must_equal 612555203
+        subject.to_digest.must_equal 385936206
       end
     end
 
@@ -47,7 +47,7 @@ describe AIXM::Component::ClassLayer do
 
     describe :to_digest do
       it "must return digest of payload" do
-        subject.to_digest.must_equal 486148039
+        subject.to_digest.must_equal 5930767
       end
     end
 

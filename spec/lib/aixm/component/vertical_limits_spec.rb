@@ -17,7 +17,7 @@ describe AIXM::Component::VerticalLimits do
         upper_z: AIXM.z(2000, :qnh),
         lower_z: AIXM::GROUND
       )
-      subject.to_digest.must_equal 929399130
+      subject.to_digest.must_equal 867600845
     end
   end
 

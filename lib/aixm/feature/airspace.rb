@@ -1,7 +1,6 @@
 module AIXM
   module Feature
     class Airspace
-
       using AIXM::Refinements
 
       attr_reader :name, :short_name, :type

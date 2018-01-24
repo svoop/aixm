@@ -14,7 +14,7 @@ describe AIXM::Feature::NavigationalAid::Marker do
 
     describe :to_digest do
       it "must return digest of payload" do
-        subject.to_digest.must_equal 420321229
+        subject.to_digest.must_equal 371155747
       end
     end
 

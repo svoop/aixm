@@ -14,7 +14,7 @@ describe AIXM::Feature::NavigationalAid::DesignatedPoint do
 
     describe :to_digest do
       it "must return digest of payload" do
-        subject.to_digest.must_equal 960735368
+        subject.to_digest.must_equal 582056647
       end
     end
 

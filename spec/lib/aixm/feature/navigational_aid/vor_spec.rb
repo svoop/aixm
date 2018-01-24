@@ -26,7 +26,7 @@ describe AIXM::Feature::NavigationalAid::VOR do
 
     describe :to_digest do
       it "must return digest of payload" do
-        subject.to_digest.must_equal 688826460
+        subject.to_digest.must_equal 184560484
       end
     end
 
