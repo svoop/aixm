@@ -231,7 +231,7 @@ to be left empty. The resulting validation errors are silently ignored:
 
 ```ruby
 document.to_xml         # render AIXM 4.5 compliant XML
-document.to_xml(:OFM)   # render AIXM 4.5 + OFM extensions XML
+document.to_xml(:ofm)   # render AIXM 4.5 + OFM extensions XML
 ```
 
 ## Constants

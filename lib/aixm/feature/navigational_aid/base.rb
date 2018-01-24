@@ -35,7 +35,7 @@ module AIXM
         ##
         # Create builder to render AIXM in subclasses
         def to_builder(*extensions)
-          @format = extensions >> :OFM ? :OFM : :AIXM
+          @format = extensions >> :ofm ? :ofm : :aixm
           builder = Builder::XmlMarkup.new(indent: 2)
           builder.comment! "Navigational aid: [#{kind}] #{name}"
           builder

@@ -32,7 +32,7 @@ describe AIXM::Feature::NavigationalAid::VOR do
 
     describe :to_xml do
       it "must build correct XML of VOR with OFM extension" do
-        subject.to_xml(:OFM).must_equal <<~END
+        subject.to_xml(:ofm).must_equal <<~END
           <!-- Navigational aid: [VOR] VOR NAVAID -->
           <Vor>
             <VorUid newEntity="true">

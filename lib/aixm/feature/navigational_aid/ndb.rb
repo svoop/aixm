@@ -31,7 +31,7 @@ module AIXM
         def to_xml(*extensions)
           builder = to_builder(*extensions)
           builder.Ndb do |ndb|
-            ndb.NdbUid({ newEntity: (true if extensions >> :OFM) }.compact) do |ndbuid|
+            ndb.NdbUid({ newEntity: (true if extensions >> :ofm) }.compact) do |ndbuid|
               ndbuid.codeId(id)
               ndbuid.geoLat(xy.lat(@format))
               ndbuid.geoLong(xy.long(@format))

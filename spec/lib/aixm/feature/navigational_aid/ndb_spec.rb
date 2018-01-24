@@ -30,7 +30,7 @@ describe AIXM::Feature::NavigationalAid::NDB do
 
     describe :to_xml do
       it "must build correct XML with OFM extension" do
-        subject.to_xml(:OFM).must_equal <<~END
+        subject.to_xml(:ofm).must_equal <<~END
           <!-- Navigational aid: [NDB] NDB NAVAID -->
           <Ndb>
             <NdbUid newEntity="true">

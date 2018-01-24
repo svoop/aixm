@@ -34,7 +34,7 @@ describe AIXM::Feature::Airspace do
       describe :to_xml do
         it "must build correct XML with OFM extensions" do
           digest = subject.to_digest
-          subject.to_xml(:OFM).must_equal <<~"END"
+          subject.to_xml(:ofm).must_equal <<~"END"
             <!-- Airspace: [D] POLYGON AIRSPACE -->
             <Ase xt_classLayersAvail="false">
               <AseUid mid="#{digest}" newEntity="true">
@@ -119,7 +119,7 @@ describe AIXM::Feature::Airspace do
         describe :to_xml do
           it "must build correct XML with OFM extensions" do
             digest = subject.to_digest
-            subject.to_xml(:OFM).must_equal <<~"END"
+            subject.to_xml(:ofm).must_equal <<~"END"
               <!-- Airspace: [D] POLYGON AIRSPACE -->
               <Ase xt_classLayersAvail="true">
                 <AseUid mid="#{digest}" newEntity="true">

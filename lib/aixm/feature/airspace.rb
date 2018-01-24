@@ -49,8 +49,8 @@ module AIXM
         mid = to_digest
         builder = Builder::XmlMarkup.new(indent: 2)
         builder.comment! "Airspace: [#{type}] #{name}"
-        builder.Ase({ xt_classLayersAvail: ((class_layers.count > 1) if extensions >> :OFM) }.compact) do |ase|
-          ase.AseUid({ mid: mid, newEntity: (true if extensions >> :OFM) }.compact) do |aseuid|
+        builder.Ase({ xt_classLayersAvail: ((class_layers.count > 1) if extensions >> :ofm) }.compact) do |ase|
+          ase.AseUid({ mid: mid, newEntity: (true if extensions >> :ofm) }.compact) do |aseuid|
             aseuid.codeType(type.to_s)
             aseuid.codeId(mid)
           end
@@ -63,11 +63,11 @@ module AIXM
             end
           end
           ase.txtRmk(remarks.to_s) if remarks
-          ase.xt_selAvail(false) if extensions >> :OFM
+          ase.xt_selAvail(false) if extensions >> :ofm
         end
         builder.Abd do |abd|
           abd.AbdUid do |abduid|
-            abduid.AseUid({ mid: mid, newEntity: (true if extensions >> :OFM) }.compact) do |aseuid|
+            abduid.AseUid({ mid: mid, newEntity: (true if extensions >> :ofm) }.compact) do |aseuid|
               aseuid.codeType(type.to_s)
               aseuid.codeId(mid)
             end

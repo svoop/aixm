@@ -16,7 +16,7 @@ module AIXM
         def to_xml(*extensions)
           builder = to_builder(*extensions)
           builder.Mkr do |mkr|
-            mkr.MkrUid({ newEntity: (true if extensions >> :OFM) }.compact) do |mkruid|
+            mkr.MkrUid({ newEntity: (true if extensions >> :ofm) }.compact) do |mkruid|
               mkruid.codeId(id)
               mkruid.geoLat(xy.lat(@format))
               mkruid.geoLong(xy.long(@format))

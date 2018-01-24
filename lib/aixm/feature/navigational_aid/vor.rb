@@ -57,7 +57,7 @@ module AIXM
         def to_xml(*extensions)
           builder = to_builder(*extensions)
           builder.Vor do |vor|
-            vor.VorUid({ newEntity: (true if extensions >> :OFM) }.compact) do |voruid|
+            vor.VorUid({ newEntity: (true if extensions >> :ofm) }.compact) do |voruid|
               voruid.codeId(id)
               voruid.geoLat(xy.lat(@format))
               voruid.geoLong(xy.long(@format))

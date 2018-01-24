@@ -30,7 +30,7 @@ module AIXM
         def to_xml(*extensions)
           builder = to_builder(*extensions)
           builder.Dme do |dme|
-            dme.DmeUid({ newEntity: (true if extensions >> :OFM) }.compact) do |dmeuid|
+            dme.DmeUid({ newEntity: (true if extensions >> :ofm) }.compact) do |dmeuid|
               dmeuid.codeId(id)
               dmeuid.geoLat(xy.lat(@format))
               dmeuid.geoLong(xy.long(@format))

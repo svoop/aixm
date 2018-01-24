@@ -20,7 +20,7 @@ module AIXM
         ##
         # Render AIXM
         def to_xml(*extensions)
-          @format = extensions >> :OFM ? :OFM : :AIXM
+          @format = extensions >> :ofm ? :ofm : :aixm
           builder = Builder::XmlMarkup.new(indent: 2)
           builder.Avx do |avx|
             avx.codeType('GRC')

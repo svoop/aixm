@@ -30,7 +30,7 @@ module AIXM
         def to_xml(*extensions)
           builder = to_builder(*extensions)
           builder.Tcn do |tcn|
-            tcn.TcnUid({ newEntity: (true if extensions >> :OFM) }.compact) do |tcnuid|
+            tcn.TcnUid({ newEntity: (true if extensions >> :ofm) }.compact) do |tcnuid|
               tcnuid.codeId(id)
               tcnuid.geoLat(xy.lat(@format))
               tcnuid.geoLong(xy.long(@format))

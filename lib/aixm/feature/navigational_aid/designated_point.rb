@@ -41,7 +41,7 @@ module AIXM
         def to_xml(*extensions)
           builder = to_builder(*extensions)
           builder.Dpn do |dpn|
-            dpn.DpnUid({ newEntity: (true if extensions >> :OFM) }.compact) do |dpnuid|
+            dpn.DpnUid({ newEntity: (true if extensions >> :ofm) }.compact) do |dpnuid|
               dpnuid.codeId(id)
               dpnuid.geoLat(xy.lat(@format))
               dpnuid.geoLong(xy.long(@format))

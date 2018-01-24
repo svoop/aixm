@@ -44,11 +44,11 @@ describe AIXM::XY do
       end
 
       it "must format AIXM correctly" do
-        subject.lat(:AIXM).must_equal %q(010724.24N)
+        subject.lat(:aixm).must_equal %q(010724.24N)
       end
 
       it "must format OFM correctly" do
-        subject.lat(:OFM).must_equal '1.12340000N'
+        subject.lat(:ofm).must_equal '1.12340000N'
       end
     end
 
@@ -62,11 +62,11 @@ describe AIXM::XY do
       end
 
       it "must format AIXM correctly" do
-        subject.lat(:AIXM).must_equal %q(010724.24S)
+        subject.lat(:aixm).must_equal %q(010724.24S)
       end
 
       it "must format OFM correctly" do
-        subject.lat(:OFM).must_equal '1.12340000S'
+        subject.lat(:ofm).must_equal '1.12340000S'
       end
     end
   end
@@ -82,11 +82,11 @@ describe AIXM::XY do
       end
 
       it "must format AIXM correctly" do
-        subject.long(:AIXM).must_equal %q(0010724.24E)
+        subject.long(:aixm).must_equal %q(0010724.24E)
       end
 
       it "must format OFM correctly" do
-        subject.long(:OFM).must_equal '1.12340000E'
+        subject.long(:ofm).must_equal '1.12340000E'
       end
     end
 
@@ -100,11 +100,11 @@ describe AIXM::XY do
       end
 
       it "must format AIXM correctly" do
-        subject.long(:AIXM).must_equal %q(0010724.24W)
+        subject.long(:aixm).must_equal %q(0010724.24W)
       end
 
       it "must format OFM correctly" do
-        subject.long(:OFM).must_equal '1.12340000W'
+        subject.long(:ofm).must_equal '1.12340000W'
       end
     end
   end

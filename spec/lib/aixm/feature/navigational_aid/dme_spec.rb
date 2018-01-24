@@ -20,7 +20,7 @@ describe AIXM::Feature::NavigationalAid::DME do
 
     describe :to_xml do
       it "must build correct XML with OFM extension" do
-        subject.to_xml(:OFM).must_equal <<~END
+        subject.to_xml(:ofm).must_equal <<~END
           <!-- Navigational aid: [DME] DME NAVAID -->
           <Dme>
             <DmeUid newEntity="true">

@@ -25,8 +25,8 @@ module AIXM
       # Shortcut for +include?+
       #
       # Example:
-      #   extensions.include?(:OFM)   # => true
-      #   extensions >> :OFM          # => true
+      #   extensions.include?(:ofm)   # => true
+      #   extensions >> :ofm          # => true
       alias_method :>>, :include?
 
       ##

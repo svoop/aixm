@@ -43,7 +43,7 @@ module AIXM
     # Render AIXM
     #
     # Extensions:
-    # * +:OFM+ - Open Flightmaps
+    # * +:ofm+ - Open Flightmaps
     def to_xml(*extensions)
       now = Time.now.xmlschema
       meta = {
@@ -53,7 +53,7 @@ module AIXM
         created: @created_at&.xmlschema || now,
         effective: @effective_at&.xmlschema || now
       }
-      meta[:version] += ' + OFM extensions of version 0.1' if extensions >> :OFM
+      meta[:version] += ' + OFM extensions of version 0.1' if extensions >> :ofm
       builder = Builder::XmlMarkup.new(indent: 2)
       builder.instruct!
       builder.tag!('AIXM-Snapshot', meta) do |aixm_snapshot|
