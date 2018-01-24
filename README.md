@@ -272,6 +272,8 @@ originative suite:
 
 * [AIXM](http://aixm.aero)
 * [AIXM on Wikipedia](https://en.wikipedia.org/wiki/AIXM)
+* [AIXM 4.5 Specification](http://aixm.aero/document/aixm-45-specification)
+* [AICM 4.5 Entity-Relationship](https://www.ead.eurocontrol.int/SystemHelp/mergedProjects/SDO/aixm/)
 * [Open Flightmaps](https://openflightmaps.org)
 
 ## Tests
