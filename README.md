@@ -176,12 +176,16 @@ document.to_xml(:OFM)   # render AIXM 4.5 + OFM extensions XML
 
 By `using AIXM::Refinements` you get the following general purpose methods:
 
+* `Hash#lookup(key, default)`<br>Similar to `fetch` but falls back to values
 * `String#indent(number)`<br>Indent every line of a string with *number* spaces
 * `String#uptrans`<br>upcase and transliterate to match the reduced character set for names
 * `String#to_dd`<br>Convert DMS angle to DD or `nil` if the format is not recognized
 * `Float#to_dms(padding)`<br>Convert DD angle to DMS with the degrees zero padded to *padding* length
 * `Float#trim`<br>Convert whole numbers to Integer and leave all other untouched
 * `Float#to_km(from: unit)`<br>Convert a distance from *unit* (:km, :m, :nm or :ft) to km
+
+See the [source code](https://github.com/svoop/aixm/blob/master/lib/aixm/refinements.rb)
+for more explicit descriptions and examples.
 
 ## Extensions
 

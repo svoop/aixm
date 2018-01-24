@@ -41,6 +41,33 @@ describe AIXM::Refinements do
     end
   end
 
+  describe 'Hash#lookup' do
+    subject do
+      { one: 1, two: 2, three: 3, four: :three }
+    end
+
+    it "must return value for key if key is present" do
+      subject.lookup(:one).must_equal 1
+    end
+
+    it "must return value if key is not found but value is present" do
+      subject.lookup(1).must_equal 1
+    end
+
+    it "must return value for key if both key and value are present" do
+      subject.lookup(:three).must_equal 3
+    end
+
+    it "returns default if neither key nor value are present" do
+      subject.lookup(:foo, :default).must_equal :default
+      subject.lookup(:foo, nil).must_be_nil
+    end
+
+    it "fails if neither key, value nor default are present" do
+      -> { subject.lookup(:foo) }.must_raise KeyError
+    end
+  end
+
   describe 'String#indent' do
     it "must indent single line string" do
       'foobar'.indent(2).must_equal '  foobar'

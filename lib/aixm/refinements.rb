@@ -36,6 +36,27 @@ module AIXM
       end
     end
 
+    refine Hash do
+      ##
+      # Fetch a value from the hash, but unlike +fetch+, if +key_or_value+ is
+      # no hash key, check whether +key_or_value+ is a hash value and if so
+      # return it.
+      #
+      # Examples:
+      #   h = { one: 1, two: 2, three: 3, four: :three }
+      #   h.lookup(:one)             # => 1
+      #   h.lookup(1)                # => 1
+      #   h.lookup(:three)           # => 3 (key has priority over value)
+      #   h.lookup(:foo)             # => KeyError
+      #   h.lookup(:foo, :default)   # => :default
+      #   h.lookup(:foo, nil)        # => nil
+      def lookup(key_or_value, default = omitted = true)
+        self[key_or_value] ||
+          (key_or_value if has_value?(key_or_value)) ||
+          (omitted ? fail(KeyError, "key or value `#{key_or_value}' not found") : default)
+      end
+    end
+
     refine String do
       ##
       # Indent every line of a string with +number+ spaces
