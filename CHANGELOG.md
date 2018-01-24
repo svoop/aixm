@@ -3,7 +3,9 @@
 * Additions:
   * Frequency
   * Navigational aids
-  * `AIXM::Z#QFE?` and friends
+  * `AIXM::Z#qfe?` and friends
+* Breaking major changes:
+  * Symbols such as :qnh, :ofm or :mhz are downcased now
 
 ## 0.1.4
 
