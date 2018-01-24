@@ -3,7 +3,7 @@ require_relative '../../../../spec_helper'
 describe AIXM::Feature::NavigationalAid::VOR do
   describe :initialize do
     let :f do
-      AIXM.f(111, :MHZ)
+      AIXM.f(111, :mhz)
     end
 
     it "won't accept invalid arguments" do
@@ -26,7 +26,7 @@ describe AIXM::Feature::NavigationalAid::VOR do
 
     describe :to_digest do
       it "must return digest of payload" do
-        subject.to_digest.must_equal 184560484
+        subject.to_digest.must_equal 276222546
       end
     end
 

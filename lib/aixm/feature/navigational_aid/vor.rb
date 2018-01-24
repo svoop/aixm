@@ -43,7 +43,7 @@ module AIXM
           @type = TYPES.lookup(type&.to_sym, nil) || fail(ArgumentError, "invalid type")
           @north = NORTHS.lookup(north&.to_sym, nil) || fail(ArgumentError, "invalid north")
           @f = f
-          fail(ArgumentError, "invalid frequency") unless f.is_a?(F) && f.between?(108, 117.95, :MHZ)
+          fail(ArgumentError, "invalid frequency") unless f.is_a?(F) && f.between?(108, 117.95, :mhz)
         end
 
         ##
@@ -66,7 +66,7 @@ module AIXM
             vor.txtName(name)
             vor.codeType(type_key.to_s)
             vor.valFreq(f.freq.trim)
-            vor.uomFreq(f.unit.to_s)
+            vor.uomFreq(f.unit.upcase.to_s)
             vor.codeTypeNorth(north_key.to_s)
             vor.codeDatum('WGE')
             if z

@@ -17,7 +17,7 @@ module AIXM
         def initialize(id:, name:, xy:, z: nil, f:)
           super(id: id, name: name, xy: xy, z: z)
           @f = f
-          fail(ArgumentError, "invalid frequency") unless f.is_a?(F) && f.between?(190, 1750, :KHZ)
+          fail(ArgumentError, "invalid frequency") unless f.is_a?(F) && f.between?(190, 1750, :khz)
         end
 
         ##
@@ -39,7 +39,7 @@ module AIXM
             ndb.OrgUid
             ndb.txtName(name)
             ndb.valFreq(f.freq.trim)
-            ndb.uomFreq(f.unit.to_s)
+            ndb.uomFreq(f.unit.upcase.to_s)
             ndb.codeDatum('WGE')
             if z
               ndb.valElev(z.alt)

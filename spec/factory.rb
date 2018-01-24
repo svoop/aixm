@@ -115,7 +115,7 @@ module AIXM
           name: 'NDB NAVAID',
           xy: AIXM.xy(lat: %q(47°51'33"N), long: %q(007°33'36"E)),
           z: AIXM.z(500, :qnh),
-          f: AIXM.f(555, :KHZ)
+          f: AIXM.f(555, :khz)
         ).tap do |ndb|
           ndb.remarks = 'ndb navaid'
         end
@@ -140,7 +140,7 @@ module AIXM
           xy: AIXM.xy(lat: %q(47°51'33"N), long: %q(007°33'36"E)),
           z: AIXM.z(500, :qnh),
           type: :VOR,
-          f: AIXM.f(111, :MHZ),
+          f: AIXM.f(111, :mhz),
           north: :geographic
         ).tap do |vor|
           vor.remarks = 'vor navaid'

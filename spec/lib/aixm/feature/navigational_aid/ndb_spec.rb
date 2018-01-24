@@ -3,7 +3,7 @@ require_relative '../../../../spec_helper'
 describe AIXM::Feature::NavigationalAid::NDB do
   describe :initialize do
     let :f do
-      AIXM.f(555, :KHZ)
+      AIXM.f(555, :khz)
     end
 
     it "won't accept invalid arguments" do
@@ -24,7 +24,7 @@ describe AIXM::Feature::NavigationalAid::NDB do
 
     describe :to_digest do
       it "must return digest of payload" do
-        subject.to_digest.must_equal 251142755
+        subject.to_digest.must_equal 839752023
       end
     end
 

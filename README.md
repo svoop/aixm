@@ -85,7 +85,7 @@ AIXM.z(45, :qne)     # altitude: flight level 45
 #### Frequency
 
 ```ruby
-AIXM.f(123.35, :MHZ)
+AIXM.f(123.35, :mhz)
 ```
 
 ### Features
