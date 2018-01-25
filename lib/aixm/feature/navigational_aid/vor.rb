@@ -8,7 +8,7 @@ module AIXM
       #
       # Types:
       # * +:vor+ (+:VOR+) - standard VOR
-      # * +:vordme+ (+:DVOR+) - VOR/DME
+      # * +:doppler_vor+ (+:DVOR+) - Doppler VOR
       #
       # North types:
       # * +:geographic+ (+:TRUE+) - VOR aligned towards geographic north
@@ -23,7 +23,7 @@ module AIXM
 
         TYPES = {
           VOR: :vor,
-          DVOR: :dvor
+          DVOR: :doppler_vor
         }.freeze
 
         NORTHS = {

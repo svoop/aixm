@@ -1,5 +1,7 @@
 ## 0.2.1
 
+* Major changes:
+  * Fix DVOR and VORDME confusion
 * Minor changes:
   * Remove :other from all value lists
 

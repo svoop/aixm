@@ -156,7 +156,7 @@ describe AIXM::Document do
               <geoLongArc>0045300.00E</geoLongArc>
             </Avx>
           </Abd>
-          <!-- Navigational aid: [ICAO] DESIGNATED POINT NAVAID -->
+          <!-- Navigational aid: [DesignatedPoint:ICAO] DESIGNATED POINT NAVAID -->
           <Dpn>
             <DpnUid>
               <codeId>DPN</codeId>
@@ -218,7 +218,7 @@ describe AIXM::Document do
             <uomDistVer>FT</uomDistVer>
             <txtRmk>ndb navaid</txtRmk>
           </Ndb>
-          <!-- Navigational aid: [VOR] VOR NAVAID -->
+          <!-- Navigational aid: [VOR:VOR] VOR NAVAID -->
           <Vor>
             <VorUid>
               <codeId>VOR</codeId>
@@ -360,7 +360,7 @@ describe AIXM::Document do
               <geoLongArc>4.88333333E</geoLongArc>
             </Avx>
           </Abd>
-          <!-- Navigational aid: [ICAO] DESIGNATED POINT NAVAID -->
+          <!-- Navigational aid: [DesignatedPoint:ICAO] DESIGNATED POINT NAVAID -->
           <Dpn>
             <DpnUid newEntity="true">
               <codeId>DPN</codeId>
@@ -422,7 +422,7 @@ describe AIXM::Document do
             <uomDistVer>FT</uomDistVer>
             <txtRmk>ndb navaid</txtRmk>
           </Ndb>
-          <!-- Navigational aid: [VOR] VOR NAVAID -->
+          <!-- Navigational aid: [VOR:VOR] VOR NAVAID -->
           <Vor>
             <VorUid newEntity="true">
               <codeId>VOR</codeId>

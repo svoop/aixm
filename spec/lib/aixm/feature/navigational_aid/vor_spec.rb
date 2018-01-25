@@ -20,20 +20,20 @@ describe AIXM::Feature::NavigationalAid::VOR do
 
     describe :kind do
       it "must return class or type" do
-        subject.kind.must_equal :VOR
+        subject.kind.must_equal "VOR:VOR"
       end
     end
 
     describe :to_digest do
       it "must return digest of payload" do
-        subject.to_digest.must_equal 276222546
+        subject.to_digest.must_equal 162986804
       end
     end
 
     describe :to_xml do
       it "must build correct XML of VOR with OFM extension" do
         subject.to_xml(:ofm).must_equal <<~END
-          <!-- Navigational aid: [VOR] VOR NAVAID -->
+          <!-- Navigational aid: [VOR:VOR] VOR NAVAID -->
           <Vor>
             <VorUid newEntity="true">
               <codeId>VOR</codeId>

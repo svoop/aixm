@@ -8,7 +8,7 @@ describe AIXM::Feature::NavigationalAid::TACAN do
 
     describe :kind do
       it "must return class or type" do
-        subject.kind.must_equal :TACAN
+        subject.kind.must_equal "TACAN"
       end
     end
 

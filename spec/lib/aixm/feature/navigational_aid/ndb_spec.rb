@@ -18,7 +18,7 @@ describe AIXM::Feature::NavigationalAid::NDB do
 
     describe :kind do
       it "must return class or type" do
-        subject.kind.must_equal :NDB
+        subject.kind.must_equal "NDB"
       end
     end
 

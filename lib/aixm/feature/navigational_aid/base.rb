@@ -21,9 +21,9 @@ module AIXM
         end
 
         ##
-        # Return either the +type_key+ or +class+
+        # Return a fully descriptive combination of +class+ and +type_key+
         def kind
-          respond_to?(:type_key) ? type_key : self.class.name.split('::').last.to_sym
+          [self.class.name.split('::').last, type_key].compact.join(':')
         end
 
         ##
@@ -38,6 +38,12 @@ module AIXM
           builder = Builder::XmlMarkup.new(indent: 2)
           builder.comment! "Navigational aid: [#{kind}] #{name}"
           builder
+        end
+
+        ##
+        # Fallback type key
+        def type_key
+          nil
         end
       end
 

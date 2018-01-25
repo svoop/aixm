@@ -154,14 +154,14 @@ All features are subclasses of `AIXM::Feature::Base`.
   * channel: String
   * remarks = String
 
-##### VOR and DVOR
+##### VOR
 
 * AIXM.vor
   * id: String
   * name: String
   * xy: AIXM.xy
   * z: AIXM.z or *nil*
-  * type: :vor or :vordme
+  * type: :vor or :dvor
   * f: AIXM.f
   * north: :geographic, :grid or :magnetic
   * remarks = String

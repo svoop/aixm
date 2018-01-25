@@ -8,7 +8,7 @@ describe AIXM::Feature::NavigationalAid::Marker do
 
     describe :kind do
       it "must return class or type" do
-        subject.kind.must_equal :Marker
+        subject.kind.must_equal "Marker"
       end
     end
 
