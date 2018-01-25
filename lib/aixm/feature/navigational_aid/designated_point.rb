@@ -10,15 +10,13 @@ module AIXM
       # * +:adhp+ (+:ADHP+) - aerodrome/heliport related name code designator
       # * +:coordinates+ (+:COORD+) - point with identifier derived from its
       #                               geographical coordinates
-      # * +:other+ (+:OTHER+) - other type
       class DesignatedPoint < Base
         using AIXM::Refinements
 
         TYPES = {
           ICAO: :icao,
           ADHP: :adhp,
-          COORD: :coordinates,
-          OTHER: :other
+          COORD: :coordinates
         }.freeze
 
         attr_reader :type

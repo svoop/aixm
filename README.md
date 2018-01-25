@@ -112,7 +112,7 @@ All features are subclasses of `AIXM::Feature::Base`.
   * name: String
   * xy: AIXM.xy
   * z: AIXM.z or *nil*
-  * type: :icao, :adhp, :coordinates or :other
+  * type: :icao, :adhp, or :coordinates
   * remarks = String
 
 ##### DME
@@ -163,7 +163,7 @@ All features are subclasses of `AIXM::Feature::Base`.
   * z: AIXM.z or *nil*
   * type: :vor or :vordme
   * f: AIXM.f
-  * north: :geographic or :magnetic
+  * north: :geographic, :grid or :magnetic
   * remarks = String
 
 ### Components

@@ -16,7 +16,6 @@ module AIXM
       #                       universal transverse mercator grid imposed on
       #                       topographic maps by the USA and NATO
       # * +:magnetic+ (+:MAG+) - VOR aligned towards magnetic north
-      # * +:other+ (+:OTHER+) - other north type
       #
       # https://en.wikipedia.org/wiki/VHF_omnidirectional_range
       class VOR < Base
@@ -24,14 +23,13 @@ module AIXM
 
         TYPES = {
           VOR: :vor,
-          DVOR: :vordme
+          DVOR: :dvor
         }.freeze
 
         NORTHS = {
           TRUE: :geographic,
           GRID: :grid,
-          MAG: :magnetic,
-          OTHER: :other
+          MAG: :magnetic
         }.freeze
 
         attr_reader :type, :f, :north

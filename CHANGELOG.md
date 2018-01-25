@@ -1,3 +1,8 @@
+## 0.2.1
+
+* Minor changes:
+  * Remove :other from all value lists
+
 ## 0.2.0
 
 * Additions:
