@@ -34,6 +34,9 @@ describe AIXM::Feature::NavigationalAid::TACAN do
             <codeDatum>WGE</codeDatum>
             <valElev>500</valElev>
             <uomDistVer>FT</uomDistVer>
+            <Ttt>
+              <codeWorkHr>H24</codeWorkHr>
+            </Ttt>
             <txtRmk>tacan navaid</txtRmk>
           </Tcn>
         END

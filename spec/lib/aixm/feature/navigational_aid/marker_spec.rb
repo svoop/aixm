@@ -35,6 +35,9 @@ describe AIXM::Feature::NavigationalAid::Marker do
             <codeDatum>WGE</codeDatum>
             <valElev>500</valElev>
             <uomDistVer>FT</uomDistVer>
+            <Mtt>
+              <codeWorkHr>H24</codeWorkHr>
+            </Mtt>
             <txtRmk>marker navaid</txtRmk>
           </Mkr>
         END

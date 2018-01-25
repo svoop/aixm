@@ -71,6 +71,11 @@ module AIXM
               vor.valElev(z.alt)
               vor.uomDistVer(z.unit.to_s)
             end
+            if schedule
+              vor.Vtt do |vtt|
+                vtt << schedule.to_xml(*extensions).indent(4)
+              end
+            end
             vor.txtRmk(remarks) if remarks
             vor.target!   # see https://github.com/jimweirich/builder/issues/42
           end

@@ -43,6 +43,11 @@ module AIXM
               dme.valElev(z.alt)
               dme.uomDistVer(z.unit.to_s)
             end
+            if schedule
+              dme.Dtt do |dtt|
+                dtt << schedule.to_xml(*extensions).indent(4)
+              end
+            end
             dme.txtRmk(remarks) if remarks
             dme.target!   # see https://github.com/jimweirich/builder/issues/42
           end

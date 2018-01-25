@@ -2,6 +2,7 @@
 
 * Major changes:
   * Fix DVOR and VORDME confusion
+  * Add schedule to navigational aids
 * Minor changes:
   * Remove :other from all value lists
 

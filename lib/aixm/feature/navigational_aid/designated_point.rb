@@ -52,6 +52,11 @@ module AIXM
               dpn.valElev(z.alt)
               dpn.uomDistVer(z.unit.to_s)
             end
+            if schedule
+              dpn.Dtt do |dtt|
+                dtt << schedule.to_xml(*extensions).indent(4)
+              end
+            end
             dpn.txtRmk(remarks) if remarks
             dpn.target!   # see https://github.com/jimweirich/builder/issues/42
           end

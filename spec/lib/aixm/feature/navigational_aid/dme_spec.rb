@@ -34,6 +34,9 @@ describe AIXM::Feature::NavigationalAid::DME do
             <codeDatum>WGE</codeDatum>
             <valElev>500</valElev>
             <uomDistVer>FT</uomDistVer>
+            <Dtt>
+              <codeWorkHr>H24</codeWorkHr>
+            </Dtt>
             <txtRmk>dme navaid</txtRmk>
           </Dme>
         END

@@ -113,6 +113,7 @@ All features are subclasses of `AIXM::Feature::Base`.
   * xy: AIXM.xy
   * z: AIXM.z or *nil*
   * type: :icao, :adhp, or :coordinates
+  * schedule = AIXM.schedule
   * remarks = String
 
 ##### DME
@@ -123,6 +124,7 @@ All features are subclasses of `AIXM::Feature::Base`.
   * xy: AIXM.xy
   * z: AIXM.z or *nil*
   * channel: String
+  * schedule = AIXM.schedule
   * remarks = String
 
 ##### NDB
@@ -133,6 +135,7 @@ All features are subclasses of `AIXM::Feature::Base`.
   * xy: AIXM.xy
   * z: AIXM.z or *nil*
   * f: AIXM.f
+  * schedule = AIXM.schedule
   * remarks = String
 
 ##### Marker
@@ -142,6 +145,7 @@ All features are subclasses of `AIXM::Feature::Base`.
   * name: String
   * xy: AIXM.xy
   * z: AIXM.z or *nil*
+  * schedule = AIXM.schedule
   * remarks = String
 
 ##### TACAN
@@ -152,6 +156,7 @@ All features are subclasses of `AIXM::Feature::Base`.
   * xy: AIXM.xy
   * z: AIXM.z or *nil*
   * channel: String
+  * schedule = AIXM.schedule
   * remarks = String
 
 ##### VOR
@@ -164,6 +169,7 @@ All features are subclasses of `AIXM::Feature::Base`.
   * type: :vor or :dvor
   * f: AIXM.f
   * north: :geographic, :grid or :magnetic
+  * schedule = AIXM.schedule
   * remarks = String
 
 ### Components

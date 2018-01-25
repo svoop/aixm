@@ -169,6 +169,9 @@ describe AIXM::Document do
             <codeType>ICAO</codeType>
             <valElev>500</valElev>
             <uomDistVer>FT</uomDistVer>
+            <Dtt>
+              <codeWorkHr>H24</codeWorkHr>
+            </Dtt>
             <txtRmk>designated point navaid</txtRmk>
           </Dpn>
           <!-- Navigational aid: [DME] DME NAVAID -->
@@ -184,6 +187,9 @@ describe AIXM::Document do
             <codeDatum>WGE</codeDatum>
             <valElev>500</valElev>
             <uomDistVer>FT</uomDistVer>
+            <Dtt>
+              <codeWorkHr>H24</codeWorkHr>
+            </Dtt>
             <txtRmk>dme navaid</txtRmk>
           </Dme>
           <!-- Navigational aid: [Marker] MARKER NAVAID -->
@@ -200,6 +206,9 @@ describe AIXM::Document do
             <codeDatum>WGE</codeDatum>
             <valElev>500</valElev>
             <uomDistVer>FT</uomDistVer>
+            <Mtt>
+              <codeWorkHr>H24</codeWorkHr>
+            </Mtt>
             <txtRmk>marker navaid</txtRmk>
           </Mkr>
           <!-- Navigational aid: [NDB] NDB NAVAID -->
@@ -216,8 +225,29 @@ describe AIXM::Document do
             <codeDatum>WGE</codeDatum>
             <valElev>500</valElev>
             <uomDistVer>FT</uomDistVer>
+            <Ntt>
+              <codeWorkHr>H24</codeWorkHr>
+            </Ntt>
             <txtRmk>ndb navaid</txtRmk>
           </Ndb>
+          <!-- Navigational aid: [TACAN] TACAN NAVAID -->
+          <Tcn>
+            <TcnUid>
+              <codeId>TCN</codeId>
+              <geoLat>475133.00N</geoLat>
+              <geoLong>0073336.00E</geoLong>
+            </TcnUid>
+            <OrgUid/>
+            <txtName>TACAN NAVAID</txtName>
+            <codeChannel>29X</codeChannel>
+            <codeDatum>WGE</codeDatum>
+            <valElev>500</valElev>
+            <uomDistVer>FT</uomDistVer>
+            <Ttt>
+              <codeWorkHr>H24</codeWorkHr>
+            </Ttt>
+            <txtRmk>tacan navaid</txtRmk>
+          </Tcn>
           <!-- Navigational aid: [VOR:VOR] VOR NAVAID -->
           <Vor>
             <VorUid>
@@ -234,23 +264,11 @@ describe AIXM::Document do
             <codeDatum>WGE</codeDatum>
             <valElev>500</valElev>
             <uomDistVer>FT</uomDistVer>
+            <Vtt>
+              <codeWorkHr>H24</codeWorkHr>
+            </Vtt>
             <txtRmk>vor navaid</txtRmk>
           </Vor>
-          <!-- Navigational aid: [TACAN] TACAN NAVAID -->
-          <Tcn>
-            <TcnUid>
-              <codeId>TCN</codeId>
-              <geoLat>475133.00N</geoLat>
-              <geoLong>0073336.00E</geoLong>
-            </TcnUid>
-            <OrgUid/>
-            <txtName>TACAN NAVAID</txtName>
-            <codeChannel>29X</codeChannel>
-            <codeDatum>WGE</codeDatum>
-            <valElev>500</valElev>
-            <uomDistVer>FT</uomDistVer>
-            <txtRmk>tacan navaid</txtRmk>
-          </Tcn>
         </AIXM-Snapshot>
       END
     end
@@ -373,6 +391,9 @@ describe AIXM::Document do
             <codeType>ICAO</codeType>
             <valElev>500</valElev>
             <uomDistVer>FT</uomDistVer>
+            <Dtt>
+              <codeWorkHr>H24</codeWorkHr>
+            </Dtt>
             <txtRmk>designated point navaid</txtRmk>
           </Dpn>
           <!-- Navigational aid: [DME] DME NAVAID -->
@@ -388,6 +409,9 @@ describe AIXM::Document do
             <codeDatum>WGE</codeDatum>
             <valElev>500</valElev>
             <uomDistVer>FT</uomDistVer>
+            <Dtt>
+              <codeWorkHr>H24</codeWorkHr>
+            </Dtt>
             <txtRmk>dme navaid</txtRmk>
           </Dme>
           <!-- Navigational aid: [Marker] MARKER NAVAID -->
@@ -404,6 +428,9 @@ describe AIXM::Document do
             <codeDatum>WGE</codeDatum>
             <valElev>500</valElev>
             <uomDistVer>FT</uomDistVer>
+            <Mtt>
+              <codeWorkHr>H24</codeWorkHr>
+            </Mtt>
             <txtRmk>marker navaid</txtRmk>
           </Mkr>
           <!-- Navigational aid: [NDB] NDB NAVAID -->
@@ -420,8 +447,29 @@ describe AIXM::Document do
             <codeDatum>WGE</codeDatum>
             <valElev>500</valElev>
             <uomDistVer>FT</uomDistVer>
+            <Ntt>
+              <codeWorkHr>H24</codeWorkHr>
+            </Ntt>
             <txtRmk>ndb navaid</txtRmk>
           </Ndb>
+          <!-- Navigational aid: [TACAN] TACAN NAVAID -->
+          <Tcn>
+            <TcnUid newEntity="true">
+              <codeId>TCN</codeId>
+              <geoLat>47.85916667N</geoLat>
+              <geoLong>7.56000000E</geoLong>
+            </TcnUid>
+            <OrgUid/>
+            <txtName>TACAN NAVAID</txtName>
+            <codeChannel>29X</codeChannel>
+            <codeDatum>WGE</codeDatum>
+            <valElev>500</valElev>
+            <uomDistVer>FT</uomDistVer>
+            <Ttt>
+              <codeWorkHr>H24</codeWorkHr>
+            </Ttt>
+            <txtRmk>tacan navaid</txtRmk>
+          </Tcn>
           <!-- Navigational aid: [VOR:VOR] VOR NAVAID -->
           <Vor>
             <VorUid newEntity="true">
@@ -438,23 +486,11 @@ describe AIXM::Document do
             <codeDatum>WGE</codeDatum>
             <valElev>500</valElev>
             <uomDistVer>FT</uomDistVer>
+            <Vtt>
+              <codeWorkHr>H24</codeWorkHr>
+            </Vtt>
             <txtRmk>vor navaid</txtRmk>
           </Vor>
-          <!-- Navigational aid: [TACAN] TACAN NAVAID -->
-          <Tcn>
-            <TcnUid newEntity="true">
-              <codeId>TCN</codeId>
-              <geoLat>47.85916667N</geoLat>
-              <geoLong>7.56000000E</geoLong>
-            </TcnUid>
-            <OrgUid/>
-            <txtName>TACAN NAVAID</txtName>
-            <codeChannel>29X</codeChannel>
-            <codeDatum>WGE</codeDatum>
-            <valElev>500</valElev>
-            <uomDistVer>FT</uomDistVer>
-            <txtRmk>tacan navaid</txtRmk>
-          </Tcn>
         </AIXM-Snapshot>
       END
     end

@@ -45,6 +45,11 @@ module AIXM
               ndb.valElev(z.alt)
               ndb.uomDistVer(z.unit.to_s)
             end
+            if schedule
+              ndb.Ntt do |ntt|
+                ntt << schedule.to_xml(*extensions).indent(4)
+              end
+            end
             ndb.txtRmk(remarks) if remarks
             ndb.target!   # see https://github.com/jimweirich/builder/issues/42
           end

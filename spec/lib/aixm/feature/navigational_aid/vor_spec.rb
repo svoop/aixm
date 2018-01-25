@@ -49,6 +49,9 @@ describe AIXM::Feature::NavigationalAid::VOR do
             <codeDatum>WGE</codeDatum>
             <valElev>500</valElev>
             <uomDistVer>FT</uomDistVer>
+            <Vtt>
+              <codeWorkHr>H24</codeWorkHr>
+            </Vtt>
             <txtRmk>vor navaid</txtRmk>
           </Vor>
         END

@@ -10,7 +10,7 @@ module AIXM
         using AIXM::Refinements
 
         attr_reader :id, :name, :xy, :z
-        attr_accessor :remarks
+        attr_accessor :schedule, :remarks
 
         private_class_method :new
 
@@ -18,6 +18,13 @@ module AIXM
           @id, @name, @xy, @z = id&.upcase, name&.upcase, xy, z
           fail(ArgumentError, "invalid xy") unless xy.is_a? AIXM::XY
           fail(ArgumentError, "invalid z") unless z.nil? || (z.is_a?(AIXM::Z) && z.qnh?)
+        end
+
+        ##
+        # Assign a +Schedule+ object or +nil+
+        def schedule=(value)
+          fail(ArgumentError, "invalid schedule") unless value.nil? || value.is_a?(AIXM::Component::Schedule)
+          @schedule = value
         end
 
         ##

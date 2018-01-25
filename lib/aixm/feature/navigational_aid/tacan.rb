@@ -43,6 +43,11 @@ module AIXM
               tcn.valElev(z.alt)
               tcn.uomDistVer(z.unit.to_s)
             end
+            if schedule
+              tcn.Ttt do |ttt|
+                ttt << schedule.to_xml(*extensions).indent(4)
+              end
+            end
             tcn.txtRmk(remarks) if remarks
             tcn.target!   # see https://github.com/jimweirich/builder/issues/42
           end

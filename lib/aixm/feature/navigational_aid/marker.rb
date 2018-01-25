@@ -30,6 +30,11 @@ module AIXM
               mkr.valElev(z.alt)
               mkr.uomDistVer(z.unit.to_s)
             end
+            if schedule
+              mkr.Mtt do |mtt|
+                mtt << schedule.to_xml(*extensions).indent(4)
+              end
+            end
             mkr.txtRmk(remarks) if remarks
             mkr.target!   # see https://github.com/jimweirich/builder/issues/42
           end

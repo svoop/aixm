@@ -34,6 +34,9 @@ describe AIXM::Feature::NavigationalAid::DesignatedPoint do
             <codeType>ICAO</codeType>
             <valElev>500</valElev>
             <uomDistVer>FT</uomDistVer>
+            <Dtt>
+              <codeWorkHr>H24</codeWorkHr>
+            </Dtt>
             <txtRmk>designated point navaid</txtRmk>
           </Dpn>
         END

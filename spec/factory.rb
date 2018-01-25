@@ -82,6 +82,7 @@ module AIXM
           z: AIXM.z(500, :qnh),
           type: :ICAO
         ).tap do |designated_point|
+          designated_point.schedule = AIXM::H24
           designated_point.remarks = 'designated point navaid'
         end
       end
@@ -94,6 +95,7 @@ module AIXM
           z: AIXM.z(500, :qnh),
           channel: '95X'
         ).tap do |dme|
+          dme.schedule = AIXM::H24
           dme.remarks = 'dme navaid'
         end
       end
@@ -105,6 +107,7 @@ module AIXM
           xy: AIXM.xy(lat: %q(47°51'33"N), long: %q(007°33'36"E)),
           z: AIXM.z(500, :qnh)
         ).tap do |marker|
+          marker.schedule = AIXM::H24
           marker.remarks = 'marker navaid'
         end
       end
@@ -117,6 +120,7 @@ module AIXM
           z: AIXM.z(500, :qnh),
           f: AIXM.f(555, :khz)
         ).tap do |ndb|
+          ndb.schedule = AIXM::H24
           ndb.remarks = 'ndb navaid'
         end
       end
@@ -129,6 +133,7 @@ module AIXM
           z: AIXM.z(500, :qnh),
           channel: '29X'
         ).tap do |tacan|
+          tacan.schedule = AIXM::H24
           tacan.remarks = 'tacan navaid'
         end
       end
@@ -143,6 +148,7 @@ module AIXM
           f: AIXM.f(111, :mhz),
           north: :geographic
         ).tap do |vor|
+          vor.schedule = AIXM::H24
           vor.remarks = 'vor navaid'
         end
       end
@@ -156,8 +162,8 @@ module AIXM
           document.features << AIXM::Factory.dme
           document.features << AIXM::Factory.marker
           document.features << AIXM::Factory.ndb
-          document.features << AIXM::Factory.vor
           document.features << AIXM::Factory.tacan
+          document.features << AIXM::Factory.vor
         end
       end
 

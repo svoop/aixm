@@ -45,6 +45,9 @@ describe AIXM::Feature::NavigationalAid::NDB do
             <codeDatum>WGE</codeDatum>
             <valElev>500</valElev>
             <uomDistVer>FT</uomDistVer>
+            <Ntt>
+              <codeWorkHr>H24</codeWorkHr>
+            </Ntt>
             <txtRmk>ndb navaid</txtRmk>
           </Ndb>
         END
