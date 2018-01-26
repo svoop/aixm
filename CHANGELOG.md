@@ -1,3 +1,8 @@
+## 0.2.2
+
+* Minor changes:
+  * Fix bad error classes
+
 ## 0.2.1
 
 * Major changes:

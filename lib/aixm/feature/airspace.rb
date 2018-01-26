@@ -23,17 +23,17 @@ module AIXM
       end
 
       def name=(value)
-        fail(AttributeError, "invalid name") unless value.is_a? String
+        fail(ArgumentError, "invalid name") unless value.is_a? String
         @name = value.uptrans
       end
 
       def short_name=(value)
-        fail(AttributeError, "invalid short name") unless value.nil? || value.is_a?(String)
+        fail(ArgumentError, "invalid short name") unless value.nil? || value.is_a?(String)
         @short_name = value&.uptrans
       end
 
       def type=(value)
-        fail(AttributeError, "invalid type") unless value.is_a?(String)
+        fail(ArgumentError, "invalid type") unless value.is_a?(String)
         @type = value.upcase
       end
 
@@ -43,7 +43,7 @@ module AIXM
       end
 
       def remarks=(value)
-        fail(AttributeError, "invalid remarks") unless value.is_a?(String)
+        fail(ArgumentError, "invalid remarks") unless value.is_a?(String)
         @remarks = value
       end
 
