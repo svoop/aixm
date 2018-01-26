@@ -99,7 +99,7 @@ module AIXM
 
         ##
         # Render AIXM markup
-        def to_xml(*extensions)
+        def to_aixm(*extensions)
           builder = to_builder(*extensions)
           builder.Vor do |vor|
             vor << to_uid(*extensions).indent(2)
@@ -116,13 +116,13 @@ module AIXM
             end
             if schedule
               vor.Vtt do |vtt|
-                vtt << schedule.to_xml(*extensions).indent(4)
+                vtt << schedule.to_aixm(*extensions).indent(4)
               end
             end
             vor.txtRmk(remarks) if remarks
           end
-          builder << @dme.to_xml(*extensions) if @dme
-          builder << @tacan.to_xml(*extensions) if @tacan
+          builder << @dme.to_aixm(*extensions) if @dme
+          builder << @tacan.to_aixm(*extensions) if @tacan
           builder.target!   # see https://github.com/jimweirich/builder/issues/42
         end
       end

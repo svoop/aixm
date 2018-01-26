@@ -265,8 +265,8 @@ Use `AIXM::Document#valid?` to validate the resulting AIXM against the XSD schem
 ## Rendering
 
 ```ruby
-document.to_xml         # render AIXM 4.5 compliant XML
-document.to_xml(:ofm)   # render AIXM 4.5 + OFM extensions XML
+document.to_aixm         # render AIXM 4.5 compliant XML
+document.to_aixm(:ofm)   # render AIXM 4.5 + OFM extensions XML
 ```
 
 ## Constants

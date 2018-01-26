@@ -48,7 +48,7 @@ module AIXM
 
         ##
         # Render AIXM markup
-        def to_xml(*extensions)
+        def to_aixm(*extensions)
           builder = to_builder(*extensions)
           builder.Dme do |dme|
             dme << to_uid(*extensions).indent(2)
@@ -63,7 +63,7 @@ module AIXM
             end
             if schedule
               dme.Dtt do |dtt|
-                dtt << schedule.to_xml(*extensions).indent(4)
+                dtt << schedule.to_aixm(*extensions).indent(4)
               end
             end
             dme.txtRmk(remarks) if remarks

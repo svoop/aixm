@@ -47,8 +47,8 @@ module AIXM
 
       ##
       # Render AIXM markup
-      def to_xml(*extensions)
-        @result_array.map { |h| h.to_xml(*extensions) }.join
+      def to_aixm(*extensions)
+        @result_array.map { |h| h.to_aixm(*extensions) }.join
       end
 
       private

@@ -34,7 +34,7 @@ module AIXM
     # Validate against the XSD and return an array of errors
     def errors
       xsd = Nokogiri::XML::Schema(File.open(AIXM::SCHEMA))
-      xsd.validate(Nokogiri::XML(to_xml)).reject do |error|
+      xsd.validate(Nokogiri::XML(to_aixm)).reject do |error|
         error.message =~ IGNORE_ERROR_PATTERN
       end
     end
@@ -44,7 +44,7 @@ module AIXM
     #
     # Extensions:
     # * +:ofm+ - Open Flightmaps
-    def to_xml(*extensions)
+    def to_aixm(*extensions)
       now = Time.now.xmlschema
       meta = {
         'xmlns:xsi': 'http://www.aixm.aero/schema/4.5/AIXM-Snapshot.xsd',
@@ -57,7 +57,7 @@ module AIXM
       builder = Builder::XmlMarkup.new(indent: 2)
       builder.instruct!
       builder.tag!('AIXM-Snapshot', meta) do |aixm_snapshot|
-        aixm_snapshot << features.map { |f| f.to_xml(*extensions) }.join.indent(2)
+        aixm_snapshot << features.map { |f| f.to_aixm(*extensions) }.join.indent(2)
       end
     end
 

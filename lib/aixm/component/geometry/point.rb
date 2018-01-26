@@ -19,7 +19,7 @@ module AIXM
 
         ##
         # Render AIXM markup
-        def to_xml(*extensions)
+        def to_aixm(*extensions)
           builder = Builder::XmlMarkup.new(indent: 2)
           builder.Avx do |avx|
             avx.codeType('GRC')

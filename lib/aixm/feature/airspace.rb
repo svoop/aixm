@@ -72,7 +72,7 @@ module AIXM
 
       ##
       # Render AIXM markup
-      def to_xml(*extensions)
+      def to_aixm(*extensions)
         mid = to_digest
         builder = Builder::XmlMarkup.new(indent: 2)
         builder.comment! "Airspace: [#{type}] #{name}"
@@ -80,10 +80,10 @@ module AIXM
           ase << to_uid(*extensions).indent(2)
           ase.txtLocalType(short_name.to_s) if short_name && short_name != name
           ase.txtName(name.to_s)
-          ase << class_layers.first.to_xml(*extensions).indent(2)
+          ase << class_layers.first.to_aixm(*extensions).indent(2)
           if schedule
             ase.Att do |att|
-              att << schedule.to_xml(*extensions).indent(4)
+              att << schedule.to_aixm(*extensions).indent(4)
             end
           end
           ase.txtRmk(remarks.to_s) if remarks
@@ -96,7 +96,7 @@ module AIXM
               aseuid.codeId(mid)
             end
           end
-          abd << geometry.to_xml(*extensions).indent(2)
+          abd << geometry.to_aixm(*extensions).indent(2)
         end
         if class_layers.count > 1
           builder.Adg do |adg|
@@ -115,7 +115,7 @@ module AIXM
                 aseuid.codeType("CLASS")
               end
               ase.txtName(name.to_s)
-              ase << class_layers[index].to_xml(*extensions).indent(2)
+              ase << class_layers[index].to_aixm(*extensions).indent(2)
             end
           end
         end

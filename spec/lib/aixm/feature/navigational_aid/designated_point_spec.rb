@@ -18,9 +18,9 @@ describe AIXM::Feature::NavigationalAid::DesignatedPoint do
       end
     end
 
-    describe :to_xml do
+    describe :to_aixm do
       it "must build correct XML of VOR with OFM extension" do
-        subject.to_xml(:ofm).must_equal <<~END
+        subject.to_aixm(:ofm).must_equal <<~END
           <!-- NavigationalAid: [DesignatedPoint:ICAO] DESIGNATED POINT NAVAID -->
           <Dpn>
             <DpnUid newEntity="true">
