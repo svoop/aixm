@@ -21,7 +21,7 @@ describe AIXM::Feature::NavigationalAid::TACAN do
     describe :to_xml do
       it "must build correct XML with OFM extension" do
         subject.to_xml(:ofm).must_equal <<~END
-          <!-- Navigational aid: [TACAN] TACAN NAVAID -->
+          <!-- NavigationalAid: [TACAN] TACAN NAVAID -->
           <Tcn>
             <TcnUid newEntity="true">
               <codeId>TTT</codeId>

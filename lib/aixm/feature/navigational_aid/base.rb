@@ -63,7 +63,7 @@ module AIXM
         # Create builder to render AIXM in subclasses
         def to_builder(*extensions)
           builder = Builder::XmlMarkup.new(indent: 2)
-          builder.comment! "Navigational aid: [#{kind}] #{name}"
+          builder.comment! "NavigationalAid: [#{kind}] #{name}"
           builder
         end
 

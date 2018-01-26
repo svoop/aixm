@@ -33,7 +33,7 @@ describe AIXM::Feature::NavigationalAid::VOR do
     describe :to_xml do
       it "must build correct XML of VOR with OFM extension" do
         subject.to_xml(:ofm).must_equal <<~END
-          <!-- Navigational aid: [VOR:VOR] VOR NAVAID -->
+          <!-- NavigationalAid: [VOR:VOR] VOR NAVAID -->
           <Vor>
             <VorUid newEntity="true">
               <codeId>VVV</codeId>
@@ -83,7 +83,7 @@ describe AIXM::Feature::NavigationalAid::VOR do
     describe :to_xml do
       it "must build correct XML of VOR with OFM extension" do
         subject.to_xml(:ofm).must_equal <<~END
-          <!-- Navigational aid: [VOR:VOR] VOR/DME NAVAID -->
+          <!-- NavigationalAid: [VOR:VOR] VOR/DME NAVAID -->
           <Vor>
             <VorUid newEntity="true">
               <codeId>VVV</codeId>
@@ -104,7 +104,7 @@ describe AIXM::Feature::NavigationalAid::VOR do
             </Vtt>
             <txtRmk>vor/dme navaid</txtRmk>
           </Vor>
-          <!-- Navigational aid: [DME] VOR/DME NAVAID -->
+          <!-- NavigationalAid: [DME] VOR/DME NAVAID -->
           <Dme>
             <DmeUid newEntity="true">
               <codeId>VVV</codeId>
@@ -156,7 +156,7 @@ describe AIXM::Feature::NavigationalAid::VOR do
     describe :to_xml do
       it "must build correct XML of VOR with OFM extension" do
         subject.to_xml(:ofm).must_equal <<~END
-          <!-- Navigational aid: [VOR:VOR] VORTAC NAVAID -->
+          <!-- NavigationalAid: [VOR:VOR] VORTAC NAVAID -->
           <Vor>
             <VorUid newEntity="true">
               <codeId>VVV</codeId>
@@ -177,7 +177,7 @@ describe AIXM::Feature::NavigationalAid::VOR do
             </Vtt>
             <txtRmk>vortac navaid</txtRmk>
           </Vor>
-          <!-- Navigational aid: [TACAN] VORTAC NAVAID -->
+          <!-- NavigationalAid: [TACAN] VORTAC NAVAID -->
           <Tcn>
             <TcnUid newEntity="true">
               <codeId>VVV</codeId>

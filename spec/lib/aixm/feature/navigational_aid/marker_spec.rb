@@ -21,7 +21,7 @@ describe AIXM::Feature::NavigationalAid::Marker do
     describe :to_xml do
       it "must build correct XML with OFM extension" do
         subject.to_xml(:ofm).must_equal <<~END
-          <!-- Navigational aid: [Marker] MARKER NAVAID -->
+          <!-- NavigationalAid: [Marker] MARKER NAVAID -->
           <Mkr>
             <MkrUid newEntity="true">
               <codeId>---</codeId>
