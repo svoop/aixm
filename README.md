@@ -146,6 +146,9 @@ ndb.remarks = String
 
 ##### Marker
 
+WARNING: Marker are not fully implemented because they usually have to be
+associated with ILS which are not yet implemented.
+
 ```ruby
 marker = AIXM.marker(
   id: String

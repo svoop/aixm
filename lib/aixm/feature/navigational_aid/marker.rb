@@ -12,9 +12,10 @@ module AIXM
         public_class_method :new
 
         # TODO: Marker require an associated ILS
-#        def initialize(*args)
-#          fail(NotImplementedError, "Marker are not fully implemented yet")
-#        end
+        def initialize(**args)
+          warn("WARNING: Maker is not fully implemented yet due to the lack of ILS")
+          super
+        end
 
         ##
         # Render UID markup
