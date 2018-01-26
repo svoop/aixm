@@ -43,7 +43,7 @@ module AIXM
         end
 
         def remarks=(value)
-          fail(ArgumentError, "invalid remarks") unless value.is_a? String
+          fail(ArgumentError, "invalid remarks") unless value.nil? || value.is_a?(String)
           @remarks = value
         end
 
