@@ -2,6 +2,7 @@
 
 * Minor changes:
   * Fix bad error classes
+  * Allow navigational aids without name
 
 ## 0.2.1
 

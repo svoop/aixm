@@ -104,7 +104,7 @@ module AIXM
           builder.Vor do |vor|
             vor << to_uid(*extensions).indent(2)
             vor.OrgUid
-            vor.txtName(name)
+            vor.txtName(name) if name
             vor.codeType(type_key.to_s)
             vor.valFreq(f.freq.trim)
             vor.uomFreq(f.unit.upcase.to_s)

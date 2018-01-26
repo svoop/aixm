@@ -37,7 +37,7 @@ module AIXM
             mkr.OrgUid
             mkr.valFreq(75)
             mkr.uomFreq('MHZ')
-            mkr.txtName(name)
+            mkr.txtName(name) if name
             mkr.codeDatum('WGE')
             if z
               mkr.valElev(z.alt)

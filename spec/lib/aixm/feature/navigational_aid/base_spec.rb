@@ -12,6 +12,10 @@ describe AIXM::Feature::NavigationalAid::Base do
       -> { base.send(:new, id: 'id', name: 'name', xy: AIXM::Factory.xy, z: AIXM.z(1, :qne)) }.must_raise ArgumentError
     end
 
+    it "accepts name to be nil" do
+      base.send(:new, id: 'id', xy: AIXM::Factory.xy).name.must_be_nil
+    end
+
     context "downcase attributes" do
       subject do
         base.send(:new, id: 'id', name: 'name', xy: AIXM::Factory.xy)

@@ -23,7 +23,7 @@ module AIXM
 
         public_class_method :new
 
-        def initialize(id:, name:, xy:, z: nil, type:)
+        def initialize(id:, name: nil, xy:, z: nil, type:)
           super(id: id, name: name, xy: xy, z: z)
           self.type = type
         end
@@ -60,7 +60,7 @@ module AIXM
           builder.Dpn do |dpn|
             dpn << to_uid(*extensions).indent(2)
             dpn.OrgUid
-            dpn.txtName(name)
+            dpn.txtName(name) if name
             dpn.codeDatum('WGE')
             dpn.codeType(type_key.to_s)
             if z

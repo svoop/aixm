@@ -32,7 +32,7 @@ module AIXM
             tcn << to_uid(*extensions).indent(2)
             tcn.OrgUid
             tcn << vor.to_uid(*extensions).indent(2) if vor
-            tcn.txtName(name)
+            tcn.txtName(name) if name
             tcn.codeChannel(channel)
             tcn.codeDatum('WGE')
             if z

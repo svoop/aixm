@@ -54,7 +54,7 @@ module AIXM
             dme << to_uid(*extensions).indent(2)
             dme.OrgUid
             dme << vor.to_uid(*extensions).indent(2) if vor
-            dme.txtName(name)
+            dme.txtName(name) if name
             dme.codeChannel(channel)
             dme.codeDatum('WGE')
             if z

@@ -13,7 +13,7 @@ module AIXM
 
         private_class_method :new
 
-        def initialize(id:, name:, xy:, z: nil)
+        def initialize(id:, name: nil, xy:, z: nil)
           self.id, self.name, self.xy, self.z = id, name, xy, z
         end
 
@@ -23,8 +23,8 @@ module AIXM
         end
 
         def name=(value)
-          fail(ArgumentError, "invalid name") unless value.is_a? String
-          @name = value.upcase
+          fail(ArgumentError, "invalid name") unless value.nil? || value.is_a?(String)
+          @name = value&.upcase
         end
 
         def xy=(value)

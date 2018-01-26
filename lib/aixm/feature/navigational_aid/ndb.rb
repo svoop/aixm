@@ -48,7 +48,7 @@ module AIXM
           builder.Ndb do |ndb|
             ndb << to_uid(*extensions).indent(2)
             ndb.OrgUid
-            ndb.txtName(name)
+            ndb.txtName(name) if name
             ndb.valFreq(f.freq.trim)
             ndb.uomFreq(f.unit.upcase.to_s)
             ndb.codeDatum('WGE')

@@ -107,7 +107,7 @@ airspace.remarks = String
 ```ruby
 designated_point = AIXM.designated_point(
   id: String
-  name: String
+  name: String or nil
   xy: AIXM.xy
   z: AIXM.z or nil
   type: :icao or :adhp, or :coordinates
