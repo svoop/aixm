@@ -269,7 +269,7 @@ describe AIXM::Document do
             </Vtt>
             <txtRmk>vor navaid</txtRmk>
           </Vor>
-          <!-- NavigationalAid: [VOR:DVOR] DVOR NAVAID -->
+          <!-- NavigationalAid: [VOR:DVOR] DOPPLER-VOR NAVAID -->
           <Vor>
             <VorUid>
               <codeId>DVV</codeId>
@@ -277,7 +277,7 @@ describe AIXM::Document do
               <geoLong>0073336.00E</geoLong>
             </VorUid>
             <OrgUid/>
-            <txtName>DVOR NAVAID</txtName>
+            <txtName>DOPPLER-VOR NAVAID</txtName>
             <codeType>DVOR</codeType>
             <valFreq>111</valFreq>
             <uomFreq>MHZ</uomFreq>
@@ -288,7 +288,7 @@ describe AIXM::Document do
             <Vtt>
               <codeWorkHr>H24</codeWorkHr>
             </Vtt>
-            <txtRmk>vor navaid</txtRmk>
+            <txtRmk>doppler-vor navaid</txtRmk>
           </Vor>
           <!-- NavigationalAid: [VOR:VOR] VOR/DME NAVAID -->
           <Vor>
@@ -600,7 +600,7 @@ describe AIXM::Document do
             </Vtt>
             <txtRmk>vor navaid</txtRmk>
           </Vor>
-          <!-- NavigationalAid: [VOR:DVOR] DVOR NAVAID -->
+          <!-- NavigationalAid: [VOR:DVOR] DOPPLER-VOR NAVAID -->
           <Vor>
             <VorUid newEntity="true">
               <codeId>DVV</codeId>
@@ -608,7 +608,7 @@ describe AIXM::Document do
               <geoLong>7.56000000E</geoLong>
             </VorUid>
             <OrgUid/>
-            <txtName>DVOR NAVAID</txtName>
+            <txtName>DOPPLER-VOR NAVAID</txtName>
             <codeType>DVOR</codeType>
             <valFreq>111</valFreq>
             <uomFreq>MHZ</uomFreq>
@@ -619,7 +619,7 @@ describe AIXM::Document do
             <Vtt>
               <codeWorkHr>H24</codeWorkHr>
             </Vtt>
-            <txtRmk>vor navaid</txtRmk>
+            <txtRmk>doppler-vor navaid</txtRmk>
           </Vor>
           <!-- NavigationalAid: [VOR:VOR] VOR/DME NAVAID -->
           <Vor>

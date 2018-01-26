@@ -156,15 +156,15 @@ module AIXM
       def dvor
         AIXM.vor(
           id: 'DVV',
-          name: 'DVOR NAVAID',
+          name: 'DOPPLER-VOR NAVAID',
           xy: AIXM.xy(lat: %q(47°51'33"N), long: %q(007°33'36"E)),
           z: AIXM.z(500, :qnh),
           type: :doppler_vor,
           f: AIXM.f(111, :mhz),
           north: :geographic
-        ).tap do |dvor|
-          dvor.schedule = AIXM::H24
-          dvor.remarks = 'vor navaid'
+        ).tap do |doppler_vor|
+          doppler_vor.schedule = AIXM::H24
+          doppler_vor.remarks = 'doppler-vor navaid'
         end
       end
 
