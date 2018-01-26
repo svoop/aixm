@@ -3,9 +3,8 @@ module AIXM
     class Airspace < Base
       using AIXM::Refinements
 
-      attr_reader :name, :short_name, :type
-      attr_reader :schedule
-      attr_accessor :geometry, :class_layers, :remarks
+      attr_reader :name, :short_name, :type, :schedule, :remarks
+      attr_accessor :geometry, :class_layers
 
       ##
       # Airspace feature
@@ -17,17 +16,35 @@ module AIXM
       #                  uppercase, e.g. +LF P 81 CHERBOURG+)
       # * +type+ - airspace type (e.g. +TMA+ or +P+)
       def initialize(name:, short_name: nil, type:)
-        @name, @short_name, @type = name.uptrans, short_name&.uptrans, type
+        self.name, self.short_name, self.type = name, short_name, type
         @schedule = nil
         @geometry = AIXM.geometry
         @class_layers = []
       end
 
-      ##
-      # Assign a +Schedule+ object or +nil+
+      def name=(value)
+        fail(AttributeError, "invalid name") unless value.is_a? String
+        @name = value.uptrans
+      end
+
+      def short_name=(value)
+        fail(AttributeError, "invalid short name") unless value.nil? || value.is_a?(String)
+        @short_name = value&.uptrans
+      end
+
+      def type=(value)
+        fail(AttributeError, "invalid type") unless value.is_a?(String)
+        @type = value.upcase
+      end
+
       def schedule=(value)
         fail(ArgumentError, "invalid schedule") unless value.nil? || value.is_a?(AIXM::Component::Schedule)
         @schedule = value
+      end
+
+      def remarks=(value)
+        fail(AttributeError, "invalid remarks") unless value.is_a?(String)
+        @remarks = value
       end
 
       ##
@@ -50,7 +67,7 @@ module AIXM
         builder.comment! "Airspace: [#{type}] #{name}"
         builder.Ase({ xt_classLayersAvail: ((class_layers.count > 1) if extensions >> :ofm) }.compact) do |ase|
           ase.AseUid({ mid: mid, newEntity: (true if extensions >> :ofm) }.compact) do |aseuid|
-            aseuid.codeType(type.to_s)
+            aseuid.codeType(type)
             aseuid.codeId(mid)
           end
           ase.txtLocalType(short_name.to_s) if short_name && short_name != name
@@ -67,7 +84,7 @@ module AIXM
         builder.Abd do |abd|
           abd.AbdUid do |abduid|
             abduid.AseUid({ mid: mid, newEntity: (true if extensions >> :ofm) }.compact) do |aseuid|
-              aseuid.codeType(type.to_s)
+              aseuid.codeType(type)
               aseuid.codeId(mid)
             end
           end
