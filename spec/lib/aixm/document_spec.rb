@@ -159,7 +159,7 @@ describe AIXM::Document do
           <!-- Navigational aid: [DesignatedPoint:ICAO] DESIGNATED POINT NAVAID -->
           <Dpn>
             <DpnUid>
-              <codeId>DPN</codeId>
+              <codeId>DDD</codeId>
               <geoLat>475133.00N</geoLat>
               <geoLong>0073336.00E</geoLong>
             </DpnUid>
@@ -177,7 +177,7 @@ describe AIXM::Document do
           <!-- Navigational aid: [DME] DME NAVAID -->
           <Dme>
             <DmeUid>
-              <codeId>DME</codeId>
+              <codeId>MMM</codeId>
               <geoLat>475133.00N</geoLat>
               <geoLong>0073336.00E</geoLong>
             </DmeUid>
@@ -214,7 +214,7 @@ describe AIXM::Document do
           <!-- Navigational aid: [NDB] NDB NAVAID -->
           <Ndb>
             <NdbUid>
-              <codeId>NDB</codeId>
+              <codeId>NNN</codeId>
               <geoLat>475133.00N</geoLat>
               <geoLong>0073336.00E</geoLong>
             </NdbUid>
@@ -233,7 +233,7 @@ describe AIXM::Document do
           <!-- Navigational aid: [TACAN] TACAN NAVAID -->
           <Tcn>
             <TcnUid>
-              <codeId>TCN</codeId>
+              <codeId>TTT</codeId>
               <geoLat>475133.00N</geoLat>
               <geoLong>0073336.00E</geoLong>
             </TcnUid>
@@ -251,7 +251,7 @@ describe AIXM::Document do
           <!-- Navigational aid: [VOR:VOR] VOR NAVAID -->
           <Vor>
             <VorUid>
-              <codeId>VOR</codeId>
+              <codeId>VVV</codeId>
               <geoLat>475133.00N</geoLat>
               <geoLong>0073336.00E</geoLong>
             </VorUid>
@@ -269,6 +269,115 @@ describe AIXM::Document do
             </Vtt>
             <txtRmk>vor navaid</txtRmk>
           </Vor>
+          <!-- Navigational aid: [VOR:DVOR] DVOR NAVAID -->
+          <Vor>
+            <VorUid>
+              <codeId>DVV</codeId>
+              <geoLat>475133.00N</geoLat>
+              <geoLong>0073336.00E</geoLong>
+            </VorUid>
+            <OrgUid/>
+            <txtName>DVOR NAVAID</txtName>
+            <codeType>DVOR</codeType>
+            <valFreq>111</valFreq>
+            <uomFreq>MHZ</uomFreq>
+            <codeTypeNorth>TRUE</codeTypeNorth>
+            <codeDatum>WGE</codeDatum>
+            <valElev>500</valElev>
+            <uomDistVer>FT</uomDistVer>
+            <Vtt>
+              <codeWorkHr>H24</codeWorkHr>
+            </Vtt>
+            <txtRmk>vor navaid</txtRmk>
+          </Vor>
+          <!-- Navigational aid: [VOR:VOR] VOR/DME NAVAID -->
+          <Vor>
+            <VorUid>
+              <codeId>VDD</codeId>
+              <geoLat>475133.00N</geoLat>
+              <geoLong>0073336.00E</geoLong>
+            </VorUid>
+            <OrgUid/>
+            <txtName>VOR/DME NAVAID</txtName>
+            <codeType>VOR</codeType>
+            <valFreq>111</valFreq>
+            <uomFreq>MHZ</uomFreq>
+            <codeTypeNorth>TRUE</codeTypeNorth>
+            <codeDatum>WGE</codeDatum>
+            <valElev>500</valElev>
+            <uomDistVer>FT</uomDistVer>
+            <Vtt>
+              <codeWorkHr>H24</codeWorkHr>
+            </Vtt>
+            <txtRmk>vor/dme navaid</txtRmk>
+          </Vor>
+          <!-- Navigational aid: [DME] VOR/DME NAVAID -->
+          <Dme>
+            <DmeUid>
+              <codeId>VDD</codeId>
+              <geoLat>475133.00N</geoLat>
+              <geoLong>0073336.00E</geoLong>
+            </DmeUid>
+            <OrgUid/>
+            <VorUid>
+              <codeId>VDD</codeId>
+              <geoLat>475133.00N</geoLat>
+              <geoLong>0073336.00E</geoLong>
+            </VorUid>
+            <txtName>VOR/DME NAVAID</txtName>
+            <codeChannel>95X</codeChannel>
+            <codeDatum>WGE</codeDatum>
+            <valElev>500</valElev>
+            <uomDistVer>FT</uomDistVer>
+            <Dtt>
+              <codeWorkHr>H24</codeWorkHr>
+            </Dtt>
+            <txtRmk>vor/dme navaid</txtRmk>
+          </Dme>
+          <!-- Navigational aid: [VOR:VOR] VORTAC NAVAID -->
+          <Vor>
+            <VorUid>
+              <codeId>VTT</codeId>
+              <geoLat>475133.00N</geoLat>
+              <geoLong>0073336.00E</geoLong>
+            </VorUid>
+            <OrgUid/>
+            <txtName>VORTAC NAVAID</txtName>
+            <codeType>VOR</codeType>
+            <valFreq>111</valFreq>
+            <uomFreq>MHZ</uomFreq>
+            <codeTypeNorth>TRUE</codeTypeNorth>
+            <codeDatum>WGE</codeDatum>
+            <valElev>500</valElev>
+            <uomDistVer>FT</uomDistVer>
+            <Vtt>
+              <codeWorkHr>H24</codeWorkHr>
+            </Vtt>
+            <txtRmk>vortac navaid</txtRmk>
+          </Vor>
+          <!-- Navigational aid: [TACAN] VORTAC NAVAID -->
+          <Tcn>
+            <TcnUid>
+              <codeId>VTT</codeId>
+              <geoLat>475133.00N</geoLat>
+              <geoLong>0073336.00E</geoLong>
+            </TcnUid>
+            <OrgUid/>
+            <VorUid>
+              <codeId>VTT</codeId>
+              <geoLat>475133.00N</geoLat>
+              <geoLong>0073336.00E</geoLong>
+            </VorUid>
+            <txtName>VORTAC NAVAID</txtName>
+            <codeChannel>29X</codeChannel>
+            <codeDatum>WGE</codeDatum>
+            <valElev>500</valElev>
+            <uomDistVer>FT</uomDistVer>
+            <Ttt>
+              <codeWorkHr>H24</codeWorkHr>
+            </Ttt>
+            <txtRmk>vortac navaid</txtRmk>
+          </Tcn>
         </AIXM-Snapshot>
       END
     end
@@ -381,7 +490,7 @@ describe AIXM::Document do
           <!-- Navigational aid: [DesignatedPoint:ICAO] DESIGNATED POINT NAVAID -->
           <Dpn>
             <DpnUid newEntity="true">
-              <codeId>DPN</codeId>
+              <codeId>DDD</codeId>
               <geoLat>47.85916667N</geoLat>
               <geoLong>7.56000000E</geoLong>
             </DpnUid>
@@ -399,7 +508,7 @@ describe AIXM::Document do
           <!-- Navigational aid: [DME] DME NAVAID -->
           <Dme>
             <DmeUid newEntity="true">
-              <codeId>DME</codeId>
+              <codeId>MMM</codeId>
               <geoLat>47.85916667N</geoLat>
               <geoLong>7.56000000E</geoLong>
             </DmeUid>
@@ -436,7 +545,7 @@ describe AIXM::Document do
           <!-- Navigational aid: [NDB] NDB NAVAID -->
           <Ndb>
             <NdbUid newEntity="true">
-              <codeId>NDB</codeId>
+              <codeId>NNN</codeId>
               <geoLat>47.85916667N</geoLat>
               <geoLong>7.56000000E</geoLong>
             </NdbUid>
@@ -455,7 +564,7 @@ describe AIXM::Document do
           <!-- Navigational aid: [TACAN] TACAN NAVAID -->
           <Tcn>
             <TcnUid newEntity="true">
-              <codeId>TCN</codeId>
+              <codeId>TTT</codeId>
               <geoLat>47.85916667N</geoLat>
               <geoLong>7.56000000E</geoLong>
             </TcnUid>
@@ -473,7 +582,7 @@ describe AIXM::Document do
           <!-- Navigational aid: [VOR:VOR] VOR NAVAID -->
           <Vor>
             <VorUid newEntity="true">
-              <codeId>VOR</codeId>
+              <codeId>VVV</codeId>
               <geoLat>47.85916667N</geoLat>
               <geoLong>7.56000000E</geoLong>
             </VorUid>
@@ -491,6 +600,115 @@ describe AIXM::Document do
             </Vtt>
             <txtRmk>vor navaid</txtRmk>
           </Vor>
+          <!-- Navigational aid: [VOR:DVOR] DVOR NAVAID -->
+          <Vor>
+            <VorUid newEntity="true">
+              <codeId>DVV</codeId>
+              <geoLat>47.85916667N</geoLat>
+              <geoLong>7.56000000E</geoLong>
+            </VorUid>
+            <OrgUid/>
+            <txtName>DVOR NAVAID</txtName>
+            <codeType>DVOR</codeType>
+            <valFreq>111</valFreq>
+            <uomFreq>MHZ</uomFreq>
+            <codeTypeNorth>TRUE</codeTypeNorth>
+            <codeDatum>WGE</codeDatum>
+            <valElev>500</valElev>
+            <uomDistVer>FT</uomDistVer>
+            <Vtt>
+              <codeWorkHr>H24</codeWorkHr>
+            </Vtt>
+            <txtRmk>vor navaid</txtRmk>
+          </Vor>
+          <!-- Navigational aid: [VOR:VOR] VOR/DME NAVAID -->
+          <Vor>
+            <VorUid newEntity="true">
+              <codeId>VDD</codeId>
+              <geoLat>47.85916667N</geoLat>
+              <geoLong>7.56000000E</geoLong>
+            </VorUid>
+            <OrgUid/>
+            <txtName>VOR/DME NAVAID</txtName>
+            <codeType>VOR</codeType>
+            <valFreq>111</valFreq>
+            <uomFreq>MHZ</uomFreq>
+            <codeTypeNorth>TRUE</codeTypeNorth>
+            <codeDatum>WGE</codeDatum>
+            <valElev>500</valElev>
+            <uomDistVer>FT</uomDistVer>
+            <Vtt>
+              <codeWorkHr>H24</codeWorkHr>
+            </Vtt>
+            <txtRmk>vor/dme navaid</txtRmk>
+          </Vor>
+          <!-- Navigational aid: [DME] VOR/DME NAVAID -->
+          <Dme>
+            <DmeUid newEntity="true">
+              <codeId>VDD</codeId>
+              <geoLat>47.85916667N</geoLat>
+              <geoLong>7.56000000E</geoLong>
+            </DmeUid>
+            <OrgUid/>
+            <VorUid newEntity="true">
+              <codeId>VDD</codeId>
+              <geoLat>47.85916667N</geoLat>
+              <geoLong>7.56000000E</geoLong>
+            </VorUid>
+            <txtName>VOR/DME NAVAID</txtName>
+            <codeChannel>95X</codeChannel>
+            <codeDatum>WGE</codeDatum>
+            <valElev>500</valElev>
+            <uomDistVer>FT</uomDistVer>
+            <Dtt>
+              <codeWorkHr>H24</codeWorkHr>
+            </Dtt>
+            <txtRmk>vor/dme navaid</txtRmk>
+          </Dme>
+          <!-- Navigational aid: [VOR:VOR] VORTAC NAVAID -->
+          <Vor>
+            <VorUid newEntity="true">
+              <codeId>VTT</codeId>
+              <geoLat>47.85916667N</geoLat>
+              <geoLong>7.56000000E</geoLong>
+            </VorUid>
+            <OrgUid/>
+            <txtName>VORTAC NAVAID</txtName>
+            <codeType>VOR</codeType>
+            <valFreq>111</valFreq>
+            <uomFreq>MHZ</uomFreq>
+            <codeTypeNorth>TRUE</codeTypeNorth>
+            <codeDatum>WGE</codeDatum>
+            <valElev>500</valElev>
+            <uomDistVer>FT</uomDistVer>
+            <Vtt>
+              <codeWorkHr>H24</codeWorkHr>
+            </Vtt>
+            <txtRmk>vortac navaid</txtRmk>
+          </Vor>
+          <!-- Navigational aid: [TACAN] VORTAC NAVAID -->
+          <Tcn>
+            <TcnUid newEntity="true">
+              <codeId>VTT</codeId>
+              <geoLat>47.85916667N</geoLat>
+              <geoLong>7.56000000E</geoLong>
+            </TcnUid>
+            <OrgUid/>
+            <VorUid newEntity="true">
+              <codeId>VTT</codeId>
+              <geoLat>47.85916667N</geoLat>
+              <geoLong>7.56000000E</geoLong>
+            </VorUid>
+            <txtName>VORTAC NAVAID</txtName>
+            <codeChannel>29X</codeChannel>
+            <codeDatum>WGE</codeDatum>
+            <valElev>500</valElev>
+            <uomDistVer>FT</uomDistVer>
+            <Ttt>
+              <codeWorkHr>H24</codeWorkHr>
+            </Ttt>
+            <txtRmk>vortac navaid</txtRmk>
+          </Tcn>
         </AIXM-Snapshot>
       END
     end

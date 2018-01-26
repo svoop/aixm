@@ -22,7 +22,7 @@ module AIXM
         end
 
         ##
-        # Render AIXM
+        # Render AIXM markup
         def to_xml(*extensions)
           builder = Builder::XmlMarkup.new(indent: 2)
           builder.Avx do |avx|

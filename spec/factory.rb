@@ -48,26 +48,26 @@ module AIXM
         end
       end
 
-      def polygon_airspace(short_name: 'POLYGON', schedule: :H24)
+      def polygon_airspace
         AIXM.airspace(
           name: 'POLYGON AIRSPACE',
-          short_name: short_name,
+          short_name: 'POLYGON',
           type: 'D'
         ).tap do |airspace|
-          airspace.schedule = AIXM.schedule(code: schedule) if schedule
+          airspace.schedule = AIXM::H24
           airspace.class_layers << class_layer
           airspace.geometry = polygon_geometry
           airspace.remarks = 'polygon airspace'
         end
       end
 
-      def circle_airspace(short_name: 'CIRCLE', schedule: :H24)
+      def circle_airspace
         AIXM.airspace(
           name: 'CIRCLE AIRSPACE',
-          short_name: short_name,
+          short_name: 'CIRCLE',
           type: 'D'
         ).tap do |airspace|
-          airspace.schedule = AIXM.schedule(code: schedule) if schedule
+          airspace.schedule = AIXM::H24
           airspace.class_layers << class_layer
           airspace.geometry = circle_geometry
           airspace.remarks = 'circle airspace'
@@ -76,7 +76,7 @@ module AIXM
 
       def designated_point
         AIXM.designated_point(
-          id: 'DPN',
+          id: 'DDD',
           name: 'DESIGNATED POINT NAVAID',
           xy: AIXM.xy(lat: %q(47°51'33"N), long: %q(007°33'36"E)),
           z: AIXM.z(500, :qnh),
@@ -89,7 +89,7 @@ module AIXM
 
       def dme
         AIXM.dme(
-          id: 'DME',
+          id: 'MMM',
           name: 'DME NAVAID',
           xy: AIXM.xy(lat: %q(47°51'33"N), long: %q(007°33'36"E)),
           z: AIXM.z(500, :qnh),
@@ -114,7 +114,7 @@ module AIXM
 
       def ndb
         AIXM.ndb(
-          id: 'NDB',
+          id: 'NNN',
           name: 'NDB NAVAID',
           xy: AIXM.xy(lat: %q(47°51'33"N), long: %q(007°33'36"E)),
           z: AIXM.z(500, :qnh),
@@ -127,7 +127,7 @@ module AIXM
 
       def tacan
         AIXM.tacan(
-          id: 'TCN',
+          id: 'TTT',
           name: 'TACAN NAVAID',
           xy: AIXM.xy(lat: %q(47°51'33"N), long: %q(007°33'36"E)),
           z: AIXM.z(500, :qnh),
@@ -140,7 +140,7 @@ module AIXM
 
       def vor
         AIXM.vor(
-          id: 'VOR',
+          id: 'VVV',
           name: 'VOR NAVAID',
           xy: AIXM.xy(lat: %q(47°51'33"N), long: %q(007°33'36"E)),
           z: AIXM.z(500, :qnh),
@@ -150,6 +150,53 @@ module AIXM
         ).tap do |vor|
           vor.schedule = AIXM::H24
           vor.remarks = 'vor navaid'
+        end
+      end
+
+      def dvor
+        AIXM.vor(
+          id: 'DVV',
+          name: 'DVOR NAVAID',
+          xy: AIXM.xy(lat: %q(47°51'33"N), long: %q(007°33'36"E)),
+          z: AIXM.z(500, :qnh),
+          type: :doppler_vor,
+          f: AIXM.f(111, :mhz),
+          north: :geographic
+        ).tap do |dvor|
+          dvor.schedule = AIXM::H24
+          dvor.remarks = 'vor navaid'
+        end
+      end
+
+      def vordme
+        AIXM.vor(
+          id: 'VDD',
+          name: 'VOR/DME NAVAID',
+          xy: AIXM.xy(lat: %q(47°51'33"N), long: %q(007°33'36"E)),
+          z: AIXM.z(500, :qnh),
+          type: :vor,
+          f: AIXM.f(111, :mhz),
+          north: :geographic
+        ).tap do |vordme|
+          vordme.schedule = AIXM::H24
+          vordme.remarks = 'vor/dme navaid'
+          vordme.associate_dme(channel: '95X')
+        end
+      end
+
+      def vortac
+        AIXM.vor(
+          id: 'VTT',
+          name: 'VORTAC NAVAID',
+          xy: AIXM.xy(lat: %q(47°51'33"N), long: %q(007°33'36"E)),
+          z: AIXM.z(500, :qnh),
+          type: :vor,
+          f: AIXM.f(111, :mhz),
+          north: :geographic
+        ).tap do |vortac|
+          vortac.schedule = AIXM::H24
+          vortac.remarks = 'vortac navaid'
+          vortac.associate_tacan(channel: '29X')
         end
       end
 
@@ -164,6 +211,9 @@ module AIXM
           document.features << AIXM::Factory.ndb
           document.features << AIXM::Factory.tacan
           document.features << AIXM::Factory.vor
+          document.features << AIXM::Factory.dvor
+          document.features << AIXM::Factory.vordme
+          document.features << AIXM::Factory.vortac
         end
       end
 

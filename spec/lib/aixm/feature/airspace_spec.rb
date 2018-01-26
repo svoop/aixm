@@ -236,18 +236,22 @@ describe AIXM::Feature::Airspace do
     end
 
     context "partially complete" do
+      subject do
+        AIXM::Factory.polygon_airspace
+      end
+
       it "must build correct XML without short name" do
-        subject = AIXM::Factory.polygon_airspace(short_name: nil)
+        subject.short_name = nil
         subject.to_xml.wont_match(/txtLocalType/)
       end
 
       it "must build correct XML with identical name and short name" do
-        subject = AIXM::Factory.polygon_airspace(short_name: 'POLYGON AIRSPACE')
+        subject.short_name = 'POLYGON AIRSPACE'
         subject.to_xml.wont_match(/txtLocalType/)
       end
 
       it "must build correct XML without schedule" do
-        subject = AIXM::Factory.polygon_airspace(schedule: nil)
+        subject.schedule = nil
         subject.to_xml.wont_match(/codeWorkHr/)
       end
     end

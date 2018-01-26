@@ -31,15 +31,22 @@ module AIXM
         end
 
         ##
-        # Render AIXM
+        # Render UID markup
+        def to_uid(*extensions)
+          builder = Builder::XmlMarkup.new(indent: 2)
+          builder.NdbUid({ newEntity: (true if extensions >> :ofm) }.compact) do |ndbuid|
+            ndbuid.codeId(id)
+            ndbuid.geoLat(xy.lat(format_for(*extensions)))
+            ndbuid.geoLong(xy.long(format_for(*extensions)))
+          end
+        end
+
+        ##
+        # Render AIXM markup
         def to_xml(*extensions)
           builder = to_builder(*extensions)
           builder.Ndb do |ndb|
-            ndb.NdbUid({ newEntity: (true if extensions >> :ofm) }.compact) do |ndbuid|
-              ndbuid.codeId(id)
-              ndbuid.geoLat(xy.lat(format_for(*extensions)))
-              ndbuid.geoLong(xy.long(format_for(*extensions)))
-            end
+            ndb << to_uid(*extensions).indent(2)
             ndb.OrgUid
             ndb.txtName(name)
             ndb.valFreq(f.freq.trim)

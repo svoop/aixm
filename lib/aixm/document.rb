@@ -40,7 +40,7 @@ module AIXM
     end
 
     ##
-    # Render AIXM
+    # Render AIXM markup
     #
     # Extensions:
     # * +:ofm+ - Open Flightmaps

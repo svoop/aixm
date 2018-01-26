@@ -179,12 +179,14 @@ vor = AIXM.vor(
   name: String
   xy: AIXM.xy
   z: AIXM.z or nil  
-  type: :vor or :dvor
+  type: :vor or :doppler_vor
   f: AIXM.f
   north: :geographic or :grid or :magnetic
 )
 vor.schedule = AIXM.schedule
 vor.remarks = String
+vor.associate_dme(channel: String)     # turns the VOR into a VOR/DME
+vor.associate_tacan(channel: String)   # turns the VOR into a VORTAC
 ```
 
 ### Components

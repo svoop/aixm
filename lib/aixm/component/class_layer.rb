@@ -33,7 +33,7 @@ module AIXM
       end
 
       ##
-      # Render AIXM
+      # Render AIXM markup
       def to_xml(*extensions)
         builder = Builder::XmlMarkup.new(indent: 2)
         builder.codeClass(self.class.to_s) if self.class

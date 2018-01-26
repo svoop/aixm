@@ -10,7 +10,7 @@ module AIXM
       class DME < Base
         using AIXM::Refinements
 
-        attr_reader :channel
+        attr_reader :channel, :vor
 
         public_class_method :new
 
@@ -24,6 +24,11 @@ module AIXM
           @channel = value.upcase
         end
 
+        def vor=(value)
+          fail(ArgumentError, "invalid VOR") unless value.is_a? VOR
+          @vor = value
+        end
+
         ##
         # Digest to identify the payload
         def to_digest
@@ -31,16 +36,24 @@ module AIXM
         end
 
         ##
-        # Render AIXM
+        # Render UID markup
+        def to_uid(*extensions)
+          builder = Builder::XmlMarkup.new(indent: 2)
+          builder.DmeUid({ newEntity: (true if extensions >> :ofm) }.compact) do |dmeuid|
+            dmeuid.codeId(id)
+            dmeuid.geoLat(xy.lat(format_for(*extensions)))
+            dmeuid.geoLong(xy.long(format_for(*extensions)))
+          end
+        end
+
+        ##
+        # Render AIXM markup
         def to_xml(*extensions)
           builder = to_builder(*extensions)
           builder.Dme do |dme|
-            dme.DmeUid({ newEntity: (true if extensions >> :ofm) }.compact) do |dmeuid|
-              dmeuid.codeId(id)
-              dmeuid.geoLat(xy.lat(format_for(*extensions)))
-              dmeuid.geoLong(xy.long(format_for(*extensions)))
-            end
+            dme << to_uid(*extensions).indent(2)
             dme.OrgUid
+            dme << vor.to_uid(*extensions).indent(2) if vor
             dme.txtName(name)
             dme.codeChannel(channel)
             dme.codeDatum('WGE')

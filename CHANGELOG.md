@@ -3,6 +3,7 @@
 * Major changes:
   * Fix DVOR and VORDME confusion
   * Add schedule to navigational aids
+  * VOR can be associated with DME (-> VOR/DME) or TACAN (-> VORTAC) now
 * Minor changes:
   * Remove :other from all value lists
 

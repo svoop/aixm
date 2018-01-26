@@ -14,16 +14,24 @@ module AIXM
         public_class_method :new
 
         ##
-        # Render AIXM
+        # Render UID markup
+        def to_uid(*extensions)
+          builder = Builder::XmlMarkup.new(indent: 2)
+          builder.TcnUid({ newEntity: (true if extensions >> :ofm) }.compact) do |tcnuid|
+            tcnuid.codeId(id)
+            tcnuid.geoLat(xy.lat(format_for(*extensions)))
+            tcnuid.geoLong(xy.long(format_for(*extensions)))
+          end
+        end
+
+        ##
+        # Render AIXM markup
         def to_xml(*extensions)
           builder = to_builder(*extensions)
           builder.Tcn do |tcn|
-            tcn.TcnUid({ newEntity: (true if extensions >> :ofm) }.compact) do |tcnuid|
-              tcnuid.codeId(id)
-              tcnuid.geoLat(xy.lat(format_for(*extensions)))
-              tcnuid.geoLong(xy.long(format_for(*extensions)))
-            end
+            tcn << to_uid(*extensions).indent(2)
             tcn.OrgUid
+            tcn << vor.to_uid(*extensions).indent(2) if vor
             tcn.txtName(name)
             tcn.codeChannel(channel)
             tcn.codeDatum('WGE')

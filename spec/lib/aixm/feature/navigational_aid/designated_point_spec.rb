@@ -14,7 +14,7 @@ describe AIXM::Feature::NavigationalAid::DesignatedPoint do
 
     describe :to_digest do
       it "must return digest of payload" do
-        subject.to_digest.must_equal 755263208
+        subject.to_digest.must_equal 5317882
       end
     end
 
@@ -24,7 +24,7 @@ describe AIXM::Feature::NavigationalAid::DesignatedPoint do
           <!-- Navigational aid: [DesignatedPoint:ICAO] DESIGNATED POINT NAVAID -->
           <Dpn>
             <DpnUid newEntity="true">
-              <codeId>DPN</codeId>
+              <codeId>DDD</codeId>
               <geoLat>47.85916667N</geoLat>
               <geoLong>7.56000000E</geoLong>
             </DpnUid>

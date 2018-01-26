@@ -60,16 +60,24 @@ module AIXM
       end
 
       ##
-      # Render AIXM
+      # Render UID markup
+      def to_uid(*extensions)
+        mid = to_digest
+        builder = Builder::XmlMarkup.new(indent: 2)
+        builder.AseUid({ mid: mid, newEntity: (true if extensions >> :ofm) }.compact) do |aseuid|
+          aseuid.codeType(type)
+          aseuid.codeId(mid)
+        end
+      end
+
+      ##
+      # Render AIXM markup
       def to_xml(*extensions)
         mid = to_digest
         builder = Builder::XmlMarkup.new(indent: 2)
         builder.comment! "Airspace: [#{type}] #{name}"
         builder.Ase({ xt_classLayersAvail: ((class_layers.count > 1) if extensions >> :ofm) }.compact) do |ase|
-          ase.AseUid({ mid: mid, newEntity: (true if extensions >> :ofm) }.compact) do |aseuid|
-            aseuid.codeType(type)
-            aseuid.codeId(mid)
-          end
+          ase << to_uid(*extensions).indent(2)
           ase.txtLocalType(short_name.to_s) if short_name && short_name != name
           ase.txtName(name.to_s)
           ase << class_layers.first.to_xml(*extensions).indent(2)

@@ -14,7 +14,7 @@ describe AIXM::Feature::NavigationalAid::DME do
 
     describe :to_digest do
       it "must return digest of payload" do
-        subject.to_digest.must_equal 30256638
+        subject.to_digest.must_equal 537506748
       end
     end
 
@@ -24,7 +24,7 @@ describe AIXM::Feature::NavigationalAid::DME do
           <!-- Navigational aid: [DME] DME NAVAID -->
           <Dme>
             <DmeUid newEntity="true">
-              <codeId>DME</codeId>
+              <codeId>MMM</codeId>
               <geoLat>47.85916667N</geoLat>
               <geoLong>7.56000000E</geoLong>
             </DmeUid>

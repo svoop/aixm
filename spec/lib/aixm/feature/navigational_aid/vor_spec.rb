@@ -13,7 +13,7 @@ describe AIXM::Feature::NavigationalAid::VOR do
     end
   end
 
-  context "complete" do
+  context "complete VOR" do
     subject do
       AIXM::Factory.vor
     end
@@ -26,7 +26,7 @@ describe AIXM::Feature::NavigationalAid::VOR do
 
     describe :to_digest do
       it "must return digest of payload" do
-        subject.to_digest.must_equal 162986804
+        subject.to_digest.must_equal 152119936
       end
     end
 
@@ -36,7 +36,7 @@ describe AIXM::Feature::NavigationalAid::VOR do
           <!-- Navigational aid: [VOR:VOR] VOR NAVAID -->
           <Vor>
             <VorUid newEntity="true">
-              <codeId>VOR</codeId>
+              <codeId>VVV</codeId>
               <geoLat>47.85916667N</geoLat>
               <geoLong>7.56000000E</geoLong>
             </VorUid>
@@ -54,6 +54,152 @@ describe AIXM::Feature::NavigationalAid::VOR do
             </Vtt>
             <txtRmk>vor navaid</txtRmk>
           </Vor>
+        END
+      end
+    end
+  end
+
+  context "complete VOR/DME" do
+    subject do
+      AIXM::Factory.vor.tap do |vor|
+        vor.name = "VOR/DME NAVAID"
+        vor.remarks = "vor/dme navaid"
+        vor.associate_dme(channel: '84X')
+      end
+    end
+
+    describe :kind do
+      it "must return class or type" do
+        subject.kind.must_equal "VOR:VOR"
+      end
+    end
+
+    describe :to_digest do
+      it "must return digest of payload" do
+        subject.to_digest.must_equal 863096858
+      end
+    end
+
+    describe :to_xml do
+      it "must build correct XML of VOR with OFM extension" do
+        subject.to_xml(:ofm).must_equal <<~END
+          <!-- Navigational aid: [VOR:VOR] VOR/DME NAVAID -->
+          <Vor>
+            <VorUid newEntity="true">
+              <codeId>VVV</codeId>
+              <geoLat>47.85916667N</geoLat>
+              <geoLong>7.56000000E</geoLong>
+            </VorUid>
+            <OrgUid/>
+            <txtName>VOR/DME NAVAID</txtName>
+            <codeType>VOR</codeType>
+            <valFreq>111</valFreq>
+            <uomFreq>MHZ</uomFreq>
+            <codeTypeNorth>TRUE</codeTypeNorth>
+            <codeDatum>WGE</codeDatum>
+            <valElev>500</valElev>
+            <uomDistVer>FT</uomDistVer>
+            <Vtt>
+              <codeWorkHr>H24</codeWorkHr>
+            </Vtt>
+            <txtRmk>vor/dme navaid</txtRmk>
+          </Vor>
+          <!-- Navigational aid: [DME] VOR/DME NAVAID -->
+          <Dme>
+            <DmeUid newEntity="true">
+              <codeId>VVV</codeId>
+              <geoLat>47.85916667N</geoLat>
+              <geoLong>7.56000000E</geoLong>
+            </DmeUid>
+            <OrgUid/>
+            <VorUid newEntity="true">
+              <codeId>VVV</codeId>
+              <geoLat>47.85916667N</geoLat>
+              <geoLong>7.56000000E</geoLong>
+            </VorUid>
+            <txtName>VOR/DME NAVAID</txtName>
+            <codeChannel>84X</codeChannel>
+            <codeDatum>WGE</codeDatum>
+            <valElev>500</valElev>
+            <uomDistVer>FT</uomDistVer>
+            <Dtt>
+              <codeWorkHr>H24</codeWorkHr>
+            </Dtt>
+            <txtRmk>vor/dme navaid</txtRmk>
+          </Dme>
+        END
+      end
+    end
+  end
+
+  context "complete VORTAC" do
+    subject do
+      AIXM::Factory.vor.tap do |vor|
+        vor.name = "VORTAC NAVAID"
+        vor.remarks = "vortac navaid"
+        vor.associate_tacan(channel: '54X')
+      end
+    end
+
+    describe :kind do
+      it "must return class or type" do
+        subject.kind.must_equal "VOR:VOR"
+      end
+    end
+
+    describe :to_digest do
+      it "must return digest of payload" do
+        subject.to_digest.must_equal 458371299
+      end
+    end
+
+    describe :to_xml do
+      it "must build correct XML of VOR with OFM extension" do
+        subject.to_xml(:ofm).must_equal <<~END
+          <!-- Navigational aid: [VOR:VOR] VORTAC NAVAID -->
+          <Vor>
+            <VorUid newEntity="true">
+              <codeId>VVV</codeId>
+              <geoLat>47.85916667N</geoLat>
+              <geoLong>7.56000000E</geoLong>
+            </VorUid>
+            <OrgUid/>
+            <txtName>VORTAC NAVAID</txtName>
+            <codeType>VOR</codeType>
+            <valFreq>111</valFreq>
+            <uomFreq>MHZ</uomFreq>
+            <codeTypeNorth>TRUE</codeTypeNorth>
+            <codeDatum>WGE</codeDatum>
+            <valElev>500</valElev>
+            <uomDistVer>FT</uomDistVer>
+            <Vtt>
+              <codeWorkHr>H24</codeWorkHr>
+            </Vtt>
+            <txtRmk>vortac navaid</txtRmk>
+          </Vor>
+          <!-- Navigational aid: [TACAN] VORTAC NAVAID -->
+          <Tcn>
+            <TcnUid newEntity="true">
+              <codeId>VVV</codeId>
+              <geoLat>47.85916667N</geoLat>
+              <geoLong>7.56000000E</geoLong>
+            </TcnUid>
+            <OrgUid/>
+            <VorUid newEntity="true">
+              <codeId>VVV</codeId>
+              <geoLat>47.85916667N</geoLat>
+              <geoLong>7.56000000E</geoLong>
+            </VorUid>
+            <txtName>VORTAC NAVAID</txtName>
+            <codeChannel>54X</codeChannel>
+            <codeDatum>WGE</codeDatum>
+            <valElev>500</valElev>
+            <uomDistVer>FT</uomDistVer>
+            <Ttt>
+              <codeWorkHr>H24</codeWorkHr>
+            </Ttt>
+            <txtRmk>vortac navaid</txtRmk>
+          </Tcn>
         END
       end
     end

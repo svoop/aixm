@@ -14,7 +14,7 @@ describe AIXM::Feature::NavigationalAid::TACAN do
 
     describe :to_digest do
       it "must return digest of payload" do
-        subject.to_digest.must_equal 518546211
+        subject.to_digest.must_equal 648449590
       end
     end
 
@@ -24,7 +24,7 @@ describe AIXM::Feature::NavigationalAid::TACAN do
           <!-- Navigational aid: [TACAN] TACAN NAVAID -->
           <Tcn>
             <TcnUid newEntity="true">
-              <codeId>TCN</codeId>
+              <codeId>TTT</codeId>
               <geoLat>47.85916667N</geoLat>
               <geoLong>7.56000000E</geoLong>
             </TcnUid>

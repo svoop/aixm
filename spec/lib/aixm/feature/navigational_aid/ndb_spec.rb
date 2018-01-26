@@ -24,7 +24,7 @@ describe AIXM::Feature::NavigationalAid::NDB do
 
     describe :to_digest do
       it "must return digest of payload" do
-        subject.to_digest.must_equal 839752023
+        subject.to_digest.must_equal 387748611
       end
     end
 
@@ -34,7 +34,7 @@ describe AIXM::Feature::NavigationalAid::NDB do
           <!-- Navigational aid: [NDB] NDB NAVAID -->
           <Ndb>
             <NdbUid newEntity="true">
-              <codeId>NDB</codeId>
+              <codeId>NNN</codeId>
               <geoLat>47.85916667N</geoLat>
               <geoLong>7.56000000E</geoLong>
             </NdbUid>

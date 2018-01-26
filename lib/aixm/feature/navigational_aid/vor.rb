@@ -32,7 +32,7 @@ module AIXM
           MAG: :magnetic
         }.freeze
 
-        attr_reader :type, :f, :north
+        attr_reader :type, :f, :north, :dme, :tacan
 
         public_class_method :new
 
@@ -63,21 +63,46 @@ module AIXM
         end
 
         ##
+        # Associate a DME (also known as VOR/DME)
+        def associate_dme(channel:)
+          @dme = AIXM.dme(id: id, name: name, xy: xy, z: z, channel: channel)
+          @dme.schedule = schedule
+          @dme.remarks = remarks
+          @dme.vor = self
+        end
+
+        ##
+        # Associate a TACAN (also known as VORTAC)
+        def associate_tacan(channel:)
+          @tacan = AIXM.tacan(id: id, name: name, xy: xy, z: z, channel: channel)
+          @tacan.schedule = schedule
+          @tacan.remarks = remarks
+          @tacan.vor = self
+        end
+
+        ##
         # Digest to identify the payload
         def to_digest
           [super, type, f.to_digest, north].to_digest
         end
 
         ##
-        # Render AIXM
+        # Render UID markup
+        def to_uid(*extensions)
+          builder = Builder::XmlMarkup.new(indent: 2)
+          builder.VorUid({ newEntity: (true if extensions >> :ofm) }.compact) do |voruid|
+            voruid.codeId(id)
+            voruid.geoLat(xy.lat(format_for(*extensions)))
+            voruid.geoLong(xy.long(format_for(*extensions)))
+          end
+        end
+
+        ##
+        # Render AIXM markup
         def to_xml(*extensions)
           builder = to_builder(*extensions)
           builder.Vor do |vor|
-            vor.VorUid({ newEntity: (true if extensions >> :ofm) }.compact) do |voruid|
-              voruid.codeId(id)
-              voruid.geoLat(xy.lat(format_for(*extensions)))
-              voruid.geoLong(xy.long(format_for(*extensions)))
-            end
+            vor << to_uid(*extensions).indent(2)
             vor.OrgUid
             vor.txtName(name)
             vor.codeType(type_key.to_s)
@@ -95,8 +120,10 @@ module AIXM
               end
             end
             vor.txtRmk(remarks) if remarks
-            vor.target!   # see https://github.com/jimweirich/builder/issues/42
           end
+          builder << @dme.to_xml(*extensions) if @dme
+          builder << @tacan.to_xml(*extensions) if @tacan
+          builder.target!   # see https://github.com/jimweirich/builder/issues/42
         end
       end
 
