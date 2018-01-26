@@ -9,22 +9,42 @@ module AIXM
       class Base < AIXM::Feature::Base
         using AIXM::Refinements
 
-        attr_reader :id, :name, :xy, :z
-        attr_accessor :schedule, :remarks
+        attr_reader :id, :name, :xy, :z, :schedule, :remarks
 
         private_class_method :new
 
         def initialize(id:, name:, xy:, z: nil)
-          @id, @name, @xy, @z = id&.upcase, name&.upcase, xy, z
-          fail(ArgumentError, "invalid xy") unless xy.is_a? AIXM::XY
-          fail(ArgumentError, "invalid z") unless z.nil? || (z.is_a?(AIXM::Z) && z.qnh?)
+          self.id, self.name, self.xy, self.z = id, name, xy, z
         end
 
-        ##
-        # Assign a +Schedule+ object or +nil+
+        def id=(value)
+          fail(ArgumentError, "invalid id") unless value.is_a? String
+          @id = value.upcase
+        end
+
+        def name=(value)
+          fail(ArgumentError, "invalid name") unless value.is_a? String
+          @name = value.upcase
+        end
+
+        def xy=(value)
+          fail(ArgumentError, "invalid xy") unless value.is_a? AIXM::XY
+          @xy = value
+        end
+
+        def z=(value)
+          fail(ArgumentError, "invalid z") unless value.nil? || (value.is_a?(AIXM::Z) && value.qnh?)
+          @z = value
+        end
+
         def schedule=(value)
           fail(ArgumentError, "invalid schedule") unless value.nil? || value.is_a?(AIXM::Component::Schedule)
           @schedule = value
+        end
+
+        def remarks=(value)
+          fail(ArgumentError, "invalid remarks") unless value.is_a? String
+          @remarks = value
         end
 
         ##

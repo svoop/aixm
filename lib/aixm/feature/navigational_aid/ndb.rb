@@ -16,8 +16,12 @@ module AIXM
 
         def initialize(id:, name:, xy:, z: nil, f:)
           super(id: id, name: name, xy: xy, z: z)
-          @f = f
-          fail(ArgumentError, "invalid frequency") unless f.is_a?(F) && f.between?(190, 1750, :khz)
+          self.f = f
+        end
+
+        def f=(value)
+          fail(ArgumentError, "invalid f") unless value.is_a?(F) && value.between?(190, 1750, :khz)
+          @f = value
         end
 
         ##

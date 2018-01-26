@@ -25,7 +25,15 @@ module AIXM
 
         def initialize(id:, name:, xy:, z: nil, type:)
           super(id: id, name: name, xy: xy, z: z)
-          @type = TYPES.lookup(type&.to_sym, nil) || fail(ArgumentError, "invalid type")
+          self.type = type
+        end
+
+        def type=(value)
+          @type = TYPES.lookup(value&.to_sym, nil) || fail(ArgumentError, "invalid type")
+        end
+
+        def type_key
+          TYPES.key(type)
         end
 
         ##
@@ -60,10 +68,6 @@ module AIXM
             dpn.txtRmk(remarks) if remarks
             dpn.target!   # see https://github.com/jimweirich/builder/issues/42
           end
-        end
-
-        def type_key
-          TYPES.key(type)
         end
       end
 

@@ -3,27 +3,15 @@ module AIXM
     module NavigationalAid
 
       ##
-      # TACAN (tactical air navigation system) operate in the frequency band
-      # between 960 MHz and 1215 MHz.
+      # TACAN (tactical air navigation system) can be used as a DME by civilian
+      # aircraft and therefore operate in the frequency band between 960 MHz
+      # and 1215 MHz.
       #
       # https://en.wikipedia.org/wiki/Tactical_air_navigation_system
-      class TACAN < Base
+      class TACAN < DME
         using AIXM::Refinements
 
-        attr_reader :channel
-
         public_class_method :new
-
-        def initialize(id:, name:, xy:, z: nil, channel:)
-          super(id: id, name: name, xy: xy, z: z)
-          @channel = channel&.upcase
-        end
-
-        ##
-        # Digest to identify the payload
-        def to_digest
-          [super, channel].to_digest
-        end
 
         ##
         # Render AIXM

@@ -38,10 +38,28 @@ module AIXM
 
         def initialize(id:, name:, xy:, z: nil, type:, f:, north:)
           super(id: id, name: name, xy: xy, z: z)
-          @type = TYPES.lookup(type&.to_sym, nil) || fail(ArgumentError, "invalid type")
-          @north = NORTHS.lookup(north&.to_sym, nil) || fail(ArgumentError, "invalid north")
-          @f = f
-          fail(ArgumentError, "invalid frequency") unless f.is_a?(F) && f.between?(108, 117.95, :mhz)
+          self.type, self.f, self.north = type, f, north
+        end
+
+        def type=(value)
+          @type = TYPES.lookup(value&.to_sym, nil) || fail(ArgumentError, "invalid type")
+        end
+
+        def type_key
+          TYPES.key(type)
+        end
+
+        def f=(value)
+          fail(ArgumentError, "invalid f") unless value.is_a?(F) && value.between?(108, 117.95, :mhz)
+          @f = value
+        end
+
+        def north=(value)
+          @north = NORTHS.lookup(value&.to_sym, nil) || fail(ArgumentError, "invalid north")
+        end
+
+        def north_key
+          NORTHS.key(north)
         end
 
         ##
@@ -79,14 +97,6 @@ module AIXM
             vor.txtRmk(remarks) if remarks
             vor.target!   # see https://github.com/jimweirich/builder/issues/42
           end
-        end
-
-        def type_key
-          TYPES.key(type)
-        end
-
-        def north_key
-          NORTHS.key(north)
         end
       end
 

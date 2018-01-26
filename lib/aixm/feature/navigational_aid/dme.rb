@@ -16,7 +16,12 @@ module AIXM
 
         def initialize(id:, name:, xy:, z: nil, channel:)
           super(id: id, name: name, xy: xy, z: z)
-          @channel = channel&.upcase
+          self.channel = channel
+        end
+
+        def channel=(value)
+          fail(ArgumentError, "invalid channel") unless value.is_a? String
+          @channel = value.upcase
         end
 
         ##
