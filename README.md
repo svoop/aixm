@@ -6,12 +6,9 @@
 
 # AIXM
 
-Partial implementation of the [Aeronautical Information Exchange Model (AIXM 4.5)](http://aixm.aero)
-for Ruby.
+Partial implementation of the [Aeronautical Information Exchange Model (AIXM 4.5)](http://aixm.aero) for Ruby.
 
-For now, only the parts needed to automize the AIP import of [Open Flightmaps](https://openflightmaps.org)
-are part of this gem. Most notably, the gem is only a builder of AIXM 4.5
-snapshot files and does not parse them.
+For now, only the parts needed to automize the AIP import of [Open Flightmaps](https://openflightmaps.org) are part of this gem. Most notably, the gem is only a builder of AIXM 4.5 snapshot files and does not parse them.
 
 * [Homepage](https://github.com/svoop/aixm)
 * [API](http://www.rubydoc.info/gems/aixm)
@@ -27,8 +24,7 @@ gem aixm
 
 ## Usage
 
-You can initialize all elements either traditionally or by use of shorter
-AIXM class methods:
+You can initialize all elements either traditionally or by use of shorter AIXM class methods:
 
 ```ruby
 AIXM.airspace(...)
@@ -41,26 +37,24 @@ All fundamentals are subclasses of `AIXM::Base`.
 
 ### Document
 
-The document is the root container of the AIXM snapshot file to be generated.
-It's essentially a collection of features:
+The document is the root container of the AIXM snapshot file to be generated. It's essentially a collection of features:
 
 ```ruby
 document = AIXM.document(created_at: Time.now, effective_at: Time.now)
 document.features << AIXM.airspace(...)
 ```
 
-To give an overview of the AIXM building blocks, the remainder of this guide
-will list initializer arguments with colons (`name: class`) and attribute
-writers with equal or push signs (`name = class` or `name << class`):
+To give you an overview of the AIXM building blocks, the remainder of this guide will use pseudo code to describe the initializer arguments, writer methods etc:
 
-* AIXM.document
-  * created_at: Time, Date or String
-  * effective_at: Time, Date or String
-  * features << AIXM::Feature
+```ruby
+document = AIXM.document(
+  created_at: Time or Date or String
+  effective_at: Time or Date or String
+)
+document.features << AIXM::Feature
+```
 
-See [the API documentation](http://www.rubydoc.info/gems/aixm) for details and
-[spec/factory.rb](https://github.com/svoop/aixm/blob/master/spec/factory.rb) for
-examples.
+See [the API documentation](http://www.rubydoc.info/gems/aixm) for details and [spec/factory.rb](https://github.com/svoop/aixm/blob/master/spec/factory.rb) for examples.
 
 #### Coordinate
 
@@ -94,83 +88,104 @@ All features are subclasses of `AIXM::Feature::Base`.
 
 #### Airspace
 
-* AIXM.airspace
-  * name: String
-  * short_name: String or *nil*
-  * type: String or Symbol
-  * schedule = AIXM.schedule
-  * geometry << AIXM.point, AIXM.arc, AIXM.border or AIXM.circle
-  * class_layers << AIXM.class_layer
-  * remarks = String
+```ruby
+airspace = AIXM.airspace(
+  name: String
+  short_name: String or nil
+  type: String or Symbol
+)
+airspace.schedule = AIXM.schedule
+airspace.geometry << AIXM.point or AIXM.arc or AIXM.border or AIXM.circle
+airspace.class_layers << AIXM.class_layer
+airspace.remarks = String
+```
 
 #### Navigational Aids
 
 ##### Designated Point
 
-* AIXM.designated_point
-  * id: String
-  * name: String
-  * xy: AIXM.xy
-  * z: AIXM.z or *nil*
-  * type: :icao, :adhp, or :coordinates
-  * schedule = AIXM.schedule
-  * remarks = String
+```ruby
+designated_point = AIXM.designated_point(
+  id: String
+  name: String
+  xy: AIXM.xy
+  z: AIXM.z or nil
+  type: :icao or :adhp, or :coordinates
+)
+designated_point.schedule = AIXM.schedule
+designated_point.remarks = String
+```
 
 ##### DME
 
-* AIXM.dme
-  * id: String
-  * name: String
-  * xy: AIXM.xy
-  * z: AIXM.z or *nil*
-  * channel: String
-  * schedule = AIXM.schedule
-  * remarks = String
+```ruby
+dme = AIXM.dme(
+  id: String
+  name: String
+  xy: AIXM.xy
+  z: AIXM.z or nil
+  channel: String
+)
+dme.schedule = AIXM.schedule
+dme.remarks = String
+```
 
 ##### NDB
 
-* AIXM.ndb
-  * id: String
-  * name: String
-  * xy: AIXM.xy
-  * z: AIXM.z or *nil*
-  * f: AIXM.f
-  * schedule = AIXM.schedule
-  * remarks = String
+```ruby
+ndb = AIXM.ndb(
+  id: String
+  name: String
+  xy: AIXM.xy
+  z: AIXM.z or nil
+  f: AIXM.f
+)
+ndb.schedule = AIXM.schedule
+ndb.remarks = String
+```
 
 ##### Marker
 
-* AIXM.marker
-  * id: String
-  * name: String
-  * xy: AIXM.xy
-  * z: AIXM.z or *nil*
-  * schedule = AIXM.schedule
-  * remarks = String
+```ruby
+marker = AIXM.marker(
+  id: String
+  name: String
+  xy: AIXM.xy
+  z: AIXM.z or nil
+)
+marker.schedule = AIXM.schedule
+marker.remarks = String
+```
 
 ##### TACAN
 
-* AIXM.tacan
-  * id: String
-  * name: String
-  * xy: AIXM.xy
-  * z: AIXM.z or *nil*
-  * channel: String
-  * schedule = AIXM.schedule
-  * remarks = String
+```ruby
+tacan = AIXM.tacan(
+  id: String
+  name: String
+  xy: AIXM.xy
+  z: AIXM.z or nil
+  channel: String
+)
+tacan.schedule = AIXM.schedule
+tacan.remarks = String
+```
 
 ##### VOR
 
-* AIXM.vor
-  * id: String
-  * name: String
-  * xy: AIXM.xy
-  * z: AIXM.z or *nil*
-  * type: :vor or :dvor
-  * f: AIXM.f
-  * north: :geographic, :grid or :magnetic
-  * schedule = AIXM.schedule
-  * remarks = String
+```ruby
+vor = AIXM.vor(
+  id: String
+  name: String
+  xy: AIXM.xy
+  z: AIXM.z or nil  
+  type: :vor or :dvor
+  f: AIXM.f
+  north: :geographic or :grid or :magnetic
+)
+vor.schedule = AIXM.schedule
+vor.remarks = String
+```
 
 ### Components
 
@@ -178,58 +193,70 @@ All components are subclasses of `AIXM::Component::Base`.
 
 #### Schedule
 
-* AIXM.schedule
-  * code: String or Symbol
+```ruby
+schedule = AIXM.schedule(
+  code: String or Symbol
+)
+```
 
 #### Class Layer
 
-* AIXM.class_layer
-  * class: String or *nil*
-  * vertical_limits: AIXM.vertical_limits
+```ruby
+class_layer = AIXM.class_layer(
+  class: String or nil
+  vertical_limits: AIXM.vertical_limits
+)
+```
 
 #### Vertical Limits
 
-* AIXM.vertical_limits
-  * max_z: AIXM.z or *nil*
-  * upper_z: AIXM.z
-  * lower_z: AIXM.z
-  * min_z: AIXM.z or *nil*
+```ruby
+vertical_limits = AIXM.vertical_limits(
+  max_z: AIXM.z or nil
+  upper_z: AIXM.z
+  lower_z: AIXM.z
+  min_z: AIXM.z or nil
+)
+```
 
 #### Point, Arc, Border and Circle
 
-* AIXM.point
-  * xy: AIXM.xy
-* AIXM.arc
-  * xy: AIXM.xy
-  * center_xy: AIXM.xy
-  * cloclwise: *true* or *false*
-* AIXM.border
-  * xy: AIXM.xy
-  * name: String
-* AIXM.circle
-  * center_xy: AIXM.xy
-  * radius: Numeric
+```ruby
+point = AIXM.point(
+  xy: AIXM.xy
+)
+arc = AIXM.arc(
+  xy: AIXM.xy
+  center_xy: AIXM.xy
+  cloclwise: true or false
+)
+border = AIXM.border(
+  xy: AIXM.xy
+  name: String
+)
+circle = AIXM.circle(
+  center_xy: AIXM.xy
+  radius: Numeric
+)
+```
 
 #### Geometry
 
-* AIXM.geometry
-  * << AIXM.point, AIXM.arc, AIXM.border or AIXM.circle
+```ruby
+geometry = AIXM.geometry
+geometry << AIXM.point or AIXM.arc or AIXM.border or AIXM.circle
+```
 
 For a geometry to be complete, it must be comprised of either:
 
 * exactly one circle
-* at least three points, arcs or borders (the last of which a point with
-  identical coordinates as the first)
+* at least three points, arcs or borders (the last of which a point with identical coordinates as the first)
 
 ## Validation
 
-Use `AIXM::Document#complete?` to check whether all mandatory information is
-present. Airspaces, geometries etc have `complete?` methods as well.
+Use `AIXM::Document#complete?` to check whether all mandatory information is present. Airspaces, geometries etc have `complete?` methods as well.
 
-Use `AIXM::Document#valid?` to validate the resulting AIXM against the XSD
-schema. If any, you find the errors in `AIXM::Document#errors`. Since the data
-model is not fully implemented, some associations cannot be assigned and have
-to be left empty. The resulting validation errors are silently ignored:
+Use `AIXM::Document#valid?` to validate the resulting AIXM against the XSD schema. If any, you find the errors in `AIXM::Document#errors`. Since the data model is not fully implemented, some associations cannot be assigned and have to be left empty. The resulting validation errors are silently ignored:
 
 * OrgUid - organizations may be empty tags
 
@@ -258,16 +285,13 @@ By `using AIXM::Refinements` you get the following general purpose methods:
 * `Float#trim`<br>Convert whole numbers to Integer and leave all other untouched
 * `Float#to_km(from: unit)`<br>Convert a distance from *unit* (:km, :m, :nm or :ft) to km
 
-See the [source code](https://github.com/svoop/aixm/blob/master/lib/aixm/refinements.rb)
-for more explicit descriptions and examples.
+See the [source code](https://github.com/svoop/aixm/blob/master/lib/aixm/refinements.rb) for more explicit descriptions and examples.
 
 ## Extensions
 
 ### OFM
 
-This extension adds proprietary tags and attributes (most of which are prefixed
-with `xt_`) aiming to improve importing the resulting AIXM into the OFM
-originative suite:
+This extension adds proprietary tags and attributes (most of which are prefixed with `xt_`) aiming to improve importing the resulting AIXM into the OFM originative suite:
 
 * `<AIXM-Snapshot version="4.5 + OFM extensions of version 0.1" (...) />`<br>root node with extended version string
 * `<Ase xt_classLayersAvail="(true|false)">`<br>true when multiple class layers and therefore an Adg-node is present
@@ -284,8 +308,7 @@ originative suite:
 
 ## Tests
 
-Some tests are very time consuming and therefore skipped by default. To run the
-full test suite, set the environment variable:
+Some tests are very time consuming and therefore skipped by default. To run the full test suite, set the environment variable:
 
 ```
 export SPEC_SCOPE=all
@@ -305,8 +328,7 @@ Please submit issues on:
 
 https://github.com/svoop/aixm/issues
 
-To contribute code, fork the project on Github, add your code and submit a
-pull request:
+To contribute code, fork the project on Github, add your code and submit a pull request:
 
 https://help.github.com/articles/fork-a-repo
 
