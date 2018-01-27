@@ -90,7 +90,7 @@ module AIXM
         # Render UID markup
         def to_uid(*extensions)
           builder = Builder::XmlMarkup.new(indent: 2)
-          builder.VorUid({ newEntity: (true if extensions >> :ofm) }.compact) do |voruid|
+          builder.VorUid({ mid: to_digest, newEntity: (true if extensions >> :ofm) }.compact) do |voruid|
             voruid.codeId(id)
             voruid.geoLat(xy.lat(format_for(*extensions)))
             voruid.geoLong(xy.long(format_for(*extensions)))

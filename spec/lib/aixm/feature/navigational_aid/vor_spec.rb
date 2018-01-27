@@ -18,6 +18,10 @@ describe AIXM::Feature::NavigationalAid::VOR do
       AIXM::Factory.vor
     end
 
+    let :digest do
+      subject.to_digest
+    end
+
     describe :kind do
       it "must return class or type" do
         subject.kind.must_equal "VOR:VOR"
@@ -35,7 +39,7 @@ describe AIXM::Feature::NavigationalAid::VOR do
         subject.to_aixm(:ofm).must_equal <<~END
           <!-- NavigationalAid: [VOR:VOR] VOR NAVAID -->
           <Vor>
-            <VorUid newEntity="true">
+            <VorUid mid="#{digest}" newEntity="true">
               <codeId>VVV</codeId>
               <geoLat>47.85916667N</geoLat>
               <geoLong>7.56000000E</geoLong>
@@ -68,6 +72,10 @@ describe AIXM::Feature::NavigationalAid::VOR do
       end
     end
 
+    let :digests do
+      [subject.to_digest, subject.dme.to_digest]
+    end
+
     describe :kind do
       it "must return class or type" do
         subject.kind.must_equal "VOR:VOR"
@@ -85,7 +93,7 @@ describe AIXM::Feature::NavigationalAid::VOR do
         subject.to_aixm(:ofm).must_equal <<~END
           <!-- NavigationalAid: [VOR:VOR] VOR/DME NAVAID -->
           <Vor>
-            <VorUid newEntity="true">
+            <VorUid mid="#{digests.first}" newEntity="true">
               <codeId>VVV</codeId>
               <geoLat>47.85916667N</geoLat>
               <geoLong>7.56000000E</geoLong>
@@ -106,13 +114,13 @@ describe AIXM::Feature::NavigationalAid::VOR do
           </Vor>
           <!-- NavigationalAid: [DME] VOR/DME NAVAID -->
           <Dme>
-            <DmeUid newEntity="true">
+            <DmeUid mid="#{digests.last}" newEntity="true">
               <codeId>VVV</codeId>
               <geoLat>47.85916667N</geoLat>
               <geoLong>7.56000000E</geoLong>
             </DmeUid>
             <OrgUid/>
-            <VorUid newEntity="true">
+            <VorUid mid="#{digests.first}" newEntity="true">
               <codeId>VVV</codeId>
               <geoLat>47.85916667N</geoLat>
               <geoLong>7.56000000E</geoLong>
@@ -141,6 +149,10 @@ describe AIXM::Feature::NavigationalAid::VOR do
       end
     end
 
+    let :digests do
+      [subject.to_digest, subject.tacan.to_digest]
+    end
+
     describe :kind do
       it "must return class or type" do
         subject.kind.must_equal "VOR:VOR"
@@ -158,7 +170,7 @@ describe AIXM::Feature::NavigationalAid::VOR do
         subject.to_aixm(:ofm).must_equal <<~END
           <!-- NavigationalAid: [VOR:VOR] VORTAC NAVAID -->
           <Vor>
-            <VorUid newEntity="true">
+            <VorUid mid="#{digests.first}" newEntity="true">
               <codeId>VVV</codeId>
               <geoLat>47.85916667N</geoLat>
               <geoLong>7.56000000E</geoLong>
@@ -179,13 +191,13 @@ describe AIXM::Feature::NavigationalAid::VOR do
           </Vor>
           <!-- NavigationalAid: [TACAN] VORTAC NAVAID -->
           <Tcn>
-            <TcnUid newEntity="true">
+            <TcnUid mid="#{digests.last}" newEntity="true">
               <codeId>VVV</codeId>
               <geoLat>47.85916667N</geoLat>
               <geoLong>7.56000000E</geoLong>
             </TcnUid>
             <OrgUid/>
-            <VorUid newEntity="true">
+            <VorUid mid="#{digests.first}" newEntity="true">
               <codeId>VVV</codeId>
               <geoLat>47.85916667N</geoLat>
               <geoLong>7.56000000E</geoLong>

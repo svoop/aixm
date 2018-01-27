@@ -6,6 +6,10 @@ describe AIXM::Feature::NavigationalAid::DesignatedPoint do
       AIXM::Factory.designated_point
     end
 
+    let :digest do
+      subject.to_digest
+    end
+
     describe :kind do
       it "must return class or type" do
         subject.kind.must_equal "DesignatedPoint:ICAO"
@@ -23,7 +27,7 @@ describe AIXM::Feature::NavigationalAid::DesignatedPoint do
         subject.to_aixm(:ofm).must_equal <<~END
           <!-- NavigationalAid: [DesignatedPoint:ICAO] DESIGNATED POINT NAVAID -->
           <Dpn>
-            <DpnUid newEntity="true">
+            <DpnUid mid="#{digest}" newEntity="true">
               <codeId>DDD</codeId>
               <geoLat>47.85916667N</geoLat>
               <geoLong>7.56000000E</geoLong>

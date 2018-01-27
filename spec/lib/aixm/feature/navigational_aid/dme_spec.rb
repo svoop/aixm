@@ -6,6 +6,10 @@ describe AIXM::Feature::NavigationalAid::DME do
       AIXM::Factory.dme
     end
 
+    let :digest do
+      subject.to_digest
+    end
+
     describe :kind do
       it "must return class or type" do
         subject.kind.must_equal "DME"
@@ -23,7 +27,7 @@ describe AIXM::Feature::NavigationalAid::DME do
         subject.to_aixm(:ofm).must_equal <<~END
           <!-- NavigationalAid: [DME] DME NAVAID -->
           <Dme>
-            <DmeUid newEntity="true">
+            <DmeUid mid="#{digest}" newEntity="true">
               <codeId>MMM</codeId>
               <geoLat>47.85916667N</geoLat>
               <geoLong>7.56000000E</geoLong>

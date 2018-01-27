@@ -46,7 +46,7 @@ module AIXM
         # Render UID markup
         def to_uid(*extensions)
           builder = Builder::XmlMarkup.new(indent: 2)
-          builder.DpnUid({ newEntity: (true if extensions >> :ofm) }.compact) do |dpnuid|
+          builder.DpnUid({ mid: to_digest, newEntity: (true if extensions >> :ofm) }.compact) do |dpnuid|
             dpnuid.codeId(id)
             dpnuid.geoLat(xy.lat(format_for(*extensions)))
             dpnuid.geoLong(xy.long(format_for(*extensions)))

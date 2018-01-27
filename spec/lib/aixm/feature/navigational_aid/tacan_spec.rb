@@ -6,6 +6,10 @@ describe AIXM::Feature::NavigationalAid::TACAN do
       AIXM::Factory.tacan
     end
 
+    let :digest do
+      subject.to_digest
+    end
+
     describe :kind do
       it "must return class or type" do
         subject.kind.must_equal "TACAN"
@@ -23,7 +27,7 @@ describe AIXM::Feature::NavigationalAid::TACAN do
         subject.to_aixm(:ofm).must_equal <<~END
           <!-- NavigationalAid: [TACAN] TACAN NAVAID -->
           <Tcn>
-            <TcnUid newEntity="true">
+            <TcnUid mid="#{digest}" newEntity="true">
               <codeId>TTT</codeId>
               <geoLat>47.85916667N</geoLat>
               <geoLong>7.56000000E</geoLong>

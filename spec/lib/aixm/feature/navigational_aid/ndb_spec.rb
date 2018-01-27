@@ -16,6 +16,10 @@ describe AIXM::Feature::NavigationalAid::NDB do
       AIXM::Factory.ndb
     end
 
+    let :digest do
+      subject.to_digest
+    end
+
     describe :kind do
       it "must return class or type" do
         subject.kind.must_equal "NDB"
@@ -33,7 +37,7 @@ describe AIXM::Feature::NavigationalAid::NDB do
         subject.to_aixm(:ofm).must_equal <<~END
           <!-- NavigationalAid: [NDB] NDB NAVAID -->
           <Ndb>
-            <NdbUid newEntity="true">
+            <NdbUid mid="#{digest}" newEntity="true">
               <codeId>NNN</codeId>
               <geoLat>47.85916667N</geoLat>
               <geoLong>7.56000000E</geoLong>

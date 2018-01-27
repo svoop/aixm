@@ -158,7 +158,7 @@ describe AIXM::Document do
           </Abd>
           <!-- NavigationalAid: [DesignatedPoint:ICAO] DESIGNATED POINT NAVAID -->
           <Dpn>
-            <DpnUid>
+            <DpnUid mid="5317882">
               <codeId>DDD</codeId>
               <geoLat>475133.00N</geoLat>
               <geoLong>0073336.00E</geoLong>
@@ -176,7 +176,7 @@ describe AIXM::Document do
           </Dpn>
           <!-- NavigationalAid: [DME] DME NAVAID -->
           <Dme>
-            <DmeUid>
+            <DmeUid mid="537506748">
               <codeId>MMM</codeId>
               <geoLat>475133.00N</geoLat>
               <geoLong>0073336.00E</geoLong>
@@ -194,7 +194,7 @@ describe AIXM::Document do
           </Dme>
           <!-- NavigationalAid: [Marker] MARKER NAVAID -->
           <Mkr>
-            <MkrUid>
+            <MkrUid mid="371155747">
               <codeId>---</codeId>
               <geoLat>475133.00N</geoLat>
               <geoLong>0073336.00E</geoLong>
@@ -213,7 +213,7 @@ describe AIXM::Document do
           </Mkr>
           <!-- NavigationalAid: [NDB] NDB NAVAID -->
           <Ndb>
-            <NdbUid>
+            <NdbUid mid="387748611">
               <codeId>NNN</codeId>
               <geoLat>475133.00N</geoLat>
               <geoLong>0073336.00E</geoLong>
@@ -232,7 +232,7 @@ describe AIXM::Document do
           </Ndb>
           <!-- NavigationalAid: [TACAN] TACAN NAVAID -->
           <Tcn>
-            <TcnUid>
+            <TcnUid mid="648449590">
               <codeId>TTT</codeId>
               <geoLat>475133.00N</geoLat>
               <geoLong>0073336.00E</geoLong>
@@ -250,7 +250,7 @@ describe AIXM::Document do
           </Tcn>
           <!-- NavigationalAid: [VOR:VOR] VOR NAVAID -->
           <Vor>
-            <VorUid>
+            <VorUid mid="152119936">
               <codeId>VVV</codeId>
               <geoLat>475133.00N</geoLat>
               <geoLong>0073336.00E</geoLong>
@@ -271,7 +271,7 @@ describe AIXM::Document do
           </Vor>
           <!-- NavigationalAid: [VOR:DVOR] DOPPLER-VOR NAVAID -->
           <Vor>
-            <VorUid>
+            <VorUid mid="203176366">
               <codeId>DVV</codeId>
               <geoLat>475133.00N</geoLat>
               <geoLong>0073336.00E</geoLong>
@@ -292,7 +292,7 @@ describe AIXM::Document do
           </Vor>
           <!-- NavigationalAid: [VOR:VOR] VOR/DME NAVAID -->
           <Vor>
-            <VorUid>
+            <VorUid mid="8168488">
               <codeId>VDD</codeId>
               <geoLat>475133.00N</geoLat>
               <geoLong>0073336.00E</geoLong>
@@ -313,13 +313,13 @@ describe AIXM::Document do
           </Vor>
           <!-- NavigationalAid: [DME] VOR/DME NAVAID -->
           <Dme>
-            <DmeUid>
+            <DmeUid mid="284278140">
               <codeId>VDD</codeId>
               <geoLat>475133.00N</geoLat>
               <geoLong>0073336.00E</geoLong>
             </DmeUid>
             <OrgUid/>
-            <VorUid>
+            <VorUid mid="8168488">
               <codeId>VDD</codeId>
               <geoLat>475133.00N</geoLat>
               <geoLong>0073336.00E</geoLong>
@@ -336,7 +336,7 @@ describe AIXM::Document do
           </Dme>
           <!-- NavigationalAid: [VOR:VOR] VORTAC NAVAID -->
           <Vor>
-            <VorUid>
+            <VorUid mid="16444351">
               <codeId>VTT</codeId>
               <geoLat>475133.00N</geoLat>
               <geoLong>0073336.00E</geoLong>
@@ -357,13 +357,13 @@ describe AIXM::Document do
           </Vor>
           <!-- NavigationalAid: [TACAN] VORTAC NAVAID -->
           <Tcn>
-            <TcnUid>
+            <TcnUid mid="595472802">
               <codeId>VTT</codeId>
               <geoLat>475133.00N</geoLat>
               <geoLong>0073336.00E</geoLong>
             </TcnUid>
             <OrgUid/>
-            <VorUid>
+            <VorUid mid="16444351">
               <codeId>VTT</codeId>
               <geoLat>475133.00N</geoLat>
               <geoLong>0073336.00E</geoLong>
@@ -489,7 +489,7 @@ describe AIXM::Document do
           </Abd>
           <!-- NavigationalAid: [DesignatedPoint:ICAO] DESIGNATED POINT NAVAID -->
           <Dpn>
-            <DpnUid newEntity="true">
+            <DpnUid mid="5317882" newEntity="true">
               <codeId>DDD</codeId>
               <geoLat>47.85916667N</geoLat>
               <geoLong>7.56000000E</geoLong>
@@ -507,7 +507,7 @@ describe AIXM::Document do
           </Dpn>
           <!-- NavigationalAid: [DME] DME NAVAID -->
           <Dme>
-            <DmeUid newEntity="true">
+            <DmeUid mid="537506748" newEntity="true">
               <codeId>MMM</codeId>
               <geoLat>47.85916667N</geoLat>
               <geoLong>7.56000000E</geoLong>
@@ -525,7 +525,7 @@ describe AIXM::Document do
           </Dme>
           <!-- NavigationalAid: [Marker] MARKER NAVAID -->
           <Mkr>
-            <MkrUid newEntity="true">
+            <MkrUid mid="371155747" newEntity="true">
               <codeId>---</codeId>
               <geoLat>47.85916667N</geoLat>
               <geoLong>7.56000000E</geoLong>
@@ -544,7 +544,7 @@ describe AIXM::Document do
           </Mkr>
           <!-- NavigationalAid: [NDB] NDB NAVAID -->
           <Ndb>
-            <NdbUid newEntity="true">
+            <NdbUid mid="387748611" newEntity="true">
               <codeId>NNN</codeId>
               <geoLat>47.85916667N</geoLat>
               <geoLong>7.56000000E</geoLong>
@@ -563,7 +563,7 @@ describe AIXM::Document do
           </Ndb>
           <!-- NavigationalAid: [TACAN] TACAN NAVAID -->
           <Tcn>
-            <TcnUid newEntity="true">
+            <TcnUid mid="648449590" newEntity="true">
               <codeId>TTT</codeId>
               <geoLat>47.85916667N</geoLat>
               <geoLong>7.56000000E</geoLong>
@@ -581,7 +581,7 @@ describe AIXM::Document do
           </Tcn>
           <!-- NavigationalAid: [VOR:VOR] VOR NAVAID -->
           <Vor>
-            <VorUid newEntity="true">
+            <VorUid mid="152119936" newEntity="true">
               <codeId>VVV</codeId>
               <geoLat>47.85916667N</geoLat>
               <geoLong>7.56000000E</geoLong>
@@ -602,7 +602,7 @@ describe AIXM::Document do
           </Vor>
           <!-- NavigationalAid: [VOR:DVOR] DOPPLER-VOR NAVAID -->
           <Vor>
-            <VorUid newEntity="true">
+            <VorUid mid="203176366" newEntity="true">
               <codeId>DVV</codeId>
               <geoLat>47.85916667N</geoLat>
               <geoLong>7.56000000E</geoLong>
@@ -623,7 +623,7 @@ describe AIXM::Document do
           </Vor>
           <!-- NavigationalAid: [VOR:VOR] VOR/DME NAVAID -->
           <Vor>
-            <VorUid newEntity="true">
+            <VorUid mid="8168488" newEntity="true">
               <codeId>VDD</codeId>
               <geoLat>47.85916667N</geoLat>
               <geoLong>7.56000000E</geoLong>
@@ -644,13 +644,13 @@ describe AIXM::Document do
           </Vor>
           <!-- NavigationalAid: [DME] VOR/DME NAVAID -->
           <Dme>
-            <DmeUid newEntity="true">
+            <DmeUid mid="284278140" newEntity="true">
               <codeId>VDD</codeId>
               <geoLat>47.85916667N</geoLat>
               <geoLong>7.56000000E</geoLong>
             </DmeUid>
             <OrgUid/>
-            <VorUid newEntity="true">
+            <VorUid mid="8168488" newEntity="true">
               <codeId>VDD</codeId>
               <geoLat>47.85916667N</geoLat>
               <geoLong>7.56000000E</geoLong>
@@ -667,7 +667,7 @@ describe AIXM::Document do
           </Dme>
           <!-- NavigationalAid: [VOR:VOR] VORTAC NAVAID -->
           <Vor>
-            <VorUid newEntity="true">
+            <VorUid mid="16444351" newEntity="true">
               <codeId>VTT</codeId>
               <geoLat>47.85916667N</geoLat>
               <geoLong>7.56000000E</geoLong>
@@ -688,13 +688,13 @@ describe AIXM::Document do
           </Vor>
           <!-- NavigationalAid: [TACAN] VORTAC NAVAID -->
           <Tcn>
-            <TcnUid newEntity="true">
+            <TcnUid mid="595472802" newEntity="true">
               <codeId>VTT</codeId>
               <geoLat>47.85916667N</geoLat>
               <geoLong>7.56000000E</geoLong>
             </TcnUid>
             <OrgUid/>
-            <VorUid newEntity="true">
+            <VorUid mid="16444351" newEntity="true">
               <codeId>VTT</codeId>
               <geoLat>47.85916667N</geoLat>
               <geoLong>7.56000000E</geoLong>

@@ -21,7 +21,7 @@ module AIXM
         # Render UID markup
         def to_uid(*extensions)
           builder = Builder::XmlMarkup.new(indent: 2)
-          builder.MkrUid({ newEntity: (true if extensions >> :ofm) }.compact) do |mkruid|
+          builder.MkrUid({ mid: to_digest, newEntity: (true if extensions >> :ofm) }.compact) do |mkruid|
             mkruid.codeId(id)
             mkruid.geoLat(xy.lat(format_for(*extensions)))
             mkruid.geoLong(xy.long(format_for(*extensions)))

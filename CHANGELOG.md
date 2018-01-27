@@ -1,3 +1,8 @@
+## 0.2.3
+
+* Minor changes:
+  * Add "mid" attributes to all navigational aid features
+
 ## 0.2.2
 
 * Minor changes:

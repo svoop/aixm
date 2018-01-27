@@ -6,6 +6,10 @@ describe AIXM::Feature::NavigationalAid::Marker do
       AIXM::Factory.marker
     end
 
+    let :digest do
+      subject.to_digest
+    end
+
     describe :kind do
       it "must return class or type" do
         subject.kind.must_equal "Marker"
@@ -23,7 +27,7 @@ describe AIXM::Feature::NavigationalAid::Marker do
         subject.to_aixm(:ofm).must_equal <<~END
           <!-- NavigationalAid: [Marker] MARKER NAVAID -->
           <Mkr>
-            <MkrUid newEntity="true">
+            <MkrUid mid="#{digest}" newEntity="true">
               <codeId>---</codeId>
               <geoLat>47.85916667N</geoLat>
               <geoLong>7.56000000E</geoLong>
