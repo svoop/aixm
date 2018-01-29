@@ -192,14 +192,15 @@ describe AIXM::Document do
             </Dtt>
             <txtRmk>dme navaid</txtRmk>
           </Dme>
-          <!-- NavigationalAid: [Marker] MARKER NAVAID -->
+          <!-- NavigationalAid: [Marker:O] MARKER NAVAID -->
           <Mkr>
-            <MkrUid mid="371155747">
+            <MkrUid mid="300437209">
               <codeId>---</codeId>
               <geoLat>475133.00N</geoLat>
               <geoLong>0073336.00E</geoLong>
             </MkrUid>
             <OrgUid/>
+            <codePsnIls>O</codePsnIls>
             <valFreq>75</valFreq>
             <uomFreq>MHZ</uomFreq>
             <txtName>MARKER NAVAID</txtName>
@@ -211,9 +212,9 @@ describe AIXM::Document do
             </Mtt>
             <txtRmk>marker navaid</txtRmk>
           </Mkr>
-          <!-- NavigationalAid: [NDB] NDB NAVAID -->
+          <!-- NavigationalAid: [NDB:B] NDB NAVAID -->
           <Ndb>
-            <NdbUid mid="387748611">
+            <NdbUid mid="782114926">
               <codeId>NNN</codeId>
               <geoLat>475133.00N</geoLat>
               <geoLong>0073336.00E</geoLong>
@@ -222,6 +223,7 @@ describe AIXM::Document do
             <txtName>NDB NAVAID</txtName>
             <valFreq>555</valFreq>
             <uomFreq>KHZ</uomFreq>
+            <codeClass>B</codeClass>
             <codeDatum>WGE</codeDatum>
             <valElev>500</valElev>
             <uomDistVer>FT</uomDistVer>
@@ -250,7 +252,7 @@ describe AIXM::Document do
           </Tcn>
           <!-- NavigationalAid: [VOR:VOR] VOR NAVAID -->
           <Vor>
-            <VorUid mid="152119936">
+            <VorUid mid="904391566">
               <codeId>VVV</codeId>
               <geoLat>475133.00N</geoLat>
               <geoLong>0073336.00E</geoLong>
@@ -269,30 +271,9 @@ describe AIXM::Document do
             </Vtt>
             <txtRmk>vor navaid</txtRmk>
           </Vor>
-          <!-- NavigationalAid: [VOR:DVOR] DOPPLER-VOR NAVAID -->
-          <Vor>
-            <VorUid mid="203176366">
-              <codeId>DVV</codeId>
-              <geoLat>475133.00N</geoLat>
-              <geoLong>0073336.00E</geoLong>
-            </VorUid>
-            <OrgUid/>
-            <txtName>DOPPLER-VOR NAVAID</txtName>
-            <codeType>DVOR</codeType>
-            <valFreq>111</valFreq>
-            <uomFreq>MHZ</uomFreq>
-            <codeTypeNorth>TRUE</codeTypeNorth>
-            <codeDatum>WGE</codeDatum>
-            <valElev>500</valElev>
-            <uomDistVer>FT</uomDistVer>
-            <Vtt>
-              <codeWorkHr>H24</codeWorkHr>
-            </Vtt>
-            <txtRmk>doppler-vor navaid</txtRmk>
-          </Vor>
           <!-- NavigationalAid: [VOR:VOR] VOR/DME NAVAID -->
           <Vor>
-            <VorUid mid="8168488">
+            <VorUid mid="428844269">
               <codeId>VDD</codeId>
               <geoLat>475133.00N</geoLat>
               <geoLong>0073336.00E</geoLong>
@@ -319,7 +300,7 @@ describe AIXM::Document do
               <geoLong>0073336.00E</geoLong>
             </DmeUid>
             <OrgUid/>
-            <VorUid mid="8168488">
+            <VorUid mid="428844269">
               <codeId>VDD</codeId>
               <geoLat>475133.00N</geoLat>
               <geoLong>0073336.00E</geoLong>
@@ -336,7 +317,7 @@ describe AIXM::Document do
           </Dme>
           <!-- NavigationalAid: [VOR:VOR] VORTAC NAVAID -->
           <Vor>
-            <VorUid mid="16444351">
+            <VorUid mid="305713874">
               <codeId>VTT</codeId>
               <geoLat>475133.00N</geoLat>
               <geoLong>0073336.00E</geoLong>
@@ -363,7 +344,7 @@ describe AIXM::Document do
               <geoLong>0073336.00E</geoLong>
             </TcnUid>
             <OrgUid/>
-            <VorUid mid="16444351">
+            <VorUid mid="305713874">
               <codeId>VTT</codeId>
               <geoLat>475133.00N</geoLat>
               <geoLong>0073336.00E</geoLong>
@@ -523,14 +504,15 @@ describe AIXM::Document do
             </Dtt>
             <txtRmk>dme navaid</txtRmk>
           </Dme>
-          <!-- NavigationalAid: [Marker] MARKER NAVAID -->
+          <!-- NavigationalAid: [Marker:O] MARKER NAVAID -->
           <Mkr>
-            <MkrUid mid="371155747" newEntity="true">
+            <MkrUid mid="300437209" newEntity="true">
               <codeId>---</codeId>
               <geoLat>47.85916667N</geoLat>
               <geoLong>7.56000000E</geoLong>
             </MkrUid>
             <OrgUid/>
+            <codePsnIls>O</codePsnIls>
             <valFreq>75</valFreq>
             <uomFreq>MHZ</uomFreq>
             <txtName>MARKER NAVAID</txtName>
@@ -542,9 +524,9 @@ describe AIXM::Document do
             </Mtt>
             <txtRmk>marker navaid</txtRmk>
           </Mkr>
-          <!-- NavigationalAid: [NDB] NDB NAVAID -->
+          <!-- NavigationalAid: [NDB:B] NDB NAVAID -->
           <Ndb>
-            <NdbUid mid="387748611" newEntity="true">
+            <NdbUid mid="782114926" newEntity="true">
               <codeId>NNN</codeId>
               <geoLat>47.85916667N</geoLat>
               <geoLong>7.56000000E</geoLong>
@@ -553,6 +535,7 @@ describe AIXM::Document do
             <txtName>NDB NAVAID</txtName>
             <valFreq>555</valFreq>
             <uomFreq>KHZ</uomFreq>
+            <codeClass>B</codeClass>
             <codeDatum>WGE</codeDatum>
             <valElev>500</valElev>
             <uomDistVer>FT</uomDistVer>
@@ -581,7 +564,7 @@ describe AIXM::Document do
           </Tcn>
           <!-- NavigationalAid: [VOR:VOR] VOR NAVAID -->
           <Vor>
-            <VorUid mid="152119936" newEntity="true">
+            <VorUid mid="904391566" newEntity="true">
               <codeId>VVV</codeId>
               <geoLat>47.85916667N</geoLat>
               <geoLong>7.56000000E</geoLong>
@@ -600,30 +583,9 @@ describe AIXM::Document do
             </Vtt>
             <txtRmk>vor navaid</txtRmk>
           </Vor>
-          <!-- NavigationalAid: [VOR:DVOR] DOPPLER-VOR NAVAID -->
-          <Vor>
-            <VorUid mid="203176366" newEntity="true">
-              <codeId>DVV</codeId>
-              <geoLat>47.85916667N</geoLat>
-              <geoLong>7.56000000E</geoLong>
-            </VorUid>
-            <OrgUid/>
-            <txtName>DOPPLER-VOR NAVAID</txtName>
-            <codeType>DVOR</codeType>
-            <valFreq>111</valFreq>
-            <uomFreq>MHZ</uomFreq>
-            <codeTypeNorth>TRUE</codeTypeNorth>
-            <codeDatum>WGE</codeDatum>
-            <valElev>500</valElev>
-            <uomDistVer>FT</uomDistVer>
-            <Vtt>
-              <codeWorkHr>H24</codeWorkHr>
-            </Vtt>
-            <txtRmk>doppler-vor navaid</txtRmk>
-          </Vor>
           <!-- NavigationalAid: [VOR:VOR] VOR/DME NAVAID -->
           <Vor>
-            <VorUid mid="8168488" newEntity="true">
+            <VorUid mid="428844269" newEntity="true">
               <codeId>VDD</codeId>
               <geoLat>47.85916667N</geoLat>
               <geoLong>7.56000000E</geoLong>
@@ -650,7 +612,7 @@ describe AIXM::Document do
               <geoLong>7.56000000E</geoLong>
             </DmeUid>
             <OrgUid/>
-            <VorUid mid="8168488" newEntity="true">
+            <VorUid mid="428844269" newEntity="true">
               <codeId>VDD</codeId>
               <geoLat>47.85916667N</geoLat>
               <geoLong>7.56000000E</geoLong>
@@ -667,7 +629,7 @@ describe AIXM::Document do
           </Dme>
           <!-- NavigationalAid: [VOR:VOR] VORTAC NAVAID -->
           <Vor>
-            <VorUid mid="16444351" newEntity="true">
+            <VorUid mid="305713874" newEntity="true">
               <codeId>VTT</codeId>
               <geoLat>47.85916667N</geoLat>
               <geoLong>7.56000000E</geoLong>
@@ -694,7 +656,7 @@ describe AIXM::Document do
               <geoLong>7.56000000E</geoLong>
             </TcnUid>
             <OrgUid/>
-            <VorUid mid="16444351" newEntity="true">
+            <VorUid mid="305713874" newEntity="true">
               <codeId>VTT</codeId>
               <geoLat>47.85916667N</geoLat>
               <geoLong>7.56000000E</geoLong>

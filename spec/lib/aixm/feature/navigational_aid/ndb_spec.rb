@@ -7,11 +7,12 @@ describe AIXM::Feature::NavigationalAid::NDB do
     end
 
     it "won't accept invalid arguments" do
-      -> { AIXM.ndb(id: 'N', name: 'NDB', xy: AIXM::Factory.xy, f: 0) }.must_raise ArgumentError
+      -> { AIXM.ndb(id: 'N', name: 'NDB', xy: AIXM::Factory.xy, type: :foo, f: f) }.must_raise ArgumentError
+      -> { AIXM.ndb(id: 'N', name: 'NDB', xy: AIXM::Factory.xy, type: :en_route, f: 0) }.must_raise ArgumentError
     end
   end
 
-  context "complete" do
+  context "complete en-route NDB" do
     subject do
       AIXM::Factory.ndb
     end
@@ -21,21 +22,21 @@ describe AIXM::Feature::NavigationalAid::NDB do
     end
 
     describe :kind do
-      it "must return class or type" do
-        subject.kind.must_equal "NDB"
+      it "must return class/type combo" do
+        subject.kind.must_equal "NDB:B"
       end
     end
 
     describe :to_digest do
       it "must return digest of payload" do
-        subject.to_digest.must_equal 387748611
+        subject.to_digest.must_equal 782114926
       end
     end
 
     describe :to_aixm do
       it "must build correct XML with OFM extension" do
         subject.to_aixm(:ofm).must_equal <<~END
-          <!-- NavigationalAid: [NDB] NDB NAVAID -->
+          <!-- NavigationalAid: [NDB:B] NDB NAVAID -->
           <Ndb>
             <NdbUid mid="#{digest}" newEntity="true">
               <codeId>NNN</codeId>
@@ -46,6 +47,7 @@ describe AIXM::Feature::NavigationalAid::NDB do
             <txtName>NDB NAVAID</txtName>
             <valFreq>555</valFreq>
             <uomFreq>KHZ</uomFreq>
+            <codeClass>B</codeClass>
             <codeDatum>WGE</codeDatum>
             <valElev>500</valElev>
             <uomDistVer>FT</uomDistVer>
@@ -55,6 +57,46 @@ describe AIXM::Feature::NavigationalAid::NDB do
             <txtRmk>ndb navaid</txtRmk>
           </Ndb>
         END
+      end
+    end
+  end
+
+  context "complete locator NDB" do
+    subject do
+      AIXM::Factory.ndb.tap do |ndb|
+        ndb.type = :locator
+      end
+    end
+
+    describe :kind do
+      it "must return class/type combo" do
+        subject.kind.must_equal "NDB:L"
+      end
+    end
+
+    describe :to_aixm do
+      it "must build correct XML with OFM extension" do
+        subject.to_aixm(:ofm).must_match %r(<codeClass>L</codeClass>)
+      end
+    end
+  end
+
+  context "complete marine NDB" do
+    subject do
+      AIXM::Factory.ndb.tap do |ndb|
+        ndb.type = :marine
+      end
+    end
+
+    describe :kind do
+      it "must return class/type combo" do
+        subject.kind.must_equal "NDB:M"
+      end
+    end
+
+    describe :to_aixm do
+      it "must build correct XML with OFM extension" do
+        subject.to_aixm(:ofm).must_match %r(<codeClass>M</codeClass>)
       end
     end
   end

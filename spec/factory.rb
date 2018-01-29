@@ -105,7 +105,8 @@ module AIXM
           id: '---',
           name: 'MARKER NAVAID',
           xy: AIXM.xy(lat: %q(47°51'33"N), long: %q(007°33'36"E)),
-          z: AIXM.z(500, :qnh)
+          z: AIXM.z(500, :qnh),
+          type: :outer
         ).tap do |marker|
           marker.schedule = AIXM::H24
           marker.remarks = 'marker navaid'
@@ -118,6 +119,7 @@ module AIXM
           name: 'NDB NAVAID',
           xy: AIXM.xy(lat: %q(47°51'33"N), long: %q(007°33'36"E)),
           z: AIXM.z(500, :qnh),
+          type: :en_route,
           f: AIXM.f(555, :khz)
         ).tap do |ndb|
           ndb.schedule = AIXM::H24
@@ -144,27 +146,12 @@ module AIXM
           name: 'VOR NAVAID',
           xy: AIXM.xy(lat: %q(47°51'33"N), long: %q(007°33'36"E)),
           z: AIXM.z(500, :qnh),
-          type: :vor,
+          type: :conventional,
           f: AIXM.f(111, :mhz),
           north: :geographic
         ).tap do |vor|
           vor.schedule = AIXM::H24
           vor.remarks = 'vor navaid'
-        end
-      end
-
-      def dvor
-        AIXM.vor(
-          id: 'DVV',
-          name: 'DOPPLER-VOR NAVAID',
-          xy: AIXM.xy(lat: %q(47°51'33"N), long: %q(007°33'36"E)),
-          z: AIXM.z(500, :qnh),
-          type: :doppler_vor,
-          f: AIXM.f(111, :mhz),
-          north: :geographic
-        ).tap do |doppler_vor|
-          doppler_vor.schedule = AIXM::H24
-          doppler_vor.remarks = 'doppler-vor navaid'
         end
       end
 
@@ -174,7 +161,7 @@ module AIXM
           name: 'VOR/DME NAVAID',
           xy: AIXM.xy(lat: %q(47°51'33"N), long: %q(007°33'36"E)),
           z: AIXM.z(500, :qnh),
-          type: :vor,
+          type: :conventional,
           f: AIXM.f(111, :mhz),
           north: :geographic
         ).tap do |vordme|
@@ -190,7 +177,7 @@ module AIXM
           name: 'VORTAC NAVAID',
           xy: AIXM.xy(lat: %q(47°51'33"N), long: %q(007°33'36"E)),
           z: AIXM.z(500, :qnh),
-          type: :vor,
+          type: :conventional,
           f: AIXM.f(111, :mhz),
           north: :geographic
         ).tap do |vortac|
@@ -211,7 +198,6 @@ module AIXM
           document.features << AIXM::Factory.ndb
           document.features << AIXM::Factory.tacan
           document.features << AIXM::Factory.vor
-          document.features << AIXM::Factory.dvor
           document.features << AIXM::Factory.vordme
           document.features << AIXM::Factory.vortac
         end

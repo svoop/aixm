@@ -1,7 +1,7 @@
 require_relative '../../../../spec_helper'
 
 describe AIXM::Feature::NavigationalAid::Marker do
-  context "complete" do
+  context "complete outer marker" do
     subject do
       AIXM::Factory.marker
     end
@@ -11,21 +11,21 @@ describe AIXM::Feature::NavigationalAid::Marker do
     end
 
     describe :kind do
-      it "must return class or type" do
-        subject.kind.must_equal "Marker"
+      it "must return class/type combo" do
+        subject.kind.must_equal "Marker:O"
       end
     end
 
     describe :to_digest do
       it "must return digest of payload" do
-        subject.to_digest.must_equal 371155747
+        subject.to_digest.must_equal 300437209
       end
     end
 
     describe :to_aixm do
       it "must build correct XML with OFM extension" do
         subject.to_aixm(:ofm).must_equal <<~END
-          <!-- NavigationalAid: [Marker] MARKER NAVAID -->
+          <!-- NavigationalAid: [Marker:O] MARKER NAVAID -->
           <Mkr>
             <MkrUid mid="#{digest}" newEntity="true">
               <codeId>---</codeId>
@@ -33,6 +33,7 @@ describe AIXM::Feature::NavigationalAid::Marker do
               <geoLong>7.56000000E</geoLong>
             </MkrUid>
             <OrgUid/>
+            <codePsnIls>O</codePsnIls>
             <valFreq>75</valFreq>
             <uomFreq>MHZ</uomFreq>
             <txtName>MARKER NAVAID</txtName>
@@ -45,6 +46,85 @@ describe AIXM::Feature::NavigationalAid::Marker do
             <txtRmk>marker navaid</txtRmk>
           </Mkr>
         END
+      end
+    end
+  end
+
+  context "complete middle marker" do
+    subject do
+      AIXM::Factory.marker.tap do |marker|
+        marker.type = :middle
+      end
+    end
+
+    describe :kind do
+      it "must return class/type combo" do
+        subject.kind.must_equal "Marker:M"
+      end
+    end
+
+    describe :to_aixm do
+      it "must build correct XML" do
+        subject.to_aixm.must_match %r(<codePsnIls>M</codePsnIls>)
+      end
+    end
+  end
+  context "complete middle marker" do
+    subject do
+      AIXM::Factory.marker.tap do |marker|
+        marker.type = :middle
+      end
+    end
+
+    describe :kind do
+      it "must return class/type combo" do
+        subject.kind.must_equal "Marker:M"
+      end
+    end
+
+    describe :to_aixm do
+      it "must build correct XML" do
+        subject.to_aixm.must_match %r(<codePsnIls>M</codePsnIls>)
+      end
+    end
+  end
+
+  context "complete inner marker" do
+    subject do
+      AIXM::Factory.marker.tap do |marker|
+        marker.type = :inner
+      end
+    end
+
+    describe :kind do
+      it "must return class/type combo" do
+        subject.kind.must_equal "Marker:I"
+      end
+    end
+
+    describe :to_aixm do
+      it "must build correct XML" do
+        subject.to_aixm.must_match %r(<codePsnIls>I</codePsnIls>)
+      end
+    end
+  end
+
+  context "complete backcourse marker" do
+    subject do
+      AIXM::Factory.marker.tap do |marker|
+        marker.type = :backcourse
+      end
+    end
+
+    describe :kind do
+      it "must return class/type combo" do
+        subject.kind.must_equal "Marker:C"
+      end
+    end
+
+    describe :to_aixm do
+      it "must build correct XML" do
+        subject.to_aixm.must_match %r(<codePsnIls>C</codePsnIls>)
       end
     end
   end

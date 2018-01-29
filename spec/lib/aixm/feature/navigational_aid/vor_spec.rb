@@ -8,12 +8,12 @@ describe AIXM::Feature::NavigationalAid::VOR do
 
     it "won't accept invalid arguments" do
       -> { AIXM.vor(id: 'V', name: 'VOR', xy: AIXM::Factory.xy, type: :foo, f: f, north: :geographic) }.must_raise ArgumentError
-      -> { AIXM.vor(id: 'V', name: 'VOR', xy: AIXM::Factory.xy, type: :vor, f: 0, north: :geographic) }.must_raise ArgumentError
-      -> { AIXM.vor(id: 'V', name: 'VOR', xy: AIXM::Factory.xy, type: :vor, f: f, north: :foobar) }.must_raise ArgumentError
+      -> { AIXM.vor(id: 'V', name: 'VOR', xy: AIXM::Factory.xy, type: :conventional, f: 0, north: :geographic) }.must_raise ArgumentError
+      -> { AIXM.vor(id: 'V', name: 'VOR', xy: AIXM::Factory.xy, type: :conventional, f: f, north: :foobar) }.must_raise ArgumentError
     end
   end
 
-  context "complete VOR" do
+  context "complete conventional VOR" do
     subject do
       AIXM::Factory.vor
     end
@@ -23,14 +23,14 @@ describe AIXM::Feature::NavigationalAid::VOR do
     end
 
     describe :kind do
-      it "must return class or type" do
+      it "must return class/type combo" do
         subject.kind.must_equal "VOR:VOR"
       end
     end
 
     describe :to_digest do
       it "must return digest of payload" do
-        subject.to_digest.must_equal 152119936
+        subject.to_digest.must_equal 904391566
       end
     end
 
@@ -63,6 +63,58 @@ describe AIXM::Feature::NavigationalAid::VOR do
     end
   end
 
+  context "complete Doppler VOR" do
+    subject do
+      AIXM::Factory.vor.tap do |vor|
+        vor.type = :doppler
+      end
+    end
+
+    let :digest do
+      subject.to_digest
+    end
+
+    describe :kind do
+      it "must return class/type combo" do
+        subject.kind.must_equal "VOR:DVOR"
+      end
+    end
+
+    describe :to_digest do
+      it "must return digest of payload" do
+        subject.to_digest.must_equal 293163781
+      end
+    end
+
+    describe :to_aixm do
+      it "must build correct XML of VOR with OFM extension" do
+        subject.to_aixm(:ofm).must_equal <<~END
+          <!-- NavigationalAid: [VOR:DVOR] VOR NAVAID -->
+          <Vor>
+            <VorUid mid="#{digest}" newEntity="true">
+              <codeId>VVV</codeId>
+              <geoLat>47.85916667N</geoLat>
+              <geoLong>7.56000000E</geoLong>
+            </VorUid>
+            <OrgUid/>
+            <txtName>VOR NAVAID</txtName>
+            <codeType>DVOR</codeType>
+            <valFreq>111</valFreq>
+            <uomFreq>MHZ</uomFreq>
+            <codeTypeNorth>TRUE</codeTypeNorth>
+            <codeDatum>WGE</codeDatum>
+            <valElev>500</valElev>
+            <uomDistVer>FT</uomDistVer>
+            <Vtt>
+              <codeWorkHr>H24</codeWorkHr>
+            </Vtt>
+            <txtRmk>vor navaid</txtRmk>
+          </Vor>
+        END
+      end
+    end
+  end
+
   context "complete VOR/DME" do
     subject do
       AIXM::Factory.vor.tap do |vor|
@@ -77,14 +129,14 @@ describe AIXM::Feature::NavigationalAid::VOR do
     end
 
     describe :kind do
-      it "must return class or type" do
+      it "must return class/type combo" do
         subject.kind.must_equal "VOR:VOR"
       end
     end
 
     describe :to_digest do
       it "must return digest of payload" do
-        subject.to_digest.must_equal 863096858
+        subject.to_digest.must_equal 604205702
       end
     end
 
@@ -154,14 +206,14 @@ describe AIXM::Feature::NavigationalAid::VOR do
     end
 
     describe :kind do
-      it "must return class or type" do
+      it "must return class/type combo" do
         subject.kind.must_equal "VOR:VOR"
       end
     end
 
     describe :to_digest do
       it "must return digest of payload" do
-        subject.to_digest.must_equal 458371299
+        subject.to_digest.must_equal 339710051
       end
     end
 

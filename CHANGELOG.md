@@ -1,23 +1,27 @@
 ## 0.2.3
 
+* Breaking minor changes:
+  * VOR types renamed from :vor to :conventional and :doppler_vor to :doppler
+  * NBR types added
+  * Marker types added
 * Minor changes:
-  * Add "mid" attributes to all navigational aid features
+  * "mid" attributes on all navigational aid features
 
 ## 0.2.2
 
 * Minor changes:
-  * Fix bad error classes
+  * Bad error classes fixed
   * Allow navigational aids without name
 
 ## 0.2.1
 
 * Major changes:
-  * Fix DVOR and VORDME confusion
-  * Add schedule to navigational aids
+  * DVOR and VORDME confusion fixed
+  * Schedule added to navigational aids
   * VOR can be associated with DME (-> VOR/DME) or TACAN (-> VORTAC) now
-  * `to_xml` has been renamed to `to_aixm` everywhere
+  * `to_xml` renamed to `to_aixm` everywhere
 * Minor changes:
-  * Remove :other from all value lists
+  * Removed :other from all value lists
 
 ## 0.2.0
 

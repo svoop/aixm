@@ -7,7 +7,7 @@ module AIXM
       # 108.00 Mhz to 117.95 MHz. Two type of VORs exist:
       #
       # Types:
-      # * +:vor+ (+:VOR+) - standard VOR
+      # * +:vor+ (+:VOR+) - conventional VOR (also known as CVOR)
       # * +:doppler_vor+ (+:DVOR+) - Doppler VOR
       #
       # North types:
@@ -22,8 +22,8 @@ module AIXM
         using AIXM::Refinements
 
         TYPES = {
-          VOR: :vor,
-          DVOR: :doppler_vor
+          VOR: :conventional,
+          DVOR: :doppler
         }.freeze
 
         NORTHS = {

@@ -6,17 +6,36 @@ module AIXM
       # NDB (non-directional beacon) operate in the frequency band between
       # 190 kHz and 1750 kHz.
       #
+      # Types:
+      # * +:en_route+ (+:B+) - high powered NDB
+      # * +:locator+ (+:L+) - locator (low powered NDB)
+      # * +:marine+ (+:M+) - marine beacon
+      #
       # https://en.wikipedia.org/wiki/Non-directional_beacon
       class NDB < Base
         using AIXM::Refinements
 
-        attr_reader :f
+        TYPES = {
+          B: :en_route,
+          L: :locator,
+          M: :marine
+        }.freeze
+
+        attr_reader :type, :f
 
         public_class_method :new
 
-        def initialize(id:, name:, xy:, z: nil, f:)
+        def initialize(id:, name:, xy:, z: nil, type:, f:)
           super(id: id, name: name, xy: xy, z: z)
-          self.f = f
+          self.type, self.f = type, f
+        end
+
+        def type=(value)
+          @type = TYPES.lookup(value&.to_sym, nil) || fail(ArgumentError, "invalid type")
+        end
+
+        def type_key
+          TYPES.key(type)
         end
 
         def f=(value)
@@ -51,6 +70,7 @@ module AIXM
             ndb.txtName(name) if name
             ndb.valFreq(f.freq.trim)
             ndb.uomFreq(f.unit.upcase.to_s)
+            ndb.codeClass(type_key.to_s)
             ndb.codeDatum('WGE')
             if z
               ndb.valElev(z.alt)

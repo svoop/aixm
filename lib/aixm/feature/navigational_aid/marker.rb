@@ -5,16 +5,40 @@ module AIXM
       ##
       # Marker (marker beacons) operate on 75 MHz.
       #
+      # Types:
+      # * +:outer+ (+:O+) - outer marker
+      # * +:middle+ (+:M+) - middle marker
+      # * +:inner+ (+:I+) - inner marker
+      # * +:backcourse+ (+:C+) - backcourse marker
+      #
       # https://en.wikipedia.org/wiki/Marker_beacon
       class Marker < Base
         using AIXM::Refinements
 
+        TYPES = {
+          O: :outer,
+          M: :middle,
+          I: :inner,
+          C: :backcourse
+        }
+
+        attr_reader :type
+
         public_class_method :new
 
         # TODO: Marker require an associated ILS
-        def initialize(**args)
+        def initialize(id:, name:, xy:, z: nil, type:)
+          super(id: id, name: name, xy: xy, z: z)
+          self.type = type
           warn("WARNING: Maker is not fully implemented yet due to the lack of ILS")
-          super
+        end
+
+        def type=(value)
+          @type = TYPES.lookup(value&.to_sym, nil) || fail(ArgumentError, "invalid type")
+        end
+
+        def type_key
+          TYPES.key(type)
         end
 
         ##
@@ -35,6 +59,7 @@ module AIXM
           builder.Mkr do |mkr|
             mkr << to_uid(*extensions).indent(2)
             mkr.OrgUid
+            mkr.codePsnIls(type_key.to_s)
             mkr.valFreq(75)
             mkr.uomFreq('MHZ')
             mkr.txtName(name) if name

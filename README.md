@@ -138,6 +138,7 @@ ndb = AIXM.ndb(
   name: String
   xy: AIXM.xy
   z: AIXM.z or nil
+  type: :en_route, :locator or :marine
   f: AIXM.f
 )
 ndb.schedule = AIXM.schedule
@@ -155,6 +156,7 @@ marker = AIXM.marker(
   name: String
   xy: AIXM.xy
   z: AIXM.z or nil
+  type: :outer, :middle, :inner or :backcourse
 )
 marker.schedule = AIXM.schedule
 marker.remarks = String
@@ -182,7 +184,7 @@ vor = AIXM.vor(
   name: String
   xy: AIXM.xy
   z: AIXM.z or nil  
-  type: :vor or :doppler_vor
+  type: :conventional or :doppler
   f: AIXM.f
   north: :geographic or :grid or :magnetic
 )

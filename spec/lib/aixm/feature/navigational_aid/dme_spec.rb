@@ -11,7 +11,7 @@ describe AIXM::Feature::NavigationalAid::DME do
     end
 
     describe :kind do
-      it "must return class or type" do
+      it "must return class/type combo" do
         subject.kind.must_equal "DME"
       end
     end
