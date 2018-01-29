@@ -99,6 +99,12 @@ module AIXM
       end
 
       ##
+      # Convert an angle from degree to radian
+      def to_rad
+        self * Math::PI / 180
+      end
+
+      ##
       # Convert DD angle to DMS with the degrees zero padded to +padding+ length
       #
       # Output format:

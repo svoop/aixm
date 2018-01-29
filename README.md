@@ -289,6 +289,7 @@ By `using AIXM::Refinements` you get the following general purpose methods:
 * `String#uptrans`<br>upcase and transliterate to match the reduced character set for names
 * `String#to_dd`<br>Convert DMS angle to DD or `nil` if the format is not recognized
 * `Float#to_dms(padding)`<br>Convert DD angle to DMS with the degrees zero padded to *padding* length
+* `Float#to_rad`<br>Convert an angle from degree to radian
 * `Float#trim`<br>Convert whole numbers to Integer and leave all other untouched
 * `Float#to_km(from: unit)`<br>Convert a distance from *unit* (:km, :m, :nm or :ft) to km
 
