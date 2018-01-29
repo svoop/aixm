@@ -41,7 +41,7 @@ module AIXM
         # and on the circumference of the circle
         def north_xy
           AIXM.xy(
-            lat: center_xy.lat + radius.to_f / 6371 * 180 / Math::PI,
+            lat: center_xy.lat + radius.to_f / (AIXM::EARTH_RADIUS / 1000) * 180 / Math::PI,
             long: center_xy.long
           )
         end

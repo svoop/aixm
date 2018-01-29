@@ -13,7 +13,7 @@ describe AIXM::Component::Geometry::Circle do
         center_xy: AIXM.xy(lat: 12.12345678, long: -23.12345678),
         radius: 15
       )
-      subject.send(:north_xy).must_equal AIXM.xy(lat: 12.25835502, long: -23.12345678)
+      subject.send(:north_xy).must_equal AIXM.xy(lat: 12.25835483455868, long: -23.12345678)
     end
   end
 

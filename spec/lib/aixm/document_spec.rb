@@ -461,7 +461,7 @@ describe AIXM::Document do
             </AbdUid>
             <Avx>
               <codeType>CWA</codeType>
-              <geoLat>47.67326549N</geoLat>
+              <geoLat>47.67326537N</geoLat>
               <geoLong>4.88333333E</geoLong>
               <codeDatum>WGE</codeDatum>
               <geoLatArc>47.58333333N</geoLatArc>

@@ -1,5 +1,7 @@
 module AIXM
 
+  EARTH_RADIUS = 6_371_008.8   # meters
+
   ##
   # Geographical coordinates
   #
