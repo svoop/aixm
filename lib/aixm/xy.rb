@@ -1,7 +1,5 @@
 module AIXM
 
-  EARTH_RADIUS = 6_371_008.8   # meters
-
   ##
   # Geographical coordinates
   #
@@ -10,6 +8,8 @@ module AIXM
   # * DMS - examples: 11°22'33.44"N, 1112233.44W
   class XY < Base
     using AIXM::Refinements
+
+    EARTH_RADIUS = 6_371_008.8   # meters
 
     def initialize(lat:, long:)
       @lat, @long = float_for(lat), float_for(long)
@@ -39,6 +39,22 @@ module AIXM
 
     def ==(other)
       other.is_a?(XY) && lat == other.lat && long == other.long
+    end
+
+    ##
+    # Calculate the distance in meters by use of the Haversine formula
+    def distance(other)
+      if self == other
+        0
+      else
+        2 * EARTH_RADIUS * Math.asin(
+          Math.sqrt(
+            Math.sin((other.lat.to_rad - lat.to_rad) / 2) ** 2 +
+              Math.cos(lat.to_rad) * Math.cos(other.lat.to_rad) *
+              Math.sin((other.long.to_rad - long.to_rad) / 2) ** 2
+          )
+        )
+      end.round
     end
 
     private

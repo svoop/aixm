@@ -134,4 +134,19 @@ describe AIXM::XY do
       a.wont_equal b
     end
   end
+
+  describe :distance do
+    subject do
+      AIXM.xy(lat: %q(44°00'07.63"N), long: %q(004°45'07.81"E))
+    end
+
+    it "calculates the distance between the same point as zero" do
+      subject.distance(subject).must_equal 0
+    end
+
+    it "calculates the distance between two points correctly in meters" do
+      other = AIXM.xy(lat: %q(43°59'25.31"N), long: %q(004°45'23.24"E))
+      subject.distance(other).must_equal 1351
+    end
+  end
 end

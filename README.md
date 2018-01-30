@@ -66,6 +66,14 @@ AIXM.xy(lat: '112233.44N', long: '1112233.44W')
 AIXM.xy(lat: 11.375955555555556, long: -111.37595555555555)
 ```
 
+You can calculate the distance in meters between two coordinates:
+
+```ruby
+a = AIXM.xy(lat: %q(44°00'07.63"N), long: %q(004°45'07.81"E))
+b = AIXM.xy(lat: %q(43°59'25.31"N), long: %q(004°45'23.24"E))
+a.distance(b)   # => 1351
+```
+
 #### Altitude and Heights
 
 Altitudes and heights exist in three different forms:
