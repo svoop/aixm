@@ -1,3 +1,9 @@
+## 0.3.0
+
+* Additions
+  * Refinement `Float#to_rad`
+  * Distance calculation with `AIXM::XY#distance`
+
 ## 0.2.3
 
 * Breaking minor changes:
@@ -27,7 +33,7 @@
 
 * Additions:
   * Frequency
-  * Navigational aids
+  * Navigational aids features
   * `AIXM::Z#qfe?` and friends
 * Breaking major changes:
   * Symbols such as :qnh, :ofm or :mhz are downcased now
@@ -70,7 +76,7 @@
   * XY Coordinate
   * Z Altitude
   * AIXM-Snapshot 4.5 Document
-  * Airspace
+  * Airspace feature
   * Vertical Limits
   * Geometry
     * Point
