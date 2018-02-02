@@ -2,9 +2,13 @@ module AIXM
   class Factory
     class << self
 
+      # Base
+
       def xy
         AIXM.xy(lat: 10, long: 20)
       end
+
+      # Components
 
       def vertical_limits
         AIXM.vertical_limits(
@@ -48,6 +52,8 @@ module AIXM
         end
       end
 
+      # Airspaces
+
       def polygon_airspace
         AIXM.airspace(
           name: 'POLYGON AIRSPACE',
@@ -73,6 +79,8 @@ module AIXM
           airspace.remarks = 'circle airspace'
         end
       end
+
+      # Navigational aids
 
       def designated_point
         AIXM.designated_point(
@@ -186,6 +194,33 @@ module AIXM
           vortac.associate_tacan(channel: '29X')
         end
       end
+
+      # Airport
+
+      def airport
+        AIXM.airport(code: 'LFNT').tap do |airport|
+          airport.name = "Avignon-Pujaut"
+          airport.xy = AIXM.xy(lat: %q(43°59'46"N), long: %q(004°45'16"E))
+          airport.z = AIXM.z(146, :QNH)
+          airport.declination = 1.08
+          airport.remarks = "Restricted access"
+        end
+      end
+
+      def runway
+        AIXM.runway(airport: airport, name: '16L/34R').tap do |runway|
+          runway.length = 650
+          runway.width = 80
+          runway.composition = :graded_earth
+          runway.remarks = "Markings eroded"
+          runway.forth.xy = AIXM.xy(lat: %q(44°00'07.63"N), long: %q(004°45'07.81"E))
+          runway.forth.displaced_threshold = AIXM.xy(lat: %q(44°00'03.54"N), long: %q(004°45'09.30"E))
+          runway.back.xy = AIXM.xy(lat: %q(43°59'25.31"N), long: %q(004°45'23.24"E))
+          runway.back.displaced_threshold = AIXM.xy(lat: %q(43°59'31.84"N), long: %q(004°45'20.85"E))
+        end
+      end
+
+      # Document
 
       def document
         time = Time.parse('2018-01-18 12:00:00 +0100')

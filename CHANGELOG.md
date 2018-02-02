@@ -1,6 +1,7 @@
 ## 0.3.0
 
 * Additions
+  * Airport feature
   * Refinement `Float#to_rad`
   * Distance calculation with `AIXM::XY#distance`
 

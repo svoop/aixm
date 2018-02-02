@@ -1,20 +1,21 @@
 module AIXM
   module Feature
+
+    ##
+    # Airspace feature
+    #
+    # Options:
+    # * +name+ - full name of the airspace (will be converted to uppercase,
+    #            e.g. +LF P 81+)
+    # * +short_name+ - short name of the airspace (will be converted to
+    #                  uppercase, e.g. +LF P 81 CHERBOURG+)
+    # * +type+ - airspace type (e.g. +TMA+ or +P+)
     class Airspace < Base
       using AIXM::Refinements
 
       attr_reader :name, :short_name, :type, :schedule, :remarks
       attr_accessor :geometry, :class_layers
 
-      ##
-      # Airspace feature
-      #
-      # Options:
-      # * +name+ - full name of the airspace (will be converted to uppercase,
-      #            e.g. +LF P 81+)
-      # * +short_name+ - short name of the airspace (will be converted to
-      #                  uppercase, e.g. +LF P 81 CHERBOURG+)
-      # * +type+ - airspace type (e.g. +TMA+ or +P+)
       def initialize(name:, short_name: nil, type:)
         self.name, self.short_name, self.type = name, short_name, type
         @schedule = nil

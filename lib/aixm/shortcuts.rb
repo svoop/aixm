@@ -7,10 +7,11 @@ module AIXM
     xy: XY,
     z: Z,
     f: F,
+    airport: Feature::Airport,
+    runway: Component::Runway,
     airspace: Feature::Airspace,
     class_layer: Component::ClassLayer,
     geometry: Component::Geometry,
-    schedule: Component::Schedule,
     vertical_limits: Component::VerticalLimits,
     arc: Component::Geometry::Arc,
     border: Component::Geometry::Border,
@@ -21,7 +22,8 @@ module AIXM
     marker: Feature::NavigationalAid::Marker,
     tacan: Feature::NavigationalAid::TACAN,
     ndb: Feature::NavigationalAid::NDB,
-    vor: Feature::NavigationalAid::VOR
+    vor: Feature::NavigationalAid::VOR,
+    schedule: Component::Schedule
   }.freeze
 
   ELEMENTS.each do |element, klass|

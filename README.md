@@ -24,10 +24,10 @@ gem aixm
 
 ## Usage
 
-You can initialize all elements either traditionally or by use of shorter AIXM class methods:
+You can initialize all elements either traditionally or by use of shorter AIXM class methods. The following two statements are identical:
 
 ```ruby
-AIXM.airspace(...)
+AIXM::Feature::Airspace.new(...)
 AIXM.airspace(...)
 ```
 
@@ -76,11 +76,11 @@ a.distance(b)   # => 1351
 
 #### Altitude and Heights
 
-Altitudes and heights exist in three different forms:
+Altitudes and heights exist in three different forms at the base of feet:
 
 ```ruby
-AIXM.z(1000, :qfe)   # height: 1000ft above ground
-AIXM.z(2000, :qnh)   # altitude: of 2000ft above mean sea level
+AIXM.z(1000, :qfe)   # height: 1000 ft above ground
+AIXM.z(2000, :qnh)   # altitude: of 2000 ft above mean sea level
 AIXM.z(45, :qne)     # altitude: flight level 45
 ```
 
@@ -108,7 +108,61 @@ airspace.class_layers << AIXM.class_layer
 airspace.remarks = String
 ```
 
-#### Navigational Aids
+#### Airport
+
+```ruby
+airport = AIXM.airport(
+  code: String
+)
+airport.name = String
+airport.xy = AIXM.xy
+airport.z = AIXM.z
+airport.declination = Float
+airport.remarks = String
+airport.runways << AIXM.runway
+airport.helipads << AIXM.helipad
+airport.add_usage_limitation(...) { ... }   # see below
+```
+
+##### Usage Limitation
+
+You can add multiple usage limitations which are are either:
+
+* `:permitted`
+* `:forbidden`
+* `:reservation_required` - specify in *remarks*
+* `:other` - specify in *remarks*
+
+Simple limitations apply to any traffic:
+
+```ruby
+airport.add_usage_limitation :permitted or :forbidden or
+                             :reservation_required or :other
+```
+
+Or specify the traffic a limitation (e.g. `:permitted`) applies to:
+
+```ruby
+airport.add_usage_limitation(:permitted) do |permitted|
+  permitted.add_condition do |condition|
+    condition.aircraft = :landplane or :seaplane or :amphibian or :helicopter or
+                         :gyrocopter or :tilt_wing or :short_takeoff_and_landing or
+                         :glider or :hangglider or :paraglider or :ultra_light or
+                         :balloon or :unmanned_drone or :other
+    condition.rule = :ifr or :vfr or :ifr_and_vfr
+    condition.realm = :civil or :military or :other
+    condition.origin = :international or :national or :any or :other
+    condition.purpose = :scheduled or :not_scheduled or :private or
+                        :school_or_training or :aerial_work or :other
+  end
+  reservation_required.schedule = AIXM.schedule
+  reservation_required.remarks = String
+end
+```
+
+Multiple conditions are joined with an implicit *or* whereas the specifics of a condition (aircraft, rule etc) are joined with an implicit *and*.
+
+#### Navigational Aid
 
 ##### Designated Point
 
@@ -206,52 +260,12 @@ vor.associate_tacan(channel: String)   # turns the VOR into a VORTAC
 
 All components are subclasses of `AIXM::Component::Base`.
 
-#### Schedule
-
-```ruby
-schedule = AIXM.schedule(
-  code: String or Symbol
-)
-```
-
 #### Class Layer
 
 ```ruby
 class_layer = AIXM.class_layer(
   class: String or nil
   vertical_limits: AIXM.vertical_limits
-)
-```
-
-#### Vertical Limits
-
-```ruby
-vertical_limits = AIXM.vertical_limits(
-  max_z: AIXM.z or nil
-  upper_z: AIXM.z
-  lower_z: AIXM.z
-  min_z: AIXM.z or nil
-)
-```
-
-#### Point, Arc, Border and Circle
-
-```ruby
-point = AIXM.point(
-  xy: AIXM.xy
-)
-arc = AIXM.arc(
-  xy: AIXM.xy
-  center_xy: AIXM.xy
-  cloclwise: true or false
-)
-border = AIXM.border(
-  xy: AIXM.xy
-  name: String
-)
-circle = AIXM.circle(
-  center_xy: AIXM.xy
-  radius: Numeric
 )
 ```
 
@@ -266,6 +280,79 @@ For a geometry to be complete, it must be comprised of either:
 
 * exactly one circle
 * at least three points, arcs or borders (the last of which a point with identical coordinates as the first)
+
+#### Point, Arc, Border and Circle
+
+```ruby
+point = AIXM.point(
+  xy: AIXM.xy
+)
+arc = AIXM.arc(
+  xy: AIXM.xy
+  center_xy: AIXM.xy
+  clockwise: true or false
+)
+border = AIXM.border(
+  xy: AIXM.xy
+  name: String
+)
+circle = AIXM.circle(
+  center_xy: AIXM.xy
+  radius: Numeric   # kilometers
+)
+```
+
+#### Runway
+
+```ruby
+runway = AIXM.runway(
+  name: String
+)
+runway.length = Integer   # meters
+runway.width = Integer    # meters
+runway.composition = :asphalt or :bitumen or :concrete or :gravel or
+                     :macadam or :sand or :graded_earth or :grass or :water
+runway.remarks = String
+```
+
+A runway has one or to directions accessible as `runway.forth` (mandatory) and
+`runway.back` (optional). Both have identical properties:
+
+```ruby
+runway.forth.name = String   # preset based on the runway name
+runway.forth.geographic_orientation = Integer   # degrees
+runway.forth.xy = AIXM.xy
+runway.forth.displaced_threshold = nil or Integer   # meters
+
+runway.forth.magnetic_orientation   # => Integer (degrees)
+```
+
+#### Helipad
+
+```ruby
+helipad = AIXM.helipad(
+  # TODO
+)
+```
+
+#### Schedule
+
+```ruby
+schedule = AIXM.schedule(
+  code: String or Symbol
+)
+```
+
+#### Vertical Limits
+
+```ruby
+vertical_limits = AIXM.vertical_limits(
+  max_z: AIXM.z or nil
+  upper_z: AIXM.z
+  lower_z: AIXM.z
+  min_z: AIXM.z or nil
+)
+```
 
 ## Validation
 
