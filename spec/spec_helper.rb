@@ -1,3 +1,5 @@
+$VERBOSE = nil   # silence warnings
+
 gem 'minitest'
 
 require 'pathname'
