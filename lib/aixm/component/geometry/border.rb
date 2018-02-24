@@ -1,3 +1,5 @@
+using AIXM::Refinements
+
 module AIXM
   module Component
     class Geometry
@@ -6,8 +8,6 @@ module AIXM
       # Borders are following natural or artifical border lines referenced by
       # +name+ and starting at +xy+.
       class Border < Point
-        using AIXM::Refinements
-
         attr_reader :name
 
         def initialize(xy:, name:)

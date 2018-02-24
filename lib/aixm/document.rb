@@ -1,7 +1,7 @@
+using AIXM::Refinements
+
 module AIXM
   class Document
-    using AIXM::Refinements
-
     IGNORE_ERROR_PATTERN = %r(OrgUid)
 
     attr_reader :created_at, :effective_at

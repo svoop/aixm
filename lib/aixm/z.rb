@@ -1,3 +1,5 @@
+using AIXM::Refinements
+
 module AIXM
 
   ##
@@ -8,8 +10,6 @@ module AIXM
   # * +:qnh+ - altitude in feet
   # * +:qne+ - altitude as flight level
   class Z
-    using AIXM::Refinements
-
     CODES = %i(qfe qnh qne).freeze
 
     attr_reader :alt, :code

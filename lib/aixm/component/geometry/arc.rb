@@ -1,3 +1,5 @@
+using AIXM::Refinements
+
 module AIXM
   module Component
     class Geometry
@@ -6,8 +8,6 @@ module AIXM
       # Arcs are +clockwise+ (true/false) circle sectors around +center_xy+ and
       # starting at +xy+.
       class Arc < Point
-        using AIXM::Refinements
-
         attr_reader :center_xy
 
         def initialize(xy:, center_xy:, clockwise:)

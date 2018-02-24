@@ -1,3 +1,5 @@
+using AIXM::Refinements
+
 module AIXM
 
   ##
@@ -7,8 +9,6 @@ module AIXM
   # * +:mhz+ - megahertz
   # * +:khz+ - kilohertz
   class F
-    using AIXM::Refinements
-
     UNITS = %i(mhz khz).freeze
 
     attr_reader :freq, :unit

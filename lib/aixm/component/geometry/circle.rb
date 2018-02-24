@@ -1,3 +1,5 @@
+using AIXM::Refinements
+
 module AIXM
   module Component
     class Geometry
@@ -5,8 +7,6 @@ module AIXM
       ##
       # Circles are defined by a +center_xy+ and a +radius+ in kilometers.
       class Circle < Base
-        using AIXM::Refinements
-
         attr_reader :center_xy, :radius
 
         def initialize(center_xy:, radius:)

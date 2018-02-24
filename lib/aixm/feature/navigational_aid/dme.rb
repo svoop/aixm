@@ -1,3 +1,5 @@
+using AIXM::Refinements
+
 module AIXM
   module Feature
     module NavigationalAid
@@ -8,8 +10,6 @@ module AIXM
       #
       # https://en.wikipedia.org/wiki/Distance_measuring_equipment
       class DME < Base
-        using AIXM::Refinements
-
         attr_reader :channel, :vor
 
         public_class_method :new

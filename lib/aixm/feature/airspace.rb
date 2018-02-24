@@ -1,3 +1,5 @@
+using AIXM::Refinements
+
 module AIXM
   module Feature
 
@@ -11,8 +13,6 @@ module AIXM
     #                  uppercase, e.g. +LF P 81 CHERBOURG+)
     # * +type+ - airspace type (e.g. +TMA+ or +P+)
     class Airspace < Base
-      using AIXM::Refinements
-
       attr_reader :name, :short_name, :type, :schedule, :remarks
       attr_accessor :geometry, :class_layers
 

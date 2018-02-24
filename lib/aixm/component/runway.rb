@@ -1,3 +1,5 @@
+using AIXM::Refinements
+
 module AIXM
   module Component
 
@@ -23,8 +25,6 @@ module AIXM
     # forth name (smaller number) and the runway hence name (bigger number)
     # joined with a forward slash.
     class Runway < Base
-      using AIXM::Refinements
-
       COMPOSITIONS = {
         ASPH: :asphalt,
         BITUM: :bitumen,
@@ -130,8 +130,6 @@ module AIXM
       ##
       # Runway direction
       class Direction
-        using AIXM::Refinements
-
         attr_reader :runway
         attr_reader :name, :geographic_orientation, :xy, :displaced_threshold
 

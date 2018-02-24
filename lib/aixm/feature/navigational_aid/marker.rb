@@ -1,3 +1,5 @@
+using AIXM::Refinements
+
 module AIXM
   module Feature
     module NavigationalAid
@@ -13,8 +15,6 @@ module AIXM
       #
       # https://en.wikipedia.org/wiki/Marker_beacon
       class Marker < Base
-        using AIXM::Refinements
-
         TYPES = {
           O: :outer,
           M: :middle,

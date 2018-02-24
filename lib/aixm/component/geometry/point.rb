@@ -1,3 +1,5 @@
+using AIXM::Refinements
+
 module AIXM
   module Component
     class Geometry
@@ -6,7 +8,6 @@ module AIXM
       # Points are defined by +xy+ coordinates.
       class Point < Base
         extend Forwardable
-        using AIXM::Refinements
 
         def_delegators :xy, :to_digest
 

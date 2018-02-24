@@ -1,3 +1,5 @@
+using AIXM::Refinements
+
 module AIXM
   module Component
 
@@ -13,8 +15,6 @@ module AIXM
     # * +AIXM::GROUND+ - surface (aka: 0ft QFE)
     # * +AIXM::UNLIMITED+ - no upper limit (aka: FL 999)
     class VerticalLimits < Base
-      using AIXM::Refinements
-
       TAGS = { upper: :Upper, lower: :Lower, max: :Max, min: :Mnm }.freeze
       CODES = { qfe: :HEI, qnh: :ALT, qne: :STD }.freeze
 

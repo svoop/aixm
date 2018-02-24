@@ -391,6 +391,7 @@ document.to_xml
 
 By `using AIXM::Refinements` you get the following general purpose methods:
 
+* `Array#to_digest`<br>Build a 1 to 9 digit integer digest (which fits in signed 32bit) from array payload
 * `Hash#lookup(key, default)`<br>Similar to `fetch` but falls back to values
 * `String#indent(number)`<br>Indent every line of a string with *number* spaces
 * `String#uptrans`<br>upcase and transliterate to match the reduced character set for names

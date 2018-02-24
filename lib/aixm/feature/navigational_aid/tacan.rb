@@ -1,3 +1,5 @@
+using AIXM::Refinements
+
 module AIXM
   module Feature
     module NavigationalAid
@@ -9,8 +11,6 @@ module AIXM
       #
       # https://en.wikipedia.org/wiki/Tactical_air_navigation_system
       class TACAN < DME
-        using AIXM::Refinements
-
         public_class_method :new
 
         ##

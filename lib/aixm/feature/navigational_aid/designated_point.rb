@@ -1,3 +1,5 @@
+using AIXM::Refinements
+
 module AIXM
   module Feature
     module NavigationalAid
@@ -11,8 +13,6 @@ module AIXM
       # * +:coordinates+ (+:COORD+) - point with identifier derived from its
       #                               geographical coordinates
       class DesignatedPoint < Base
-        using AIXM::Refinements
-
         TYPES = {
           ICAO: :icao,
           ADHP: :adhp,

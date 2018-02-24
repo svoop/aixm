@@ -1,3 +1,5 @@
+using AIXM::Refinements
+
 module AIXM
   module Feature
     module NavigationalAid
@@ -7,8 +9,6 @@ module AIXM
       #
       # Please note that the optional elevation +z+ must be in +:qnh+.
       class Base < AIXM::Feature::Base
-        using AIXM::Refinements
-
         attr_reader :id, :name, :xy, :z, :schedule, :remarks
 
         private_class_method :new

@@ -1,3 +1,5 @@
+using AIXM::Refinements
+
 module AIXM
   module Feature
     module NavigationalAid
@@ -19,8 +21,6 @@ module AIXM
       #
       # https://en.wikipedia.org/wiki/VHF_omnidirectional_range
       class VOR < Base
-        using AIXM::Refinements
-
         TYPES = {
           VOR: :conventional,
           DVOR: :doppler

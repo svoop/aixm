@@ -1,3 +1,5 @@
+using AIXM::Refinements
+
 module AIXM
   module Feature
     module NavigationalAid
@@ -13,8 +15,6 @@ module AIXM
       #
       # https://en.wikipedia.org/wiki/Non-directional_beacon
       class NDB < Base
-        using AIXM::Refinements
-
         TYPES = {
           B: :en_route,
           L: :locator,

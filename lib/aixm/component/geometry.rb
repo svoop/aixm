@@ -1,3 +1,5 @@
+using AIXM::Refinements
+
 module AIXM
   module Component
 
@@ -19,7 +21,6 @@ module AIXM
     class Geometry < Base
       include Enumerable
       extend Forwardable
-      using AIXM::Refinements
 
       def_delegators :@result_array, :each, :<<
 

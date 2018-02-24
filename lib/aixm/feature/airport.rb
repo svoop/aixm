@@ -1,3 +1,5 @@
+using AIXM::Refinements
+
 module AIXM
   module Feature
 
@@ -9,8 +11,6 @@ module AIXM
     # * three letter IATA indicator (e.g. "AVN")
     # * two letter country code + four digit number (e.g. "LF1234")
     class Airport < Base
-      using AIXM::Refinements
-
       attr_reader :code
       attr_reader :name, :xy, :z, :declination, :remarks
       attr_accessor :runways, :helipads, :usage_limitations
@@ -105,8 +105,6 @@ module AIXM
       end
 
       class UsageLimitation
-        using AIXM::Refinements
-
         LIMITATIONS = {
           PERMIT: :permitted,
           FORBID: :forbidden,
@@ -153,8 +151,6 @@ module AIXM
         end
 
         class Condition
-          using AIXM::Refinements
-
           AIRCRAFT = {
             L: :landplane,
             S: :seaplane,
