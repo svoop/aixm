@@ -22,9 +22,10 @@ describe AIXM::Feature::NavigationalAid::Marker do
       end
     end
 
-    describe :to_aixm do
-      it "must build correct XML with OFM extension" do
-        subject.to_aixm(:ofm).must_equal <<~END
+    describe :to_xml do
+      it "must build correct OFMX" do
+        AIXM.ofmx!
+        subject.to_xml.must_equal <<~END
           <!-- NavigationalAid: [Marker:O] MARKER NAVAID -->
           <Mkr>
             <MkrUid mid="#{digest}" newEntity="true">
@@ -63,9 +64,9 @@ describe AIXM::Feature::NavigationalAid::Marker do
       end
     end
 
-    describe :to_aixm do
+    describe :to_xml do
       it "must build correct XML" do
-        subject.to_aixm.must_match %r(<codePsnIls>M</codePsnIls>)
+        subject.to_xml.must_match %r(<codePsnIls>M</codePsnIls>)
       end
     end
   end
@@ -82,9 +83,9 @@ describe AIXM::Feature::NavigationalAid::Marker do
       end
     end
 
-    describe :to_aixm do
+    describe :to_xml do
       it "must build correct XML" do
-        subject.to_aixm.must_match %r(<codePsnIls>M</codePsnIls>)
+        subject.to_xml.must_match %r(<codePsnIls>M</codePsnIls>)
       end
     end
   end
@@ -102,9 +103,9 @@ describe AIXM::Feature::NavigationalAid::Marker do
       end
     end
 
-    describe :to_aixm do
+    describe :to_xml do
       it "must build correct XML" do
-        subject.to_aixm.must_match %r(<codePsnIls>I</codePsnIls>)
+        subject.to_xml.must_match %r(<codePsnIls>I</codePsnIls>)
       end
     end
   end
@@ -122,9 +123,9 @@ describe AIXM::Feature::NavigationalAid::Marker do
       end
     end
 
-    describe :to_aixm do
+    describe :to_xml do
       it "must build correct XML" do
-        subject.to_aixm.must_match %r(<codePsnIls>C</codePsnIls>)
+        subject.to_xml.must_match %r(<codePsnIls>C</codePsnIls>)
       end
     end
   end

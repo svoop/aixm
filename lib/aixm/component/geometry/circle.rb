@@ -21,16 +21,16 @@ module AIXM
         end
 
         ##
-        # Render AIXM markup
-        def to_aixm(*extensions)
+        # Render XML
+        def to_xml
           builder = Builder::XmlMarkup.new(indent: 2)
           builder.Avx do |avx|
             avx.codeType('CWA')
-            avx.geoLat(north_xy.lat(format_for(*extensions)))
-            avx.geoLong(north_xy.long(format_for(*extensions)))
+            avx.geoLat(north_xy.lat(AIXM.format))
+            avx.geoLong(north_xy.long(AIXM.format))
             avx.codeDatum('WGE')
-            avx.geoLatArc(center_xy.lat(format_for(*extensions)))
-            avx.geoLongArc(center_xy.long(format_for(*extensions)))
+            avx.geoLatArc(center_xy.lat(AIXM.format))
+            avx.geoLongArc(center_xy.long(AIXM.format))
           end
         end
 

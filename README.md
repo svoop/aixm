@@ -6,9 +6,9 @@
 
 # AIXM
 
-Partial implementation of the [Aeronautical Information Exchange Model (AIXM 4.5)](http://aixm.aero) for Ruby.
+Partial implementation of the [Aeronautical Information Exchange Model (AIXM 4.5)](http://aixm.aero) and it's dialect [Open FlightMaps eXchange format (OFMX 4.5-1)](https://github.com/openflightmaps/ofmx) for Ruby.
 
-For now, only the parts needed to automize the AIP import of [Open Flightmaps](https://openflightmaps.org) are part of this gem. Most notably, the gem is only a builder of AIXM 4.5 snapshot files and does not parse them.
+For now, only the parts needed to automize the AIP import of [Open Flightmaps](https://openflightmaps.org) are part of this gem. Most notably, the gem is only a builder for snapshot files and does not parse them.
 
 * [Homepage](https://github.com/svoop/aixm)
 * [API](http://www.rubydoc.info/gems/aixm)
@@ -362,11 +362,23 @@ Use `AIXM::Document#valid?` to validate the resulting AIXM against the XSD schem
 
 * OrgUid - organizations may be empty tags
 
-## Rendering
+## Generation
+
+By default, AIXM 4.5 is generated:
 
 ```ruby
-document.to_aixm         # render AIXM 4.5 compliant XML
-document.to_aixm(:ofm)   # render AIXM 4.5 + OFM extensions XML
+AIXM.format
+# => :aixm
+document.to_xml
+```
+
+However, if you prefer OFMX 4.5-1 to be generated:
+
+```ruby
+AIXM.ofmx!
+AIXM.format
+# => :ofmx
+document.to_xml
 ```
 
 ## Constants
@@ -390,23 +402,16 @@ By `using AIXM::Refinements` you get the following general purpose methods:
 
 See the [source code](https://github.com/svoop/aixm/blob/master/lib/aixm/refinements.rb) for more explicit descriptions and examples.
 
-## Extensions
-
-### OFM
-
-This extension adds proprietary tags and attributes (most of which are prefixed with `xt_`) aiming to improve importing the resulting AIXM into the OFM originative suite:
-
-* `<AIXM-Snapshot version="4.5 + OFM extensions of version 0.1" (...) />`<br>root node with extended version string
-* `<Ase xt_classLayersAvail="(true|false)">`<br>true when multiple class layers and therefore an Adg-node is present
-* `<xt_selAvail>(true|false)</xt_selAvail>`<br>enables conditional airspaces feature
-* `<AseUid newEntity="(true|false)">`<br>tell the importer whether adding a new or updating an existing entity
-
 ## References
 
+### AIXM
 * [AIXM](http://aixm.aero)
-* [AIXM on Wikipedia](https://en.wikipedia.org/wiki/AIXM)
+* [AICM 4.5 Documentation](https://openflightmaps.github.io/ofmx/aixm/4.5/manual/aicm/)
 * [AIXM 4.5 Specification](http://aixm.aero/document/aixm-45-specification)
-* [AICM 4.5 Entity-Relationship](https://www.ead.eurocontrol.int/SystemHelp/mergedProjects/SDO/aixm/)
+
+### OFMX
+* [OFMX](https://github.com/openflightmaps/ofmx)
+* [OFMX Documentation](https://github.com/openflightmaps/ofmx/wiki)
 * [Open Flightmaps](https://openflightmaps.org)
 
 ## Tests

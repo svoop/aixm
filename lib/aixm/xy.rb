@@ -6,7 +6,7 @@ module AIXM
   # The following notations for longitude and latitude are recognized:
   # * DD - examples: 12.12345678 (north or east), -12.12345678 (south or west)
   # * DMS - examples: 11°22'33.44"N, 1112233.44W
-  class XY < Base
+  class XY
     using AIXM::Refinements
 
     EARTH_RADIUS = 6_371_008.8   # meters
@@ -17,17 +17,17 @@ module AIXM
       fail(ArgumentError, "illegal longitude") unless (-180..180).include? @long
     end
 
-    def lat(format=nil)
+    def lat(format = nil)
       case format
-        when :ofm then ("%.8f" % @lat.abs.round(8)) + (@lat.negative? ? 'S' : 'N')
+        when :ofmx then ("%.8f" % @lat.abs.round(8)) + (@lat.negative? ? 'S' : 'N')
         when :aixm then @lat.to_dms(2).gsub(/[^\d.]/, '') + (@lat.negative? ? 'S' : 'N')
         else @lat.round(8)
       end
     end
 
-    def long(format=nil)
+    def long(format = nil)
       case format
-        when :ofm then ("%.8f" % @long.abs.round(8)) + (@long.negative? ? 'W' : 'E')
+        when :ofmx then ("%.8f" % @long.abs.round(8)) + (@long.negative? ? 'W' : 'E')
         when :aixm then @long.to_dms(3).gsub(/[^\d.]/, '') + (@long.negative? ? 'W' : 'E')
         else @long.round(8)
       end

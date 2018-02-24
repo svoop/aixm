@@ -62,42 +62,42 @@ module AIXM
 
       ##
       # Render UID markup
-      def to_uid(*extensions)
+      def to_uid
         mid = to_digest
         builder = Builder::XmlMarkup.new(indent: 2)
-        builder.AseUid({ mid: mid, newEntity: (true if extensions >> :ofm) }.compact) do |aseuid|
+        builder.AseUid({ mid: mid, newEntity: (true if AIXM.ofmx?) }.compact) do |aseuid|
           aseuid.codeType(type)
           aseuid.codeId(mid)
         end
       end
 
       ##
-      # Render AIXM markup
-      def to_aixm(*extensions)
+      # Render XML
+      def to_xml
         mid = to_digest
         builder = Builder::XmlMarkup.new(indent: 2)
         builder.comment! "Airspace: [#{type}] #{name}"
-        builder.Ase({ xt_classLayersAvail: ((class_layers.count > 1) if extensions >> :ofm) }.compact) do |ase|
-          ase << to_uid(*extensions).indent(2)
+        builder.Ase({ xt_classLayersAvail: ((class_layers.count > 1) if AIXM.ofmx?) }.compact) do |ase|
+          ase << to_uid.indent(2)
           ase.txtLocalType(short_name.to_s) if short_name && short_name != name
           ase.txtName(name.to_s)
-          ase << class_layers.first.to_aixm(*extensions).indent(2)
+          ase << class_layers.first.to_xml.indent(2)
           if schedule
             ase.Att do |att|
-              att << schedule.to_aixm(*extensions).indent(4)
+              att << schedule.to_xml.indent(4)
             end
           end
           ase.txtRmk(remarks.to_s) if remarks
-          ase.xt_selAvail(false) if extensions >> :ofm
+          ase.xt_selAvail(false) if AIXM.ofmx?
         end
         builder.Abd do |abd|
           abd.AbdUid do |abduid|
-            abduid.AseUid({ mid: mid, newEntity: (true if extensions >> :ofm) }.compact) do |aseuid|
+            abduid.AseUid({ mid: mid, newEntity: (true if AIXM.ofmx?) }.compact) do |aseuid|
               aseuid.codeType(type)
               aseuid.codeId(mid)
             end
           end
-          abd << geometry.to_aixm(*extensions).indent(2)
+          abd << geometry.to_xml.indent(2)
         end
         if class_layers.count > 1
           builder.Adg do |adg|
@@ -116,7 +116,7 @@ module AIXM
                 aseuid.codeType("CLASS")
               end
               ase.txtName(name.to_s)
-              ase << class_layers[index].to_aixm(*extensions).indent(2)
+              ase << class_layers[index].to_xml.indent(2)
             end
           end
         end

@@ -15,23 +15,23 @@ module AIXM
 
         ##
         # Render UID markup
-        def to_uid(*extensions)
+        def to_uid
           builder = Builder::XmlMarkup.new(indent: 2)
-          builder.TcnUid({ mid: to_digest, newEntity: (true if extensions >> :ofm) }.compact) do |tcnuid|
+          builder.TcnUid({ mid: to_digest, newEntity: (true if AIXM.ofmx?) }.compact) do |tcnuid|
             tcnuid.codeId(id)
-            tcnuid.geoLat(xy.lat(format_for(*extensions)))
-            tcnuid.geoLong(xy.long(format_for(*extensions)))
+            tcnuid.geoLat(xy.lat(AIXM.format))
+            tcnuid.geoLong(xy.long(AIXM.format))
           end
         end
 
         ##
-        # Render AIXM markup
-        def to_aixm(*extensions)
-          builder = to_builder(*extensions)
+        # Render XML
+        def to_xml
+          builder = to_builder
           builder.Tcn do |tcn|
-            tcn << to_uid(*extensions).indent(2)
+            tcn << to_uid.indent(2)
             tcn.OrgUid
-            tcn << vor.to_uid(*extensions).indent(2) if vor
+            tcn << vor.to_uid.indent(2) if vor
             tcn.txtName(name) if name
             tcn.codeChannel(channel)
             tcn.codeDatum('WGE')
@@ -41,7 +41,7 @@ module AIXM
             end
             if schedule
               tcn.Ttt do |ttt|
-                ttt << schedule.to_aixm(*extensions).indent(4)
+                ttt << schedule.to_xml.indent(4)
               end
             end
             tcn.txtRmk(remarks) if remarks

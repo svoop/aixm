@@ -4,31 +4,36 @@
   * Airport feature
   * Refinement `Float#to_rad`
   * Distance calculation with `AIXM::XY#distance`
+* Breaking additions:
+  * Global configuration with AIXM.config
+* Breaking changes:
+  * `to_aixm` renamed to `to_xml` again
+  * Removed signature `to_xml(extension)` in favor of `AIXM.format`
 
 ## 0.2.3
 
-* Breaking minor changes:
+* Breaking changes:
   * VOR types renamed from :vor to :conventional and :doppler_vor to :doppler
   * NBR types added
   * Marker types added
-* Minor changes:
+* Changes:
   * "mid" attributes on all navigational aid features
 
 ## 0.2.2
 
-* Minor changes:
+* Changes:
   * Bad error classes fixed
   * Allow navigational aids without name
 
 ## 0.2.1
 
-* Major changes:
+* Breaking changes:
   * DVOR and VORDME confusion fixed
-  * Schedule added to navigational aids
   * VOR can be associated with DME (-> VOR/DME) or TACAN (-> VORTAC) now
   * `to_xml` renamed to `to_aixm` everywhere
-* Minor changes:
   * Removed :other from all value lists
+* Changes:
+  * Schedule added to navigational aids
 
 ## 0.2.0
 
@@ -36,17 +41,17 @@
   * Frequency
   * Navigational aids features
   * `AIXM::Z#qfe?` and friends
-* Breaking major changes:
+* Breaking changes:
   * Symbols such as :qnh, :ofm or :mhz are downcased now
 
 ## 0.1.4
 
-* Breaking minor changes:
+* Breaking changes:
   * `AIXM.z(alt: 123, code: :QNE)` is now `AIXM.z(123, :QNE)`
 
 ## 0.1.3
 
-* Breaking major changes:
+* Breaking changes:
   * Re-organization of classes in features and components
 * Additions:
   * Shortcut initializers e.g. `AIXM.airspace(...)`
@@ -55,7 +60,7 @@
 
 * Breaking additions:
   * Class layers
-* Breaking minor changes:
+* Breaking changes:
   * Use `document.features << (feature)` instead of `document << (feature)`
 
 ## 0.1.1
@@ -65,7 +70,7 @@
   * Refinement `Float#to_km` and `String#uptrans`
   * Shortcut constants `AIXM::UNLIMITED` and `AIXM::H24`
   * `Airspace#short_name`
-* Minor changes:
+* Changes:
   * `Document#created_at` and `#effective_at` accept Time, Date, String or *nil*
   * Separate `AIXM::Document#valid?` from `#complete?`
   * Write coordinates in DD if extension `:OFM` is set

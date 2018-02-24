@@ -33,9 +33,10 @@ describe AIXM::Feature::NavigationalAid::NDB do
       end
     end
 
-    describe :to_aixm do
-      it "must build correct XML with OFM extension" do
-        subject.to_aixm(:ofm).must_equal <<~END
+    describe :to_xml do
+      it "must build correct OFMX" do
+        AIXM.ofmx!
+        subject.to_xml.must_equal <<~END
           <!-- NavigationalAid: [NDB:B] NDB NAVAID -->
           <Ndb>
             <NdbUid mid="#{digest}" newEntity="true">
@@ -74,9 +75,10 @@ describe AIXM::Feature::NavigationalAid::NDB do
       end
     end
 
-    describe :to_aixm do
-      it "must build correct XML with OFM extension" do
-        subject.to_aixm(:ofm).must_match %r(<codeClass>L</codeClass>)
+    describe :to_xml do
+      it "must build correct OFMX" do
+        AIXM.ofmx!
+        subject.to_xml.must_match %r(<codeClass>L</codeClass>)
       end
     end
   end
@@ -94,9 +96,10 @@ describe AIXM::Feature::NavigationalAid::NDB do
       end
     end
 
-    describe :to_aixm do
-      it "must build correct XML with OFM extension" do
-        subject.to_aixm(:ofm).must_match %r(<codeClass>M</codeClass>)
+    describe :to_xml do
+      it "must build correct OFMX" do
+        AIXM.ofmx!
+        subject.to_xml.must_match %r(<codeClass>M</codeClass>)
       end
     end
   end

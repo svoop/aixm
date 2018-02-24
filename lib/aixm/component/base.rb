@@ -1,6 +1,6 @@
 module AIXM
   module Component
-    class Base < AIXM::Base
+    class Base
     end
   end
 end

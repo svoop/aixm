@@ -22,14 +22,6 @@ module AIXM
 
     refine Array do
       ##
-      # Shortcut for +include?+
-      #
-      # Example:
-      #   extensions.include?(:ofm)   # => true
-      #   extensions >> :ofm          # => true
-      alias_method :>>, :include?
-
-      ##
       # Build a 1 to 9 digit integer digest (which fits in signed 32bit) from payload
       def to_digest
         ::Digest::SHA512.hexdigest(flatten.join('|')).gsub(/\D/, '')[0, 9].to_i

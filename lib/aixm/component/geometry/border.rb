@@ -22,15 +22,15 @@ module AIXM
         end
 
         ##
-        # Render AIXM markup
-        def to_aixm(*extensions)
+        # Render XML
+        def to_xml
           builder = Builder::XmlMarkup.new(indent: 2)
           builder.Avx do |avx|
             avx.codeType('FNT')
-            avx.geoLat(xy.lat(format_for(*extensions)))
-            avx.geoLong(xy.long(format_for(*extensions)))
+            avx.geoLat(xy.lat(AIXM.format))
+            avx.geoLong(xy.long(AIXM.format))
             avx.codeDatum('WGE')
-            if extensions >> :ofm
+            if AIXM.ofmx?
               avx.GbrUid do |gbruid|
                 gbruid.txtName(name.to_s)
               end

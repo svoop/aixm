@@ -33,8 +33,8 @@ module AIXM
       end
 
       ##
-      # Render AIXM markup
-      def to_aixm(*extensions)
+      # Render XML
+      def to_xml
         Builder::XmlMarkup.new(indent: 2).codeWorkHr(CODES.key(code).to_s)
       end
     end

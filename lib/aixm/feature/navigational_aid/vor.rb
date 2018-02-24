@@ -88,21 +88,21 @@ module AIXM
 
         ##
         # Render UID markup
-        def to_uid(*extensions)
+        def to_uid
           builder = Builder::XmlMarkup.new(indent: 2)
-          builder.VorUid({ mid: to_digest, newEntity: (true if extensions >> :ofm) }.compact) do |voruid|
+          builder.VorUid({ mid: to_digest, newEntity: (true if AIXM.ofmx?) }.compact) do |voruid|
             voruid.codeId(id)
-            voruid.geoLat(xy.lat(format_for(*extensions)))
-            voruid.geoLong(xy.long(format_for(*extensions)))
+            voruid.geoLat(xy.lat(AIXM.format))
+            voruid.geoLong(xy.long(AIXM.format))
           end
         end
 
         ##
-        # Render AIXM markup
-        def to_aixm(*extensions)
-          builder = to_builder(*extensions)
+        # Render XML
+        def to_xml
+          builder = to_builder
           builder.Vor do |vor|
-            vor << to_uid(*extensions).indent(2)
+            vor << to_uid.indent(2)
             vor.OrgUid
             vor.txtName(name) if name
             vor.codeType(type_key.to_s)
@@ -116,13 +116,13 @@ module AIXM
             end
             if schedule
               vor.Vtt do |vtt|
-                vtt << schedule.to_aixm(*extensions).indent(4)
+                vtt << schedule.to_xml.indent(4)
               end
             end
             vor.txtRmk(remarks) if remarks
           end
-          builder << @dme.to_aixm(*extensions) if @dme
-          builder << @tacan.to_aixm(*extensions) if @tacan
+          builder << @dme.to_xml if @dme
+          builder << @tacan.to_xml if @tacan
           builder.target!   # see https://github.com/jimweirich/builder/issues/42
         end
       end

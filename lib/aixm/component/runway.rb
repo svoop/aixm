@@ -100,21 +100,21 @@ module AIXM
 
       ##
       # Render UID markup
-      def to_uid(*extensions)
+      def to_uid
         mid = to_digest
         builder = Builder::XmlMarkup.new(indent: 2)
-        builder.RwyUid({ mid: mid, newEntity: (true if extensions >> :ofm) }.compact) do |rwyuid|
-          rwyuid << ahp.to_uid(*extensions)
+        builder.RwyUid({ mid: mid, newEntity: (true if AIXM.ofmx?) }.compact) do |rwyuid|
+          rwyuid << ahp.to_uid
           rwyuid.txtDesig(name)
         end
       end
 
       ##
-      # Render AIXM markup
-      def to_aixm(*extensions)
+      # Render XML
+      def to_xml
         builder = Builder::XmlMarkup.new(indent: 2)
         builder.Rwy do |rwy|
-          rwy << to_uid(extensions)
+          rwy << to_uid
           rwy.valLen(length)
           rwy.valWid(width)
           rwy.uomDimRwy('M')
@@ -123,7 +123,7 @@ module AIXM
         end
         %i(@forth @back).each do |direction|
           direction = instance_variable_get(direction)
-          builder << direction.to_aixm(*extensions) if direction
+          builder << direction.to_xml if direction
         end
       end
 
@@ -188,8 +188,8 @@ module AIXM
         end
 
         ##
-        # Render AIXM markup
-        def to_aixm
+        # Render XML
+        def to_xml
           builder = Builder::XmlMarkup.new(indent: 2)
           builder.Rdn do |rdn|
             rdn.RdnUid do |rdnuid|

@@ -34,9 +34,10 @@ describe AIXM::Feature::NavigationalAid::VOR do
       end
     end
 
-    describe :to_aixm do
-      it "must build correct XML of VOR with OFM extension" do
-        subject.to_aixm(:ofm).must_equal <<~END
+    describe :to_xml do
+      it "must build correct OFMX" do
+        AIXM.ofmx!
+        subject.to_xml.must_equal <<~END
           <!-- NavigationalAid: [VOR:VOR] VOR NAVAID -->
           <Vor>
             <VorUid mid="#{digest}" newEntity="true">
@@ -86,9 +87,10 @@ describe AIXM::Feature::NavigationalAid::VOR do
       end
     end
 
-    describe :to_aixm do
-      it "must build correct XML of VOR with OFM extension" do
-        subject.to_aixm(:ofm).must_equal <<~END
+    describe :to_xml do
+      it "must build correct OFMX" do
+        AIXM.ofmx!
+        subject.to_xml.must_equal <<~END
           <!-- NavigationalAid: [VOR:DVOR] VOR NAVAID -->
           <Vor>
             <VorUid mid="#{digest}" newEntity="true">
@@ -140,9 +142,10 @@ describe AIXM::Feature::NavigationalAid::VOR do
       end
     end
 
-    describe :to_aixm do
-      it "must build correct XML of VOR with OFM extension" do
-        subject.to_aixm(:ofm).must_equal <<~END
+    describe :to_xml do
+      it "must build correct OFMX of VOR" do
+        AIXM.ofmx!
+        subject.to_xml.must_equal <<~END
           <!-- NavigationalAid: [VOR:VOR] VOR/DME NAVAID -->
           <Vor>
             <VorUid mid="#{digests.first}" newEntity="true">
@@ -217,9 +220,10 @@ describe AIXM::Feature::NavigationalAid::VOR do
       end
     end
 
-    describe :to_aixm do
-      it "must build correct XML of VOR with OFM extension" do
-        subject.to_aixm(:ofm).must_equal <<~END
+    describe :to_xml do
+      it "must build correct OFMX of VOR" do
+        AIXM.ofmx!
+        subject.to_xml.must_equal <<~END
           <!-- NavigationalAid: [VOR:VOR] VORTAC NAVAID -->
           <Vor>
             <VorUid mid="#{digests.first}" newEntity="true">

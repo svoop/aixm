@@ -33,11 +33,11 @@ module AIXM
       end
 
       ##
-      # Render AIXM markup
-      def to_aixm(*extensions)
+      # Render XML
+      def to_xml
         builder = Builder::XmlMarkup.new(indent: 2)
         builder.codeClass(self.class.to_s) if self.class
-        builder << vertical_limits.to_aixm(*extensions)
+        builder << vertical_limits.to_xml
         builder.target!   # see https://github.com/jimweirich/builder/issues/42
       end
     end

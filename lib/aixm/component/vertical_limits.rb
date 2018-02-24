@@ -35,8 +35,8 @@ module AIXM
       end
 
       ##
-      # Render AIXM markup
-      def to_aixm(*extensions)
+      # Render XML
+      def to_xml
         %i(upper lower max min).each_with_object(Builder::XmlMarkup.new(indent: 2)) do |limit, builder|
           if z = send(:"#{limit}_z")
             builder.tag!(:"codeDistVer#{TAGS[limit]}", CODES[z.code].to_s)

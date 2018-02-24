@@ -7,8 +7,8 @@ require 'time'
 
 require_relative 'aixm/version'
 require_relative 'aixm/refinements'
+require_relative 'aixm/format'
 
-require_relative 'aixm/base'
 require_relative 'aixm/document'
 require_relative 'aixm/xy'
 require_relative 'aixm/z'

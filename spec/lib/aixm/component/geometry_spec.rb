@@ -71,8 +71,9 @@ describe AIXM::Component::Geometry do
       subject.to_digest.must_equal 310635400
     end
 
-    it "must build valid XML" do
-      subject.to_aixm.must_equal <<~END
+    it "must build valid AIXM" do
+      AIXM.aixm!
+      subject.to_xml.must_equal <<~END
         <Avx>
           <codeType>GRC</codeType>
           <geoLat>110000.00N</geoLat>
@@ -110,8 +111,9 @@ describe AIXM::Component::Geometry do
       subject.must_be :complete?
     end
 
-    it "must build valid XML" do
-      subject.to_aixm.must_equal <<~END
+    it "must build valid AIXM" do
+      AIXM.aixm!
+      subject.to_xml.must_equal <<~END
         <Avx>
           <codeType>CWA</codeType>
           <geoLat>110000.00N</geoLat>
@@ -155,8 +157,9 @@ describe AIXM::Component::Geometry do
       subject.must_be :complete?
     end
 
-    it "must build valid XML" do
-      subject.to_aixm.must_equal <<~END
+    it "must build valid AIXM" do
+      AIXM.aixm!
+      subject.to_xml.must_equal <<~END
         <Avx>
           <codeType>FNT</codeType>
           <geoLat>110000.00N</geoLat>
@@ -197,8 +200,9 @@ describe AIXM::Component::Geometry do
       subject.wont_be :complete?
     end
 
-    it "must build valid XML" do
-      subject.to_aixm.must_equal <<~END
+    it "must build valid AIXM" do
+      AIXM.aixm!
+      subject.to_xml.must_equal <<~END
         <Avx>
           <codeType>CWA</codeType>
           <geoLat>110523.76N</geoLat>

@@ -29,14 +29,15 @@ describe AIXM::Component::Geometry::Arc do
     end
   end
 
-  describe :to_aixm do
-    it "must build correct XML for clockwise arcs" do
+  describe :to_xml do
+    it "must build correct AIXM for clockwise arcs" do
+      AIXM.aixm!
       subject = AIXM.arc(
         xy: AIXM.xy(lat: 11.1, long: 33.3),
         center_xy: AIXM.xy(lat: 22.2, long: 33.3),
         clockwise: true
       )
-      subject.to_aixm.must_equal <<~END
+      subject.to_xml.must_equal <<~END
         <Avx>
           <codeType>CWA</codeType>
           <geoLat>110600.00N</geoLat>
@@ -54,7 +55,7 @@ describe AIXM::Component::Geometry::Arc do
         center_xy: AIXM.xy(lat: 22.2, long: 33.3),
         clockwise: false
       )
-      subject.to_aixm.must_equal <<~END
+      subject.to_xml.must_equal <<~END
         <Avx>
           <codeType>CCA</codeType>
           <geoLat>110600.00N</geoLat>

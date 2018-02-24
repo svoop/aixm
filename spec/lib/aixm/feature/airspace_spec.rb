@@ -31,10 +31,11 @@ describe AIXM::Feature::Airspace do
         end
       end
 
-      describe :to_aixm do
-        it "must build correct XML with OFM extensions" do
+      describe :to_xml do
+        it "must build correct OFMX" do
+          AIXM.ofmx!
           digest = subject.to_digest
-          subject.to_aixm(:ofm).must_equal <<~"END"
+          subject.to_xml.must_equal <<~"END"
             <!-- Airspace: [D] POLYGON AIRSPACE -->
             <Ase xt_classLayersAvail="false">
               <AseUid mid="#{digest}" newEntity="true">
@@ -116,10 +117,11 @@ describe AIXM::Feature::Airspace do
           end
         end
 
-        describe :to_aixm do
-          it "must build correct XML with OFM extensions" do
+        describe :to_xml do
+          it "must build correct OFMX" do
+            AIXM.ofmx!
             digest = subject.to_digest
-            subject.to_aixm(:ofm).must_equal <<~"END"
+            subject.to_xml.must_equal <<~"END"
               <!-- Airspace: [D] POLYGON AIRSPACE -->
               <Ase xt_classLayersAvail="true">
                 <AseUid mid="#{digest}" newEntity="true">
@@ -242,17 +244,17 @@ describe AIXM::Feature::Airspace do
 
       it "must build correct XML without short name" do
         subject.short_name = nil
-        subject.to_aixm.wont_match(/txtLocalType/)
+        subject.to_xml.wont_match(/txtLocalType/)
       end
 
       it "must build correct XML with identical name and short name" do
         subject.short_name = 'POLYGON AIRSPACE'
-        subject.to_aixm.wont_match(/txtLocalType/)
+        subject.to_xml.wont_match(/txtLocalType/)
       end
 
       it "must build correct XML without schedule" do
         subject.schedule = nil
-        subject.to_aixm.wont_match(/codeWorkHr/)
+        subject.to_xml.wont_match(/codeWorkHr/)
       end
     end
   end

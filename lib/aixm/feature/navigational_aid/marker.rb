@@ -43,21 +43,21 @@ module AIXM
 
         ##
         # Render UID markup
-        def to_uid(*extensions)
+        def to_uid
           builder = Builder::XmlMarkup.new(indent: 2)
-          builder.MkrUid({ mid: to_digest, newEntity: (true if extensions >> :ofm) }.compact) do |mkruid|
+          builder.MkrUid({ mid: to_digest, newEntity: (true if AIXM.ofmx?) }.compact) do |mkruid|
             mkruid.codeId(id)
-            mkruid.geoLat(xy.lat(format_for(*extensions)))
-            mkruid.geoLong(xy.long(format_for(*extensions)))
+            mkruid.geoLat(xy.lat(AIXM.format))
+            mkruid.geoLong(xy.long(AIXM.format))
           end
         end
 
         ##
-        # Render AIXM markup
-        def to_aixm(*extensions)
-          builder = to_builder(*extensions)
+        # Render XML
+        def to_xml
+          builder = to_builder
           builder.Mkr do |mkr|
-            mkr << to_uid(*extensions).indent(2)
+            mkr << to_uid.indent(2)
             mkr.OrgUid
             mkr.codePsnIls(type_key.to_s)
             mkr.valFreq(75)
@@ -70,7 +70,7 @@ module AIXM
             end
             if schedule
               mkr.Mtt do |mtt|
-                mtt << schedule.to_aixm(*extensions).indent(4)
+                mtt << schedule.to_xml.indent(4)
               end
             end
             mkr.txtRmk(remarks) if remarks

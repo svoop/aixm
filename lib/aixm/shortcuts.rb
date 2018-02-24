@@ -1,7 +1,5 @@
 module AIXM
 
-  SCHEMA = Pathname(__dir__).join('schemas', '4.5', 'AIXM-Snapshot.xsd').freeze
-
   ELEMENTS = {
     document: Document,
     xy: XY,

@@ -22,10 +22,10 @@ describe AIXM::Component::Schedule do
     end
   end
 
-  describe :to_aixm do
+  describe :to_xml do
     it "must build correct XML" do
       subject = AIXM.schedule(code: :continuous)
-      subject.to_aixm.must_equal <<~END
+      subject.to_xml.must_equal <<~END
         <codeWorkHr>H24</codeWorkHr>
       END
     end

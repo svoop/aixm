@@ -1,5 +1,5 @@
 module AIXM
-  class Document < Base
+  class Document
     using AIXM::Refinements
 
     IGNORE_ERROR_PATTERN = %r(OrgUid)
@@ -19,7 +19,7 @@ module AIXM
     end
 
     ##
-    # Check whether the document is complete (extensions excluded)
+    # Check whether the document is complete
     def complete?
       features.any? && features.none? { |f| f.respond_to?(:complete?) && !f.complete? }
     end
@@ -33,18 +33,15 @@ module AIXM
     ##
     # Validate against the XSD and return an array of errors
     def errors
-      xsd = Nokogiri::XML::Schema(File.open(AIXM::SCHEMA))
-      xsd.validate(Nokogiri::XML(to_aixm)).reject do |error|
+      xsd = Nokogiri::XML::Schema(File.open(AIXM.format_schema))
+      xsd.validate(Nokogiri::XML(to_xml)).reject do |error|
         error.message =~ IGNORE_ERROR_PATTERN
       end
     end
 
     ##
-    # Render AIXM markup
-    #
-    # Extensions:
-    # * +:ofm+ - Open Flightmaps
-    def to_aixm(*extensions)
+    # Render XML
+    def to_xml
       now = Time.now.xmlschema
       meta = {
         'xmlns:xsi': 'http://www.aixm.aero/schema/4.5/AIXM-Snapshot.xsd',
@@ -53,11 +50,11 @@ module AIXM
         created: @created_at&.xmlschema || now,
         effective: @effective_at&.xmlschema || now
       }
-      meta[:version] += ' + OFM extensions of version 0.1' if extensions >> :ofm
+      meta[:version] += ' + OFM extensions of version 0.1' if AIXM.ofmx?
       builder = Builder::XmlMarkup.new(indent: 2)
       builder.instruct!
       builder.tag!('AIXM-Snapshot', meta) do |aixm_snapshot|
-        aixm_snapshot << features.map { |f| f.to_aixm(*extensions) }.join.indent(2)
+        aixm_snapshot << features.map { |f| f.to_xml }.join.indent(2)
       end
     end
 
