@@ -165,6 +165,9 @@ describe AIXM::Component::Geometry do
           <geoLat>110000.00N</geoLat>
           <geoLong>0220000.00E</geoLong>
           <codeDatum>WGE</codeDatum>
+          <GbrUid>
+            <txtName>foobar</txtName>
+          </GbrUid>
         </Avx>
         <Avx>
           <codeType>GRC</codeType>

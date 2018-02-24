@@ -2,16 +2,14 @@ require_relative '../../spec_helper'
 
 describe AIXM do
   describe :format do
-    it "must return format" do
+    it "must return format identifier" do
       AIXM.aixm!
       AIXM.format.must_equal :aixm
     end
-  end
 
-  describe :format_schema do
-    it "must return schema for format" do
+    it "must return format details" do
       AIXM.aixm!
-      AIXM.format_schema.to_s.must_match(/xsd$/)
+      AIXM.format(:root).must_equal 'AIXM-Snapshot'
     end
   end
 

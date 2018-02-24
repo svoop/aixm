@@ -1,22 +1,33 @@
 module AIXM
 
   FORMATS = {
-    aixm: Pathname(__dir__).join('schemas', 'aixm', '4.5', 'AIXM-Snapshot.xsd').freeze,
-    ofmx: Pathname(__dir__).join('schemas', 'ofmx', '4.5-1', 'OFMX-Snapshot.xsd').freeze
+    aixm: {
+      version: '4.5',
+      namespace: 'http://www.aixm.aero/schema/4.5/AIXM-Snapshot.xsd',
+      schema: Pathname(__dir__).join('..', '..', 'schemas', 'aixm', '4.5', 'AIXM-Snapshot.xsd'),
+      root: 'AIXM-Snapshot'
+    },
+    ofmx: {
+      version: '4.5-1',
+      namespace: 'http://openflightmaps.org/schema/4.5-1/OFMX-Snapshot.xsd',
+      schema: Pathname(__dir__).join('..', '..', 'schemas', 'ofmx', '4.5-1', 'OFMX-Snapshot.xsd'),
+      root: 'OFMX-Snapshot'
+    }
   }.freeze
 
   class << self
 
     ##
     # Currently active format
-    def format
-      @@format
-    end
-
-    ##
-    # Schema for currently active format
-    def format_schema
-      FORMATS[@@format]
+    #
+    # To get the format identifyer:
+    #   AIXM.format   # => :aixm
+    #
+    # To get format details:
+    #   AIXM.format(:version)   # => '4.5'
+    #   AIXM.format(:root)      # => 'AIXM-Snapshot'
+    def format(key = nil)
+      key ? FORMATS.dig(@@format, key) : @@format
     end
 
     ##
