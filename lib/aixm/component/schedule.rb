@@ -10,7 +10,7 @@ module AIXM
     #
     # Shortcuts:
     # * +AIXM::H24+ - continuous 24/7
-    class Schedule < Base
+    class Schedule
       CODES = {
         H24: :continuous,
         HJ: :sunrise_to_sunset,

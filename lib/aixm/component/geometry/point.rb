@@ -6,7 +6,7 @@ module AIXM
 
       ##
       # Points are defined by +xy+ coordinates.
-      class Point < Base
+      class Point
         extend Forwardable
 
         def_delegators :xy, :to_digest

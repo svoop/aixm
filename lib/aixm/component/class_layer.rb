@@ -6,7 +6,7 @@ module AIXM
     ##
     # Class layers consists of an optional airspace class and mandatory
     # vertical limits.
-    class ClassLayer < Base
+    class ClassLayer
       CLASSES = %i(A B C D E F G)
 
       attr_reader :vertical_limits

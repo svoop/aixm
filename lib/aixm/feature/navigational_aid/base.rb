@@ -8,7 +8,7 @@ module AIXM
       # Implements common attributes of all navigational aids
       #
       # Please note that the optional elevation +z+ must be in +:qnh+.
-      class Base < AIXM::Feature::Base
+      class Base
         attr_reader :id, :name, :xy, :z, :schedule, :remarks
 
         private_class_method :new

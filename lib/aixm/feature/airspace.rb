@@ -12,7 +12,7 @@ module AIXM
     # * +short_name+ - short name of the airspace (will be converted to
     #                  uppercase, e.g. +LF P 81 CHERBOURG+)
     # * +type+ - airspace type (e.g. +TMA+ or +P+)
-    class Airspace < Base
+    class Airspace
       attr_reader :name, :short_name, :type, :schedule, :remarks
       attr_accessor :geometry, :class_layers
 

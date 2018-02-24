@@ -18,7 +18,7 @@ module AIXM
     #   geometry = AIXM.geometry
     #   geometry << AIXM.point(...)
     #   geometry << AIXM.point(...)
-    class Geometry < Base
+    class Geometry
       include Enumerable
       extend Forwardable
 

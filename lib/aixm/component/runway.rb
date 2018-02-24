@@ -24,7 +24,7 @@ module AIXM
     # By convention, the runway name is usually the composition of the runway
     # forth name (smaller number) and the runway hence name (bigger number)
     # joined with a forward slash.
-    class Runway < Base
+    class Runway
       COMPOSITIONS = {
         ASPH: :asphalt,
         BITUM: :bitumen,
