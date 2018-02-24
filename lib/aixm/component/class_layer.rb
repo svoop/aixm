@@ -29,7 +29,7 @@ module AIXM
       ##
       # Digest to identify the payload
       def to_digest
-        [self.class, vertical_limits.to_digest].to_digest
+        [self.class, vertical_limits].to_digest
       end
 
       ##

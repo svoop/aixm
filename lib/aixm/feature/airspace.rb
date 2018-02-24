@@ -57,7 +57,7 @@ module AIXM
       ##
       # Digest to identify the payload
       def to_digest
-        [name, short_name, type, schedule&.to_digest, class_layers.map(&:to_digest), geometry.to_digest, remarks].to_digest
+        [name, short_name, type, schedule, class_layers, geometry, remarks].to_digest
       end
 
       ##

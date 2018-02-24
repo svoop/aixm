@@ -182,7 +182,7 @@ module AIXM
         ##
         # Digest to identify the payload
         def to_digest
-          [name, xy.to_digest, displaced_threshold].to_digest
+          [name, xy, displaced_threshold].to_digest
         end
 
         ##

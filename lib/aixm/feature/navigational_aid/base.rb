@@ -56,7 +56,7 @@ module AIXM
         ##
         # Digest to identify the payload
         def to_digest
-          [kind, id, name, xy.to_digest, z&.to_digest, remarks].to_digest
+          [kind, id, name, xy, z, remarks].to_digest
         end
 
         ##

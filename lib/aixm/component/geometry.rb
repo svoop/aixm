@@ -43,7 +43,7 @@ module AIXM
       ##
       # Digest to identify the payload
       def to_digest
-        segments.map(&:to_digest).to_digest
+        segments.to_digest
       end
 
       ##
