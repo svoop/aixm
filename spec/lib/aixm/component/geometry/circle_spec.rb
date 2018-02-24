@@ -29,11 +29,11 @@ describe AIXM::Component::Geometry::Circle do
 
   describe :to_xml do
     it "must build correct AIXM for circles not near the equator" do
-      AIXM.aixm!
       subject = AIXM.circle(
         center_xy: AIXM.xy(lat: 11.1, long: 22.2),
         radius: 25
       )
+      AIXM.aixm!
       subject.to_xml.must_equal <<~END
         <Avx>
           <codeType>CWA</codeType>
@@ -47,11 +47,11 @@ describe AIXM::Component::Geometry::Circle do
     end
 
     it "must build correct AIXM for circles near the equator" do
-      AIXM.aixm!
       subject = AIXM.circle(
         center_xy: AIXM.xy(lat: -0.0005, long: -22.2),
         radius: 50
       )
+      AIXM.aixm!
       subject.to_xml.must_equal <<~END
         <Avx>
           <codeType>CWA</codeType>

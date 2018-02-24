@@ -20,7 +20,8 @@ describe AIXM::Component::ClassLayer do
     end
 
     describe :to_xml do
-      it "must build correct XML" do
+      it "must build correct AIXM" do
+        AIXM.aixm!
         subject.to_xml.must_equal <<~END
           <codeClass>C</codeClass>
           <codeDistVerUpper>STD</codeDistVerUpper>
@@ -52,7 +53,8 @@ describe AIXM::Component::ClassLayer do
     end
 
     describe :to_xml do
-      it "must build correct XML" do
+      it "must build correct AIXM" do
+        AIXM.aixm!
         subject.to_xml.must_equal <<~END
           <codeDistVerUpper>STD</codeDistVerUpper>
           <valDistVerUpper>65</valDistVerUpper>

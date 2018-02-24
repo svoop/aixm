@@ -143,7 +143,7 @@ describe AIXM::Feature::NavigationalAid::VOR do
     end
 
     describe :to_xml do
-      it "must build correct OFMX of VOR" do
+      it "must build correct OFMX" do
         AIXM.ofmx!
         subject.to_xml.must_equal <<~END
           <!-- NavigationalAid: [VOR:VOR] VOR/DME NAVAID -->
@@ -221,7 +221,7 @@ describe AIXM::Feature::NavigationalAid::VOR do
     end
 
     describe :to_xml do
-      it "must build correct OFMX of VOR" do
+      it "must build correct OFMX" do
         AIXM.ofmx!
         subject.to_xml.must_equal <<~END
           <!-- NavigationalAid: [VOR:VOR] VORTAC NAVAID -->

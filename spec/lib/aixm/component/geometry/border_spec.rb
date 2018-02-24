@@ -13,17 +13,20 @@ describe AIXM::Component::Geometry::Border do
 
   describe :to_xml do
     it "must build correct AIXM" do
-      AIXM.aixm!
       subject = AIXM.border(
         xy: AIXM.xy(lat: 11.1, long: 22.2),
-        name: 'foobar'
+        name: 'FRANCE-SWITZERLAND'
       )
+      AIXM.aixm!
       subject.to_xml.must_equal <<~END
       <Avx>
         <codeType>FNT</codeType>
         <geoLat>110600.00N</geoLat>
         <geoLong>0221200.00E</geoLong>
         <codeDatum>WGE</codeDatum>
+        <GbrUid>
+          <txtName>FRANCE-SWITZERLAND</txtName>
+        </GbrUid>
       </Avx>
       END
     end

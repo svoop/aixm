@@ -33,8 +33,8 @@ describe AIXM::Feature::Airspace do
 
       describe :to_xml do
         it "must build correct OFMX" do
-          AIXM.ofmx!
           digest = subject.to_digest
+          AIXM.ofmx!
           subject.to_xml.must_equal <<~"END"
             <!-- Airspace: [D] POLYGON AIRSPACE -->
             <Ase xt_classLayersAvail="false">
@@ -119,8 +119,8 @@ describe AIXM::Feature::Airspace do
 
         describe :to_xml do
           it "must build correct OFMX" do
-            AIXM.ofmx!
             digest = subject.to_digest
+            AIXM.ofmx!
             subject.to_xml.must_equal <<~"END"
               <!-- Airspace: [D] POLYGON AIRSPACE -->
               <Ase xt_classLayersAvail="true">
@@ -242,18 +242,21 @@ describe AIXM::Feature::Airspace do
         AIXM::Factory.polygon_airspace
       end
 
-      it "must build correct XML without short name" do
+      it "must build correct AIXM without short name" do
         subject.short_name = nil
+        AIXM.aixm!
         subject.to_xml.wont_match(/txtLocalType/)
       end
 
-      it "must build correct XML with identical name and short name" do
+      it "must build correct AIXM with identical name and short name" do
         subject.short_name = 'POLYGON AIRSPACE'
+        AIXM.aixm!
         subject.to_xml.wont_match(/txtLocalType/)
       end
 
-      it "must build correct XML without schedule" do
+      it "must build correct AIXM without schedule" do
         subject.schedule = nil
+        AIXM.aixm!
         subject.to_xml.wont_match(/codeWorkHr/)
       end
     end

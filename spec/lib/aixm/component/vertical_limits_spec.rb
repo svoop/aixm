@@ -21,12 +21,13 @@ describe AIXM::Component::VerticalLimits do
     end
   end
 
-  describe :to_xml do
-    it "must build correct XML with only upper_z and lower_z" do
+  describe :to_aixm do
+    it "must build correct AIXM with only upper_z and lower_z" do
       subject = AIXM.vertical_limits(
         upper_z: AIXM.z(2000, :qnh),
         lower_z: AIXM::GROUND
       )
+      AIXM.aixm!
       subject.to_xml.must_equal <<~END
         <codeDistVerUpper>ALT</codeDistVerUpper>
         <valDistVerUpper>2000</valDistVerUpper>
@@ -37,12 +38,13 @@ describe AIXM::Component::VerticalLimits do
       END
     end
 
-    it "must build correct XML with additional max_z" do
+    it "must build correct AIXM with additional max_z" do
       subject = AIXM.vertical_limits(
         upper_z: AIXM.z(65, :qne),
         lower_z: AIXM.z(1000, :qfe),
         max_z: AIXM.z(6000, :qnh)
       )
+      AIXM.aixm!
       subject.to_xml.must_equal <<~END
         <codeDistVerUpper>STD</codeDistVerUpper>
         <valDistVerUpper>65</valDistVerUpper>
@@ -56,12 +58,13 @@ describe AIXM::Component::VerticalLimits do
       END
     end
 
-    it "must build correct XML with additional min_z" do
+    it "must build correct AIXM with additional min_z" do
       subject = AIXM.vertical_limits(
         upper_z: AIXM.z(65, :qne),
         lower_z: AIXM.z(45, :qne),
         min_z: AIXM.z(3000, :qnh)
       )
+      AIXM.aixm!
       subject.to_xml.must_equal <<~END
         <codeDistVerUpper>STD</codeDistVerUpper>
         <valDistVerUpper>65</valDistVerUpper>

@@ -31,12 +31,12 @@ describe AIXM::Component::Geometry::Arc do
 
   describe :to_xml do
     it "must build correct AIXM for clockwise arcs" do
-      AIXM.aixm!
       subject = AIXM.arc(
         xy: AIXM.xy(lat: 11.1, long: 33.3),
         center_xy: AIXM.xy(lat: 22.2, long: 33.3),
         clockwise: true
       )
+      AIXM.aixm!
       subject.to_xml.must_equal <<~END
         <Avx>
           <codeType>CWA</codeType>
@@ -49,12 +49,13 @@ describe AIXM::Component::Geometry::Arc do
       END
     end
 
-    it "must build correct XML for counter-clockwise arcs" do
+    it "must build correct AIXM for counter-clockwise arcs" do
       subject = AIXM.arc(
         xy: AIXM.xy(lat: 11.1, long: 33.3),
         center_xy: AIXM.xy(lat: 22.2, long: 33.3),
         clockwise: false
       )
+      AIXM.aixm!
       subject.to_xml.must_equal <<~END
         <Avx>
           <codeType>CCA</codeType>

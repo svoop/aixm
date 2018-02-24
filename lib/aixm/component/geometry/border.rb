@@ -26,10 +26,8 @@ module AIXM
             avx.geoLat(xy.lat(AIXM.format))
             avx.geoLong(xy.long(AIXM.format))
             avx.codeDatum('WGE')
-            if AIXM.ofmx?
-              avx.GbrUid do |gbruid|
-                gbruid.txtName(name.to_s)
-              end
+            avx.GbrUid do |gbruid|
+              gbruid.txtName(name.to_s)
             end
           end
         end

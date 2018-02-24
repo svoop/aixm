@@ -16,8 +16,8 @@ describe AIXM::Component::Geometry::Point do
 
   describe :to_xml do
     it "must build correct AIXM for N/E points" do
-      AIXM.aixm!
       subject = AIXM.point(xy: AIXM.xy(lat: 11.1, long: 22.2))
+      AIXM.aixm!
       subject.to_xml.must_equal <<~END
         <Avx>
           <codeType>GRC</codeType>
@@ -29,8 +29,8 @@ describe AIXM::Component::Geometry::Point do
     end
 
     it "must build correct AIXM for S/W points" do
-      AIXM.aixm!
       subject = AIXM.point(xy: AIXM.xy(lat: -11.1, long: -22.2))
+      AIXM.aixm!
       subject.to_xml.must_equal <<~END
         <Avx>
           <codeType>GRC</codeType>
