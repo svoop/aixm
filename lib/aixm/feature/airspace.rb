@@ -54,14 +54,10 @@ module AIXM
         !!name && !!type && class_layers.any? && geometry.complete?
       end
 
-      ##
-      # Digest to identify the payload
       def to_digest
         [name, short_name, type, schedule, class_layers, geometry, remarks].to_digest
       end
 
-      ##
-      # Render UID markup
       def to_uid
         mid = to_digest
         builder = Builder::XmlMarkup.new(indent: 2)
@@ -71,8 +67,6 @@ module AIXM
         end
       end
 
-      ##
-      # Render XML
       def to_xml
         mid = to_digest
         builder = Builder::XmlMarkup.new(indent: 2)

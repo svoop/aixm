@@ -13,8 +13,6 @@ module AIXM
       class TACAN < DME
         public_class_method :new
 
-        ##
-        # Render UID markup
         def to_uid
           builder = Builder::XmlMarkup.new(indent: 2)
           builder.TcnUid({ mid: to_digest, newEntity: (true if AIXM.ofmx?) }.compact) do |tcnuid|
@@ -24,8 +22,6 @@ module AIXM
           end
         end
 
-        ##
-        # Render XML
         def to_xml
           builder = to_builder
           builder.Tcn do |tcn|

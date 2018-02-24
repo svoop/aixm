@@ -98,8 +98,6 @@ module AIXM
         @remarks = value&.to_s
       end
 
-      ##
-      # Digest to identify the payload
       def to_digest
         [].to_digest
       end

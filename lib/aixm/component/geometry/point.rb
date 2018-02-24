@@ -18,8 +18,6 @@ module AIXM
           @xy = xy
         end
 
-        ##
-        # Render XML
         def to_xml
           builder = Builder::XmlMarkup.new(indent: 2)
           builder.Avx do |avx|

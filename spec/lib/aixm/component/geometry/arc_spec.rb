@@ -25,7 +25,7 @@ describe AIXM::Component::Geometry::Arc do
         center_xy: AIXM.xy(lat: 22.2, long: 33.3),
         clockwise: true
       )
-      subject.to_digest.must_equal 712900173
+      subject.to_digest.must_equal 253842470
     end
   end
 

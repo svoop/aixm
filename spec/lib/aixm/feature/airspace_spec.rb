@@ -27,7 +27,7 @@ describe AIXM::Feature::Airspace do
 
       describe :to_digest do
         it "must return digest of payload" do
-          subject.to_digest.must_equal 367297292
+          subject.to_digest.must_equal 595551355
         end
       end
 
@@ -113,7 +113,7 @@ describe AIXM::Feature::Airspace do
 
         describe :to_digest do
           it "must return digest of payload" do
-            subject.to_digest.must_equal 481196243
+            subject.to_digest.must_equal 633292197
           end
         end
 

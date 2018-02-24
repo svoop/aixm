@@ -132,7 +132,7 @@ describe AIXM::Component::Geometry do
     end
 
     it "must return digest of payload" do
-      subject.to_digest.must_equal 8205396
+      subject.to_digest.must_equal 368159360
     end
   end
 
@@ -176,7 +176,7 @@ describe AIXM::Component::Geometry do
     end
 
     it "must return digest of payload" do
-      subject.to_digest.must_equal 376662362
+      subject.to_digest.must_equal 204277421
     end
   end
 
@@ -215,7 +215,7 @@ describe AIXM::Component::Geometry do
     end
 
     it "must return digest of payload" do
-      subject.to_digest.must_equal 141059998
+      subject.to_digest.must_equal 470722036
     end
   end
 end

@@ -13,12 +13,6 @@ describe AIXM::Z do
     end
   end
 
-  describe :to_digest do
-    it "must return digest of payload" do
-      AIXM.z(111, :qnh).to_digest.must_equal 606000673
-    end
-  end
-
   describe :== do
     it "recognizes objects with identical altitude and Q code as equal" do
       a = AIXM.z(111, :qnh)
@@ -70,6 +64,12 @@ describe AIXM::Z do
       AIXM.z(0, :qfe).unit.must_equal :FT
       AIXM.z(0, :qnh).unit.must_equal :FT
       AIXM.z(0, :qne).unit.must_equal :FL
+    end
+  end
+
+  describe :to_digest do
+    it "must return digest of payload" do
+      AIXM.z(111, :qnh).to_digest.must_equal 606000673
     end
   end
 end

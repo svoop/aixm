@@ -13,12 +13,6 @@ describe AIXM::F do
     end
   end
 
-  describe :to_digest do
-    it "must return digest of payload" do
-      AIXM.f(111, :mhz).to_digest.must_equal 779608518
-    end
-  end
-
   describe :== do
     it "recognizes objects with identical frequency and unit as equal" do
       a = AIXM.f(123.0, :mhz)
@@ -53,6 +47,12 @@ describe AIXM::F do
     it "detect frequencies outside of a frequency band" do
       subject.between?(90, 110, :khz).must_equal false
       subject.between?(90, 95, :mhz).must_equal false
+    end
+  end
+
+  describe :to_digest do
+    it "must return digest of payload" do
+      AIXM.f(111, :mhz).to_digest.must_equal 779608518
     end
   end
 end

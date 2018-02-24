@@ -41,8 +41,6 @@ module AIXM
           TYPES.key(type)
         end
 
-        ##
-        # Render UID markup
         def to_uid
           builder = Builder::XmlMarkup.new(indent: 2)
           builder.MkrUid({ mid: to_digest, newEntity: (true if AIXM.ofmx?) }.compact) do |mkruid|
@@ -52,8 +50,6 @@ module AIXM
           end
         end
 
-        ##
-        # Render XML
         def to_xml
           builder = to_builder
           builder.Mkr do |mkr|

@@ -43,14 +43,10 @@ module AIXM
           @f = value
         end
 
-        ##
-        # Digest to identify the payload
         def to_digest
           [super, f].to_digest
         end
 
-        ##
-        # Render UID markup
         def to_uid
           builder = Builder::XmlMarkup.new(indent: 2)
           builder.NdbUid({ mid: to_digest, newEntity: (true if AIXM.ofmx?) }.compact) do |ndbuid|
@@ -60,8 +56,6 @@ module AIXM
           end
         end
 
-        ##
-        # Render XML
         def to_xml
           builder = to_builder
           builder.Ndb do |ndb|

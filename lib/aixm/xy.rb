@@ -33,10 +33,6 @@ module AIXM
       end
     end
 
-    def to_digest
-      [lat, long].to_digest
-    end
-
     def ==(other)
       other.is_a?(XY) && lat == other.lat && long == other.long
     end
@@ -55,6 +51,10 @@ module AIXM
           )
         )
       end.round
+    end
+
+    def to_digest
+      [lat, long].to_digest
     end
 
     private

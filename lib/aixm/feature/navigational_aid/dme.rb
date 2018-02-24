@@ -29,14 +29,10 @@ module AIXM
           @vor = value
         end
 
-        ##
-        # Digest to identify the payload
         def to_digest
           [super, channel].to_digest
         end
 
-        ##
-        # Render UID markup
         def to_uid
           builder = Builder::XmlMarkup.new(indent: 2)
           builder.DmeUid({ mid: to_digest, newEntity: (true if AIXM.ofmx?) }.compact) do |dmeuid|
@@ -46,8 +42,6 @@ module AIXM
           end
         end
 
-        ##
-        # Render XML
         def to_xml
           builder = to_builder
           builder.Dme do |dme|

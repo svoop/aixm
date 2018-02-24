@@ -26,14 +26,10 @@ module AIXM
         @klass
       end
 
-      ##
-      # Digest to identify the payload
       def to_digest
         [self.class, vertical_limits].to_digest
       end
 
-      ##
-      # Render XML
       def to_xml
         builder = Builder::XmlMarkup.new(indent: 2)
         builder.codeClass(self.class.to_s) if self.class

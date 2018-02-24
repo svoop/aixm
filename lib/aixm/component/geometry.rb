@@ -40,14 +40,10 @@ module AIXM
         circle? || closed_shape?
       end
 
-      ##
-      # Digest to identify the payload
       def to_digest
         segments.to_digest
       end
 
-      ##
-      # Render XML
       def to_xml
         @result_array.map { |h| h.to_xml }.join
       end

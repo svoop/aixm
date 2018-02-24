@@ -19,12 +19,6 @@ module AIXM
       fail(ArgumentError, "unrecognized Q code `#{code}'") unless CODES.include? @code
     end
 
-    ##
-    # Digest to identify the payload
-    def to_digest
-      [alt, code].to_digest
-    end
-
     def ==(other)
       other.is_a?(Z) && alt == other.alt && code == other.code
     end
@@ -43,6 +37,10 @@ module AIXM
 
     def unit
       qne? ? :FL : :FT
+    end
+
+    def to_digest
+      [alt, code].to_digest
     end
 
   end

@@ -36,14 +36,10 @@ module AIXM
           TYPES.key(type)
         end
 
-        ##
-        # Digest to identify the payload
         def to_digest
           [super, type].to_digest
         end
 
-        ##
-        # Render UID markup
         def to_uid
           builder = Builder::XmlMarkup.new(indent: 2)
           builder.DpnUid({ mid: to_digest, newEntity: (true if AIXM.ofmx?) }.compact) do |dpnuid|
@@ -53,8 +49,6 @@ module AIXM
           end
         end
 
-        ##
-        # Render XML
         def to_xml
           builder = to_builder
           builder.Dpn do |dpn|

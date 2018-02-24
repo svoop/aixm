@@ -109,12 +109,6 @@ describe AIXM::XY do
     end
   end
 
-  describe :to_digest do
-    it "must return digest of payload" do
-      AIXM::Factory.xy.to_digest.must_equal 783044788
-    end
-  end
-
   describe :== do
     it "recognizes objects with identical latitude and longitude as equal" do
       a = AIXM.xy(lat: "112233N", long: "0223344E")
@@ -147,6 +141,12 @@ describe AIXM::XY do
     it "calculates the distance between two points correctly in meters" do
       other = AIXM.xy(lat: %q(43°59'25.31"N), long: %q(004°45'23.24"E))
       subject.distance(other).must_equal 1351
+    end
+  end
+
+  describe :to_digest do
+    it "must return digest of payload" do
+      AIXM::Factory.xy.to_digest.must_equal 783044788
     end
   end
 end

@@ -7,7 +7,7 @@ describe AIXM::Component::Geometry::Border do
         xy: AIXM.xy(lat: 11.1, long: 22.2),
         name: 'foobar'
       )
-      subject.to_digest.must_equal 813052011
+      subject.to_digest.must_equal 339017758
     end
   end
 

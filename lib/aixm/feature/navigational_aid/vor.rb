@@ -80,14 +80,10 @@ module AIXM
           @tacan.vor = self
         end
 
-        ##
-        # Digest to identify the payload
         def to_digest
           [super, type, f, north].to_digest
         end
 
-        ##
-        # Render UID markup
         def to_uid
           builder = Builder::XmlMarkup.new(indent: 2)
           builder.VorUid({ mid: to_digest, newEntity: (true if AIXM.ofmx?) }.compact) do |voruid|
@@ -97,8 +93,6 @@ module AIXM
           end
         end
 
-        ##
-        # Render XML
         def to_xml
           builder = to_builder
           builder.Vor do |vor|

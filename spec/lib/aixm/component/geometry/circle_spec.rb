@@ -23,7 +23,7 @@ describe AIXM::Component::Geometry::Circle do
         center_xy: AIXM.xy(lat: 12.12345678, long: -23.12345678),
         radius: 15
       )
-      subject.to_digest.must_equal 386055945
+      subject.to_digest.must_equal 16251510
     end
   end
 

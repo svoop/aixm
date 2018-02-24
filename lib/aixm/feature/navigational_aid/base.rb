@@ -53,8 +53,6 @@ module AIXM
           [self.class.name.split('::').last, type_key].compact.join(':')
         end
 
-        ##
-        # Digest to identify the payload
         def to_digest
           [kind, id, name, xy, z, remarks].to_digest
         end

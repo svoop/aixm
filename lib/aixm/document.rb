@@ -40,7 +40,7 @@ module AIXM
     end
 
     ##
-    # Render XML
+    # Generate XML
     def to_xml
       now = Time.now.xmlschema
       meta = {

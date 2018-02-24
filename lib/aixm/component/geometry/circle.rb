@@ -14,14 +14,10 @@ module AIXM
           @center_xy, @radius = center_xy, radius
         end
 
-        ##
-        # Digest to identify the payload
         def to_digest
-          [center_xy.lat, center_xy.long, radius].to_digest
+          [center_xy, radius].to_digest
         end
 
-        ##
-        # Render XML
         def to_xml
           builder = Builder::XmlMarkup.new(indent: 2)
           builder.Avx do |avx|

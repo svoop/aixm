@@ -26,14 +26,10 @@ module AIXM
         @code = CODES.lookup(code&.to_sym, nil) || fail(ArgumentError, "invalid code")
       end
 
-      ##
-      # Digest to identify the payload
       def to_digest
         [code].to_digest
       end
 
-      ##
-      # Render XML
       def to_xml
         Builder::XmlMarkup.new(indent: 2).codeWorkHr(CODES.key(code).to_s)
       end

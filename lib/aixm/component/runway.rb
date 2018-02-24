@@ -92,14 +92,10 @@ module AIXM
         @remarks = value&.to_s
       end
 
-      ##
-      # Digest to identify the payload
       def to_digest
         [].to_digest
       end
 
-      ##
-      # Render UID markup
       def to_uid
         mid = to_digest
         builder = Builder::XmlMarkup.new(indent: 2)
@@ -109,8 +105,6 @@ module AIXM
         end
       end
 
-      ##
-      # Render XML
       def to_xml
         builder = Builder::XmlMarkup.new(indent: 2)
         builder.Rwy do |rwy|
@@ -179,14 +173,10 @@ module AIXM
           (geographic_orientation + runway.airport.declination).round
         end
 
-        ##
-        # Digest to identify the payload
         def to_digest
           [name, xy, displaced_threshold].to_digest
         end
 
-        ##
-        # Render XML
         def to_xml
           builder = Builder::XmlMarkup.new(indent: 2)
           builder.Rdn do |rdn|

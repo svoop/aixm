@@ -19,12 +19,6 @@ module AIXM
     end
 
     ##
-    # Digest to identify the payload
-    def to_digest
-      [freq, unit].to_digest
-    end
-
-    ##
     # Check whether two frequencies are identical
     def ==(other)
       other.is_a?(F) && freq == other.freq && unit == other.unit
@@ -34,6 +28,10 @@ module AIXM
     # Check whether this frequency is part of a frequency band
     def between?(lower_freq, upper_freq, unit)
       freq.between?(lower_freq, upper_freq) && self.unit == unit
+    end
+
+    def to_digest
+      [freq, unit].to_digest
     end
 
   end

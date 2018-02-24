@@ -23,14 +23,10 @@ module AIXM
           @clockwise
         end
 
-        ##
-        # Digest to identify the payload
         def to_digest
-          [xy.lat, xy.long, center_xy.lat, center_xy.long, clockwise?].to_digest
+          [xy, center_xy, clockwise?].to_digest
         end
 
-        ##
-        # Render XML
         def to_xml
           builder = Builder::XmlMarkup.new(indent: 2)
           builder.Avx do |avx|
