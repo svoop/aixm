@@ -99,7 +99,7 @@ module AIXM
       def to_uid
         mid = to_digest
         builder = Builder::XmlMarkup.new(indent: 2)
-        builder.RwyUid({ mid: mid, newEntity: (true if AIXM.ofmx?) }.compact) do |rwyuid|
+        builder.RwyUid(mid: mid) do |rwyuid|
           rwyuid << ahp.to_uid
           rwyuid.txtDesig(name)
         end

@@ -28,7 +28,7 @@ describe AIXM::Feature::NavigationalAid::Marker do
         subject.to_xml.must_equal <<~END
           <!-- NavigationalAid: [Marker:O] MARKER NAVAID -->
           <Mkr>
-            <MkrUid mid="#{digest}" newEntity="true">
+            <MkrUid mid="#{digest}">
               <codeId>---</codeId>
               <geoLat>47.85916667N</geoLat>
               <geoLong>7.56000000E</geoLong>

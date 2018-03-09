@@ -42,7 +42,7 @@ module AIXM
 
         def to_uid
           builder = Builder::XmlMarkup.new(indent: 2)
-          builder.DpnUid({ mid: to_digest, newEntity: (true if AIXM.ofmx?) }.compact) do |dpnuid|
+          builder.DpnUid(mid: to_digest) do |dpnuid|
             dpnuid.codeId(id)
             dpnuid.geoLat(xy.lat(AIXM.format))
             dpnuid.geoLong(xy.long(AIXM.format))

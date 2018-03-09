@@ -39,7 +39,7 @@ describe AIXM::Feature::NavigationalAid::NDB do
         subject.to_xml.must_equal <<~END
           <!-- NavigationalAid: [NDB:B] NDB NAVAID -->
           <Ndb>
-            <NdbUid mid="#{digest}" newEntity="true">
+            <NdbUid mid="#{digest}">
               <codeId>NNN</codeId>
               <geoLat>47.85916667N</geoLat>
               <geoLong>7.56000000E</geoLong>

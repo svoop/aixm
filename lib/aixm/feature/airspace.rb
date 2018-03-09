@@ -61,7 +61,7 @@ module AIXM
       def to_uid
         mid = to_digest
         builder = Builder::XmlMarkup.new(indent: 2)
-        builder.AseUid({ mid: mid, newEntity: (true if AIXM.ofmx?) }.compact) do |aseuid|
+        builder.AseUid(mid: mid) do |aseuid|
           aseuid.codeType(type)
           aseuid.codeId(mid)
         end
@@ -71,7 +71,7 @@ module AIXM
         mid = to_digest
         builder = Builder::XmlMarkup.new(indent: 2)
         builder.comment! "Airspace: [#{type}] #{name}"
-        builder.Ase({ xt_classLayersAvail: ((class_layers.count > 1) if AIXM.ofmx?) }.compact) do |ase|
+        builder.Ase({ classLayers: (class_layers.count if AIXM.ofmx?) }.compact) do |ase|
           ase << to_uid.indent(2)
           ase.txtLocalType(short_name.to_s) if short_name && short_name != name
           ase.txtName(name.to_s)
@@ -82,11 +82,11 @@ module AIXM
             end
           end
           ase.txtRmk(remarks.to_s) if remarks
-          ase.xt_selAvail(false) if AIXM.ofmx?
+          ase.codeSelAvbl(false) if AIXM.ofmx?
         end
         builder.Abd do |abd|
           abd.AbdUid do |abduid|
-            abduid.AseUid({ mid: mid, newEntity: (true if AIXM.ofmx?) }.compact) do |aseuid|
+            abduid.AseUid(mid: mid) do |aseuid|
               aseuid.codeType(type)
               aseuid.codeId(mid)
             end

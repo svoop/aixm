@@ -86,7 +86,7 @@ module AIXM
 
         def to_uid
           builder = Builder::XmlMarkup.new(indent: 2)
-          builder.VorUid({ mid: to_digest, newEntity: (true if AIXM.ofmx?) }.compact) do |voruid|
+          builder.VorUid(mid: to_digest) do |voruid|
             voruid.codeId(id)
             voruid.geoLat(xy.lat(AIXM.format))
             voruid.geoLong(xy.long(AIXM.format))

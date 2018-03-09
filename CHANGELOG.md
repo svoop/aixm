@@ -1,14 +1,15 @@
 ## 0.3.0
 
+* Breaking additions:
+  * Global configuration with AIXM.config
+* Breaking changes:
+  * Switch from "AIXM with OFM extensions" to OFMX
+  * `to_aixm` renamed to `to_xml` again
+  * Removed signature `to_xml(extension)` in favor of `AIXM.format`
 * Additions
   * Airport feature
   * Refinement `Float#to_rad`
   * Distance calculation with `AIXM::XY#distance`
-* Breaking additions:
-  * Global configuration with AIXM.config
-* Breaking changes:
-  * `to_aixm` renamed to `to_xml` again
-  * Removed signature `to_xml(extension)` in favor of `AIXM.format`
 
 ## 0.2.3
 
@@ -37,12 +38,12 @@
 
 ## 0.2.0
 
+* Breaking changes:
+  * Symbols such as :qnh, :ofm or :mhz are downcased now
 * Additions:
   * Frequency
   * Navigational aids features
   * `AIXM::Z#qfe?` and friends
-* Breaking changes:
-  * Symbols such as :qnh, :ofm or :mhz are downcased now
 
 ## 0.1.4
 

@@ -37,8 +37,8 @@ describe AIXM::Feature::Airspace do
           AIXM.ofmx!
           subject.to_xml.must_equal <<~"END"
             <!-- Airspace: [D] POLYGON AIRSPACE -->
-            <Ase xt_classLayersAvail="false">
-              <AseUid mid="#{digest}" newEntity="true">
+            <Ase classLayers="1">
+              <AseUid mid="#{digest}">
                 <codeType>D</codeType>
                 <codeId>#{digest}</codeId>
               </AseUid>
@@ -61,11 +61,11 @@ describe AIXM::Feature::Airspace do
                 <codeWorkHr>H24</codeWorkHr>
               </Att>
               <txtRmk>polygon airspace</txtRmk>
-              <xt_selAvail>false</xt_selAvail>
+              <codeSelAvbl>false</codeSelAvbl>
             </Ase>
             <Abd>
               <AbdUid>
-                <AseUid mid="#{digest}" newEntity="true">
+                <AseUid mid="#{digest}">
                   <codeType>D</codeType>
                   <codeId>#{digest}</codeId>
                 </AseUid>
@@ -123,8 +123,8 @@ describe AIXM::Feature::Airspace do
             AIXM.ofmx!
             subject.to_xml.must_equal <<~"END"
               <!-- Airspace: [D] POLYGON AIRSPACE -->
-              <Ase xt_classLayersAvail="true">
-                <AseUid mid="#{digest}" newEntity="true">
+              <Ase classLayers="2">
+                <AseUid mid="#{digest}">
                   <codeType>D</codeType>
                   <codeId>#{digest}</codeId>
                 </AseUid>
@@ -147,11 +147,11 @@ describe AIXM::Feature::Airspace do
                   <codeWorkHr>H24</codeWorkHr>
                 </Att>
                 <txtRmk>polygon airspace</txtRmk>
-                <xt_selAvail>false</xt_selAvail>
+                <codeSelAvbl>false</codeSelAvbl>
               </Ase>
               <Abd>
                 <AbdUid>
-                  <AseUid mid="#{digest}" newEntity="true">
+                  <AseUid mid="#{digest}">
                     <codeType>D</codeType>
                     <codeId>#{digest}</codeId>
                   </AseUid>

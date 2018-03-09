@@ -40,7 +40,7 @@ describe AIXM::Feature::NavigationalAid::VOR do
         subject.to_xml.must_equal <<~END
           <!-- NavigationalAid: [VOR:VOR] VOR NAVAID -->
           <Vor>
-            <VorUid mid="#{digest}" newEntity="true">
+            <VorUid mid="#{digest}">
               <codeId>VVV</codeId>
               <geoLat>47.85916667N</geoLat>
               <geoLong>7.56000000E</geoLong>
@@ -93,7 +93,7 @@ describe AIXM::Feature::NavigationalAid::VOR do
         subject.to_xml.must_equal <<~END
           <!-- NavigationalAid: [VOR:DVOR] VOR NAVAID -->
           <Vor>
-            <VorUid mid="#{digest}" newEntity="true">
+            <VorUid mid="#{digest}">
               <codeId>VVV</codeId>
               <geoLat>47.85916667N</geoLat>
               <geoLong>7.56000000E</geoLong>
@@ -148,7 +148,7 @@ describe AIXM::Feature::NavigationalAid::VOR do
         subject.to_xml.must_equal <<~END
           <!-- NavigationalAid: [VOR:VOR] VOR/DME NAVAID -->
           <Vor>
-            <VorUid mid="#{digests.first}" newEntity="true">
+            <VorUid mid="#{digests.first}">
               <codeId>VVV</codeId>
               <geoLat>47.85916667N</geoLat>
               <geoLong>7.56000000E</geoLong>
@@ -169,13 +169,13 @@ describe AIXM::Feature::NavigationalAid::VOR do
           </Vor>
           <!-- NavigationalAid: [DME] VOR/DME NAVAID -->
           <Dme>
-            <DmeUid mid="#{digests.last}" newEntity="true">
+            <DmeUid mid="#{digests.last}">
               <codeId>VVV</codeId>
               <geoLat>47.85916667N</geoLat>
               <geoLong>7.56000000E</geoLong>
             </DmeUid>
             <OrgUid/>
-            <VorUid mid="#{digests.first}" newEntity="true">
+            <VorUid mid="#{digests.first}">
               <codeId>VVV</codeId>
               <geoLat>47.85916667N</geoLat>
               <geoLong>7.56000000E</geoLong>
@@ -226,7 +226,7 @@ describe AIXM::Feature::NavigationalAid::VOR do
         subject.to_xml.must_equal <<~END
           <!-- NavigationalAid: [VOR:VOR] VORTAC NAVAID -->
           <Vor>
-            <VorUid mid="#{digests.first}" newEntity="true">
+            <VorUid mid="#{digests.first}">
               <codeId>VVV</codeId>
               <geoLat>47.85916667N</geoLat>
               <geoLong>7.56000000E</geoLong>
@@ -247,13 +247,13 @@ describe AIXM::Feature::NavigationalAid::VOR do
           </Vor>
           <!-- NavigationalAid: [TACAN] VORTAC NAVAID -->
           <Tcn>
-            <TcnUid mid="#{digests.last}" newEntity="true">
+            <TcnUid mid="#{digests.last}">
               <codeId>VVV</codeId>
               <geoLat>47.85916667N</geoLat>
               <geoLong>7.56000000E</geoLong>
             </TcnUid>
             <OrgUid/>
-            <VorUid mid="#{digests.first}" newEntity="true">
+            <VorUid mid="#{digests.first}">
               <codeId>VVV</codeId>
               <geoLat>47.85916667N</geoLat>
               <geoLong>7.56000000E</geoLong>
