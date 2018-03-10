@@ -19,7 +19,7 @@ module AIXM
 
     def lat(format = nil)
       case format
-        when :ofmx then ("%.8f" % @lat.abs.round(8)) + (@lat.negative? ? 'S' : 'N')
+        when :ofmx then ("%011.8f" % @lat.abs.round(8)) + (@lat.negative? ? 'S' : 'N')
         when :aixm then @lat.to_dms(2).gsub(/[^\d.]/, '') + (@lat.negative? ? 'S' : 'N')
         else @lat.round(8)
       end
@@ -27,7 +27,7 @@ module AIXM
 
     def long(format = nil)
       case format
-        when :ofmx then ("%.8f" % @long.abs.round(8)) + (@long.negative? ? 'W' : 'E')
+        when :ofmx then ("%012.8f" % @long.abs.round(8)) + (@long.negative? ? 'W' : 'E')
         when :aixm then @long.to_dms(3).gsub(/[^\d.]/, '') + (@long.negative? ? 'W' : 'E')
         else @long.round(8)
       end

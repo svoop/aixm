@@ -161,13 +161,13 @@ describe AIXM::Component::Geometry do
       AIXM.aixm!
       subject.to_xml.must_equal <<~END
         <Avx>
+          <GbrUid>
+            <txtName>foobar</txtName>
+          </GbrUid>
           <codeType>FNT</codeType>
           <geoLat>110000.00N</geoLat>
           <geoLong>0220000.00E</geoLong>
           <codeDatum>WGE</codeDatum>
-          <GbrUid>
-            <txtName>foobar</txtName>
-          </GbrUid>
         </Avx>
         <Avx>
           <codeType>GRC</codeType>

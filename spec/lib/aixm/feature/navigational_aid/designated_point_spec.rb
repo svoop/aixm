@@ -31,7 +31,7 @@ describe AIXM::Feature::NavigationalAid::DesignatedPoint do
             <DpnUid mid="#{digest}">
               <codeId>DDD</codeId>
               <geoLat>47.85916667N</geoLat>
-              <geoLong>7.56000000E</geoLong>
+              <geoLong>007.56000000E</geoLong>
             </DpnUid>
             <OrgUid/>
             <txtName>DESIGNATED POINT NAVAID</txtName>

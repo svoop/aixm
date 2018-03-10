@@ -43,7 +43,7 @@ describe AIXM::Feature::NavigationalAid::VOR do
             <VorUid mid="#{digest}">
               <codeId>VVV</codeId>
               <geoLat>47.85916667N</geoLat>
-              <geoLong>7.56000000E</geoLong>
+              <geoLong>007.56000000E</geoLong>
             </VorUid>
             <OrgUid/>
             <txtName>VOR NAVAID</txtName>
@@ -96,7 +96,7 @@ describe AIXM::Feature::NavigationalAid::VOR do
             <VorUid mid="#{digest}">
               <codeId>VVV</codeId>
               <geoLat>47.85916667N</geoLat>
-              <geoLong>7.56000000E</geoLong>
+              <geoLong>007.56000000E</geoLong>
             </VorUid>
             <OrgUid/>
             <txtName>VOR NAVAID</txtName>
@@ -151,7 +151,7 @@ describe AIXM::Feature::NavigationalAid::VOR do
             <VorUid mid="#{digests.first}">
               <codeId>VVV</codeId>
               <geoLat>47.85916667N</geoLat>
-              <geoLong>7.56000000E</geoLong>
+              <geoLong>007.56000000E</geoLong>
             </VorUid>
             <OrgUid/>
             <txtName>VOR/DME NAVAID</txtName>
@@ -172,13 +172,13 @@ describe AIXM::Feature::NavigationalAid::VOR do
             <DmeUid mid="#{digests.last}">
               <codeId>VVV</codeId>
               <geoLat>47.85916667N</geoLat>
-              <geoLong>7.56000000E</geoLong>
+              <geoLong>007.56000000E</geoLong>
             </DmeUid>
             <OrgUid/>
             <VorUid mid="#{digests.first}">
               <codeId>VVV</codeId>
               <geoLat>47.85916667N</geoLat>
-              <geoLong>7.56000000E</geoLong>
+              <geoLong>007.56000000E</geoLong>
             </VorUid>
             <txtName>VOR/DME NAVAID</txtName>
             <codeChannel>84X</codeChannel>
@@ -229,7 +229,7 @@ describe AIXM::Feature::NavigationalAid::VOR do
             <VorUid mid="#{digests.first}">
               <codeId>VVV</codeId>
               <geoLat>47.85916667N</geoLat>
-              <geoLong>7.56000000E</geoLong>
+              <geoLong>007.56000000E</geoLong>
             </VorUid>
             <OrgUid/>
             <txtName>VORTAC NAVAID</txtName>
@@ -250,13 +250,13 @@ describe AIXM::Feature::NavigationalAid::VOR do
             <TcnUid mid="#{digests.last}">
               <codeId>VVV</codeId>
               <geoLat>47.85916667N</geoLat>
-              <geoLong>7.56000000E</geoLong>
+              <geoLong>007.56000000E</geoLong>
             </TcnUid>
             <OrgUid/>
             <VorUid mid="#{digests.first}">
               <codeId>VVV</codeId>
               <geoLat>47.85916667N</geoLat>
-              <geoLong>7.56000000E</geoLong>
+              <geoLong>007.56000000E</geoLong>
             </VorUid>
             <txtName>VORTAC NAVAID</txtName>
             <codeChannel>54X</codeChannel>

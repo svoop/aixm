@@ -31,7 +31,7 @@ describe AIXM::Feature::NavigationalAid::TACAN do
             <TcnUid mid="#{digest}">
               <codeId>TTT</codeId>
               <geoLat>47.85916667N</geoLat>
-              <geoLong>7.56000000E</geoLong>
+              <geoLong>007.56000000E</geoLong>
             </TcnUid>
             <OrgUid/>
             <txtName>TACAN NAVAID</txtName>

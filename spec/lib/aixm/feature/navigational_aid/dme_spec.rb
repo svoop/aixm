@@ -31,7 +31,7 @@ describe AIXM::Feature::NavigationalAid::DME do
             <DmeUid mid="#{digest}">
               <codeId>MMM</codeId>
               <geoLat>47.85916667N</geoLat>
-              <geoLong>7.56000000E</geoLong>
+              <geoLong>007.56000000E</geoLong>
             </DmeUid>
             <OrgUid/>
             <txtName>DME NAVAID</txtName>

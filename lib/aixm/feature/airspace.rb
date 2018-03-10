@@ -81,8 +81,8 @@ module AIXM
               att << schedule.to_xml.indent(4)
             end
           end
-          ase.txtRmk(remarks.to_s) if remarks
           ase.codeSelAvbl(false) if AIXM.ofmx?
+          ase.txtRmk(remarks.to_s) if remarks
         end
         builder.Abd do |abd|
           abd.AbdUid do |abduid|

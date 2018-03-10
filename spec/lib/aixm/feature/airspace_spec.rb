@@ -60,8 +60,8 @@ describe AIXM::Feature::Airspace do
               <Att>
                 <codeWorkHr>H24</codeWorkHr>
               </Att>
-              <txtRmk>polygon airspace</txtRmk>
               <codeSelAvbl>false</codeSelAvbl>
+              <txtRmk>polygon airspace</txtRmk>
             </Ase>
             <Abd>
               <AbdUid>
@@ -73,24 +73,24 @@ describe AIXM::Feature::Airspace do
               <Avx>
                 <codeType>CWA</codeType>
                 <geoLat>47.85916667N</geoLat>
-                <geoLong>7.56000000E</geoLong>
+                <geoLong>007.56000000E</geoLong>
                 <codeDatum>WGE</codeDatum>
                 <geoLatArc>47.90416667N</geoLatArc>
-                <geoLongArc>7.56333333E</geoLongArc>
+                <geoLongArc>007.56333333E</geoLongArc>
               </Avx>
               <Avx>
-                <codeType>FNT</codeType>
-                <geoLat>47.94361111N</geoLat>
-                <geoLong>7.59583333E</geoLong>
-                <codeDatum>WGE</codeDatum>
                 <GbrUid>
                   <txtName>FRANCE_GERMANY</txtName>
                 </GbrUid>
+                <codeType>FNT</codeType>
+                <geoLat>47.94361111N</geoLat>
+                <geoLong>007.59583333E</geoLong>
+                <codeDatum>WGE</codeDatum>
               </Avx>
               <Avx>
                 <codeType>GRC</codeType>
                 <geoLat>47.85916667N</geoLat>
-                <geoLong>7.56000000E</geoLong>
+                <geoLong>007.56000000E</geoLong>
                 <codeDatum>WGE</codeDatum>
               </Avx>
             </Abd>
@@ -146,8 +146,8 @@ describe AIXM::Feature::Airspace do
                 <Att>
                   <codeWorkHr>H24</codeWorkHr>
                 </Att>
-                <txtRmk>polygon airspace</txtRmk>
                 <codeSelAvbl>false</codeSelAvbl>
+                <txtRmk>polygon airspace</txtRmk>
               </Ase>
               <Abd>
                 <AbdUid>
@@ -159,24 +159,24 @@ describe AIXM::Feature::Airspace do
                 <Avx>
                   <codeType>CWA</codeType>
                   <geoLat>47.85916667N</geoLat>
-                  <geoLong>7.56000000E</geoLong>
+                  <geoLong>007.56000000E</geoLong>
                   <codeDatum>WGE</codeDatum>
                   <geoLatArc>47.90416667N</geoLatArc>
-                  <geoLongArc>7.56333333E</geoLongArc>
+                  <geoLongArc>007.56333333E</geoLongArc>
                 </Avx>
                 <Avx>
-                  <codeType>FNT</codeType>
-                  <geoLat>47.94361111N</geoLat>
-                  <geoLong>7.59583333E</geoLong>
-                  <codeDatum>WGE</codeDatum>
                   <GbrUid>
                     <txtName>FRANCE_GERMANY</txtName>
                   </GbrUid>
+                  <codeType>FNT</codeType>
+                  <geoLat>47.94361111N</geoLat>
+                  <geoLong>007.59583333E</geoLong>
+                  <codeDatum>WGE</codeDatum>
                 </Avx>
                 <Avx>
                   <codeType>GRC</codeType>
                   <geoLat>47.85916667N</geoLat>
-                  <geoLong>7.56000000E</geoLong>
+                  <geoLong>007.56000000E</geoLong>
                   <codeDatum>WGE</codeDatum>
                 </Avx>
               </Abd>

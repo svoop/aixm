@@ -31,7 +31,7 @@ describe AIXM::Feature::NavigationalAid::Marker do
             <MkrUid mid="#{digest}">
               <codeId>---</codeId>
               <geoLat>47.85916667N</geoLat>
-              <geoLong>7.56000000E</geoLong>
+              <geoLong>007.56000000E</geoLong>
             </MkrUid>
             <OrgUid/>
             <codePsnIls>O</codePsnIls>

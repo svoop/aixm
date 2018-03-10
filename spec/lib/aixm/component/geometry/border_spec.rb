@@ -19,15 +19,15 @@ describe AIXM::Component::Geometry::Border do
       )
       AIXM.aixm!
       subject.to_xml.must_equal <<~END
-      <Avx>
-        <codeType>FNT</codeType>
-        <geoLat>110600.00N</geoLat>
-        <geoLong>0221200.00E</geoLong>
-        <codeDatum>WGE</codeDatum>
-        <GbrUid>
-          <txtName>FRANCE-SWITZERLAND</txtName>
-        </GbrUid>
-      </Avx>
+        <Avx>
+          <GbrUid>
+            <txtName>FRANCE-SWITZERLAND</txtName>
+          </GbrUid>
+          <codeType>FNT</codeType>
+          <geoLat>110600.00N</geoLat>
+          <geoLong>0221200.00E</geoLong>
+          <codeDatum>WGE</codeDatum>
+        </Avx>
       END
     end
   end

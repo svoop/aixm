@@ -22,13 +22,13 @@ module AIXM
         def to_xml
           builder = Builder::XmlMarkup.new(indent: 2)
           builder.Avx do |avx|
+            avx.GbrUid do |gbruid|
+              gbruid.txtName(name.to_s)
+            end
             avx.codeType('FNT')
             avx.geoLat(xy.lat(AIXM.format))
             avx.geoLong(xy.long(AIXM.format))
             avx.codeDatum('WGE')
-            avx.GbrUid do |gbruid|
-              gbruid.txtName(name.to_s)
-            end
           end
         end
       end

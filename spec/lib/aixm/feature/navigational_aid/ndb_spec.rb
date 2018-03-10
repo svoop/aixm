@@ -42,7 +42,7 @@ describe AIXM::Feature::NavigationalAid::NDB do
             <NdbUid mid="#{digest}">
               <codeId>NNN</codeId>
               <geoLat>47.85916667N</geoLat>
-              <geoLong>7.56000000E</geoLong>
+              <geoLong>007.56000000E</geoLong>
             </NdbUid>
             <OrgUid/>
             <txtName>NDB NAVAID</txtName>

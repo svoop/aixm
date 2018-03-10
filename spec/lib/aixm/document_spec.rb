@@ -49,8 +49,7 @@ describe AIXM::Document do
     end
 
     it "won't have errors" do
-      skip
-#     subject.errors.must_equal []
+      subject.errors.must_equal []
     end
 
     it "must pass validation" do
@@ -104,13 +103,13 @@ describe AIXM::Document do
               <geoLongArc>0073348.00E</geoLongArc>
             </Avx>
             <Avx>
+              <GbrUid>
+                <txtName>FRANCE_GERMANY</txtName>
+              </GbrUid>
               <codeType>FNT</codeType>
               <geoLat>475637.00N</geoLat>
               <geoLong>0073545.00E</geoLong>
               <codeDatum>WGE</codeDatum>
-              <GbrUid>
-                <txtName>FRANCE_GERMANY</txtName>
-              </GbrUid>
             </Avx>
             <Avx>
               <codeType>GRC</codeType>
@@ -397,8 +396,8 @@ describe AIXM::Document do
             <Att>
               <codeWorkHr>H24</codeWorkHr>
             </Att>
-            <txtRmk>polygon airspace</txtRmk>
             <codeSelAvbl>false</codeSelAvbl>
+            <txtRmk>polygon airspace</txtRmk>
           </Ase>
           <Abd>
             <AbdUid>
@@ -410,24 +409,24 @@ describe AIXM::Document do
             <Avx>
               <codeType>CWA</codeType>
               <geoLat>47.85916667N</geoLat>
-              <geoLong>7.56000000E</geoLong>
+              <geoLong>007.56000000E</geoLong>
               <codeDatum>WGE</codeDatum>
               <geoLatArc>47.90416667N</geoLatArc>
-              <geoLongArc>7.56333333E</geoLongArc>
+              <geoLongArc>007.56333333E</geoLongArc>
             </Avx>
             <Avx>
-              <codeType>FNT</codeType>
-              <geoLat>47.94361111N</geoLat>
-              <geoLong>7.59583333E</geoLong>
-              <codeDatum>WGE</codeDatum>
               <GbrUid>
                 <txtName>FRANCE_GERMANY</txtName>
               </GbrUid>
+              <codeType>FNT</codeType>
+              <geoLat>47.94361111N</geoLat>
+              <geoLong>007.59583333E</geoLong>
+              <codeDatum>WGE</codeDatum>
             </Avx>
             <Avx>
               <codeType>GRC</codeType>
               <geoLat>47.85916667N</geoLat>
-              <geoLong>7.56000000E</geoLong>
+              <geoLong>007.56000000E</geoLong>
               <codeDatum>WGE</codeDatum>
             </Avx>
           </Abd>
@@ -455,8 +454,8 @@ describe AIXM::Document do
             <Att>
               <codeWorkHr>H24</codeWorkHr>
             </Att>
-            <txtRmk>circle airspace</txtRmk>
             <codeSelAvbl>false</codeSelAvbl>
+            <txtRmk>circle airspace</txtRmk>
           </Ase>
           <Abd>
             <AbdUid>
@@ -468,10 +467,10 @@ describe AIXM::Document do
             <Avx>
               <codeType>CWA</codeType>
               <geoLat>47.67326537N</geoLat>
-              <geoLong>4.88333333E</geoLong>
+              <geoLong>004.88333333E</geoLong>
               <codeDatum>WGE</codeDatum>
               <geoLatArc>47.58333333N</geoLatArc>
-              <geoLongArc>4.88333333E</geoLongArc>
+              <geoLongArc>004.88333333E</geoLongArc>
             </Avx>
           </Abd>
           <!-- NavigationalAid: [DesignatedPoint:ICAO] DESIGNATED POINT NAVAID -->
@@ -479,7 +478,7 @@ describe AIXM::Document do
             <DpnUid mid="5317882">
               <codeId>DDD</codeId>
               <geoLat>47.85916667N</geoLat>
-              <geoLong>7.56000000E</geoLong>
+              <geoLong>007.56000000E</geoLong>
             </DpnUid>
             <OrgUid/>
             <txtName>DESIGNATED POINT NAVAID</txtName>
@@ -497,7 +496,7 @@ describe AIXM::Document do
             <DmeUid mid="537506748">
               <codeId>MMM</codeId>
               <geoLat>47.85916667N</geoLat>
-              <geoLong>7.56000000E</geoLong>
+              <geoLong>007.56000000E</geoLong>
             </DmeUid>
             <OrgUid/>
             <txtName>DME NAVAID</txtName>
@@ -515,7 +514,7 @@ describe AIXM::Document do
             <MkrUid mid="300437209">
               <codeId>---</codeId>
               <geoLat>47.85916667N</geoLat>
-              <geoLong>7.56000000E</geoLong>
+              <geoLong>007.56000000E</geoLong>
             </MkrUid>
             <OrgUid/>
             <codePsnIls>O</codePsnIls>
@@ -535,7 +534,7 @@ describe AIXM::Document do
             <NdbUid mid="782114926">
               <codeId>NNN</codeId>
               <geoLat>47.85916667N</geoLat>
-              <geoLong>7.56000000E</geoLong>
+              <geoLong>007.56000000E</geoLong>
             </NdbUid>
             <OrgUid/>
             <txtName>NDB NAVAID</txtName>
@@ -555,7 +554,7 @@ describe AIXM::Document do
             <TcnUid mid="648449590">
               <codeId>TTT</codeId>
               <geoLat>47.85916667N</geoLat>
-              <geoLong>7.56000000E</geoLong>
+              <geoLong>007.56000000E</geoLong>
             </TcnUid>
             <OrgUid/>
             <txtName>TACAN NAVAID</txtName>
@@ -573,7 +572,7 @@ describe AIXM::Document do
             <VorUid mid="904391566">
               <codeId>VVV</codeId>
               <geoLat>47.85916667N</geoLat>
-              <geoLong>7.56000000E</geoLong>
+              <geoLong>007.56000000E</geoLong>
             </VorUid>
             <OrgUid/>
             <txtName>VOR NAVAID</txtName>
@@ -594,7 +593,7 @@ describe AIXM::Document do
             <VorUid mid="428844269">
               <codeId>VDD</codeId>
               <geoLat>47.85916667N</geoLat>
-              <geoLong>7.56000000E</geoLong>
+              <geoLong>007.56000000E</geoLong>
             </VorUid>
             <OrgUid/>
             <txtName>VOR/DME NAVAID</txtName>
@@ -615,13 +614,13 @@ describe AIXM::Document do
             <DmeUid mid="284278140">
               <codeId>VDD</codeId>
               <geoLat>47.85916667N</geoLat>
-              <geoLong>7.56000000E</geoLong>
+              <geoLong>007.56000000E</geoLong>
             </DmeUid>
             <OrgUid/>
             <VorUid mid="428844269">
               <codeId>VDD</codeId>
               <geoLat>47.85916667N</geoLat>
-              <geoLong>7.56000000E</geoLong>
+              <geoLong>007.56000000E</geoLong>
             </VorUid>
             <txtName>VOR/DME NAVAID</txtName>
             <codeChannel>95X</codeChannel>
@@ -638,7 +637,7 @@ describe AIXM::Document do
             <VorUid mid="305713874">
               <codeId>VTT</codeId>
               <geoLat>47.85916667N</geoLat>
-              <geoLong>7.56000000E</geoLong>
+              <geoLong>007.56000000E</geoLong>
             </VorUid>
             <OrgUid/>
             <txtName>VORTAC NAVAID</txtName>
@@ -659,13 +658,13 @@ describe AIXM::Document do
             <TcnUid mid="595472802">
               <codeId>VTT</codeId>
               <geoLat>47.85916667N</geoLat>
-              <geoLong>7.56000000E</geoLong>
+              <geoLong>007.56000000E</geoLong>
             </TcnUid>
             <OrgUid/>
             <VorUid mid="305713874">
               <codeId>VTT</codeId>
               <geoLat>47.85916667N</geoLat>
-              <geoLong>7.56000000E</geoLong>
+              <geoLong>007.56000000E</geoLong>
             </VorUid>
             <txtName>VORTAC NAVAID</txtName>
             <codeChannel>29X</codeChannel>
