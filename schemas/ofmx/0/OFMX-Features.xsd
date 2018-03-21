@@ -2,13 +2,13 @@
 <!--
 ********************************************************************************
 
-OFMX 4.5-1 - open flightmaps exchange format
+OFMX 0.1.0 - open flightmaps exchange format
 
-This is a fork of AIXM 4.5 to accomodate extensions and backports for open
-flightmaps.
+This is a fork of AIXM 4.5 to accomodate extensions and backports for
+open flightmaps.
 
-AIXM 4.5: copyright (c) 2006, EUROCONTROL (BSD license)
-OFMX 4.5: https://openflightmaps.org/live/downloads/20150306-GUL.pdf
+AIXM: copyright (c) 2006, EUROCONTROL (BSD license)
+OFMX: https://openflightmaps.org/live/downloads/20150306-GUL.pdf
 
 Redistribution and use in source and binary forms, with or without modification,
 are permitted provided that the following conditions are met:
@@ -501,8 +501,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
         </xsd:annotation>
       </xsd:element>
     </xsd:sequence>
-    <xsd:attribute ref="region" use="required"/>
-    <xsd:attribute ref="source" use="required"/>
+    <xsd:attribute ref="source"/>
   </xsd:complexType>
   <xsd:complexType name="AerodromeHeliportUidType">
     <xsd:annotation>
@@ -515,6 +514,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
         </xsd:annotation>
       </xsd:element>
     </xsd:sequence>
+    <xsd:attribute ref="region" use="required"/>
     <xsd:attribute ref="mid"/>
   </xsd:complexType>
   <xsd:complexType name="AerodromeHeliportUsageType">
@@ -1380,7 +1380,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
           <xsd:documentation>Airspace is active according to Airspace - Timetable</xsd:documentation>
         </xsd:annotation>
       </xsd:element>
-      <xsd:element name="codeSelAvbl" type="xsd:boolean" minOccurs="0">
+      <xsd:element name="codeSelAvbl" type="codeYesNo" minOccurs="0">
         <xsd:annotation>
           <xsd:documentation>Airspace may be activated selectively</xsd:documentation>
         </xsd:annotation>
@@ -1391,6 +1391,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
         </xsd:annotation>
       </xsd:element>
     </xsd:sequence>
+    <xsd:attribute ref="source"/>
     <xsd:attribute name="classLayers" type="counter"/>
   </xsd:complexType>
   <xsd:complexType name="AirspaceUidType">
@@ -1409,6 +1410,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
         </xsd:annotation>
       </xsd:element>
     </xsd:sequence>
+    <xsd:attribute ref="region" use="required"/>
     <xsd:attribute ref="mid"/>
   </xsd:complexType>
   <xsd:complexType name="ApronGeometryPointType">
@@ -1861,6 +1863,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
         </xsd:annotation>
       </xsd:element>
     </xsd:sequence>
+    <xsd:attribute ref="source"/>
   </xsd:complexType>
   <xsd:complexType name="DesignatedPointUidType">
     <xsd:annotation>
@@ -1883,6 +1886,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
         </xsd:annotation>
       </xsd:element>
     </xsd:sequence>
+    <xsd:attribute ref="region" use="required"/>
     <xsd:attribute ref="mid"/>
   </xsd:complexType>
   <xsd:complexType name="DirectFlightClassType">
@@ -2140,6 +2144,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
         </xsd:annotation>
       </xsd:element>
     </xsd:sequence>
+    <xsd:attribute ref="source"/>
   </xsd:complexType>
   <xsd:complexType name="DmeUidType">
     <xsd:annotation>
@@ -2162,6 +2167,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
         </xsd:annotation>
       </xsd:element>
     </xsd:sequence>
+    <xsd:attribute ref="region" use="required"/>
     <xsd:attribute ref="mid"/>
   </xsd:complexType>
   <xsd:complexType name="DmeUsageLimitationType">
@@ -4469,6 +4475,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
         </xsd:annotation>
       </xsd:element>
     </xsd:sequence>
+    <xsd:attribute ref="source"/>
   </xsd:complexType>
   <xsd:complexType name="MkrUidType">
     <xsd:annotation>
@@ -4491,6 +4498,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
         </xsd:annotation>
       </xsd:element>
     </xsd:sequence>
+    <xsd:attribute ref="region" use="required"/>
     <xsd:attribute ref="mid"/>
   </xsd:complexType>
   <xsd:complexType name="MlsAzimuthType">
@@ -5239,6 +5247,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
         </xsd:annotation>
       </xsd:element>
     </xsd:sequence>
+    <xsd:attribute ref="source"/>
   </xsd:complexType>
   <xsd:complexType name="NdbUidType">
     <xsd:annotation>
@@ -5261,6 +5270,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
         </xsd:annotation>
       </xsd:element>
     </xsd:sequence>
+    <xsd:attribute ref="region" use="required"/>
     <xsd:attribute ref="mid"/>
   </xsd:complexType>
   <xsd:complexType name="NdbUsageLimitationType">
@@ -5643,6 +5653,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
         </xsd:annotation>
       </xsd:element>
     </xsd:sequence>
+    <xsd:attribute ref="source"/>
   </xsd:complexType>
   <xsd:complexType name="OrganisationAuthorityUidType">
     <xsd:annotation>
@@ -5655,6 +5666,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
         </xsd:annotation>
       </xsd:element>
     </xsd:sequence>
+    <xsd:attribute ref="region" use="required"/>
     <xsd:attribute ref="mid"/>
   </xsd:complexType>
   <xsd:complexType name="OxygenType">
@@ -8013,6 +8025,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
         </xsd:annotation>
       </xsd:element>
     </xsd:sequence>
+    <xsd:attribute ref="source"/>
   </xsd:complexType>
   <xsd:complexType name="TacanUidType">
     <xsd:annotation>
@@ -8035,6 +8048,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
         </xsd:annotation>
       </xsd:element>
     </xsd:sequence>
+    <xsd:attribute ref="region" use="required"/>
     <xsd:attribute ref="mid"/>
   </xsd:complexType>
   <xsd:complexType name="TacanUsageLimitationType">
@@ -9201,6 +9215,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
         </xsd:annotation>
       </xsd:element>
     </xsd:sequence>
+    <xsd:attribute ref="source"/>
   </xsd:complexType>
   <xsd:complexType name="UnitUidType">
     <xsd:annotation>
@@ -9213,6 +9228,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
         </xsd:annotation>
       </xsd:element>
     </xsd:sequence>
+    <xsd:attribute ref="region" use="required"/>
     <xsd:attribute ref="mid"/>
   </xsd:complexType>
   <xsd:complexType name="VorLimitationType">
@@ -9372,6 +9388,11 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
           <xsd:documentation>Magnetic variation date</xsd:documentation>
         </xsd:annotation>
       </xsd:element>
+      <xsd:element name="valMagVarChg" type="valAngleMagVarChg" minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation>Annual rate of change of magnetic variation</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
       <xsd:element name="codeEm" type="codeEmRdo" minOccurs="0">
         <xsd:annotation>
           <xsd:documentation>Emission</xsd:documentation>
@@ -9433,6 +9454,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
         </xsd:annotation>
       </xsd:element>
     </xsd:sequence>
+    <xsd:attribute ref="source"/>
   </xsd:complexType>
   <xsd:complexType name="VorUidType">
     <xsd:annotation>
@@ -9455,6 +9477,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
         </xsd:annotation>
       </xsd:element>
     </xsd:sequence>
+    <xsd:attribute ref="region" use="required"/>
     <xsd:attribute ref="mid"/>
   </xsd:complexType>
   <xsd:complexType name="VorUsageLimitationType">
@@ -9553,7 +9576,6 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
         </xsd:complexType>
       </xsd:element>
     </xsd:sequence>
-    <xsd:attribute ref="region" use="required"/>
   </xsd:complexType>
   <xsd:complexType name="LabelMarkerUidType">
     <xsd:annotation>
@@ -9571,6 +9593,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
         </xsd:annotation>
       </xsd:element>
     </xsd:sequence>
+    <xsd:attribute ref="region" use="required"/>
     <xsd:attribute ref="mid"/>
   </xsd:complexType>
   <xsd:group name="SectorOfCircle">

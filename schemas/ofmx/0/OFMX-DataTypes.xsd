@@ -2,13 +2,13 @@
 <!--
 ********************************************************************************
 
-OFMX 4.5-1 - open flightmaps exchange format
+OFMX 0.1.0 - open flightmaps exchange format
 
-This is a fork of AIXM 4.5 to accomodate extensions and backports for open
-flightmaps.
+This is a fork of AIXM 4.5 to accomodate extensions and backports for
+open flightmaps.
 
-AIXM 4.5: copyright (c) 2006, EUROCONTROL (BSD license)
-OFMX 4.5: https://openflightmaps.org/live/downloads/20150306-GUL.pdf
+AIXM: copyright (c) 2006, EUROCONTROL (BSD license)
+OFMX: https://openflightmaps.org/live/downloads/20150306-GUL.pdf
 
 Redistribution and use in source and binary forms, with or without modification,
 are permitted provided that the following conditions are met:
@@ -68,6 +68,11 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
       <xsd:minInclusive value="1"/>
     </xsd:restriction>
   </xsd:simpleType>
+  <xsd:simpleType name="uuid">
+    <xsd:restriction base="xsd:string">
+      <xsd:pattern value="[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}"/>
+    </xsd:restriction>
+  </xsd:simpleType>
   <xsd:simpleType name="codeRegion">
     <xsd:annotation>
       <xsd:documentation>The two to four letter coded region.</xsd:documentation>
@@ -82,7 +87,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
       <xsd:documentation>Reference to the source AIP document.</xsd:documentation>
     </xsd:annotation>
     <xsd:restriction base="xsd:string">
-      <xsd:pattern value="(GEN|ENR|AD|AIRAC)\|.{3,}\|\d+\|\d+"/>
+      <xsd:pattern value="[A-Z]{2,4}\|(GEN|ENR|AD|AIRAC)\|.{3,}\|\d+\|\d+"/>
     </xsd:restriction>
   </xsd:simpleType>
   <xsd:simpleType name="codeAcftEngineNoBase">

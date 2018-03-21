@@ -2,13 +2,13 @@
 <!--
 ********************************************************************************
 
-OFMX 4.5-1 - open flightmaps exchange format
+OFMX 0.1.0 - open flightmaps exchange format
 
-This is a fork of AIXM 4.5 to accomodate extensions and backports for open
-flightmaps.
+This is a fork of AIXM 4.5 to accomodate extensions and backports for
+open flightmaps.
 
-AIXM 4.5: copyright (c) 2006, EUROCONTROL (BSD license)
-OFMX 4.5: https://openflightmaps.org/live/downloads/20150306-GUL.pdf
+AIXM: copyright (c) 2006, EUROCONTROL (BSD license)
+OFMX: https://openflightmaps.org/live/downloads/20150306-GUL.pdf
 
 Redistribution and use in source and binary forms, with or without modification,
 are permitted provided that the following conditions are met:
@@ -195,6 +195,11 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
       <xsd:attribute name="origin" type="xsd:string" use="required">
         <xsd:annotation>
           <xsd:documentation>The originator (source) of the message</xsd:documentation>
+        </xsd:annotation>
+      </xsd:attribute>
+      <xsd:attribute name="namespace" type="uuid" use="required">
+        <xsd:annotation>
+          <xsd:documentation>The originator (source) namespace of the message</xsd:documentation>
         </xsd:annotation>
       </xsd:attribute>
       <xsd:attribute name="created" type="xsd:dateTime" use="required">
