@@ -71,7 +71,7 @@ module AIXM
         mid = to_digest
         builder = Builder::XmlMarkup.new(indent: 2)
         builder.comment! "Airspace: [#{type}] #{name}"
-        builder.Ase({ classLayers: (class_layers.count if AIXM.ofmx?) }.compact) do |ase|
+        builder.Ase({ classLayers: (class_layers.count if AIXM.ofmx? && class_layers.count > 1) }.compact) do |ase|
           ase << to_uid.indent(2)
           ase.txtLocalType(short_name.to_s) if short_name && short_name != name
           ase.txtName(name.to_s)
@@ -94,6 +94,15 @@ module AIXM
           abd << geometry.to_xml.indent(2)
         end
         if class_layers.count > 1
+          class_layers.each.with_index do |class_layer, index|
+            builder.Ase do |ase|
+              ase.AseUid(mid: "#{mid}.#{index + 1}") do |aseuid|
+                aseuid.codeType("CLASS")
+              end
+              ase.txtName(name.to_s)
+              ase << class_layers[index].to_xml.indent(2)
+            end
+          end
           builder.Adg do |adg|
             class_layers.each.with_index do |class_layer, index|
               adg.AdgUid do |adguid|
@@ -103,15 +112,6 @@ module AIXM
               end
             end
             adg.AseUidSameExtent(mid: mid)
-          end
-          class_layers.each.with_index do |class_layer, index|
-            builder.Ase do |ase|
-              ase.AseUid(mid: "#{mid}.#{index + 1}") do |aseuid|
-                aseuid.codeType("CLASS")
-              end
-              ase.txtName(name.to_s)
-              ase << class_layers[index].to_xml.indent(2)
-            end
           end
         end
         builder.target!   # see https://github.com/jimweirich/builder/issues/42

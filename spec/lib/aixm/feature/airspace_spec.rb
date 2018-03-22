@@ -37,7 +37,7 @@ describe AIXM::Feature::Airspace do
           AIXM.ofmx!
           subject.to_xml.must_equal <<~"END"
             <!-- Airspace: [D] POLYGON AIRSPACE -->
-            <Ase classLayers="1">
+            <Ase>
               <AseUid mid="#{digest}">
                 <codeType>D</codeType>
                 <codeId>#{digest}</codeId>
@@ -180,19 +180,6 @@ describe AIXM::Feature::Airspace do
                   <codeDatum>WGE</codeDatum>
                 </Avx>
               </Abd>
-              <Adg>
-                <AdgUid>
-                  <AseUid mid="#{digest}.1">
-                    <codeType>CLASS</codeType>
-                  </AseUid>
-                </AdgUid>
-                <AdgUid>
-                  <AseUid mid="#{digest}.2">
-                    <codeType>CLASS</codeType>
-                  </AseUid>
-                </AdgUid>
-                <AseUidSameExtent mid="#{digest}"/>
-              </Adg>
               <Ase>
                 <AseUid mid="#{digest}.1">
                   <codeType>CLASS</codeType>
@@ -231,6 +218,19 @@ describe AIXM::Feature::Airspace do
                 <valDistVerMnm>3000</valDistVerMnm>
                 <uomDistVerMnm>FT</uomDistVerMnm>
               </Ase>
+              <Adg>
+                <AdgUid>
+                  <AseUid mid="#{digest}.1">
+                    <codeType>CLASS</codeType>
+                  </AseUid>
+                </AdgUid>
+                <AdgUid>
+                  <AseUid mid="#{digest}.2">
+                    <codeType>CLASS</codeType>
+                  </AseUid>
+                </AdgUid>
+                <AseUidSameExtent mid="#{digest}"/>
+              </Adg>
             END
           end
         end

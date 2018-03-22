@@ -5,7 +5,7 @@ module AIXM
     module NavigationalAid
 
       ##
-      # Designated points are  named map coordinates
+      # Designated points are named map coordinates
       #
       # Types:
       # * +:icao+ (+:ICAO+) - ICAO 5 letter name code designator
