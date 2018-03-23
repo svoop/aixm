@@ -53,10 +53,6 @@ module AIXM
       end.round
     end
 
-    def to_digest
-      [lat, long].to_digest
-    end
-
     private
 
     def float_for(value)

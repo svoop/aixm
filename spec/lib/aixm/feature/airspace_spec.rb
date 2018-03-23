@@ -25,22 +25,15 @@ describe AIXM::Feature::Airspace do
         end
       end
 
-      describe :to_digest do
-        it "must return digest of payload" do
-          subject.to_digest.must_equal 595551355
-        end
-      end
-
       describe :to_xml do
         it "must build correct OFMX" do
-          digest = subject.to_digest
           AIXM.ofmx!
           subject.to_xml.must_equal <<~"END"
             <!-- Airspace: [D] POLYGON AIRSPACE -->
             <Ase>
-              <AseUid mid="#{digest}">
+              <AseUid>
                 <codeType>D</codeType>
-                <codeId>#{digest}</codeId>
+                <codeId>TODO</codeId>
               </AseUid>
               <txtLocalType>POLYGON</txtLocalType>
               <txtName>POLYGON AIRSPACE</txtName>
@@ -65,9 +58,9 @@ describe AIXM::Feature::Airspace do
             </Ase>
             <Abd>
               <AbdUid>
-                <AseUid mid="#{digest}">
+                <AseUid>
                   <codeType>D</codeType>
-                  <codeId>#{digest}</codeId>
+                  <codeId>TODO</codeId>
                 </AseUid>
               </AbdUid>
               <Avx>
@@ -111,22 +104,15 @@ describe AIXM::Feature::Airspace do
           end
         end
 
-        describe :to_digest do
-          it "must return digest of payload" do
-            subject.to_digest.must_equal 633292197
-          end
-        end
-
         describe :to_xml do
           it "must build correct OFMX" do
-            digest = subject.to_digest
             AIXM.ofmx!
             subject.to_xml.must_equal <<~"END"
               <!-- Airspace: [D] POLYGON AIRSPACE -->
               <Ase classLayers="2">
-                <AseUid mid="#{digest}">
+                <AseUid>
                   <codeType>D</codeType>
-                  <codeId>#{digest}</codeId>
+                  <codeId>TODO</codeId>
                 </AseUid>
                 <txtLocalType>POLYGON</txtLocalType>
                 <txtName>POLYGON AIRSPACE</txtName>
@@ -151,9 +137,9 @@ describe AIXM::Feature::Airspace do
               </Ase>
               <Abd>
                 <AbdUid>
-                  <AseUid mid="#{digest}">
+                  <AseUid>
                     <codeType>D</codeType>
-                    <codeId>#{digest}</codeId>
+                    <codeId>TODO</codeId>
                   </AseUid>
                 </AbdUid>
                 <Avx>
@@ -181,7 +167,7 @@ describe AIXM::Feature::Airspace do
                 </Avx>
               </Abd>
               <Ase>
-                <AseUid mid="#{digest}.1">
+                <AseUid>
                   <codeType>CLASS</codeType>
                 </AseUid>
                 <txtName>POLYGON AIRSPACE</txtName>
@@ -200,7 +186,7 @@ describe AIXM::Feature::Airspace do
                 <uomDistVerMnm>FT</uomDistVerMnm>
               </Ase>
               <Ase>
-                <AseUid mid="#{digest}.2">
+                <AseUid>
                   <codeType>CLASS</codeType>
                 </AseUid>
                 <txtName>POLYGON AIRSPACE</txtName>
@@ -220,16 +206,19 @@ describe AIXM::Feature::Airspace do
               </Ase>
               <Adg>
                 <AdgUid>
-                  <AseUid mid="#{digest}.1">
+                  <AseUid>
                     <codeType>CLASS</codeType>
                   </AseUid>
                 </AdgUid>
                 <AdgUid>
-                  <AseUid mid="#{digest}.2">
+                  <AseUid>
                     <codeType>CLASS</codeType>
                   </AseUid>
                 </AdgUid>
-                <AseUidSameExtent mid="#{digest}"/>
+                <AseUidSameExtent>
+                  <codeType>D</codeType>
+                  <codeId>TODO</codeId>
+                </AseUidSameExtent>
               </Adg>
             END
           end

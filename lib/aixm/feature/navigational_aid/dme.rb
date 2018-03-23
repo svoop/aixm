@@ -29,13 +29,9 @@ module AIXM
           @vor = value
         end
 
-        def to_digest
-          [super, channel].to_digest
-        end
-
         def to_uid
           builder = Builder::XmlMarkup.new(indent: 2)
-          builder.DmeUid(mid: to_digest) do |dmeuid|
+          builder.DmeUid do |dmeuid|
             dmeuid.codeId(id)
             dmeuid.geoLat(xy.lat(AIXM.format))
             dmeuid.geoLong(xy.long(AIXM.format))

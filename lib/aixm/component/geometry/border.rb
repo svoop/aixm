@@ -15,10 +15,6 @@ module AIXM
           @name = name
         end
 
-        def to_digest
-          [xy, name].to_digest
-        end
-
         def to_xml
           builder = Builder::XmlMarkup.new(indent: 2)
           builder.Avx do |avx|

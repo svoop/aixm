@@ -80,13 +80,9 @@ module AIXM
           @tacan.vor = self
         end
 
-        def to_digest
-          [super, type, f, north].to_digest
-        end
-
         def to_uid
           builder = Builder::XmlMarkup.new(indent: 2)
-          builder.VorUid(mid: to_digest) do |voruid|
+          builder.VorUid do |voruid|
             voruid.codeId(id)
             voruid.geoLat(xy.lat(AIXM.format))
             voruid.geoLong(xy.long(AIXM.format))

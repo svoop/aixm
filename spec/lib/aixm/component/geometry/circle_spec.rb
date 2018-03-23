@@ -17,16 +17,6 @@ describe AIXM::Component::Geometry::Circle do
     end
   end
 
-  describe :to_digest do
-    it "must return digest of payload" do
-      subject = AIXM.circle(
-        center_xy: AIXM.xy(lat: 12.12345678, long: -23.12345678),
-        radius: 15
-      )
-      subject.to_digest.must_equal 16251510
-    end
-  end
-
   describe :to_xml do
     it "must build correct AIXM for circles not near the equator" do
       subject = AIXM.circle(

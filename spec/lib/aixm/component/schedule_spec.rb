@@ -15,13 +15,6 @@ describe AIXM::Component::Schedule do
     end
   end
 
-  describe :to_digest do
-    it "must return digest of payload" do
-      subject = AIXM.schedule(code: :continuous)
-      subject.to_digest.must_equal 349179367
-    end
-  end
-
   describe :to_xml do
     it "must build correct AIXM" do
       subject = AIXM.schedule(code: :continuous)

@@ -9,7 +9,7 @@ module AIXM
       class Point
         extend Forwardable
 
-        def_delegators :xy, :to_digest
+        def_delegators :xy
 
         attr_reader :xy
 

@@ -6,19 +6,9 @@ describe AIXM::Feature::NavigationalAid::TACAN do
       AIXM::Factory.tacan
     end
 
-    let :digest do
-      subject.to_digest
-    end
-
     describe :kind do
       it "must return class/type combo" do
         subject.kind.must_equal "TACAN"
-      end
-    end
-
-    describe :to_digest do
-      it "must return digest of payload" do
-        subject.to_digest.must_equal 648449590
       end
     end
 
@@ -28,7 +18,7 @@ describe AIXM::Feature::NavigationalAid::TACAN do
         subject.to_xml.must_equal <<~END
           <!-- NavigationalAid: [TACAN] TACAN NAVAID -->
           <Tcn>
-            <TcnUid mid="#{digest}">
+            <TcnUid>
               <codeId>TTT</codeId>
               <geoLat>47.85916667N</geoLat>
               <geoLong>007.56000000E</geoLong>

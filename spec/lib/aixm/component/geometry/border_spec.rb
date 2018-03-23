@@ -1,16 +1,6 @@
 require_relative '../../../../spec_helper'
 
 describe AIXM::Component::Geometry::Border do
-  describe :to_digest do
-    it "must return digest of payload" do
-      subject = AIXM.border(
-        xy: AIXM.xy(lat: 11.1, long: 22.2),
-        name: 'foobar'
-      )
-      subject.to_digest.must_equal 339017758
-    end
-  end
-
   describe :to_xml do
     it "must build correct AIXM" do
       subject = AIXM.border(

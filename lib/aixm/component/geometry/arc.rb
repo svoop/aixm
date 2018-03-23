@@ -23,10 +23,6 @@ module AIXM
           @clockwise
         end
 
-        def to_digest
-          [xy, center_xy, clockwise?].to_digest
-        end
-
         def to_xml
           builder = Builder::XmlMarkup.new(indent: 2)
           builder.Avx do |avx|

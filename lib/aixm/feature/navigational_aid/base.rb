@@ -53,10 +53,6 @@ module AIXM
           [self.class.name.split('::').last, type_key].compact.join(':')
         end
 
-        def to_digest
-          [kind, id, name, xy, z, remarks].to_digest
-        end
-
         ##
         # Create builder to render AIXM in subclasses
         def to_builder

@@ -36,13 +36,9 @@ module AIXM
           TYPES.key(type)
         end
 
-        def to_digest
-          [super, type].to_digest
-        end
-
         def to_uid
           builder = Builder::XmlMarkup.new(indent: 2)
-          builder.DpnUid(mid: to_digest) do |dpnuid|
+          builder.DpnUid do |dpnuid|
             dpnuid.codeId(id)
             dpnuid.geoLat(xy.lat(AIXM.format))
             dpnuid.geoLong(xy.long(AIXM.format))

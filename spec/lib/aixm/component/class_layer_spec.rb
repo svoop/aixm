@@ -13,12 +13,6 @@ describe AIXM::Component::ClassLayer do
       AIXM.class_layer(class: :C, vertical_limits: AIXM::Factory.vertical_limits)
     end
 
-    describe :to_digest do
-      it "must return digest of payload" do
-        subject.to_digest.must_equal 385936206
-      end
-    end
-
     describe :to_xml do
       it "must build correct AIXM" do
         AIXM.aixm!
@@ -44,12 +38,6 @@ describe AIXM::Component::ClassLayer do
   context "without class" do
     subject do
       AIXM.class_layer(vertical_limits: AIXM::Factory.vertical_limits)
-    end
-
-    describe :to_digest do
-      it "must return digest of payload" do
-        subject.to_digest.must_equal 5930767
-      end
     end
 
     describe :to_xml do

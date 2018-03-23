@@ -18,19 +18,9 @@ describe AIXM::Feature::NavigationalAid::VOR do
       AIXM::Factory.vor
     end
 
-    let :digest do
-      subject.to_digest
-    end
-
     describe :kind do
       it "must return class/type combo" do
         subject.kind.must_equal "VOR:VOR"
-      end
-    end
-
-    describe :to_digest do
-      it "must return digest of payload" do
-        subject.to_digest.must_equal 904391566
       end
     end
 
@@ -40,7 +30,7 @@ describe AIXM::Feature::NavigationalAid::VOR do
         subject.to_xml.must_equal <<~END
           <!-- NavigationalAid: [VOR:VOR] VOR NAVAID -->
           <Vor>
-            <VorUid mid="#{digest}">
+            <VorUid>
               <codeId>VVV</codeId>
               <geoLat>47.85916667N</geoLat>
               <geoLong>007.56000000E</geoLong>
@@ -71,19 +61,9 @@ describe AIXM::Feature::NavigationalAid::VOR do
       end
     end
 
-    let :digest do
-      subject.to_digest
-    end
-
     describe :kind do
       it "must return class/type combo" do
         subject.kind.must_equal "VOR:DVOR"
-      end
-    end
-
-    describe :to_digest do
-      it "must return digest of payload" do
-        subject.to_digest.must_equal 293163781
       end
     end
 
@@ -93,7 +73,7 @@ describe AIXM::Feature::NavigationalAid::VOR do
         subject.to_xml.must_equal <<~END
           <!-- NavigationalAid: [VOR:DVOR] VOR NAVAID -->
           <Vor>
-            <VorUid mid="#{digest}">
+            <VorUid>
               <codeId>VVV</codeId>
               <geoLat>47.85916667N</geoLat>
               <geoLong>007.56000000E</geoLong>
@@ -126,19 +106,9 @@ describe AIXM::Feature::NavigationalAid::VOR do
       end
     end
 
-    let :digests do
-      [subject.to_digest, subject.dme.to_digest]
-    end
-
     describe :kind do
       it "must return class/type combo" do
         subject.kind.must_equal "VOR:VOR"
-      end
-    end
-
-    describe :to_digest do
-      it "must return digest of payload" do
-        subject.to_digest.must_equal 604205702
       end
     end
 
@@ -148,7 +118,7 @@ describe AIXM::Feature::NavigationalAid::VOR do
         subject.to_xml.must_equal <<~END
           <!-- NavigationalAid: [VOR:VOR] VOR/DME NAVAID -->
           <Vor>
-            <VorUid mid="#{digests.first}">
+            <VorUid>
               <codeId>VVV</codeId>
               <geoLat>47.85916667N</geoLat>
               <geoLong>007.56000000E</geoLong>
@@ -169,13 +139,13 @@ describe AIXM::Feature::NavigationalAid::VOR do
           </Vor>
           <!-- NavigationalAid: [DME] VOR/DME NAVAID -->
           <Dme>
-            <DmeUid mid="#{digests.last}">
+            <DmeUid>
               <codeId>VVV</codeId>
               <geoLat>47.85916667N</geoLat>
               <geoLong>007.56000000E</geoLong>
             </DmeUid>
             <OrgUid/>
-            <VorUid mid="#{digests.first}">
+            <VorUid>
               <codeId>VVV</codeId>
               <geoLat>47.85916667N</geoLat>
               <geoLong>007.56000000E</geoLong>
@@ -204,19 +174,9 @@ describe AIXM::Feature::NavigationalAid::VOR do
       end
     end
 
-    let :digests do
-      [subject.to_digest, subject.tacan.to_digest]
-    end
-
     describe :kind do
       it "must return class/type combo" do
         subject.kind.must_equal "VOR:VOR"
-      end
-    end
-
-    describe :to_digest do
-      it "must return digest of payload" do
-        subject.to_digest.must_equal 339710051
       end
     end
 
@@ -226,7 +186,7 @@ describe AIXM::Feature::NavigationalAid::VOR do
         subject.to_xml.must_equal <<~END
           <!-- NavigationalAid: [VOR:VOR] VORTAC NAVAID -->
           <Vor>
-            <VorUid mid="#{digests.first}">
+            <VorUid>
               <codeId>VVV</codeId>
               <geoLat>47.85916667N</geoLat>
               <geoLong>007.56000000E</geoLong>
@@ -247,13 +207,13 @@ describe AIXM::Feature::NavigationalAid::VOR do
           </Vor>
           <!-- NavigationalAid: [TACAN] VORTAC NAVAID -->
           <Tcn>
-            <TcnUid mid="#{digests.last}">
+            <TcnUid>
               <codeId>VVV</codeId>
               <geoLat>47.85916667N</geoLat>
               <geoLong>007.56000000E</geoLong>
             </TcnUid>
             <OrgUid/>
-            <VorUid mid="#{digests.first}">
+            <VorUid>
               <codeId>VVV</codeId>
               <geoLat>47.85916667N</geoLat>
               <geoLong>007.56000000E</geoLong>

@@ -11,16 +11,6 @@ describe AIXM::Component::VerticalLimits do
     end
   end
 
-  describe :to_digest do
-    it "must return digest of payload" do
-      subject = AIXM.vertical_limits(
-        upper_z: AIXM.z(2000, :qnh),
-        lower_z: AIXM::GROUND
-      )
-      subject.to_digest.must_equal 867600845
-    end
-  end
-
   describe :to_aixm do
     it "must build correct AIXM with only upper_z and lower_z" do
       subject = AIXM.vertical_limits(

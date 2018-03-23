@@ -49,10 +49,4 @@ describe AIXM::F do
       subject.between?(90, 95, :mhz).must_equal false
     end
   end
-
-  describe :to_digest do
-    it "must return digest of payload" do
-      AIXM.f(111, :mhz).to_digest.must_equal 779608518
-    end
-  end
 end

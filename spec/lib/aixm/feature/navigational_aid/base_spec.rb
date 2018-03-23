@@ -31,11 +31,4 @@ describe AIXM::Feature::NavigationalAid::Base do
     end
   end
 
-  describe :to_digest do
-    it "must return digest of payload" do
-      subject = base.send(:new, id: 'id', name: 'name', xy: AIXM::Factory.xy, z: AIXM.z(100, :qnh))
-      subject.to_digest.must_equal 711143170
-    end
-  end
-
 end

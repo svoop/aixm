@@ -17,19 +17,9 @@ describe AIXM::Feature::NavigationalAid::NDB do
       AIXM::Factory.ndb
     end
 
-    let :digest do
-      subject.to_digest
-    end
-
     describe :kind do
       it "must return class/type combo" do
         subject.kind.must_equal "NDB:B"
-      end
-    end
-
-    describe :to_digest do
-      it "must return digest of payload" do
-        subject.to_digest.must_equal 782114926
       end
     end
 
@@ -39,7 +29,7 @@ describe AIXM::Feature::NavigationalAid::NDB do
         subject.to_xml.must_equal <<~END
           <!-- NavigationalAid: [NDB:B] NDB NAVAID -->
           <Ndb>
-            <NdbUid mid="#{digest}">
+            <NdbUid>
               <codeId>NNN</codeId>
               <geoLat>47.85916667N</geoLat>
               <geoLong>007.56000000E</geoLong>

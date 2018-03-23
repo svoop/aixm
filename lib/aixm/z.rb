@@ -39,10 +39,6 @@ module AIXM
       qne? ? :FL : :FT
     end
 
-    def to_digest
-      [alt, code].to_digest
-    end
-
   end
 
 end

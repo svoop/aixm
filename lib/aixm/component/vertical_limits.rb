@@ -28,10 +28,6 @@ module AIXM
         @upper_z, @lower_z, @max_z, @min_z = upper_z, lower_z, max_z, min_z
       end
 
-      def to_digest
-        [upper_z.alt, upper_z.code, lower_z.alt, lower_z.code, max_z&.alt, max_z&.code, min_z&.alt, min_z&.code].to_digest
-      end
-
       def to_xml
         %i(upper lower max min).each_with_object(Builder::XmlMarkup.new(indent: 2)) do |limit, builder|
           if z = send(:"#{limit}_z")

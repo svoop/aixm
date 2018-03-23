@@ -18,17 +18,6 @@ describe AIXM::Component::Geometry::Arc do
     end
   end
 
-  describe :to_digest do
-    it "must return digest of payload" do
-      subject = AIXM.arc(
-        xy: AIXM.xy(lat: 11.1, long: 33.3),
-        center_xy: AIXM.xy(lat: 22.2, long: 33.3),
-        clockwise: true
-      )
-      subject.to_digest.must_equal 253842470
-    end
-  end
-
   describe :to_xml do
     it "must build correct AIXM for clockwise arcs" do
       subject = AIXM.arc(

@@ -40,10 +40,6 @@ module AIXM
         circle? || closed_shape?
       end
 
-      def to_digest
-        segments.to_digest
-      end
-
       def to_xml
         @result_array.map { |h| h.to_xml }.join
       end

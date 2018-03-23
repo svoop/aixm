@@ -43,13 +43,9 @@ module AIXM
           @f = value
         end
 
-        def to_digest
-          [super, f].to_digest
-        end
-
         def to_uid
           builder = Builder::XmlMarkup.new(indent: 2)
-          builder.NdbUid(mid: to_digest) do |ndbuid|
+          builder.NdbUid do |ndbuid|
             ndbuid.codeId(id)
             ndbuid.geoLat(xy.lat(AIXM.format))
             ndbuid.geoLong(xy.long(AIXM.format))

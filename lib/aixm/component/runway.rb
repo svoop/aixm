@@ -92,14 +92,9 @@ module AIXM
         @remarks = value&.to_s
       end
 
-      def to_digest
-        [].to_digest
-      end
-
       def to_uid
-        mid = to_digest
         builder = Builder::XmlMarkup.new(indent: 2)
-        builder.RwyUid(mid: mid) do |rwyuid|
+        builder.RwyUid do |rwyuid|
           rwyuid << ahp.to_uid
           rwyuid.txtDesig(name)
         end
@@ -171,10 +166,6 @@ module AIXM
         # Calculate the magnetic orientation (bearing) in degrees
         def magnetic_orientation
           (geographic_orientation + runway.airport.declination).round
-        end
-
-        def to_digest
-          [name, xy, displaced_threshold].to_digest
         end
 
         def to_xml

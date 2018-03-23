@@ -26,10 +26,6 @@ module AIXM
         @klass
       end
 
-      def to_digest
-        [self.class, vertical_limits].to_digest
-      end
-
       def to_xml
         builder = Builder::XmlMarkup.new(indent: 2)
         builder.codeClass(self.class.to_s) if self.class

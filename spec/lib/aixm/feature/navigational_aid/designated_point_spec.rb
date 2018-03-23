@@ -6,19 +6,9 @@ describe AIXM::Feature::NavigationalAid::DesignatedPoint do
       AIXM::Factory.designated_point
     end
 
-    let :digest do
-      subject.to_digest
-    end
-
     describe :kind do
       it "must return class/type combo" do
         subject.kind.must_equal "DesignatedPoint:ICAO"
-      end
-    end
-
-    describe :to_digest do
-      it "must return digest of payload" do
-        subject.to_digest.must_equal 5317882
       end
     end
 
@@ -28,7 +18,7 @@ describe AIXM::Feature::NavigationalAid::DesignatedPoint do
         subject.to_xml.must_equal <<~END
           <!-- NavigationalAid: [DesignatedPoint:ICAO] DESIGNATED POINT NAVAID -->
           <Dpn>
-            <DpnUid mid="#{digest}">
+            <DpnUid>
               <codeId>DDD</codeId>
               <geoLat>47.85916667N</geoLat>
               <geoLong>007.56000000E</geoLong>

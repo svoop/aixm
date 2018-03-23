@@ -143,10 +143,4 @@ describe AIXM::XY do
       subject.distance(other).must_equal 1351
     end
   end
-
-  describe :to_digest do
-    it "must return digest of payload" do
-      AIXM::Factory.xy.to_digest.must_equal 783044788
-    end
-  end
 end

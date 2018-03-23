@@ -6,19 +6,9 @@ describe AIXM::Feature::NavigationalAid::DME do
       AIXM::Factory.dme
     end
 
-    let :digest do
-      subject.to_digest
-    end
-
     describe :kind do
       it "must return class/type combo" do
         subject.kind.must_equal "DME"
-      end
-    end
-
-    describe :to_digest do
-      it "must return digest of payload" do
-        subject.to_digest.must_equal 537506748
       end
     end
 
@@ -28,7 +18,7 @@ describe AIXM::Feature::NavigationalAid::DME do
         subject.to_xml.must_equal <<~END
           <!-- NavigationalAid: [DME] DME NAVAID -->
           <Dme>
-            <DmeUid mid="#{digest}">
+            <DmeUid>
               <codeId>MMM</codeId>
               <geoLat>47.85916667N</geoLat>
               <geoLong>007.56000000E</geoLong>

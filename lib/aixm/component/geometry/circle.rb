@@ -14,10 +14,6 @@ module AIXM
           @center_xy, @radius = center_xy, radius
         end
 
-        def to_digest
-          [center_xy, radius].to_digest
-        end
-
         def to_xml
           builder = Builder::XmlMarkup.new(indent: 2)
           builder.Avx do |avx|

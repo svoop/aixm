@@ -54,21 +54,16 @@ module AIXM
         !!name && !!type && class_layers.any? && geometry.complete?
       end
 
-      def to_digest
-        [name, short_name, type, schedule, class_layers, geometry, remarks].to_digest
-      end
-
       def to_uid
-        mid = to_digest
+        id = Digest::MD5.hexdigest([type, name, short_name].join('|'))[0..8]   # TODO:
         builder = Builder::XmlMarkup.new(indent: 2)
-        builder.AseUid(mid: mid) do |aseuid|
+        builder.AseUid do |aseuid|
           aseuid.codeType(type)
-          aseuid.codeId(mid)
+          aseuid.codeId(id)
         end
       end
 
       def to_xml
-        mid = to_digest
         builder = Builder::XmlMarkup.new(indent: 2)
         builder.comment! "Airspace: [#{type}] #{name}"
         builder.Ase({ classLayers: (class_layers.count if AIXM.ofmx? && class_layers.count > 1) }.compact) do |ase|
@@ -86,18 +81,16 @@ module AIXM
         end
         builder.Abd do |abd|
           abd.AbdUid do |abduid|
-            abduid.AseUid(mid: mid) do |aseuid|
-              aseuid.codeType(type)
-              aseuid.codeId(mid)
-            end
+            abduid << to_uid.indent(4)
           end
           abd << geometry.to_xml.indent(2)
         end
         if class_layers.count > 1
           class_layers.each.with_index do |class_layer, index|
             builder.Ase do |ase|
-              ase.AseUid(mid: "#{mid}.#{index + 1}") do |aseuid|
+              ase.AseUid do |aseuid|
                 aseuid.codeType("CLASS")
+                aseuid.codeId()   # TODO:
               end
               ase.txtName(name.to_s)
               ase << class_layers[index].to_xml.indent(2)
@@ -106,12 +99,13 @@ module AIXM
           builder.Adg do |adg|
             class_layers.each.with_index do |class_layer, index|
               adg.AdgUid do |adguid|
-                adguid.AseUid(mid: "#{mid}.#{index + 1}") do |aseuid|
+                adguid.AseUid do |aseuid|
                   aseuid.codeType("CLASS")
+                  aseuid.codeType()   # TODO:
                 end
               end
             end
-            adg.AseUidSameExtent(mid: mid)
+            adg.AseUidSameExtent()   # TODO:
           end
         end
         builder.target!   # see https://github.com/jimweirich/builder/issues/42

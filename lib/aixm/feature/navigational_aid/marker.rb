@@ -43,7 +43,7 @@ module AIXM
 
         def to_uid
           builder = Builder::XmlMarkup.new(indent: 2)
-          builder.MkrUid(mid: to_digest) do |mkruid|
+          builder.MkrUid do |mkruid|
             mkruid.codeId(id)
             mkruid.geoLat(xy.lat(AIXM.format))
             mkruid.geoLong(xy.long(AIXM.format))

@@ -6,19 +6,9 @@ describe AIXM::Feature::NavigationalAid::Marker do
       AIXM::Factory.marker
     end
 
-    let :digest do
-      subject.to_digest
-    end
-
     describe :kind do
       it "must return class/type combo" do
         subject.kind.must_equal "Marker:O"
-      end
-    end
-
-    describe :to_digest do
-      it "must return digest of payload" do
-        subject.to_digest.must_equal 300437209
       end
     end
 
@@ -28,7 +18,7 @@ describe AIXM::Feature::NavigationalAid::Marker do
         subject.to_xml.must_equal <<~END
           <!-- NavigationalAid: [Marker:O] MARKER NAVAID -->
           <Mkr>
-            <MkrUid mid="#{digest}">
+            <MkrUid>
               <codeId>---</codeId>
               <geoLat>47.85916667N</geoLat>
               <geoLong>007.56000000E</geoLong>

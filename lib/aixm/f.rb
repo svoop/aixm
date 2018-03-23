@@ -30,10 +30,6 @@ module AIXM
       freq.between?(lower_freq, upper_freq) && self.unit == unit
     end
 
-    def to_digest
-      [freq, unit].to_digest
-    end
-
   end
 
 end

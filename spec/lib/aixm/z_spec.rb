@@ -66,10 +66,4 @@ describe AIXM::Z do
       AIXM.z(0, :qne).unit.must_equal :FL
     end
   end
-
-  describe :to_digest do
-    it "must return digest of payload" do
-      AIXM.z(111, :qnh).to_digest.must_equal 606000673
-    end
-  end
 end

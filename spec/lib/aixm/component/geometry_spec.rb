@@ -67,10 +67,6 @@ describe AIXM::Component::Geometry do
       subject.segments.count.must_equal 2
     end
 
-    it "must return digest of payload" do
-      subject.to_digest.must_equal 310635400
-    end
-
     it "must build valid AIXM" do
       AIXM.aixm!
       subject.to_xml.must_equal <<~END
@@ -130,10 +126,6 @@ describe AIXM::Component::Geometry do
         </Avx>
       END
     end
-
-    it "must return digest of payload" do
-      subject.to_digest.must_equal 368159360
-    end
   end
 
   context "border" do
@@ -177,10 +169,6 @@ describe AIXM::Component::Geometry do
         </Avx>
       END
     end
-
-    it "must return digest of payload" do
-      subject.to_digest.must_equal 204277421
-    end
   end
 
   context "circle" do
@@ -215,10 +203,6 @@ describe AIXM::Component::Geometry do
           <geoLongArc>0220000.00E</geoLongArc>
         </Avx>
       END
-    end
-
-    it "must return digest of payload" do
-      subject.to_digest.must_equal 470722036
     end
   end
 end

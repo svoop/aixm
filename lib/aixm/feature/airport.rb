@@ -24,7 +24,7 @@ module AIXM
       end
 
       def inspect
-        %Q(#<AIXM::Feature::Airport code=#{code.inspect} digest=#{to_digest.inspect}>)
+        %Q(#<AIXM::Feature::Airport code=#{code.inspect}>)
       end
 
       ##
@@ -96,10 +96,6 @@ module AIXM
       # Free text with further details
       def remarks=(value)
         @remarks = value&.to_s
-      end
-
-      def to_digest
-        [].to_digest
       end
 
       class UsageLimitation

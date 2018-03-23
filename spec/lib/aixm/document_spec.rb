@@ -63,7 +63,7 @@ describe AIXM::Document do
         <AIXM-Snapshot xmlns:xsi="http://www.aixm.aero/schema/4.5/AIXM-Snapshot.xsd" version="4.5" origin="rubygem aixm-#{AIXM::VERSION}" created="2018-01-18T12:00:00+01:00" effective="2018-01-18T12:00:00+01:00">
           <!-- Airspace: [D] POLYGON AIRSPACE -->
           <Ase>
-            <AseUid mid="595551355">
+            <AseUid>
               <codeType>D</codeType>
               <codeId>595551355</codeId>
             </AseUid>
@@ -89,7 +89,7 @@ describe AIXM::Document do
           </Ase>
           <Abd>
             <AbdUid>
-              <AseUid mid="595551355">
+              <AseUid>
                 <codeType>D</codeType>
                 <codeId>595551355</codeId>
               </AseUid>
@@ -120,7 +120,7 @@ describe AIXM::Document do
           </Abd>
           <!-- Airspace: [D] CIRCLE AIRSPACE -->
           <Ase>
-            <AseUid mid="548508666">
+            <AseUid>
               <codeType>D</codeType>
               <codeId>548508666</codeId>
             </AseUid>
@@ -146,7 +146,7 @@ describe AIXM::Document do
           </Ase>
           <Abd>
             <AbdUid>
-              <AseUid mid="548508666">
+              <AseUid>
                 <codeType>D</codeType>
                 <codeId>548508666</codeId>
               </AseUid>
@@ -162,7 +162,7 @@ describe AIXM::Document do
           </Abd>
           <!-- NavigationalAid: [DesignatedPoint:ICAO] DESIGNATED POINT NAVAID -->
           <Dpn>
-            <DpnUid mid="5317882">
+            <DpnUid>
               <codeId>DDD</codeId>
               <geoLat>475133.00N</geoLat>
               <geoLong>0073336.00E</geoLong>
@@ -180,7 +180,7 @@ describe AIXM::Document do
           </Dpn>
           <!-- NavigationalAid: [DME] DME NAVAID -->
           <Dme>
-            <DmeUid mid="537506748">
+            <DmeUid>
               <codeId>MMM</codeId>
               <geoLat>475133.00N</geoLat>
               <geoLong>0073336.00E</geoLong>
@@ -198,7 +198,7 @@ describe AIXM::Document do
           </Dme>
           <!-- NavigationalAid: [Marker:O] MARKER NAVAID -->
           <Mkr>
-            <MkrUid mid="300437209">
+            <MkrUid>
               <codeId>---</codeId>
               <geoLat>475133.00N</geoLat>
               <geoLong>0073336.00E</geoLong>
@@ -218,7 +218,7 @@ describe AIXM::Document do
           </Mkr>
           <!-- NavigationalAid: [NDB:B] NDB NAVAID -->
           <Ndb>
-            <NdbUid mid="782114926">
+            <NdbUid>
               <codeId>NNN</codeId>
               <geoLat>475133.00N</geoLat>
               <geoLong>0073336.00E</geoLong>
@@ -238,7 +238,7 @@ describe AIXM::Document do
           </Ndb>
           <!-- NavigationalAid: [TACAN] TACAN NAVAID -->
           <Tcn>
-            <TcnUid mid="648449590">
+            <TcnUid>
               <codeId>TTT</codeId>
               <geoLat>475133.00N</geoLat>
               <geoLong>0073336.00E</geoLong>
@@ -256,7 +256,7 @@ describe AIXM::Document do
           </Tcn>
           <!-- NavigationalAid: [VOR:VOR] VOR NAVAID -->
           <Vor>
-            <VorUid mid="904391566">
+            <VorUid>
               <codeId>VVV</codeId>
               <geoLat>475133.00N</geoLat>
               <geoLong>0073336.00E</geoLong>
@@ -277,7 +277,7 @@ describe AIXM::Document do
           </Vor>
           <!-- NavigationalAid: [VOR:VOR] VOR/DME NAVAID -->
           <Vor>
-            <VorUid mid="428844269">
+            <VorUid>
               <codeId>VDD</codeId>
               <geoLat>475133.00N</geoLat>
               <geoLong>0073336.00E</geoLong>
@@ -298,13 +298,13 @@ describe AIXM::Document do
           </Vor>
           <!-- NavigationalAid: [DME] VOR/DME NAVAID -->
           <Dme>
-            <DmeUid mid="284278140">
+            <DmeUid>
               <codeId>VDD</codeId>
               <geoLat>475133.00N</geoLat>
               <geoLong>0073336.00E</geoLong>
             </DmeUid>
             <OrgUid/>
-            <VorUid mid="428844269">
+            <VorUid>
               <codeId>VDD</codeId>
               <geoLat>475133.00N</geoLat>
               <geoLong>0073336.00E</geoLong>
@@ -321,7 +321,7 @@ describe AIXM::Document do
           </Dme>
           <!-- NavigationalAid: [VOR:VOR] VORTAC NAVAID -->
           <Vor>
-            <VorUid mid="305713874">
+            <VorUid>
               <codeId>VTT</codeId>
               <geoLat>475133.00N</geoLat>
               <geoLong>0073336.00E</geoLong>
@@ -342,13 +342,13 @@ describe AIXM::Document do
           </Vor>
           <!-- NavigationalAid: [TACAN] VORTAC NAVAID -->
           <Tcn>
-            <TcnUid mid="595472802">
+            <TcnUid>
               <codeId>VTT</codeId>
               <geoLat>475133.00N</geoLat>
               <geoLong>0073336.00E</geoLong>
             </TcnUid>
             <OrgUid/>
-            <VorUid mid="305713874">
+            <VorUid>
               <codeId>VTT</codeId>
               <geoLat>475133.00N</geoLat>
               <geoLong>0073336.00E</geoLong>
@@ -374,7 +374,7 @@ describe AIXM::Document do
         <OFMX-Snapshot xmlns:xsi="http://openflightmaps.org/schema/4.5-1/OFMX-Snapshot.xsd" version="4.5-1" origin="rubygem aixm-#{AIXM::VERSION}" created="2018-01-18T12:00:00+01:00" effective="2018-01-18T12:00:00+01:00">
           <!-- Airspace: [D] POLYGON AIRSPACE -->
           <Ase classLayers="1">
-            <AseUid mid="595551355">
+            <AseUid>
               <codeType>D</codeType>
               <codeId>595551355</codeId>
             </AseUid>
@@ -401,7 +401,7 @@ describe AIXM::Document do
           </Ase>
           <Abd>
             <AbdUid>
-              <AseUid mid="595551355">
+              <AseUid>
                 <codeType>D</codeType>
                 <codeId>595551355</codeId>
               </AseUid>
@@ -432,7 +432,7 @@ describe AIXM::Document do
           </Abd>
           <!-- Airspace: [D] CIRCLE AIRSPACE -->
           <Ase classLayers="1">
-            <AseUid mid="548508666">
+            <AseUid>
               <codeType>D</codeType>
               <codeId>548508666</codeId>
             </AseUid>
@@ -459,7 +459,7 @@ describe AIXM::Document do
           </Ase>
           <Abd>
             <AbdUid>
-              <AseUid mid="548508666">
+              <AseUid>
                 <codeType>D</codeType>
                 <codeId>548508666</codeId>
               </AseUid>
@@ -475,7 +475,7 @@ describe AIXM::Document do
           </Abd>
           <!-- NavigationalAid: [DesignatedPoint:ICAO] DESIGNATED POINT NAVAID -->
           <Dpn>
-            <DpnUid mid="5317882">
+            <DpnUid>
               <codeId>DDD</codeId>
               <geoLat>47.85916667N</geoLat>
               <geoLong>007.56000000E</geoLong>
@@ -493,7 +493,7 @@ describe AIXM::Document do
           </Dpn>
           <!-- NavigationalAid: [DME] DME NAVAID -->
           <Dme>
-            <DmeUid mid="537506748">
+            <DmeUid>
               <codeId>MMM</codeId>
               <geoLat>47.85916667N</geoLat>
               <geoLong>007.56000000E</geoLong>
@@ -511,7 +511,7 @@ describe AIXM::Document do
           </Dme>
           <!-- NavigationalAid: [Marker:O] MARKER NAVAID -->
           <Mkr>
-            <MkrUid mid="300437209">
+            <MkrUid>
               <codeId>---</codeId>
               <geoLat>47.85916667N</geoLat>
               <geoLong>007.56000000E</geoLong>
@@ -531,7 +531,7 @@ describe AIXM::Document do
           </Mkr>
           <!-- NavigationalAid: [NDB:B] NDB NAVAID -->
           <Ndb>
-            <NdbUid mid="782114926">
+            <NdbUid>
               <codeId>NNN</codeId>
               <geoLat>47.85916667N</geoLat>
               <geoLong>007.56000000E</geoLong>
@@ -551,7 +551,7 @@ describe AIXM::Document do
           </Ndb>
           <!-- NavigationalAid: [TACAN] TACAN NAVAID -->
           <Tcn>
-            <TcnUid mid="648449590">
+            <TcnUid>
               <codeId>TTT</codeId>
               <geoLat>47.85916667N</geoLat>
               <geoLong>007.56000000E</geoLong>
@@ -569,7 +569,7 @@ describe AIXM::Document do
           </Tcn>
           <!-- NavigationalAid: [VOR:VOR] VOR NAVAID -->
           <Vor>
-            <VorUid mid="904391566">
+            <VorUid>
               <codeId>VVV</codeId>
               <geoLat>47.85916667N</geoLat>
               <geoLong>007.56000000E</geoLong>
@@ -590,7 +590,7 @@ describe AIXM::Document do
           </Vor>
           <!-- NavigationalAid: [VOR:VOR] VOR/DME NAVAID -->
           <Vor>
-            <VorUid mid="428844269">
+            <VorUid>
               <codeId>VDD</codeId>
               <geoLat>47.85916667N</geoLat>
               <geoLong>007.56000000E</geoLong>
@@ -611,13 +611,13 @@ describe AIXM::Document do
           </Vor>
           <!-- NavigationalAid: [DME] VOR/DME NAVAID -->
           <Dme>
-            <DmeUid mid="284278140">
+            <DmeUid>
               <codeId>VDD</codeId>
               <geoLat>47.85916667N</geoLat>
               <geoLong>007.56000000E</geoLong>
             </DmeUid>
             <OrgUid/>
-            <VorUid mid="428844269">
+            <VorUid>
               <codeId>VDD</codeId>
               <geoLat>47.85916667N</geoLat>
               <geoLong>007.56000000E</geoLong>
@@ -634,7 +634,7 @@ describe AIXM::Document do
           </Dme>
           <!-- NavigationalAid: [VOR:VOR] VORTAC NAVAID -->
           <Vor>
-            <VorUid mid="305713874">
+            <VorUid>
               <codeId>VTT</codeId>
               <geoLat>47.85916667N</geoLat>
               <geoLong>007.56000000E</geoLong>
@@ -655,13 +655,13 @@ describe AIXM::Document do
           </Vor>
           <!-- NavigationalAid: [TACAN] VORTAC NAVAID -->
           <Tcn>
-            <TcnUid mid="595472802">
+            <TcnUid>
               <codeId>VTT</codeId>
               <geoLat>47.85916667N</geoLat>
               <geoLong>007.56000000E</geoLong>
             </TcnUid>
             <OrgUid/>
-            <VorUid mid="305713874">
+            <VorUid>
               <codeId>VTT</codeId>
               <geoLat>47.85916667N</geoLat>
               <geoLong>007.56000000E</geoLong>
