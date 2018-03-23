@@ -7,20 +7,31 @@ module AIXM
     # Airspace feature
     #
     # Options:
-    # * +name+ - full name of the airspace (will be converted to uppercase,
-    #            e.g. +LF P 81+)
-    # * +short_name+ - short name of the airspace (will be converted to
-    #                  uppercase, e.g. +LF P 81 CHERBOURG+)
+    # * +id+ - published identifier (e.g. +LFP81+) or +nil+ to assign a 8 byte
+    #          hex digest derived from +type+, +name+ and +short_name+
+    # * +name+ - full name of the airspace (e.g. +LF P 81+)
+    # * +short_name+ - short name of the airspace (e.g. +LF P 81 CHERBOURG+)
     # * +type+ - airspace type (e.g. +TMA+ or +P+)
     class Airspace
-      attr_reader :name, :short_name, :type, :schedule, :remarks
+      attr_reader :id, :type, :name, :short_name, :schedule, :remarks
       attr_accessor :geometry, :class_layers
 
-      def initialize(name:, short_name: nil, type:)
-        self.name, self.short_name, self.type = name, short_name, type
+      def initialize(id: nil, type:, name:, short_name: nil)
+        self.type, self.name, self.short_name = type, name, short_name
+        self.id = id
         @schedule = nil
         @geometry = AIXM.geometry
         @class_layers = []
+      end
+
+      def id=(value)
+        fail(ArgumentError, "invalid id") unless value.nil? || value.is_a?(String)
+        @id = value&.uptrans || [type, name, short_name].to_digest
+      end
+
+      def type=(value)
+        fail(ArgumentError, "invalid type") unless value.is_a?(String)
+        @type = value.upcase
       end
 
       def name=(value)
@@ -33,11 +44,6 @@ module AIXM
         @short_name = value&.uptrans
       end
 
-      def type=(value)
-        fail(ArgumentError, "invalid type") unless value.is_a?(String)
-        @type = value.upcase
-      end
-
       def schedule=(value)
         fail(ArgumentError, "invalid schedule") unless value.nil? || value.is_a?(AIXM::Component::Schedule)
         @schedule = value
@@ -48,14 +54,7 @@ module AIXM
         @remarks = value
       end
 
-      ##
-      # Check whether the airspace is complete
-      def complete?
-        !!name && !!type && class_layers.any? && geometry.complete?
-      end
-
       def to_uid
-        id = Digest::MD5.hexdigest([type, name, short_name].join('|'))[0..8]   # TODO:
         builder = Builder::XmlMarkup.new(indent: 2)
         builder.AseUid do |aseuid|
           aseuid.codeType(type)

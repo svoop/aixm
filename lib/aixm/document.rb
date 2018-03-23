@@ -19,12 +19,6 @@ module AIXM
     end
 
     ##
-    # Check whether the document is complete
-    def complete?
-      features.any? && features.none? { |f| f.respond_to?(:complete?) && !f.complete? }
-    end
-
-    ##
     # Validate atainst the XSD and return +true+ if no errors were found
     def valid?
       errors.none?

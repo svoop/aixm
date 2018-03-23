@@ -7,6 +7,7 @@
   * `to_aixm` renamed to `to_xml` again
   * Removed signature `to_xml(extension)` in favor of `AIXM.format`
   * Removed `Array#to_digest`
+  * Removed `Document#complete?`
 * Additions
   * Airport feature
   * Refinement `Float#to_rad`

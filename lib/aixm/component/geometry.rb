@@ -35,12 +35,13 @@ module AIXM
       end
 
       ##
-      # Check whether the geometry is complete
-      def complete?
-        circle? || closed_shape?
+      # Check whether the geometry is closed
+      def closed?
+        circle? || polygon?
       end
 
       def to_xml
+        raise "geometry is not closed" unless closed?
         @result_array.map { |h| h.to_xml }.join
       end
 
@@ -51,7 +52,7 @@ module AIXM
           @result_array.first.is_a?(AIXM::Component::Geometry::Circle)
       end
 
-      def closed_shape?
+      def polygon?
         @result_array.size >= 3 &&
           !@result_array.any? { |h| h.is_a?(AIXM::Component::Geometry::Circle) } &&
           @result_array.last.is_a?(AIXM::Component::Geometry::Point) &&

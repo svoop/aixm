@@ -37,10 +37,6 @@ describe AIXM::Document do
     subject do
       AIXM.document
     end
-
-    it "must fail validation" do
-      subject.wont_be :complete?
-    end
   end
 
   context "complete" do
@@ -50,10 +46,6 @@ describe AIXM::Document do
 
     it "won't have errors" do
       subject.errors.must_equal []
-    end
-
-    it "must pass validation" do
-      subject.must_be :complete?
     end
 
     it "must build correct AIXM" do

@@ -356,9 +356,7 @@ vertical_limits = AIXM.vertical_limits(
 
 ## Validation
 
-Use `AIXM::Document#complete?` to check whether all mandatory information is present. Airspaces, geometries etc have `complete?` methods as well.
-
-Use `AIXM::Document#valid?` to validate the resulting AIXM against the XSD schema. If any, you find the errors in `AIXM::Document#errors`. Since the data model is not fully implemented, some associations cannot be assigned and have to be left empty. The resulting validation errors are silently ignored:
+`AIXM::Document#valid?` validates the resulting AIXM or OFMX against its XSD schema. If any, you find the errors in `AIXM::Document#errors`. Since the data model is not fully implemented, some associations cannot be assigned and have to be left empty. The resulting validation errors are silently ignored:
 
 * OrgUid - organizations may be empty tags
 

@@ -6,10 +6,14 @@ describe AIXM::Component::Geometry do
       AIXM.geometry
     end
 
-    it "must fail validation" do
+    it "must fail checks" do
       subject.wont_be :circle?
-      subject.wont_be :closed_shape?
-      subject.wont_be :complete?
+      subject.wont_be :polygon?
+      subject.wont_be :closed?
+    end
+
+    it "must fail to build AIXM" do
+      -> { subject.to_xml }.must_raise RuntimeError
     end
   end
 
@@ -20,10 +24,14 @@ describe AIXM::Component::Geometry do
       end
     end
 
-    it "must fail validation" do
+    it "must fail checks" do
       subject.wont_be :circle?
-      subject.wont_be :closed_shape?
-      subject.wont_be :complete?
+      subject.wont_be :polygon?
+      subject.wont_be :closed?
+    end
+
+    it "must fail to build AIXM" do
+      -> { subject.to_xml }.must_raise RuntimeError
     end
   end
 
@@ -35,36 +43,35 @@ describe AIXM::Component::Geometry do
       end
     end
 
-    it "must fail validation" do
+    it "must fail checks" do
       subject.wont_be :circle?
-      subject.wont_be :closed_shape?
-      subject.wont_be :complete?
+      subject.wont_be :polygon?
+      subject.wont_be :closed?
+    end
+
+    it "must fail to build AIXM" do
+      -> { subject.to_xml }.must_raise RuntimeError
     end
   end
 
-  context "polygon" do
+  context "closed polygon" do
     subject do
       AIXM.geometry.tap do |geometry|
         geometry << AIXM.point(xy: AIXM.xy(lat: 11, long: 22))
         geometry << AIXM.point(xy: AIXM.xy(lat: 22, long: 33))
+        geometry << AIXM.point(xy: AIXM.xy(lat: 33, long: 44))
+        geometry << AIXM.point(xy: AIXM.xy(lat: 11, long: 22))
       end
     end
 
-    it "must recognize unclosed" do
+    it "must pass checks" do
       subject.wont_be :circle?
-      subject.wont_be :closed_shape?
-      subject.wont_be :complete?
-    end
-
-    it "must recognize closed" do
-      subject << AIXM.point(xy: AIXM.xy(lat: 11, long: 22))
-      subject.wont_be :circle?
-      subject.must_be :closed_shape?
-      subject.must_be :complete?
+      subject.must_be :polygon?
+      subject.must_be :closed?
     end
 
     it "must return elements" do
-      subject.segments.count.must_equal 2
+      subject.segments.count.must_equal 4
     end
 
     it "must build valid AIXM" do
@@ -82,29 +89,55 @@ describe AIXM::Component::Geometry do
           <geoLong>0330000.00E</geoLong>
           <codeDatum>WGE</codeDatum>
         </Avx>
+        <Avx>
+          <codeType>GRC</codeType>
+          <geoLat>330000.00N</geoLat>
+          <geoLong>0440000.00E</geoLong>
+          <codeDatum>WGE</codeDatum>
+        </Avx>
+        <Avx>
+          <codeType>GRC</codeType>
+          <geoLat>110000.00N</geoLat>
+          <geoLong>0220000.00E</geoLong>
+          <codeDatum>WGE</codeDatum>
+        </Avx>
       END
     end
   end
 
-  context "arc" do
+  context "unclosed polygon" do
+    subject do
+      AIXM.geometry.tap do |geometry|
+        geometry << AIXM.point(xy: AIXM.xy(lat: 11, long: 22))
+        geometry << AIXM.point(xy: AIXM.xy(lat: 22, long: 33))
+        geometry << AIXM.point(xy: AIXM.xy(lat: 33, long: 44))
+      end
+    end
+
+    it "must fail checks" do
+      subject.wont_be :circle?
+      subject.wont_be :polygon?
+      subject.wont_be :closed?
+    end
+
+    it "must fail to build AIXM" do
+      -> { subject.to_xml }.must_raise RuntimeError
+    end
+  end
+
+  context "closed arc" do
     subject do
       AIXM.geometry.tap do |geometry|
         geometry << AIXM.arc(xy: AIXM.xy(lat: 11, long: 22), center_xy: AIXM.xy(lat: 10, long: 20), clockwise: true)
         geometry << AIXM.point(xy: AIXM.xy(lat: 22, long: 33))
+        geometry << AIXM.point(xy: AIXM.xy(lat: 11, long: 22))
       end
     end
 
-    it "must recognize unclosed" do
+    it "must pass checks" do
       subject.wont_be :circle?
-      subject.wont_be :closed_shape?
-      subject.wont_be :complete?
-    end
-
-    it "must recognize closed" do
-      subject << AIXM.point(xy: AIXM.xy(lat: 11, long: 22))
-      subject.wont_be :circle?
-      subject.must_be :closed_shape?
-      subject.must_be :complete?
+      subject.must_be :polygon?
+      subject.must_be :closed?
     end
 
     it "must build valid AIXM" do
@@ -124,29 +157,48 @@ describe AIXM::Component::Geometry do
           <geoLong>0330000.00E</geoLong>
           <codeDatum>WGE</codeDatum>
         </Avx>
+        <Avx>
+          <codeType>GRC</codeType>
+          <geoLat>110000.00N</geoLat>
+          <geoLong>0220000.00E</geoLong>
+          <codeDatum>WGE</codeDatum>
+        </Avx>
       END
     end
   end
 
-  context "border" do
+  context "unclosed arc" do
     subject do
       AIXM.geometry.tap do |geometry|
-        geometry << AIXM.border(xy: AIXM.xy(lat: 11, long: 22), name: 'foobar')
+        geometry << AIXM.arc(xy: AIXM.xy(lat: 11, long: 22), center_xy: AIXM.xy(lat: 10, long: 20), clockwise: true)
         geometry << AIXM.point(xy: AIXM.xy(lat: 22, long: 33))
       end
     end
 
-    it "must recognize unclosed" do
+    it "must fail checks" do
       subject.wont_be :circle?
-      subject.wont_be :closed_shape?
-      subject.wont_be :complete?
+      subject.wont_be :polygon?
+      subject.wont_be :closed?
     end
 
-    it "must recognize closed" do
-      subject << AIXM.point(xy: AIXM.xy(lat: 11, long: 22))
+    it "must fail to build AIXM" do
+      -> { subject.to_xml }.must_raise RuntimeError
+    end
+  end
+
+  context "closed border" do
+    subject do
+      AIXM.geometry.tap do |geometry|
+        geometry << AIXM.border(xy: AIXM.xy(lat: 11, long: 22), name: 'foobar')
+        geometry << AIXM.point(xy: AIXM.xy(lat: 22, long: 33))
+        geometry << AIXM.point(xy: AIXM.xy(lat: 11, long: 22))
+      end
+    end
+
+    it "must pass checks" do
       subject.wont_be :circle?
-      subject.must_be :closed_shape?
-      subject.must_be :complete?
+      subject.must_be :polygon?
+      subject.must_be :closed?
     end
 
     it "must build valid AIXM" do
@@ -167,7 +219,32 @@ describe AIXM::Component::Geometry do
           <geoLong>0330000.00E</geoLong>
           <codeDatum>WGE</codeDatum>
         </Avx>
+        <Avx>
+          <codeType>GRC</codeType>
+          <geoLat>110000.00N</geoLat>
+          <geoLong>0220000.00E</geoLong>
+          <codeDatum>WGE</codeDatum>
+        </Avx>
       END
+    end
+  end
+
+  context "unclosed border" do
+    subject do
+      AIXM.geometry.tap do |geometry|
+        geometry << AIXM.border(xy: AIXM.xy(lat: 11, long: 22), name: 'foobar')
+        geometry << AIXM.point(xy: AIXM.xy(lat: 22, long: 33))
+      end
+    end
+
+    it "must fail checks" do
+      subject.wont_be :circle?
+      subject.wont_be :polygon?
+      subject.wont_be :closed?
+    end
+
+    it "must fail to build AIXM" do
+      -> { subject.to_xml }.must_raise RuntimeError
     end
   end
 
@@ -178,17 +255,10 @@ describe AIXM::Component::Geometry do
       end
     end
 
-    it "must pass validation" do
+    it "must pass checks" do
       subject.must_be :circle?
-      subject.wont_be :closed_shape?
-      subject.must_be :complete?
-    end
-
-    it "must fail validation when additional elements are present" do
-      subject << AIXM.point(xy: AIXM.xy(lat: 11, long: 22))
-      subject.wont_be :circle?
-      subject.wont_be :closed_shape?
-      subject.wont_be :complete?
+      subject.wont_be :polygon?
+      subject.must_be :closed?
     end
 
     it "must build valid AIXM" do
@@ -205,4 +275,24 @@ describe AIXM::Component::Geometry do
       END
     end
   end
+
+  context "circle with additional elements" do
+    subject do
+      AIXM.geometry.tap do |geometry|
+        geometry << AIXM.circle(center_xy: AIXM.xy(lat: 11, long: 22), radius: 10)
+        geometry << AIXM.point(xy: AIXM.xy(lat: 22, long: 33))
+      end
+    end
+
+    it "must fail checks when additional elements are present" do
+      subject.wont_be :circle?
+      subject.wont_be :polygon?
+      subject.wont_be :closed?
+    end
+
+    it "must fail to build AIXM" do
+      -> { subject.to_xml }.must_raise RuntimeError
+    end
+  end
+
 end
