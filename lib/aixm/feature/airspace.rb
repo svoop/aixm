@@ -26,7 +26,7 @@ module AIXM
 
       def id=(value)
         fail(ArgumentError, "invalid id") unless value.nil? || value.is_a?(String)
-        @id = value&.uptrans || [type, name, short_name].to_digest
+        @id = value&.uptrans || [type, name, short_name].to_digest.upcase
       end
 
       def type=(value)
@@ -54,11 +54,11 @@ module AIXM
         @remarks = value
       end
 
-      def to_uid
+      def to_uid(as: :AseUid)
         builder = Builder::XmlMarkup.new(indent: 2)
-        builder.AseUid do |aseuid|
-          aseuid.codeType(type)
-          aseuid.codeId(id)
+        builder.tag!(as) do |uid|
+          uid.codeType(type)
+          uid.codeId(id)
         end
       end
 
@@ -69,14 +69,16 @@ module AIXM
           ase << to_uid.indent(2)
           ase.txtLocalType(short_name.to_s) if short_name && short_name != name
           ase.txtName(name.to_s)
-          ase << class_layers.first.to_xml.indent(2)
-          if schedule
-            ase.Att do |att|
-              att << schedule.to_xml.indent(4)
+          unless class_layers.count > 1
+            ase << class_layers.first.to_xml.indent(2)
+            if schedule
+              ase.Att do |att|
+                att << schedule.to_xml.indent(4)
+              end
             end
+            ase.codeSelAvbl(false) if AIXM.ofmx?
+            ase.txtRmk(remarks.to_s) if remarks
           end
-          ase.codeSelAvbl(false) if AIXM.ofmx?
-          ase.txtRmk(remarks.to_s) if remarks
         end
         builder.Abd do |abd|
           abd.AbdUid do |abduid|
@@ -86,25 +88,18 @@ module AIXM
         end
         if class_layers.count > 1
           class_layers.each.with_index do |class_layer, index|
+            class_airspace = AIXM.airspace(type: 'CLASS', name: "#{name} CL#{index}")
             builder.Ase do |ase|
-              ase.AseUid do |aseuid|
-                aseuid.codeType("CLASS")
-                aseuid.codeId()   # TODO:
-              end
+              ase << class_airspace.to_uid.indent(2)
               ase.txtName(name.to_s)
               ase << class_layers[index].to_xml.indent(2)
             end
-          end
-          builder.Adg do |adg|
-            class_layers.each.with_index do |class_layer, index|
+            builder.Adg do |adg|
               adg.AdgUid do |adguid|
-                adguid.AseUid do |aseuid|
-                  aseuid.codeType("CLASS")
-                  aseuid.codeType()   # TODO:
-                end
+                adguid << class_airspace.to_uid.indent(4)
               end
+              adg << to_uid(as: :AseUidSameExtent).indent(2)
             end
-            adg.AseUidSameExtent()   # TODO:
           end
         end
         builder.target!   # see https://github.com/jimweirich/builder/issues/42

@@ -56,9 +56,10 @@ module AIXM
 
       def polygon_airspace
         AIXM.airspace(
+          id: 'PA',
+          type: 'D',
           name: 'POLYGON AIRSPACE',
-          short_name: 'POLYGON',
-          type: 'D'
+          short_name: 'POLYGON'
         ).tap do |airspace|
           airspace.schedule = AIXM::H24
           airspace.class_layers << class_layer
@@ -69,9 +70,10 @@ module AIXM
 
       def circle_airspace
         AIXM.airspace(
+          id: 'CA',
+          type: 'D',
           name: 'CIRCLE AIRSPACE',
-          short_name: 'CIRCLE',
-          type: 'D'
+          short_name: 'CIRCLE'
         ).tap do |airspace|
           airspace.schedule = AIXM::H24
           airspace.class_layers << class_layer
