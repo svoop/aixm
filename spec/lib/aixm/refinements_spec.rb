@@ -7,31 +7,31 @@ describe AIXM::Refinements do
   context Array do
     describe :to_digest do
       it "must digest single string" do
-        %w(a).to_digest.must_equal 140922416
+        %w(a).to_digest.must_equal "1f40fc92"
       end
 
       it "must digest double string" do
-        %w(a b).to_digest.must_equal 307557246
+        %w(a b).to_digest.must_equal "3c075e5f"
       end
 
       it "must digest integer" do
-        [5].to_digest.must_equal 60537198
+        [5].to_digest.must_equal "06df0537"
       end
 
       it "must digest nested array" do
-        [1, [2, 3]].to_digest.must_equal 960981551
+        [1, [2, 3]].to_digest.must_equal "e9609e81"
       end
 
       it "must digest float" do
-        [5.0].to_digest.must_equal 786519620
+        [5.0].to_digest.must_equal "78fc651d"
       end
 
       it "must digest boolean" do
-        [true, false].to_digest.must_equal 796799143
+        [true, false].to_digest.must_equal "79bdc67a"
       end
 
       it "must digest nil" do
-        [nil].to_digest.must_equal 831357815
+        [nil].to_digest.must_equal "cf83e135"
       end
     end
   end

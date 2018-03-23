@@ -22,11 +22,9 @@ module AIXM
 
     refine Array do
       ##
-      # Build a 1 to 9 digit integer digest (which fits in signed 32bit) from payload
+      # Build a 4 byte hex digest
       def to_digest
-        ::Digest::SHA512.hexdigest(
-          flatten.map { |m| m.respond_to?(:to_digest) ? m.to_digest : m }.join('|')
-        ).gsub(/\D/, '')[0, 9].to_i
+        ::Digest::SHA512.hexdigest(flatten.map(&:to_s).join('|'))[0, 8]
       end
     end
 
