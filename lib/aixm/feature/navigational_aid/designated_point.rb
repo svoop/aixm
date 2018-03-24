@@ -63,7 +63,7 @@ module AIXM
               end
             end
             dpn.txtRmk(remarks) if remarks
-            dpn.target!   # see https://github.com/jimweirich/builder/issues/42
+            dpn.target!
           end
         end
       end

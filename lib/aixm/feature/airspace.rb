@@ -6,22 +6,25 @@ module AIXM
     ##
     # Airspace feature
     #
-    # Options:
+    # Arguments:
     # * +id+ - published identifier (e.g. +LFP81+) or +nil+ to assign a 8 byte
     #          hex digest derived from +type+, +name+ and +short_name+
+    # * +type+ - airspace type (e.g. +TMA+ or +P+)
     # * +name+ - full name of the airspace (e.g. +LF P 81+)
     # * +short_name+ - short name of the airspace (e.g. +LF P 81 CHERBOURG+)
-    # * +type+ - airspace type (e.g. +TMA+ or +P+)
+    #
+    # Writers:
+    # * +geometry+ - instance of +AIXM::Component::Geometry+
+    # * +layers+ - array of instances of +AIXM::Component::Layer+
     class Airspace
-      attr_reader :id, :type, :name, :short_name, :schedule, :remarks
-      attr_accessor :geometry, :class_layers
+      attr_reader :id, :type, :name, :short_name
+      attr_accessor :geometry, :layers
 
       def initialize(id: nil, type:, name:, short_name: nil)
         self.type, self.name, self.short_name = type, name, short_name
         self.id = id
-        @schedule = nil
         @geometry = AIXM.geometry
-        @class_layers = []
+        @layers = []
       end
 
       def id=(value)
@@ -44,16 +47,6 @@ module AIXM
         @short_name = value&.uptrans
       end
 
-      def schedule=(value)
-        fail(ArgumentError, "invalid schedule") unless value.nil? || value.is_a?(AIXM::Component::Schedule)
-        @schedule = value
-      end
-
-      def remarks=(value)
-        fail(ArgumentError, "invalid remarks") unless value.is_a?(String)
-        @remarks = value
-      end
-
       def to_uid(as: :AseUid)
         builder = Builder::XmlMarkup.new(indent: 2)
         builder.tag!(as) do |uid|
@@ -63,21 +56,16 @@ module AIXM
       end
 
       def to_xml
+        fail "geometry not closed" unless geometry.closed?
+        fail "no layers defined" unless layers.any?
         builder = Builder::XmlMarkup.new(indent: 2)
         builder.comment! "Airspace: [#{type}] #{name}"
-        builder.Ase({ classLayers: (class_layers.count if AIXM.ofmx? && class_layers.count > 1) }.compact) do |ase|
+        builder.Ase({ classLayers: (layers.count if AIXM.ofmx? && layered?) }.compact) do |ase|
           ase << to_uid.indent(2)
-          ase.txtLocalType(short_name.to_s) if short_name && short_name != name
-          ase.txtName(name.to_s)
-          unless class_layers.count > 1
-            ase << class_layers.first.to_xml.indent(2)
-            if schedule
-              ase.Att do |att|
-                att << schedule.to_xml.indent(4)
-              end
-            end
-            ase.codeSelAvbl(false) if AIXM.ofmx?
-            ase.txtRmk(remarks.to_s) if remarks
+          ase.txtLocalType(short_name) if short_name && short_name != name
+          ase.txtName(name)
+          unless layered?
+            ase << layers.first.to_xml.indent(2)
           end
         end
         builder.Abd do |abd|
@@ -86,24 +74,31 @@ module AIXM
           end
           abd << geometry.to_xml.indent(2)
         end
-        if class_layers.count > 1
-          class_layers.each.with_index do |class_layer, index|
-            class_airspace = AIXM.airspace(type: 'CLASS', name: "#{name} CL#{index}")
+        if layered?
+          layers.each.with_index do |layer, index|
+            layer_airspace = AIXM.airspace(type: 'CLASS', name: "#{name} LAYER #{index + 1}")
             builder.Ase do |ase|
-              ase << class_airspace.to_uid.indent(2)
-              ase.txtName(name.to_s)
-              ase << class_layers[index].to_xml.indent(2)
+              ase << layer_airspace.to_uid.indent(2)
+              ase.txtName(layer_airspace.name)
+              ase << layers[index].to_xml.indent(2)
             end
             builder.Adg do |adg|
               adg.AdgUid do |adguid|
-                adguid << class_airspace.to_uid.indent(4)
+                adguid << layer_airspace.to_uid.indent(4)
               end
               adg << to_uid(as: :AseUidSameExtent).indent(2)
             end
           end
         end
-        builder.target!   # see https://github.com/jimweirich/builder/issues/42
+        builder.target!
       end
+
+      private
+
+      def layered?
+        layers.count > 1
+      end
+
     end
   end
 end

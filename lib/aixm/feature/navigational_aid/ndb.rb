@@ -72,7 +72,7 @@ module AIXM
               end
             end
             ndb.txtRmk(remarks) if remarks
-            ndb.target!   # see https://github.com/jimweirich/builder/issues/42
+            ndb.target!
           end
         end
       end

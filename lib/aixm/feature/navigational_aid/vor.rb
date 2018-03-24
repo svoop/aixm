@@ -113,7 +113,7 @@ module AIXM
           end
           builder << @dme.to_xml if @dme
           builder << @tacan.to_xml if @tacan
-          builder.target!   # see https://github.com/jimweirich/builder/issues/42
+          builder.target!
         end
       end
 

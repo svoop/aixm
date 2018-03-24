@@ -8,7 +8,7 @@ module AIXM
     airport: Feature::Airport,
     runway: Component::Runway,
     airspace: Feature::Airspace,
-    class_layer: Component::ClassLayer,
+    layer: Component::Layer,
     geometry: Component::Geometry,
     vertical_limits: Component::VerticalLimits,
     arc: Component::Geometry::Arc,

@@ -19,11 +19,15 @@ module AIXM
         )
       end
 
-      def class_layer
-        AIXM.class_layer(
+      def layer
+        AIXM.layer(
           class: :C,
           vertical_limits: vertical_limits
-        )
+        ).tap do |layer|
+          layer.schedule = AIXM::H24
+          layer.selective = true
+          layer.remarks = 'airspace layer'
+        end
       end
 
       def polygon_geometry
@@ -61,10 +65,8 @@ module AIXM
           name: 'POLYGON AIRSPACE',
           short_name: 'POLYGON'
         ).tap do |airspace|
-          airspace.schedule = AIXM::H24
-          airspace.class_layers << class_layer
+          airspace.layers << layer
           airspace.geometry = polygon_geometry
-          airspace.remarks = 'polygon airspace'
         end
       end
 
@@ -75,10 +77,8 @@ module AIXM
           name: 'CIRCLE AIRSPACE',
           short_name: 'CIRCLE'
         ).tap do |airspace|
-          airspace.schedule = AIXM::H24
-          airspace.class_layers << class_layer
+          airspace.layers << layer
           airspace.geometry = circle_geometry
-          airspace.remarks = 'circle airspace'
         end
       end
 

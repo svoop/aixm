@@ -57,7 +57,7 @@ module AIXM
               end
             end
             dme.txtRmk(remarks) if remarks
-            dme.target!   # see https://github.com/jimweirich/builder/issues/42
+            dme.target!
           end
         end
       end

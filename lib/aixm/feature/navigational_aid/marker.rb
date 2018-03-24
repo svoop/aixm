@@ -70,7 +70,7 @@ module AIXM
               end
             end
             mkr.txtRmk(remarks) if remarks
-            mkr.target!   # see https://github.com/jimweirich/builder/issues/42
+            mkr.target!
           end
         end
       end

@@ -35,7 +35,7 @@ module AIXM
             builder.tag!(:"valDistVer#{TAGS[limit]}", z.alt.to_s)
             builder.tag!(:"uomDistVer#{TAGS[limit]}", z.unit.to_s)
           end
-        end.target!   # see https://github.com/jimweirich/builder/issues/42
+        end.target!
       end
     end
 

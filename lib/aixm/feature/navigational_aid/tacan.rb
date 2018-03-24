@@ -41,7 +41,7 @@ module AIXM
               end
             end
             tcn.txtRmk(remarks) if remarks
-            tcn.target!   # see https://github.com/jimweirich/builder/issues/42
+            tcn.target!
           end
         end
       end

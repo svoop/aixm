@@ -98,14 +98,13 @@ All features are subclasses of `AIXM::Feature::Base`.
 
 ```ruby
 airspace = AIXM.airspace(
+  id: String
+  type: String or Symbol
   name: String
   short_name: String or nil
-  type: String or Symbol
 )
-airspace.schedule = AIXM.schedule
 airspace.geometry << AIXM.point or AIXM.arc or AIXM.border or AIXM.circle
-airspace.class_layers << AIXM.class_layer
-airspace.remarks = String
+airspace.layers << AIXM.layer
 ```
 
 #### Airport
@@ -260,13 +259,16 @@ vor.associate_tacan(channel: String)   # turns the VOR into a VORTAC
 
 All components are subclasses of `AIXM::Component::Base`.
 
-#### Class Layer
+#### Layer
 
 ```ruby
-class_layer = AIXM.class_layer(
+layer = AIXM.layer(
   class: String or nil
   vertical_limits: AIXM.vertical_limits
 )
+layer.schedule = AIXM.schedule
+layer.selective = true or false (default)
+layer.remarks = String
 ```
 
 #### Geometry
