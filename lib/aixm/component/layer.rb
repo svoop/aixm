@@ -8,7 +8,7 @@ module AIXM
     # mandatory vertical limits.
     #
     # Arguments:
-    # * +class+ - optional airspace class (e.g. +C+)
+    # * +class+ - optional airspace class (e.g. :C)
     # * +vertical_limits+ - instance of +AIXM::Component::VerticalLimits+
     #
     # Writers:

@@ -7,7 +7,15 @@ module AIXM
       ##
       # Implements common attributes of all navigational aids
       #
-      # Please note that the optional elevation +z+ must be in +:qnh+.
+      # Arguments:
+      # * +id+ - published identifier
+      # * +name+ - full name
+      # * +xy+ - position
+      # * +z+ - elevation in +:qnh+
+      #
+      # Writers:
+      # * +schedule+ - instance of +AIXM::Component::Schedule+
+      # * +remarks+ - free text remarks
       class Base
         attr_reader :id, :name, :xy, :z, :schedule, :remarks
 
@@ -24,7 +32,7 @@ module AIXM
 
         def name=(value)
           fail(ArgumentError, "invalid name") unless value.nil? || value.is_a?(String)
-          @name = value&.upcase
+          @name = value&.uptrans
         end
 
         def xy=(value)
@@ -48,6 +56,12 @@ module AIXM
         end
 
         ##
+        # Fallback type key
+        def type_key
+          nil
+        end
+
+        ##
         # Return a fully descriptive combination of +class+ and +type_key+
         def kind
           [self.class.name.split('::').last, type_key].compact.join(':')
@@ -59,12 +73,6 @@ module AIXM
           builder = Builder::XmlMarkup.new(indent: 2)
           builder.comment! "NavigationalAid: [#{kind}] #{name}"
           builder
-        end
-
-        ##
-        # Fallback type key
-        def type_key
-          nil
         end
       end
 

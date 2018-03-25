@@ -8,8 +8,13 @@ module AIXM
       # TACAN (tactical air navigation system) can be used as a DME by civilian
       # aircraft and therefore operate in the frequency band between 960 MHz
       # and 1215 MHz.
-      #
       # https://en.wikipedia.org/wiki/Tactical_air_navigation_system
+      #
+      # Arguments:
+      # * +channel+ - radio channel (e.g. "3X")
+      #
+      # Don't use +vor=+! Instantiate a VOR and then invoke +assign_tacan+ on
+      # it instead.
       class TACAN < DME
         public_class_method :new
 

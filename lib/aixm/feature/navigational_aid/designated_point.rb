@@ -7,16 +7,21 @@ module AIXM
       ##
       # Designated points are named map coordinates
       #
+      # Writers:
+      # * +:type:+ - type of designated point
+      #
       # Types:
       # * +:icao+ (+:ICAO+) - ICAO 5 letter name code designator
       # * +:adhp+ (+:ADHP+) - aerodrome/heliport related name code designator
       # * +:coordinates+ (+:COORD+) - point with identifier derived from its
       #                               geographical coordinates
+      # * +:other+ (+:OTHER+) - see remarks
       class DesignatedPoint < Base
         TYPES = {
           ICAO: :icao,
           ADHP: :adhp,
-          COORD: :coordinates
+          COORD: :coordinates,
+          OTHER: :other
         }.freeze
 
         attr_reader :type

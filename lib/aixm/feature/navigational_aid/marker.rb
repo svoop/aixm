@@ -6,20 +6,26 @@ module AIXM
 
       ##
       # Marker (marker beacons) operate on 75 MHz.
+      # https://en.wikipedia.org/wiki/Marker_beacon
+      #
+      # Arguments:
+      # * +type+ - type of marker
       #
       # Types:
       # * +:outer+ (+:O+) - outer marker
       # * +:middle+ (+:M+) - middle marker
       # * +:inner+ (+:I+) - inner marker
       # * +:backcourse+ (+:C+) - backcourse marker
+      # * +:other+ (+:OTHER+) - see remarks
       #
-      # https://en.wikipedia.org/wiki/Marker_beacon
+
       class Marker < Base
         TYPES = {
           O: :outer,
           M: :middle,
           I: :inner,
-          C: :backcourse
+          C: :backcourse,
+          OTHER: :other
         }
 
         attr_reader :type

@@ -7,8 +7,13 @@ module AIXM
       ##
       # DME (distance measuring equipment) operate in the frequency band
       # between 962 MHz and 1213 MHz.
-      #
       # https://en.wikipedia.org/wiki/Distance_measuring_equipment
+      #
+      # Arguments:
+      # * +channel+ - radio channel (e.g. "3X")
+      #
+      # Don't use +vor=+! Instantiate a VOR and then invoke +assign_dme+ on
+      # it instead.
       class DME < Base
         attr_reader :channel, :vor
 

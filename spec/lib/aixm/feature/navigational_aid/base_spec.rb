@@ -1,33 +1,52 @@
 require_relative '../../../../spec_helper'
 
 describe AIXM::Feature::NavigationalAid::Base do
-  let :base do
-    AIXM::Feature::NavigationalAid::Base
+  subject do
+    AIXM::Feature::NavigationalAid::Base.send(:new, id: 'XXX', xy: AIXM::Factory.xy)
   end
 
-  describe :initialize do
-    it "won't accept invalid arguments" do
-      -> { base.send(:new, id: 'id', name: 'name', xy: 0) }.must_raise ArgumentError
-      -> { base.send(:new, id: 'id', name: 'name', xy: AIXM::Factory.xy, z: 0) }.must_raise ArgumentError
-      -> { base.send(:new, id: 'id', name: 'name', xy: AIXM::Factory.xy, z: AIXM.z(1, :qne)) }.must_raise ArgumentError
+  describe :id= do
+    it "fails on invalid values" do
+      -> { subject.id = 123 }.must_raise ArgumentError
     end
 
-    it "accepts name to be nil" do
-      base.send(:new, id: 'id', xy: AIXM::Factory.xy).name.must_be_nil
+    it "upcases value" do
+      subject.tap { |s| s.id = 'lol' }.id.must_equal 'LOL'
+    end
+  end
+
+  describe :name= do
+    it "fails on invalid values" do
+      -> { subject.name = 123 }.must_raise ArgumentError
     end
 
-    context "downcase attributes" do
-      subject do
-        base.send(:new, id: 'id', name: 'name', xy: AIXM::Factory.xy)
-      end
+    it "accepts nil value" do
+      subject.tap { |s| s.name = nil }.name.must_be :nil?
+    end
 
-      it "upcases ID" do
-        subject.id.must_equal 'ID'
-      end
+    it "uptranses value" do
+      subject.tap { |s| s.name = 'löl' }.name.must_equal 'LOEL'
+    end
+  end
 
-      it "upcases name" do
-        subject.name.must_equal 'NAME'
-      end
+  describe :xy= do
+    it "fails on invalid values" do
+      -> { subject.xy = 123 }.must_raise ArgumentError
+    end
+
+    it "accepts valid values" do
+      subject.tap { |s| s.xy = AIXM::Factory.xy }.xy.must_equal AIXM::Factory.xy
+    end
+  end
+
+  describe :xy= do
+    it "fails on invalid values" do
+      -> { subject.z = 123 }.must_raise ArgumentError
+      -> { subject.z = AIXM.z(123, :qfe) }.must_raise ArgumentError
+    end
+
+    it "accepts valid values" do
+      subject.tap { |s| s.z = AIXM.z(123, :qnh) }.z.must_equal AIXM.z(123, :qnh)
     end
   end
 

@@ -7,18 +7,23 @@ module AIXM
       ##
       # NDB (non-directional beacon) operate in the frequency band between
       # 190 kHz and 1750 kHz.
+      # https://en.wikipedia.org/wiki/Non-directional_beacon
+      #
+      # Argments:
+      # * +type+ - type of NDB
+      # * +f+ - radio frequency
       #
       # Types:
       # * +:en_route+ (+:B+) - high powered NDB
       # * +:locator+ (+:L+) - locator (low powered NDB)
       # * +:marine+ (+:M+) - marine beacon
-      #
-      # https://en.wikipedia.org/wiki/Non-directional_beacon
+      # * +:other+ (+:OTHER+) - see remarks
       class NDB < Base
         TYPES = {
           B: :en_route,
           L: :locator,
-          M: :marine
+          M: :marine,
+          OTHER: :other
         }.freeze
 
         attr_reader :type, :f

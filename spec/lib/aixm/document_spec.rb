@@ -33,12 +33,6 @@ describe AIXM::Document do
     end
   end
 
-  context "incomplete" do
-    subject do
-      AIXM.document
-    end
-  end
-
   context "complete" do
     subject do
       AIXM::Factory.document

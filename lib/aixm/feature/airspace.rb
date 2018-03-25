@@ -7,11 +7,11 @@ module AIXM
     # Airspace feature
     #
     # Arguments:
-    # * +id+ - published identifier (e.g. +LFP81+) or +nil+ to assign a 8 byte
+    # * +id+ - published identifier (e.g. "LFP81") or +nil+ to assign a 8 byte
     #          hex digest derived from +type+, +name+ and +short_name+
-    # * +type+ - airspace type (e.g. +TMA+ or +P+)
-    # * +name+ - full name of the airspace (e.g. +LF P 81+)
-    # * +short_name+ - short name of the airspace (e.g. +LF P 81 CHERBOURG+)
+    # * +type+ - airspace type (e.g. "TMA" or "P")
+    # * +name+ - full name of the airspace (e.g. "LF P 81")
+    # * +short_name+ - short name of the airspace (e.g. "LF P 81 CHERBOURG")
     #
     # Writers:
     # * +geometry+ - instance of +AIXM::Component::Geometry+

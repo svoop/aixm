@@ -6,11 +6,24 @@ module AIXM
 
       ##
       # VOR (VHF omnidirectional range) operate in the frequency band between
-      # 108.00 Mhz to 117.95 MHz. Two type of VORs exist:
+      # 108.00 Mhz to 117.95 MHz.
+      # https://en.wikipedia.org/wiki/VHF_omnidirectional_range
+      #
+      # Arguments:
+      # * +type+ - type of VOR
+      # * +f+ - radio frequency
+      # * +north+ - north alignment
+      #
+      # Setters:
+      # * +associate_dme+ - associate a DME with the given channel which turns
+      #                     this VOR into a VOR/DME
+      # * +associate_tacan+ - associate a TACAN with the given channel which
+      #                       turns this VOR into a VORTAC
       #
       # Types:
-      # * +:vor+ (+:VOR+) - conventional VOR (also known as CVOR)
-      # * +:doppler_vor+ (+:DVOR+) - Doppler VOR
+      # * +:conventional+ (+:VOR+) - conventional VOR (also known as CVOR)
+      # * +:doppler+ (+:DVOR+) - Doppler VOR
+      # * +:other+ (+:OTHER+) - see remarks
       #
       # North types:
       # * +:geographic+ (+:TRUE+) - VOR aligned towards geographic north
@@ -18,18 +31,19 @@ module AIXM
       #                       universal transverse mercator grid imposed on
       #                       topographic maps by the USA and NATO
       # * +:magnetic+ (+:MAG+) - VOR aligned towards magnetic north
-      #
-      # https://en.wikipedia.org/wiki/VHF_omnidirectional_range
+      # * +:other+ (+:OTHER+) - see remarks
       class VOR < Base
         TYPES = {
           VOR: :conventional,
-          DVOR: :doppler
+          DVOR: :doppler,
+          OTHER: :other
         }.freeze
 
         NORTHS = {
           TRUE: :geographic,
           GRID: :grid,
-          MAG: :magnetic
+          MAG: :magnetic,
+          OTHER: :other
         }.freeze
 
         attr_reader :type, :f, :north, :dme, :tacan
