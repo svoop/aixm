@@ -117,7 +117,7 @@ airport.name = String
 airport.xy = AIXM.xy
 airport.z = AIXM.z
 airport.declination = Float
-airport.remarks = String
+airport.remarks = String or nil
 airport.runways << AIXM.runway
 airport.helipads << AIXM.helipad
 airport.add_usage_limitation(...) { ... }   # see below
@@ -155,7 +155,7 @@ airport.add_usage_limitation(:permitted) do |permitted|
                         :school_or_training or :aerial_work or :other
   end
   reservation_required.schedule = AIXM.schedule
-  reservation_required.remarks = String
+  reservation_required.remarks = String or nil
 end
 ```
 
@@ -173,8 +173,7 @@ designated_point = AIXM.designated_point(
   z: AIXM.z or nil
   type: :icao or :adhp, or :coordinates
 )
-designated_point.schedule = AIXM.schedule
-designated_point.remarks = String
+designated_point.remarks = String or nil
 ```
 
 ##### DME
@@ -188,7 +187,7 @@ dme = AIXM.dme(
   channel: String
 )
 dme.schedule = AIXM.schedule
-dme.remarks = String
+dme.remarks = String or nil
 ```
 
 ##### NDB
@@ -203,7 +202,7 @@ ndb = AIXM.ndb(
   f: AIXM.f
 )
 ndb.schedule = AIXM.schedule
-ndb.remarks = String
+ndb.remarks = String or nil
 ```
 
 ##### Marker
@@ -220,7 +219,7 @@ marker = AIXM.marker(
   type: :outer, :middle, :inner or :backcourse
 )
 marker.schedule = AIXM.schedule
-marker.remarks = String
+marker.remarks = String or nil
 ```
 
 ##### TACAN
@@ -234,7 +233,7 @@ tacan = AIXM.tacan(
   channel: String
 )
 tacan.schedule = AIXM.schedule
-tacan.remarks = String
+tacan.remarks = String or nil
 ```
 
 ##### VOR
@@ -250,7 +249,7 @@ vor = AIXM.vor(
   north: :geographic or :grid or :magnetic
 )
 vor.schedule = AIXM.schedule
-vor.remarks = String
+vor.remarks = String or nil
 vor.associate_dme(channel: String)     # turns the VOR into a VOR/DME
 vor.associate_tacan(channel: String)   # turns the VOR into a VORTAC
 ```
@@ -268,7 +267,7 @@ layer = AIXM.layer(
 )
 layer.schedule = AIXM.schedule
 layer.selective = true or false (default)
-layer.remarks = String
+layer.remarks = String or nil
 ```
 
 #### Geometry
@@ -314,7 +313,7 @@ runway.length = Integer   # meters
 runway.width = Integer    # meters
 runway.composition = :asphalt or :bitumen or :concrete or :gravel or
                      :macadam or :sand or :graded_earth or :grass or :water
-runway.remarks = String
+runway.remarks = String or nil
 ```
 
 A runway has one or to directions accessible as `runway.forth` (mandatory) and
@@ -343,6 +342,7 @@ helipad = AIXM.helipad(
 schedule = AIXM.schedule(
   code: String or Symbol
 )
+schedule.remarks = String or nil
 ```
 
 #### Vertical Limits

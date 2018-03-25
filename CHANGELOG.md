@@ -8,10 +8,13 @@
   * Removed signature `to_xml(extension)` in favor of `AIXM.format`
   * Removed `Array#to_digest`
   * Removed `Document#complete?`
+  * Schedule and remarks moved from Airspace to to Layer (formerly known as
+    class layer) 
 * Additions
   * Airport feature
   * Refinement `Float#to_rad`
   * Distance calculation with `AIXM::XY#distance`
+  * `Schedule#remarks`
 
 ## 0.2.3
 

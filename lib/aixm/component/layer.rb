@@ -70,9 +70,7 @@ module AIXM
         builder.codeClass(self.class.to_s) if self.class
         builder << vertical_limits.to_xml
         if schedule
-          builder.Att do |att|
-            att << schedule.to_xml.indent(2)
-          end
+          builder << schedule.to_xml(as: :Att)
         end
         builder.codeSelAvbl(selective? ? 'Y' : 'N') if AIXM.ofmx?
         builder.txtRmk(remarks) if remarks

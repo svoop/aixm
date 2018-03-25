@@ -119,9 +119,7 @@ module AIXM
               vor.uomDistVer(z.unit.to_s)
             end
             if schedule
-              vor.Vtt do |vtt|
-                vtt << schedule.to_xml.indent(4)
-              end
+              vor << schedule.to_xml(as: :Vtt).indent(2)
             end
             vor.txtRmk(remarks) if remarks
           end

@@ -41,9 +41,7 @@ module AIXM
               tcn.uomDistVer(z.unit.to_s)
             end
             if schedule
-              tcn.Ttt do |ttt|
-                ttt << schedule.to_xml.indent(4)
-              end
+              tcn << schedule.to_xml(as: :Ttt).indent(2)
             end
             tcn.txtRmk(remarks) if remarks
             tcn.target!

@@ -10,6 +10,14 @@ module AIXM
 
       # Components
 
+      def schedule
+        AIXM.schedule(
+          code: :sunrise_to_sunset
+        ).tap do |schedule|
+          schedule.remarks =  "schedule remarks"
+        end
+      end
+
       def vertical_limits
         AIXM.vertical_limits(
           upper_z: AIXM.z(65, :qne),

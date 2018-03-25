@@ -71,9 +71,7 @@ module AIXM
               mkr.uomDistVer(z.unit.to_s)
             end
             if schedule
-              mkr.Mtt do |mtt|
-                mtt << schedule.to_xml.indent(4)
-              end
+              mkr << schedule.to_xml(as: :Mtt).indent(2)
             end
             mkr.txtRmk(remarks) if remarks
             mkr.target!

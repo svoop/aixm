@@ -57,9 +57,7 @@ module AIXM
               dme.uomDistVer(z.unit.to_s)
             end
             if schedule
-              dme.Dtt do |dtt|
-                dtt << schedule.to_xml.indent(4)
-              end
+              dme << schedule.to_xml(as: :Dtt).indent(2)
             end
             dme.txtRmk(remarks) if remarks
             dme.target!
