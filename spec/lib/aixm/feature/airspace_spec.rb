@@ -30,7 +30,7 @@ describe AIXM::Feature::Airspace do
         -> { subject.id = 123 }.must_raise ArgumentError
       end
 
-      it "uptranses value" do
+      it "upcases and transcodes value" do
         subject.tap { |s| s.type = 'tma' }.type.must_equal 'TMA'
       end
     end

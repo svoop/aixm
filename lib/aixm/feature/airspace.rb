@@ -53,9 +53,9 @@ module AIXM
 
       def to_uid(as: :AseUid)
         builder = Builder::XmlMarkup.new(indent: 2)
-        builder.tag!(as) do |uid|
-          uid.codeType(type)
-          uid.codeId(id)
+        builder.tag!(as) do |tag|
+          tag.codeType(type)
+          tag.codeId(id)
         end
       end
 

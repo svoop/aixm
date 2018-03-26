@@ -24,7 +24,7 @@ describe AIXM::Feature::NavigationalAid::Base do
       subject.tap { |s| s.name = nil }.name.must_be :nil?
     end
 
-    it "uptranses value" do
+    it "upcases and transcodes value" do
       subject.tap { |s| s.name = 'löl' }.name.must_equal 'LOEL'
     end
   end
@@ -39,7 +39,7 @@ describe AIXM::Feature::NavigationalAid::Base do
     end
   end
 
-  describe :xy= do
+  describe :z= do
     it "fails on invalid values" do
       -> { subject.z = 123 }.must_raise ArgumentError
       -> { subject.z = AIXM.z(123, :qfe) }.must_raise ArgumentError

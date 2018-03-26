@@ -73,9 +73,7 @@ module AIXM
         builder = Builder::XmlMarkup.new(indent: 2)
         builder.codeClass(self.class.to_s) if self.class
         builder << vertical_limits.to_xml
-        if schedule
-          builder << schedule.to_xml(as: :Att)
-        end
+        builder << schedule.to_xml(as: :Att) if schedule
         builder.codeSelAvbl(selective? ? 'Y' : 'N') if AIXM.ofmx?
         builder.txtRmk(remarks) if remarks
         builder.target!

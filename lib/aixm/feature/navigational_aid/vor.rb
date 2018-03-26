@@ -116,9 +116,7 @@ module AIXM
               vor.valElev(z.alt)
               vor.uomDistVer(z.unit.to_s)
             end
-            if schedule
-              vor << schedule.to_xml(as: :Vtt).indent(2)
-            end
+            vor << schedule.to_xml(as: :Vtt).indent(2) if schedule
             vor.txtRmk(remarks) if remarks
           end
           builder << @dme.to_xml if @dme

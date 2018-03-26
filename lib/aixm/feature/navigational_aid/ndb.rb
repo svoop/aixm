@@ -75,9 +75,7 @@ module AIXM
               ndb.valElev(z.alt)
               ndb.uomDistVer(z.unit.to_s)
             end
-            if schedule
-              ndb << schedule.to_xml(as: :Ntt).indent(2)
-            end
+            ndb << schedule.to_xml(as: :Ntt).indent(2) if schedule
             ndb.txtRmk(remarks) if remarks
             ndb.target!
           end

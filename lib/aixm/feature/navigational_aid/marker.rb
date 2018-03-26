@@ -70,9 +70,7 @@ module AIXM
               mkr.valElev(z.alt)
               mkr.uomDistVer(z.unit.to_s)
             end
-            if schedule
-              mkr << schedule.to_xml(as: :Mtt).indent(2)
-            end
+            mkr << schedule.to_xml(as: :Mtt).indent(2) if schedule
             mkr.txtRmk(remarks) if remarks
             mkr.target!
           end
