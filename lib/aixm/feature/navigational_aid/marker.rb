@@ -10,15 +10,6 @@ module AIXM
       #
       # Arguments:
       # * +type+ - type of marker
-      #
-      # Types:
-      # * +:outer+ (+:O+) - outer marker
-      # * +:middle+ (+:M+) - middle marker
-      # * +:inner+ (+:I+) - inner marker
-      # * +:backcourse+ (+:C+) - backcourse marker
-      # * +:other+ (+:OTHER+) - see remarks
-      #
-
       class Marker < Base
         TYPES = {
           O: :outer,
@@ -39,6 +30,15 @@ module AIXM
           warn("WARNING: Maker is not fully implemented yet due to the lack of ILS")
         end
 
+        ##
+        # Type of marker
+        #
+        # Allowed values:
+        # * +:outer+ (+:O+) - outer marker
+        # * +:middle+ (+:M+) - middle marker
+        # * +:inner+ (+:I+) - inner marker
+        # * +:backcourse+ (+:C+) - backcourse marker
+        # * +:other+ (+:OTHER+) - specify in +remarks+
         def type=(value)
           @type = TYPES.lookup(value&.to_sym, nil) || fail(ArgumentError, "invalid type")
         end

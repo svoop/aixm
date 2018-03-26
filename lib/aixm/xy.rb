@@ -13,10 +13,12 @@ module AIXM
 
     def initialize(lat:, long:)
       @lat, @long = float_for(lat), float_for(long)
-      fail(ArgumentError, "illegal latitude") unless (-90..90).include? @lat
-      fail(ArgumentError, "illegal longitude") unless (-180..180).include? @long
+      fail(ArgumentError, "invalid latitude") unless (-90..90).include? @lat
+      fail(ArgumentError, "invalid longitude") unless (-180..180).include? @long
     end
 
+    ##
+    # Latitude
     def lat(format = nil)
       case format
         when :ofmx then ("%011.8f" % @lat.abs.round(8)) + (@lat.negative? ? 'S' : 'N')
@@ -25,6 +27,8 @@ module AIXM
       end
     end
 
+    ##
+    # Longitude
     def long(format = nil)
       case format
         when :ofmx then ("%012.8f" % @long.abs.round(8)) + (@long.negative? ? 'W' : 'E')
@@ -33,6 +37,8 @@ module AIXM
       end
     end
 
+    ##
+    # Check whether two coordinate pairs are identical
     def ==(other)
       other.is_a?(XY) && lat == other.lat && long == other.long
     end
@@ -59,10 +65,10 @@ module AIXM
       case value
         when Numeric then value.to_f
         when String then value[0..-2].to_dd * (value =~ /[SW]$/ ? -1 : 1)
-        else fail(ArgumentError, "illegal value class `#{value.class}'")
+        else fail(ArgumentError, "invalid value class `#{value.class}'")
       end
     rescue
-      fail(ArgumentError, "illegal value `#{value}'")
+      fail(ArgumentError, "invalid value `#{value}'")
     end
 
   end

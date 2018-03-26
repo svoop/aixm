@@ -10,10 +10,7 @@ module AIXM
       # https://en.wikipedia.org/wiki/Distance_measuring_equipment
       #
       # Arguments:
-      # * +channel+ - radio channel (e.g. "3X")
-      #
-      # Don't use +vor=+! Instantiate a VOR and then invoke +assign_dme+ on
-      # it instead.
+      # * +channel+ - radio channel
       class DME < Base
         attr_reader :channel, :vor
 
@@ -24,6 +21,8 @@ module AIXM
           self.channel = channel
         end
 
+        ##
+        # Radio channel (e.g. "3X")
         def channel=(value)
           fail(ArgumentError, "invalid channel") unless value.is_a? String
           @channel = value.upcase
@@ -33,6 +32,7 @@ module AIXM
           fail(ArgumentError, "invalid VOR") unless value.is_a? VOR
           @vor = value
         end
+        private :vor=
 
         def to_uid
           builder = Builder::XmlMarkup.new(indent: 2)

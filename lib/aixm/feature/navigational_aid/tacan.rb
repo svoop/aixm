@@ -11,10 +11,7 @@ module AIXM
       # https://en.wikipedia.org/wiki/Tactical_air_navigation_system
       #
       # Arguments:
-      # * +channel+ - radio channel (e.g. "3X")
-      #
-      # Don't use +vor=+! Instantiate a VOR and then invoke +assign_tacan+ on
-      # it instead.
+      # * +channel+ - radio channel
       class TACAN < DME
         public_class_method :new
 

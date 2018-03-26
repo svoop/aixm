@@ -19,7 +19,7 @@ module AIXM
     # * +:unspecified+ (+:HX+) - schedule not specified
     # * +:operational_request+ (+:HO+) - on request
     # * +:notam+ (+:NOTAM+) - see notam
-    # * +:other+ (+:OTHER+) - see remarks
+    # * +:other+ (+:OTHER+) - specify in +remarks+
     #
     # Shortcuts:
     # * +AIXM::H24+ - continuous 24/7

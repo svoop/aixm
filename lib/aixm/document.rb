@@ -10,7 +10,7 @@ module AIXM
     ##
     # Define a AIXM-Snapshot document
     #
-    # Options:
+    # Arguments:
     # * +created_at+ - creation date and time (default: now)
     # * +effective_at+ - snapshot effective after date and time (default: now)
     def initialize(created_at: nil, effective_at: nil)

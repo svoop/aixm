@@ -12,12 +12,6 @@ module AIXM
       # Argments:
       # * +type+ - type of NDB
       # * +f+ - radio frequency
-      #
-      # Types:
-      # * +:en_route+ (+:B+) - high powered NDB
-      # * +:locator+ (+:L+) - locator (low powered NDB)
-      # * +:marine+ (+:M+) - marine beacon
-      # * +:other+ (+:OTHER+) - see remarks
       class NDB < Base
         TYPES = {
           B: :en_route,
@@ -35,6 +29,14 @@ module AIXM
           self.type, self.f = type, f
         end
 
+        ##
+        # Type of NDB
+        #
+        # Allowed values:
+        # * +:en_route+ (+:B+) - high powered NDB
+        # * +:locator+ (+:L+) - locator (low powered NDB)
+        # * +:marine+ (+:M+) - marine beacon
+        # * +:other+ (+:OTHER+) - specify in +remarks+
         def type=(value)
           @type = TYPES.lookup(value&.to_sym, nil) || fail(ArgumentError, "invalid type")
         end
@@ -43,6 +45,8 @@ module AIXM
           TYPES.key(type)
         end
 
+        ##
+        # Radio frequency
         def f=(value)
           fail(ArgumentError, "invalid f") unless value.is_a?(F) && value.between?(190, 1750, :khz)
           @f = value

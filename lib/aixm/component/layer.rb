@@ -8,14 +8,8 @@ module AIXM
     # mandatory vertical limits.
     #
     # Arguments:
-    # * +class+ - optional airspace class (e.g. :C)
+    # * +class+ - optional airspace class
     # * +vertical_limits+ - instance of +AIXM::Component::VerticalLimits+
-    #
-    # Writers:
-    # * +schedule+ - instance of +AIXM::Component::Schedule+
-    # * +selective+ - +true+ if this class layer can be activated selectively
-    #                 or +false+ (default) otherwise
-    # * +remarks+ - free text remarks
     class Layer
       CLASSES = (:A..:G)
 
@@ -26,26 +20,36 @@ module AIXM
         @selective = false
       end
 
+      ##
+      # Airspace class from :A to :G
       def class=(value)
         @klass = value&.to_sym&.upcase
         fail(ArgumentError, "invalid schedule") unless @klass.nil? || CLASSES.include?(@klass)
       end
 
+      ##
+      # Vertical limits as instance of +AIXM::Component::VerticalLimits+
       def vertical_limits=(value)
         fail(ArgumentError, "invalid vertical limits") unless value.is_a? AIXM::Component::VerticalLimits
         @vertical_limits = value
       end
 
+      ##
+      # Schedule as instance of +AIXM::Component::Schedule+
       def schedule=(value)
         fail(ArgumentError, "invalid schedule") unless value.nil? || value.is_a?(AIXM::Component::Schedule)
         @schedule = value
       end
 
+      ##
+      # May be activated selectively (true or false)
       def selective=(value)
         fail(ArgumentError, "invalid selective") unless [true, false].include? value
         @selective = value
       end
 
+      ##
+      # Free text remarks
       def remarks=(value)
         @remarks = value&.to_s
       end

@@ -12,10 +12,6 @@ module AIXM
       # * +name+ - full name
       # * +xy+ - position
       # * +z+ - elevation in +:qnh+
-      #
-      # Writers:
-      # * +schedule+ - instance of +AIXM::Component::Schedule+
-      # * +remarks+ - free text remarks
       class Base
         attr_reader :id, :name, :xy, :z, :schedule, :remarks
 
@@ -25,31 +21,43 @@ module AIXM
           self.id, self.name, self.xy, self.z = id, name, xy, z
         end
 
+        ##
+        # Published identifier
         def id=(value)
           fail(ArgumentError, "invalid id") unless value.is_a? String
           @id = value.upcase
         end
 
+        ##
+        # Full name
         def name=(value)
           fail(ArgumentError, "invalid name") unless value.nil? || value.is_a?(String)
           @name = value&.uptrans
         end
 
+        ##
+        # Position
         def xy=(value)
           fail(ArgumentError, "invalid xy") unless value.is_a? AIXM::XY
           @xy = value
         end
 
+        ##
+        # Elevation in +qnh+
         def z=(value)
           fail(ArgumentError, "invalid z") unless value.nil? || (value.is_a?(AIXM::Z) && value.qnh?)
           @z = value
         end
 
+        ##
+        # Schedule as instance of +AIXM::Component::Schedule+
         def schedule=(value)
           fail(ArgumentError, "invalid schedule") unless value.nil? || value.is_a?(AIXM::Component::Schedule)
           @schedule = value
         end
 
+        ##
+        # Free text remarks
         def remarks=(value)
           fail(ArgumentError, "invalid remarks") unless value.nil? || value.is_a?(String)
           @remarks = value

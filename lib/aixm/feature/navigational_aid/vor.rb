@@ -13,25 +13,6 @@ module AIXM
       # * +type+ - type of VOR
       # * +f+ - radio frequency
       # * +north+ - north alignment
-      #
-      # Setters:
-      # * +associate_dme+ - associate a DME with the given channel which turns
-      #                     this VOR into a VOR/DME
-      # * +associate_tacan+ - associate a TACAN with the given channel which
-      #                       turns this VOR into a VORTAC
-      #
-      # Types:
-      # * +:conventional+ (+:VOR+) - conventional VOR (also known as CVOR)
-      # * +:doppler+ (+:DVOR+) - Doppler VOR
-      # * +:other+ (+:OTHER+) - see remarks
-      #
-      # North types:
-      # * +:geographic+ (+:TRUE+) - VOR aligned towards geographic north
-      # * +:grid+ (+:GRID+) - VOR aligned along north-south lines of the
-      #                       universal transverse mercator grid imposed on
-      #                       topographic maps by the USA and NATO
-      # * +:magnetic+ (+:MAG+) - VOR aligned towards magnetic north
-      # * +:other+ (+:OTHER+) - see remarks
       class VOR < Base
         TYPES = {
           VOR: :conventional,
@@ -55,6 +36,13 @@ module AIXM
           self.type, self.f, self.north = type, f, north
         end
 
+        ##
+        # Type of VOR
+        #
+        # Allowed values:
+        # * +:conventional+ (+:VOR+) - conventional VOR (also known as CVOR)
+        # * +:doppler+ (+:DVOR+) - Doppler VOR
+        # * +:other+ (+:OTHER+) - specify in +remarks+
         def type=(value)
           @type = TYPES.lookup(value&.to_sym, nil) || fail(ArgumentError, "invalid type")
         end
@@ -63,11 +51,21 @@ module AIXM
           TYPES.key(type)
         end
 
+        ##
+        # Radio frequency
         def f=(value)
           fail(ArgumentError, "invalid f") unless value.is_a?(F) && value.between?(108, 117.95, :mhz)
           @f = value
         end
 
+        ##
+        # North alignment
+        # * +:geographic+ (+:TRUE+) - VOR aligned towards geographic north
+        # * +:grid+ (+:GRID+) - VOR aligned along north-south lines of the
+        #                       universal transverse mercator grid imposed on
+        #                       topographic maps by the USA and NATO
+        # * +:magnetic+ (+:MAG+) - VOR aligned towards magnetic north
+        # * +:other+ (+:OTHER+) - specify in +remarks+
         def north=(value)
           @north = NORTHS.lookup(value&.to_sym, nil) || fail(ArgumentError, "invalid north")
         end
@@ -82,7 +80,7 @@ module AIXM
           @dme = AIXM.dme(id: id, name: name, xy: xy, z: z, channel: channel)
           @dme.schedule = schedule
           @dme.remarks = remarks
-          @dme.vor = self
+          @dme.send(:vor=, self)
         end
 
         ##
@@ -91,7 +89,7 @@ module AIXM
           @tacan = AIXM.tacan(id: id, name: name, xy: xy, z: z, channel: channel)
           @tacan.schedule = schedule
           @tacan.remarks = remarks
-          @tacan.vor = self
+          @tacan.send(:vor=, self)
         end
 
         def to_uid

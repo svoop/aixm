@@ -78,7 +78,7 @@ describe AIXM::Refinements do
     end
 
     describe :uptrans do
-      it "must transliterate illegal characters" do
+      it "must transliterate invalid characters" do
         'DÉJÀ SCHÖN'.uptrans.must_equal 'DEJA SCHOEN'
       end
     end

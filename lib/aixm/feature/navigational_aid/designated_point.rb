@@ -7,15 +7,8 @@ module AIXM
       ##
       # Designated points are named map coordinates
       #
-      # Writers:
-      # * +:type:+ - type of designated point
-      #
-      # Types:
-      # * +:icao+ (+:ICAO+) - ICAO 5 letter name code designator
-      # * +:adhp+ (+:ADHP+) - aerodrome/heliport related name code designator
-      # * +:coordinates+ (+:COORD+) - point with identifier derived from its
-      #                               geographical coordinates
-      # * +:other+ (+:OTHER+) - see remarks
+      # Arguments:
+      # * +type+ - type of designated point
       class DesignatedPoint < Base
         TYPES = {
           ICAO: :icao,
@@ -33,6 +26,15 @@ module AIXM
           self.type = type
         end
 
+        ##
+        # Type of designated point
+        #
+        # Allowed values:
+        # * +:icao+ (+:ICAO+) - ICAO 5 letter name code designator
+        # * +:adhp+ (+:ADHP+) - aerodrome/heliport related name code designator
+        # * +:coordinates+ (+:COORD+) - point with identifier derived from its
+        #                               geographical coordinates
+        # * +:other+ (+:OTHER+) - specify in +remarks+
         def type=(value)
           @type = TYPES.lookup(value&.to_sym, nil) || fail(ArgumentError, "invalid type")
         end

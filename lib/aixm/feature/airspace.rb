@@ -6,14 +6,7 @@ module AIXM
     ##
     # Airspace feature
     #
-    # Arguments:
-    # * +id+ - published identifier (e.g. "LFP81") or +nil+ to assign a 8 byte
-    #          hex digest derived from +type+, +name+ and +short_name+
-    # * +type+ - airspace type (e.g. "TMA" or "P")
-    # * +name+ - full name of the airspace (e.g. "LF P 81")
-    # * +short_name+ - short name of the airspace (e.g. "LF P 81 CHERBOURG")
-    #
-    # Writers:
+    # Accessors:
     # * +geometry+ - instance of +AIXM::Component::Geometry+
     # * +layers+ - array of instances of +AIXM::Component::Layer+
     class Airspace
@@ -27,21 +20,32 @@ module AIXM
         @layers = []
       end
 
+      ##
+      # Published identifier (e.g. "LFP81")
+      #
+      # Passing +nil+ will assign a 8 byte hex digest derived from +type+,
+      # +name+ and +short_name+.
       def id=(value)
         fail(ArgumentError, "invalid id") unless value.nil? || value.is_a?(String)
         @id = value&.uptrans || [type, name, short_name].to_digest.upcase
       end
 
+      ##
+      # Airspace type (e.g. "TMA" or "P")
       def type=(value)
         fail(ArgumentError, "invalid type") unless value.is_a?(String)
         @type = value.upcase
       end
 
+      ##
+      # Full name (e.g. "LF P 81 CHERBOURG")
       def name=(value)
         fail(ArgumentError, "invalid name") unless value.is_a? String
         @name = value.uptrans
       end
 
+      ##
+      # Short name (e.g. "LF P 81")
       def short_name=(value)
         fail(ArgumentError, "invalid short name") unless value.nil? || value.is_a?(String)
         @short_name = value&.uptrans
