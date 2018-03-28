@@ -112,14 +112,17 @@ airspace.layers << AIXM.layer
 ```ruby
 airport = AIXM.airport(
   code: String
+  name: String
+  xy: AIXM.xy
 )
-airport.name = String
-airport.xy = AIXM.xy
+airport.gps = String
+airport.type = :landing_site
 airport.z = AIXM.z
 airport.declination = Float
+airport.transition_z = AIXM.z
 airport.remarks = String or nil
-airport.runways << AIXM.runway
-airport.helipads << AIXM.helipad
+airport.add_runway(AIXM.runway)
+airport.add_helipad(AIXM.helipad)
 airport.add_usage_limitation(...) { ... }   # see below
 ```
 
@@ -154,8 +157,8 @@ airport.add_usage_limitation(:permitted) do |permitted|
     condition.purpose = :scheduled or :not_scheduled or :private or
                         :school_or_training or :aerial_work or :other
   end
-  reservation_required.schedule = AIXM.schedule
-  reservation_required.remarks = String or nil
+  permitted.schedule = AIXM.schedule
+  permitted.remarks = String or nil
 end
 ```
 
@@ -312,7 +315,8 @@ runway = AIXM.runway(
 runway.length = Integer   # meters
 runway.width = Integer    # meters
 runway.composition = :asphalt or :bitumen or :concrete or :gravel or
-                     :macadam or :sand or :graded_earth or :grass or :water
+                     :macadam or :sand or :graded_earth or :grass or :water or
+                     :other
 runway.remarks = String or nil
 ```
 

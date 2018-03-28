@@ -1,96 +1,71 @@
 require_relative '../../../spec_helper'
 
 describe AIXM::Component::Runway do
+  subject do
+    AIXM::Factory.airport.runways.first
+  end
+
   describe :initialize do
-    subject do
-      AIXM::Component::Runway
+    it "sets defaults for bidirectional runways" do
+      subject.forth.name.must_equal '16L'
+      subject.back.name.must_equal '34R'
     end
 
-    let :airport do
-      AIXM::Factory.airport
-    end
-
-    it "fails on invalid arguments" do
-      -> { subject.new(airport: 0, name: '16L/34R') }.must_raise ArgumentError
-      -> { subject.new(airport: airport, name: 0) }.must_raise ArgumentError
-    end
-
-    it "upcases and transcodes name" do
-      subject.new(airport: airport, name: '16l/34r').name.must_equal '16L/34R'
-    end
-
-    it "presets forth and back names" do
-      subject.new(airport: airport, name: '16l/34r').forth.name.must_equal '16L'
-      subject.new(airport: airport, name: '16l/34r').back.name.must_equal '34R'
-      subject.new(airport: airport, name: '16l').forth.name.must_equal '16L'
-      subject.new(airport: airport, name: '16l').back.must_be_nil
+    it "sets defaults for unidirectional runways" do
+      subject = AIXM::Component::Runway.new(name: '30')
+      subject.forth.name.must_equal '30'
+      subject.back.must_be :nil?
     end
   end
 
-  subject do
-    AIXM::Factory.runway
+  describe :name= do
+    it "upcases and transcodes value" do
+      subject.tap { |s| s.name = '10r/28l' }.name.must_equal '10R/28L'
+    end
   end
 
   describe :length= do
     it "fails on invalid values" do
+      -> { subject.length = :foobar }.must_raise ArgumentError
       -> { subject.length = nil }.must_raise ArgumentError
       -> { subject.length = -1 }.must_raise ArgumentError
     end
 
-    it "normalizes value" do
-      subject.tap { |s| s.length = 1234.0 }.length.must_equal 1234
+    it "converts valid values to integer" do
+      subject.tap { |s| s.length = 1000.5 }.length.must_equal 1000
     end
   end
 
   describe :width= do
     it "fails on invalid values" do
+      -> { subject.width = :foobar }.must_raise ArgumentError
       -> { subject.width = nil }.must_raise ArgumentError
       -> { subject.width = -1 }.must_raise ArgumentError
     end
 
-    it "normalizes value" do
-      subject.tap { |s| s.length = 123.0 }.length.must_equal 123
+    it "converts valid values to integer" do
+      subject.tap { |s| s.width = 150.5 }.width.must_equal 150
     end
   end
 
   describe :composition= do
     it "fails on invalid values" do
+      -> { subject.composition = :foobar }.must_raise ArgumentError
       -> { subject.composition = nil }.must_raise ArgumentError
-      -> { subject.composition = 'foobar' }.must_raise ArgumentError
     end
 
-    it "normalizes values" do
-      subject.tap { |s| s.composition = 'CONC' }.composition.must_equal :concrete
+    it "normalizes valid values" do
+      subject.tap { |s| s.composition = :macadam }.composition.must_equal :macadam
+      subject.tap { |s| s.composition = :GRADE }.composition.must_equal :graded_earth
     end
   end
 
-  describe :remarks= do
-    it "stringifies value unless nil" do
-      subject.tap { |s| s.remarks = 'foobar' }.remarks.must_equal 'foobar'
-      subject.tap { |s| s.remarks = 123 }.remarks.must_equal '123'
-      subject.tap { |s| s.remarks = nil }.remarks.must_be_nil
-    end
-  end
+  macro :remarks
 end
 
 describe AIXM::Component::Runway::Direction do
-  describe :initialize do
-    subject do
-      AIXM::Component::Runway::Direction
-    end
-
-    it "fails on invalid arguments" do
-      -> { subject.new(runway: 0, name: '16L') }.must_raise ArgumentError
-      -> { subject.new(runway: AIXM::Factory.runway, name: 0) }.must_raise ArgumentError
-    end
-
-    it "upcases and transcodes name" do
-      subject.new(runway: AIXM::Factory.runway, name: '16l').name.must_equal '16L'
-    end
-  end
-
   subject do
-    AIXM::Component::Runway::Direction.new(runway: AIXM::Factory.runway, name: '16l')
+    AIXM::Factory.airport.runways.first.forth
   end
 
   describe :name= do
@@ -102,24 +77,27 @@ describe AIXM::Component::Runway::Direction do
   end
 
   describe :geographic_orientation= do
-    it "fails on out of bound values" do
+    it "fails on invalid values" do
+      -> { subject.geographic_orientation = :foobar }.must_raise ArgumentError
       -> { subject.geographic_orientation = -1 }.must_raise ArgumentError
       -> { subject.geographic_orientation = 360 }.must_raise ArgumentError
     end
-  end
 
-  describe :xy= do
-    it "fails on non AIXM::XY value" do
-      -> { subject.xy = nil }.must_raise ArgumentError
+    it "converts valid values to integer" do
+      subject.tap { |s| s.geographic_orientation = 100.5 }.geographic_orientation.must_equal 100
     end
   end
+
+  macro :xy
+
+  macro :z_qnh
 
   describe :displaced_threshold= do
-    it "fails on non AIXM::XY or Numeric value" do
-      -> { subject.xy = nil }.must_raise ArgumentError
+    it "fails on invalid values" do
+      -> { subject.displaced_threshold = nil }.must_raise ArgumentError
     end
 
-    it "normalizes value" do
+    it "converts valid values to integer" do
       subject.tap { |s| s.displaced_threshold = 222.0 }.displaced_threshold.must_equal 222
     end
 
@@ -129,6 +107,8 @@ describe AIXM::Component::Runway::Direction do
       subject.displaced_threshold.must_equal 199
     end
   end
+
+  macro :remarks
 
   describe :magnetic_orientation do
     it "is calculated correctly" do

@@ -6,6 +6,13 @@ module AIXM
     ##
     # Runways are landing and takeoff strips
     #
+    # By convention, the runway name is usually the composition of the runway
+    # forth name (smaller number) and the runway back name (bigger number)
+    # joined with a forward slash.
+    #
+    # Arguments:
+    # * +name+ - name of the runway
+    #
     # Example of a bidirectional runway:
     #   runway = AIXM.runway(name: '16L/34R')
     #   runway.name   # => '16L/34R'
@@ -20,10 +27,6 @@ module AIXM
     #   runway.forth.name = '16L'
     #   runway.forth.geographic_orientation = 165
     #   runway.back = nil
-    #
-    # By convention, the runway name is usually the composition of the runway
-    # forth name (smaller number) and the runway hence name (bigger number)
-    # joined with a forward slash.
     class Runway
       COMPOSITIONS = {
         ASPH: :asphalt,
@@ -34,34 +37,46 @@ module AIXM
         SAND: :sand,
         GRADE: :graded_earth,
         GRASS: :grass,
-        WATER: :water
+        WATER: :water,
+        OTHER: :other
       }
 
-      attr_reader :airport
-      attr_reader :name, :length, :width, :composition, :remarks
+      attr_reader :airport, :name
+      attr_reader :length, :width, :composition, :remarks
       attr_accessor :forth, :back
 
-      def initialize(airport:, name:)
-        fail(ArgumentError, "illegal airport") unless airport.is_a? AIXM::Feature::Airport
-        fail(ArgumentError, "illegal name") unless name.is_a? String
-        @airport, @name = airport, name.uptrans
+      def initialize(name:)
+        self.name = name
         @name.split('/').tap do |forth, back|
           @forth = Direction.new(runway: self, name: forth)
           @back = Direction.new(runway: self, name: back) if back
         end
       end
 
+      def airport=(value)
+        fail(ArgumentError, "invalid airport") unless value.is_a? AIXM::Feature::Airport
+        @airport = value
+      end
+      private :airport=
+
+      ##
+      # Name of the runway (e.g. "12/30" or "34L/16R")
+      def name=(value)
+        fail(ArgumentError, "invalid name") unless value.is_a? String
+        @name = value.uptrans
+      end
+
       ##
       # Length in meters
       def length=(value)
-        fail(ArgumentError, "illegal length") unless value.is_a?(Numeric) && value > 0
+        fail(ArgumentError, "invalid length") unless value.is_a?(Numeric) && value > 0
         @length = value.to_i
       end
 
       ##
       # Width in meters
       def width=(value)
-        fail(ArgumentError, "illegal width") unless value.is_a?(Numeric)  && value > 0
+        fail(ArgumentError, "invalid width") unless value.is_a?(Numeric)  && value > 0
         @width = value.to_i
       end
 
@@ -69,25 +84,23 @@ module AIXM
       # Composition of the surface
       #
       # Allowed values:
-      # * +:asphalt+
-      # * +:concrete+
-      # * +:bitumen+ - dug up, bound and rolled ground
-      # * +:gravel+ - small and midsize rounded stones
-      # * +:macadam+ - small rounded stones
-      # * +:sand+
-      # * +:graded_earth+ - graded or rolled earth possibly with some grass
-      # * +:grass+ - lawn
-      # * +:water+
+      # * +:asphalt+ (+:ASPH+)
+      # * +:concrete+ (+:CONC+)
+      # * +:bitumen+ (+:BITUM+) - dug up, bound and rolled ground
+      # * +:gravel+ (+:GRAVE+) - small and midsize rounded stones
+      # * +:macadam+ (+:MACADAM+) - small rounded stones
+      # * +:sand+ (+:SAND+)
+      # * +:graded_earth+ (+:GRADE+) - graded or rolled earth possibly with
+      #                                some grass
+      # * +:grass+ (+:GRASS+) - lawn
+      # * +:water+ (+:WATER+)
+      # * +:other+ (+:OTHER+) - specify in +remarks+
       def composition=(value)
         @composition = COMPOSITIONS.lookup(value&.to_sym, nil) || fail(ArgumentError, "invalid composition")
       end
 
-      def composition_key
-        COMPOSITIONS.key(north)
-      end
-
       ##
-      # Free text with further details
+      # Free text remarks
       def remarks=(value)
         @remarks = value&.to_s
       end
@@ -95,7 +108,7 @@ module AIXM
       def to_uid
         builder = Builder::XmlMarkup.new(indent: 2)
         builder.RwyUid do |rwyuid|
-          rwyuid << ahp.to_uid
+          rwyuid << airport.to_uid.indent(2)
           rwyuid.txtDesig(name)
         end
       end
@@ -103,49 +116,74 @@ module AIXM
       def to_xml
         builder = Builder::XmlMarkup.new(indent: 2)
         builder.Rwy do |rwy|
-          rwy << to_uid
+          rwy << to_uid.indent(2)
           rwy.valLen(length)
           rwy.valWid(width)
           rwy.uomDimRwy('M')
-          rwy.codeComosition(composition_key.to_s)
-          rwy.txtRmk(remarks)
+          rwy.codeComposition(COMPOSITIONS.key(composition).to_s)
+          rwy.txtRmk(remarks) if remarks
         end
         %i(@forth @back).each do |direction|
           direction = instance_variable_get(direction)
           builder << direction.to_xml if direction
         end
+        builder.target!
       end
 
       ##
       # Runway direction
+      #
+      # Access runway direction instances via the runway:
+      #   runway.name         # => "12/30"
+      #   runway.forth.name   # => "12"
+      #   runway.back.name    # => "30"
       class Direction
-        attr_reader :runway
-        attr_reader :name, :geographic_orientation, :xy, :displaced_threshold
+        attr_reader :runway, :name
+        attr_reader :geographic_orientation, :xy, :z, :displaced_threshold, :remarks
 
         def initialize(runway:, name:)
-          fail(ArgumentError, "illegal runway") unless runway.is_a? AIXM::Component::Runway
-          @runway, self.name = runway, name
+          self.runway, self.name = runway, name
         end
 
+        def runway=(value)
+          fail(ArgumentError, "invalid runway") unless value.is_a? AIXM::Component::Runway
+          @runway = value
+        end
+        private :runway
+
         ##
-        # Overwrite preset runway direction name
+        # Name of the runway direction (e.g. "16R")
         def name=(value)
-          fail(ArgumentError, "illegal name") unless value.is_a? String
+          fail(ArgumentError, "invalid name") unless value.is_a? String
           @name = value.uptrans
         end
 
         ##
         # Geographic orientation (true bearing) in degrees
         def geographic_orientation=(value)
+          fail(ArgumentError, "invalid geographic orientation") unless value.respond_to? :to_i
           @geographic_orientation = value.to_i
-          fail(ArgumentError, "illegal geographic orientation") unless (0..359).include? @geographic_orientation
+          fail(ArgumentError, "invalid geographic orientation") unless (0..359).include? @geographic_orientation
         end
 
         ##
         # Beginning point (middle of the runway width)
         def xy=(value)
-          fail(ArgumentError, "illegal xy") unless value.is_a? AIXM::XY
+          fail(ArgumentError, "invalid xy") unless value.is_a? AIXM::XY
           @xy = value
+        end
+
+        ##
+        # Elevation of the touch down zone in +qnh+
+        def z=(value)
+          fail(ArgumentError, "invalid z") unless value.is_a?(AIXM::Z) && value.qnh?
+          @z = value
+        end
+
+        ##
+        # Free text remarks
+        def remarks=(value)
+          @remarks = value&.to_s
         end
 
         ##
@@ -158,48 +196,52 @@ module AIXM
           @displaced_threshold = case value
             when AIXM::XY then @xy.distance(value).to_i
             when Numeric then value.to_i
-            else fail(ArgumentError, "illegal displaced threshold")
+            else fail(ArgumentError, "invalid displaced threshold")
           end
         end
 
         ##
-        # Calculate the magnetic orientation (bearing) in degrees
+        # Calculate the magnetic orientation (magnetic bearing) in degrees
         def magnetic_orientation
-          (geographic_orientation + runway.airport.declination).round
+          if geographic_orientation && runway.airport.declination
+            (geographic_orientation + runway.airport.declination).round
+          end
         end
 
         def to_xml
           builder = Builder::XmlMarkup.new(indent: 2)
           builder.Rdn do |rdn|
             rdn.RdnUid do |rdnuid|
-              rdnuid.RwyUid do |rwyuid|
-              end
-              rdnuid.txtDesign(name)
+              rdnuid << runway.to_uid.indent(4)
+              rdnuid.txtDesig(name)
             end
-            rdn.geoLat(xy.lat)
-            rdn.geoLong(xy.long)
-            rdn.valTrueBrg()
-            rdn.magBrg()
-            rdn.valElevTdz()
-            rdn.uomElevTdz()
-            rdn.txtRmk()
+            rdn.geoLat(xy.lat(AIXM.format))
+            rdn.geoLong(xy.long(AIXM.format))
+            rdn.valTrueBrg(geographic_orientation)
+            rdn.valMagBrg(magnetic_orientation)
+            if z
+              rdn.valElevTdz(z.alt)
+              rdn.uomElevTdz(z.unit.to_s)
+            end
+            rdn.txtRmk(remarks) if remarks
           end
-          builder.Rdd do |rdd|
-            builder.RddUid do |rdduid|
-              builder.RdnUid do |rdnuid|
-                builder.RwyUid do |rwyuid|
+          if displaced_threshold
+            builder.Rdd do |rdd|
+              rdd.RddUid do |rdduid|
+                rdduid.RdnUid do |rdnuid|
+                  rdnuid << runway.to_uid.indent(6)
+                  rdnuid.txtDesig(name)
                 end
+                rdduid.codeType('DPLM')
+                rdduid.codeDayPeriod('A')
               end
-              rdduid.codeType()
-              rdduid.codeDayPeriod()
+              rdd.valDist(displaced_threshold)
+              rdd.uomDist('M')
+              rdd.txtRmk(remarks) if remarks
             end
-            rdd.valDist()
-            rdd.uomDist()
-            rdd.txtRmk()
           end
         end
       end
-
     end
   end
 end

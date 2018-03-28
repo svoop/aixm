@@ -208,43 +208,66 @@ module AIXM
       # Airport
 
       def airport
-        AIXM.airport(code: 'LFNT').tap do |airport|
-          airport.name = "Avignon-Pujaut"
-          airport.xy = AIXM.xy(lat: %q(43°59'46"N), long: %q(004°45'16"E))
-          airport.z = AIXM.z(146, :QNH)
+        AIXM.airport(
+          code: 'LFNT',
+          name: 'Avignon-Pujaut',
+          xy: AIXM.xy(lat: %q(43°59'46"N), long: %q(004°45'16"E))
+        ).tap do |airport|
+          airport.gps = "LFPUJAUT"
+          airport.z = AIXM.z(146, :qnh)
           airport.declination = 1.08
+          airport.transition_z = AIXM.z(10_000, :qnh)
           airport.remarks = "Restricted access"
+          airport.add_runway(runway)
+#         airport.add_helipad(helipad)
+          airport.add_usage_limitation :permitted
+          airport.add_usage_limitation(:reservation_required) do |reservation_required|
+            reservation_required.add_condition { |c| c.aircraft = :glider }
+            reservation_required.add_condition { |c| c.origin = :international }
+            reservation_required.schedule = AIXM::H24
+            reservation_required.remarks = "reservation remarks"
+          end
         end
       end
 
       def runway
-        AIXM.runway(airport: airport, name: '16L/34R').tap do |runway|
+        AIXM.runway(name: '16L/34R').tap do |runway|
           runway.length = 650
           runway.width = 80
           runway.composition = :graded_earth
           runway.remarks = "Markings eroded"
           runway.forth.xy = AIXM.xy(lat: %q(44°00'07.63"N), long: %q(004°45'07.81"E))
+          runway.forth.z = AIXM.z(145, :qnh)
           runway.forth.displaced_threshold = AIXM.xy(lat: %q(44°00'03.54"N), long: %q(004°45'09.30"E))
+          runway.forth.geographic_orientation = 165
+          runway.forth.remarks = "forth remarks"
           runway.back.xy = AIXM.xy(lat: %q(43°59'25.31"N), long: %q(004°45'23.24"E))
+          runway.forth.z = AIXM.z(147, :qnh)
           runway.back.displaced_threshold = AIXM.xy(lat: %q(43°59'31.84"N), long: %q(004°45'20.85"E))
+          runway.back.geographic_orientation = 345
+          runway.back.remarks = "back remarks"
         end
       end
+
+#     def helipad
+#     end
 
       # Document
 
       def document
         time = Time.parse('2018-01-18 12:00:00 +0100')
         AIXM.document(created_at: time, effective_at: time).tap do |document|
-          document.features << AIXM::Factory.polygon_airspace
-          document.features << AIXM::Factory.circle_airspace
-          document.features << AIXM::Factory.designated_point
-          document.features << AIXM::Factory.dme
-          document.features << AIXM::Factory.marker
-          document.features << AIXM::Factory.ndb
-          document.features << AIXM::Factory.tacan
-          document.features << AIXM::Factory.vor
-          document.features << AIXM::Factory.vordme
-          document.features << AIXM::Factory.vortac
+           document.features << AIXM::Factory.airport
+#          document.features << AIXM::Factory.polygon_airspace
+#          document.features << AIXM::Factory.circle_airspace
+#          document.features << AIXM::Factory.designated_point
+#          document.features << AIXM::Factory.dme
+#          document.features << AIXM::Factory.marker
+#          document.features << AIXM::Factory.ndb
+#          document.features << AIXM::Factory.tacan
+#          document.features << AIXM::Factory.vor
+#          document.features << AIXM::Factory.vordme
+#          document.features << AIXM::Factory.vortac
         end
       end
 

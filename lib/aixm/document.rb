@@ -2,7 +2,9 @@ using AIXM::Refinements
 
 module AIXM
   class Document
-    IGNORE_ERROR_PATTERN = %r(OrgUid)
+#   TODO: testing only
+#   IGNORE_ERROR_PATTERN = %r(OrgUid)
+    IGNORE_ERROR_PATTERN = %r(OrgUid|region|namespace)
 
     attr_reader :created_at, :effective_at
     attr_accessor :features

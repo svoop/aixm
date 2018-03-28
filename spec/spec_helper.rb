@@ -26,5 +26,9 @@ end
 class MiniTest::Spec
   class << self
     alias_method :context, :describe
+
+    def macro(name)
+      load Pathname(__dir__).join("macros/#{name}.rb")
+    end
   end
 end
