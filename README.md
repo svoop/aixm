@@ -24,16 +24,51 @@ gem aixm
 
 ## Usage
 
+Here's how to build a document object, populate it with a simple feature and then render it as AIXM:
+
+```ruby
+document = AIXM.document
+document.features << AIXM.designated_point(
+  id: "ABIXI",
+  xy: AIXM.xy(lat: %q(46°31'54.3"N), long: %q(002°19'55.2"W)),
+  type: :icao
+)
+document.aixm!   # not really necessary since AIXM is the default format
+document.to_xml
+```
+
 You can initialize all elements either traditionally or by use of shorter AIXM class methods. The following two statements are identical:
 
 ```ruby
-AIXM::Feature::Airspace.new(...)
-AIXM.airspace(...)
+AIXM::Feature::NavigationalAid::DesignatedPoint.new(...)
+AIXM.designated_point(...)
 ```
 
-### Fundamentals
+## Configuration
 
-All fundamentals are subclasses of `AIXM::Base`.
+The following configuration options are available for setting and getting:
+
+```ruby
+AIXM.config.format           # either :aixm (default) or :ofmx
+AIXM.config.ignored_errors   # regex of ignored XML schema errors
+```
+
+There are shortcuts to set and get the format:
+
+```ruby
+AIXM.format             # => :aixm
+AIXM.aixm?              # => true
+AIXM.ofmx!              # => :ofmx
+AIXM.ofmx?              # => true
+AIXM.format             # => :ofmx
+AIXM.format(:version)   # => 0
+```
+
+## Validation
+
+`AIXM::Document#valid?` validates the resulting AIXM or OFMX against its XML schema. If any, you find the errors in `AIXM::Document#errors`.
+
+## Model
 
 ### Document
 
@@ -91,8 +126,6 @@ AIXM.f(123.35, :mhz)
 ```
 
 ### Features
-
-All features are subclasses of `AIXM::Feature::Base`.
 
 #### Airspace
 
@@ -259,8 +292,6 @@ vor.associate_tacan(channel: String)   # turns the VOR into a VORTAC
 
 ### Components
 
-All components are subclasses of `AIXM::Component::Base`.
-
 #### Layer
 
 ```ruby
@@ -358,31 +389,6 @@ vertical_limits = AIXM.vertical_limits(
   lower_z: AIXM.z
   min_z: AIXM.z or nil
 )
-```
-
-## Validation
-
-`AIXM::Document#valid?` validates the resulting AIXM or OFMX against its XSD schema. If any, you find the errors in `AIXM::Document#errors`. Since the data model is not fully implemented, some associations cannot be assigned and have to be left empty. The resulting validation errors are silently ignored:
-
-* OrgUid - organizations may be empty tags
-
-## Generation
-
-By default, AIXM 4.5 is generated:
-
-```ruby
-AIXM.format
-# => :aixm
-document.to_xml
-```
-
-However, if you prefer OFMX 4.5-1 to be generated:
-
-```ruby
-AIXM.ofmx!
-AIXM.format
-# => :ofmx
-document.to_xml
 ```
 
 ## Constants
