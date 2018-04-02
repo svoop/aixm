@@ -68,6 +68,7 @@ module AIXM
 
       def polygon_airspace
         AIXM.airspace(
+          source: 'LF|GEN|0.0 FACTORY|0|0',
           region: 'LF',
           id: 'PA',
           type: 'D',
@@ -81,6 +82,7 @@ module AIXM
 
       def circle_airspace
         AIXM.airspace(
+          source: 'LF|GEN|0.0 FACTORY|0|0',
           region: 'LF',
           id: 'CA',
           type: 'D',
@@ -96,6 +98,7 @@ module AIXM
 
       def designated_point
         AIXM.designated_point(
+          source: 'LF|GEN|0.0 FACTORY|0|0',
           region: 'LF',
           id: 'DDD',
           name: 'DESIGNATED POINT NAVAID',
@@ -110,6 +113,7 @@ module AIXM
 
       def dme
         AIXM.dme(
+          source: 'LF|GEN|0.0 FACTORY|0|0',
           region: 'LF',
           id: 'MMM',
           name: 'DME NAVAID',
@@ -124,6 +128,7 @@ module AIXM
 
       def marker
         AIXM.marker(
+          source: 'LF|GEN|0.0 FACTORY|0|0',
           region: 'LF',
           id: '---',
           name: 'MARKER NAVAID',
@@ -138,6 +143,7 @@ module AIXM
 
       def ndb
         AIXM.ndb(
+          source: 'LF|GEN|0.0 FACTORY|0|0',
           region: 'LF',
           id: 'NNN',
           name: 'NDB NAVAID',
@@ -153,6 +159,7 @@ module AIXM
 
       def tacan
         AIXM.tacan(
+          source: 'LF|GEN|0.0 FACTORY|0|0',
           region: 'LF',
           id: 'TTT',
           name: 'TACAN NAVAID',
@@ -167,6 +174,7 @@ module AIXM
 
       def vor
         AIXM.vor(
+          source: 'LF|GEN|0.0 FACTORY|0|0',
           region: 'LF',
           id: 'VVV',
           name: 'VOR NAVAID',
@@ -183,6 +191,7 @@ module AIXM
 
       def vordme
         AIXM.vor(
+          source: 'LF|GEN|0.0 FACTORY|0|0',
           region: 'LF',
           id: 'VDD',
           name: 'VOR/DME NAVAID',
@@ -200,6 +209,7 @@ module AIXM
 
       def vortac
         AIXM.vor(
+          source: 'LF|GEN|0.0 FACTORY|0|0',
           region: 'LF',
           id: 'VTT',
           name: 'VORTAC NAVAID',
@@ -219,6 +229,7 @@ module AIXM
 
       def airport
         AIXM.airport(
+          source: 'LF|GEN|0.0 FACTORY|0|0',
           region: 'LF',
           code: 'LFNT',
           name: 'Avignon-Pujaut',

@@ -156,6 +156,142 @@ describe AIXM::Feature::Airport do
       end
     end
   end
+
+  describe :to_xml do
+    it "must build correct OFMX" do
+      AIXM.ofmx!
+      subject.to_xml.must_equal <<~END
+        <Ahp source="LF|GEN|0.0 FACTORY|0|0">
+          <AhpUid region="LF">
+            <codeId>LFNT</codeId>
+          </AhpUid>
+          <txtName>AVIGNON-PUJAUT</txtName>
+          <codeIcao>LFNT</codeIcao>
+          <codeGps>LFPUJAUT</codeGps>
+          <codeType>AD</codeType>
+          <geoLat>43.99611111N</geoLat>
+          <geoLong>004.75444444E</geoLong>
+          <codeDatum>WGE</codeDatum>
+          <valElev>146</valElev>
+          <uomDistVer>FT</uomDistVer>
+          <valMagVar>1.08</valMagVar>
+          <valTransitionAlt>10000</valTransitionAlt>
+          <uomTransitionAlt>FT</uomTransitionAlt>
+          <txtRmk>Restricted access</txtRmk>
+        </Ahp>
+        <Rwy>
+          <RwyUid>
+            <AhpUid region="LF">
+              <codeId>LFNT</codeId>
+            </AhpUid>
+            <txtDesig>16L/34R</txtDesig>
+          </RwyUid>
+          <valLen>650</valLen>
+          <valWid>80</valWid>
+          <uomDimRwy>M</uomDimRwy>
+          <codeComposition>GRADE</codeComposition>
+          <txtRmk>Markings eroded</txtRmk>
+        </Rwy>
+        <Rdn>
+          <RdnUid>
+            <RwyUid>
+              <AhpUid region="LF">
+                <codeId>LFNT</codeId>
+              </AhpUid>
+              <txtDesig>16L/34R</txtDesig>
+            </RwyUid>
+            <txtDesig>16L</txtDesig>
+          </RdnUid>
+          <geoLat>44.00211944N</geoLat>
+          <geoLong>004.75216944E</geoLong>
+          <valTrueBrg>165</valTrueBrg>
+          <valMagBrg>166</valMagBrg>
+          <valElevTdz>147</valElevTdz>
+          <uomElevTdz>FT</uomElevTdz>
+          <txtRmk>forth remarks</txtRmk>
+        </Rdn>
+        <Rdd>
+          <RddUid>
+            <RdnUid>
+              <RwyUid>
+                <AhpUid region="LF">
+                  <codeId>LFNT</codeId>
+                </AhpUid>
+                <txtDesig>16L/34R</txtDesig>
+              </RwyUid>
+              <txtDesig>16L</txtDesig>
+            </RdnUid>
+            <codeType>DPLM</codeType>
+            <codeDayPeriod>A</codeDayPeriod>
+          </RddUid>
+          <valDist>131</valDist>
+          <uomDist>M</uomDist>
+          <txtRmk>forth remarks</txtRmk>
+        </Rdd>
+        <Rdn>
+          <RdnUid>
+            <RwyUid>
+              <AhpUid region="LF">
+                <codeId>LFNT</codeId>
+              </AhpUid>
+              <txtDesig>16L/34R</txtDesig>
+            </RwyUid>
+            <txtDesig>34R</txtDesig>
+          </RdnUid>
+          <geoLat>43.99036389N</geoLat>
+          <geoLong>004.75645556E</geoLong>
+          <valTrueBrg>345</valTrueBrg>
+          <valMagBrg>346</valMagBrg>
+          <txtRmk>back remarks</txtRmk>
+        </Rdn>
+        <Rdd>
+          <RddUid>
+            <RdnUid>
+              <RwyUid>
+                <AhpUid region="LF">
+                  <codeId>LFNT</codeId>
+                </AhpUid>
+                <txtDesig>16L/34R</txtDesig>
+              </RwyUid>
+              <txtDesig>34R</txtDesig>
+            </RdnUid>
+            <codeType>DPLM</codeType>
+            <codeDayPeriod>A</codeDayPeriod>
+          </RddUid>
+          <valDist>209</valDist>
+          <uomDist>M</uomDist>
+          <txtRmk>back remarks</txtRmk>
+        </Rdd>
+        <Ahu>
+          <AhuUid>
+            <AhpUid region="LF">
+              <codeId>LFNT</codeId>
+            </AhpUid>
+          </AhuUid>
+          <UsageLimitation>
+            <codeUsageLimitation>PERMIT</codeUsageLimitation>
+          </UsageLimitation>
+          <UsageLimitation>
+            <codeUsageLimitation>RESERV</codeUsageLimitation>
+            <UsageCondition>
+              <AircraftClass>
+                <codeType>E</codeType>
+              </AircraftClass>
+            </UsageCondition>
+            <UsageCondition>
+              <FlightClass>
+                <codeOrigin>INTL</codeOrigin>
+              </FlightClass>
+            </UsageCondition>
+            <Timetable>
+              <codeWorkHr>H24</codeWorkHr>
+            </Timetable>
+            <txtRmk>reservation remarks</txtRmk>
+          </UsageLimitation>
+        </Ahu>
+      END
+    end
+  end
 end
 
 describe AIXM::Feature::Airport::UsageLimitation do

@@ -140,6 +140,7 @@ AIXM.f(123.35, :mhz)
 
 ```ruby
 airspace = AIXM.airspace(
+  source: String or nil
   region: String or nil (to use +AIXM.config.region+)
   id: String
   type: String or Symbol
@@ -154,6 +155,7 @@ airspace.layers << AIXM.layer
 
 ```ruby
 airport = AIXM.airport(
+  source: String or nil
   region: String or nil (to use +AIXM.config.region+)
   code: String
   name: String
@@ -214,6 +216,7 @@ Multiple conditions are joined with an implicit *or* whereas the specifics of a 
 
 ```ruby
 designated_point = AIXM.designated_point(
+  source: String or nil
   region: String or nil (to use +AIXM.config.region+)
   id: String
   name: String or nil
@@ -228,6 +231,7 @@ designated_point.remarks = String or nil
 
 ```ruby
 dme = AIXM.dme(
+  source: String or nil
   region: String or nil (to use +AIXM.config.region+)
   id: String
   name: String
@@ -243,6 +247,7 @@ dme.remarks = String or nil
 
 ```ruby
 ndb = AIXM.ndb(
+  source: String or nil
   region: String or nil (to use +AIXM.config.region+)
   id: String
   name: String
@@ -262,6 +267,7 @@ associated with ILS which are not yet implemented.
 
 ```ruby
 marker = AIXM.marker(
+  source: String or nil
   region: String or nil (to use +AIXM.config.region+)
   id: String
   name: String
@@ -277,6 +283,7 @@ marker.remarks = String or nil
 
 ```ruby
 tacan = AIXM.tacan(
+  source: String or nil
   region: String or nil (to use +AIXM.config.region+)
   id: String
   name: String
@@ -292,6 +299,7 @@ tacan.remarks = String or nil
 
 ```ruby
 vor = AIXM.vor(
+  source: String or nil
   region: String or nil (to use +AIXM.config.region+)
   id: String
   name: String

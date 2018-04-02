@@ -52,7 +52,7 @@ describe AIXM::Feature::NavigationalAid::VOR do
         AIXM.ofmx!
         subject.to_xml.must_equal <<~END
           <!-- NavigationalAid: [VOR:VOR] VOR NAVAID -->
-          <Vor>
+          <Vor source="LF|GEN|0.0 FACTORY|0|0">
             <VorUid region="LF">
               <codeId>VVV</codeId>
               <geoLat>47.85916667N</geoLat>
@@ -97,7 +97,7 @@ describe AIXM::Feature::NavigationalAid::VOR do
         AIXM.ofmx!
         subject.to_xml.must_equal <<~END
           <!-- NavigationalAid: [VOR:VOR] VOR/DME NAVAID -->
-          <Vor>
+          <Vor source="LF|GEN|0.0 FACTORY|0|0">
             <VorUid region="LF">
               <codeId>VVV</codeId>
               <geoLat>47.85916667N</geoLat>
@@ -165,7 +165,7 @@ describe AIXM::Feature::NavigationalAid::VOR do
         AIXM.ofmx!
         subject.to_xml.must_equal <<~END
           <!-- NavigationalAid: [VOR:VOR] VORTAC NAVAID -->
-          <Vor>
+          <Vor source="LF|GEN|0.0 FACTORY|0|0">
             <VorUid region="LF">
               <codeId>VVV</codeId>
               <geoLat>47.85916667N</geoLat>

@@ -26,7 +26,7 @@ module AIXM
 
         def to_xml
           builder = to_builder
-          builder.Tcn do |tcn|
+          builder.Tcn({ source: (source if AIXM.ofmx?) }.compact) do |tcn|
             tcn << to_uid.indent(2)
             tcn.OrgUid
             tcn << vor.to_uid.indent(2) if vor

@@ -5,6 +5,16 @@ describe AIXM::Feature::Base do
     AIXM::Feature::Base.send(:new)
   end
 
+  describe :source= do
+    it "fails on invalid values" do
+      -> { subject.source = 123 }.must_raise ArgumentError
+    end
+
+    it "accepts nil value" do
+      subject.tap { |s| s.source = nil }.source.must_be :nil?
+    end
+  end
+
   describe :region= do
     it "fails on invalid values" do
       -> { subject.region = 123 }.must_raise ArgumentError

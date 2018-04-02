@@ -26,7 +26,7 @@ describe AIXM::Feature::NavigationalAid::DME do
       AIXM.ofmx!
       subject.to_xml.must_equal <<~END
         <!-- NavigationalAid: [DME] DME NAVAID -->
-        <Dme>
+        <Dme source="LF|GEN|0.0 FACTORY|0|0">
           <DmeUid region="LF">
             <codeId>MMM</codeId>
             <geoLat>47.85916667N</geoLat>

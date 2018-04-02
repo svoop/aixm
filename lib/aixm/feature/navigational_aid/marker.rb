@@ -24,8 +24,8 @@ module AIXM
         public_class_method :new
 
         # TODO: Marker require an associated ILS
-        def initialize(region: nil, id:, name:, xy:, z: nil, type:)
-          super(region: region, id: id, name: name, xy: xy, z: z)
+        def initialize(source: nil, region: nil, id:, name:, xy:, z: nil, type:)
+          super(source: source, region: region, id: id, name: name, xy: xy, z: z)
           self.type = type
           warn("WARNING: Maker is not fully implemented yet due to the lack of ILS")
         end
@@ -58,7 +58,7 @@ module AIXM
 
         def to_xml
           builder = to_builder
-          builder.Mkr do |mkr|
+          builder.Mkr({ source: (source if AIXM.ofmx?) }.compact) do |mkr|
             mkr << to_uid.indent(2)
             mkr.OrgUid
             mkr.codePsnIls(type_key.to_s)

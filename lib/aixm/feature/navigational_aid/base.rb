@@ -17,8 +17,8 @@ module AIXM
 
         private_class_method :new
 
-        def initialize(region: nil, id:, name: nil, xy:, z: nil)
-          super(region: region)
+        def initialize(source: nil, region: nil, id:, name: nil, xy:, z: nil)
+          super(source: source, region: region)
           self.id, self.name, self.xy, self.z = id, name, xy, z
         end
 

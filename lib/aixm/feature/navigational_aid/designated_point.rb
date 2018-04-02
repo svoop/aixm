@@ -21,8 +21,8 @@ module AIXM
 
         public_class_method :new
 
-        def initialize(region: nil, id:, name: nil, xy:, z: nil, type:)
-          super(region: region, id: id, name: name, xy: xy, z: z)
+        def initialize(source: nil, region: nil, id:, name: nil, xy:, z: nil, type:)
+          super(source: source, region: region, id: id, name: name, xy: xy, z: z)
           self.type = type
         end
 
@@ -54,7 +54,7 @@ module AIXM
 
         def to_xml
           builder = to_builder
-          builder.Dpn do |dpn|
+          builder.Dpn({ source: (source if AIXM.ofmx?) }.compact) do |dpn|
             dpn << to_uid.indent(2)
             dpn.OrgUid
             dpn.txtName(name) if name

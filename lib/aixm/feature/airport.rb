@@ -24,8 +24,8 @@ module AIXM
 
       public_class_method :new
 
-      def initialize(region: nil, code:, name:, xy:)
-        super(region: region)
+      def initialize(source: nil, region: nil, code:, name:, xy:)
+        super(source: source, region: region)
         self.code, self.name, self.xy = code, name, xy
         @runways, @helipads, @usage_limitations = [], [], []
       end
@@ -187,7 +187,7 @@ module AIXM
 
       def to_xml
         builder = Builder::XmlMarkup.new(indent: 2)
-        builder.Ahp do |ahp|
+        builder.Ahp({ source: (source if AIXM.ofmx?) }.compact) do |ahp|
           ahp << to_uid.indent(2)
           # TODO: Org
           ahp.txtName(name)

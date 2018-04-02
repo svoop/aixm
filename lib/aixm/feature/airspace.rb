@@ -15,8 +15,8 @@ module AIXM
 
       public_class_method :new
 
-      def initialize(region: nil, id: nil, type:, name:, short_name: nil)
-        super(region: region)
+      def initialize(source: nil, region: nil, id: nil, type:, name:, short_name: nil)
+        super(source: source, region: region)
         self.type, self.name, self.short_name = type, name, short_name
         self.id = id
         @geometry = AIXM.geometry
@@ -67,7 +67,10 @@ module AIXM
         fail "no layers defined" unless layers.any?
         builder = Builder::XmlMarkup.new(indent: 2)
         builder.comment! "Airspace: [#{type}] #{name}"
-        builder.Ase({ classLayers: (layers.count if AIXM.ofmx? && layered?) }.compact) do |ase|
+        builder.Ase({
+          source: (source if AIXM.ofmx?),
+          classLayers: (layers.count if AIXM.ofmx? && layered?)
+        }.compact) do |ase|
           ase << to_uid.indent(2)
           ase.txtLocalType(short_name) if short_name && short_name != name
           ase.txtName(name)

@@ -31,8 +31,8 @@ module AIXM
 
         public_class_method :new
 
-        def initialize(region: nil, id:, name:, xy:, z: nil, type:, f:, north:)
-          super(region: region, id: id, name: name, xy: xy, z: z)
+        def initialize(source: source, region: nil, id:, name:, xy:, z: nil, type:, f:, north:)
+          super(source: source, region: region, id: id, name: name, xy: xy, z: z)
           self.type, self.f, self.north = type, f, north
         end
 
@@ -105,7 +105,7 @@ module AIXM
 
         def to_xml
           builder = to_builder
-          builder.Vor do |vor|
+          builder.Vor({ source: (source if AIXM.ofmx?) }.compact) do |vor|
             vor << to_uid.indent(2)
             vor.OrgUid
             vor.txtName(name) if name
