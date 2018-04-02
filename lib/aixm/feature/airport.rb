@@ -39,7 +39,7 @@ module AIXM
       # * three letter IATA indicator (e.g. "AVN")
       # * two letter ICAO country code + four digit number (e.g. "LF1234")
       def code=(value)
-        fail(ArgumentError, "invalid code `#{code}'") unless value.upcase =~ CODE_PATTERN
+        fail(ArgumentError, "invalid code `#{code}'") unless value.upcase.match? CODE_PATTERN
         @code = value.upcase
       end
 
