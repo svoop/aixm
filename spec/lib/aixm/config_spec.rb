@@ -1,6 +1,20 @@
 require_relative '../../spec_helper'
 
 describe AIXM do
+  describe :initialize_config do
+    it "must use AIXM" do
+      AIXM.send :initialize_config
+      AIXM.format.must_equal :aixm
+    end
+  end
+
+  describe :config do
+    it "must set and get arbitrary config options" do
+      AIXM.config.foo = :bar
+      AIXM.config.foo.must_equal :bar
+    end
+  end
+
   describe :format do
     it "must return format identifier" do
       AIXM.aixm!

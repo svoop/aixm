@@ -1,4 +1,5 @@
 require 'builder'
+require 'ostruct'
 require 'nokogiri'
 require 'forwardable'
 require 'digest'
@@ -6,7 +7,7 @@ require 'time'
 
 require_relative 'aixm/version'
 require_relative 'aixm/refinements'
-require_relative 'aixm/format'
+require_relative 'aixm/config'
 
 require_relative 'aixm/document'
 require_relative 'aixm/xy'

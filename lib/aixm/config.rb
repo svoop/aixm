@@ -18,6 +18,12 @@ module AIXM
   class << self
 
     ##
+    # Access the configuration (e.g. +AIXM.config.format+)
+    def config
+      @@config
+    end
+
+    ##
     # Currently active format
     #
     # To get the format identifyer:
@@ -27,19 +33,28 @@ module AIXM
     #   AIXM.format(:version)   # => '4.5'
     #   AIXM.format(:root)      # => 'AIXM-Snapshot'
     def format(key = nil)
-      key ? FORMATS.dig(@@format, key) : @@format
+      key ? FORMATS.dig(@@config.format, key) : @@config.format
     end
 
     ##
     # Shortcuts to query format e.g. with +AIXM.ofmx?+ and to set format e.g.
     # with +AIXM.ofmx!+
     FORMATS.each_key do |format|
-      define_method("#{format}!") { @@format = format }
-      define_method("#{format}?") { @@format == format }
+      define_method("#{format}!") { @@config.format = format }
+      define_method("#{format}?") { @@config.format == format }
     end
+
+    private
+
+    ##
+    # Default configuration
+    def initialize_config
+      @@config = OpenStruct.new(
+        format: :aixm
+      )
+    end
+
   end
 end
 
-##
-# Use format +:aixm+ by default
-AIXM.aixm!
+AIXM.send(:initialize_config)
