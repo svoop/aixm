@@ -117,7 +117,7 @@ describe AIXM::Feature::Airspace do
         subject.to_xml.must_equal <<~"END"
           <!-- Airspace: [D] POLYGON AIRSPACE -->
           <Ase>
-            <AseUid>
+            <AseUid region="LF">
               <codeType>D</codeType>
               <codeId>PA</codeId>
             </AseUid>
@@ -144,7 +144,7 @@ describe AIXM::Feature::Airspace do
           </Ase>
           <Abd>
             <AbdUid>
-              <AseUid>
+              <AseUid region="LF">
                 <codeType>D</codeType>
                 <codeId>PA</codeId>
               </AseUid>
@@ -191,7 +191,7 @@ describe AIXM::Feature::Airspace do
         subject.to_xml.must_equal <<~"END"
           <!-- Airspace: [D] POLYGON AIRSPACE -->
           <Ase classLayers="2">
-            <AseUid>
+            <AseUid region="LF">
               <codeType>D</codeType>
               <codeId>PA</codeId>
             </AseUid>
@@ -200,7 +200,7 @@ describe AIXM::Feature::Airspace do
           </Ase>
           <Abd>
             <AbdUid>
-              <AseUid>
+              <AseUid region="LF">
                 <codeType>D</codeType>
                 <codeId>PA</codeId>
               </AseUid>
@@ -230,7 +230,7 @@ describe AIXM::Feature::Airspace do
             </Avx>
           </Abd>
           <Ase>
-            <AseUid>
+            <AseUid region="LF">
               <codeType>CLASS</codeType>
               <codeId>E5B59824</codeId>
             </AseUid>
@@ -256,18 +256,18 @@ describe AIXM::Feature::Airspace do
           </Ase>
           <Adg>
             <AdgUid>
-              <AseUid>
+              <AseUid region="LF">
                 <codeType>CLASS</codeType>
                 <codeId>E5B59824</codeId>
               </AseUid>
             </AdgUid>
-            <AseUidSameExtent>
+            <AseUidSameExtent region="LF">
               <codeType>D</codeType>
               <codeId>PA</codeId>
             </AseUidSameExtent>
           </Adg>
           <Ase>
-            <AseUid>
+            <AseUid region="LF">
               <codeType>CLASS</codeType>
               <codeId>75DA71AE</codeId>
             </AseUid>
@@ -293,12 +293,12 @@ describe AIXM::Feature::Airspace do
           </Ase>
           <Adg>
             <AdgUid>
-              <AseUid>
+              <AseUid region="LF">
                 <codeType>CLASS</codeType>
                 <codeId>75DA71AE</codeId>
               </AseUid>
             </AdgUid>
-            <AseUidSameExtent>
+            <AseUidSameExtent region="LF">
               <codeType>D</codeType>
               <codeId>PA</codeId>
             </AseUidSameExtent>

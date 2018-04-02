@@ -8,11 +8,7 @@ module AIXM
     #
     # Arguments:
     # * +code+ - airport code
-    class Airport
-      attr_reader :code
-      attr_reader :name, :gps, :xy, :z, :declination, :transition_z, :schedule, :remarks
-      attr_accessor :runways, :helipads, :usage_limitations
-
+    class Airport < Base
       CODE_PATTERN = /^[A-Z]{2}([A-Z]{1,2}|\d{4})$/.freeze
 
       TYPES = {
@@ -22,7 +18,14 @@ module AIXM
         LS: :landing_site
       }
 
-      def initialize(code:, name:, xy:)
+      attr_reader :code
+      attr_reader :name, :gps, :xy, :z, :declination, :transition_z, :schedule, :remarks
+      attr_accessor :runways, :helipads, :usage_limitations
+
+      public_class_method :new
+
+      def initialize(region: nil, code:, name:, xy:)
+        super(region: region)
         self.code, self.name, self.xy = code, name, xy
         @runways, @helipads, @usage_limitations = [], [], []
       end
@@ -177,7 +180,7 @@ module AIXM
 
       def to_uid
         builder = Builder::XmlMarkup.new(indent: 2)
-        builder.AhpUid do |ahpuid|
+        builder.AhpUid({ region: (region if AIXM.ofmx?) }.compact) do |ahpuid|
           ahpuid.codeId(code)
         end
       end

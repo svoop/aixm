@@ -68,6 +68,7 @@ module AIXM
 
       def polygon_airspace
         AIXM.airspace(
+          region: 'LF',
           id: 'PA',
           type: 'D',
           name: 'POLYGON AIRSPACE',
@@ -80,6 +81,7 @@ module AIXM
 
       def circle_airspace
         AIXM.airspace(
+          region: 'LF',
           id: 'CA',
           type: 'D',
           name: 'CIRCLE AIRSPACE',
@@ -94,6 +96,7 @@ module AIXM
 
       def designated_point
         AIXM.designated_point(
+          region: 'LF',
           id: 'DDD',
           name: 'DESIGNATED POINT NAVAID',
           xy: AIXM.xy(lat: %q(47°51'33"N), long: %q(007°33'36"E)),
@@ -107,6 +110,7 @@ module AIXM
 
       def dme
         AIXM.dme(
+          region: 'LF',
           id: 'MMM',
           name: 'DME NAVAID',
           xy: AIXM.xy(lat: %q(47°51'33"N), long: %q(007°33'36"E)),
@@ -120,6 +124,7 @@ module AIXM
 
       def marker
         AIXM.marker(
+          region: 'LF',
           id: '---',
           name: 'MARKER NAVAID',
           xy: AIXM.xy(lat: %q(47°51'33"N), long: %q(007°33'36"E)),
@@ -133,6 +138,7 @@ module AIXM
 
       def ndb
         AIXM.ndb(
+          region: 'LF',
           id: 'NNN',
           name: 'NDB NAVAID',
           xy: AIXM.xy(lat: %q(47°51'33"N), long: %q(007°33'36"E)),
@@ -147,6 +153,7 @@ module AIXM
 
       def tacan
         AIXM.tacan(
+          region: 'LF',
           id: 'TTT',
           name: 'TACAN NAVAID',
           xy: AIXM.xy(lat: %q(47°51'33"N), long: %q(007°33'36"E)),
@@ -160,6 +167,7 @@ module AIXM
 
       def vor
         AIXM.vor(
+          region: 'LF',
           id: 'VVV',
           name: 'VOR NAVAID',
           xy: AIXM.xy(lat: %q(47°51'33"N), long: %q(007°33'36"E)),
@@ -175,6 +183,7 @@ module AIXM
 
       def vordme
         AIXM.vor(
+          region: 'LF',
           id: 'VDD',
           name: 'VOR/DME NAVAID',
           xy: AIXM.xy(lat: %q(47°51'33"N), long: %q(007°33'36"E)),
@@ -191,6 +200,7 @@ module AIXM
 
       def vortac
         AIXM.vor(
+          region: 'LF',
           id: 'VTT',
           name: 'VORTAC NAVAID',
           xy: AIXM.xy(lat: %q(47°51'33"N), long: %q(007°33'36"E)),
@@ -209,6 +219,7 @@ module AIXM
 
       def airport
         AIXM.airport(
+          region: 'LF',
           code: 'LFNT',
           name: 'Avignon-Pujaut',
           xy: AIXM.xy(lat: %q(43°59'46"N), long: %q(004°45'16"E))

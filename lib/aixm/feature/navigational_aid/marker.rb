@@ -24,8 +24,8 @@ module AIXM
         public_class_method :new
 
         # TODO: Marker require an associated ILS
-        def initialize(id:, name:, xy:, z: nil, type:)
-          super(id: id, name: name, xy: xy, z: z)
+        def initialize(region: nil, id:, name:, xy:, z: nil, type:)
+          super(region: region, id: id, name: name, xy: xy, z: z)
           self.type = type
           warn("WARNING: Maker is not fully implemented yet due to the lack of ILS")
         end
@@ -49,7 +49,7 @@ module AIXM
 
         def to_uid
           builder = Builder::XmlMarkup.new(indent: 2)
-          builder.MkrUid do |mkruid|
+          builder.MkrUid({ region: (region if AIXM.ofmx?) }.compact) do |mkruid|
             mkruid.codeId(id)
             mkruid.geoLat(xy.lat(AIXM.format))
             mkruid.geoLong(xy.long(AIXM.format))

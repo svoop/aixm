@@ -29,7 +29,7 @@ describe AIXM::Feature::NavigationalAid::Marker do
       subject.to_xml.must_equal <<~END
         <!-- NavigationalAid: [Marker:O] MARKER NAVAID -->
         <Mkr>
-          <MkrUid>
+          <MkrUid region="LF">
             <codeId>---</codeId>
             <geoLat>47.85916667N</geoLat>
             <geoLong>007.56000000E</geoLong>

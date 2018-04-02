@@ -40,7 +40,7 @@ describe AIXM::Feature::NavigationalAid::NDB do
       subject.to_xml.must_equal <<~END
         <!-- NavigationalAid: [NDB:B] NDB NAVAID -->
         <Ndb>
-          <NdbUid>
+          <NdbUid region="LF">
             <codeId>NNN</codeId>
             <geoLat>47.85916667N</geoLat>
             <geoLong>007.56000000E</geoLong>

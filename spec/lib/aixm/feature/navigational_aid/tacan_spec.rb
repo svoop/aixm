@@ -27,7 +27,7 @@ describe AIXM::Feature::NavigationalAid::TACAN do
       subject.to_xml.must_equal <<~END
         <!-- NavigationalAid: [TACAN] TACAN NAVAID -->
         <Tcn>
-          <TcnUid>
+          <TcnUid region="LF">
             <codeId>TTT</codeId>
             <geoLat>47.85916667N</geoLat>
             <geoLong>007.56000000E</geoLong>

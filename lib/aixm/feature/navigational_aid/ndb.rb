@@ -24,8 +24,8 @@ module AIXM
 
         public_class_method :new
 
-        def initialize(id:, name:, xy:, z: nil, type:, f:)
-          super(id: id, name: name, xy: xy, z: z)
+        def initialize(region: nil, id:, name:, xy:, z: nil, type:, f:)
+          super(region: region, id: id, name: name, xy: xy, z: z)
           self.type, self.f = type, f
         end
 
@@ -54,7 +54,7 @@ module AIXM
 
         def to_uid
           builder = Builder::XmlMarkup.new(indent: 2)
-          builder.NdbUid do |ndbuid|
+          builder.NdbUid({ region: (region if AIXM.ofmx?) }.compact) do |ndbuid|
             ndbuid.codeId(id)
             ndbuid.geoLat(xy.lat(AIXM.format))
             ndbuid.geoLong(xy.long(AIXM.format))

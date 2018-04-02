@@ -29,7 +29,7 @@ describe AIXM::Feature::NavigationalAid::DesignatedPoint do
       subject.to_xml.must_equal <<~END
         <!-- NavigationalAid: [DesignatedPoint:ICAO] DESIGNATED POINT NAVAID -->
         <Dpn>
-          <DpnUid>
+          <DpnUid region="LF">
             <codeId>DDD</codeId>
             <geoLat>47.85916667N</geoLat>
             <geoLong>007.56000000E</geoLong>

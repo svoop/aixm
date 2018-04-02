@@ -50,6 +50,7 @@ The following configuration options are available for setting and getting:
 
 ```ruby
 AIXM.config.format           # either :aixm (default) or :ofmx
+AIXM.config.region           # fallback region
 AIXM.config.ignored_errors   # regex of ignored XML schema errors
 ```
 
@@ -139,6 +140,7 @@ AIXM.f(123.35, :mhz)
 
 ```ruby
 airspace = AIXM.airspace(
+  region: String or nil (to use +AIXM.config.region+)
   id: String
   type: String or Symbol
   name: String
@@ -152,6 +154,7 @@ airspace.layers << AIXM.layer
 
 ```ruby
 airport = AIXM.airport(
+  region: String or nil (to use +AIXM.config.region+)
   code: String
   name: String
   xy: AIXM.xy
@@ -211,6 +214,7 @@ Multiple conditions are joined with an implicit *or* whereas the specifics of a 
 
 ```ruby
 designated_point = AIXM.designated_point(
+  region: String or nil (to use +AIXM.config.region+)
   id: String
   name: String or nil
   xy: AIXM.xy
@@ -224,6 +228,7 @@ designated_point.remarks = String or nil
 
 ```ruby
 dme = AIXM.dme(
+  region: String or nil (to use +AIXM.config.region+)
   id: String
   name: String
   xy: AIXM.xy
@@ -238,6 +243,7 @@ dme.remarks = String or nil
 
 ```ruby
 ndb = AIXM.ndb(
+  region: String or nil (to use +AIXM.config.region+)
   id: String
   name: String
   xy: AIXM.xy
@@ -256,6 +262,7 @@ associated with ILS which are not yet implemented.
 
 ```ruby
 marker = AIXM.marker(
+  region: String or nil (to use +AIXM.config.region+)
   id: String
   name: String
   xy: AIXM.xy
@@ -270,6 +277,7 @@ marker.remarks = String or nil
 
 ```ruby
 tacan = AIXM.tacan(
+  region: String or nil (to use +AIXM.config.region+)
   id: String
   name: String
   xy: AIXM.xy
@@ -284,6 +292,7 @@ tacan.remarks = String or nil
 
 ```ruby
 vor = AIXM.vor(
+  region: String or nil (to use +AIXM.config.region+)
   id: String
   name: String
   xy: AIXM.xy

@@ -12,12 +12,13 @@ module AIXM
       # * +name+ - full name
       # * +xy+ - position
       # * +z+ - elevation in +:qnh+
-      class Base
+      class Base < AIXM::Feature::Base
         attr_reader :id, :name, :xy, :z, :schedule, :remarks
 
         private_class_method :new
 
-        def initialize(id:, name: nil, xy:, z: nil)
+        def initialize(region: nil, id:, name: nil, xy:, z: nil)
+          super(region: region)
           self.id, self.name, self.xy, self.z = id, name, xy, z
         end
 

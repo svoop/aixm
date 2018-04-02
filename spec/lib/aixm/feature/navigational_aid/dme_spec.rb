@@ -27,7 +27,7 @@ describe AIXM::Feature::NavigationalAid::DME do
       subject.to_xml.must_equal <<~END
         <!-- NavigationalAid: [DME] DME NAVAID -->
         <Dme>
-          <DmeUid>
+          <DmeUid region="LF">
             <codeId>MMM</codeId>
             <geoLat>47.85916667N</geoLat>
             <geoLong>007.56000000E</geoLong>

@@ -31,8 +31,8 @@ module AIXM
 
         public_class_method :new
 
-        def initialize(id:, name:, xy:, z: nil, type:, f:, north:)
-          super(id: id, name: name, xy: xy, z: z)
+        def initialize(region: nil, id:, name:, xy:, z: nil, type:, f:, north:)
+          super(region: region, id: id, name: name, xy: xy, z: z)
           self.type, self.f, self.north = type, f, north
         end
 
@@ -78,6 +78,7 @@ module AIXM
         # Associate a DME (also known as VOR/DME)
         def associate_dme(channel:)
           @dme = AIXM.dme(id: id, name: name, xy: xy, z: z, channel: channel)
+          @dme.region = region
           @dme.schedule = schedule
           @dme.remarks = remarks
           @dme.send(:vor=, self)
@@ -87,6 +88,7 @@ module AIXM
         # Associate a TACAN (also known as VORTAC)
         def associate_tacan(channel:)
           @tacan = AIXM.tacan(id: id, name: name, xy: xy, z: z, channel: channel)
+          @tacan.region = region
           @tacan.schedule = schedule
           @tacan.remarks = remarks
           @tacan.send(:vor=, self)
@@ -94,7 +96,7 @@ module AIXM
 
         def to_uid
           builder = Builder::XmlMarkup.new(indent: 2)
-          builder.VorUid do |voruid|
+          builder.VorUid({ region: (region if AIXM.ofmx?) }.compact) do |voruid|
             voruid.codeId(id)
             voruid.geoLat(xy.lat(AIXM.format))
             voruid.geoLong(xy.long(AIXM.format))

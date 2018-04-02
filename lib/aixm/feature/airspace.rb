@@ -9,11 +9,14 @@ module AIXM
     # Accessors:
     # * +geometry+ - instance of +AIXM::Component::Geometry+
     # * +layers+ - array of instances of +AIXM::Component::Layer+
-    class Airspace
+    class Airspace < Base
       attr_reader :id, :type, :name, :short_name
       attr_accessor :geometry, :layers
 
-      def initialize(id: nil, type:, name:, short_name: nil)
+      public_class_method :new
+
+      def initialize(region: nil, id: nil, type:, name:, short_name: nil)
+        super(region: region)
         self.type, self.name, self.short_name = type, name, short_name
         self.id = id
         @geometry = AIXM.geometry
@@ -53,7 +56,7 @@ module AIXM
 
       def to_uid(as: :AseUid)
         builder = Builder::XmlMarkup.new(indent: 2)
-        builder.tag!(as) do |tag|
+        builder.tag!(as, { region: (region if AIXM.ofmx?) }.compact) do |tag|
           tag.codeType(type)
           tag.codeId(id)
         end
@@ -80,7 +83,7 @@ module AIXM
         end
         if layered?
           layers.each.with_index do |layer, index|
-            layer_airspace = AIXM.airspace(type: 'CLASS', name: "#{name} LAYER #{index + 1}")
+            layer_airspace = AIXM.airspace(region: region, type: 'CLASS', name: "#{name} LAYER #{index + 1}")
             builder.Ase do |ase|
               ase << layer_airspace.to_uid.indent(2)
               ase.txtName(layer_airspace.name)

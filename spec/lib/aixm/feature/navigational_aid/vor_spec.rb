@@ -53,7 +53,7 @@ describe AIXM::Feature::NavigationalAid::VOR do
         subject.to_xml.must_equal <<~END
           <!-- NavigationalAid: [VOR:VOR] VOR NAVAID -->
           <Vor>
-            <VorUid>
+            <VorUid region="LF">
               <codeId>VVV</codeId>
               <geoLat>47.85916667N</geoLat>
               <geoLong>007.56000000E</geoLong>
@@ -98,7 +98,7 @@ describe AIXM::Feature::NavigationalAid::VOR do
         subject.to_xml.must_equal <<~END
           <!-- NavigationalAid: [VOR:VOR] VOR/DME NAVAID -->
           <Vor>
-            <VorUid>
+            <VorUid region="LF">
               <codeId>VVV</codeId>
               <geoLat>47.85916667N</geoLat>
               <geoLong>007.56000000E</geoLong>
@@ -119,13 +119,13 @@ describe AIXM::Feature::NavigationalAid::VOR do
           </Vor>
           <!-- NavigationalAid: [DME] VOR/DME NAVAID -->
           <Dme>
-            <DmeUid>
+            <DmeUid region="LF">
               <codeId>VVV</codeId>
               <geoLat>47.85916667N</geoLat>
               <geoLong>007.56000000E</geoLong>
             </DmeUid>
             <OrgUid/>
-            <VorUid>
+            <VorUid region="LF">
               <codeId>VVV</codeId>
               <geoLat>47.85916667N</geoLat>
               <geoLong>007.56000000E</geoLong>
@@ -166,7 +166,7 @@ describe AIXM::Feature::NavigationalAid::VOR do
         subject.to_xml.must_equal <<~END
           <!-- NavigationalAid: [VOR:VOR] VORTAC NAVAID -->
           <Vor>
-            <VorUid>
+            <VorUid region="LF">
               <codeId>VVV</codeId>
               <geoLat>47.85916667N</geoLat>
               <geoLong>007.56000000E</geoLong>
@@ -187,13 +187,13 @@ describe AIXM::Feature::NavigationalAid::VOR do
           </Vor>
           <!-- NavigationalAid: [TACAN] VORTAC NAVAID -->
           <Tcn>
-            <TcnUid>
+            <TcnUid region="LF">
               <codeId>VVV</codeId>
               <geoLat>47.85916667N</geoLat>
               <geoLong>007.56000000E</geoLong>
             </TcnUid>
             <OrgUid/>
-            <VorUid>
+            <VorUid region="LF">
               <codeId>VVV</codeId>
               <geoLat>47.85916667N</geoLat>
               <geoLong>007.56000000E</geoLong>
