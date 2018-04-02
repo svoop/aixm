@@ -50,7 +50,8 @@ module AIXM
     # Default configuration
     def initialize_config
       @@config = OpenStruct.new(
-        format: :aixm
+        format: :aixm,
+        ignored_errors: %r(OrgUid|region)
       )
     end
 

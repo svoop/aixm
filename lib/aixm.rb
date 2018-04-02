@@ -1,5 +1,6 @@
 require 'builder'
 require 'ostruct'
+require 'securerandom'
 require 'nokogiri'
 require 'forwardable'
 require 'digest'

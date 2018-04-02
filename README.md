@@ -83,11 +83,14 @@ To give you an overview of the AIXM building blocks, the remainder of this guide
 
 ```ruby
 document = AIXM.document(
+  namespace: UUID
   created_at: Time or Date or String
   effective_at: Time or Date or String
 )
 document.features << AIXM::Feature
 ```
+
+Please read the [OFMX documentation](https://github.com/openflightmaps/ofmx/wiki) to get an overview of the most relevant parts of AIXM as well as differences between AIXM and OFMX!
 
 See [the API documentation](http://www.rubydoc.info/gems/aixm) for details and [spec/factory.rb](https://github.com/svoop/aixm/blob/master/spec/factory.rb) for examples.
 
@@ -118,6 +121,11 @@ AIXM.z(1000, :qfe)   # height: 1000 ft above ground
 AIXM.z(2000, :qnh)   # altitude: of 2000 ft above mean sea level
 AIXM.z(45, :qne)     # altitude: flight level 45
 ```
+
+Some common values are available as convenience constants:
+
+* `AIXM::GROUND` - height: 0ft above ground
+* `AIXM::UNLIMITED` - altitude: FL 999
 
 #### Frequency
 
@@ -380,6 +388,10 @@ schedule = AIXM.schedule(
 schedule.remarks = String or nil
 ```
 
+Some common values are available as convenience constants:
+
+* `AIXM::H24` - continuous 24/7
+
 #### Vertical Limits
 
 ```ruby
@@ -390,12 +402,6 @@ vertical_limits = AIXM.vertical_limits(
   min_z: AIXM.z or nil
 )
 ```
-
-## Constants
-
-* `AIXM::GROUND` - height: 0ft above ground
-* `AIXM::UNLIMITED` - altitude: FL 999
-* `AIXM::H24` - continuous schedule
 
 ## Refinements
 
