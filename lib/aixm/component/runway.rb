@@ -53,6 +53,10 @@ module AIXM
         end
       end
 
+      def inspect
+        %Q(#<#{self.class} name=#{name.inspect}>)
+      end
+
       def airport=(value)
         fail(ArgumentError, "invalid airport") unless value.is_a? AIXM::Feature::Airport
         @airport = value

@@ -22,6 +22,10 @@ module AIXM
           self.id, self.name, self.xy, self.z = id, name, xy, z
         end
 
+        def inspect
+          %Q(#<#{self.class} id=#{id.inspect}>)
+        end
+
         ##
         # Published identifier
         def id=(value)

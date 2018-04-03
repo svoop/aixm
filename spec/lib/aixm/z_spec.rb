@@ -1,15 +1,27 @@
 require_relative '../../spec_helper'
 
 describe AIXM::Z do
-  describe :initialize do
-    it "must parse valid Q code" do
-      subject = AIXM.z(111, 'QNH')
-      subject.alt.must_equal 111
-      subject.code.must_equal :qnh
+  subject do
+    AIXM::Factory.z
+  end
+
+  describe :alt= do
+    it "fails on invalid values" do
+      -> { subject.alt = :foo }.must_raise ArgumentError
     end
 
-    it "won't parse invalid Q code" do
-      -> { AIXM.z(111, :FOO) }.must_raise ArgumentError
+    it "converts Numeric to Integer" do
+      subject.tap { |s| s.alt = 5.5 }.alt.must_equal 5
+    end
+  end
+
+  describe :code= do
+    it "fails on invalid values" do
+      -> { subject.code = :foo }.must_raise ArgumentError
+    end
+
+    it "symbolizes and downcases values" do
+      subject.tap { |s| s.code = "QFE" }.code.must_equal :qfe
     end
   end
 

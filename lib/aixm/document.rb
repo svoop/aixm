@@ -20,6 +20,10 @@ module AIXM
       @features = []
     end
 
+    def inspect
+      %Q(#<#{self.class} created_at=#{created_at.inspect}>)
+    end
+
     ##
     # UUID to namespace the data in this document
     def namespace=(value)

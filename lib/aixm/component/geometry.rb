@@ -28,6 +28,10 @@ module AIXM
         @result_array = segments
       end
 
+      def inspect
+        %Q(#<#{self.class} segments=#{segments.count.inspect}>)
+      end
+
       ##
       # Array of +AIXM::Component::Geometry::...+ objects
       def segments

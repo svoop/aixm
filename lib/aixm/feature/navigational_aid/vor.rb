@@ -31,7 +31,7 @@ module AIXM
 
         public_class_method :new
 
-        def initialize(source: source, region: nil, id:, name:, xy:, z: nil, type:, f:, north:)
+        def initialize(source: nil, region: nil, id:, name:, xy:, z: nil, type:, f:, north:)
           super(source: source, region: region, id: id, name: name, xy: xy, z: z)
           self.type, self.f, self.north = type, f, north
         end

@@ -15,8 +15,26 @@ module AIXM
     attr_reader :alt, :code
 
     def initialize(alt, code)
-      @alt, @code = alt, code&.to_sym&.downcase
-      fail(ArgumentError, "unrecognized Q code `#{code}'") unless CODES.include? @code
+      self.alt, self.code = alt, code
+    end
+
+    def inspect
+      %Q(#<#{self.class} #{to_s}>)
+    end
+
+    def to_s
+      qne? ? "FL%03i" % alt : [alt, unit, code.upcase].join(' ')
+    end
+
+    def alt=(value)
+      fail(ArgumentError, "invalid alt") unless value.is_a? Numeric
+      @alt = value.to_i
+    end
+
+    def code=(value)
+      fail(ArgumentError, "invalid code") unless value.respond_to? :to_sym
+      @code = value.to_sym.downcase
+      fail(ArgumentError, "invalid code") unless CODES.include? @code
     end
 
     ##

@@ -28,6 +28,10 @@ module AIXM
         @upper_z, @lower_z, @max_z, @min_z = upper_z, lower_z, max_z, min_z
       end
 
+      def inspect
+        %Q(#<#{self.class} upper_z="#{upper_z.to_s}" lower_z="#{lower_z.to_s}">)
+      end
+
       def to_xml
         %i(upper lower max min).each_with_object(Builder::XmlMarkup.new(indent: 2)) do |limit, builder|
           if z = send(:"#{limit}_z")

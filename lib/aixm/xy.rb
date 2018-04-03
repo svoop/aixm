@@ -12,13 +12,24 @@ module AIXM
     EARTH_RADIUS = 6_371_008.8   # meters
 
     def initialize(lat:, long:)
-      @lat, @long = float_for(lat), float_for(long)
-      fail(ArgumentError, "invalid latitude") unless (-90..90).include? @lat
-      fail(ArgumentError, "invalid longitude") unless (-180..180).include? @long
+      self.lat, self.long = lat, long
+    end
+
+    def inspect
+      %Q(#<#{self.class} #{to_s}>)
+    end
+
+    def to_s
+      [lat(:ofmx), long(:ofmx)].join(' ')
     end
 
     ##
     # Latitude
+    def lat=(value)
+      @lat = float_for value
+      fail(ArgumentError, "invalid lat") unless (-90..90).include? @lat
+    end
+
     def lat(format = nil)
       case format
         when :ofmx then ("%011.8f" % @lat.abs.round(8)) + (@lat.negative? ? 'S' : 'N')
@@ -29,6 +40,11 @@ module AIXM
 
     ##
     # Longitude
+    def long=(value)
+      @long = float_for value
+      fail(ArgumentError, "invalid long") unless (-180..180).include? @long
+    end
+
     def long(format = nil)
       case format
         when :ofmx then ("%012.8f" % @long.abs.round(8)) + (@long.negative? ? 'W' : 'E')

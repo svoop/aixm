@@ -14,6 +14,10 @@ module AIXM
           @center_xy, @radius = center_xy, radius
         end
 
+        def inspect
+          %Q(#<#{self.class} xy="#{xy.to_s}">)
+        end
+
         def to_xml
           builder = Builder::XmlMarkup.new(indent: 2)
           builder.Avx do |avx|

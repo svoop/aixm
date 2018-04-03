@@ -1,35 +1,23 @@
 require_relative '../../spec_helper'
 
 describe AIXM::XY do
-  describe :initialize do
-    it "must parse valid DD" do
-      subject = AIXM.xy(lat: 11.2233, long: 22.3344)
-      subject.lat.must_equal 11.2233
-      subject.long.must_equal 22.3344
+  subject do
+    AIXM::Factory.xy
+  end
+
+  describe :lat= do
+    it "parses valid DD values" do
+      subject.tap { |s| s.lat = 11.2233 }.lat.must_equal 11.2233
     end
 
-    it "must parse valid DMS N/E"  do
-      subject = AIXM.xy(lat: %q(11°22'33"N), long: %q(22°33'44"E))
-      subject.lat.must_equal 11.37583333
-      subject.long.must_equal 22.56222222
+    it "parses valid DMS values"  do
+      subject.tap { |s| s.lat = %q(11°22'33"N) }.lat.must_equal(11.37583333)
+      subject.tap { |s| s.lat = %q(11°22'33"S) }.lat.must_equal(-11.37583333)
     end
 
-    it "must parse valid DMS S/W"  do
-      subject = AIXM.xy(lat: %q(11°22'33"S), long: %q(22°33'44"W))
-      subject.lat.must_equal(-11.37583333)
-      subject.long.must_equal(-22.56222222)
-    end
-
-    it "won't parse invalid latitude" do
-      -> { AIXM.xy(lat: 91, long: 22.3344) }.must_raise ArgumentError
-    end
-
-    it "won't parse invalid longitude" do
-      -> { AIXM.xy(lat: 11.2233, long: 181) }.must_raise ArgumentError
-    end
-
-    it "won't parse invalid DMS" do
-      -> { AIXM.xy(lat: "foo", long: "bar") }.must_raise ArgumentError
+    it "fails on invalid values" do
+      -> { subject.lat = 91 }.must_raise ArgumentError
+      -> { subject.lat = "foo" }.must_raise ArgumentError
     end
   end
 
@@ -68,6 +56,22 @@ describe AIXM::XY do
       it "must format OFM correctly" do
         subject.lat(:ofmx).must_equal '01.12340000S'
       end
+    end
+  end
+
+  describe :long= do
+    it "parses valid DD values" do
+      subject.tap { |s| s.long = 22.3344 }.long.must_equal 22.3344
+    end
+
+    it "parses valid DMS values"  do
+      subject.tap { |s| s.long = %q(22°33'44"E) }.long.must_equal(22.56222222)
+      subject.tap { |s| s.long = %q(22°33'44"W) }.long.must_equal(-22.56222222)
+    end
+
+    it "fails on invalid values" do
+      -> { subject.long = 181 }.must_raise ArgumentError
+      -> { subject.long = "foo" }.must_raise ArgumentError
     end
   end
 

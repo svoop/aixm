@@ -23,6 +23,10 @@ module AIXM
         @layers = []
       end
 
+      def inspect
+        %Q(#<#{self.class} type=#{type.inspect} code=#{name.inspect}>)
+      end
+
       ##
       # Published identifier (e.g. "LFP81")
       #

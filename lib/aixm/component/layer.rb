@@ -20,6 +20,10 @@ module AIXM
         @selective = false
       end
 
+      def inspect
+        %Q(#<#{self.class} class=#{@klass.inspect}>)
+      end
+
       ##
       # Airspace class from :A to :G
       def class=(value)

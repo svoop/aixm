@@ -15,6 +15,10 @@ module AIXM
           @name = name
         end
 
+        def inspect
+          %Q(#<#{self.class} xy="#{xy.to_s}">)
+        end
+
         def to_xml
           builder = Builder::XmlMarkup.new(indent: 2)
           builder.Avx do |avx|

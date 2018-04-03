@@ -5,17 +5,35 @@ module AIXM
   ##
   # Frequency
   #
-  # The following units are recognized:
-  # * +:mhz+ - megahertz
-  # * +:khz+ - kilohertz
+  # Arguments:
+  # * +freq+ - frequency
+  # * +unit+ - either +:ghz+, +:mhz+ or +:khz+
   class F
-    UNITS = %i(mhz khz).freeze
+    UNITS = %i(ghz mhz khz).freeze
 
     attr_reader :freq, :unit
 
     def initialize(freq, unit)
-      @freq, @unit = freq.to_f, unit&.to_sym&.downcase
-      fail(ArgumentError, "unrecognized unit `#{@unit}'") unless UNITS.include? @unit
+      self.freq, self.unit = freq, unit
+    end
+
+    def inspect
+      %Q(#<#{self.class} #{to_s}>)
+    end
+
+    def to_s
+      [freq, unit].join(' ')
+    end
+
+    def freq=(value)
+      fail(ArgumentError, "invalid freq") unless value.is_a? Numeric
+      @freq = value.to_f
+    end
+
+    def unit=(value)
+      fail(ArgumentError, "invalid unit") unless value.respond_to? :to_sym
+      @unit = value.to_sym.downcase
+      fail(ArgumentError, "invalid unit") unless UNITS.include? @unit
     end
 
     ##

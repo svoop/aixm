@@ -8,6 +8,14 @@ module AIXM
         AIXM.xy(lat: 10, long: 20)
       end
 
+      def z
+        AIXM.z(1000, :qnh)
+      end
+
+      def f
+        AIXM.f(123.35, :mhz)
+      end
+
       # Components
 
       def schedule

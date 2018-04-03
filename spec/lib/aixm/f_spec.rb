@@ -1,15 +1,27 @@
 require_relative '../../spec_helper'
 
 describe AIXM::F do
-  describe :initialize do
-    it "must parse valid unit" do
-      subject = AIXM.f(123.35, :mhz)
-      subject.freq.must_equal 123.35
-      subject.unit.must_equal :mhz
+  subject do
+    AIXM::Factory.f
+  end
+
+  describe :freq= do
+    it "fails on invalid values" do
+      -> { subject.freq = :foo }.must_raise ArgumentError
     end
 
-    it "won't parse invalid unit" do
-      -> { AIXM.f(123.35, :foo) }.must_raise ArgumentError
+    it "converts Numeric to Float" do
+      subject.tap { |s| s.freq = 5 }.freq.must_equal 5.0
+    end
+  end
+
+  describe :unit= do
+    it "fails on invalid values" do
+      -> { subject.unit = :foo }.must_raise ArgumentError
+    end
+
+    it "symbolizes and downcases values" do
+      subject.tap { |s| s.unit = "MHz" }.unit.must_equal :mhz
     end
   end
 
@@ -49,4 +61,5 @@ describe AIXM::F do
       subject.between?(90, 95, :mhz).must_equal false
     end
   end
+
 end

@@ -31,7 +31,7 @@ module AIXM
       end
 
       def inspect
-        %Q(#<AIXM::Feature::Airport code=#{code.inspect}>)
+        %Q(#<#{self.class} code=#{code.inspect}>)
       end
 
       ##
@@ -243,7 +243,7 @@ module AIXM
         end
 
         def inspect
-          %Q(#<AIXM::Feature::Airport::UsageLimitation limitation=#{limitation.inspect}>)
+          %Q(#<#{self.class} limitation=#{limitation.inspect}>)
         end
 
         def limitation=(value)
@@ -331,7 +331,7 @@ module AIXM
           attr_reader :aircraft, :rule, :realm, :origin, :purpose
 
           def inspect
-            %Q(#<AIXM::Feature::Airport::UsageLimitation::Condition aircraft=#{aircraft.inspect} rule=#{rule.inspect} realm=#{realm.inspect} origin=#{origin.inspect} purpose=#{purpose.inspect}>)
+            %Q(#<#{self.class} aircraft=#{aircraft.inspect} rule=#{rule.inspect} realm=#{realm.inspect} origin=#{origin.inspect} purpose=#{purpose.inspect}>)
           end
 
           ##

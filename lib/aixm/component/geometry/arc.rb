@@ -17,6 +17,10 @@ module AIXM
           @center_xy, @clockwise = center_xy, clockwise
         end
 
+        def inspect
+          %Q(#<#{self.class} xy="#{xy.to_s}">)
+        end
+
         ##
         # Whether the arc is going clockwise (true) or not (false)
         def clockwise?

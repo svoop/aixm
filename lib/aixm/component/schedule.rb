@@ -40,6 +40,10 @@ module AIXM
         self.code = code
       end
 
+      def inspect
+        %Q(#<#{self.class} code=#{code.inspect}>)
+      end
+
       def code=(value)
         @code = CODES.lookup(value&.to_sym, nil) || fail(ArgumentError, "invalid code")
       end
