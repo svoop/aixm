@@ -60,7 +60,9 @@ describe AIXM::Component::Runway do
     end
   end
 
-  macro :remarks
+  describe :remarks= do
+    macro :remarks
+  end
 end
 
 describe AIXM::Component::Runway::Direction do
@@ -88,9 +90,13 @@ describe AIXM::Component::Runway::Direction do
     end
   end
 
-  macro :xy
+  describe :xy= do
+    macro :xy
+  end
 
-  macro :z_qnh
+  describe :z= do
+    macro :z_qnh
+  end
 
   describe :displaced_threshold= do
     it "fails on invalid values" do
@@ -108,7 +114,9 @@ describe AIXM::Component::Runway::Direction do
     end
   end
 
-  macro :remarks
+  describe :remarks= do
+    macro :remarks
+  end
 
   describe :magnetic_orientation do
     it "is calculated correctly" do

@@ -75,9 +75,13 @@ describe AIXM::Feature::Airport do
     end
   end
 
-  macro :xy
+  describe :xy= do
+    macro :xy
+  end
 
-  macro :z_qnh
+  describe :z= do
+    macro :z_qnh
+  end
 
   describe :declination= do
     it "fails on invalid values" do
@@ -102,9 +106,13 @@ describe AIXM::Feature::Airport do
     end
   end
 
-  macro :schedule
+  describe :schedule= do
+    macro :schedule
+  end
 
-  macro :remarks
+  describe :remarks= do
+    macro :remarks
+  end
 
   describe :add_runway do
     it "fails on invalid arguments" do
@@ -317,9 +325,13 @@ describe AIXM::Feature::Airport::UsageLimitation do
     end
   end
 
-  macro :schedule
+  describe :schedule= do
+    macro :schedule
+  end
 
-  macro :remarks
+  describe :remarks= do
+    macro :remarks
+  end
 end
 
 describe AIXM::Feature::Airport::UsageLimitation::Condition do
