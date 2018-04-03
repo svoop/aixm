@@ -36,10 +36,10 @@ module AIXM
 
         def to_uid
           builder = Builder::XmlMarkup.new(indent: 2)
-          builder.DmeUid({ region: (region if AIXM.ofmx?) }.compact) do |dmeuid|
-            dmeuid.codeId(id)
-            dmeuid.geoLat(xy.lat(AIXM.format))
-            dmeuid.geoLong(xy.long(AIXM.format))
+          builder.DmeUid({ region: (region if AIXM.ofmx?) }.compact) do |dme_uid|
+            dme_uid.codeId(id)
+            dme_uid.geoLat(xy.lat(AIXM.format))
+            dme_uid.geoLong(xy.long(AIXM.format))
           end
         end
 

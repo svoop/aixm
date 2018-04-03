@@ -17,10 +17,10 @@ module AIXM
 
         def to_uid
           builder = Builder::XmlMarkup.new(indent: 2)
-          builder.TcnUid({ region: (region if AIXM.ofmx?) }.compact) do |tcnuid|
-            tcnuid.codeId(id)
-            tcnuid.geoLat(xy.lat(AIXM.format))
-            tcnuid.geoLong(xy.long(AIXM.format))
+          builder.TcnUid({ region: (region if AIXM.ofmx?) }.compact) do |tcn_uid|
+            tcn_uid.codeId(id)
+            tcn_uid.geoLat(xy.lat(AIXM.format))
+            tcn_uid.geoLong(xy.long(AIXM.format))
           end
         end
 

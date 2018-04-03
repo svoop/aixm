@@ -79,8 +79,8 @@ module AIXM
           end
         end
         builder.Abd do |abd|
-          abd.AbdUid do |abduid|
-            abduid << to_uid.indent(4)
+          abd.AbdUid do |abd_uid|
+            abd_uid << to_uid.indent(4)
           end
           abd << geometry.to_xml.indent(2)
         end
@@ -93,8 +93,8 @@ module AIXM
               ase << layers[index].to_xml.indent(2)
             end
             builder.Adg do |adg|
-              adg.AdgUid do |adguid|
-                adguid << layer_airspace.to_uid.indent(4)
+              adg.AdgUid do |adg_uid|
+                adg_uid << layer_airspace.to_uid.indent(4)
               end
               adg << to_uid(as: :AseUidSameExtent).indent(2)
             end

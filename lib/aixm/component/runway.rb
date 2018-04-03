@@ -107,9 +107,9 @@ module AIXM
 
       def to_uid
         builder = Builder::XmlMarkup.new(indent: 2)
-        builder.RwyUid do |rwyuid|
-          rwyuid << airport.to_uid.indent(2)
-          rwyuid.txtDesig(name)
+        builder.RwyUid do |rwy_uid|
+          rwy_uid << airport.to_uid.indent(2)
+          rwy_uid.txtDesig(name)
         end
       end
 
@@ -211,9 +211,9 @@ module AIXM
         def to_xml
           builder = Builder::XmlMarkup.new(indent: 2)
           builder.Rdn do |rdn|
-            rdn.RdnUid do |rdnuid|
-              rdnuid << runway.to_uid.indent(4)
-              rdnuid.txtDesig(name)
+            rdn.RdnUid do |rdn_uid|
+              rdn_uid << runway.to_uid.indent(4)
+              rdn_uid.txtDesig(name)
             end
             rdn.geoLat(xy.lat(AIXM.format))
             rdn.geoLong(xy.long(AIXM.format))
@@ -227,13 +227,13 @@ module AIXM
           end
           if displaced_threshold
             builder.Rdd do |rdd|
-              rdd.RddUid do |rdduid|
-                rdduid.RdnUid do |rdnuid|
-                  rdnuid << runway.to_uid.indent(6)
-                  rdnuid.txtDesig(name)
+              rdd.RddUid do |rdd_uid|
+                rdd_uid.RdnUid do |rdn_uid|
+                  rdn_uid << runway.to_uid.indent(6)
+                  rdn_uid.txtDesig(name)
                 end
-                rdduid.codeType('DPLM')
-                rdduid.codeDayPeriod('A')
+                rdd_uid.codeType('DPLM')
+                rdd_uid.codeDayPeriod('A')
               end
               rdd.valDist(displaced_threshold)
               rdd.uomDist('M')

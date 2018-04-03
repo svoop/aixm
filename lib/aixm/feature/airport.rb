@@ -180,8 +180,8 @@ module AIXM
 
       def to_uid
         builder = Builder::XmlMarkup.new(indent: 2)
-        builder.AhpUid({ region: (region if AIXM.ofmx?) }.compact) do |ahpuid|
-          ahpuid.codeId(code)
+        builder.AhpUid({ region: (region if AIXM.ofmx?) }.compact) do |ahp_uid|
+          ahp_uid.codeId(code)
         end
       end
 
@@ -215,8 +215,8 @@ module AIXM
         end
         if usage_limitations.any?
           builder.Ahu do |ahu|
-            ahu.AhuUid do |ahuuid|
-              ahuuid << to_uid.indent(4)
+            ahu.AhuUid do |ahu_uid|
+              ahu_uid << to_uid.indent(4)
             end
             usage_limitations.each do |usage_limitation|
               ahu << usage_limitation.to_xml.indent(2)
