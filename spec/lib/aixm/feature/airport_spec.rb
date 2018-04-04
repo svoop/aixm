@@ -71,7 +71,7 @@ describe AIXM::Feature::Airport do
     end
 
     it "derives values from runways and helipads" do
-      subject.type.must_equal :aerodrome
+      subject.type.must_equal :aerodrome_and_heliport
     end
   end
 
@@ -126,17 +126,17 @@ describe AIXM::Feature::Airport do
     end
   end
 
-# describe :add_helipad do
-#   it "fails on invalid arguments" do
-#     -> { subject.add_helipad nil }.must_raise ArgumentError
-#   end
-#
-#    it "adds helipad to the array" do
-#     count = subject.helipads.count
-#     subject.add_helipad(AIXM.helipad(name: '10'))
-#     subject.helipads.count.must_equal count + 1
-#   end
-# end
+  describe :add_helipad do
+    it "fails on invalid arguments" do
+      -> { subject.add_helipad nil }.must_raise ArgumentError
+    end
+
+    it "adds helipad to the array" do
+      count = subject.helipads.count
+      subject.add_helipad(AIXM.helipad(name: 'H2'))
+      subject.helipads.count.must_equal count + 1
+    end
+  end
 
   describe :add_usage_limitation do
     it "fails on invalid arguments" do
@@ -176,7 +176,7 @@ describe AIXM::Feature::Airport do
           <txtName>AVIGNON-PUJAUT</txtName>
           <codeIcao>LFNT</codeIcao>
           <codeGps>LFPUJAUT</codeGps>
-          <codeType>AD</codeType>
+          <codeType>AH</codeType>
           <geoLat>43.99611111N</geoLat>
           <geoLong>004.75444444E</geoLong>
           <codeDatum>WGE</codeDatum>
@@ -271,6 +271,25 @@ describe AIXM::Feature::Airport do
           <uomDist>M</uomDist>
           <txtRmk>back remarks</txtRmk>
         </Rdd>
+        <Tla>
+          <TlaUid>
+            <AhpUid region=\"LF\">
+              <codeId>LFNT</codeId>
+            </AhpUid>
+            <txtDesig>H1</txtDesig>
+          </TlaUid>
+          <geoLat>43.99915000N</geoLat>
+          <geoLong>004.75154444E</geoLong>
+          <codeDatum>WGE</codeDatum>
+          <valElev>141</valElev>
+          <uomDistVer>FT</uomDistVer>
+          <valLen>20</valLen>
+          <valWid>20</valWid>
+          <uomDim>M</uomDim>
+          <codeComposition>GRASS</codeComposition>
+          <codeSts>OTHER</codeSts>
+          <txtRmk>Authorizaton by AD operator required</txtRmk>
+        </Tla>
         <Ahu>
           <AhuUid>
             <AhpUid region="LF">

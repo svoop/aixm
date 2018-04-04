@@ -249,7 +249,7 @@ module AIXM
           airport.transition_z = AIXM.z(10_000, :qnh)
           airport.remarks = "Restricted access"
           airport.add_runway(runway)
-#         airport.add_helipad(helipad)
+          airport.add_helipad(helipad)
           airport.add_usage_limitation :permitted
           airport.add_usage_limitation(:reservation_required) do |reservation_required|
             reservation_required.add_condition { |c| c.aircraft = :glider }
@@ -280,8 +280,17 @@ module AIXM
         end
       end
 
-#     def helipad
-#     end
+      def helipad
+        AIXM.helipad(name: 'H1').tap do |helipad|
+          helipad.xy = AIXM.xy(lat: %q(43°59'56.94"N), long: %q(004°45'05.56"E))
+          helipad.z = AIXM.z(141, :qnh)
+          helipad.length = 20
+          helipad.width = 20
+          helipad.composition = :grass
+          helipad.status = :other
+          helipad.remarks = "Authorizaton by AD operator required"
+        end
+      end
 
       # Document
 

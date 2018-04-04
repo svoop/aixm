@@ -393,8 +393,17 @@ runway.forth.magnetic_orientation   # => Integer (degrees)
 
 ```ruby
 helipad = AIXM.helipad(
-  # TODO
+  name: String
 )
+helipad.xy = AIXM.xy
+helipad.z = AIXM.z
+helipad.length = Integer   # meters
+helipad.width = Integer    # meters
+helipad.composition = :asphalt or :bitumen or :concrete or :gravel or :macadam or
+  :sand or :graded_earth or :grass or :water or :other
+helipad.status = :closed or :work_in_progress or :parked_aircraft or
+  :visual_aids_failure or :secondary_power or :other
+helipad.remarks = String or nil
 ```
 
 #### Schedule

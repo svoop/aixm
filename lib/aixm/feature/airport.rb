@@ -141,11 +141,11 @@ module AIXM
 
       ##
       # Add a helipad to the airport
-#     def add_helipad(helipad)
-#       fail(ArgumentError, "invalid helipad") unless helipad.is_a? AIXM::Component::Helipad
-#       helipad.send(:airport=, self)
-#       @helipads << helipad
-#     end
+      def add_helipad(helipad)
+        fail(ArgumentError, "invalid helipad") unless helipad.is_a? AIXM::Component::Helipad
+        helipad.send(:airport=, self)
+        @helipads << helipad
+      end
 
       ##
       # Add usage limitations
@@ -212,6 +212,9 @@ module AIXM
         end
         runways.each do |runway|
           builder << runway.to_xml
+        end
+        helipads.each do |helipad|
+          builder << helipad.to_xml
         end
         if usage_limitations.any?
           builder.Ahu do |ahu|
