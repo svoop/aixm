@@ -149,6 +149,26 @@ organisation.id = String or nil
 organisation.remarks = String or nil
 ```
 
+#### Unit
+
+```ruby
+unit = AIXM.unit(
+  source: String or nil
+  region: String or nil (to use +AIXM.config.region+)
+  organisation: AIXM.organisation
+  name: String
+  type: :area_control_centre or :approach_control_office) or
+    :ats_reporting_office or :air_traffic_services_unit) or
+    :communications_office or :flight_information_centre or
+    :flight_service_station or :meteorological_office or
+    :international_notam_office or :radar_office or :aerodrome_control_tower or
+    :other
+  class: :icao or :other
+)
+unit.airport = AIXM.airport
+unit.remarks = String or nil
+```
+
 #### Airspace
 
 ```ruby

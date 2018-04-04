@@ -17,7 +17,8 @@ module AIXM
       attr_reader :schedule, :remarks
 
       def initialize(class: nil, vertical_limits:)
-        self.class, self.vertical_limits = binding.local_variable_get(:class), vertical_limits
+        self.class = binding.local_variable_get(:class)
+        self.vertical_limits = vertical_limits
         @selective = false
       end
 
@@ -29,7 +30,16 @@ module AIXM
       # Airspace class from :A to :G
       def class=(value)
         @klass = value&.to_sym&.upcase
-        fail(ArgumentError, "invalid schedule") unless @klass.nil? || CLASSES.include?(@klass)
+        fail(ArgumentError, "invalid class") unless @klass.nil? || CLASSES.include?(@klass)
+      end
+
+      ##
+      # Read the airspace class
+      #
+      # This and other workarounds in the initializer are necessary due to
+      # "class" being a reserved keyword in Ruby.
+      def class
+        @klass
       end
 
       ##
@@ -57,15 +67,6 @@ module AIXM
       # Free text remarks
       def remarks=(value)
         @remarks = value&.to_s
-      end
-
-      ##
-      # Read the airspace class
-      #
-      # This and other workarounds in the initializer are necessary due to
-      # "class" being a reserved keyword in Ruby.
-      def class
-        @klass
       end
 
       ##

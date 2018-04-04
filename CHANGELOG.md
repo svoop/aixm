@@ -11,7 +11,7 @@
   * Schedule and remarks moved from Airspace to to Layer (formerly known as
     class layer)
 * Additions
-  * Organization feature
+  * Organization and Unit features
   * Airport feature
   * Refinement `Float#to_rad`
   * Distance calculation with `AIXM::XY#distance`

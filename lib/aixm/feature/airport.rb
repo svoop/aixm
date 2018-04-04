@@ -7,7 +7,10 @@ module AIXM
     # Airport feature (aerodrome, heliport etc)
     #
     # Arguments:
+    # * +organisation+ - responsible organisation
     # * +code+ - airport code
+    # * +name+ - name of the airport
+    # * +xy+ - reference point
     class Airport < Base
       CODE_PATTERN = /^[A-Z]{2}([A-Z]{1,2}|\d{4})$/.freeze
 
@@ -34,6 +37,8 @@ module AIXM
         %Q(#<#{self.class} code=#{code.inspect}>)
       end
 
+      ##
+      # Responsible organisation
       def organisation=(value)
         fail(ArgumentError, "invalid organisation") unless value.is_a? AIXM::Feature::Organisation
         @organisation = value

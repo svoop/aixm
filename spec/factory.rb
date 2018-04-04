@@ -254,6 +254,22 @@ module AIXM
         end
       end
 
+      # Unit
+
+      def unit
+        AIXM.unit(
+          source: 'LF|GEN|0.0 FACTORY|0|0',
+          region: 'LF',
+          organisation: organisation,
+          name: 'PUJAUT TWR',
+          type: :aerodrome_control_tower,
+          class: :icao
+        ).tap do |unit|
+          unit.airport = airport
+          unit.remarks = 'A/A FR only'
+        end
+      end
+
       # Airport
 
       def airport
@@ -324,6 +340,7 @@ module AIXM
           effective_at: time
         ).tap do |document|
           document.features << organisation
+          document.features << unit
           document.features << airport
           document.features << polygon_airspace
           document.features << circle_airspace

@@ -8,7 +8,7 @@ module AIXM
       # Implements common attributes of all navigational aids
       #
       # Arguments:
-      # * +organisation+ - organisation
+      # * +organisation+ - responsible organisation
       # * +id+ - published identifier
       # * +name+ - full name
       # * +xy+ - position
@@ -29,7 +29,7 @@ module AIXM
         end
 
         ##
-        # Organisation
+        # Responsible organisation
         def organisation=(value)
           fail(ArgumentError, "invalid organisation") unless value == false || value.is_a?(AIXM::Feature::Organisation)
           @organisation = value
