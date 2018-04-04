@@ -50,7 +50,8 @@ module AIXM
         OTHER: :other
       }
 
-      attr_reader :airport, :name
+      attr_reader :airport
+      attr_reader :name
       attr_reader :length, :width, :composition, :status, :remarks
       attr_accessor :forth, :back
 

@@ -13,7 +13,8 @@ module AIXM
     class Layer
       CLASSES = (:A..:G)
 
-      attr_reader :vertical_limits, :schedule, :remarks
+      attr_reader :vertical_limits
+      attr_reader :schedule, :remarks
 
       def initialize(class: nil, vertical_limits:)
         self.class, self.vertical_limits = binding.local_variable_get(:class), vertical_limits

@@ -242,7 +242,8 @@ module AIXM
           OTHER: :other
         }.freeze
 
-        attr_reader :airport, :limitation
+        attr_reader :airport
+        attr_reader :limitation
         attr_reader :conditions, :schedule, :remarks
 
         def initialize(limitation:)

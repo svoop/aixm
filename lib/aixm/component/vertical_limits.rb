@@ -18,7 +18,7 @@ module AIXM
       TAGS = { upper: :Upper, lower: :Lower, max: :Max, min: :Mnm }.freeze
       CODES = { qfe: :HEI, qnh: :ALT, qne: :STD }.freeze
 
-      attr_reader :upper_z, :lower_z, :max_z, :min_z
+      attr_reader :max_z, :upper_z, :lower_z, :min_z
 
       def initialize(max_z: nil, upper_z:, lower_z:, min_z: nil)
         fail(ArgumentError, "invalid upper_z") unless upper_z.is_a? AIXM::Z

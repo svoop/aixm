@@ -32,7 +32,8 @@ module AIXM
         OTHER: :other
       }
 
-      attr_reader :airport, :name
+      attr_reader :airport
+      attr_reader :name
       attr_reader :xy, :z, :length, :width, :composition, :status, :remarks
 
       def initialize(name:)

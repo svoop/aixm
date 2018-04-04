@@ -34,7 +34,8 @@ module AIXM
         OTHER: :other
       }.freeze
 
-      attr_reader :code, :remarks
+      attr_reader :code
+      attr_reader :remarks
 
       def initialize(code:)
         self.code = code
