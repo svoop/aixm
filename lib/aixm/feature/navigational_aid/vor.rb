@@ -98,8 +98,8 @@ module AIXM
           builder = Builder::XmlMarkup.new(indent: 2)
           builder.VorUid({ region: (region if AIXM.ofmx?) }.compact) do |vor_uid|
             vor_uid.codeId(id)
-            vor_uid.geoLat(xy.lat(AIXM.format))
-            vor_uid.geoLong(xy.long(AIXM.format))
+            vor_uid.geoLat(xy.lat(AIXM.schema))
+            vor_uid.geoLong(xy.long(AIXM.schema))
           end
         end
 

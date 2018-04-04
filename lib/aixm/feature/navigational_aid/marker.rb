@@ -51,8 +51,8 @@ module AIXM
           builder = Builder::XmlMarkup.new(indent: 2)
           builder.MkrUid({ region: (region if AIXM.ofmx?) }.compact) do |mkr_uid|
             mkr_uid.codeId(id)
-            mkr_uid.geoLat(xy.lat(AIXM.format))
-            mkr_uid.geoLong(xy.long(AIXM.format))
+            mkr_uid.geoLat(xy.lat(AIXM.schema))
+            mkr_uid.geoLong(xy.long(AIXM.schema))
           end
         end
 

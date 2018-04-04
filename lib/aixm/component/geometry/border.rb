@@ -31,8 +31,8 @@ module AIXM
               gbr_uid.txtName(name.to_s)
             end
             avx.codeType('FNT')
-            avx.geoLat(xy.lat(AIXM.format))
-            avx.geoLong(xy.long(AIXM.format))
+            avx.geoLat(xy.lat(AIXM.schema))
+            avx.geoLong(xy.long(AIXM.schema))
             avx.codeDatum('WGE')
           end
         end

@@ -137,8 +137,8 @@ module AIXM
         builder = Builder::XmlMarkup.new(indent: 2)
         builder.Tla do |tla|
           tla << to_uid.indent(2)
-          tla.geoLat(xy.lat(AIXM.format))
-          tla.geoLong(xy.long(AIXM.format))
+          tla.geoLat(xy.lat(AIXM.schema))
+          tla.geoLong(xy.long(AIXM.schema))
           tla.codeDatum('WGE')
           if z
             tla.valElev(z.alt)

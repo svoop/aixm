@@ -30,8 +30,8 @@ module AIXM
           builder = Builder::XmlMarkup.new(indent: 2)
           builder.Avx do |avx|
             avx.codeType('GRC')
-            avx.geoLat(xy.lat(AIXM.format))
-            avx.geoLong(xy.long(AIXM.format))
+            avx.geoLat(xy.lat(AIXM.schema))
+            avx.geoLong(xy.long(AIXM.schema))
             avx.codeDatum('WGE')
           end
         end

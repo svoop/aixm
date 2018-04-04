@@ -52,7 +52,7 @@ module AIXM
     ##
     # Validate against the XSD and return an array of errors
     def errors
-      xsd = Nokogiri::XML::Schema(File.open(AIXM.format(:schema)))
+      xsd = Nokogiri::XML::Schema(File.open(AIXM.schema(:xsd)))
       xsd.validate(Nokogiri::XML(to_xml)).reject do |error|
         AIXM.config.ignored_errors && error.message.match?(AIXM.config.ignored_errors)
       end
@@ -62,8 +62,8 @@ module AIXM
     # Generate XML
     def to_xml
       meta = {
-        'xmlns:xsi': AIXM.format(:namespace),
-        version: AIXM.format(:version),
+        'xmlns:xsi': AIXM.schema(:namespace),
+        version: AIXM.schema(:version),
         origin: "rubygem aixm-#{AIXM::VERSION}",
         namespace: (namespace if AIXM.ofmx?),
         created: @created_at.xmlschema,
@@ -71,7 +71,7 @@ module AIXM
       }.compact
       builder = Builder::XmlMarkup.new(indent: 2)
       builder.instruct!
-      builder.tag!(AIXM.format(:root), meta) do |root|
+      builder.tag!(AIXM.schema(:root), meta) do |root|
         root << features.map { |f| f.to_xml }.join.indent(2)
       end
     end

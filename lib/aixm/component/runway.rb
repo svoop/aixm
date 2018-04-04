@@ -245,8 +245,8 @@ module AIXM
               rdn_uid << runway.to_uid.indent(4)
               rdn_uid.txtDesig(name)
             end
-            rdn.geoLat(xy.lat(AIXM.format))
-            rdn.geoLong(xy.long(AIXM.format))
+            rdn.geoLat(xy.lat(AIXM.schema))
+            rdn.geoLong(xy.long(AIXM.schema))
             rdn.valTrueBrg(geographic_orientation)
             rdn.valMagBrg(magnetic_orientation)
             if z

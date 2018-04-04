@@ -1,16 +1,16 @@
 module AIXM
 
-  FORMATS = {
+  SCHEMAS = {
     aixm: {
       version: '4.5',
       namespace: 'http://www.aixm.aero/schema/4.5/AIXM-Snapshot.xsd',
-      schema: Pathname(__dir__).join('..', '..', 'schemas', 'aixm', '4.5', 'AIXM-Snapshot.xsd'),
+      xsd: Pathname(__dir__).join('..', '..', 'schemas', 'aixm', '4.5', 'AIXM-Snapshot.xsd'),
       root: 'AIXM-Snapshot'
     },
     ofmx: {
       version: '0',
       namespace: 'http://openflightmaps.org/schema/0/OFMX-Snapshot.xsd',
-      schema: Pathname(__dir__).join('..', '..', 'schemas', 'ofmx', '0', 'OFMX-Snapshot.xsd'),
+      xsd: Pathname(__dir__).join('..', '..', 'schemas', 'ofmx', '0', 'OFMX-Snapshot.xsd'),
       root: 'OFMX-Snapshot'
     }
   }.freeze
@@ -18,30 +18,30 @@ module AIXM
   class << self
 
     ##
-    # Access the configuration (e.g. +AIXM.config.format+)
+    # Access the configuration (e.g. +AIXM.config.schema+)
     def config
       @@config
     end
 
     ##
-    # Currently active format
+    # Currently active schema
     #
-    # To get the format identifyer:
-    #   AIXM.format   # => :aixm
+    # To get the schema identifyer:
+    #   AIXM.schema   # => :aixm
     #
-    # To get format details:
-    #   AIXM.format(:version)   # => '4.5'
-    #   AIXM.format(:root)      # => 'AIXM-Snapshot'
-    def format(key = nil)
-      key ? FORMATS.dig(@@config.format, key) : @@config.format
+    # To get schema details:
+    #   AIXM.schema(:version)   # => '4.5'
+    #   AIXM.schema(:root)      # => 'AIXM-Snapshot'
+    def schema(key = nil)
+      key ? SCHEMAS.dig(@@config.schema, key) : @@config.schema
     end
 
     ##
-    # Shortcuts to query format e.g. with +AIXM.ofmx?+ and to set format e.g.
+    # Shortcuts to query schema e.g. with +AIXM.ofmx?+ and to set schema e.g.
     # with +AIXM.ofmx!+
-    FORMATS.each_key do |format|
-      define_method("#{format}!") { @@config.format = format }
-      define_method("#{format}?") { @@config.format == format }
+    SCHEMAS.each_key do |schema|
+      define_method("#{schema}!") { @@config.schema = schema }
+      define_method("#{schema}?") { @@config.schema == schema }
     end
 
     private
@@ -50,7 +50,7 @@ module AIXM
     # Default configuration
     def initialize_config
       @@config = OpenStruct.new(
-        format: :aixm,
+        schema: :aixm,
         ignored_errors: %r(OrgUid)
       )
     end

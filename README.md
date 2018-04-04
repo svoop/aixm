@@ -33,7 +33,7 @@ document.features << AIXM.designated_point(
   xy: AIXM.xy(lat: %q(46°31'54.3"N), long: %q(002°19'55.2"W)),
   type: :icao
 )
-document.aixm!   # not really necessary since AIXM is the default format
+document.aixm!   # not really necessary since AIXM is the default schema
 document.to_xml
 ```
 
@@ -49,20 +49,20 @@ AIXM.designated_point(...)
 The following configuration options are available for setting and getting:
 
 ```ruby
-AIXM.config.format           # either :aixm (default) or :ofmx
+AIXM.config.schema           # either :aixm (default) or :ofmx
 AIXM.config.region           # fallback region
 AIXM.config.ignored_errors   # regex of ignored XML schema errors
 ```
 
-There are shortcuts to set and get the format:
+There are shortcuts to set and get the schema:
 
 ```ruby
-AIXM.format             # => :aixm
+AIXM.schema             # => :aixm
 AIXM.aixm?              # => true
 AIXM.ofmx!              # => :ofmx
 AIXM.ofmx?              # => true
-AIXM.format             # => :ofmx
-AIXM.format(:version)   # => 0
+AIXM.schema             # => :ofmx
+AIXM.schema(:version)   # => 0
 ```
 
 ## Validation
@@ -317,18 +317,6 @@ vor.associate_tacan(channel: String)   # turns the VOR into a VORTAC
 
 ### Components
 
-#### Layer
-
-```ruby
-layer = AIXM.layer(
-  class: String or nil
-  vertical_limits: AIXM.vertical_limits
-)
-layer.schedule = AIXM.schedule
-layer.selective = true or false (default)
-layer.remarks = String or nil
-```
-
 #### Geometry
 
 ```ruby
@@ -359,6 +347,29 @@ border = AIXM.border(
 circle = AIXM.circle(
   center_xy: AIXM.xy
   radius: Numeric   # kilometers
+)
+```
+
+#### Layer
+
+```ruby
+layer = AIXM.layer(
+  class: String or nil
+  vertical_limits: AIXM.vertical_limits
+)
+layer.schedule = AIXM.schedule
+layer.selective = true or false (default)
+layer.remarks = String or nil
+```
+
+#### Vertical Limits
+
+```ruby
+vertical_limits = AIXM.vertical_limits(
+  max_z: AIXM.z or nil
+  upper_z: AIXM.z
+  lower_z: AIXM.z
+  min_z: AIXM.z or nil
 )
 ```
 
@@ -418,17 +429,6 @@ schedule.remarks = String or nil
 Some common values are available as convenience constants:
 
 * `AIXM::H24` - continuous 24/7
-
-#### Vertical Limits
-
-```ruby
-vertical_limits = AIXM.vertical_limits(
-  max_z: AIXM.z or nil
-  upper_z: AIXM.z
-  lower_z: AIXM.z
-  min_z: AIXM.z or nil
-)
-```
 
 ## Refinements
 

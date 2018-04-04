@@ -5,11 +5,11 @@
 * Breaking changes:
   * Switch from "AIXM with OFM extensions" to OFMX
   * `to_aixm` renamed to `to_xml` again
-  * Removed signature `to_xml(extension)` in favor of `AIXM.format`
+  * Removed signature `to_xml(extension)` in favor of `AIXM.schema`
   * Removed `Array#to_digest`
   * Removed `Document#complete?`
   * Schedule and remarks moved from Airspace to to Layer (formerly known as
-    class layer) 
+    class layer)
 * Additions
   * Airport feature
   * Refinement `Float#to_rad`

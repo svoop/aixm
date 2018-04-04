@@ -30,8 +30,8 @@ module AIXM
       fail(ArgumentError, "invalid lat") unless (-90..90).include? @lat
     end
 
-    def lat(format = nil)
-      case format
+    def lat(schema = nil)
+      case schema
         when :ofmx then ("%011.8f" % @lat.abs.round(8)) + (@lat.negative? ? 'S' : 'N')
         when :aixm then @lat.to_dms(2).gsub(/[^\d.]/, '') + (@lat.negative? ? 'S' : 'N')
         else @lat.round(8)
@@ -45,8 +45,8 @@ module AIXM
       fail(ArgumentError, "invalid long") unless (-180..180).include? @long
     end
 
-    def long(format = nil)
-      case format
+    def long(schema = nil)
+      case schema
         when :ofmx then ("%012.8f" % @long.abs.round(8)) + (@long.negative? ? 'W' : 'E')
         when :aixm then @long.to_dms(3).gsub(/[^\d.]/, '') + (@long.negative? ? 'W' : 'E')
         else @long.round(8)

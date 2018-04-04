@@ -195,8 +195,8 @@ module AIXM
           ahp.codeIata(code) if code.length == 3
           ahp.codeGps(gps) if gps
           ahp.codeType(TYPES.key(type).to_s)
-          ahp.geoLat(xy.lat(AIXM.format))
-          ahp.geoLong(xy.long(AIXM.format))
+          ahp.geoLat(xy.lat(AIXM.schema))
+          ahp.geoLong(xy.long(AIXM.schema))
           ahp.codeDatum('WGE')
           if z
             ahp.valElev(z.alt)

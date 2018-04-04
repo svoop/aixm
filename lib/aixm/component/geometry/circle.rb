@@ -31,11 +31,11 @@ module AIXM
           builder = Builder::XmlMarkup.new(indent: 2)
           builder.Avx do |avx|
             avx.codeType('CWA')
-            avx.geoLat(north_xy.lat(AIXM.format))
-            avx.geoLong(north_xy.long(AIXM.format))
+            avx.geoLat(north_xy.lat(AIXM.schema))
+            avx.geoLong(north_xy.long(AIXM.schema))
             avx.codeDatum('WGE')
-            avx.geoLatArc(center_xy.lat(AIXM.format))
-            avx.geoLongArc(center_xy.long(AIXM.format))
+            avx.geoLatArc(center_xy.lat(AIXM.schema))
+            avx.geoLongArc(center_xy.long(AIXM.schema))
           end
         end
 

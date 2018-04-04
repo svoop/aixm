@@ -56,8 +56,8 @@ module AIXM
           builder = Builder::XmlMarkup.new(indent: 2)
           builder.NdbUid({ region: (region if AIXM.ofmx?) }.compact) do |ndb_uid|
             ndb_uid.codeId(id)
-            ndb_uid.geoLat(xy.lat(AIXM.format))
-            ndb_uid.geoLong(xy.long(AIXM.format))
+            ndb_uid.geoLat(xy.lat(AIXM.schema))
+            ndb_uid.geoLong(xy.long(AIXM.schema))
           end
         end
 
