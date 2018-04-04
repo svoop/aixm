@@ -14,12 +14,16 @@ module AIXM
         attr_reader :xy
 
         def initialize(xy:)
-          fail(ArgumentError, "invalid xy") unless xy.is_a? AIXM::XY
-          @xy = xy
+          self.xy = xy
         end
 
         def inspect
           %Q(#<#{self.class} xy="#{xy.to_s}">)
+        end
+
+        def xy=(value)
+          fail(ArgumentError, "invalid xy") unless value.is_a? AIXM::XY
+          @xy = value
         end
 
         def to_xml

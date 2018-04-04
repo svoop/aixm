@@ -1,18 +1,37 @@
 require_relative '../../../../spec_helper'
 
 describe AIXM::Component::Geometry::Circle do
-  describe :initialize do
-    it "won't accept invalid arguments" do
-      -> { AIXM.circle(center_xy: 0, radius: 0) }.must_raise ArgumentError
+  subject do
+    AIXM.circle(
+      center_xy: AIXM.xy(lat: 12.12345678, long: -23.12345678),
+      radius: 15
+    )
+  end
+
+  describe :center_xy= do
+    it "fails on invalid values" do
+      -> { subject.center_xy = 123 }.must_raise ArgumentError
+    end
+
+    it "accepts valid values" do
+      subject.tap { |s| s.center_xy = AIXM::Factory.xy }.center_xy.must_equal AIXM::Factory.xy
+    end
+  end
+
+  describe :radius= do
+    it "fails on invalid values" do
+      -> { subject.radius = :foo }.must_raise ArgumentError
+      -> { subject.radius = 0 }.must_raise ArgumentError
+      -> { subject.radius = -5 }.must_raise ArgumentError
+    end
+
+    it "converts Numeric to Float" do
+      subject.tap { |s| s.radius = 5 }.radius.must_equal 5.0
     end
   end
 
   describe :north_xy do
     it "must calculate approximation of northmost point on the circumference" do
-      subject = AIXM.circle(
-        center_xy: AIXM.xy(lat: 12.12345678, long: -23.12345678),
-        radius: 15
-      )
       subject.send(:north_xy).must_equal AIXM.xy(lat: 12.25835483455868, long: -23.12345678)
     end
   end

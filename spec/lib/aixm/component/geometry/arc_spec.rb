@@ -1,13 +1,28 @@
 require_relative '../../../../spec_helper'
 
 describe AIXM::Component::Geometry::Arc do
-  describe :initialize do
-    it "won't accept invalid arguments" do
-      xy = AIXM.xy(lat: 11.1, long: 22.2)
-      -> { AIXM.arc(xy: 0, center_xy: xy, clockwise: true) }.must_raise ArgumentError
-      -> { AIXM.arc(xy: xy, center_xy: 0, clockwise: true) }.must_raise ArgumentError
-      -> { AIXM.arc(xy: xy, center_xy: xy, clockwise: 0) }.must_raise ArgumentError
+  subject do
+    AIXM.arc(
+      xy: AIXM.xy(lat: 11.1, long: 33.3),
+      center_xy: AIXM.xy(lat: 22.2, long: 33.3),
+      clockwise: true
+    )
+  end
+
+  describe :center_xy= do
+    it "fails on invalid values" do
+      -> { subject.center_xy = 123 }.must_raise ArgumentError
     end
+
+    it "accepts valid values" do
+      subject.tap { |s| s.center_xy = AIXM::Factory.xy }.center_xy.must_equal AIXM::Factory.xy
+    end
+  end
+
+  describe :clockwise= do
+    it "fails on invalid values" do
+      -> { subject.clockwise = 0 }.must_raise ArgumentError
+    end  
   end
 
   describe :clockwise? do

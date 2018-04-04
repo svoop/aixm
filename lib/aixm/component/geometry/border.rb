@@ -12,7 +12,12 @@ module AIXM
 
         def initialize(xy:, name:)
           super(xy: xy)
-          @name = name
+          self.name = name
+        end
+
+        def name=(value)
+          fail(ArgumentError, "invalid name") unless value.is_a? String
+          @name = value
         end
 
         def inspect

@@ -1,10 +1,12 @@
 require_relative '../../../../spec_helper'
 
 describe AIXM::Component::Geometry::Point do
-  describe :initialize do
-    it "won't accept invalid arguments" do
-      -> { AIXM.point(xy: 0) }.must_raise ArgumentError
-    end
+  subject do
+    AIXM.point(xy: AIXM.xy(lat: 11.1, long: 22.2))
+  end
+
+  describe :xy= do
+    macro :xy
   end
 
   describe :to_xml do
