@@ -27,6 +27,10 @@ module AIXM
         @region || AIXM.config.region&.upcase
       end
 
+      def ==(other)
+        other.is_a?(self.class) && self.to_uid == other.to_uid
+      end
+
     end
   end
 end
