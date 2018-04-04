@@ -265,6 +265,7 @@ module AIXM
           runway.length = 650
           runway.width = 80
           runway.composition = :graded_earth
+          runway.status = :closed
           runway.remarks = "Markings eroded"
           runway.forth.xy = AIXM.xy(lat: %q(44°00'07.63"N), long: %q(004°45'07.81"E))
           runway.forth.z = AIXM.z(145, :qnh)

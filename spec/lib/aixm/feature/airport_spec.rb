@@ -198,6 +198,7 @@ describe AIXM::Feature::Airport do
           <valWid>80</valWid>
           <uomDimRwy>M</uomDimRwy>
           <codeComposition>GRADE</codeComposition>
+          <codeSts>CLSD</codeSts>
           <txtRmk>Markings eroded</txtRmk>
         </Rwy>
         <Rdn>

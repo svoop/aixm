@@ -60,6 +60,21 @@ describe AIXM::Component::Runway do
     end
   end
 
+  describe :status= do
+    it "fails on invalid values" do
+      -> { subject.status = :foobar }.must_raise ArgumentError
+    end
+
+    it "accepts nil values" do
+      subject.tap { |s| s.status = nil }.status.must_be :nil?
+    end
+
+    it "normalizes valid values" do
+      subject.tap { |s| s.status = :closed }.status.must_equal :closed
+      subject.tap { |s| s.status = :SPOWER }.status.must_equal :secondary_power
+    end
+  end
+
   describe :remarks= do
     macro :remarks
   end

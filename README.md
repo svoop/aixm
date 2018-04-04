@@ -185,7 +185,7 @@ Simple limitations apply to any traffic:
 
 ```ruby
 airport.add_usage_limitation :permitted or :forbidden or
-                             :reservation_required or :other
+  :reservation_required or :other
 ```
 
 Or specify the traffic a limitation (e.g. `:permitted`) applies to:
@@ -194,14 +194,14 @@ Or specify the traffic a limitation (e.g. `:permitted`) applies to:
 airport.add_usage_limitation(:permitted) do |permitted|
   permitted.add_condition do |condition|
     condition.aircraft = :landplane or :seaplane or :amphibian or :helicopter or
-                         :gyrocopter or :tilt_wing or :short_takeoff_and_landing or
-                         :glider or :hangglider or :paraglider or :ultra_light or
-                         :balloon or :unmanned_drone or :other
+      :gyrocopter or :tilt_wing or :short_takeoff_and_landing or :glider or
+      :hangglider or :paraglider or :ultra_light or :balloon or
+      :unmanned_drone or :other
     condition.rule = :ifr or :vfr or :ifr_and_vfr
     condition.realm = :civil or :military or :other
     condition.origin = :international or :national or :any or :other
     condition.purpose = :scheduled or :not_scheduled or :private or
-                        :school_or_training or :aerial_work or :other
+      :school_or_training or :aerial_work or :other
   end
   permitted.schedule = AIXM.schedule
   permitted.remarks = String or nil
@@ -253,7 +253,7 @@ ndb = AIXM.ndb(
   name: String
   xy: AIXM.xy
   z: AIXM.z or nil
-  type: :en_route, :locator or :marine
+  type: :en_route or :locator or :marine
   f: AIXM.f
 )
 ndb.schedule = AIXM.schedule
@@ -273,7 +273,7 @@ marker = AIXM.marker(
   name: String
   xy: AIXM.xy
   z: AIXM.z or nil
-  type: :outer, :middle, :inner or :backcourse
+  type: :outer or :middle or :inner or :backcourse
 )
 marker.schedule = AIXM.schedule
 marker.remarks = String or nil
@@ -370,9 +370,10 @@ runway = AIXM.runway(
 )
 runway.length = Integer   # meters
 runway.width = Integer    # meters
-runway.composition = :asphalt or :bitumen or :concrete or :gravel or
-                     :macadam or :sand or :graded_earth or :grass or :water or
-                     :other
+runway.composition = :asphalt or :bitumen or :concrete or :gravel or :macadam or
+  :sand or :graded_earth or :grass or :water or :other
+runway.status = :closed or :work_in_progress or :parked_aircraft or
+  :visual_aids_failure or :secondary_power or :other
 runway.remarks = String or nil
 ```
 

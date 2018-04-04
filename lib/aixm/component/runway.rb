@@ -41,8 +41,17 @@ module AIXM
         OTHER: :other
       }
 
+      STATUSES = {
+        CLSD: :closed,
+        WIP: :work_in_progress,
+        PARKED: :parked_aircraft,
+        FAILAID: :visual_aids_failure,
+        SPOWER: :secondary_power,
+        OTHER: :other
+      }
+
       attr_reader :airport, :name
-      attr_reader :length, :width, :composition, :remarks
+      attr_reader :length, :width, :composition, :status, :remarks
       attr_accessor :forth, :back
 
       def initialize(name:)
@@ -104,6 +113,22 @@ module AIXM
       end
 
       ##
+      # Runway status
+      #
+      # Allowed values:
+      # * +nil+ - normal operation
+      # * +:closed+ (+:CLSD+)
+      # * +:work_in_progress+ (+:WIP+) - e.g. construction work
+      # * +:parked_aircraft+ (+:PARKED+) - parked or disabled aircraft on runway
+      # * +:visual_aids_failure+ (+:FAILAID+) - failure or irregular operation
+      #                                         of visual aids
+      # * +:secondary_power+ (+:SPOWER+) - secondary power supply in operation
+      # * +:other+ (+:OTHER+) - specify in +remarks+
+      def status=(value)
+        @status = value.nil? ? nil : (STATUSES.lookup(value&.to_sym, nil) || fail(ArgumentError, "invalid status"))
+      end
+
+      ##
       # Free text remarks
       def remarks=(value)
         @remarks = value&.to_s
@@ -125,6 +150,7 @@ module AIXM
           rwy.valWid(width)
           rwy.uomDimRwy('M')
           rwy.codeComposition(COMPOSITIONS.key(composition).to_s)
+          rwy.codeSts(STATUSES.key(status).to_s) if status
           rwy.txtRmk(remarks) if remarks
         end
         %i(@forth @back).each do |direction|
