@@ -24,7 +24,7 @@ module AIXM
       end
 
       def inspect
-        %Q(#<#{self.class} type=#{type.inspect} code=#{name.inspect}>)
+        %Q(#<#{self.class} type=#{type.inspect} name=#{name.inspect}>)
       end
 
       ##
