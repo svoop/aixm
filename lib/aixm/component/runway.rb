@@ -146,10 +146,10 @@ module AIXM
         builder = Builder::XmlMarkup.new(indent: 2)
         builder.Rwy do |rwy|
           rwy << to_uid.indent(2)
-          rwy.valLen(length)
-          rwy.valWid(width)
-          rwy.uomDimRwy('M')
-          rwy.codeComposition(COMPOSITIONS.key(composition).to_s)
+          rwy.valLen(length) if length
+          rwy.valWid(width) if width
+          rwy.uomDimRwy('M') if length || width
+          rwy.codeComposition(COMPOSITIONS.key(composition).to_s) if composition
           rwy.codeSts(STATUSES.key(status).to_s) if status
           rwy.txtRmk(remarks) if remarks
         end
