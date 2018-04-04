@@ -297,17 +297,17 @@ module AIXM
       def document
         time = Time.parse('2018-01-18 12:00:00 +0100')
         AIXM.document(created_at: time, effective_at: time).tap do |document|
-           document.features << AIXM::Factory.airport
-#          document.features << AIXM::Factory.polygon_airspace
-#          document.features << AIXM::Factory.circle_airspace
-#          document.features << AIXM::Factory.designated_point
-#          document.features << AIXM::Factory.dme
-#          document.features << AIXM::Factory.marker
-#          document.features << AIXM::Factory.ndb
-#          document.features << AIXM::Factory.tacan
-#          document.features << AIXM::Factory.vor
-#          document.features << AIXM::Factory.vordme
-#          document.features << AIXM::Factory.vortac
+          document.features << airport
+          document.features << polygon_airspace
+          document.features << circle_airspace
+          document.features << designated_point
+          document.features << dme
+          document.features << marker
+          document.features << ndb
+          document.features << tacan
+          document.features << vor
+          document.features << vordme
+          document.features << vortac
         end
       end
 
