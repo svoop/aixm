@@ -32,7 +32,9 @@ describe AIXM::Feature::NavigationalAid::TACAN do
             <geoLat>47.85916667N</geoLat>
             <geoLong>007.56000000E</geoLong>
           </TcnUid>
-          <OrgUid/>
+          <OrgUid region="LF">
+            <txtName>FRANCE</txtName>
+          </OrgUid>
           <txtName>TACAN NAVAID</txtName>
           <codeChannel>29X</codeChannel>
           <codeDatum>WGE</codeDatum>

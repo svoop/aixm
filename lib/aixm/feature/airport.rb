@@ -18,20 +18,25 @@ module AIXM
         LS: :landing_site
       }
 
-      attr_reader :code
-      attr_reader :name, :gps, :xy, :z, :declination, :transition_z, :schedule, :remarks
+      attr_reader :organisation, :code, :name, :xy
+      attr_reader :gps, :z, :declination, :transition_z, :schedule, :remarks
       attr_accessor :runways, :helipads, :usage_limitations
 
       public_class_method :new
 
-      def initialize(source: nil, region: nil, code:, name:, xy:)
+      def initialize(source: nil, region: nil, organisation:, code:, name:, xy:)
         super(source: source, region: region)
-        self.code, self.name, self.xy = code, name, xy
+        self.organisation, self.code, self.name, self.xy = organisation, code, name, xy
         @runways, @helipads, @usage_limitations = [], [], []
       end
 
       def inspect
         %Q(#<#{self.class} code=#{code.inspect}>)
+      end
+
+      def organisation=(value)
+        fail(ArgumentError, "invalid organisation") unless value.is_a? AIXM::Feature::Organisation
+        @organisation = value
       end
 
       ##
@@ -189,11 +194,11 @@ module AIXM
         builder = Builder::XmlMarkup.new(indent: 2)
         builder.Ahp({ source: (source if AIXM.ofmx?) }.compact) do |ahp|
           ahp << to_uid.indent(2)
-          # TODO: Org
+          ahp << organisation.to_uid.indent(2)
           ahp.txtName(name)
           ahp.codeIcao(code) if code.length == 4
           ahp.codeIata(code) if code.length == 3
-          ahp.codeGps(gps) if gps
+          ahp.codeGps(gps) if AIXM.ofmx? && gps
           ahp.codeType(TYPES.key(type).to_s)
           ahp.geoLat(xy.lat(AIXM.schema))
           ahp.geoLong(xy.long(AIXM.schema))

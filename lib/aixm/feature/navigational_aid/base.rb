@@ -8,22 +8,31 @@ module AIXM
       # Implements common attributes of all navigational aids
       #
       # Arguments:
+      # * +organisation+ - organisation
       # * +id+ - published identifier
       # * +name+ - full name
       # * +xy+ - position
       # * +z+ - elevation in +:qnh+
       class Base < AIXM::Feature::Base
-        attr_reader :id, :name, :xy, :z, :schedule, :remarks
+        attr_reader :organisation, :id, :name, :xy, :z
+        attr_reader :schedule, :remarks
 
         private_class_method :new
 
-        def initialize(source: nil, region: nil, id:, name: nil, xy:, z: nil)
+        def initialize(source: nil, region: nil, organisation:, id:, name: nil, xy:, z: nil)
           super(source: source, region: region)
-          self.id, self.name, self.xy, self.z = id, name, xy, z
+          self.organisation, self.id, self.name, self.xy, self.z = organisation, id, name, xy, z
         end
 
         def inspect
           %Q(#<#{self.class} id=#{id.inspect}>)
+        end
+
+        ##
+        # Organisation
+        def organisation=(value)
+          fail(ArgumentError, "invalid organisation") unless value == false || value.is_a?(AIXM::Feature::Organisation)
+          @organisation = value
         end
 
         ##

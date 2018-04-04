@@ -20,9 +20,11 @@ module AIXM
         attr_reader :type
 
         public_class_method :new
+        private :organisation=
+        private :organisation
 
-        def initialize(source: nil, region: nil, id:, name: nil, xy:, z: nil, type:)
-          super(source: source, region: region, id: id, name: name, xy: xy, z: z)
+        def initialize(type:, **arguments)
+          super(organisation: false, z: nil, **arguments)
           self.type = type
         end
 
@@ -56,14 +58,9 @@ module AIXM
           builder = to_builder
           builder.Dpn({ source: (source if AIXM.ofmx?) }.compact) do |dpn|
             dpn << to_uid.indent(2)
-            dpn.OrgUid
-            dpn.txtName(name) if name
             dpn.codeDatum('WGE')
             dpn.codeType(type_key.to_s)
-            if z
-              dpn.valElev(z.alt)
-              dpn.uomDistVer(z.unit.to_s)
-            end
+            dpn.txtName(name) if name
             dpn.txtRmk(remarks) if remarks
             dpn.target!
           end

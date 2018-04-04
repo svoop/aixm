@@ -123,6 +123,7 @@ module AIXM
         AIXM.dme(
           source: 'LF|GEN|0.0 FACTORY|0|0',
           region: 'LF',
+          organisation: organisation,
           id: 'MMM',
           name: 'DME NAVAID',
           xy: AIXM.xy(lat: %q(47°51'33"N), long: %q(007°33'36"E)),
@@ -138,6 +139,7 @@ module AIXM
         AIXM.marker(
           source: 'LF|GEN|0.0 FACTORY|0|0',
           region: 'LF',
+          organisation: organisation,
           id: '---',
           name: 'MARKER NAVAID',
           xy: AIXM.xy(lat: %q(47°51'33"N), long: %q(007°33'36"E)),
@@ -153,6 +155,7 @@ module AIXM
         AIXM.ndb(
           source: 'LF|GEN|0.0 FACTORY|0|0',
           region: 'LF',
+          organisation: organisation,
           id: 'NNN',
           name: 'NDB NAVAID',
           xy: AIXM.xy(lat: %q(47°51'33"N), long: %q(007°33'36"E)),
@@ -169,6 +172,7 @@ module AIXM
         AIXM.tacan(
           source: 'LF|GEN|0.0 FACTORY|0|0',
           region: 'LF',
+          organisation: organisation,
           id: 'TTT',
           name: 'TACAN NAVAID',
           xy: AIXM.xy(lat: %q(47°51'33"N), long: %q(007°33'36"E)),
@@ -184,6 +188,7 @@ module AIXM
         AIXM.vor(
           source: 'LF|GEN|0.0 FACTORY|0|0',
           region: 'LF',
+          organisation: organisation,
           id: 'VVV',
           name: 'VOR NAVAID',
           xy: AIXM.xy(lat: %q(47°51'33"N), long: %q(007°33'36"E)),
@@ -201,6 +206,7 @@ module AIXM
         AIXM.vor(
           source: 'LF|GEN|0.0 FACTORY|0|0',
           region: 'LF',
+          organisation: organisation,
           id: 'VDD',
           name: 'VOR/DME NAVAID',
           xy: AIXM.xy(lat: %q(47°51'33"N), long: %q(007°33'36"E)),
@@ -219,6 +225,7 @@ module AIXM
         AIXM.vor(
           source: 'LF|GEN|0.0 FACTORY|0|0',
           region: 'LF',
+          organisation: organisation,
           id: 'VTT',
           name: 'VORTAC NAVAID',
           xy: AIXM.xy(lat: %q(47°51'33"N), long: %q(007°33'36"E)),
@@ -233,12 +240,27 @@ module AIXM
         end
       end
 
+      # Organisation
+
+      def organisation
+        AIXM.organisation(
+          source: 'LF|GEN|0.0 FACTORY|0|0',
+          region: 'LF',
+          name: 'FRANCE',
+          type: 'S'
+        ).tap do |organisation|
+          organisation.id = 'LF'
+          organisation.remarks = 'Oversea departments not included'
+        end
+      end
+
       # Airport
 
       def airport
         AIXM.airport(
           source: 'LF|GEN|0.0 FACTORY|0|0',
           region: 'LF',
+          organisation: organisation,
           code: 'LFNT',
           name: 'Avignon-Pujaut',
           xy: AIXM.xy(lat: %q(43°59'46"N), long: %q(004°45'16"E))
@@ -295,8 +317,13 @@ module AIXM
       # Document
 
       def document
-        time = Time.parse('2018-01-18 12:00:00 +0100')
-        AIXM.document(created_at: time, effective_at: time).tap do |document|
+        time = Time.parse('2018-01-01 12:00:00 +0100')
+        AIXM.document(
+          namespace: '00000000-0000-0000-0000-000000000000',
+          created_at: time,
+          effective_at: time
+        ).tap do |document|
+          document.features << organisation
           document.features << airport
           document.features << polygon_airspace
           document.features << circle_airspace

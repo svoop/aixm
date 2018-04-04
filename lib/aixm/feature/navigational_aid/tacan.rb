@@ -28,7 +28,7 @@ module AIXM
           builder = to_builder
           builder.Tcn({ source: (source if AIXM.ofmx?) }.compact) do |tcn|
             tcn << to_uid.indent(2)
-            tcn.OrgUid
+            tcn << organisation.to_uid.indent(2)
             tcn << vor.to_uid.indent(2) if vor
             tcn.txtName(name) if name
             tcn.codeChannel(channel)

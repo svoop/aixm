@@ -34,12 +34,9 @@ describe AIXM::Feature::NavigationalAid::DesignatedPoint do
             <geoLat>47.85916667N</geoLat>
             <geoLong>007.56000000E</geoLong>
           </DpnUid>
-          <OrgUid/>
-          <txtName>DESIGNATED POINT NAVAID</txtName>
           <codeDatum>WGE</codeDatum>
           <codeType>ICAO</codeType>
-          <valElev>500</valElev>
-          <uomDistVer>FT</uomDistVer>
+          <txtName>DESIGNATED POINT NAVAID</txtName>
           <txtRmk>designated point navaid</txtRmk>
         </Dpn>
       END

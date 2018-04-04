@@ -5,6 +5,10 @@ describe AIXM::Feature::NavigationalAid::DME do
     AIXM::Factory.dme
   end
 
+  describe :organisation= do
+    macro :organisation
+  end
+
   describe :channel= do
     it "fails on invalid values" do
       -> { subject.channel = 123 }.must_raise ArgumentError
@@ -32,7 +36,9 @@ describe AIXM::Feature::NavigationalAid::DME do
             <geoLat>47.85916667N</geoLat>
             <geoLong>007.56000000E</geoLong>
           </DmeUid>
-          <OrgUid/>
+          <OrgUid region=\"LF\">
+            <txtName>FRANCE</txtName>
+          </OrgUid>
           <txtName>DME NAVAID</txtName>
           <codeChannel>95X</codeChannel>
           <codeDatum>WGE</codeDatum>

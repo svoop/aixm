@@ -2,7 +2,11 @@ require_relative '../../../../spec_helper'
 
 describe AIXM::Feature::NavigationalAid::Base do
   subject do
-    AIXM::Feature::NavigationalAid::Base.send(:new, id: 'XXX', xy: AIXM::Factory.xy)
+    AIXM::Feature::NavigationalAid::Base.send(:new,
+      organisation: AIXM::Factory.organisation,
+      id: 'XXX',
+      xy: AIXM::Factory.xy
+    )
   end
 
   describe :id= do

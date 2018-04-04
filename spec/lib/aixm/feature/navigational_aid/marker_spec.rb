@@ -34,7 +34,9 @@ describe AIXM::Feature::NavigationalAid::Marker do
             <geoLat>47.85916667N</geoLat>
             <geoLong>007.56000000E</geoLong>
           </MkrUid>
-          <OrgUid/>
+          <OrgUid region="LF">
+            <txtName>FRANCE</txtName>
+          </OrgUid>
           <codePsnIls>O</codePsnIls>
           <valFreq>75</valFreq>
           <uomFreq>MHZ</uomFreq>

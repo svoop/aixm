@@ -56,7 +56,7 @@ module AIXM
     ##
     # Check whether two coordinate pairs are identical
     def ==(other)
-      other.is_a?(XY) && lat == other.lat && long == other.long
+      other.is_a?(self.class) && lat == other.lat && long == other.long
     end
 
     ##

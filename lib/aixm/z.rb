@@ -40,7 +40,7 @@ module AIXM
     ##
     # Check whether two elevations/altitudes are equivalent
     def ==(other)
-      other.is_a?(Z) && alt == other.alt && code == other.code
+      other.is_a?(self.class) && alt == other.alt && code == other.code
     end
 
     ##

@@ -39,7 +39,7 @@ module AIXM
     ##
     # Check whether two frequencies are identical
     def ==(other)
-      other.is_a?(F) && freq == other.freq && unit == other.unit
+      other.is_a?(self.class) && freq == other.freq && unit == other.unit
     end
 
     ##

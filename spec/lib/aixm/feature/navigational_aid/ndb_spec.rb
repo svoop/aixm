@@ -45,7 +45,9 @@ describe AIXM::Feature::NavigationalAid::NDB do
             <geoLat>47.85916667N</geoLat>
             <geoLong>007.56000000E</geoLong>
           </NdbUid>
-          <OrgUid/>
+          <OrgUid region="LF">
+            <txtName>FRANCE</txtName>
+          </OrgUid>
           <txtName>NDB NAVAID</txtName>
           <valFreq>555</valFreq>
           <uomFreq>KHZ</uomFreq>

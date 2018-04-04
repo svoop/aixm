@@ -31,8 +31,8 @@ module AIXM
 
         public_class_method :new
 
-        def initialize(source: nil, region: nil, id:, name:, xy:, z: nil, type:, f:, north:)
-          super(source: source, region: region, id: id, name: name, xy: xy, z: z)
+        def initialize(type:, f:, north:, **arguments)
+          super(**arguments)
           self.type, self.f, self.north = type, f, north
         end
 
@@ -77,20 +77,16 @@ module AIXM
         ##
         # Associate a DME (also known as VOR/DME)
         def associate_dme(channel:)
-          @dme = AIXM.dme(id: id, name: name, xy: xy, z: z, channel: channel)
-          @dme.region = region
-          @dme.schedule = schedule
-          @dme.remarks = remarks
+          @dme = AIXM.dme(organisation: organisation, id: id, name: name, xy: xy, z: z, channel: channel)
+          @dme.region, @dme.schedule, @dme.remarks = region, schedule, remarks
           @dme.send(:vor=, self)
         end
 
         ##
         # Associate a TACAN (also known as VORTAC)
         def associate_tacan(channel:)
-          @tacan = AIXM.tacan(id: id, name: name, xy: xy, z: z, channel: channel)
-          @tacan.region = region
-          @tacan.schedule = schedule
-          @tacan.remarks = remarks
+          @tacan = AIXM.tacan(organisation: organisation, id: id, name: name, xy: xy, z: z, channel: channel)
+          @tacan.region, @tacan.schedule, @tacan.remarks = region, schedule, remarks
           @tacan.send(:vor=, self)
         end
 
@@ -107,7 +103,7 @@ module AIXM
           builder = to_builder
           builder.Vor({ source: (source if AIXM.ofmx?) }.compact) do |vor|
             vor << to_uid.indent(2)
-            vor.OrgUid
+            vor << organisation.to_uid.indent(2)
             vor.txtName(name) if name
             vor.codeType(type_key.to_s)
             vor.valFreq(f.freq.trim)

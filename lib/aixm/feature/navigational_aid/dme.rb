@@ -16,8 +16,8 @@ module AIXM
 
         public_class_method :new
 
-        def initialize(source: nil, region: nil, id:, name:, xy:, z: nil, channel:)
-          super(source: source, region: region, id: id, name: name, xy: xy, z: z)
+        def initialize(channel:, **arguments)
+          super(**arguments)
           self.channel = channel
         end
 
@@ -47,7 +47,7 @@ module AIXM
           builder = to_builder
           builder.Dme({ source: (source if AIXM.ofmx?) }.compact) do |dme|
             dme << to_uid.indent(2)
-            dme.OrgUid
+            dme << organisation.to_uid.indent(2)
             dme << vor.to_uid.indent(2) if vor
             dme.txtName(name) if name
             dme.codeChannel(channel)

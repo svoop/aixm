@@ -5,6 +5,7 @@ module AIXM
     xy: XY,
     z: Z,
     f: F,
+    organisation: Feature::Organisation,
     airport: Feature::Airport,
     runway: Component::Runway,
     helipad: Component::Helipad,

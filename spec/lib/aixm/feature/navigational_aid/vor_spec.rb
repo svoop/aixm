@@ -58,7 +58,9 @@ describe AIXM::Feature::NavigationalAid::VOR do
               <geoLat>47.85916667N</geoLat>
               <geoLong>007.56000000E</geoLong>
             </VorUid>
-            <OrgUid/>
+            <OrgUid region="LF">
+              <txtName>FRANCE</txtName>
+            </OrgUid>
             <txtName>VOR NAVAID</txtName>
             <codeType>VOR</codeType>
             <valFreq>111</valFreq>
@@ -103,7 +105,9 @@ describe AIXM::Feature::NavigationalAid::VOR do
               <geoLat>47.85916667N</geoLat>
               <geoLong>007.56000000E</geoLong>
             </VorUid>
-            <OrgUid/>
+            <OrgUid region="LF">
+              <txtName>FRANCE</txtName>
+            </OrgUid>
             <txtName>VOR/DME NAVAID</txtName>
             <codeType>VOR</codeType>
             <valFreq>111</valFreq>
@@ -124,7 +128,9 @@ describe AIXM::Feature::NavigationalAid::VOR do
               <geoLat>47.85916667N</geoLat>
               <geoLong>007.56000000E</geoLong>
             </DmeUid>
-            <OrgUid/>
+            <OrgUid region="LF">
+              <txtName>FRANCE</txtName>
+            </OrgUid>
             <VorUid region="LF">
               <codeId>VVV</codeId>
               <geoLat>47.85916667N</geoLat>
@@ -171,7 +177,9 @@ describe AIXM::Feature::NavigationalAid::VOR do
               <geoLat>47.85916667N</geoLat>
               <geoLong>007.56000000E</geoLong>
             </VorUid>
-            <OrgUid/>
+            <OrgUid region="LF">
+              <txtName>FRANCE</txtName>
+            </OrgUid>
             <txtName>VORTAC NAVAID</txtName>
             <codeType>VOR</codeType>
             <valFreq>111</valFreq>
@@ -192,7 +200,9 @@ describe AIXM::Feature::NavigationalAid::VOR do
               <geoLat>47.85916667N</geoLat>
               <geoLong>007.56000000E</geoLong>
             </TcnUid>
-            <OrgUid/>
+            <OrgUid region="LF">
+              <txtName>FRANCE</txtName>
+            </OrgUid>
             <VorUid region="LF">
               <codeId>VVV</codeId>
               <geoLat>47.85916667N</geoLat>

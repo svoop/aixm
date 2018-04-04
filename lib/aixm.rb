@@ -27,6 +27,7 @@ require_relative 'aixm/component/runway'
 require_relative 'aixm/component/helipad'
 
 require_relative 'aixm/feature/base'
+require_relative 'aixm/feature/organisation'
 require_relative 'aixm/feature/airspace'
 require_relative 'aixm/feature/airport'
 require_relative 'aixm/feature/navigational_aid/base'

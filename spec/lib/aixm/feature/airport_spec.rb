@@ -8,6 +8,7 @@ describe AIXM::Feature::Airport do
   describe :initialize do
     it "sets defaults" do
       subject = AIXM::Feature::Airport.new(
+        organisation: AIXM::Factory.organisation,
         code: 'LFNT',
         name: 'Avignon-Pujaut',
         xy: AIXM.xy(lat: %q(43°59'46"N), long: %q(004°45'16"E))
@@ -15,6 +16,13 @@ describe AIXM::Feature::Airport do
       subject.runways.must_equal []
       subject.helipads.must_equal []
       subject.usage_limitations.must_equal []
+    end
+  end
+
+  describe :organisation= do
+    it "fails on invalid values" do
+      -> { subject.organisation = :foobar }.must_raise ArgumentError
+      -> { subject.organisation = nil }.must_raise ArgumentError
     end
   end
 
@@ -173,6 +181,9 @@ describe AIXM::Feature::Airport do
           <AhpUid region="LF">
             <codeId>LFNT</codeId>
           </AhpUid>
+          <OrgUid region="LF">
+            <txtName>FRANCE</txtName>
+          </OrgUid>
           <txtName>AVIGNON-PUJAUT</txtName>
           <codeIcao>LFNT</codeIcao>
           <codeGps>LFPUJAUT</codeGps>

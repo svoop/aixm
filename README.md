@@ -51,7 +51,7 @@ The following configuration options are available for setting and getting:
 ```ruby
 AIXM.config.schema           # either :aixm (default) or :ofmx
 AIXM.config.region           # fallback region
-AIXM.config.ignored_errors   # regex of ignored XML schema errors
+AIXM.config.ignored_errors   # ignore XML schema errors which match this regex
 ```
 
 There are shortcuts to set and get the schema:
@@ -136,6 +136,19 @@ AIXM.f(123.35, :mhz)
 
 ### Features
 
+#### Organisation
+
+```ruby
+organisation = AIXM.organisation(
+  name: String
+  type: :state or :group_of_states or :national_organisation or
+    :international_organisation or :aircraft_operating_agency or
+    :air_traffic_services_provider or :handling_authority or :national_authority
+)
+organisation.id = String or nil
+organisation.remarks = String or nil
+```
+
 #### Airspace
 
 ```ruby
@@ -157,6 +170,7 @@ airspace.layers << AIXM.layer
 airport = AIXM.airport(
   source: String or nil
   region: String or nil (to use +AIXM.config.region+)
+  organisation: AIXM.organisation
   code: String
   name: String
   xy: AIXM.xy
@@ -221,7 +235,6 @@ designated_point = AIXM.designated_point(
   id: String
   name: String or nil
   xy: AIXM.xy
-  z: AIXM.z or nil
   type: :icao or :adhp, or :coordinates
 )
 designated_point.remarks = String or nil
@@ -233,6 +246,7 @@ designated_point.remarks = String or nil
 dme = AIXM.dme(
   source: String or nil
   region: String or nil (to use +AIXM.config.region+)
+  organisation: AIXM.organisation
   id: String
   name: String
   xy: AIXM.xy
@@ -249,6 +263,7 @@ dme.remarks = String or nil
 ndb = AIXM.ndb(
   source: String or nil
   region: String or nil (to use +AIXM.config.region+)
+  organisation: AIXM.organisation
   id: String
   name: String
   xy: AIXM.xy
@@ -269,6 +284,7 @@ associated with ILS which are not yet implemented.
 marker = AIXM.marker(
   source: String or nil
   region: String or nil (to use +AIXM.config.region+)
+  organisation: AIXM.organisation
   id: String
   name: String
   xy: AIXM.xy
@@ -285,6 +301,7 @@ marker.remarks = String or nil
 tacan = AIXM.tacan(
   source: String or nil
   region: String or nil (to use +AIXM.config.region+)
+  organisation: AIXM.organisation
   id: String
   name: String
   xy: AIXM.xy
@@ -301,6 +318,7 @@ tacan.remarks = String or nil
 vor = AIXM.vor(
   source: String or nil
   region: String or nil (to use +AIXM.config.region+)
+  organisation: AIXM.organisation
   id: String
   name: String
   xy: AIXM.xy
