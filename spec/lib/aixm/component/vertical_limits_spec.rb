@@ -1,13 +1,41 @@
 require_relative '../../../spec_helper'
 
 describe AIXM::Component::VerticalLimits do
-  describe :initialize do
-    it "won't accept invalid arguments" do
-      z = AIXM.z(1000, :qnh)
-      -> { AIXM.vertical_limits(upper_z: 0, lower_z: z, max_z: z, min_z: z) }.must_raise ArgumentError
-      -> { AIXM.vertical_limits(upper_z: z, lower_z: 0, max_z: z, min_z: z) }.must_raise ArgumentError
-      -> { AIXM.vertical_limits(upper_z: z, lower_z: z, max_z: 0, min_z: z) }.must_raise ArgumentError
-      -> { AIXM.vertical_limits(upper_z: z, lower_z: z, max_z: z, min_z: 0) }.must_raise ArgumentError
+  subject do
+    AIXM::Factory.vertical_limits
+  end
+
+  describe :upper_z= do
+    it "fails on invalid values" do
+      -> { subject.upper_z = :foobar }.must_raise ArgumentError
+      -> { subject.upper_z = nil }.must_raise ArgumentError
+    end
+  end
+
+  describe :lower_z= do
+    it "fails on invalid values" do
+      -> { subject.lower_z = :foobar }.must_raise ArgumentError
+      -> { subject.lower_z = nil }.must_raise ArgumentError
+    end
+  end
+
+  describe :max_z= do
+    it "fails on invalid values" do
+      -> { subject.max_z = :foobar }.must_raise ArgumentError
+    end
+
+    it "accepts nil values" do
+      subject.tap { |s| s.max_z = nil }.max_z.must_be :nil?
+    end
+  end
+
+  describe :min_z= do
+    it "fails on invalid values" do
+      -> { subject.min_z = :foobar }.must_raise ArgumentError
+    end
+
+    it "accepts nil values" do
+      subject.tap { |s| s.min_z = nil }.min_z.must_be :nil?
     end
   end
 

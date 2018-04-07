@@ -79,7 +79,7 @@ module AIXM
           source: 'LF|GEN|0.0 FACTORY|0|0',
           region: 'LF',
           id: 'PA',
-          type: 'D',
+          type: :danger_area,
           name: 'POLYGON AIRSPACE',
           short_name: 'POLYGON'
         ).tap do |airspace|
@@ -93,7 +93,7 @@ module AIXM
           source: 'LF|GEN|0.0 FACTORY|0|0',
           region: 'LF',
           id: 'CA',
-          type: 'D',
+          type: :danger_area,
           name: 'CIRCLE AIRSPACE',
           short_name: 'CIRCLE'
         ).tap do |airspace|

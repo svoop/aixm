@@ -9,6 +9,7 @@ require 'time'
 require_relative 'aixm/version'
 require_relative 'aixm/refinements'
 require_relative 'aixm/config'
+require_relative 'aixm/errors'
 
 require_relative 'aixm/document'
 require_relative 'aixm/xy'

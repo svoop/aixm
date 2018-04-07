@@ -3,13 +3,23 @@ using AIXM::Refinements
 module AIXM
   module Feature
 
-    ##
-    # Organisation feature
+    # Organisations and authorities such as ATS organisations, aircraft
+    # operating agencies, states and so forth.
     #
-    # Arguments:
-    # * +name+ - name of the organisation
-    # * +type+ - type of organisation
+    # ===Cheat Sheet in Pseudo Code:
+    #   organisation = AIXM.organisation(
+    #     source: String or nil
+    #     region: String or nil (falls back to +AIXM.config.region+)
+    #     name: String
+    #     type: TYPES
+    #   )
+    #   organisation.id = String or nil
+    #   organisation.remarks = String or nil
+    #
+    # @see https://github.com/openflightmaps/ofmx/wiki/Organisation#org-organisation
     class Organisation < Base
+      public_class_method :new
+
       TYPES = {
         S: :state,
         GS: :group_of_states,
@@ -19,60 +29,50 @@ module AIXM
         ATS: :air_traffic_services_provider,
         HA: :handling_authority,
         A: :national_authority,
-        OTHER: :other
+        OTHER: :other                          # specify in remarks
       }
 
-      attr_reader :name, :type
-      attr_reader :id, :remarks
+      # @return [String] name of organisation (e.g. "FRANCE")
+      attr_reader :name
 
-      public_class_method :new
+      # @return [Symbol] type of organisation (see {TYPES})
+      attr_reader :type
+
+      # @return [String] code of the organisation (e.g. "LF")
+      attr_reader :id
+
+      # @return [String] free text remarks
+      attr_reader :remarks
 
       def initialize(source: nil, region: nil, name:, type:)
         super(source: source, region: region)
         self.name, self.type = name, type
       end
 
-      ##
-      # Name of the organisation (e.g. "FRANCE")
       def name=(value)
         fail(ArgumentError, "invalid name") unless value.is_a? String
         @name = value.uptrans
       end
 
-      ##
-      # Type of organisation
-      #
-      # Allowed values:
-      # * +:state+ (+:S+)
-      # * +:group_of_states+ (+:GS+)
-      # * +:national_organisation+ (+:O+)
-      # * +:international_organisation+ (+:IO+)
-      # * +:aircraft_operating_agency+ (+:AOA+)
-      # * +:air_traffic_services_provider+ (+:ATS+)
-      # * +:handling_authority+ (+:HA+)
-      # * +:national_authority+ (+:A+)
-      # * +:other+ (+:OTHER+) - specify in +remarks+
       def type=(value)
         @type = TYPES.lookup(value&.to_sym, nil) || fail(ArgumentError, "invalid type")
       end
 
-      ##
-      # Code of the organisation (e.g. "LF" for name "FRANCE" and type "S")
       def id=(value)
         fail(ArgumentError, "invalid id") unless value.nil? || value.is_a?(String)
         @id = value&.upcase
       end
 
-      ##
-      # Free text remarks
       def remarks=(value)
         @remarks = value&.to_s
       end
 
+      # @return [String]
       def inspect
         %Q(#<#{self.class} name=#{name.inspect} type=#{type.inspect}>)
       end
 
+      # @return [String] UID markup
       def to_uid
         builder = Builder::XmlMarkup.new(indent: 2)
         builder.OrgUid({ region: (region if AIXM.ofmx?) }.compact) do |org_uid|
@@ -80,6 +80,7 @@ module AIXM
         end
       end
 
+      # @return [String] AIXM or OFMX markup
       def to_xml
         builder = Builder::XmlMarkup.new(indent: 2)
         builder.Org({ source: (source if AIXM.ofmx?) }.compact) do |org|

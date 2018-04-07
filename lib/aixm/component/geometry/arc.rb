@@ -4,10 +4,19 @@ module AIXM
   module Component
     class Geometry
 
-      ##
-      # Arcs are +clockwise+ (true/false) circle sectors around +center_xy+ and
-      # starting at +xy+.
+      # Arcs are clockwise or counter clockwise circle segments around a
+      # +center_xy+ and starting at +xy+.
+      #
+      # ===Cheat Sheet in Pseudo Code:
+      #   arc = AIXM.arc(
+      #     xy: AIXM.xy
+      #     center_xy: AIXM.xy
+      #     clockwise: true or false
+      #   )
+      #
+      # @see https://github.com/openflightmaps/ofmx/wiki/Airspace#arc
       class Arc < Point
+        # @return [AIXM::XY] center point
         attr_reader :center_xy
 
         def initialize(xy:, center_xy:, clockwise:)
@@ -15,6 +24,7 @@ module AIXM
           self.center_xy, self.clockwise = center_xy, clockwise
         end
 
+        # @return [String]
         def inspect
           %Q(#<#{self.class} xy="#{xy.to_s}">)
         end
@@ -24,17 +34,18 @@ module AIXM
           @center_xy = value
         end
 
+        # @!attribute [w] clockwise
+        # @return [Boolean] wheter the arc is going clockwise (true) or not (false)
+        def clockwise?
+          @clockwise
+        end
+
         def clockwise=(value)
           fail(ArgumentError, "clockwise must be true or false") unless [true, false].include? value
           @clockwise = value
         end
 
-        ##
-        # Whether the arc is going clockwise (true) or not (false)
-        def clockwise?
-          @clockwise
-        end
-
+        # @return [String] AIXM or OFMX markup
         def to_xml
           builder = Builder::XmlMarkup.new(indent: 2)
           builder.Avx do |avx|

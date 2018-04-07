@@ -3,17 +3,30 @@ using AIXM::Refinements
 module AIXM
   module Component
 
-    ##
-    # Runways are landing and takeoff strips
+    # Runways are landing and takeoff strips for forward propelled aircraft.
     #
     # By convention, the runway name is usually the composition of the runway
     # forth name (smaller number) and the runway back name (bigger number)
-    # joined with a forward slash.
+    # joined with a forward slash e.g. "12/30" or "16R/34L".
     #
-    # Arguments:
-    # * +name+ - name of the runway
+    # A runway has one or to directions accessible as +runway.forth+ (mandatory)
+    # and +runway.back+ (optional). Both have identical properties.
     #
-    # Example of a bidirectional runway:
+    # ===Cheat Sheet in Pseudo Code:
+    #   runway = AIXM.runway(
+    #     name: String
+    #   )
+    #   runway.length = Integer   # meters
+    #   runway.width = Integer    # meters
+    #   runway.composition = COMPOSITIONS
+    #   runway.status = STATUSES
+    #   runway.remarks = String or nil
+    #   runway.forth.name = String   # preset based on the runway name
+    #   runway.forth.geographic_orientation = Integer   # degrees
+    #   runway.forth.xy = AIXM.xy
+    #   runway.forth.displaced_threshold = nil or Integer   # meters
+    #
+    # @example Bidirectional runway
     #   runway = AIXM.runway(name: '16L/34R')
     #   runway.name   # => '16L/34R'
     #   runway.forth.name = '16L'
@@ -21,39 +34,63 @@ module AIXM
     #   runway.back.name = '34R'
     #   runway.back.geographic_orientation = 345
     #
-    # Example of a unidirectinal runway:
+    # @example Unidirectional runway:
     #   runway = AIXM.runway(name: '16L')
     #   runway.name   # => '16L'
     #   runway.forth.name = '16L'
     #   runway.forth.geographic_orientation = 165
     #   runway.back = nil
+    #
+    # @see https://github.com/openflightmaps/ofmx/wiki/Airport#rwy-runway
     class Runway
       COMPOSITIONS = {
         ASPH: :asphalt,
-        BITUM: :bitumen,
+        BITUM: :bitumen,        # dug up, bound and rolled ground
         CONC: :concrete,
-        GRAVE: :gravel,
-        MACADAM: :macadam,
+        GRAVE: :gravel,         # small and midsize rounded stones
+        MACADAM: :macadam,      # small rounded stones
         SAND: :sand,
-        GRADE: :graded_earth,
-        GRASS: :grass,
+        GRADE: :graded_earth,   # graded or rolled earth possibly with some grass
+        GRASS: :grass,          # lawn
         WATER: :water,
-        OTHER: :other
+        OTHER: :other           # specify in remarks
       }
 
       STATUSES = {
         CLSD: :closed,
-        WIP: :work_in_progress,
-        PARKED: :parked_aircraft,
-        FAILAID: :visual_aids_failure,
-        SPOWER: :secondary_power,
-        OTHER: :other
+        WIP: :work_in_progress,          # e.g. construction work
+        PARKED: :parked_aircraft,        # parked or disabled aircraft on helipad
+        FAILAID: :visual_aids_failure,   # failure or irregular operation of visual aids
+        SPOWER: :secondary_power,        # secondary power supply in operation
+        OTHER: :other                    # specify in remarks
       }
 
+      # @return [AIXM::Feature::Airport] airport the runway belongs to
       attr_reader :airport
+
+      # @return [String] full name of runway (e.g. "12/30" or "16L/34R")
       attr_reader :name
-      attr_reader :length, :width, :composition, :status, :remarks
-      attr_accessor :forth, :back
+
+      # @return [Integer] length in meters
+      attr_reader :length
+
+      # @return [Integer] width in meters
+      attr_reader :width
+
+      # @return [Symbol] composition of the surface (see {COMPOSITIONS})
+      attr_reader :composition
+
+      # @return [Symbol, nil] status of the runway (see {STATUSES}) or +nil+ for normal operation
+      attr_reader :status
+
+      # @return [String] free text remarks
+      attr_reader :remarks
+
+      # @return [AIXM::Component::Runway::Direction] main direction
+      attr_accessor :forth
+
+      # @return [AIXM::Component::Runway::Direction] reverse direction
+      attr_accessor :back
 
       def initialize(name:)
         self.name = name
@@ -63,6 +100,7 @@ module AIXM
         end
       end
 
+      # @return [String]
       def inspect
         %Q(#<#{self.class} name=#{name.inspect}>)
       end
@@ -73,68 +111,34 @@ module AIXM
       end
       private :airport=
 
-      ##
-      # Name of the runway (e.g. "12/30" or "34L/16R")
       def name=(value)
         fail(ArgumentError, "invalid name") unless value.is_a? String
         @name = value.uptrans
       end
 
-      ##
-      # Length in meters
       def length=(value)
         fail(ArgumentError, "invalid length") unless value.is_a?(Numeric) && value > 0
         @length = value.to_i
       end
 
-      ##
-      # Width in meters
       def width=(value)
         fail(ArgumentError, "invalid width") unless value.is_a?(Numeric)  && value > 0
         @width = value.to_i
       end
 
-      ##
-      # Composition of the surface
-      #
-      # Allowed values:
-      # * +:asphalt+ (+:ASPH+)
-      # * +:concrete+ (+:CONC+)
-      # * +:bitumen+ (+:BITUM+) - dug up, bound and rolled ground
-      # * +:gravel+ (+:GRAVE+) - small and midsize rounded stones
-      # * +:macadam+ (+:MACADAM+) - small rounded stones
-      # * +:sand+ (+:SAND+)
-      # * +:graded_earth+ (+:GRADE+) - graded or rolled earth possibly with
-      #                                some grass
-      # * +:grass+ (+:GRASS+) - lawn
-      # * +:water+ (+:WATER+)
-      # * +:other+ (+:OTHER+) - specify in +remarks+
       def composition=(value)
         @composition = COMPOSITIONS.lookup(value&.to_sym, nil) || fail(ArgumentError, "invalid composition")
       end
 
-      ##
-      # Runway status
-      #
-      # Allowed values:
-      # * +nil+ - normal operation
-      # * +:closed+ (+:CLSD+)
-      # * +:work_in_progress+ (+:WIP+) - e.g. construction work
-      # * +:parked_aircraft+ (+:PARKED+) - parked or disabled aircraft on runway
-      # * +:visual_aids_failure+ (+:FAILAID+) - failure or irregular operation
-      #                                         of visual aids
-      # * +:secondary_power+ (+:SPOWER+) - secondary power supply in operation
-      # * +:other+ (+:OTHER+) - specify in +remarks+
       def status=(value)
         @status = value.nil? ? nil : (STATUSES.lookup(value&.to_sym, nil) || fail(ArgumentError, "invalid status"))
       end
 
-      ##
-      # Free text remarks
       def remarks=(value)
         @remarks = value&.to_s
       end
 
+      # @return [String] UID markup
       def to_uid
         builder = Builder::XmlMarkup.new(indent: 2)
         builder.RwyUid do |rwy_uid|
@@ -143,6 +147,7 @@ module AIXM
         end
       end
 
+      # @return [String] AIXM or OFMX markup
       def to_xml
         builder = Builder::XmlMarkup.new(indent: 2)
         builder.Rwy do |rwy|
@@ -161,16 +166,33 @@ module AIXM
         builder.target!
       end
 
-      ##
-      # Runway direction
+      # Runway directions further describe each direction +forth+ and +back+
+      # of a runway.
       #
-      # Access runway direction instances via the runway:
-      #   runway.name         # => "12/30"
-      #   runway.forth.name   # => "12"
-      #   runway.back.name    # => "30"
+      # @see https://github.com/openflightmaps/ofmx/wiki/Airport#rdn-runway-direction
       class Direction
-        attr_reader :runway, :name
-        attr_reader :geographic_orientation, :xy, :z, :displaced_threshold, :remarks
+        # @return [AIXM::Component::Runway] runway the runway direction is further describing
+        attr_reader :runway
+
+        # @return [String] partial name of runway (e.g. "12" or "16L")
+        attr_reader :name
+
+        # @return [Integer] geographic orientation (true bearing) in degrees
+        attr_reader :geographic_orientation
+
+        # @return [AIXM::XY] beginning point (middle of the runway width)
+        attr_reader :xy
+
+        # @return [AIXM::Z] elevation of the touch down zone in +qnh+
+        attr_reader :z
+
+        # @return [AIXM::XY, Integer] displaced threshold point either as
+        #   coordinates (AIXM::XY) or distance (Integer) in meters from the
+        #   beginning point
+        attr_reader :displaced_threshold
+
+        # @return [String] free text remarks
+        attr_reader :remarks
 
         def initialize(runway:, name:)
           self.runway, self.name = runway, name
@@ -182,47 +204,27 @@ module AIXM
         end
         private :runway
 
-        ##
-        # Name of the runway direction (e.g. "16R")
         def name=(value)
           fail(ArgumentError, "invalid name") unless value.is_a? String
           @name = value.uptrans
         end
 
-        ##
-        # Geographic orientation (true bearing) in degrees
         def geographic_orientation=(value)
           fail(ArgumentError, "invalid geographic orientation") unless value.respond_to? :to_i
           @geographic_orientation = value.to_i
           fail(ArgumentError, "invalid geographic orientation") unless (0..359).include? @geographic_orientation
         end
 
-        ##
-        # Beginning point (middle of the runway width)
         def xy=(value)
           fail(ArgumentError, "invalid xy") unless value.is_a? AIXM::XY
           @xy = value
         end
 
-        ##
-        # Elevation of the touch down zone in +qnh+
         def z=(value)
           fail(ArgumentError, "invalid z") unless value.is_a?(AIXM::Z) && value.qnh?
           @z = value
         end
 
-        ##
-        # Free text remarks
-        def remarks=(value)
-          @remarks = value&.to_s
-        end
-
-        ##
-        # Displaced threshold point
-        #
-        # Allowed values:
-        # * +AIXM::XY+ - coordinates of the point
-        # * +Numeric+ - distance in meters from the beginning point
         def displaced_threshold=(value)
           @displaced_threshold = case value
             when AIXM::XY then @xy.distance(value).to_i
@@ -231,14 +233,18 @@ module AIXM
           end
         end
 
-        ##
-        # Calculate the magnetic orientation (magnetic bearing) in degrees
+        def remarks=(value)
+          @remarks = value&.to_s
+        end
+
+        # @return [Integer] magnetic orientation (magnetic bearing) in degrees
         def magnetic_orientation
           if geographic_orientation && runway.airport.declination
             (geographic_orientation + runway.airport.declination).round
           end
         end
 
+        # @return [String] AIXM or OFMX markup
         def to_xml
           builder = Builder::XmlMarkup.new(indent: 2)
           builder.Rdn do |rdn|

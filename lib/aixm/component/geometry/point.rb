@@ -4,19 +4,27 @@ module AIXM
   module Component
     class Geometry
 
-      ##
       # Points are defined by +xy+ coordinates.
+      #
+      # ===Cheat Sheet in Pseudo Code:
+      #   point = AIXM.point(
+      #     xy: AIXM.xy
+      #   )
+      #
+      # @see https://github.com/openflightmaps/ofmx/wiki/Airspace#point
       class Point
         extend Forwardable
 
         def_delegators :xy
 
+        # @return [AIXM::XY] (starting) point
         attr_reader :xy
 
         def initialize(xy:)
           self.xy = xy
         end
 
+        # @return [String]
         def inspect
           %Q(#<#{self.class} xy="#{xy.to_s}">)
         end
@@ -26,6 +34,7 @@ module AIXM
           @xy = value
         end
 
+        # @return [String] AIXM or OFMX markup
         def to_xml
           builder = Builder::XmlMarkup.new(indent: 2)
           builder.Avx do |avx|

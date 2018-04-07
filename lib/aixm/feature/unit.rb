@@ -3,15 +3,25 @@ using AIXM::Refinements
 module AIXM
   module Feature
 
-    ##
-    # Unit feature
+    # Units providing all kind of services such as air traffic management,
+    # search and rescue, meteorological services and so forth.
     #
-    # Arguments:
-    # * +organisation+ - responsible organisation
-    # * +name+ - name of the unit
-    # * +type+ - type of unit
-    # * +class+ - class of unit
+    # ===Cheat Sheet in Pseudo Code:
+    #   unit = AIXM.unit(
+    #     source: String or nil
+    #     region: String or nil (falls back to +AIXM.config.region+)
+    #     organisation: AIXM.organisation
+    #     name: String
+    #     type: TYPES
+    #     class: :icao or :other
+    #   )
+    #   unit.airport = AIXM.airport
+    #   unit.remarks = String or nil
+    #
+    # @see https://github.com/openflightmaps/ofmx/wiki/Organisation#uni-unit
     class Unit < Base
+      public_class_method :new
+
       TYPES = {
         ACC: :area_control_centre,
         APP: :approach_control_office,
@@ -24,18 +34,28 @@ module AIXM
         NOF: :international_notam_office,
         RAD: :radar_office,
         TWR: :aerodrome_control_tower,
-        OTHER: :other
+        OTHER: :other                       # specify in remarks
       }
 
       CLASSES = {
         ICAO: :icao,
-        OTHER: :other
+        OTHER: :other   # specify in remarks
       }
 
-      attr_reader :organisation, :name, :type
-      attr_reader :airport, :remarks
+      # @return [AIXM::Feature::Organisation] superior organisation
+      attr_reader :organisation
 
-      public_class_method :new
+      # @return [String] name of unit (e.g. "MARSEILLE ACS")
+      attr_reader :name
+
+      # @return [Symbol] type of unit (see {TYPES})
+      attr_reader :type
+
+      # @return [AIXM::Feature::Airport] airport
+      attr_reader :airport
+
+      # @return [String] free text remarks
+      attr_reader :remarks
 
       def initialize(source: nil, region: nil, organisation:, name:, type:, class:)
         super(source: source, region: region)
@@ -43,76 +63,45 @@ module AIXM
         self.class = binding.local_variable_get(:class)
       end
 
-      ##
-      # Responsible organisation
       def organisation=(value)
         fail(ArgumentError, "invalid organisation") unless value.is_a? AIXM::Feature::Organisation
         @organisation = value
       end
 
-      ##
-      # Name of the unit (e.g. "AVIGNON APP")
       def name=(value)
         fail(ArgumentError, "invalid name") unless value.is_a? String
         @name = value.uptrans
       end
 
-      ##
-      # Type of unit
-      #
-      # Allowed values:
-      # * +:area_control_centre+ (+:ACC+)
-      # * +:approach_control_office+ (+:APP+)
-      # * +:ats_reporting_office+ (+:ARO+)
-      # * +:air_traffic_services_unit+ (+:ATSU+)
-      # * +:communications_office+ (+:COM+)
-      # * +:flight_information_centre+ (+:FIC+)
-      # * +:flight_service_station+ (+:FSS+)
-      # * +:meteorological_office+ (+:MET+)
-      # * +:international_notam_office+ (+:NOF+)
-      # * +:radar_office+ (+:RAD+)
-      # * +:aerodrome_control_tower+ (+:TWR+)
-      # * +:other+ (+:OTHER+) - specify in +remarks+
       def type=(value)
         @type = TYPES.lookup(value&.to_sym, nil) || fail(ArgumentError, "invalid type")
       end
 
-      ##
-      # Class of unit
-      #
-      # Allowed values:
-      # * +:icao+ (+:ICAO+)
-      # * +:other+ (+:OTHER+) - specify in +remarks+
-      def class=(value)
-        @klass = CLASSES.lookup(value&.to_sym, nil) || fail(ArgumentError, "invalid class")
-      end
-
-      ##
-      # Read the unit class
-      #
-      # This and other workarounds in the initializer are necessary due to
-      # "class" being a reserved keyword in Ruby.
+      # @!attribute class
+      # @return [Symbol] class of unit (see {CLASSES})
       def class
         @klass
       end
 
-      ##
-      # Airport the unit is located at
+      def class=(value)
+        @klass = CLASSES.lookup(value&.to_sym, nil) || fail(ArgumentError, "invalid class")
+      end
+
       def airport=(value)
         fail(ArgumentError, "invalid airport") unless value.is_a? AIXM::Feature::Airport
         @airport = value
       end
 
-      ##
-      # Free text remarks
       def remarks=(value)
         @remarks = value&.to_s
       end
 
+      # @return [String]
       def inspect
         %Q(#<#{self.class} name=#{name.inspect} type=#{type.inspect}>)
       end
 
+      # @return [String] UID markup
       def to_uid
         builder = Builder::XmlMarkup.new(indent: 2)
         builder.UniUid({ region: (region if AIXM.ofmx?) }.compact) do |uni_uid|
@@ -120,6 +109,7 @@ module AIXM
         end
       end
 
+      # @return [String] AIXM or OFMX markup
       def to_xml
         builder = Builder::XmlMarkup.new(indent: 2)
         builder.Uni({ source: (source if AIXM.ofmx?) }.compact) do |uni|

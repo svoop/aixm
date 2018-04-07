@@ -2,26 +2,35 @@ using AIXM::Refinements
 
 module AIXM
 
-  ##
-  # Elevation or altitude
+  # Height, elevation or altitude
   #
-  # The following Q codes are recognized:
-  # * +:qfe+ - height in feet
-  # * +:qnh+ - altitude in feet
-  # * +:qne+ - altitude as flight level
+  # @example
+  #   AIXM.z(1000, :qfe)   # height: 1000 ft above ground
+  #   AIXM.z(2000, :qnh)   # elevation or altitude: 2000 ft above mean sea level
+  #   AIXM.z(45, :qne)     # altitude: flight level 45
+  #
+  # ===Shortcuts:
+  # * +AIXM::GROUND+ - surface expressed as "0 ft QFE"
+  # * +AIXM::UNLIMITED+ - no upper limit expressed as "FL 999"
   class Z
     CODES = %i(qfe qnh qne).freeze
 
-    attr_reader :alt, :code
+    # @return [Integer] elevation or altitude value
+    attr_reader :alt
+
+    # @return [Symbol] Q code - either +:qfe+ (height in feet), +:qnh+ (altitude in feet or +:qne+ (altitude as flight level)
+    attr_reader :code
 
     def initialize(alt, code)
       self.alt, self.code = alt, code
     end
 
+    # @return [String]
     def inspect
       %Q(#<#{self.class} #{to_s}>)
     end
 
+    # @return [String] human readable representation (e.g. "FL045" or "1350 FT")
     def to_s
       qne? ? "FL%03i" % alt : [alt, unit, code.upcase].join(' ')
     end
@@ -37,44 +46,35 @@ module AIXM
       fail(ArgumentError, "invalid code") unless CODES.include? @code
     end
 
-    ##
-    # Check whether two elevations/altitudes are equivalent
+    # @return [Boolean]
     def ==(other)
       other.is_a?(self.class) && alt == other.alt && code == other.code
     end
 
-    ##
-    # Check Q code
-    #
-    # Example:
+    # @example
+    #   z = AIXM.z(123, :qnh)
     #   z.qnh?   # => true
     #   z.qfe?   # => false
+    #
+    # @!method qfe?
+    # @!method qnh?
+    # @!method qne?
+    # @return [Boolean]
     CODES.each do |code|
       define_method(:"#{code}?") { @code == code }
     end
 
-    ##
-    # Whether on ground level
+    # @return [Boolean] whether ground level or not
     def ground?
       qfe? && @alt == 0
     end
 
-    ##
-    # Get the elevation/altitude base
-    #
-    # Values:
-    # * +:ASFC: - above surface
-    # * +:AMSL: - above mean sea level
+    # @return [Symbol] either +:ASFC+ (above surface) or +:AMSL+ (above mean sea level)
     def base
       qfe? ? :ASFC : :AMSL
     end
 
-    ##
-    # Get the unit
-    #
-    # Values:
-    # * +:FL+ - flight level
-    # * +:FT+ - feet
+    # @return [Symbol] unit - either +:FL+ (flight leel) or +:FT+ (feet)
     def unit
       qne? ? :FL : :FT
     end

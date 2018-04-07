@@ -4,17 +4,29 @@ module AIXM
   module Feature
     module NavigationalAid
 
-      ##
-      # TACAN (tactical air navigation system) can be used as a DME by civilian
-      # aircraft and therefore operate in the frequency band between 960 MHz
-      # and 1215 MHz.
-      # https://en.wikipedia.org/wiki/Tactical_air_navigation_system
+      # TACAN (tactical air navigation system) are military systems which also
+      # provide DME service to civilian aircraft and therefore operate in the
+      # frequency band between 960 MHz and 1215 MHz.
       #
-      # Arguments:
-      # * +channel+ - radio channel
+      # ===Cheat Sheet in Pseudo Code:
+      #   tacan = AIXM.tacan(
+      #     source: String or nil
+      #     region: String or nil (to use +AIXM.config.region+)
+      #     organisation: AIXM.organisation
+      #     id: String
+      #     name: String
+      #     xy: AIXM.xy
+      #     z: AIXM.z or nil
+      #     channel: String
+      #   )
+      # tacan.schedule = AIXM.schedule
+      # tacan.remarks = String or nil
+      #
+      # @see https://github.com/openflightmaps/ofmx/wiki/Navigational-aid#tcn-tacan
       class TACAN < DME
         public_class_method :new
 
+        # @return [String] UID markup
         def to_uid
           builder = Builder::XmlMarkup.new(indent: 2)
           builder.TcnUid({ region: (region if AIXM.ofmx?) }.compact) do |tcn_uid|
@@ -24,6 +36,7 @@ module AIXM
           end
         end
 
+        # @return [String] AIXM or OFMX markup
         def to_xml
           builder = to_builder
           builder.Tcn({ source: (source if AIXM.ofmx?) }.compact) do |tcn|

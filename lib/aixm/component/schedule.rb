@@ -3,44 +3,42 @@ using AIXM::Refinements
 module AIXM
   module Component
 
-    ##
-    # Schedules define activity time windows. As of now, only predefined
-    # schedules are imlemented either by use of explicit (e.g. +:continuous+)
-    # or short codes (e.g. +:H24+) as listed by the +CODES+ constant.
+    # Schedules define activity time windows.
     #
-    # Arguments:
-    # * +code+ - predefined schedule code
-    # * +remarks+ - free text remarks
+    # @note As of now, only predefined schedules (see {CODES}) are imlemented.
     #
-    # Codes:
-    # * +:continuous+ (+:H24+) - all day and all night
-    # * +:sunrise_to_sunset+ (+:HJ+) - all day
-    # * +:sunset_to_sunrise+ (+:HN+) - all night
-    # * +:unspecified+ (+:HX+) - schedule not specified
-    # * +:operational_request+ (+:HO+) - on request
-    # * +:notam+ (+:NOTAM+) - see notam
-    # * +:other+ (+:OTHER+) - specify in +remarks+
+    # ===Cheat Sheat in Pseudo Code:
+    #   schedule = AIXM.schedule(
+    #     code: String or Symbol
+    #   )
+    #   schedule.remarks = String or nil
     #
-    # Shortcuts:
-    # * +AIXM::H24+ - continuous 24/7
+    # ===Shortcuts:
+    # * +AIXM::H24+ - continuous, all day and all night
+    #
+    # @see https://github.com/openflightmaps/ofmx/wiki/Timetable#predefined-timetable
     class Schedule
       CODES = {
-        H24: :continuous,
-        HJ: :sunrise_to_sunset,
-        HN: :sunset_to_sunrise,
+        H24: :continuous,           # all day and all night
+        HJ: :sunrise_to_sunset,     # all day
+        HN: :sunset_to_sunrise,     # all night
         HX: :unspecified,
-        HO: :operational_request,
-        NOTAM: :notam,
-        OTHER: :other
+        HO: :operational_request,   # on request only
+        NOTAM: :notam,              # see NOTAM
+        OTHER: :other               # specify in remarks
       }.freeze
 
+      # @return [Symbol] schedule code (see {CODES})
       attr_reader :code
+
+      # @return [String] free text remarks
       attr_reader :remarks
 
       def initialize(code:)
         self.code = code
       end
 
+      # @return [String]
       def inspect
         %Q(#<#{self.class} code=#{code.inspect}>)
       end
@@ -53,6 +51,7 @@ module AIXM
         @remarks = value&.to_s
       end
 
+      # @return [String] AIXM or OFMX markup
       def to_xml(as: :Timetable)
         builder = Builder::XmlMarkup.new(indent: 2)
         builder.tag!(as) do |tag|

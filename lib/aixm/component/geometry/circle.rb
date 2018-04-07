@@ -4,10 +4,21 @@ module AIXM
   module Component
     class Geometry
 
-      ##
       # Circles are defined by a +center_xy+ and a +radius+ in kilometers.
+      #
+      # ===Cheat Sheet in Pseudo Code:
+      #   circle = AIXM.circle(
+      #     center_xy: AIXM.xy
+      #     radius: Numeric   # kilometers
+      #   )
+      #
+      # @see https://github.com/openflightmaps/ofmx/wiki/Airspace#circle
       class Circle
-        attr_reader :center_xy, :radius
+        # @return [AIXM::XY] center point
+        attr_reader :center_xy
+
+        # @return [Integer] circle radius
+        attr_reader :radius
 
         def initialize(center_xy:, radius:)
           self.center_xy, self.radius = center_xy, radius
@@ -23,10 +34,12 @@ module AIXM
           @radius = value.to_f
         end
 
+        # @return [String]
         def inspect
           %Q(#<#{self.class} xy="#{xy.to_s}">)
         end
 
+        # @return [String] AIXM or OFMX markup
         def to_xml
           builder = Builder::XmlMarkup.new(indent: 2)
           builder.Avx do |avx|
@@ -41,9 +54,8 @@ module AIXM
 
         private
 
-        ##
         # Coordinates of the point which is both strictly north of the center
-        # and on the circumference of the circle
+        # and on the circumference of the circle.
         def north_xy
           AIXM.xy(
             lat: center_xy.lat + radius.to_f / (AIXM::XY::EARTH_RADIUS / 1000) * 180 / Math::PI,

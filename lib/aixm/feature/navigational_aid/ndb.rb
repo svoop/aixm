@@ -4,54 +4,56 @@ module AIXM
   module Feature
     module NavigationalAid
 
-      ##
-      # NDB (non-directional beacon) operate in the frequency band between
-      # 190 kHz and 1750 kHz.
-      # https://en.wikipedia.org/wiki/Non-directional_beacon
+      # A non-directional radio beacon (NDB) is a radio transmitter at a known
+      # location operating in the frequency band between 190 kHz and 1750 kHz.
       #
-      # Argments:
-      # * +type+ - type of NDB
-      # * +f+ - radio frequency
+      # ===Cheat Sheet in Pseudo Code:
+      #   ndb = AIXM.ndb(
+      #     source: String or nil
+      #     region: String or nil (falls back to AIXM.config.region)
+      #     organisation: AIXM.organisation
+      #     id: String
+      #     name: String
+      #     xy: AIXM.xy
+      #     z: AIXM.z or nil
+      #     type: TYPES
+      #     f: AIXM.f
+      #   )
+      #   ndb.schedule = AIXM.schedule
+      #   ndb.remarks = String or nil
+      #
+      # @see https://github.com/openflightmaps/ofmx/wiki/Navigational-aid#ndb-ndb
       class NDB < Base
+        public_class_method :new
+
         TYPES = {
           B: :en_route,
           L: :locator,
           M: :marine,
-          OTHER: :other
+          OTHER: :other   # specify in remarks
         }.freeze
 
-        attr_reader :type, :f
+        # @return [Symbol] type of NDB (see {TYPES})
+        attr_reader :type
 
-        public_class_method :new
+        # @return [AIXM::F] radio frequency
+        attr_reader :f
 
         def initialize(type:, f:, **arguments)
           super(**arguments)
           self.type, self.f = type, f
         end
 
-        ##
-        # Type of NDB
-        #
-        # Allowed values:
-        # * +:en_route+ (+:B+) - high powered NDB
-        # * +:locator+ (+:L+) - locator (low powered NDB)
-        # * +:marine+ (+:M+) - marine beacon
-        # * +:other+ (+:OTHER+) - specify in +remarks+
         def type=(value)
           @type = TYPES.lookup(value&.to_sym, nil) || fail(ArgumentError, "invalid type")
         end
 
-        def type_key
-          TYPES.key(type)
-        end
-
-        ##
-        # Radio frequency
         def f=(value)
           fail(ArgumentError, "invalid f") unless value.is_a?(F) && value.between?(190, 1750, :khz)
           @f = value
         end
 
+        # @return [String] UID markup
         def to_uid
           builder = Builder::XmlMarkup.new(indent: 2)
           builder.NdbUid({ region: (region if AIXM.ofmx?) }.compact) do |ndb_uid|
@@ -61,6 +63,7 @@ module AIXM
           end
         end
 
+        # @return [String] AIXM or OFMX markup
         def to_xml
           builder = to_builder
           builder.Ndb({ source: (source if AIXM.ofmx?) }.compact) do |ndb|
@@ -79,6 +82,12 @@ module AIXM
             ndb.txtRmk(remarks) if remarks
             ndb.target!
           end
+        end
+
+        private
+
+        def type_key
+          TYPES.key(type)
         end
       end
 

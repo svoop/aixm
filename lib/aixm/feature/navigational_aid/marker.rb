@@ -4,49 +4,54 @@ module AIXM
   module Feature
     module NavigationalAid
 
-      ##
-      # Marker (marker beacons) operate on 75 MHz.
-      # https://en.wikipedia.org/wiki/Marker_beacon
+      # Marker beacons guide an aircraft on a specific route e.g. towards a
+      # runway (which is why marker beacons are often part of an ILS). Their
+      # VHF radio beacons are transmitted on 75 MHz.
       #
-      # Arguments:
-      # * +type+ - type of marker
+      # ===Cheat Sheet in Pseudo Code:
+      #   marker = AIXM.marker(
+      #     source: String or nil
+      #     region: String or nil (falls back to AIXM.config.region)
+      #     organisation: AIXM.organisation
+      #     id: String
+      #     name: String
+      #     xy: AIXM.xy
+      #     z: AIXM.z or nil
+      #     type: :outer or :middle or :inner or :backcourse
+      #   )
+      #   marker.schedule = AIXM.schedule
+      #   marker.remarks = String or nil
+      #
+      # @note Marker are not fully implemented because they usually have to be
+      #   associated with an ILS which are not implemented as of now.
+      #
+      # @see https://github.com/openflightmaps/ofmx/wiki/Navigational-aid#mkr-marker-beacon
       class Marker < Base
+        public_class_method :new
+
         TYPES = {
           O: :outer,
           M: :middle,
           I: :inner,
           C: :backcourse,
-          OTHER: :other
+          OTHER: :other     # specify in remarks
         }
 
+        # @return [Symbol] type of marker (see {TYPES})
         attr_reader :type
 
-        public_class_method :new
-
-        # TODO: Marker require an associated ILS
+        # TODO: Marker require an associated ILS (not yet implemented)
         def initialize(type:, **arguments)
           super(**arguments)
           self.type = type
           warn("WARNING: Maker is not fully implemented yet due to the lack of ILS")
         end
 
-        ##
-        # Type of marker
-        #
-        # Allowed values:
-        # * +:outer+ (+:O+) - outer marker
-        # * +:middle+ (+:M+) - middle marker
-        # * +:inner+ (+:I+) - inner marker
-        # * +:backcourse+ (+:C+) - backcourse marker
-        # * +:other+ (+:OTHER+) - specify in +remarks+
         def type=(value)
           @type = TYPES.lookup(value&.to_sym, nil) || fail(ArgumentError, "invalid type")
         end
 
-        def type_key
-          TYPES.key(type)
-        end
-
+        # @return [String] UID markup
         def to_uid
           builder = Builder::XmlMarkup.new(indent: 2)
           builder.MkrUid({ region: (region if AIXM.ofmx?) }.compact) do |mkr_uid|
@@ -56,6 +61,7 @@ module AIXM
           end
         end
 
+        # @return [String] AIXM or OFMX markup
         def to_xml
           builder = to_builder
           builder.Mkr({ source: (source if AIXM.ofmx?) }.compact) do |mkr|
@@ -74,6 +80,12 @@ module AIXM
             mkr.txtRmk(remarks) if remarks
             mkr.target!
           end
+        end
+
+        private
+
+        def type_key
+          TYPES.key(type)
         end
       end
 

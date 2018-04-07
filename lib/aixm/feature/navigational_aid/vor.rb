@@ -4,92 +4,93 @@ module AIXM
   module Feature
     module NavigationalAid
 
-      ##
-      # VOR (VHF omnidirectional range) operate in the frequency band between
-      # 108.00 Mhz to 117.95 MHz.
-      # https://en.wikipedia.org/wiki/VHF_omnidirectional_range
+      # VHF omni directional radio range (VOR) is a type of radio navigation for
+      # aircraft to determine their position and course. They operate in the
+      # frequency band between 108.00 Mhz to 117.95 MHz.
       #
-      # Arguments:
-      # * +type+ - type of VOR
-      # * +f+ - radio frequency
-      # * +north+ - north alignment
+      # ===Cheat Sheet in Pseudo Code:
+      #   vor = AIXM.vor(
+      #     source: String or nil
+      #     region: String or nil (falls back to AIXM.config.region)
+      #     organisation: AIXM.organisation
+      #     id: String
+      #     name: String
+      #     xy: AIXM.xy
+      #     z: AIXM.z or nil
+      #     type: TYPES
+      #     f: AIXM.f
+      #     north: NORTHS
+      #   )
+      #   vor.schedule = AIXM.schedule
+      #   vor.remarks = String or nil
+      #   vor.associate_dme(channel: String)     # turns the VOR into a VOR/DME
+      #   vor.associate_tacan(channel: String)   # turns the VOR into a VORTAC
+      #
+      # @see https://github.com/openflightmaps/ofmx/wiki/Navigational-aid#vor-vor
       class VOR < Base
+        public_class_method :new
+
         TYPES = {
           VOR: :conventional,
           DVOR: :doppler,
-          OTHER: :other
+          OTHER: :other         # specify in remarks
         }.freeze
 
         NORTHS = {
           TRUE: :geographic,
-          GRID: :grid,
+          GRID: :grid,         # parallel to the north-south lines of the UTM grid
           MAG: :magnetic,
-          OTHER: :other
+          OTHER: :other        # specify in remarks
         }.freeze
 
-        attr_reader :type, :f, :north, :dme, :tacan
+        # @return [Symbol] type of VOR (see {TYPES})
+        attr_reader :type
 
-        public_class_method :new
+        # @return [AIXM::F] radio requency
+        attr_reader :f
+
+        # @return [Symbol] north indication (see {NORTHS})
+        attr_reader :north
+
+        # @return [AIXM::Feature::NavigationalAid::DME] associated DME
+        attr_reader :dme
+
+        # @return [AIXM::Feature::NavigationalAid::TACAN] associated TACAN
+        attr_reader :tacan
 
         def initialize(type:, f:, north:, **arguments)
           super(**arguments)
           self.type, self.f, self.north = type, f, north
         end
 
-        ##
-        # Type of VOR
-        #
-        # Allowed values:
-        # * +:conventional+ (+:VOR+) - conventional VOR (also known as CVOR)
-        # * +:doppler+ (+:DVOR+) - Doppler VOR
-        # * +:other+ (+:OTHER+) - specify in +remarks+
         def type=(value)
           @type = TYPES.lookup(value&.to_sym, nil) || fail(ArgumentError, "invalid type")
         end
 
-        def type_key
-          TYPES.key(type)
-        end
-
-        ##
-        # Radio frequency
         def f=(value)
           fail(ArgumentError, "invalid f") unless value.is_a?(F) && value.between?(108, 117.95, :mhz)
           @f = value
         end
 
-        ##
-        # North alignment
-        # * +:geographic+ (+:TRUE+) - VOR aligned towards geographic north
-        # * +:grid+ (+:GRID+) - VOR aligned along north-south lines of the
-        #                       universal transverse mercator grid imposed on
-        #                       topographic maps by the USA and NATO
-        # * +:magnetic+ (+:MAG+) - VOR aligned towards magnetic north
-        # * +:other+ (+:OTHER+) - specify in +remarks+
         def north=(value)
           @north = NORTHS.lookup(value&.to_sym, nil) || fail(ArgumentError, "invalid north")
         end
 
-        def north_key
-          NORTHS.key(north)
-        end
-
-        ##
-        # Associate a DME (also known as VOR/DME)
+        # Associate a DME which turns the VOR into a VOR/DME
         def associate_dme(channel:)
           @dme = AIXM.dme(organisation: organisation, id: id, name: name, xy: xy, z: z, channel: channel)
           @dme.region, @dme.schedule, @dme.remarks = region, schedule, remarks
           @dme.send(:vor=, self)
         end
 
-        ##
-        # Associate a TACAN (also known as VORTAC)
+        # Associate a TACAN which turns the VOR into a VORTAC
         def associate_tacan(channel:)
           @tacan = AIXM.tacan(organisation: organisation, id: id, name: name, xy: xy, z: z, channel: channel)
           @tacan.region, @tacan.schedule, @tacan.remarks = region, schedule, remarks
           @tacan.send(:vor=, self)
         end
 
+        # @return [String] UID markup
         def to_uid
           builder = Builder::XmlMarkup.new(indent: 2)
           builder.VorUid({ region: (region if AIXM.ofmx?) }.compact) do |vor_uid|
@@ -99,6 +100,7 @@ module AIXM
           end
         end
 
+        # @return [String] AIXM or OFMX markup
         def to_xml
           builder = to_builder
           builder.Vor({ source: (source if AIXM.ofmx?) }.compact) do |vor|
@@ -120,6 +122,16 @@ module AIXM
           builder << @dme.to_xml if @dme
           builder << @tacan.to_xml if @tacan
           builder.target!
+        end
+
+        # @api private
+        def type_key
+          TYPES.key(type)
+        end
+
+        # @api private
+        def north_key
+          NORTHS.key(north)
         end
       end
 

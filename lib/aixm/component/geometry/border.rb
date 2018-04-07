@@ -4,10 +4,18 @@ module AIXM
   module Component
     class Geometry
 
-      ##
       # Borders are following natural or artifical border lines referenced by
       # +name+ and starting at +xy+.
+      #
+      # ===Cheat Sheet in Pseudo Code:
+      #   border = AIXM.border(
+      #     xy: AIXM.xy
+      #     name: String
+      #   )
+      #
+      # @see https://github.com/openflightmaps/ofmx/wiki/Airspace#frontier
       class Border < Point
+        # @return [String] name of the border
         attr_reader :name
 
         def initialize(xy:, name:)
@@ -20,10 +28,12 @@ module AIXM
           @name = value
         end
 
+        # @return [String]
         def inspect
           %Q(#<#{self.class} xy="#{xy.to_s}">)
         end
 
+        # @return [String] AIXM or OFMX markup
         def to_xml
           builder = Builder::XmlMarkup.new(indent: 2)
           builder.Avx do |avx|

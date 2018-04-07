@@ -6,7 +6,7 @@
 
 # AIXM
 
-Partial implementation of the [Aeronautical Information Exchange Model (AIXM 4.5)](http://aixm.aero) and it's dialect [Open FlightMaps eXchange format (OFMX 4.5-1)](https://github.com/openflightmaps/ofmx) for Ruby.
+Partial implementation of the [Aeronautical Information Exchange Model (AIXM 4.5)](http://aixm.aero) and it's dialect [Open FlightMaps eXchange format (OFMX 0)](https://github.com/openflightmaps/ofmx) for Ruby.
 
 For now, only the parts needed to automize the AIP import of [Open Flightmaps](https://openflightmaps.org) are part of this gem. Most notably, the gem is only a builder for snapshot files and does not parse them.
 
@@ -71,418 +71,39 @@ AIXM.schema(:version)   # => 0
 
 ## Model
 
-### Document
-
-The document is the root container of the AIXM snapshot file to be generated. It's essentially a collection of features:
-
-```ruby
-document = AIXM.document(created_at: Time.now, effective_at: Time.now)
-document.features << AIXM.airspace(...)
-```
-
-To give you an overview of the AIXM building blocks, the remainder of this guide will use pseudo code to describe the initializer arguments, writer methods etc:
-
-```ruby
-document = AIXM.document(
-  namespace: UUID
-  created_at: Time or Date or String
-  effective_at: Time or Date or String
-)
-document.features << AIXM::Feature
-```
-
-Please read the [OFMX documentation](https://github.com/openflightmaps/ofmx/wiki) to get an overview of the most relevant parts of AIXM as well as differences between AIXM and OFMX!
-
-See [the API documentation](http://www.rubydoc.info/gems/aixm) for details and [spec/factory.rb](https://github.com/svoop/aixm/blob/master/spec/factory.rb) for examples.
-
-#### Coordinate
-
-All of the below are equivalent:
-
-```ruby
-AIXM.xy(lat: %q(11°22'33.44"), long: %q(-111°22'33.44"))
-AIXM.xy(lat: '112233.44N', long: '1112233.44W')
-AIXM.xy(lat: 11.375955555555556, long: -111.37595555555555)
-```
-
-You can calculate the distance in meters between two coordinates:
-
-```ruby
-a = AIXM.xy(lat: %q(44°00'07.63"N), long: %q(004°45'07.81"E))
-b = AIXM.xy(lat: %q(43°59'25.31"N), long: %q(004°45'23.24"E))
-a.distance(b)   # => 1351
-```
-
-#### Altitude and Heights
-
-Altitudes and heights exist in three different forms at the base of feet:
-
-```ruby
-AIXM.z(1000, :qfe)   # height: 1000 ft above ground
-AIXM.z(2000, :qnh)   # altitude: of 2000 ft above mean sea level
-AIXM.z(45, :qne)     # altitude: flight level 45
-```
-
-Some common values are available as convenience constants:
-
-* `AIXM::GROUND` - height: 0ft above ground
-* `AIXM::UNLIMITED` - altitude: FL 999
-
-#### Frequency
-
-```ruby
-AIXM.f(123.35, :mhz)
-```
-
-### Features
-
-#### Organisation
-
-```ruby
-organisation = AIXM.organisation(
-  name: String
-  type: :state or :group_of_states or :national_organisation or
-    :international_organisation or :aircraft_operating_agency or
-    :air_traffic_services_provider or :handling_authority or :national_authority
-)
-organisation.id = String or nil
-organisation.remarks = String or nil
-```
-
-#### Unit
-
-```ruby
-unit = AIXM.unit(
-  source: String or nil
-  region: String or nil (to use +AIXM.config.region+)
-  organisation: AIXM.organisation
-  name: String
-  type: :area_control_centre or :approach_control_office) or
-    :ats_reporting_office or :air_traffic_services_unit) or
-    :communications_office or :flight_information_centre or
-    :flight_service_station or :meteorological_office or
-    :international_notam_office or :radar_office or :aerodrome_control_tower or
-    :other
-  class: :icao or :other
-)
-unit.airport = AIXM.airport
-unit.remarks = String or nil
-```
-
-#### Airspace
-
-```ruby
-airspace = AIXM.airspace(
-  source: String or nil
-  region: String or nil (to use +AIXM.config.region+)
-  id: String
-  type: String or Symbol
-  name: String
-  short_name: String or nil
-)
-airspace.geometry << AIXM.point or AIXM.arc or AIXM.border or AIXM.circle
-airspace.layers << AIXM.layer
-```
-
-#### Airport
-
-```ruby
-airport = AIXM.airport(
-  source: String or nil
-  region: String or nil (to use +AIXM.config.region+)
-  organisation: AIXM.organisation
-  code: String
-  name: String
-  xy: AIXM.xy
-)
-airport.gps = String
-airport.type = :landing_site
-airport.z = AIXM.z
-airport.declination = Float
-airport.transition_z = AIXM.z
-airport.remarks = String or nil
-airport.add_runway(AIXM.runway)
-airport.add_helipad(AIXM.helipad)
-airport.add_usage_limitation(...) { ... }   # see below
-```
-
-##### Usage Limitation
-
-You can add multiple usage limitations which are are either:
-
-* `:permitted`
-* `:forbidden`
-* `:reservation_required` - specify in *remarks*
-* `:other` - specify in *remarks*
-
-Simple limitations apply to any traffic:
-
-```ruby
-airport.add_usage_limitation :permitted or :forbidden or
-  :reservation_required or :other
-```
-
-Or specify the traffic a limitation (e.g. `:permitted`) applies to:
-
-```ruby
-airport.add_usage_limitation(:permitted) do |permitted|
-  permitted.add_condition do |condition|
-    condition.aircraft = :landplane or :seaplane or :amphibian or :helicopter or
-      :gyrocopter or :tilt_wing or :short_takeoff_and_landing or :glider or
-      :hangglider or :paraglider or :ultra_light or :balloon or
-      :unmanned_drone or :other
-    condition.rule = :ifr or :vfr or :ifr_and_vfr
-    condition.realm = :civil or :military or :other
-    condition.origin = :international or :national or :any or :other
-    condition.purpose = :scheduled or :not_scheduled or :private or
-      :school_or_training or :aerial_work or :other
-  end
-  permitted.schedule = AIXM.schedule
-  permitted.remarks = String or nil
-end
-```
-
-Multiple conditions are joined with an implicit *or* whereas the specifics of a condition (aircraft, rule etc) are joined with an implicit *and*.
-
-#### Navigational Aid
-
-##### Designated Point
-
-```ruby
-designated_point = AIXM.designated_point(
-  source: String or nil
-  region: String or nil (to use +AIXM.config.region+)
-  id: String
-  name: String or nil
-  xy: AIXM.xy
-  type: :icao or :adhp, or :coordinates
-)
-designated_point.remarks = String or nil
-```
-
-##### DME
-
-```ruby
-dme = AIXM.dme(
-  source: String or nil
-  region: String or nil (to use +AIXM.config.region+)
-  organisation: AIXM.organisation
-  id: String
-  name: String
-  xy: AIXM.xy
-  z: AIXM.z or nil
-  channel: String
-)
-dme.schedule = AIXM.schedule
-dme.remarks = String or nil
-```
-
-##### NDB
-
-```ruby
-ndb = AIXM.ndb(
-  source: String or nil
-  region: String or nil (to use +AIXM.config.region+)
-  organisation: AIXM.organisation
-  id: String
-  name: String
-  xy: AIXM.xy
-  z: AIXM.z or nil
-  type: :en_route or :locator or :marine
-  f: AIXM.f
-)
-ndb.schedule = AIXM.schedule
-ndb.remarks = String or nil
-```
-
-##### Marker
-
-WARNING: Marker are not fully implemented because they usually have to be
-associated with ILS which are not yet implemented.
-
-```ruby
-marker = AIXM.marker(
-  source: String or nil
-  region: String or nil (to use +AIXM.config.region+)
-  organisation: AIXM.organisation
-  id: String
-  name: String
-  xy: AIXM.xy
-  z: AIXM.z or nil
-  type: :outer or :middle or :inner or :backcourse
-)
-marker.schedule = AIXM.schedule
-marker.remarks = String or nil
-```
-
-##### TACAN
-
-```ruby
-tacan = AIXM.tacan(
-  source: String or nil
-  region: String or nil (to use +AIXM.config.region+)
-  organisation: AIXM.organisation
-  id: String
-  name: String
-  xy: AIXM.xy
-  z: AIXM.z or nil
-  channel: String
-)
-tacan.schedule = AIXM.schedule
-tacan.remarks = String or nil
-```
-
-##### VOR
-
-```ruby
-vor = AIXM.vor(
-  source: String or nil
-  region: String or nil (to use +AIXM.config.region+)
-  organisation: AIXM.organisation
-  id: String
-  name: String
-  xy: AIXM.xy
-  z: AIXM.z or nil  
-  type: :conventional or :doppler
-  f: AIXM.f
-  north: :geographic or :grid or :magnetic
-)
-vor.schedule = AIXM.schedule
-vor.remarks = String or nil
-vor.associate_dme(channel: String)     # turns the VOR into a VOR/DME
-vor.associate_tacan(channel: String)   # turns the VOR into a VORTAC
-```
-
-### Components
-
-#### Geometry
-
-```ruby
-geometry = AIXM.geometry
-geometry << AIXM.point or AIXM.arc or AIXM.border or AIXM.circle
-```
-
-For a geometry to be complete, it must be comprised of either:
-
-* exactly one circle
-* at least three points, arcs or borders (the last of which a point with identical coordinates as the first)
-
-#### Point, Arc, Border and Circle
-
-```ruby
-point = AIXM.point(
-  xy: AIXM.xy
-)
-arc = AIXM.arc(
-  xy: AIXM.xy
-  center_xy: AIXM.xy
-  clockwise: true or false
-)
-border = AIXM.border(
-  xy: AIXM.xy
-  name: String
-)
-circle = AIXM.circle(
-  center_xy: AIXM.xy
-  radius: Numeric   # kilometers
-)
-```
-
-#### Layer
-
-```ruby
-layer = AIXM.layer(
-  class: String or nil
-  vertical_limits: AIXM.vertical_limits
-)
-layer.schedule = AIXM.schedule
-layer.selective = true or false (default)
-layer.remarks = String or nil
-```
-
-#### Vertical Limits
-
-```ruby
-vertical_limits = AIXM.vertical_limits(
-  max_z: AIXM.z or nil
-  upper_z: AIXM.z
-  lower_z: AIXM.z
-  min_z: AIXM.z or nil
-)
-```
-
-#### Runway
-
-```ruby
-runway = AIXM.runway(
-  name: String
-)
-runway.length = Integer   # meters
-runway.width = Integer    # meters
-runway.composition = :asphalt or :bitumen or :concrete or :gravel or :macadam or
-  :sand or :graded_earth or :grass or :water or :other
-runway.status = :closed or :work_in_progress or :parked_aircraft or
-  :visual_aids_failure or :secondary_power or :other
-runway.remarks = String or nil
-```
-
-A runway has one or to directions accessible as `runway.forth` (mandatory) and
-`runway.back` (optional). Both have identical properties:
-
-```ruby
-runway.forth.name = String   # preset based on the runway name
-runway.forth.geographic_orientation = Integer   # degrees
-runway.forth.xy = AIXM.xy
-runway.forth.displaced_threshold = nil or Integer   # meters
-
-runway.forth.magnetic_orientation   # => Integer (degrees)
-```
-
-#### Helipad
-
-```ruby
-helipad = AIXM.helipad(
-  name: String
-)
-helipad.xy = AIXM.xy
-helipad.z = AIXM.z
-helipad.length = Integer   # meters
-helipad.width = Integer    # meters
-helipad.composition = :asphalt or :bitumen or :concrete or :gravel or :macadam or
-  :sand or :graded_earth or :grass or :water or :other
-helipad.status = :closed or :work_in_progress or :parked_aircraft or
-  :visual_aids_failure or :secondary_power or :other
-helipad.remarks = String or nil
-```
-
-#### Schedule
-
-```ruby
-schedule = AIXM.schedule(
-  code: String or Symbol
-)
-schedule.remarks = String or nil
-```
-
-Some common values are available as convenience constants:
-
-* `AIXM::H24` - continuous 24/7
+### Fundamental
+* [Document](http://www.rubydoc.info/gems/aixm/AIXM/Document.html)
+* [XY (longitude and latitude)](http://www.rubydoc.info/gems/aixm/AIXM/XY.html)
+* [Z (height, elevation or altitude)](http://www.rubydoc.info/gems/aixm/AIXM/Z.html)
+* [F (frequency)](http://www.rubydoc.info/gems/aixm/AIXM/F.html)
+
+### Feature
+* [Organisation](http://www.rubydoc.info/gems/aixm/AIXM/Feature/Organisation.html)
+* [Airport](http://www.rubydoc.info/gems/aixm/AIXM/Feature/Airport.html)
+* [Airspace](http://www.rubydoc.info/gems/aixm/AIXM/Feature/Airspace.html)
+* Navigational aid
+  * [Designated point](http://www.rubydoc.info/gems/aixm/AIXM/Feature/DesignatedPoint.html)
+  * [DME](http://www.rubydoc.info/gems/aixm/AIXM/Feature/DME.html)
+  * [Marker](http://www.rubydoc.info/gems/aixm/AIXM/Feature/Marker.html)
+  * [NDB](http://www.rubydoc.info/gems/aixm/AIXM/Feature/NDB.html)
+  * [TACAN](http://www.rubydoc.info/gems/aixm/AIXM/Feature/TACAN.html)
+  * [VOR](http://www.rubydoc.info/gems/aixm/AIXM/Feature/VOR.html)
+
+### Component
+* [Geometry](http://www.rubydoc.info/gems/aixm/AIXM/Component/Geometry.html)
+  * [Point](http://www.rubydoc.info/gems/aixm/AIXM/Component/Point.html)
+  * [Arc](http://www.rubydoc.info/gems/aixm/AIXM/Component/Arc.html)
+  * [Border](http://www.rubydoc.info/gems/aixm/AIXM/Component/Border.html)
+  * [Circle](http://www.rubydoc.info/gems/aixm/AIXM/Component/Circle.html)
+* [Runway](http://www.rubydoc.info/gems/aixm/AIXM/Component/Runway.html)
+* [Helipad](http://www.rubydoc.info/gems/aixm/AIXM/Component/Helipad.html)
+* [Layer](http://www.rubydoc.info/gems/aixm/AIXM/Component/Layer.html)
+* [Vertical limits](http://www.rubydoc.info/gems/aixm/AIXM/Component/VerticalLimits.html)
+* [Schedule](http://www.rubydoc.info/gems/aixm/AIXM/Component/Schedule.html)
 
 ## Refinements
 
-By `using AIXM::Refinements` you get the following general purpose methods:
-
-* `Array#to_digest`<br>Build a 4 byte hex digest
-* `Hash#lookup(key, default)`<br>Similar to `fetch` but falls back to values
-* `String#indent(number)`<br>Indent every line of a string with *number* spaces
-* `String#uptrans`<br>upcase and transliterate to match the reduced character set for names
-* `String#to_dd`<br>Convert DMS angle to DD or `nil` if the format is not recognized
-* `Float#to_dms(padding)`<br>Convert DD angle to DMS with the degrees zero padded to *padding* length
-* `Float#to_rad`<br>Convert an angle from degree to radian
-* `Float#trim`<br>Convert whole numbers to Integer and leave all other untouched
-* `Float#to_km(from: unit)`<br>Convert a distance from *unit* (:km, :m, :nm or :ft) to km
-
-See the [source code](https://github.com/svoop/aixm/blob/master/lib/aixm/refinements.rb) for more explicit descriptions and examples.
+By `using AIXM::Refinements` you get a few handy [extensions to Ruby core classes](http://www.rubydoc.info/gems/aixm/AIXM/Refinements.html).
 
 ## References
 

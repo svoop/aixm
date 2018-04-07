@@ -2,27 +2,31 @@ using AIXM::Refinements
 
 module AIXM
 
-  ##
-  # Frequency
+  # Radio frequency for communication, navigation and so forth.
   #
-  # Arguments:
-  # * +freq+ - frequency
-  # * +unit+ - either +:ghz+, +:mhz+ or +:khz+
+  # @example
+  #   AIXM.f(123.35, :mhz)
   class F
     UNITS = %i(ghz mhz khz).freeze
 
-    attr_reader :freq, :unit
+    # @return [Float] frequency
+    attr_reader :freq
+
+    # @return [Symbol] unit (see {UNITS})
+    attr_reader :unit
 
     def initialize(freq, unit)
       self.freq, self.unit = freq, unit
     end
 
+    # @return [String]
     def inspect
       %Q(#<#{self.class} #{to_s}>)
     end
 
+    # @return [String] human readable representation (e.g. "123.35 MHZ")
     def to_s
-      [freq, unit].join(' ')
+      [freq, unit.upcase].join(' ')
     end
 
     def freq=(value)
@@ -36,14 +40,12 @@ module AIXM
       fail(ArgumentError, "invalid unit") unless UNITS.include? @unit
     end
 
-    ##
-    # Check whether two frequencies are identical
+    # @return [Boolean]
     def ==(other)
       other.is_a?(self.class) && freq == other.freq && unit == other.unit
     end
 
-    ##
-    # Check whether this frequency is part of a frequency band
+    # @return [Boolean] whether this frequency is part of a frequency band
     def between?(lower_freq, upper_freq, unit)
       freq.between?(lower_freq, upper_freq) && self.unit == unit
     end

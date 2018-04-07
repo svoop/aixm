@@ -20,46 +20,81 @@ module AIXM
       ft: 0.0003048
     }.freeze
 
+    # @!method to_digest
+    #   Builds a 4 byte hex digest from the Array payload.
+    #
+    #   @example
+    #     ['foo', :bar, nil, [123]].to_digest
+    #     # => "f3920098"
+    #
+    #   @note This is a refinement for +Array+
+    #   @return [String] 4 byte hex
     refine Array do
-      ##
-      # Build a 4 byte hex digest
       def to_digest
         ::Digest::SHA512.hexdigest(flatten.map(&:to_s).join('|'))[0, 8]
       end
     end
 
+    # @!method lookup(key_or_value, fallback=omitted=true)
+    #   Fetch a value from the hash, but unlike +fetch+, if +key_or_value+ is
+    #   no hash key, check whether +key_or_value+ is a hash value and if so
+    #   return it.
+    #
+    #   @example
+    #     h = { one: 1, two: 2, three: 3, four: :three }
+    #     h.lookup(:one)              # => 1
+    #     h.lookup(1)                 # => 1
+    #     h.lookup(:three)            # => 3 (key has priority over value)
+    #     h.lookup(:foo)              # => KeyError
+    #     h.lookup(:foo, :fallback)   # => :fallback
+    #     h.lookup(:foo, nil)         # => nil
+    #
+    #   @note This is a refinement for +Hash+
+    #   @param key_or_value [Object] key or value of the hash
+    #   @param fallback [Object] fallback value
+    #   @raise [KeyError] if neither a matching hash key nor hash value are
+    #     found and no fallback value has been passed
     refine Hash do
-      ##
-      # Fetch a value from the hash, but unlike +fetch+, if +key_or_value+ is
-      # no hash key, check whether +key_or_value+ is a hash value and if so
-      # return it.
-      #
-      # Examples:
-      #   h = { one: 1, two: 2, three: 3, four: :three }
-      #   h.lookup(:one)             # => 1
-      #   h.lookup(1)                # => 1
-      #   h.lookup(:three)           # => 3 (key has priority over value)
-      #   h.lookup(:foo)             # => KeyError
-      #   h.lookup(:foo, :default)   # => :default
-      #   h.lookup(:foo, nil)        # => nil
-      def lookup(key_or_value, default = omitted = true)
+      def lookup(key_or_value, fallback=omitted=true)
         self[key_or_value] ||
           (key_or_value if has_value?(key_or_value)) ||
-          (omitted ? fail(KeyError, "key or value `#{key_or_value}' not found") : default)
+          (omitted ? fail(KeyError, "key or value `#{key_or_value}' not found") : fallback)
       end
     end
 
+    # @!method indent(number)
+    #   Indent every line of a string with +number+ spaces.
+    #
+    #   @example
+    #     "foo\nbar".indent(2)
+    #     # => "  foo\n  bar"
+    #
+    #   @note This is a refinement for +String+
+    #   @param number [Integer] number of spaces
+    #   @return [String] line indended string
     refine String do
-      ##
-      # Indent every line of a string with +number+ spaces
       def indent(number)
         whitespace = ' ' * number
         gsub(/^/, whitespace)
       end
+    end
 
-      ##
-      # Upcase and transliterate to match the reduced character set for
-      # AIXM names and titles
+    # @!method uptrans
+    #   Upcase and transliterate to match the reduced character set for
+    #   AIXM names and titles.
+    #
+    #   See {UPTRANS_MAP} for supported diacryts and {UPTRANS_FILTER} for the
+    #   list of allowed characters in the returned value.
+    #
+    #   @example
+    #     "Nîmes-Alès".uptrans
+    #     # => "NIMES-ALES"
+    #     "Zürich".uptrans
+    #     # => "ZUERICH"
+    #
+    #   @note This is a refinement for +String+
+    #   @return [String] upcased and transliterated String
+    refine String do
       def uptrans
         self.dup.tap do |string|
           string.upcase!
@@ -68,14 +103,25 @@ module AIXM
           string.gsub!(UPTRANS_FILTER, '')
         end
       end
+    end
 
-      ##
-      # Convert DMS angle to DD or +nil+ if the format is not recognized
-      #
-      # Supported formats:
-      # * {-}{DD}D°MM'SS{.SS}"
-      # * {-}{DD}D MM SS{.SS}
-      # * {-}{DD}DMMSS{.SS}
+    # @!method to_dd
+    #   Convert DMS angle to DD or +nil+ if the notation is not recognized.
+    #
+    #   @example
+    #     %q(43°12'77.92").to_dd
+    #     # => 43.22164444444445
+    #     %q(-123).to_dd
+    #     # => nil
+    #
+    #   Supported notations:
+    #   * +{-}{DD}D°MM'SS{.SS}"+
+    #   * +{-}{DD}D MM SS{.SS}+
+    #   * +{-}{DD}DMMSS{.SS}+
+    #
+    #   @note This is a refinement for +String+
+    #   @return [Float] angle in DD notation
+    refine String do
       def to_dd
         if self =~ /\A(-)?(\d{1,3})[° ]?(\d{2})[' ]?(\d{2}\.?\d{0,2})"?\z/
           ("#{$1}1".to_i * ($2.to_f + ($3.to_f/60) + ($4.to_f/3600)))
@@ -83,24 +129,52 @@ module AIXM
       end
     end
 
+    # @!method trim
+    #   Convert whole numbers to Integer and leave all other untouched.
+    #
+    #   @example
+    #     3.0.trim
+    #     # => 3
+    #     3.3.trim
+    #     # => 3.3
+    #
+    #   @note This is a refinement for +Float+
+    #   @return [Integer, Float] converted Float
     refine Float do
-      ##
-      # Convert whole numbers to Integer and leave all other untouched
       def trim
         (self % 1).zero? ? self.to_i : self
       end
+    end
 
-      ##
-      # Convert an angle from degree to radian
+    # @!method to_rad
+    #   Convert an angle from degree to radian.
+    #
+    #   @example
+    #     45.to_rad
+    #     # => 0.7853981633974483
+    #
+    #   @note This is a refinement for +Float+
+    #   @return [Float] radian angle
+    refine Float do
       def to_rad
         self * Math::PI / 180
       end
+    end
 
-      ##
-      # Convert DD angle to DMS with the degrees zero padded to +padding+ length
-      #
-      # Output format:
-      # * {-}D°MM'SS.SS"
+    # @!method to_dms(padding=3)
+    #   Convert DD angle to DMS with the degrees zero padded to +padding+
+    #   length.
+    #
+    #   @example
+    #     43.22164444444445.to_dms(2)
+    #     # => "43°12'77.92\""
+    #     43.22164444444445.to_dms
+    #     # => "043°12'77.92\""
+    #
+    #   @note This is a refinement for +Float+
+    #   @param padding [Integer] number of digits for the degree part
+    #   @return [String] angle in DMS notation +{-}D°MM'SS.SS"+
+    refine Float do
       def to_dms(padding=3)
         degrees = self.abs.floor
         minutes = ((self.abs - degrees) * 60).floor
@@ -114,9 +188,22 @@ module AIXM
           seconds.abs
         ]
       end
+    end
 
-      ##
-      # Convert a distance +from+ unit (+:km+, +:m+, +:nm+ or +:ft+) to kilometers
+    # @!method to_km(from:)
+    #   Convert a distance from the source unit +from+ to kilometers.
+    #
+    #   @example
+    #     10.to_km(from: :nm)
+    #     # => 18.52
+    #     10.to_km(from: :foobar)
+    #     # => ArgumentError
+    #
+    #   @note This is a refinement for +Float+
+    #   @param from [Symbol] source unit (see {KM_FACTORS})
+    #   @raise [ArgumentError] if the specified unit is not supported
+    #   @return [Float] value converted to kilometers
+    refine Float do
       def to_km(from:)
         self * KM_FACTORS.fetch(from.downcase.to_sym)
       rescue KeyError

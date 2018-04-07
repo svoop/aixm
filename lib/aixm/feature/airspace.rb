@@ -3,16 +3,22 @@ using AIXM::Refinements
 module AIXM
   module Feature
 
-    ##
-    # Airspace feature
+    # Three-dimensional volume most notably defining flight zones.
     #
-    # Accessors:
-    # * +geometry+ - instance of +AIXM::Component::Geometry+
-    # * +layers+ - array of instances of +AIXM::Component::Layer+
+    # ===Cheat Sheet in Pseudo Code:
+    #   airspace = AIXM.airspace(
+    #     source: String or nil
+    #     region: String or nil (falls back to AIXM.config.region)
+    #     id: String
+    #     type: String or Symbol
+    #     name: String
+    #     short_name: String or nil
+    #   )
+    #   airspace.geometry << AIXM.point or AIXM.arc or AIXM.border or AIXM.circle
+    #   airspace.layers << AIXM.layer
+    #
+    # @see https://github.com/openflightmaps/ofmx/wiki/Airspace#ase-airspace
     class Airspace < Base
-      attr_reader :id, :type, :name, :short_name
-      attr_accessor :geometry, :layers
-
       public_class_method :new
 
       TYPES = {
@@ -58,6 +64,25 @@ module AIXM
         PART: :part_of_airspace
       }
 
+      # @note When assigning +nil+, a 4 byte hex derived from +#type+, +#name+ and +#short_name+ is written instead.
+      # @return [String] published identifier (e.g. "LFP81")
+      attr_reader :id
+
+      # @return [Symbol] type of airspace (see {TYPES})
+      attr_reader :type
+
+      # @return [String] full name (e.g. "LF P 81 CHERBOURG")
+      attr_reader :name
+
+      # @return [String] short name (e.g. "LF P 81")
+      attr_reader :short_name
+
+      # @return [AIXM::Component::Geometry] horizontal geometrical shape
+      attr_accessor :geometry
+
+      # @return [Array of AIXM::Compoment::Layer] vertical layers
+      attr_accessor :layers
+
       def initialize(source: nil, region: nil, id: nil, type:, name:, short_name: nil)
         super(source: source, region: region)
         self.type, self.name, self.short_name = type, name, short_name
@@ -66,40 +91,31 @@ module AIXM
         @layers = []
       end
 
+      # @return [String]
       def inspect
         %Q(#<#{self.class} type=#{type.inspect} name=#{name.inspect}>)
       end
 
-      ##
-      # Published identifier (e.g. "LFP81")
-      #
-      # Passing +nil+ will assign a 8 byte hex digest derived from +type+,
-      # +name+ and +short_name+.
       def id=(value)
         fail(ArgumentError, "invalid id") unless value.nil? || value.is_a?(String)
         @id = value&.uptrans || [type, name, short_name].to_digest.upcase
       end
 
-      ##
-      # Airspace type (e.g. "TMA" or "P")
       def type=(value)
         @type = TYPES.lookup(value&.to_sym, nil) || fail(ArgumentError, "invalid type")
       end
 
-      ##
-      # Full name (e.g. "LF P 81 CHERBOURG")
       def name=(value)
         fail(ArgumentError, "invalid name") unless value.is_a? String
         @name = value.uptrans
       end
 
-      ##
-      # Short name (e.g. "LF P 81")
       def short_name=(value)
         fail(ArgumentError, "invalid short name") unless value.nil? || value.is_a?(String)
         @short_name = value&.uptrans
       end
 
+      # @return [String] UID markup
       def to_uid(as: :AseUid)
         builder = Builder::XmlMarkup.new(indent: 2)
         builder.tag!(as, { region: (region if AIXM.ofmx?) }.compact) do |tag|
@@ -108,9 +124,11 @@ module AIXM
         end
       end
 
+      # @raise [AIXM::GeometryError] if the geometry is not closed
+      # @raise [AIXM::LayerError] if no layers are defined
+      # @return [String] AIXM or OFMX markup
       def to_xml
-        fail "geometry not closed" unless geometry.closed?
-        fail "no layers defined" unless layers.any?
+        fail(LayerError, "no layers defined") unless layers.any?
         builder = Builder::XmlMarkup.new(indent: 2)
         builder.comment! "Airspace: [#{TYPES.key(type)}] #{name}"
         builder.Ase({

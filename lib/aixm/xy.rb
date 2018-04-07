@@ -2,35 +2,44 @@ using AIXM::Refinements
 
 module AIXM
 
-  ##
   # Geographical coordinates
   #
-  # The following notations for longitude and latitude are recognized:
+  # ===Recognized notations:
   # * DD - examples: 12.12345678 (north or east), -12.12345678 (south or west)
   # * DMS - examples: 11°22'33.44"N, 1112233.44W
+  #
+  # @example All of the below are equivalent
+  #   AIXM.xy(lat: %q(11°22'33.44"), long: %q(-111°22'33.44"))
+  #   AIXM.xy(lat: '112233.44N', long: '1112233.44W')
+  #   AIXM.xy(lat: 11.375955555555556, long: -111.37595555555555)
+  #
+  # @see https://github.com/openflightmaps/ofmx/wiki/Coordinates
   class XY
-    EARTH_RADIUS = 6_371_008.8   # meters
+    EARTH_RADIUS = 6_371_008.8
 
     def initialize(lat:, long:)
       self.lat, self.long = lat, long
     end
 
+    # @return [String]
     def inspect
       %Q(#<#{self.class} #{to_s}>)
     end
 
+    # @return [String] human readable representation
     def to_s
       [lat(:ofmx), long(:ofmx)].join(' ')
     end
 
-    ##
-    # Latitude
+    # @!attribute lat
     def lat=(value)
       @lat = float_for value
       fail(ArgumentError, "invalid lat") unless (-90..90).include? @lat
     end
 
-    def lat(schema = nil)
+    # @param schema [Symbol, nil] either nil, +:aixm+ or +:ofmx+
+    # @return [String, Float] latitude
+    def lat(schema=nil)
       case schema
         when :ofmx then ("%011.8f" % @lat.abs.round(8)) + (@lat.negative? ? 'S' : 'N')
         when :aixm then @lat.to_dms(2).gsub(/[^\d.]/, '') + (@lat.negative? ? 'S' : 'N')
@@ -38,14 +47,15 @@ module AIXM
       end
     end
 
-    ##
-    # Longitude
+    # @!attribute long
     def long=(value)
       @long = float_for value
       fail(ArgumentError, "invalid long") unless (-180..180).include? @long
     end
 
-    def long(schema = nil)
+    # @param schema [Symbol, nil] either nil, +:aixm+ or +:ofmx+
+    # @return [Float, String] longitude
+    def long(schema=nil)
       case schema
         when :ofmx then ("%012.8f" % @long.abs.round(8)) + (@long.negative? ? 'W' : 'E')
         when :aixm then @long.to_dms(3).gsub(/[^\d.]/, '') + (@long.negative? ? 'W' : 'E')
@@ -53,14 +63,12 @@ module AIXM
       end
     end
 
-    ##
-    # Check whether two coordinate pairs are identical
+    # @return [Boolean]
     def ==(other)
       other.is_a?(self.class) && lat == other.lat && long == other.long
     end
 
-    ##
-    # Calculate the distance in meters by use of the Haversine formula
+    # @return [Float] distance in meters as calculated by use of the Haversine formula
     def distance(other)
       if self == other
         0

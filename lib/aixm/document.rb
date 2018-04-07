@@ -1,56 +1,69 @@
 using AIXM::Refinements
 
 module AIXM
+
+  # The AIXM-Snapshot or OFMX-Snapshot document is the root container for
+  # aeronautical information such as airports or airspaces.
+  #
+  # ===Cheat Sheet in Pseudo Code:
+  #   document = AIXM.document(
+  #     namespace: String (UUID)
+  #     created_at: Time or Date or String
+  #     effective_at: Time or Date or String
+  #   )
+  #   document.features << AIXM::Feature
+  #
+  # @see https://github.com/openflightmaps/ofmx/wiki/Snapshot
   class Document
     NAMESPACE_PATTERN = /\A[a-f\d]{8}-[a-f\d]{4}-[a-f\d]{4}-[a-f\d]{4}-[a-f\d]{12}\z/
 
-    attr_reader :namespace, :created_at, :effective_at
+    # @return [String] UUID to namespace the data contained in this document
+    attr_reader :namespace
+
+    # @return [Time] creation date and time (default: +effective_at+ or now)
+    attr_reader :created_at
+
+    # @return [Time] effective after date and time (default: +created_at+ or now)
+    attr_reader :effective_at
+
+    # @return [Array of AIXM::Feature] airspaces, airports and other features
     attr_accessor :features
 
-    ##
-    # Define a AIXM-Snapshot document
-    #
-    # Arguments:
-    # * +namespace+ - UUID to namespace the data in this document
-    # * +created_at+ - creation date and time (default: +effective_at+ or now)
-    # * +effective_at+ - effective after date and time (default: +created_at+
-    #                    or now)
     def initialize(namespace: nil, created_at: nil, effective_at: nil)
       self.namespace, self.created_at, self.effective_at = namespace, created_at, effective_at
       @features = []
     end
 
+    # @return [String]
     def inspect
       %Q(#<#{self.class} created_at=#{created_at.inspect}>)
     end
 
-    ##
-    # UUID to namespace the data in this document
     def namespace=(value)
       fail(ArgumentError, "invalid namespace") unless value.nil? || value.match?(NAMESPACE_PATTERN)
       @namespace = value || SecureRandom.uuid
     end
 
-    ##
-    # Creation date and time (default: +effective_at+ or now)
     def created_at=(value)
       @created_at = parse_time(value) || effective_at || Time.now
     end
 
-    ##
-    # Effective after date and time (default: +created_at+ or now)
     def effective_at=(value)
       @effective_at = parse_time(value) || created_at || Time.now
     end
 
-    ##
-    # Validate atainst the XSD and return +true+ if no errors were found
+    # Validate the generated AIXM or OFMX atainst it's XSD.
+    #
+    # @return [Boolean] whether valid or not
     def valid?
       errors.none?
     end
 
     ##
-    # Validate against the XSD and return an array of errors
+    # Validate the generated AIXM or OFMX atainst it's XSD and return the
+    # errors found.
+    #
+    # @return [Array of String] validation errors
     def errors
       xsd = Nokogiri::XML::Schema(File.open(AIXM.schema(:xsd)))
       xsd.validate(Nokogiri::XML(to_xml)).reject do |error|
@@ -58,8 +71,7 @@ module AIXM
       end
     end
 
-    ##
-    # Generate XML
+    # @return [String] AIXM or OFMX markup
     def to_xml
       meta = {
         'xmlns:xsi': AIXM.schema(:namespace),

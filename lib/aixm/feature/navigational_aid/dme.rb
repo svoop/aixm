@@ -4,25 +4,40 @@ module AIXM
   module Feature
     module NavigationalAid
 
-      ##
-      # DME (distance measuring equipment) operate in the frequency band
-      # between 962 MHz and 1213 MHz.
-      # https://en.wikipedia.org/wiki/Distance_measuring_equipment
+      # Distance measuring equipment (DME) is a transponder-based radio navigation
+      # technology which measures slant range distance by timing the propagation
+      # delay of VHF or UHF signals. They operate in the frequency band between
+      # 962 MHz and 1213 MHz.
       #
-      # Arguments:
-      # * +channel+ - radio channel
+      # ===Cheat Sheet in Pseudo Code:
+      #   dme = AIXM.dme(
+      #     source: String or nil
+      #     region: String or nil (falls back to AIXM.config.region)
+      #     organisation: AIXM.organisation
+      #     id: String
+      #     name: String
+      #     xy: AIXM.xy
+      #     z: AIXM.z or nil
+      #     channel: String
+      #   )
+      #   dme.schedule = AIXM.schedule
+      #   dme.remarks = String or nil
+      #
+      # @see https://github.com/openflightmaps/ofmx/wiki/Navigational-aid#dme-dme
       class DME < Base
-        attr_reader :channel, :vor
-
         public_class_method :new
+
+        # @return [String] radio channel
+        attr_reader :channel
+
+        # @return [AIXM::Feature::NavigationalAid::VOR] associated VOR
+        attr_reader :vor
 
         def initialize(channel:, **arguments)
           super(**arguments)
           self.channel = channel
         end
 
-        ##
-        # Radio channel (e.g. "3X")
         def channel=(value)
           fail(ArgumentError, "invalid channel") unless value.is_a? String
           @channel = value.upcase
@@ -34,6 +49,7 @@ module AIXM
         end
         private :vor=
 
+        # @return [String] UID markup
         def to_uid
           builder = Builder::XmlMarkup.new(indent: 2)
           builder.DmeUid({ region: (region if AIXM.ofmx?) }.compact) do |dme_uid|
@@ -43,6 +59,7 @@ module AIXM
           end
         end
 
+        # @return [String] AIXM or OFMX markup
         def to_xml
           builder = to_builder
           builder.Dme({ source: (source if AIXM.ofmx?) }.compact) do |dme|

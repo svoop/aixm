@@ -13,7 +13,7 @@ describe AIXM::Component::Geometry do
     end
 
     it "must fail to build AIXM" do
-      -> { subject.to_xml }.must_raise RuntimeError
+      -> { subject.to_xml }.must_raise AIXM::GeometryError
     end
   end
 
@@ -31,7 +31,7 @@ describe AIXM::Component::Geometry do
     end
 
     it "must fail to build AIXM" do
-      -> { subject.to_xml }.must_raise RuntimeError
+      -> { subject.to_xml }.must_raise AIXM::GeometryError
     end
   end
 
@@ -50,7 +50,7 @@ describe AIXM::Component::Geometry do
     end
 
     it "must fail to build AIXM" do
-      -> { subject.to_xml }.must_raise RuntimeError
+      -> { subject.to_xml }.must_raise AIXM::GeometryError
     end
   end
 
@@ -121,7 +121,7 @@ describe AIXM::Component::Geometry do
     end
 
     it "must fail to build AIXM" do
-      -> { subject.to_xml }.must_raise RuntimeError
+      -> { subject.to_xml }.must_raise AIXM::GeometryError
     end
   end
 
@@ -182,7 +182,7 @@ describe AIXM::Component::Geometry do
     end
 
     it "must fail to build AIXM" do
-      -> { subject.to_xml }.must_raise RuntimeError
+      -> { subject.to_xml }.must_raise AIXM::GeometryError
     end
   end
 
@@ -244,7 +244,7 @@ describe AIXM::Component::Geometry do
     end
 
     it "must fail to build AIXM" do
-      -> { subject.to_xml }.must_raise RuntimeError
+      -> { subject.to_xml }.must_raise AIXM::GeometryError
     end
   end
 
@@ -291,7 +291,7 @@ describe AIXM::Component::Geometry do
     end
 
     it "must fail to build AIXM" do
-      -> { subject.to_xml }.must_raise RuntimeError
+      -> { subject.to_xml }.must_raise AIXM::GeometryError
     end
   end
 

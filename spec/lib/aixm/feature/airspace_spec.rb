@@ -70,14 +70,13 @@ describe AIXM::Feature::Airspace do
 
     describe :to_xml do
       it "fails to build AIXM since geometry is not closed" do
-        error = -> { subject.to_xml }.must_raise RuntimeError
-        error.message.must_equal "geometry not closed"
+        subject.layers << AIXM::Factory.layer
+        -> { subject.to_xml }.must_raise AIXM::GeometryError
       end
 
       it "fails to build AIXM since layers are not defined" do
         subject.geometry = AIXM::Factory.circle_geometry
-        error = -> { subject.to_xml }.must_raise RuntimeError
-        error.message.must_equal "no layers defined"
+        -> { subject.to_xml }.must_raise AIXM::LayerError
       end
     end
   end
