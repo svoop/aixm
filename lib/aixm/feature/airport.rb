@@ -181,8 +181,8 @@ module AIXM
       #     reservation_required.schedule = AIXM::H24
       #     reservation_required.remarks = "Reservation 24 HRS prior to arrival"
       #   end
-      def add_usage_limitation(limitation)
-        usage_limitation = UsageLimitation.new(limitation: limitation)
+      def add_usage_limitation(type)
+        usage_limitation = UsageLimitation.new(type: type)
         yield(usage_limitation) if block_given?
         @usage_limitations << usage_limitation
         self
@@ -240,7 +240,7 @@ module AIXM
       end
 
       class UsageLimitation
-        LIMITATIONS = {
+        TYPES = {
           PERMIT: :permitted,
           FORBID: :forbidden,
           RESERV: :reservation_required,
@@ -248,20 +248,20 @@ module AIXM
         }.freeze
 
         attr_reader :airport
-        attr_reader :limitation
         attr_reader :conditions, :schedule, :remarks
 
-        def initialize(limitation:)
-          self.limitation = limitation
+        attr_reader :type
+        def initialize(type:)
+          self.type = type
           @conditions = []
         end
 
         def inspect
-          %Q(#<#{self.class} limitation=#{limitation.inspect}>)
+          %Q(#<#{self.class} type=#{type.inspect}>)
         end
 
-        def limitation=(value)
-          @limitation = LIMITATIONS.lookup(value&.to_sym, nil) || fail(ArgumentError, "invalid limitation")
+        def type=(value)
+          @type = TYPES.lookup(value&.to_sym, nil) || fail(ArgumentError, "invalid type")
         end
 
         def add_condition()
@@ -287,7 +287,7 @@ module AIXM
         def to_xml
           builder = Builder::XmlMarkup.new(indent: 2)
           builder.UsageLimitation do |usage_limitation|
-            usage_limitation.codeUsageLimitation(LIMITATIONS.key(limitation).to_s)
+            usage_limitation.codeUsageLimitation(TYPES.key(type).to_s)
             conditions.each do |condition|
               usage_limitation << condition.to_xml.indent(2)
             end

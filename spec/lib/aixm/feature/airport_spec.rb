@@ -156,7 +156,7 @@ describe AIXM::Feature::Airport do
         count = subject.usage_limitations.count
         subject.add_usage_limitation(:permitted)
         subject.usage_limitations.count.must_equal count + 1
-        subject.usage_limitations.last.limitation.must_equal :permitted
+        subject.usage_limitations.last.type.must_equal :permitted
       end
     end
 
@@ -344,15 +344,15 @@ describe AIXM::Feature::Airport::UsageLimitation do
     end
   end
 
-  describe :limitation= do
+  describe :type= do
     it "fails on invalid values" do
-      -> { subject.limitation = :foobar }.must_raise ArgumentError
-      -> { subject.limitation = nil }.must_raise ArgumentError
+      -> { subject.type = :foobar }.must_raise ArgumentError
+      -> { subject.type = nil }.must_raise ArgumentError
     end
 
     it "accepts valid values" do
-      subject.tap { |s| s.limitation = :permitted }.limitation.must_equal :permitted
-      subject.tap { |s| s.limitation = :RESERV }.limitation.must_equal :reservation_required
+      subject.tap { |s| s.type = :permitted }.type.must_equal :permitted
+      subject.tap { |s| s.type = :RESERV }.type.must_equal :reservation_required
     end
   end
 
