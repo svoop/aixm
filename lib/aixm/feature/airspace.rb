@@ -15,6 +15,49 @@ module AIXM
 
       public_class_method :new
 
+      TYPES = {
+        NAS: :national_airspace_system,
+        FIR: :flight_information_region,
+        'FIR-P': :part_of_flight_information_region,
+        UIR: :upper_flight_information_region,
+        'UIR-P': :part_of_upper_flight_information_region,
+        CTA: :control_area,
+        'CTA-P': :part_of_control_area,
+        OCA: :oceanic_control_area,
+        'OCA-P': :part_of_oceanic_control_area,
+        UTA: :upper_control_area,
+        'UTA-P': :part_of_upper_control_area,
+        TMA: :terminal_control_area,
+        'TMA-P': :part_of_terminal_control_area,
+        CTR: :control_zone,
+        'CTR-P': :part_of_control_zone,
+        CLASS: :airspace_with_class,
+        OTA: :oceanic_transition_area,
+        SECTOR: :control_sector,
+        'SECTOR-C': :temporarily_consolidated_sector,
+        TSA: :temporary_segregated_area,
+        TRA: :temporary_reserved_area,
+        CBA: :cross_border_area,
+        RCA: :reduced_coordination_airspace_procedure,
+        RAS: :regulated_airspace,
+        AWY: :airway,
+        P: :prohibited_area,
+        R: :restricted_area,
+        'R-AMC': :amc_manageable_restricted_area,
+        D: :danger_area,
+        'D-AMC': :amc_manageable_danger_area,
+        'D-OTHER': :dangerous_activities_area,
+        ADIZ: :air_defense_identification_zone,
+        A: :alert_area,
+        W: :warning_area,
+        PROTECT: :protected_from_specific_air_traffic,
+        AMA: :minimum_altitude_area,
+        ASR: :altimeter_setting_region,
+        'NO-FIR': :airspace_outside_any_flight_information_region,
+        POLITICAL: :political_area,
+        PART: :part_of_airspace
+      }
+
       def initialize(source: nil, region: nil, id: nil, type:, name:, short_name: nil)
         super(source: source, region: region)
         self.type, self.name, self.short_name = type, name, short_name
@@ -40,8 +83,7 @@ module AIXM
       ##
       # Airspace type (e.g. "TMA" or "P")
       def type=(value)
-        fail(ArgumentError, "invalid type") unless value.is_a?(String)
-        @type = value.upcase
+        @type = TYPES.lookup(value&.to_sym, nil) || fail(ArgumentError, "invalid type")
       end
 
       ##
@@ -61,7 +103,7 @@ module AIXM
       def to_uid(as: :AseUid)
         builder = Builder::XmlMarkup.new(indent: 2)
         builder.tag!(as, { region: (region if AIXM.ofmx?) }.compact) do |tag|
-          tag.codeType(type)
+          tag.codeType(TYPES.key(type).to_s)
           tag.codeId(id)
         end
       end
@@ -70,7 +112,7 @@ module AIXM
         fail "geometry not closed" unless geometry.closed?
         fail "no layers defined" unless layers.any?
         builder = Builder::XmlMarkup.new(indent: 2)
-        builder.comment! "Airspace: [#{type}] #{name}"
+        builder.comment! "Airspace: [#{TYPES.key(type)}] #{name}"
         builder.Ase({
           source: (source if AIXM.ofmx?),
           classLayers: (layers.count if AIXM.ofmx? && layered?)

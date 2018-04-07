@@ -9,7 +9,7 @@ describe AIXM::Feature::Airspace do
 
     describe :initialize do
       it "sets defaults" do
-        subject.id.must_equal 'E2695A2B'
+        subject.id.must_equal '22E2F734'
         subject.layers.must_equal []
         subject.geometry.must_be_instance_of AIXM::Component::Geometry
       end
@@ -27,11 +27,13 @@ describe AIXM::Feature::Airspace do
 
     describe :type= do
       it "fails on invalid values" do
-        -> { subject.id = 123 }.must_raise ArgumentError
+        -> { subject.type = :foobar }.must_raise ArgumentError
+        -> { subject.type = nil }.must_raise ArgumentError
       end
 
-      it "upcases and transcodes value" do
-        subject.tap { |s| s.type = 'tma' }.type.must_equal 'TMA'
+      it "accepts valid values" do
+        subject.tap { |s| s.type = :danger_area }.type.must_equal :danger_area
+        subject.tap { |s| s.type = :P }.type.must_equal :prohibited_area
       end
     end
 
@@ -91,7 +93,7 @@ describe AIXM::Feature::Airspace do
     describe :to_xml do
       it "builds correct AIXM without id" do
         AIXM.aixm!
-        subject.to_xml.must_match(%r{<codeId>E2695A2B</codeId>})
+        subject.to_xml.must_match(%r{<codeId>22E2F734</codeId>})
       end
 
       it "builds correct AIXM without short name" do
@@ -232,7 +234,7 @@ describe AIXM::Feature::Airspace do
           <Ase>
             <AseUid region="LF">
               <codeType>CLASS</codeType>
-              <codeId>E5B59824</codeId>
+              <codeId>522496D6</codeId>
             </AseUid>
             <txtName>POLYGON AIRSPACE LAYER 1</txtName>
             <codeClass>C</codeClass>
@@ -258,7 +260,7 @@ describe AIXM::Feature::Airspace do
             <AdgUid>
               <AseUid region="LF">
                 <codeType>CLASS</codeType>
-                <codeId>E5B59824</codeId>
+                <codeId>522496D6</codeId>
               </AseUid>
             </AdgUid>
             <AseUidSameExtent region="LF">
@@ -269,7 +271,7 @@ describe AIXM::Feature::Airspace do
           <Ase>
             <AseUid region="LF">
               <codeType>CLASS</codeType>
-              <codeId>75DA71AE</codeId>
+              <codeId>CAA85949</codeId>
             </AseUid>
             <txtName>POLYGON AIRSPACE LAYER 2</txtName>
             <codeClass>C</codeClass>
@@ -295,7 +297,7 @@ describe AIXM::Feature::Airspace do
             <AdgUid>
               <AseUid region="LF">
                 <codeType>CLASS</codeType>
-                <codeId>75DA71AE</codeId>
+                <codeId>CAA85949</codeId>
               </AseUid>
             </AdgUid>
             <AseUidSameExtent region="LF">
