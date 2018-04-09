@@ -1,8 +1,8 @@
-require_relative '../../../spec_helper'
+require_relative '../../spec_helper'
 
-describe AIXM::Feature::Base do
+describe AIXM::Feature do
   subject do
-    AIXM::Feature::Base.send(:new)
+    AIXM::Feature.send(:new)
   end
 
   describe :source= do

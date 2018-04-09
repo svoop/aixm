@@ -1,7 +1,7 @@
 using AIXM::Refinements
 
 module AIXM
-  module Component
+  class Component
 
     # Vertical limits define a 3D airspace vertically. They are often noted in
     # AIP as follows:

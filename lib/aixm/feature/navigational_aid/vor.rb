@@ -1,8 +1,8 @@
 using AIXM::Refinements
 
 module AIXM
-  module Feature
-    module NavigationalAid
+  class Feature
+    class NavigationalAid
 
       # VHF omni directional radio range (VOR) is a type of radio navigation for
       # aircraft to determine their position and course. They operate in the
@@ -27,7 +27,7 @@ module AIXM
       #   vor.associate_tacan(channel: String)   # turns the VOR into a VORTAC
       #
       # @see https://github.com/openflightmaps/ofmx/wiki/Navigational-aid#vor-vor
-      class VOR < Base
+      class VOR < NavigationalAid
         public_class_method :new
 
         TYPES = {

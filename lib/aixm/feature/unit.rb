@@ -1,7 +1,7 @@
 using AIXM::Refinements
 
 module AIXM
-  module Feature
+  class Feature
 
     # Units providing all kind of services such as air traffic management,
     # search and rescue, meteorological services and so forth.
@@ -19,7 +19,7 @@ module AIXM
     #   unit.remarks = String or nil
     #
     # @see https://github.com/openflightmaps/ofmx/wiki/Organisation#uni-unit
-    class Unit < Base
+    class Unit < Feature
       public_class_method :new
 
       TYPES = {

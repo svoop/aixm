@@ -1,8 +1,8 @@
 using AIXM::Refinements
 
 module AIXM
-  module Feature
-    module NavigationalAid
+  class Feature
+    class NavigationalAid
 
       # Marker beacons guide an aircraft on a specific route e.g. towards a
       # runway (which is why marker beacons are often part of an ILS). Their
@@ -26,7 +26,7 @@ module AIXM
       #   associated with an ILS which are not implemented as of now.
       #
       # @see https://github.com/openflightmaps/ofmx/wiki/Navigational-aid#mkr-marker-beacon
-      class Marker < Base
+      class Marker < NavigationalAid
         public_class_method :new
 
         TYPES = {

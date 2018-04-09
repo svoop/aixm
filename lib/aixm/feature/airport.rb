@@ -1,7 +1,7 @@
 using AIXM::Refinements
 
 module AIXM
-  module Feature
+  class Feature
 
     # Defined area on land or water to be used for the arrival, departure and
     # surface movement of aircraft.
@@ -26,7 +26,7 @@ module AIXM
     #   airport.add_usage_limitation(UsageLimitation::TYPES)
     #
     # @see https://github.com/openflightmaps/ofmx/wiki/Airport#ahp-airport
-    class Airport < Base
+    class Airport < Feature
       public_class_method :new
 
       CODE_PATTERN = /^[A-Z]{2}([A-Z]{1,2}|\d{4})$/.freeze

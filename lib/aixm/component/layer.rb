@@ -1,7 +1,7 @@
 using AIXM::Refinements
 
 module AIXM
-  module Component
+  class Component
 
     # Each airspace has one or more layers with optional airspace class and
     # mandatory vertical limits.

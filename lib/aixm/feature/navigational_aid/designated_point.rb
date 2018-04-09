@@ -1,8 +1,8 @@
 using AIXM::Refinements
 
 module AIXM
-  module Feature
-    module NavigationalAid
+  class Feature
+    class NavigationalAid
 
       # Named geographical location used in defining an ATS route, aircraft
       # flight paths or for other navigation purposes.
@@ -19,7 +19,7 @@ module AIXM
       #   designated_point.remarks = String or nil
       #
       # @see https://github.com/openflightmaps/ofmx/wiki/Navigational-aid#dpn-designated-point
-      class DesignatedPoint < Base
+      class DesignatedPoint < NavigationalAid
         public_class_method :new
         private :organisation=
         private :organisation

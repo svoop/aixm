@@ -1,7 +1,7 @@
 using AIXM::Refinements
 
 module AIXM
-  module Component
+  class Component
     class Geometry
 
       # Points are defined by +xy+ coordinates.

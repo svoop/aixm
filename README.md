@@ -71,17 +71,17 @@ AIXM.schema(:version)   # => 0
 
 ## Model
 
-### Fundamental
+### Fundamentals
 * [Document](http://www.rubydoc.info/gems/aixm/AIXM/Document.html)
 * [XY (longitude and latitude)](http://www.rubydoc.info/gems/aixm/AIXM/XY.html)
 * [Z (height, elevation or altitude)](http://www.rubydoc.info/gems/aixm/AIXM/Z.html)
 * [F (frequency)](http://www.rubydoc.info/gems/aixm/AIXM/F.html)
 
-### Feature
+### Features
 * [Organisation](http://www.rubydoc.info/gems/aixm/AIXM/Feature/Organisation.html)
 * [Airport](http://www.rubydoc.info/gems/aixm/AIXM/Feature/Airport.html)
 * [Airspace](http://www.rubydoc.info/gems/aixm/AIXM/Feature/Airspace.html)
-* Navigational aid
+* [Navigational aid](http://www.rubydoc.info/gems/aixm/AIXM/NavigationalAid.html)
   * [Designated point](http://www.rubydoc.info/gems/aixm/AIXM/Feature/DesignatedPoint.html)
   * [DME](http://www.rubydoc.info/gems/aixm/AIXM/Feature/DME.html)
   * [Marker](http://www.rubydoc.info/gems/aixm/AIXM/Feature/Marker.html)
@@ -89,7 +89,7 @@ AIXM.schema(:version)   # => 0
   * [TACAN](http://www.rubydoc.info/gems/aixm/AIXM/Feature/TACAN.html)
   * [VOR](http://www.rubydoc.info/gems/aixm/AIXM/Feature/VOR.html)
 
-### Component
+### Components
 * [Geometry](http://www.rubydoc.info/gems/aixm/AIXM/Component/Geometry.html)
   * [Point](http://www.rubydoc.info/gems/aixm/AIXM/Component/Point.html)
   * [Arc](http://www.rubydoc.info/gems/aixm/AIXM/Component/Arc.html)

@@ -1,7 +1,7 @@
 using AIXM::Refinements
 
 module AIXM
-  module Component
+  class Component
     class Geometry
 
       # Borders are following natural or artifical border lines referenced by

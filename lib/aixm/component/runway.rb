@@ -1,7 +1,7 @@
 using AIXM::Refinements
 
 module AIXM
-  module Component
+  class Component
 
     # Runways are landing and takeoff strips for forward propelled aircraft.
     #

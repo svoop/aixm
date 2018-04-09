@@ -1,8 +1,8 @@
 using AIXM::Refinements
 
 module AIXM
-  module Feature
-    module NavigationalAid
+  class Feature
+    class NavigationalAid
 
       # A non-directional radio beacon (NDB) is a radio transmitter at a known
       # location operating in the frequency band between 190 kHz and 1750 kHz.
@@ -23,7 +23,7 @@ module AIXM
       #   ndb.remarks = String or nil
       #
       # @see https://github.com/openflightmaps/ofmx/wiki/Navigational-aid#ndb-ndb
-      class NDB < Base
+      class NDB < NavigationalAid
         public_class_method :new
 
         TYPES = {

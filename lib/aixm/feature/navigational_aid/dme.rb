@@ -1,8 +1,8 @@
 using AIXM::Refinements
 
 module AIXM
-  module Feature
-    module NavigationalAid
+  class Feature
+    class NavigationalAid
 
       # Distance measuring equipment (DME) is a transponder-based radio navigation
       # technology which measures slant range distance by timing the propagation
@@ -24,7 +24,7 @@ module AIXM
       #   dme.remarks = String or nil
       #
       # @see https://github.com/openflightmaps/ofmx/wiki/Navigational-aid#dme-dme
-      class DME < Base
+      class DME < NavigationalAid
         public_class_method :new
 
         # @return [String] radio channel

@@ -1,7 +1,7 @@
 using AIXM::Refinements
 
 module AIXM
-  module Feature
+  class Feature
 
     # Three-dimensional volume most notably defining flight zones.
     #
@@ -18,7 +18,7 @@ module AIXM
     #   airspace.layers << AIXM.layer
     #
     # @see https://github.com/openflightmaps/ofmx/wiki/Airspace#ase-airspace
-    class Airspace < Base
+    class Airspace < Feature
       public_class_method :new
 
       TYPES = {

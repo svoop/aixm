@@ -1,8 +1,8 @@
 using AIXM::Refinements
 
 module AIXM
-  module Feature
-    module NavigationalAid
+  class Feature
+    class NavigationalAid
 
       # TACAN (tactical air navigation system) are military systems which also
       # provide DME service to civilian aircraft and therefore operate in the

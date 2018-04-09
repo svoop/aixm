@@ -1,7 +1,7 @@
 using AIXM::Refinements
 
 module AIXM
-  module Feature
+  class Feature
 
     # Organisations and authorities such as ATS organisations, aircraft
     # operating agencies, states and so forth.
@@ -17,7 +17,7 @@ module AIXM
     #   organisation.remarks = String or nil
     #
     # @see https://github.com/openflightmaps/ofmx/wiki/Organisation#org-organisation
-    class Organisation < Base
+    class Organisation < Feature
       public_class_method :new
 
       TYPES = {

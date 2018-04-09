@@ -1,7 +1,7 @@
 using AIXM::Refinements
 
 module AIXM
-  module Component
+  class Component
 
     # Geometries define a 3D airspace horizontally. It's either exactly one
     # circle or at least three points, arcs and borders (the last of which

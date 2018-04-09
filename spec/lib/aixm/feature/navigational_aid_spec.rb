@@ -1,8 +1,8 @@
-require_relative '../../../../spec_helper'
+require_relative '../../../spec_helper'
 
-describe AIXM::Feature::NavigationalAid::Base do
+describe AIXM::Feature::NavigationalAid do
   subject do
-    AIXM::Feature::NavigationalAid::Base.send(:new,
+    AIXM::Feature::NavigationalAid.send(:new,
       organisation: AIXM::Factory.organisation,
       id: 'XXX',
       xy: AIXM::Factory.xy
