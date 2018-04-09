@@ -19,7 +19,7 @@ module AIXM
       #     z: AIXM.z or nil
       #     type: :outer or :middle or :inner or :backcourse
       #   )
-      #   marker.schedule = AIXM.schedule
+      #   marker.schedule = AIXM.schedule or nil
       #   marker.remarks = String or nil
       #
       # @note Marker are not fully implemented because they usually have to be

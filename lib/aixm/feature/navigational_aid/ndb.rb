@@ -19,7 +19,7 @@ module AIXM
       #     type: TYPES
       #     f: AIXM.f
       #   )
-      #   ndb.schedule = AIXM.schedule
+      #   ndb.schedule = AIXM.schedule or nil
       #   ndb.remarks = String or nil
       #
       # @see https://github.com/openflightmaps/ofmx/wiki/Navigational-aid#ndb-ndb

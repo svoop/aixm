@@ -20,6 +20,7 @@ module AIXM
     #   airport.z = AIXM.z
     #   airport.declination = Float
     #   airport.transition_z = AIXM.z
+    #   airport.schedule = AIXM.schedule or nil
     #   airport.remarks = String or nil
     #   airport.add_runway(AIXM.runway)
     #   airport.add_helipad(AIXM.helipad)

@@ -11,7 +11,7 @@ module AIXM
     #     class: String or nil
     #     vertical_limits: AIXM.vertical_limits
     #   )
-    #   layer.schedule = AIXM.schedule
+    #   layer.schedule = AIXM.schedule or nil
     #   layer.selective = true or false (default)
     #   layer.remarks = String or nil
     #

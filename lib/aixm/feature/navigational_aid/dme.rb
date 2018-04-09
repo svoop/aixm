@@ -20,7 +20,7 @@ module AIXM
       #     z: AIXM.z or nil
       #     channel: String
       #   )
-      #   dme.schedule = AIXM.schedule
+      #   dme.schedule = AIXM.schedule or nil
       #   dme.remarks = String or nil
       #
       # @see https://github.com/openflightmaps/ofmx/wiki/Navigational-aid#dme-dme

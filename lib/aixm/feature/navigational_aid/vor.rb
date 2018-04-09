@@ -21,7 +21,7 @@ module AIXM
       #     f: AIXM.f
       #     north: NORTHS
       #   )
-      #   vor.schedule = AIXM.schedule
+      #   vor.schedule = AIXM.schedule or nil
       #   vor.remarks = String or nil
       #   vor.associate_dme(channel: String)     # turns the VOR into a VOR/DME
       #   vor.associate_tacan(channel: String)   # turns the VOR into a VORTAC

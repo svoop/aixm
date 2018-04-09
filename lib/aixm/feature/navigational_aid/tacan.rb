@@ -19,7 +19,7 @@ module AIXM
       #     z: AIXM.z or nil
       #     channel: String
       #   )
-      # tacan.schedule = AIXM.schedule
+      # tacan.schedule = AIXM.schedule or nil
       # tacan.remarks = String or nil
       #
       # @see https://github.com/openflightmaps/ofmx/wiki/Navigational-aid#tcn-tacan
