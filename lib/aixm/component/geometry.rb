@@ -43,7 +43,10 @@ module AIXM
         %Q(#<#{self.class} segments=#{segments.count.inspect}>)
       end
 
-      # @return [Array of AIXM::Component::Geometry::Point|Arc|Border|Circle] points, arcs, borders or circle
+      # @return [Array<AIXM::Component::Geometry::Point,
+      #   AIXM::Component::Geometry::Arc,
+      #   AIXM::Component::Geometry::Border,
+      #   AIXM::Component::Geometry::Circle>] points, arcs, borders or circle
       def segments
         @result_array
       end

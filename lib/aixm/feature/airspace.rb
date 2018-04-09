@@ -80,7 +80,7 @@ module AIXM
       # @return [AIXM::Component::Geometry] horizontal geometrical shape
       attr_accessor :geometry
 
-      # @return [Array of AIXM::Compoment::Layer] vertical layers
+      # @return [Array<AIXM::Compoment::Layer>] vertical layers
       attr_accessor :layers
 
       def initialize(source: nil, region: nil, id: nil, type:, name:, short_name: nil)

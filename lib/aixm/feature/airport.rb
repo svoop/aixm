@@ -79,13 +79,13 @@ module AIXM
       # @return [String] free text remarks
       attr_reader :remarks
 
-      # @return [Array of AIXM::Component::Runway] runways present at this airport
-      attr_accessor :runways
+      # @return [Array<AIXM::Component::Runway>] runways present at this airport
+      attr_reader :runways
 
-      # @return [Array of AIXM::Component::Helipad] helipads present at this airport
-      attr_accessor :helipads
+      # @return [Array<AIXM::Component::Helipad>] helipads present at this airport
+      attr_reader :helipads
 
-      # @return [Array of AIXM::Feature::Airport::UsageLimitation] usage limitations
+      # @return [Array<AIXM::Feature::Airport::UsageLimitation>] usage limitations
       attr_accessor :usage_limitations
 
       def initialize(source: nil, region: nil, organisation:, code:, name:, xy:)
@@ -298,7 +298,7 @@ module AIXM
         # @return [Symbol] type of limitation
         attr_reader :type
 
-        # @return [Array of AIXM::Feature::Airport::UsageLimitation::Condition] conditions for this limitation to apply
+        # @return [Array<AIXM::Feature::Airport::UsageLimitation::Condition>] conditions for this limitation to apply
         attr_reader :conditions
 
         # @return [AIXM::Component::Schedule, nil] limitation application hours

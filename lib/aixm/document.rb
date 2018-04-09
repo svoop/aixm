@@ -26,7 +26,7 @@ module AIXM
     # @return [Time] effective after date and time (default: +created_at+ or now)
     attr_reader :effective_at
 
-    # @return [Array of AIXM::Feature] airspaces, airports and other features
+    # @return [Array<AIXM::Feature>] airspaces, airports and other features
     attr_accessor :features
 
     def initialize(namespace: nil, created_at: nil, effective_at: nil)
@@ -62,7 +62,7 @@ module AIXM
     # Validate the generated AIXM or OFMX atainst it's XSD and return the
     # errors found.
     #
-    # @return [Array of String] validation errors
+    # @return [Array<String>] validation errors
     def errors
       xsd = Nokogiri::XML::Schema(File.open(AIXM.schema(:xsd)))
       xsd.validate(Nokogiri::XML(to_xml)).reject do |error|
