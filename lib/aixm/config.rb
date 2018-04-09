@@ -17,37 +17,64 @@ module AIXM
 
   class << self
 
-    ##
     # Access the configuration (e.g. +AIXM.config.schema+)
+    # @return [OpenStruct] configuration struct
     def config
       @@config
     end
 
-    ##
     # Currently active schema
     #
-    # To get the schema identifyer:
+    # @example Get the schema identifyer
     #   AIXM.schema   # => :aixm
     #
-    # To get schema details:
+    # @example Get schema details
     #   AIXM.schema(:version)   # => '4.5'
     #   AIXM.schema(:root)      # => 'AIXM-Snapshot'
+    #
+    # @param key [Symbol, nil] schema detail key (see {SCHEMAS})
+    # @return [Object] schema detail value
     def schema(key = nil)
       key ? SCHEMAS.dig(@@config.schema, key) : @@config.schema
     end
 
-    ##
-    # Shortcuts to query schema e.g. with +AIXM.ofmx?+ and to set schema e.g.
-    # with +AIXM.ofmx!+
+    # Shortcuts to set the schema.
+    #
+    # @example
+    #   AIXM.aixm!   # => :aixm
+    #   AIXM.ofmx?   # => false
+    #   AIXM.ofmx!   # => :ofmx
+    #   AIXM.ofmx?   # => true
+    #
+    # @!method aixm!
+    # @!method ofmx!
+    # @return [Symbol] schema key
     SCHEMAS.each_key do |schema|
       define_method("#{schema}!") { @@config.schema = schema }
+    end
+
+    # Shortcuts to query the schema.
+    #
+    # @example
+    #   AIXM.aixm!   # => :aixm
+    #   AIXM.ofmx?   # => false
+    #   AIXM.ofmx!   # => :ofmx
+    #   AIXM.ofmx?   # => true
+    #
+    # @!method aixm?
+    # @!method ofmx?
+    # @return [Boolean]
+    SCHEMAS.each_key do |schema|
       define_method("#{schema}?") { @@config.schema == schema }
     end
 
     private
 
-    ##
-    # Default configuration
+    # Configuration defaults (view source for more).
+    #
+    # @!visibility public
+    # @api private
+    # @return [OpenStruct]
     def initialize_config
       @@config = OpenStruct.new(
         schema: :aixm

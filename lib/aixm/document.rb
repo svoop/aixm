@@ -59,7 +59,6 @@ module AIXM
       errors.none?
     end
 
-    ##
     # Validate the generated AIXM or OFMX atainst it's XSD and return the
     # errors found.
     #
