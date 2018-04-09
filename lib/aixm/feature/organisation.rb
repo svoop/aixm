@@ -49,6 +49,11 @@ module AIXM
         self.name, self.type = name, type
       end
 
+      # @return [String]
+      def inspect
+        %Q(#<#{self.class} name=#{name.inspect} type=#{type.inspect}>)
+      end
+
       def name=(value)
         fail(ArgumentError, "invalid name") unless value.is_a? String
         @name = value.uptrans
@@ -65,11 +70,6 @@ module AIXM
 
       def remarks=(value)
         @remarks = value&.to_s
-      end
-
-      # @return [String]
-      def inspect
-        %Q(#<#{self.class} name=#{name.inspect} type=#{type.inspect}>)
       end
 
       # @return [String] UID markup

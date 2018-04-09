@@ -46,6 +46,11 @@ module AIXM
         self.upper_z, self.lower_z, self.max_z, self.min_z = upper_z, lower_z, max_z, min_z
       end
 
+      # @return [String]
+      def inspect
+        %Q(#<#{self.class} upper_z="#{upper_z.to_s}" lower_z="#{lower_z.to_s}">)
+      end
+
       def upper_z=(value)
         fail(ArgumentError, "invalid upper_z") unless value.is_a? AIXM::Z
         @upper_z = value
@@ -64,11 +69,6 @@ module AIXM
       def min_z=(value)
         fail(ArgumentError, "invalid min_z") unless value.nil? || value.is_a?(AIXM::Z)
         @min_z = value
-      end
-
-      # @return [String]
-      def inspect
-        %Q(#<#{self.class} upper_z="#{upper_z.to_s}" lower_z="#{lower_z.to_s}">)
       end
 
       # @return [String] AIXM or OFMX markup

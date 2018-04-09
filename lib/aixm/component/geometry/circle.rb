@@ -24,6 +24,11 @@ module AIXM
           self.center_xy, self.radius = center_xy, radius
         end
 
+        # @return [String]
+        def inspect
+          %Q(#<#{self.class} xy="#{xy.to_s}">)
+        end
+
         def center_xy=(value)
           fail(ArgumentError, "invalid center xy") unless value.is_a? AIXM::XY
           @center_xy = value
@@ -32,11 +37,6 @@ module AIXM
         def radius=(value)
           fail(ArgumentError, "invalid radius") unless value.is_a?(Numeric) && value > 0
           @radius = value.to_f
-        end
-
-        # @return [String]
-        def inspect
-          %Q(#<#{self.class} xy="#{xy.to_s}">)
         end
 
         # @return [String] AIXM or OFMX markup

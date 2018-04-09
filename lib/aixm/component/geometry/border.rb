@@ -23,14 +23,14 @@ module AIXM
           self.name = name
         end
 
-        def name=(value)
-          fail(ArgumentError, "invalid name") unless value.is_a? String
-          @name = value
-        end
-
         # @return [String]
         def inspect
           %Q(#<#{self.class} xy="#{xy.to_s}">)
+        end
+
+        def name=(value)
+          fail(ArgumentError, "invalid name") unless value.is_a? String
+          @name = value
         end
 
         # @return [String] AIXM or OFMX markup

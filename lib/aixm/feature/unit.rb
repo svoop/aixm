@@ -63,6 +63,11 @@ module AIXM
         self.class = binding.local_variable_get(:class)
       end
 
+      # @return [String]
+      def inspect
+        %Q(#<#{self.class} name=#{name.inspect} type=#{type.inspect}>)
+      end
+
       def organisation=(value)
         fail(ArgumentError, "invalid organisation") unless value.is_a? AIXM::Feature::Organisation
         @organisation = value
@@ -94,11 +99,6 @@ module AIXM
 
       def remarks=(value)
         @remarks = value&.to_s
-      end
-
-      # @return [String]
-      def inspect
-        %Q(#<#{self.class} name=#{name.inspect} type=#{type.inspect}>)
       end
 
       # @return [String] UID markup
