@@ -401,7 +401,7 @@ describe AIXM::Feature::Airport::UsageLimitation::Condition do
     end
 
     it "accepts valid values" do
-      subject.tap { |s| s.realm = :civil }.realm.must_equal :civil
+      subject.tap { |s| s.realm = :civilian }.realm.must_equal :civilian
       subject.tap { |s| s.realm = :MIL }.realm.must_equal :military
     end
   end

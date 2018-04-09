@@ -385,7 +385,7 @@ module AIXM
           }.freeze
 
           REALMS = {
-            CIVIL: :civil,
+            CIVIL: :civilian,
             MIL: :military,
             OTHER: :other     # specify in remarks
           }.freeze
