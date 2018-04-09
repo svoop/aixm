@@ -22,7 +22,7 @@ module AIXM
       # @return [AIXM::Z] elevation in +:qnh+
       attr_reader :z
 
-      # @return [AIXM::Component::Schedule] operating hours
+      # @return [AIXM::Component::Schedule, nil] operating hours
       attr_reader :schedule
 
       # @return [String] free text remarks

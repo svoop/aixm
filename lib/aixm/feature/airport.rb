@@ -73,7 +73,7 @@ module AIXM
       # @return [AIXM::Z] transition altitude in :+qnh+
       attr_reader :transition_z
 
-      # @return [AIXM::Component::Schedule] operating hours
+      # @return [AIXM::Component::Schedule, nil] operating hours
       attr_reader :schedule
 
       # @return [String] free text remarks
@@ -301,7 +301,7 @@ module AIXM
         # @return [Array of AIXM::Feature::Airport::UsageLimitation::Condition] conditions for this limitation to apply
         attr_reader :conditions
 
-        # @return [AIXM::Component::Schedule] limitation application hours
+        # @return [AIXM::Component::Schedule, nil] limitation application hours
         attr_reader :schedule
 
         # @return [String] free text remarks

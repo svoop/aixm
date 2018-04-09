@@ -22,7 +22,7 @@ module AIXM
       # @return [AIXM::Component::VerticalLimits] vertical limits of this layer
       attr_reader :vertical_limits
 
-      # @return [AIXM::Component::Schedule] activation hours
+      # @return [AIXM::Component::Schedule, nil] activation hours
       attr_reader :schedule
 
       # @return [String] free text remarks
