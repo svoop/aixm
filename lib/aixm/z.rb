@@ -69,11 +69,6 @@ module AIXM
       qfe? && @alt == 0
     end
 
-    # @return [Symbol] either +:ASFC+ (above surface) or +:AMSL+ (above mean sea level)
-    def base
-      qfe? ? :ASFC : :AMSL
-    end
-
     # @return [Symbol] unit - either +:FL+ (flight leel) or +:FT+ (feet)
     def unit
       qne? ? :FL : :FT

@@ -63,14 +63,6 @@ describe AIXM::Z do
     end
   end
 
-  describe :base do
-    it "must return the correct base" do
-      AIXM.z(0, :qfe).base.must_equal :ASFC
-      AIXM.z(0, :qnh).base.must_equal :AMSL
-      AIXM.z(0, :qne).base.must_equal :AMSL
-    end
-  end
-
   describe :unit do
     it "must return the correct unit" do
       AIXM.z(0, :qfe).unit.must_equal :FT
