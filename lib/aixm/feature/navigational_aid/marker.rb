@@ -74,7 +74,7 @@ module AIXM
             mkr.codeDatum('WGE')
             if z
               mkr.valElev(z.alt)
-              mkr.uomDistVer(z.unit.to_s)
+              mkr.uomDistVer(z.unit.upcase.to_s)
             end
             mkr << schedule.to_xml(as: :Mtt).indent(2) if schedule
             mkr.txtRmk(remarks) if remarks

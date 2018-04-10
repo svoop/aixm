@@ -24,9 +24,9 @@ module AIXM
       %Q(#<#{self.class} #{to_s}>)
     end
 
-    # @return [String] human readable representation (e.g. "123.35 MHZ")
+    # @return [String] human readable representation (e.g. "123.35 mhz")
     def to_s
-      [freq, unit.upcase].join(' ')
+      [freq, unit].join(' ')
     end
 
     def freq=(value)

@@ -251,12 +251,12 @@ module AIXM
           ahp.codeDatum('WGE')
           if z
             ahp.valElev(z.alt)
-            ahp.uomDistVer(z.unit.to_s)
+            ahp.uomDistVer(z.unit.upcase.to_s)
           end
           ahp.valMagVar(declination) if declination
           if transition_z
             ahp.valTransitionAlt(transition_z.alt)
-            ahp.uomTransitionAlt(transition_z.unit.to_s)
+            ahp.uomTransitionAlt(transition_z.unit.upcase.to_s)
           end
           ahp << schedule.to_xml(as: :Aht).indent(2) if schedule
           ahp.txtRmk(remarks) if remarks

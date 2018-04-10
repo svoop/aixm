@@ -30,7 +30,7 @@ module AIXM
       %Q(#<#{self.class} #{to_s}>)
     end
 
-    # @return [String] human readable representation (e.g. "FL045" or "1350 FT")
+    # @return [String] human readable representation (e.g. "FL045" or "1350 ft QNH")
     def to_s
       qne? ? "FL%03i" % alt : [alt, unit, code.upcase].join(' ')
     end
@@ -69,9 +69,9 @@ module AIXM
       qfe? && @alt == 0
     end
 
-    # @return [Symbol] unit - either +:FL+ (flight leel) or +:FT+ (feet)
+    # @return [Symbol] unit - either +:fl+ (flight level) or +:ft+ (feet)
     def unit
-      qne? ? :FL : :FT
+      qne? ? :fl : :ft
     end
 
   end

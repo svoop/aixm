@@ -76,7 +76,7 @@ module AIXM
             ndb.codeDatum('WGE')
             if z
               ndb.valElev(z.alt)
-              ndb.uomDistVer(z.unit.to_s)
+              ndb.uomDistVer(z.unit.upcase.to_s)
             end
             ndb << schedule.to_xml(as: :Ntt).indent(2) if schedule
             ndb.txtRmk(remarks) if remarks

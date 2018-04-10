@@ -77,7 +77,7 @@ module AIXM
           if z = send(:"#{limit}_z")
             builder.tag!(:"codeDistVer#{TAGS[limit]}", CODES[z.code].to_s)
             builder.tag!(:"valDistVer#{TAGS[limit]}", z.alt.to_s)
-            builder.tag!(:"uomDistVer#{TAGS[limit]}", z.unit.to_s)
+            builder.tag!(:"uomDistVer#{TAGS[limit]}", z.unit.upcase.to_s)
           end
         end.target!
       end

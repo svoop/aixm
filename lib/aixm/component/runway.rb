@@ -258,7 +258,7 @@ module AIXM
             rdn.valMagBrg(magnetic_orientation)
             if z
               rdn.valElevTdz(z.alt)
-              rdn.uomElevTdz(z.unit.to_s)
+              rdn.uomElevTdz(z.unit.upcase.to_s)
             end
             rdn.txtRmk(remarks) if remarks
           end

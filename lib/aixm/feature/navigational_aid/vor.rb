@@ -114,7 +114,7 @@ module AIXM
             vor.codeDatum('WGE')
             if z
               vor.valElev(z.alt)
-              vor.uomDistVer(z.unit.to_s)
+              vor.uomDistVer(z.unit.upcase.to_s)
             end
             vor << schedule.to_xml(as: :Vtt).indent(2) if schedule
             vor.txtRmk(remarks) if remarks

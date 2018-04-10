@@ -117,13 +117,13 @@ module AIXM
         builder.Fqy do |fqy|
           fqy << to_uid.indent(2)
           fqy.valFreqRec(reception_f.freq) if reception_f
-          fqy.uomFreq(transmission_f.unit.to_s.upcase)
+          fqy.uomFreq(transmission_f.unit.upcase.to_s)
           fqy << schedule.to_xml(as: :Ftt).indent(2) if schedule
           fqy.txtRmk(remarks) if remarks
           callsigns.each do |language, callsign|
             fqy.Cdl do |cdl|
               cdl.txtCallSign(callsign)
-              cdl.codeLang(language.to_s.upcase)
+              cdl.codeLang(language.upcase.to_s)
             end
           end
           fqy.target!

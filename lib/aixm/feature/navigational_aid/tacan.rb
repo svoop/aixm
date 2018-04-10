@@ -48,7 +48,7 @@ module AIXM
             tcn.codeDatum('WGE')
             if z
               tcn.valElev(z.alt)
-              tcn.uomDistVer(z.unit.to_s)
+              tcn.uomDistVer(z.unit.upcase.to_s)
             end
             tcn << schedule.to_xml(as: :Ttt).indent(2) if schedule
             tcn.txtRmk(remarks) if remarks

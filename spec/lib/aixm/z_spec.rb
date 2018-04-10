@@ -65,9 +65,9 @@ describe AIXM::Z do
 
   describe :unit do
     it "must return the correct unit" do
-      AIXM.z(0, :qfe).unit.must_equal :FT
-      AIXM.z(0, :qnh).unit.must_equal :FT
-      AIXM.z(0, :qne).unit.must_equal :FL
+      AIXM.z(0, :qfe).unit.must_equal :ft
+      AIXM.z(0, :qnh).unit.must_equal :ft
+      AIXM.z(0, :qne).unit.must_equal :fl
     end
   end
 end

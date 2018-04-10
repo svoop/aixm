@@ -139,7 +139,7 @@ module AIXM
           tla.codeDatum('WGE')
           if z
             tla.valElev(z.alt)
-            tla.uomDistVer(z.unit.to_s)
+            tla.uomDistVer(z.unit.upcase.to_s)
           end
           tla.valLen(length) if length
           tla.valWid(width) if width
