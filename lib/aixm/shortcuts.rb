@@ -7,6 +7,8 @@ module AIXM
     f: F,
     organisation: Feature::Organisation,
     unit: Feature::Unit,
+    service: Component::Service,
+    frequency: Component::Frequency,
     airport: Feature::Airport,
     runway: Component::Runway,
     helipad: Component::Helipad,

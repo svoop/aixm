@@ -267,6 +267,30 @@ module AIXM
         ).tap do |unit|
           unit.airport = airport
           unit.remarks = 'A/A FR only'
+          unit.add_service(service)
+        end
+      end
+
+      def service
+        AIXM.service(
+          name: "PUJAUT TOWER",
+          type: :approach_control_service
+        ).tap do |service|
+          service.schedule = AIXM::H24
+          service.remarks = "service remarks"
+          service.add_frequency(frequency)
+        end
+      end
+
+      def frequency
+        AIXM.frequency(
+          transmission_f: AIXM.f(123.35, :mhz),
+          callsigns: { en: "PUJAUT CONTROL", fr: "PUJAUT CONTROLE" }
+        ).tap do |frequency|
+          frequency.type = :standard
+          frequency.reception_f = AIXM.f(124.1, :mhz)
+          frequency.schedule = AIXM::H24
+          frequency.remarks = "frequency remarks"
         end
       end
 

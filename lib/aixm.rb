@@ -17,6 +17,8 @@ require_relative 'aixm/z'
 require_relative 'aixm/f'
 
 require_relative 'aixm/component'
+require_relative 'aixm/component/service'
+require_relative 'aixm/component/frequency'
 require_relative 'aixm/component/geometry'
 require_relative 'aixm/component/geometry/point'
 require_relative 'aixm/component/geometry/arc'

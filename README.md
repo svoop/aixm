@@ -79,6 +79,7 @@ AIXM.schema(:version)   # => 0
 
 ### Features
 * [Organisation](http://www.rubydoc.info/gems/aixm/AIXM/Feature/Organisation.html)
+* [Unit](http://www.rubydoc.info/gems/aixm/AIXM/Feature/Unit.html)
 * [Airport](http://www.rubydoc.info/gems/aixm/AIXM/Feature/Airport.html)
 * [Airspace](http://www.rubydoc.info/gems/aixm/AIXM/Feature/Airspace.html)
 * [Navigational aid](http://www.rubydoc.info/gems/aixm/AIXM/NavigationalAid.html)
@@ -90,6 +91,8 @@ AIXM.schema(:version)   # => 0
   * [VOR](http://www.rubydoc.info/gems/aixm/AIXM/Feature/VOR.html)
 
 ### Components
+* [Service](http://www.rubydoc.info/gems/aixm/AIXM/Component/Service.html)
+* [Frequency](http://www.rubydoc.info/gems/aixm/AIXM/Component/Frequency.html)
 * [Geometry](http://www.rubydoc.info/gems/aixm/AIXM/Component/Geometry.html)
   * [Point](http://www.rubydoc.info/gems/aixm/AIXM/Component/Point.html)
   * [Arc](http://www.rubydoc.info/gems/aixm/AIXM/Component/Arc.html)

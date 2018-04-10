@@ -17,6 +17,7 @@ module AIXM
     #   )
     #   unit.airport = AIXM.airport
     #   unit.remarks = String or nil
+    #   unit.add_service(AIXM.service)
     #
     # @see https://github.com/openflightmaps/ofmx/wiki/Organisation#uni-unit
     class Unit < Feature
@@ -61,6 +62,7 @@ module AIXM
         super(source: source, region: region)
         self.organisation, self.name, self.type = organisation, name, type
         self.class = binding.local_variable_get(:class)
+        @services = []
       end
 
       # @return [String]
@@ -101,6 +103,23 @@ module AIXM
         @remarks = value&.to_s
       end
 
+      # Add a service provided by this unit.
+      #
+      # @param service [AIXM::Component::Service] service instance
+      # @return [self]
+      def add_service(service)
+        fail(ArgumentError, "invalid service") unless service.is_a? AIXM::Component::Service
+        service.send(:unit=, self)
+        @services << service
+        self
+      end
+
+      # @!attribute [r] services
+      # @return [Array<AIXM::Component::Service>] services provided by this unit
+      def services
+        @services.sort { |a, b| [a.type, a.name] <=> [b.type, b.name] }
+      end
+
       # @return [String] UID markup
       def to_uid
         builder = Builder::XmlMarkup.new(indent: 2)
@@ -120,6 +139,11 @@ module AIXM
           uni.codeClass(CLASSES.key(self.class).to_s)
           uni.txtRmk(remarks) if remarks
         end
+        services.each.with_object({}) do |service, sequences|
+          sequences[service.type] = (sequences[service.type] || 0) + 1
+          builder << service.to_xml(sequences[service.type])
+        end
+        builder.target!
       end
     end
 
