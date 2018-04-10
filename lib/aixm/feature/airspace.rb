@@ -62,7 +62,7 @@ module AIXM
         'NO-FIR': :airspace_outside_any_flight_information_region,
         POLITICAL: :political_area,
         PART: :part_of_airspace
-      }
+      }.freeze
 
       # @note When assigning +nil+, a 4 byte hex derived from +#type+, +#name+ and +#short_name+ is written instead.
       # @return [String] published identifier (e.g. "LFP81")

@@ -30,7 +30,7 @@ module AIXM
         HA: :handling_authority,
         A: :national_authority,
         OTHER: :other                          # specify in remarks
-      }
+      }.freeze
 
       # @return [String] name of organisation (e.g. "FRANCE")
       attr_reader :name

@@ -15,7 +15,7 @@ module AIXM
   #
   # @see https://github.com/openflightmaps/ofmx/wiki/Snapshot
   class Document
-    NAMESPACE_PATTERN = /\A[a-f\d]{8}-[a-f\d]{4}-[a-f\d]{4}-[a-f\d]{4}-[a-f\d]{12}\z/
+    NAMESPACE_PATTERN = /\A[a-f\d]{8}-[a-f\d]{4}-[a-f\d]{4}-[a-f\d]{4}-[a-f\d]{12}\z/.freeze
 
     # @return [String] UUID to namespace the data contained in this document
     attr_reader :namespace

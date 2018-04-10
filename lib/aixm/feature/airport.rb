@@ -37,7 +37,7 @@ module AIXM
         HP: :heliport,
         AH: :aerodrome_and_heliport,
         LS: :landing_site
-      }
+      }.freeze
 
       # @return [AIXM::Feature::Organisation] superior organisation
       attr_reader :organisation

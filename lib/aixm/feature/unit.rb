@@ -35,12 +35,12 @@ module AIXM
         RAD: :radar_office,
         TWR: :aerodrome_control_tower,
         OTHER: :other                       # specify in remarks
-      }
+      }.freeze
 
       CLASSES = {
         ICAO: :icao,
         OTHER: :other   # specify in remarks
-      }
+      }.freeze
 
       # @return [AIXM::Feature::Organisation] superior organisation
       attr_reader :organisation

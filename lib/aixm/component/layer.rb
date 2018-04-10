@@ -17,7 +17,7 @@ module AIXM
     #
     # @see https://github.com/openflightmaps/ofmx/wiki/Airspace
     class Layer
-      CLASSES = (:A..:G)
+      CLASSES = (:A..:G).freeze
 
       # @return [AIXM::Component::VerticalLimits] vertical limits of this layer
       attr_reader :vertical_limits

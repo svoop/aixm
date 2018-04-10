@@ -30,7 +30,7 @@ module AIXM
         GRASS: :grass,          # lawn
         WATER: :water,
         OTHER: :other           # specify in remarks
-      }
+      }.freeze
 
       STATUSES = {
         CLSD: :closed,
@@ -39,7 +39,7 @@ module AIXM
         FAILAID: :visual_aids_failure,   # failure or irregular operation of visual aids
         SPOWER: :secondary_power,        # secondary power supply in operation
         OTHER: :other                    # specify in remarks
-      }
+      }.freeze
 
       # @return [AIXM::Feature::Airport] airport this helipad belongs to
       attr_reader :airport
