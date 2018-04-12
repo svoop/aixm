@@ -29,8 +29,8 @@ describe AIXM::Component::Layer do
       end
     end
 
-    describe :schedule= do
-      macro :schedule
+    describe :timetable= do
+      macro :timetable
     end
 
     describe :selective= do

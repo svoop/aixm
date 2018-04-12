@@ -50,7 +50,7 @@ describe AIXM::Feature::NavigationalAid::TACAN do
 
     it "builds correct minimal OFMX" do
       AIXM.ofmx!
-      subject.name = subject.z = subject.schedule = subject.remarks = nil
+      subject.name = subject.z = subject.timetable = subject.remarks = nil
       subject.to_xml.must_equal <<~END
         <!-- NavigationalAid: [TACAN] UNNAMED -->
         <Tcn source="LF|GEN|0.0 FACTORY|0|0">

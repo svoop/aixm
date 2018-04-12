@@ -19,7 +19,7 @@ module AIXM
       #     z: AIXM.z or nil
       #     channel: String
       #   )
-      # tacan.schedule = AIXM.schedule or nil
+      # tacan.timetable = AIXM.timetable or nil
       # tacan.remarks = String or nil
       #
       # @see https://github.com/openflightmaps/ofmx/wiki/Navigational-aid#tcn-tacan
@@ -50,7 +50,7 @@ module AIXM
               tcn.valElev(z.alt)
               tcn.uomDistVer(z.unit.upcase.to_s)
             end
-            tcn << schedule.to_xml(as: :Ttt).indent(2) if schedule
+            tcn << timetable.to_xml(as: :Ttt).indent(2) if timetable
             tcn.txtRmk(remarks) if remarks
             tcn.target!
           end

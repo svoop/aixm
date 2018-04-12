@@ -19,7 +19,7 @@ module AIXM
       #     type: TYPES
       #     f: AIXM.f
       #   )
-      #   ndb.schedule = AIXM.schedule or nil
+      #   ndb.timetable = AIXM.timetable or nil
       #   ndb.remarks = String or nil
       #
       # @see https://github.com/openflightmaps/ofmx/wiki/Navigational-aid#ndb-ndb
@@ -78,7 +78,7 @@ module AIXM
               ndb.valElev(z.alt)
               ndb.uomDistVer(z.unit.upcase.to_s)
             end
-            ndb << schedule.to_xml(as: :Ntt).indent(2) if schedule
+            ndb << timetable.to_xml(as: :Ntt).indent(2) if timetable
             ndb.txtRmk(remarks) if remarks
             ndb.target!
           end

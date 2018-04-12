@@ -18,11 +18,11 @@ module AIXM
 
       # Components
 
-      def schedule
-        AIXM.schedule(
+      def timetable
+        AIXM.timetable(
           code: :sunrise_to_sunset
-        ).tap do |schedule|
-          schedule.remarks =  "schedule remarks"
+        ).tap do |timetable|
+          timetable.remarks =  "timetable remarks"
         end
       end
 
@@ -40,7 +40,7 @@ module AIXM
           class: :C,
           vertical_limits: vertical_limits
         ).tap do |layer|
-          layer.schedule = AIXM::H24
+          layer.timetable = AIXM::H24
           layer.selective = true
           layer.remarks = 'airspace layer'
         end
@@ -114,7 +114,7 @@ module AIXM
           z: AIXM.z(500, :qnh),
           type: :ICAO
         ).tap do |designated_point|
-          designated_point.schedule = AIXM::H24
+          designated_point.timetable = AIXM::H24
           designated_point.remarks = 'designated point navaid'
         end
       end
@@ -130,7 +130,7 @@ module AIXM
           z: AIXM.z(500, :qnh),
           channel: '95X'
         ).tap do |dme|
-          dme.schedule = AIXM::H24
+          dme.timetable = AIXM::H24
           dme.remarks = 'dme navaid'
         end
       end
@@ -146,7 +146,7 @@ module AIXM
           z: AIXM.z(500, :qnh),
           type: :outer
         ).tap do |marker|
-          marker.schedule = AIXM::H24
+          marker.timetable = AIXM::H24
           marker.remarks = 'marker navaid'
         end
       end
@@ -163,7 +163,7 @@ module AIXM
           type: :en_route,
           f: AIXM.f(555, :khz)
         ).tap do |ndb|
-          ndb.schedule = AIXM::H24
+          ndb.timetable = AIXM::H24
           ndb.remarks = 'ndb navaid'
         end
       end
@@ -179,7 +179,7 @@ module AIXM
           z: AIXM.z(500, :qnh),
           channel: '29X'
         ).tap do |tacan|
-          tacan.schedule = AIXM::H24
+          tacan.timetable = AIXM::H24
           tacan.remarks = 'tacan navaid'
         end
       end
@@ -197,7 +197,7 @@ module AIXM
           f: AIXM.f(111, :mhz),
           north: :geographic
         ).tap do |vor|
-          vor.schedule = AIXM::H24
+          vor.timetable = AIXM::H24
           vor.remarks = 'vor navaid'
         end
       end
@@ -215,7 +215,7 @@ module AIXM
           f: AIXM.f(111, :mhz),
           north: :geographic
         ).tap do |vordme|
-          vordme.schedule = AIXM::H24
+          vordme.timetable = AIXM::H24
           vordme.remarks = 'vor/dme navaid'
           vordme.associate_dme(channel: '95X')
         end
@@ -234,7 +234,7 @@ module AIXM
           f: AIXM.f(111, :mhz),
           north: :geographic
         ).tap do |vortac|
-          vortac.schedule = AIXM::H24
+          vortac.timetable = AIXM::H24
           vortac.remarks = 'vortac navaid'
           vortac.associate_tacan(channel: '29X')
         end
@@ -276,7 +276,7 @@ module AIXM
           name: "PUJAUT TOWER",
           type: :approach_control_service
         ).tap do |service|
-          service.schedule = AIXM::H24
+          service.timetable = AIXM::H24
           service.remarks = "service remarks"
           service.add_frequency(frequency)
         end
@@ -289,7 +289,7 @@ module AIXM
         ).tap do |frequency|
           frequency.type = :standard
           frequency.reception_f = AIXM.f(124.1, :mhz)
-          frequency.schedule = AIXM::H24
+          frequency.timetable = AIXM::H24
           frequency.remarks = "frequency remarks"
         end
       end
@@ -316,7 +316,7 @@ module AIXM
           airport.add_usage_limitation(:reservation_required) do |reservation_required|
             reservation_required.add_condition { |c| c.aircraft = :glider }
             reservation_required.add_condition { |c| c.origin = :international }
-            reservation_required.schedule = AIXM::H24
+            reservation_required.timetable = AIXM::H24
             reservation_required.remarks = "reservation remarks"
           end
         end

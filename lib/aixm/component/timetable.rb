@@ -3,21 +3,21 @@ using AIXM::Refinements
 module AIXM
   class Component
 
-    # Schedules define activity time windows.
+    # Timetables define activity time windows.
     #
-    # @note As of now, only predefined schedules (see {CODES}) are imlemented.
+    # @note As of now, only predefined timetables (see {CODES}) are imlemented.
     #
     # ===Cheat Sheat in Pseudo Code:
-    #   schedule = AIXM.schedule(
+    #   timetable = AIXM.timetable(
     #     code: String or Symbol
     #   )
-    #   schedule.remarks = String or nil
+    #   timetable.remarks = String or nil
     #
     # ===Shortcuts:
     # * +AIXM::H24+ - continuous, all day and all night
     #
     # @see https://github.com/openflightmaps/ofmx/wiki/Timetable#predefined-timetable
-    class Schedule
+    class Timetable
       CODES = {
         H24: :continuous,           # all day and all night
         HJ: :sunrise_to_sunset,     # all day
@@ -28,7 +28,7 @@ module AIXM
         OTHER: :other               # specify in remarks
       }.freeze
 
-      # @return [Symbol] schedule code (see {CODES})
+      # @return [Symbol] predefined timetable code (see {CODES})
       attr_reader :code
 
       # @return [String, nil] free text remarks

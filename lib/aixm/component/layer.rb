@@ -11,7 +11,7 @@ module AIXM
     #     class: String or nil
     #     vertical_limits: AIXM.vertical_limits
     #   )
-    #   layer.schedule = AIXM.schedule or nil
+    #   layer.timetable = AIXM.timetable or nil
     #   layer.selective = true or false (default)
     #   layer.remarks = String or nil
     #
@@ -22,8 +22,8 @@ module AIXM
       # @return [AIXM::Component::VerticalLimits] vertical limits of this layer
       attr_reader :vertical_limits
 
-      # @return [AIXM::Component::Schedule, nil] activation hours
-      attr_reader :schedule
+      # @return [AIXM::Component::Timetable, nil] activation hours
+      attr_reader :timetable
 
       # @return [String, nil] free text remarks
       attr_reader :remarks
@@ -55,9 +55,9 @@ module AIXM
         @vertical_limits = value
       end
 
-      def schedule=(value)
-        fail(ArgumentError, "invalid schedule") unless value.nil? || value.is_a?(AIXM::Component::Schedule)
-        @schedule = value
+      def timetable=(value)
+        fail(ArgumentError, "invalid timetable") unless value.nil? || value.is_a?(AIXM::Component::Timetable)
+        @timetable = value
       end
 
       # @!attribute [w] selective
@@ -80,7 +80,7 @@ module AIXM
         builder = Builder::XmlMarkup.new(indent: 2)
         builder.codeClass(self.class.to_s) if self.class
         builder << vertical_limits.to_xml
-        builder << schedule.to_xml(as: :Att) if schedule
+        builder << timetable.to_xml(as: :Att) if timetable
         builder.codeSelAvbl(selective? ? 'Y' : 'N') if AIXM.ofmx?
         builder.txtRmk(remarks) if remarks
         builder.target!

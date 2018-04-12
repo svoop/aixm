@@ -22,8 +22,8 @@ module AIXM
       # @return [AIXM::Z, nil] elevation in +:qnh+
       attr_reader :z
 
-      # @return [AIXM::Component::Schedule, nil] operating hours
-      attr_reader :schedule
+      # @return [AIXM::Component::Timetable, nil] operating hours
+      attr_reader :timetable
 
       # @return [String, nil] free text remarks
       attr_reader :remarks
@@ -63,9 +63,9 @@ module AIXM
         @z = value
       end
 
-      def schedule=(value)
-        fail(ArgumentError, "invalid schedule") unless value.nil? || value.is_a?(AIXM::Component::Schedule)
-        @schedule = value
+      def timetable=(value)
+        fail(ArgumentError, "invalid timetable") unless value.nil? || value.is_a?(AIXM::Component::Timetable)
+        @timetable = value
       end
 
       def remarks=(value)

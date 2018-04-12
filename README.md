@@ -102,7 +102,7 @@ AIXM.schema(:version)   # => 0
 * [Helipad](http://www.rubydoc.info/gems/aixm/AIXM/Component/Helipad.html)
 * [Layer](http://www.rubydoc.info/gems/aixm/AIXM/Component/Layer.html)
 * [Vertical limits](http://www.rubydoc.info/gems/aixm/AIXM/Component/VerticalLimits.html)
-* [Schedule](http://www.rubydoc.info/gems/aixm/AIXM/Component/Schedule.html)
+* [Timetable](http://www.rubydoc.info/gems/aixm/AIXM/Component/Timetable.html)
 
 ## Refinements
 

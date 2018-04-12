@@ -26,7 +26,7 @@ module AIXM
     tacan: Feature::NavigationalAid::TACAN,
     ndb: Feature::NavigationalAid::NDB,
     vor: Feature::NavigationalAid::VOR,
-    schedule: Component::Schedule
+    timetable: Component::Timetable
   }.freeze
 
   ELEMENTS.each do |element, klass|
@@ -37,6 +37,6 @@ module AIXM
 
   GROUND = z(0, :qfe).freeze
   UNLIMITED = z(999, :qne).freeze
-  H24 = schedule(code: :H24).freeze
+  H24 = timetable(code: :H24).freeze
 
 end

@@ -67,7 +67,7 @@ describe AIXM::Feature::NavigationalAid::NDB do
 
     it "builds correct minimal OFMX" do
       AIXM.ofmx!
-      subject.name = subject.type = subject.z = subject.schedule = subject.remarks = nil
+      subject.name = subject.type = subject.z = subject.timetable = subject.remarks = nil
       subject.to_xml.must_equal <<~END
         <!-- NavigationalAid: [NDB] UNNAMED -->
         <Ndb source="LF|GEN|0.0 FACTORY|0|0">

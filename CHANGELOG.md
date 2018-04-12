@@ -1,14 +1,15 @@
 ## 0.3.0
 
 * Breaking additions:
-  * Global configuration with AIXM.config
+  * Global configuration with `AIXM.config`
 * Breaking changes:
   * Switch from "AIXM with OFM extensions" to OFMX
   * `to_aixm` renamed to `to_xml` again
   * Removed signature `to_xml(extension)` in favor of `AIXM.schema`
   * Removed `Array#to_digest`
   * Removed `Document#complete?`
-  * Schedule and remarks moved from Airspace to to Layer (formerly known as
+  * Renamed Schedule to Timetable
+  * Timetable and remarks moved from Airspace to to Layer (formerly known as
     class layer)
 * Additions
   * Organization and Unit features

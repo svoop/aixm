@@ -17,7 +17,7 @@ module AIXM
     #   )
     #   frequency.reception_f = AIXM.f or nil
     #   frequency.type = TYPES or nil
-    #   frequency.schedule = AIXM.schedule or nil
+    #   frequency.timetable = AIXM.timetable or nil
     #   frequency.remarks = String or nil
     #
     # @see https://github.com/openflightmaps/ofmx/wiki/Organisation#fqy-frequency
@@ -52,8 +52,8 @@ module AIXM
       # @return [Symbol, nil] type of frequency (see {TYPES})
       attr_reader :type
 
-      # @return [AIXM::Component::Schedule, nil] operating hours
-      attr_reader :schedule
+      # @return [AIXM::Component::Timetable, nil] operating hours
+      attr_reader :timetable
 
       # @return [String, nil] free text remarks
       attr_reader :remarks
@@ -93,9 +93,9 @@ module AIXM
         @type = value.nil? ? nil : TYPES.lookup(value.to_s.to_sym, nil) || fail(ArgumentError, "invalid type")
       end
 
-      def schedule=(value)
-        fail(ArgumentError, "invalid schedule") unless value.nil? || value.is_a?(AIXM::Component::Schedule)
-        @schedule = value
+      def timetable=(value)
+        fail(ArgumentError, "invalid timetable") unless value.nil? || value.is_a?(AIXM::Component::Timetable)
+        @timetable = value
       end
 
       def remarks=(value)
@@ -118,7 +118,7 @@ module AIXM
           fqy << to_uid.indent(2)
           fqy.valFreqRec(reception_f.freq) if reception_f
           fqy.uomFreq(transmission_f.unit.upcase.to_s)
-          fqy << schedule.to_xml(as: :Ftt).indent(2) if schedule
+          fqy << timetable.to_xml(as: :Ftt).indent(2) if timetable
           fqy.txtRmk(remarks) if remarks
           callsigns.each do |language, callsign|
             fqy.Cdl do |cdl|

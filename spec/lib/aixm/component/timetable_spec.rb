@@ -1,8 +1,8 @@
 require_relative '../../../spec_helper'
 
-describe AIXM::Component::Schedule do
+describe AIXM::Component::Timetable do
   subject do
-    AIXM::Factory.schedule
+    AIXM::Factory.timetable
   end
 
   describe :code= do
@@ -26,7 +26,7 @@ describe AIXM::Component::Schedule do
       subject.to_xml.must_equal <<~END
         <Timetable>
           <codeWorkHr>HJ</codeWorkHr>
-          <txtRmkWorkHr>schedule remarks</txtRmkWorkHr>
+          <txtRmkWorkHr>timetable remarks</txtRmkWorkHr>
         </Timetable>
       END
     end

@@ -21,7 +21,7 @@ module AIXM
       #     f: AIXM.f
       #     north: NORTHS
       #   )
-      #   vor.schedule = AIXM.schedule or nil
+      #   vor.timetable = AIXM.timetable or nil
       #   vor.remarks = String or nil
       #   vor.associate_dme(channel: String)     # turns the VOR into a VOR/DME
       #   vor.associate_tacan(channel: String)   # turns the VOR into a VORTAC
@@ -79,14 +79,14 @@ module AIXM
         # Associate a DME which turns the VOR into a VOR/DME
         def associate_dme(channel:)
           @dme = AIXM.dme(organisation: organisation, id: id, name: name, xy: xy, z: z, channel: channel)
-          @dme.region, @dme.schedule, @dme.remarks = region, schedule, remarks
+          @dme.region, @dme.timetable, @dme.remarks = region, timetable, remarks
           @dme.send(:vor=, self)
         end
 
         # Associate a TACAN which turns the VOR into a VORTAC
         def associate_tacan(channel:)
           @tacan = AIXM.tacan(organisation: organisation, id: id, name: name, xy: xy, z: z, channel: channel)
-          @tacan.region, @tacan.schedule, @tacan.remarks = region, schedule, remarks
+          @tacan.region, @tacan.timetable, @tacan.remarks = region, timetable, remarks
           @tacan.send(:vor=, self)
         end
 
@@ -116,7 +116,7 @@ module AIXM
               vor.valElev(z.alt)
               vor.uomDistVer(z.unit.upcase.to_s)
             end
-            vor << schedule.to_xml(as: :Vtt).indent(2) if schedule
+            vor << timetable.to_xml(as: :Vtt).indent(2) if timetable
             vor.txtRmk(remarks) if remarks
           end
           builder << @dme.to_xml if @dme

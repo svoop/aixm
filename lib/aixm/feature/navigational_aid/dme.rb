@@ -20,7 +20,7 @@ module AIXM
       #     z: AIXM.z or nil
       #     channel: String
       #   )
-      #   dme.schedule = AIXM.schedule or nil
+      #   dme.timetable = AIXM.timetable or nil
       #   dme.remarks = String or nil
       #
       # @see https://github.com/openflightmaps/ofmx/wiki/Navigational-aid#dme-dme
@@ -73,7 +73,7 @@ module AIXM
               dme.valElev(z.alt)
               dme.uomDistVer(z.unit.upcase.to_s)
             end
-            dme << schedule.to_xml(as: :Dtt).indent(2) if schedule
+            dme << timetable.to_xml(as: :Dtt).indent(2) if timetable
             dme.txtRmk(remarks) if remarks
             dme.target!
           end

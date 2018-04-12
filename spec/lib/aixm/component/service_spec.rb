@@ -38,8 +38,8 @@ describe AIXM::Component::Service do
     end
   end
 
-  describe :schedule= do
-    macro :schedule
+  describe :timetable= do
+    macro :timetable
   end
 
   describe :remarks= do

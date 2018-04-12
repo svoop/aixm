@@ -19,7 +19,7 @@ module AIXM
       #     z: AIXM.z or nil
       #     type: :outer or :middle or :inner or :backcourse
       #   )
-      #   marker.schedule = AIXM.schedule or nil
+      #   marker.timetable = AIXM.timetable or nil
       #   marker.remarks = String or nil
       #
       # @note Marker are not fully implemented because they usually have to be
@@ -76,7 +76,7 @@ module AIXM
               mkr.valElev(z.alt)
               mkr.uomDistVer(z.unit.upcase.to_s)
             end
-            mkr << schedule.to_xml(as: :Mtt).indent(2) if schedule
+            mkr << timetable.to_xml(as: :Mtt).indent(2) if timetable
             mkr.txtRmk(remarks) if remarks
             mkr.target!
           end

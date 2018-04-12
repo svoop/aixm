@@ -64,8 +64,8 @@ describe AIXM::Component::Frequency do
     end
   end
 
-  describe :schedule= do
-    macro :schedule
+  describe :timetable= do
+    macro :timetable
   end
 
   describe :remarks= do

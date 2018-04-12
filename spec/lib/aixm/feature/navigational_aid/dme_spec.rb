@@ -54,7 +54,7 @@ describe AIXM::Feature::NavigationalAid::DME do
 
     it "builds correct minimal OFMX" do
       AIXM.ofmx!
-      subject.name = subject.z = subject.schedule = subject.remarks = nil
+      subject.name = subject.z = subject.timetable = subject.remarks = nil
       subject.to_xml.must_equal <<~END
         <!-- NavigationalAid: [DME] UNNAMED -->
         <Dme source="LF|GEN|0.0 FACTORY|0|0">

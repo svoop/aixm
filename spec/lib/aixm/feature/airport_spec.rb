@@ -119,8 +119,8 @@ describe AIXM::Feature::Airport do
     end
   end
 
-  describe :schedule= do
-    macro :schedule
+  describe :timetable= do
+    macro :timetable
   end
 
   describe :remarks= do
@@ -386,8 +386,8 @@ describe AIXM::Feature::Airport::UsageLimitation do
     end
   end
 
-  describe :schedule= do
-    macro :schedule
+  describe :timetable= do
+    macro :timetable
   end
 
   describe :remarks= do

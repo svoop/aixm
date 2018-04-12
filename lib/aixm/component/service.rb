@@ -10,7 +10,7 @@ module AIXM
     #     name: String
     #     type: TYPES
     #   )
-    #   service.schedule = AIXM.schedule or nil
+    #   service.timetable = AIXM.timetable or nil
     #   service.remarks = String or nil
     #   service.add_frequency(AIXM.frequency)
     #
@@ -86,8 +86,8 @@ module AIXM
       # @return [Symbol] type of service (see {TYPES})
       attr_reader :type
 
-      # @return [AIXM::Component::Schedule, nil] operating hours
-      attr_reader :schedule
+      # @return [AIXM::Component::Timetable, nil] operating hours
+      attr_reader :timetable
 
       # @return [String, nil] free text remarks
       attr_reader :remarks
@@ -120,9 +120,9 @@ module AIXM
         @type = TYPES.lookup(value&.to_s&.to_sym, nil) || fail(ArgumentError, "invalid type")
       end
 
-      def schedule=(value)
-        fail(ArgumentError, "invalid schedule") unless value.nil? || value.is_a?(AIXM::Component::Schedule)
-        @schedule = value
+      def timetable=(value)
+        fail(ArgumentError, "invalid timetable") unless value.nil? || value.is_a?(AIXM::Component::Timetable)
+        @timetable = value
       end
 
       def remarks=(value)
@@ -156,7 +156,7 @@ module AIXM
         builder = Builder::XmlMarkup.new(indent: 2)
         builder.Ser do |ser|
           ser << to_uid.indent(2)
-          ser << schedule.to_xml(as: :Stt).indent(2) if schedule
+          ser << timetable.to_xml(as: :Stt).indent(2) if timetable
           ser.txtRmk(remarks) if remarks
         end
         frequencies.each do |frequency|

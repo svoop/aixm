@@ -20,7 +20,7 @@ module AIXM
     #   airport.z = AIXM.z or nil
     #   airport.declination = Float or nil
     #   airport.transition_z = AIXM.z or nil
-    #   airport.schedule = AIXM.schedule or nil
+    #   airport.timetable = AIXM.timetable or nil
     #   airport.remarks = String or nil
     #   airport.add_runway(AIXM.runway)
     #   airport.add_helipad(AIXM.helipad)
@@ -74,8 +74,8 @@ module AIXM
       # @return [AIXM::Z, nil] transition altitude in +:qnh+
       attr_reader :transition_z
 
-      # @return [AIXM::Component::Schedule, nil] operating hours
-      attr_reader :schedule
+      # @return [AIXM::Component::Timetable, nil] operating hours
+      attr_reader :timetable
 
       # @return [String, nil] free text remarks
       attr_reader :remarks
@@ -161,9 +161,9 @@ module AIXM
         @transition_z = value
       end
 
-      def schedule=(value)
-        fail(ArgumentError, "invalid schedule") unless value.nil? || value.is_a?(AIXM::Component::Schedule)
-        @schedule = value
+      def timetable=(value)
+        fail(ArgumentError, "invalid timetable") unless value.nil? || value.is_a?(AIXM::Component::Timetable)
+        @timetable = value
       end
 
       def remarks=(value)
@@ -214,7 +214,7 @@ module AIXM
       #       condition.rule = :ifr
       #       condition.origin = :international
       #     end
-      #     reservation_required.schedule = AIXM::H24
+      #     reservation_required.timetable = AIXM::H24
       #     reservation_required.remarks = "Reservation 24 HRS prior to arrival"
       #   end
       #
@@ -259,7 +259,7 @@ module AIXM
             ahp.valTransitionAlt(transition_z.alt)
             ahp.uomTransitionAlt(transition_z.unit.upcase.to_s)
           end
-          ahp << schedule.to_xml(as: :Aht).indent(2) if schedule
+          ahp << timetable.to_xml(as: :Aht).indent(2) if timetable
           ahp.txtRmk(remarks) if remarks
         end
         runways.each do |runway|
@@ -303,8 +303,8 @@ module AIXM
         # @return [Array<AIXM::Feature::Airport::UsageLimitation::Condition>] conditions for this limitation to apply
         attr_reader :conditions
 
-        # @return [AIXM::Component::Schedule, nil] limitation application hours
-        attr_reader :schedule
+        # @return [AIXM::Component::Timetable, nil] limitation application hours
+        attr_reader :timetable
 
         # @return [String, nil] free text remarks
         attr_reader :remarks
@@ -334,9 +334,9 @@ module AIXM
           self
         end
 
-        def schedule=(value)
-          fail(ArgumentError, "invalid schedule") unless value.nil? || value.is_a?(AIXM::Component::Schedule)
-          @schedule = value
+        def timetable=(value)
+          fail(ArgumentError, "invalid timetable") unless value.nil? || value.is_a?(AIXM::Component::Timetable)
+          @timetable = value
         end
 
         def remarks=(value)
@@ -351,7 +351,7 @@ module AIXM
             conditions.each do |condition|
               usage_limitation << condition.to_xml.indent(2)
             end
-            usage_limitation << schedule.to_xml(as: :Timetable).indent(2) if schedule
+            usage_limitation << timetable.to_xml(as: :Timetable).indent(2) if timetable
             usage_limitation.txtRmk(remarks) if remarks
           end
         end
