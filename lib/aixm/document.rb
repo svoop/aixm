@@ -20,10 +20,10 @@ module AIXM
     # @return [String] UUID to namespace the data contained in this document
     attr_reader :namespace
 
-    # @return [Time] creation date and time (default: +effective_at+ or now)
+    # @return [Time] creation date and time (default: {#effective_at} or now)
     attr_reader :created_at
 
-    # @return [Time] effective after date and time (default: +created_at+ or now)
+    # @return [Time] effective after date and time (default: {#created_at} or now)
     attr_reader :effective_at
 
     # @return [Array<AIXM::Feature>] airspaces, airports and other features

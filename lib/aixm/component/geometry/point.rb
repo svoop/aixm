@@ -4,7 +4,7 @@ module AIXM
   class Component
     class Geometry
 
-      # Points are defined by +xy+ coordinates.
+      # Points are defined by {#xy} coordinates.
       #
       # ===Cheat Sheet in Pseudo Code:
       #   point = AIXM.point(

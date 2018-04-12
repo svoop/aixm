@@ -6,9 +6,9 @@ module AIXM
     # Vertical limits define a 3D airspace vertically. They are often noted in
     # AIP as follows:
     #
-    #   +upper z+ (or +max_z+ whichever is higher)
-    #   ---------
-    #   +lower_z+ (or +min_z+ whichever is lower)
+    #   upper_z (or max_z whichever is higher)
+    #   -------
+    #   lower_z (or min_z whichever is lower)
     #
     # ===Cheat Sheet in Pseudo Code:
     #   vertical_limits = AIXM.vertical_limits(

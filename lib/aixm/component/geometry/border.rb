@@ -5,7 +5,7 @@ module AIXM
     class Geometry
 
       # Borders are following natural or artifical border lines referenced by
-      # +name+ and starting at +xy+.
+      # {#name} and starting at {#xy}.
       #
       # ===Cheat Sheet in Pseudo Code:
       #   border = AIXM.border(

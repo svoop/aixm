@@ -4,7 +4,7 @@ module AIXM
   class Component
     class Geometry
 
-      # Circles are defined by a +center_xy+ and a +radius+ in kilometers.
+      # Circles are defined by a {#center_xy} and a {#radius} in kilometers.
       #
       # ===Cheat Sheet in Pseudo Code:
       #   circle = AIXM.circle(

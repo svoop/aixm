@@ -5,7 +5,7 @@ module AIXM
     class Geometry
 
       # Arcs are clockwise or counter clockwise circle segments around a
-      # +center_xy+ and starting at +xy+.
+      # {#center_xy} and starting at {#xy}.
       #
       # ===Cheat Sheet in Pseudo Code:
       #   arc = AIXM.arc(

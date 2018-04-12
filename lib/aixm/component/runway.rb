@@ -168,7 +168,7 @@ module AIXM
         builder.target!
       end
 
-      # Runway directions further describe each direction +forth+ and +back+
+      # Runway directions further describe each direction {#forth} and {#back}
       # of a runway.
       #
       # @see https://github.com/openflightmaps/ofmx/wiki/Airport#rdn-runway-direction

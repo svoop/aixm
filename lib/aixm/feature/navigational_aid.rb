@@ -72,7 +72,7 @@ module AIXM
         @remarks = value&.to_s
       end
 
-      # @return [String] fully descriptive combination of +class+ and +type_key+
+      # @return [String] fully descriptive combination of {#class} and {#type} key
       def kind
         [self.class.name.split('::').last, type_key].compact.join(':')
       end

@@ -36,8 +36,8 @@ module AIXM
     end
 
     # @!method lookup(key_or_value, fallback=omitted=true)
-    #   Fetch a value from the hash, but unlike +fetch+, if +key_or_value+ is
-    #   no hash key, check whether +key_or_value+ is a hash value and if so
+    #   Fetch a value from the hash, but unlike +Hash#fetch+, if +key_or_value+
+    #   is no hash key, check whether +key_or_value+ is a hash value and if so
     #   return it.
     #
     #   @example

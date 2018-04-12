@@ -64,7 +64,8 @@ module AIXM
         PART: :part_of_airspace
       }.freeze
 
-      # @note When assigning +nil+, a 4 byte hex derived from +#type+, +#name+ and +#short_name+ is written instead.
+      # @note When assigning +nil+, a 4 byte hex derived from {#type}, {#name}
+      #   and {#short_name} is written instead.
       # @return [String] published identifier (e.g. "LFP81")
       attr_reader :id
 
