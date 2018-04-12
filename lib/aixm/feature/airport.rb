@@ -15,11 +15,11 @@ module AIXM
     #     name: String
     #     xy: AIXM.xy
     #   )
-    #   airport.gps = String
+    #   airport.gps = String or nil
     #   airport.type = TYPES
-    #   airport.z = AIXM.z
-    #   airport.declination = Float
-    #   airport.transition_z = AIXM.z
+    #   airport.z = AIXM.z or nil
+    #   airport.declination = Float or nil
+    #   airport.transition_z = AIXM.z or nil
     #   airport.schedule = AIXM.schedule or nil
     #   airport.remarks = String or nil
     #   airport.add_runway(AIXM.runway)
@@ -57,10 +57,10 @@ module AIXM
       # @return [AIXM::XY] reference point
       attr_reader :xy
 
-      # @return [String] GPS code
+      # @return [String, nil] GPS code
       attr_reader :gps
 
-      # @return [AIXM::Z] elevation in +:qnh+
+      # @return [AIXM::Z, nil] elevation in +:qnh+
       attr_reader :z
 
       # When looking towards the geographic (aka: true) north, a positive
@@ -68,16 +68,16 @@ module AIXM
       # by this angle.
       #
       # @see https://en.wikipedia.org/wiki/Magnetic_declination
-      # @return [Float] magnetic declination in degrees
+      # @return [Float, nil] magnetic declination in degrees
       attr_reader :declination
 
-      # @return [AIXM::Z] transition altitude in :+qnh+
+      # @return [AIXM::Z, nil] transition altitude in +:qnh+
       attr_reader :transition_z
 
       # @return [AIXM::Component::Schedule, nil] operating hours
       attr_reader :schedule
 
-      # @return [String] free text remarks
+      # @return [String, nil] free text remarks
       attr_reader :remarks
 
       # @return [Array<AIXM::Component::Runway>] runways present at this airport
@@ -106,7 +106,7 @@ module AIXM
       end
 
       def code=(value)
-        fail(ArgumentError, "invalid code `#{code}'") unless value.upcase.match? CODE_PATTERN
+        fail(ArgumentError, "invalid code `#{code}'") unless value&.upcase&.match? CODE_PATTERN
         @code = value.upcase
       end
 
@@ -135,7 +135,7 @@ module AIXM
       end
 
       def type=(value)
-        resolved_value = TYPES.lookup(value&.to_sym, nil)
+        resolved_value = TYPES.lookup(value&.to_s&.to_sym, nil)
         fail(ArgumentError, "invalid type") unless resolved_value == :landing_site
         @type = resolved_value
       end
@@ -146,18 +146,18 @@ module AIXM
       end
 
       def z=(value)
-        fail(ArgumentError, "invalid z") unless value.is_a?(AIXM::Z) && value.qnh?
+        fail(ArgumentError, "invalid z") unless value.nil? || (value.is_a?(AIXM::Z) && value.qnh?)
         @z = value
       end
 
       def declination=(value)
-        fail(ArgumentError, "invalid declination") unless value.respond_to? :to_f
-        @declination = value
-        fail(ArgumentError, "invalid declination") unless (-180..180).include?(@declination)
+        return @declination = value if value.nil?
+        fail(ArgumentError, "invalid declination") unless value.is_a?(Numeric) && (-180..180).include?(value)
+        @declination = value.to_f
       end
 
       def transition_z=(value)
-        fail(ArgumentError, "invalid transition_z") unless value.is_a?(AIXM::Z) && value.qnh?
+        fail(ArgumentError, "invalid transition_z") unless value.nil? || (value.is_a?(AIXM::Z) && value.qnh?)
         @transition_z = value
       end
 
@@ -238,6 +238,7 @@ module AIXM
       # @return [String] AIXM or OFMX markup
       def to_xml
         builder = Builder::XmlMarkup.new(indent: 2)
+        builder.comment! "Airport: #{code} #{name}"
         builder.Ahp({ source: (source if AIXM.ofmx?) }.compact) do |ahp|
           ahp << to_uid.indent(2)
           ahp << organisation.to_uid.indent(2)
@@ -245,7 +246,7 @@ module AIXM
           ahp.codeIcao(code) if code.length == 4
           ahp.codeIata(code) if code.length == 3
           ahp.codeGps(gps) if AIXM.ofmx? && gps
-          ahp.codeType(TYPES.key(type).to_s)
+          ahp.codeType(TYPES.key(type).to_s) if type
           ahp.geoLat(xy.lat(AIXM.schema))
           ahp.geoLong(xy.long(AIXM.schema))
           ahp.codeDatum('WGE')
@@ -305,7 +306,7 @@ module AIXM
         # @return [AIXM::Component::Schedule, nil] limitation application hours
         attr_reader :schedule
 
-        # @return [String] free text remarks
+        # @return [String, nil] free text remarks
         attr_reader :remarks
 
         def initialize(type:)
@@ -319,7 +320,7 @@ module AIXM
         end
 
         def type=(value)
-          @type = TYPES.lookup(value&.to_sym, nil) || fail(ArgumentError, "invalid type")
+          @type = TYPES.lookup(value&.to_s&.to_sym, nil) || fail(ArgumentError, "invalid type")
         end
 
         # Add a condition to the usage limitation.
@@ -406,19 +407,19 @@ module AIXM
             OTHER: :other               # specify in remarks
           }.freeze
 
-          # @return [Symbol] kind of aircraft (see {AIRCRAFT})
+          # @return [Symbol, nil] kind of aircraft (see {AIRCRAFT})
           attr_reader :aircraft
 
-          # @return [String] flight rule (see {RULES})
+          # @return [String, nil] flight rule (see {RULES})
           attr_reader :rule
 
-          # @return [String] whether military or civil (see {REALMS})
+          # @return [String, nil] whether military or civil (see {REALMS})
           attr_reader :realm
 
-          # @return [String] geographic origin of the flight (see {ORIGINS})
+          # @return [String, nil] geographic origin of the flight (see {ORIGINS})
           attr_reader :origin
 
-          # @return [String] purpose of the flight (see {PURPOSES})
+          # @return [String, nil] purpose of the flight (see {PURPOSES})
           attr_reader :purpose
 
           # @return [String]
@@ -427,23 +428,23 @@ module AIXM
           end
 
           def aircraft=(value)
-            @aircraft = AIRCRAFT.lookup(value&.to_sym, nil) || fail(ArgumentError, "invalid aircraft")
+            @aircraft = value.nil? ? nil : AIRCRAFT.lookup(value.to_s.to_sym, nil) || fail(ArgumentError, "invalid aircraft")
           end
 
           def rule=(value)
-            @rule = RULES.lookup(value&.to_sym, nil) || fail(ArgumentError, "invalid rule")
+            @rule = value.nil? ? nil : RULES.lookup(value.to_s.to_sym, nil) || fail(ArgumentError, "invalid rule")
           end
 
           def realm=(value)
-            @realm = REALMS.lookup(value&.to_sym, nil) || fail(ArgumentError, "invalid realm")
+            @realm = value.nil? ? nil : REALMS.lookup(value.to_s.to_sym, nil) || fail(ArgumentError, "invalid realm")
           end
 
           def origin=(value)
-            @origin = ORIGINS.lookup(value&.to_sym, nil) || fail(ArgumentError, "invalid origin")
+            @origin = value.nil? ? nil : ORIGINS.lookup(value.to_s.to_sym, nil) || fail(ArgumentError, "invalid origin")
           end
 
           def purpose=(value)
-            @purpose = PURPOSES.lookup(value&.to_sym, nil) || fail(ArgumentError, "invalid purpose")
+            @purpose = value.nil? ? nil : PURPOSES.lookup(value.to_s.to_sym, nil) || fail(ArgumentError, "invalid purpose")
           end
 
           # @return [String] AIXM or OFMX markup

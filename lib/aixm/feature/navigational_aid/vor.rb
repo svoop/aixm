@@ -52,10 +52,10 @@ module AIXM
         # @return [Symbol] north indication (see {NORTHS})
         attr_reader :north
 
-        # @return [AIXM::Feature::NavigationalAid::DME] associated DME
+        # @return [AIXM::Feature::NavigationalAid::DME, nil] associated DME
         attr_reader :dme
 
-        # @return [AIXM::Feature::NavigationalAid::TACAN] associated TACAN
+        # @return [AIXM::Feature::NavigationalAid::TACAN, nil] associated TACAN
         attr_reader :tacan
 
         def initialize(type:, f:, north:, **arguments)
@@ -64,7 +64,7 @@ module AIXM
         end
 
         def type=(value)
-          @type = TYPES.lookup(value&.to_sym, nil) || fail(ArgumentError, "invalid type")
+          @type = TYPES.lookup(value&.to_s&.to_sym, nil) || fail(ArgumentError, "invalid type")
         end
 
         def f=(value)
@@ -73,7 +73,7 @@ module AIXM
         end
 
         def north=(value)
-          @north = NORTHS.lookup(value&.to_sym, nil) || fail(ArgumentError, "invalid north")
+          @north = NORTHS.lookup(value&.to_s&.to_sym, nil) || fail(ArgumentError, "invalid north")
         end
 
         # Associate a DME which turns the VOR into a VOR/DME

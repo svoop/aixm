@@ -1,7 +1,11 @@
 describe nil do
 
   it "fails on invalid values" do
-    -> { subject.schedule = 'foobar' }.must_raise ArgumentError
+    [:foobar, 123].wont_be_written_to subject, :schedule
+  end
+
+  it "accepts nil values" do
+    [nil].must_be_written_to subject, :schedule
   end
 
 end

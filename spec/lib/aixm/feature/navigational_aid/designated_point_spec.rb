@@ -7,11 +7,10 @@ describe AIXM::Feature::NavigationalAid::DesignatedPoint do
 
   describe :type= do
     it "fails on invalid values" do
-      -> { subject.type = :foobar }.must_raise ArgumentError
-      -> { subject.type = nil }.must_raise ArgumentError
+      [nil, :foobar, 123].wont_be_written_to subject, :type
     end
 
-    it "accepts valid values" do
+    it "looks up valid values" do
       subject.tap { |s| s.type = :icao }.type.must_equal :icao
       subject.tap { |s| s.type = :OTHER }.type.must_equal :other
     end
@@ -24,7 +23,7 @@ describe AIXM::Feature::NavigationalAid::DesignatedPoint do
   end
 
   describe :to_xml do
-    it "must build correct OFMX" do
+    it "builds correct complete OFMX" do
       AIXM.ofmx!
       subject.to_xml.must_equal <<~END
         <!-- NavigationalAid: [DesignatedPoint:ICAO] DESIGNATED POINT NAVAID -->
@@ -38,6 +37,23 @@ describe AIXM::Feature::NavigationalAid::DesignatedPoint do
           <codeType>ICAO</codeType>
           <txtName>DESIGNATED POINT NAVAID</txtName>
           <txtRmk>designated point navaid</txtRmk>
+        </Dpn>
+      END
+    end
+
+    it "builds correct minimal OFMX" do
+      AIXM.ofmx!
+      subject.name = subject.remarks = nil
+      subject.to_xml.must_equal <<~END
+        <!-- NavigationalAid: [DesignatedPoint:ICAO] UNNAMED -->
+        <Dpn source="LF|GEN|0.0 FACTORY|0|0">
+          <DpnUid region="LF">
+            <codeId>DDD</codeId>
+            <geoLat>47.85916667N</geoLat>
+            <geoLong>007.56000000E</geoLong>
+          </DpnUid>
+          <codeDatum>WGE</codeDatum>
+          <codeType>ICAO</codeType>
         </Dpn>
       END
     end

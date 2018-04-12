@@ -17,18 +17,17 @@ describe AIXM::Component::Frequency do
 
   describe :transmission_f= do
     it "fails on invalid values" do
-      -> { subject.transmission_f = :foobar }.must_raise ArgumentError
-      -> { subject.transmission_f = nil }.must_raise ArgumentError
+      [nil, :foobar, 123].wont_be_written_to subject, :transmission_f
     end
 
     it "accepts valid values" do
-      subject.tap { |s| s.transmission_f = AIXM::Factory.f }.transmission_f.must_equal AIXM::Factory.f
+      [AIXM::Factory.f].must_be_written_to subject, :transmission_f
     end
   end
 
   describe :callsigns= do
     it "fails on invalid values" do
-      -> { subject.callsigns = :foobar }.must_raise ArgumentError
+      [nil, :foobar, 123].wont_be_written_to subject, :callsigns
     end
 
     it "downcases language codes" do
@@ -42,12 +41,11 @@ describe AIXM::Component::Frequency do
 
   describe :reception_f= do
     it "fails on invalid values" do
-      -> { subject.reception_f = :foobar }.must_raise ArgumentError
+      [:foobar, 123].wont_be_written_to subject, :reception_f
     end
 
     it "accepts valid values" do
-      subject.tap { |s| s.reception_f = AIXM::Factory.f }.reception_f.must_equal AIXM::Factory.f
-      subject.tap { |s| s.reception_f = nil }.reception_f.must_be :nil?
+      [nil, AIXM::Factory.f].must_be_written_to subject, :reception_f
     end
   end
 
@@ -56,10 +54,13 @@ describe AIXM::Component::Frequency do
       -> { subject.type = :foobar }.must_raise ArgumentError
     end
 
-    it "accepts valid values" do
+    it "accepts nil value" do
+      [nil].must_be_written_to subject, :type
+    end
+
+    it "looks up valid values" do
       subject.tap { |s| s.type = :standard }.type.must_equal :standard
       subject.tap { |s| s.type = :ALT }.type.must_equal :alternative
-      subject.tap { |s| s.type = nil }.type.must_be :nil?
     end
   end
 

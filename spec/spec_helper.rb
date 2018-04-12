@@ -32,3 +32,23 @@ class MiniTest::Spec
     end
   end
 end
+
+module Minitest::Assertions
+  def assert_write(values, subject, attribute, msg=nil)
+    values.each do |value|
+      msg = message(msg) { "Expected #{mu_pp(value)} to be written to #{subject.class}##{attribute}" }
+      subject.send("#{attribute}=", value)
+      assert(subject.send(attribute) == value, msg)
+    end
+  end
+
+  def refute_write(values, subject, attribute, msg=nil)
+    values.each do |value|
+      msg = "Expected #{mu_pp(value)} to raise ArgumentError when written to #{subject.class}##{attribute}"
+      assert_raises(ArgumentError, msg) { subject.send("#{attribute}=", value) }
+    end
+  end
+end
+
+Array.infect_an_assertion :assert_write, :must_be_written_to, :reverse
+Array.infect_an_assertion :refute_write, :wont_be_written_to, :reverse

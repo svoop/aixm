@@ -8,11 +8,10 @@ describe AIXM::Feature::NavigationalAid::VOR do
 
     describe :type= do
       it "fails on invalid values" do
-        -> { subject.type = :foobar }.must_raise ArgumentError
-        -> { subject.type = nil }.must_raise ArgumentError
+        [nil, :foobar, 123].wont_be_written_to subject, :type
       end
 
-      it "accepts valid values" do
+      it "looks up valid values" do
         subject.tap { |s| s.type = :conventional }.type.must_equal :conventional
         subject.tap { |s| s.type = :DVOR }.type.must_equal :doppler
       end
@@ -20,22 +19,20 @@ describe AIXM::Feature::NavigationalAid::VOR do
 
     describe :f= do
       it "fails on invalid values" do
-        -> { subject.f = :foobar }.must_raise ArgumentError
-        -> { subject.f = nil }.must_raise ArgumentError
+        [nil, :foobar, 123].wont_be_written_to subject, :f
       end
 
       it "accepts valid values" do
-        subject.tap { |s| s.f = AIXM.f(110, :mhz) }.f.freq.must_equal 110
+        [AIXM.f(110, :mhz)].must_be_written_to subject, :f
       end
     end
 
     describe :north= do
       it "fails on invalid values" do
-        -> { subject.north = :foobar }.must_raise ArgumentError
-        -> { subject.north = nil }.must_raise ArgumentError
+        [nil, :foobar, 123].wont_be_written_to subject, :north
       end
 
-      it "accepts valid values" do
+      it "looks up valid values" do
         subject.tap { |s| s.north = :magnetic }.north.must_equal :magnetic
         subject.tap { |s| s.north = :TRUE }.north.must_equal :geographic
       end
@@ -48,7 +45,7 @@ describe AIXM::Feature::NavigationalAid::VOR do
     end
 
     describe :to_xml do
-      it "must build correct OFMX" do
+      it "builds correct complete OFMX" do
         AIXM.ofmx!
         subject.to_xml.must_equal <<~END
           <!-- NavigationalAid: [VOR:VOR] VOR NAVAID -->
@@ -76,6 +73,29 @@ describe AIXM::Feature::NavigationalAid::VOR do
           </Vor>
         END
       end
+
+      it "builds correct minimal OFMX" do
+        AIXM.ofmx!
+        subject.name = subject.z = subject.schedule = subject.remarks = nil
+        subject.to_xml.must_equal <<~END
+          <!-- NavigationalAid: [VOR:VOR] UNNAMED -->
+          <Vor source="LF|GEN|0.0 FACTORY|0|0">
+            <VorUid region="LF">
+              <codeId>VVV</codeId>
+              <geoLat>47.85916667N</geoLat>
+              <geoLong>007.56000000E</geoLong>
+            </VorUid>
+            <OrgUid region="LF">
+              <txtName>FRANCE</txtName>
+            </OrgUid>
+            <codeType>VOR</codeType>
+            <valFreq>111</valFreq>
+            <uomFreq>MHZ</uomFreq>
+            <codeTypeNorth>TRUE</codeTypeNorth>
+            <codeDatum>WGE</codeDatum>
+          </Vor>
+        END
+      end
     end
   end
 
@@ -95,7 +115,7 @@ describe AIXM::Feature::NavigationalAid::VOR do
     end
 
     describe :to_xml do
-      it "must build correct OFMX" do
+      it "builds correct OFMX" do
         AIXM.ofmx!
         subject.to_xml.must_equal <<~END
           <!-- NavigationalAid: [VOR:VOR] VOR/DME NAVAID -->
@@ -167,7 +187,7 @@ describe AIXM::Feature::NavigationalAid::VOR do
     end
 
     describe :to_xml do
-      it "must build correct OFMX" do
+      it "builds correct OFMX" do
         AIXM.ofmx!
         subject.to_xml.must_equal <<~END
           <!-- NavigationalAid: [VOR:VOR] VORTAC NAVAID -->

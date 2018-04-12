@@ -7,40 +7,38 @@ describe AIXM::Component::VerticalLimits do
 
   describe :upper_z= do
     it "fails on invalid values" do
-      -> { subject.upper_z = :foobar }.must_raise ArgumentError
-      -> { subject.upper_z = nil }.must_raise ArgumentError
+      [nil, :foobar, 123].wont_be_written_to subject, :upper_z
     end
   end
 
   describe :lower_z= do
     it "fails on invalid values" do
-      -> { subject.lower_z = :foobar }.must_raise ArgumentError
-      -> { subject.lower_z = nil }.must_raise ArgumentError
+      [nil, :foobar, 123].wont_be_written_to subject, :lower_z
     end
   end
 
   describe :max_z= do
     it "fails on invalid values" do
-      -> { subject.max_z = :foobar }.must_raise ArgumentError
+      [:foobar, 123].wont_be_written_to subject, :max_z
     end
 
-    it "accepts nil values" do
-      subject.tap { |s| s.max_z = nil }.max_z.must_be :nil?
+    it "accepts nil value" do
+      [nil].must_be_written_to subject, :max_z
     end
   end
 
   describe :min_z= do
     it "fails on invalid values" do
-      -> { subject.min_z = :foobar }.must_raise ArgumentError
+      [:foobar, 123].wont_be_written_to subject, :min_z
     end
 
-    it "accepts nil values" do
-      subject.tap { |s| s.min_z = nil }.min_z.must_be :nil?
+    it "accepts nil value" do
+      [nil].must_be_written_to subject, :max_z
     end
   end
 
   describe :to_aixm do
-    it "must build correct AIXM with only upper_z and lower_z" do
+    it "builds correct AIXM with only upper_z and lower_z" do
       subject = AIXM.vertical_limits(
         upper_z: AIXM.z(2000, :qnh),
         lower_z: AIXM::GROUND
@@ -56,7 +54,7 @@ describe AIXM::Component::VerticalLimits do
       END
     end
 
-    it "must build correct AIXM with additional max_z" do
+    it "builds correct AIXM with additional max_z" do
       subject = AIXM.vertical_limits(
         upper_z: AIXM.z(65, :qne),
         lower_z: AIXM.z(1000, :qfe),
@@ -76,7 +74,7 @@ describe AIXM::Component::VerticalLimits do
       END
     end
 
-    it "must build correct AIXM with additional min_z" do
+    it "builds correct AIXM with additional min_z" do
       subject = AIXM.vertical_limits(
         upper_z: AIXM.z(65, :qne),
         lower_z: AIXM.z(45, :qne),

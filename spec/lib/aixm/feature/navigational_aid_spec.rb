@@ -21,11 +21,11 @@ describe AIXM::Feature::NavigationalAid do
 
   describe :name= do
     it "fails on invalid values" do
-      -> { subject.name = 123 }.must_raise ArgumentError
+      [:foobar, 123].wont_be_written_to subject, :name
     end
 
     it "accepts nil value" do
-      subject.tap { |s| s.name = nil }.name.must_be :nil?
+      [nil].must_be_written_to subject, :name
     end
 
     it "upcases and transcodes value" do
@@ -39,6 +39,14 @@ describe AIXM::Feature::NavigationalAid do
 
   describe :z= do
     macro :z_qnh
+
+    it "accepts nil value" do
+      [nil].must_be_written_to subject, :z
+    end
+  end
+
+  describe :remarks= do
+    macro :remarks
   end
 
 end

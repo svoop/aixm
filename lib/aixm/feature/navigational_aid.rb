@@ -13,19 +13,19 @@ module AIXM
       # @return [String] published identifier
       attr_reader :id
 
-      # @return [String] name of the navigational aid
+      # @return [String, nil] name of the navigational aid
       attr_reader :name
 
       # @return [AIXM::XY] geographic position
       attr_reader :xy
 
-      # @return [AIXM::Z] elevation in +:qnh+
+      # @return [AIXM::Z, nil] elevation in +:qnh+
       attr_reader :z
 
       # @return [AIXM::Component::Schedule, nil] operating hours
       attr_reader :schedule
 
-      # @return [String] free text remarks
+      # @return [String, nil] free text remarks
       attr_reader :remarks
 
       def initialize(source: nil, region: nil, organisation:, id:, name: nil, xy:, z: nil)
@@ -35,7 +35,7 @@ module AIXM
 
       # @return [String]
       def inspect
-        %Q(#<#{self.class} id=#{id.inspect}>)
+        %Q(#<#{self.class} id=#{id.inspect} name=#{name.inspect}>)
       end
 
       def organisation=(value)
@@ -69,11 +69,10 @@ module AIXM
       end
 
       def remarks=(value)
-        fail(ArgumentError, "invalid remarks") unless value.nil? || value.is_a?(String)
-        @remarks = value
+        @remarks = value&.to_s
       end
 
-      # @return [String] fully descriptive combination of +class+ and +type+ key
+      # @return [String] fully descriptive combination of +class+ and +type_key+
       def kind
         [self.class.name.split('::').last, type_key].compact.join(':')
       end
@@ -86,7 +85,7 @@ module AIXM
 
       def to_builder
         builder = Builder::XmlMarkup.new(indent: 2)
-        builder.comment! "NavigationalAid: [#{kind}] #{name}"
+        builder.comment! "NavigationalAid: [#{kind}] #{name || :UNNAMED}"
         builder
       end
     end

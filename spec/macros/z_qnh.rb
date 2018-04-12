@@ -1,12 +1,11 @@
 describe nil do
 
   it "fails on invalid values" do
-    -> { subject.z = 123 }.must_raise ArgumentError
-    -> { subject.z = AIXM.z(123, :qfe) }.must_raise ArgumentError
+    [:foobar, 123, AIXM.z(123, :qfe)].wont_be_written_to subject, :z
   end
 
   it "accepts valid values" do
-    subject.tap { |s| s.z = AIXM.z(123, :qnh) }.z.must_equal AIXM.z(123, :qnh)
+    [AIXM.z(123, :qnh)].must_be_written_to subject, :z
   end
 
 end

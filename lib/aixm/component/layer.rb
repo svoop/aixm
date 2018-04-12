@@ -25,7 +25,7 @@ module AIXM
       # @return [AIXM::Component::Schedule, nil] activation hours
       attr_reader :schedule
 
-      # @return [String] free text remarks
+      # @return [String, nil] free text remarks
       attr_reader :remarks
 
       def initialize(class: nil, vertical_limits:)

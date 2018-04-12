@@ -11,18 +11,18 @@ describe AIXM::Component::Geometry::Arc do
 
   describe :center_xy= do
     it "fails on invalid values" do
-      -> { subject.center_xy = 123 }.must_raise ArgumentError
+      [nil, 123].wont_be_written_to subject, :xy
     end
 
     it "accepts valid values" do
-      subject.tap { |s| s.center_xy = AIXM::Factory.xy }.center_xy.must_equal AIXM::Factory.xy
+      [AIXM::Factory.xy].must_be_written_to subject, :xy
     end
   end
 
   describe :clockwise= do
     it "fails on invalid values" do
-      -> { subject.clockwise = 0 }.must_raise ArgumentError
-    end  
+      [nil, 0].wont_be_written_to subject, :clockwise
+    end
   end
 
   describe :clockwise? do
@@ -34,7 +34,7 @@ describe AIXM::Component::Geometry::Arc do
   end
 
   describe :to_xml do
-    it "must build correct AIXM for clockwise arcs" do
+    it "builds correct AIXM for clockwise arcs" do
       subject = AIXM.arc(
         xy: AIXM.xy(lat: 11.1, long: 33.3),
         center_xy: AIXM.xy(lat: 22.2, long: 33.3),
@@ -53,7 +53,7 @@ describe AIXM::Component::Geometry::Arc do
       END
     end
 
-    it "must build correct AIXM for counter-clockwise arcs" do
+    it "builds correct AIXM for counter-clockwise arcs" do
       subject = AIXM.arc(
         xy: AIXM.xy(lat: 11.1, long: 33.3),
         center_xy: AIXM.xy(lat: 22.2, long: 33.3),

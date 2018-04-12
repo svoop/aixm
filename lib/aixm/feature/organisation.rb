@@ -38,10 +38,10 @@ module AIXM
       # @return [Symbol] type of organisation (see {TYPES})
       attr_reader :type
 
-      # @return [String] code of the organisation (e.g. "LF")
+      # @return [String, nil] code of the organisation (e.g. "LF")
       attr_reader :id
 
-      # @return [String] free text remarks
+      # @return [String, nil] free text remarks
       attr_reader :remarks
 
       def initialize(source: nil, region: nil, name:, type:)
@@ -60,7 +60,7 @@ module AIXM
       end
 
       def type=(value)
-        @type = TYPES.lookup(value&.to_sym, nil) || fail(ArgumentError, "invalid type")
+        @type = TYPES.lookup(value&.to_s&.to_sym, nil) || fail(ArgumentError, "invalid type")
       end
 
       def id=(value)
@@ -83,6 +83,7 @@ module AIXM
       # @return [String] AIXM or OFMX markup
       def to_xml
         builder = Builder::XmlMarkup.new(indent: 2)
+        builder.comment! "Organisation: #{name}"
         builder.Org({ source: (source if AIXM.ofmx?) }.compact) do |org|
           org << to_uid.indent(2)
           org.codeId(id) if id

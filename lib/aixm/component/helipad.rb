@@ -10,11 +10,11 @@ module AIXM
     #     name: String
     #   )
     #   helipad.xy = AIXM.xy
-    #   helipad.z = AIXM.z
-    #   helipad.length = Integer   # meters
-    #   helipad.width = Integer    # meters
-    #   helipad.composition = COMPOSITIONS
-    #   helipad.status = STATUSES
+    #   helipad.z = AIXM.z or nil
+    #   helipad.length = Integer or nil   # meters
+    #   helipad.width = Integer or nil    # meters
+    #   helipad.composition = COMPOSITIONS or nil
+    #   helipad.status = STATUSES or nil
     #   helipad.remarks = String or nil
     #
     # @see https://github.com/openflightmaps/ofmx/wiki/Airport#tla-helipad-tlof
@@ -50,22 +50,22 @@ module AIXM
       # @return [AIXM::XY] center point
       attr_reader :xy
 
-      # @return [AIXM:Z] elevation in +:qnh+
+      # @return [AIXM:Z, nil] elevation in +:qnh+
       attr_reader :z
 
-      # @return [Integer] length in meters
+      # @return [Integer, nil] length in meters
       attr_reader :length
 
-      # @return [Integer] width in meters
+      # @return [Integer, nil] width in meters
       attr_reader :width
 
-      # @return [Symbol] composition of the surface (see {COMPOSITIONS})
+      # @return [Symbol, nil] composition of the surface (see {COMPOSITIONS})
       attr_reader :composition
 
       # @return [Symbol, nil] status of the helipad (see {STATUSES}) or +nil+ for normal operation
       attr_reader :status
 
-      # @return [String] free text remarks
+      # @return [String, nil] free text remarks
       attr_reader :remarks
 
       def initialize(name:)
@@ -94,26 +94,26 @@ module AIXM
       end
 
       def z=(value)
-        fail(ArgumentError, "invalid z") unless value.is_a?(AIXM::Z) && value.qnh?
+        fail(ArgumentError, "invalid z") unless value.nil? || (value.is_a?(AIXM::Z) && value.qnh?)
         @z = value
       end
 
       def length=(value)
-        fail(ArgumentError, "invalid length") unless value.is_a?(Numeric) && value > 0
-        @length = value.to_i
+        fail(ArgumentError, "invalid length") unless value.nil? || (value.is_a?(Numeric) && value > 0)
+        @length = value.nil? ? nil : value.to_i
       end
 
       def width=(value)
-        fail(ArgumentError, "invalid width") unless value.is_a?(Numeric)  && value > 0
-        @width = value.to_i
+        fail(ArgumentError, "invalid width") unless value.nil? || (value.is_a?(Numeric)  && value > 0)
+        @width = value.nil? ? nil : value.to_i
       end
 
       def composition=(value)
-        @composition = COMPOSITIONS.lookup(value&.to_sym, nil) || fail(ArgumentError, "invalid composition")
+        @composition = value.nil? ? nil : COMPOSITIONS.lookup(value.to_s.to_sym, nil) || fail(ArgumentError, "invalid composition")
       end
 
       def status=(value)
-        @status = value.nil? ? nil : (STATUSES.lookup(value&.to_sym, nil) || fail(ArgumentError, "invalid status"))
+        @status = value.nil? ? nil : (STATUSES.lookup(value.to_s.to_sym, nil) || fail(ArgumentError, "invalid status"))
       end
 
       def remarks=(value)

@@ -7,11 +7,15 @@ describe AIXM::Feature::Unit do
 
   describe :organisation= do
     macro :organisation
+
+    it "fails on nil value" do
+      [nil].wont_be_written_to subject, :organisation
+    end
   end
 
   describe :name= do
     it "fails on invalid values" do
-      -> { subject.name = nil }.must_raise ArgumentError
+      [nil, :foobar, 123].wont_be_written_to subject, :name
     end
 
     it "upcases and transcodes valid values" do
@@ -21,11 +25,10 @@ describe AIXM::Feature::Unit do
 
   describe :type= do
     it "fails on invalid values" do
-      -> { subject.type = :foobar }.must_raise ArgumentError
-      -> { subject.type = nil }.must_raise ArgumentError
+      [nil, :foobar, 123].wont_be_written_to subject, :type
     end
 
-    it "accepts valid values" do
+    it "looks up valid values" do
       subject.tap { |s| s.type = :flight_information_centre }.type.must_equal :flight_information_centre
       subject.tap { |s| s.type = :MET }.type.must_equal :meteorological_office
     end
@@ -33,13 +36,22 @@ describe AIXM::Feature::Unit do
 
   describe :class= do
     it "fails on invalid values" do
-      -> { subject.class = :foobar }.must_raise ArgumentError
-      -> { subject.class = nil }.must_raise ArgumentError
+      [nil, :foobar, 123].wont_be_written_to subject, :class
+    end
+
+    it "looks up valid values" do
+      subject.tap { |s| s.class = :icao }.class.must_equal :icao
+      subject.tap { |s| s.class = :OTHER }.class.must_equal :other
+    end
+  end
+
+  describe :airport= do
+    it "fails on invalid values" do
+      [:foobar, 123].wont_be_written_to subject, :airport
     end
 
     it "accepts valid values" do
-      subject.tap { |s| s.class = :icao }.class.must_equal :icao
-      subject.tap { |s| s.class = :OTHER }.class.must_equal :other
+      [nil, AIXM::Factory.airport].must_be_written_to subject, :airport
     end
   end
 
@@ -54,10 +66,11 @@ describe AIXM::Feature::Unit do
       end
     end
 
-    it "must build correct OFMX" do
+    it "builds correct complete OFMX" do
       2.times { subject.add_service(service) }
       AIXM.ofmx!
       subject.to_xml.must_equal <<~END
+        <!-- Unit: PUJAUT TWR -->
         <Uni source="LF|GEN|0.0 FACTORY|0|0">
           <UniUid region="LF">
             <txtName>PUJAUT TWR</txtName>
@@ -189,6 +202,25 @@ describe AIXM::Feature::Unit do
             <codeLang>FR</codeLang>
           </Cdl>
         </Fqy>
+      END
+    end
+
+    it "builds correct minimal OFMX" do
+      AIXM.ofmx!
+      subject.airport = subject.remarks = nil
+      subject.instance_variable_set(:'@services', [])
+      subject.to_xml.must_equal <<~END
+        <!-- Unit: PUJAUT TWR -->
+        <Uni source="LF|GEN|0.0 FACTORY|0|0">
+          <UniUid region="LF">
+            <txtName>PUJAUT TWR</txtName>
+          </UniUid>
+          <OrgUid region="LF">
+            <txtName>FRANCE</txtName>
+          </OrgUid>
+          <codeType>TWR</codeType>
+          <codeClass>ICAO</codeClass>
+        </Uni>
       END
     end
   end

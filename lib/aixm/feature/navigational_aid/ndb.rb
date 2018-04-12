@@ -33,7 +33,7 @@ module AIXM
           OTHER: :other   # specify in remarks
         }.freeze
 
-        # @return [Symbol] type of NDB (see {TYPES})
+        # @return [Symbol, nil] type of NDB (see {TYPES})
         attr_reader :type
 
         # @return [AIXM::F] radio frequency
@@ -45,7 +45,7 @@ module AIXM
         end
 
         def type=(value)
-          @type = TYPES.lookup(value&.to_sym, nil) || fail(ArgumentError, "invalid type")
+          @type = value.nil? ? nil : TYPES.lookup(value.to_s.to_sym, nil) || fail(ArgumentError, "invalid type")
         end
 
         def f=(value)
@@ -72,7 +72,7 @@ module AIXM
             ndb.txtName(name) if name
             ndb.valFreq(f.freq.trim)
             ndb.uomFreq(f.unit.upcase.to_s)
-            ndb.codeClass(type_key.to_s)
+            ndb.codeClass(type_key.to_s) if type
             ndb.codeDatum('WGE')
             if z
               ndb.valElev(z.alt)

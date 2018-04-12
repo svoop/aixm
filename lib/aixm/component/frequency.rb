@@ -90,7 +90,7 @@ module AIXM
       end
 
       def type=(value)
-        @type = value.nil? ? nil : TYPES.lookup(value&.to_sym, nil) || fail(ArgumentError, "invalid type")
+        @type = value.nil? ? nil : TYPES.lookup(value.to_s.to_sym, nil) || fail(ArgumentError, "invalid type")
       end
 
       def schedule=(value)

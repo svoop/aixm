@@ -17,7 +17,11 @@ describe AIXM::Feature::Airspace do
 
     describe :id= do
       it "fails on invalid values" do
-        -> { subject.id = 123 }.must_raise ArgumentError
+        [:foobar, 123].wont_be_written_to subject, :id
+      end
+
+      it "falls back to id derived from digest of id, name and short_name" do
+        subject.tap { |s| s.id = nil }.id.must_equal '22E2F734'
       end
 
       it "upcases value" do
@@ -27,11 +31,10 @@ describe AIXM::Feature::Airspace do
 
     describe :type= do
       it "fails on invalid values" do
-        -> { subject.type = :foobar }.must_raise ArgumentError
-        -> { subject.type = nil }.must_raise ArgumentError
+        [nil, :foobar, 123].wont_be_written_to subject, :type
       end
 
-      it "accepts valid values" do
+      it "looks up valid values" do
         subject.tap { |s| s.type = :danger_area }.type.must_equal :danger_area
         subject.tap { |s| s.type = :P }.type.must_equal :prohibited_area
       end
@@ -39,7 +42,11 @@ describe AIXM::Feature::Airspace do
 
     describe :name= do
       it "fails on invalid values" do
-        -> { subject.name = 123 }.must_raise ArgumentError
+        [:foobar, 123].wont_be_written_to subject, :name
+      end
+
+      it "accepts nil value" do
+        [nil].must_be_written_to subject, :name
       end
 
       it "upcases value" do
@@ -49,11 +56,11 @@ describe AIXM::Feature::Airspace do
 
     describe :short_name= do
       it "fails on invalid values" do
-        -> { subject.short_name = 123 }.must_raise ArgumentError
+        [:foobar, 123].wont_be_written_to subject, :short_name
       end
 
       it "accepts nil value" do
-        subject.tap { |s| s.short_name = nil }.short_name.must_be :nil?
+        [nil].must_be_written_to subject, :short_name
       end
 
       it "upcases value" do
@@ -62,7 +69,7 @@ describe AIXM::Feature::Airspace do
     end
 
     describe :to_uid do
-      it "must build with arbitrary tag" do
+      it "builds with arbitrary tag" do
         subject.to_uid.must_match(/<AseUid>/)
         subject.to_uid(as: :FooBar).must_match(/<FooBar>/)
       end
@@ -113,7 +120,7 @@ describe AIXM::Feature::Airspace do
     end
 
     describe :to_xml do
-      it "must build correct OFMX" do
+      it "builds correct complete OFMX" do
         AIXM.ofmx!
         subject.to_xml.must_equal <<~"END"
           <!-- Airspace: [D] POLYGON AIRSPACE -->
@@ -124,6 +131,69 @@ describe AIXM::Feature::Airspace do
             </AseUid>
             <txtLocalType>POLYGON</txtLocalType>
             <txtName>POLYGON AIRSPACE</txtName>
+            <codeClass>C</codeClass>
+            <codeDistVerUpper>STD</codeDistVerUpper>
+            <valDistVerUpper>65</valDistVerUpper>
+            <uomDistVerUpper>FL</uomDistVerUpper>
+            <codeDistVerLower>STD</codeDistVerLower>
+            <valDistVerLower>45</valDistVerLower>
+            <uomDistVerLower>FL</uomDistVerLower>
+            <codeDistVerMax>ALT</codeDistVerMax>
+            <valDistVerMax>6000</valDistVerMax>
+            <uomDistVerMax>FT</uomDistVerMax>
+            <codeDistVerMnm>HEI</codeDistVerMnm>
+            <valDistVerMnm>3000</valDistVerMnm>
+            <uomDistVerMnm>FT</uomDistVerMnm>
+            <Att>
+              <codeWorkHr>H24</codeWorkHr>
+            </Att>
+            <codeSelAvbl>Y</codeSelAvbl>
+            <txtRmk>airspace layer</txtRmk>
+          </Ase>
+          <Abd>
+            <AbdUid>
+              <AseUid region="LF">
+                <codeType>D</codeType>
+                <codeId>PA</codeId>
+              </AseUid>
+            </AbdUid>
+            <Avx>
+              <codeType>CWA</codeType>
+              <geoLat>47.85916667N</geoLat>
+              <geoLong>007.56000000E</geoLong>
+              <codeDatum>WGE</codeDatum>
+              <geoLatArc>47.90416667N</geoLatArc>
+              <geoLongArc>007.56333333E</geoLongArc>
+            </Avx>
+            <Avx>
+              <GbrUid>
+                <txtName>FRANCE_GERMANY</txtName>
+              </GbrUid>
+              <codeType>FNT</codeType>
+              <geoLat>47.94361111N</geoLat>
+              <geoLong>007.59583333E</geoLong>
+              <codeDatum>WGE</codeDatum>
+            </Avx>
+            <Avx>
+              <codeType>GRC</codeType>
+              <geoLat>47.85916667N</geoLat>
+              <geoLong>007.56000000E</geoLong>
+              <codeDatum>WGE</codeDatum>
+            </Avx>
+          </Abd>
+        END
+      end
+
+      it "builds correct minimal OFMX" do
+        AIXM.ofmx!
+        subject.short_name = subject.name = nil
+        subject.to_xml.must_equal <<~"END"
+          <!-- Airspace: [D] UNNAMED -->
+          <Ase source="LF|GEN|0.0 FACTORY|0|0">
+            <AseUid region="LF">
+              <codeType>D</codeType>
+              <codeId>PA</codeId>
+            </AseUid>
             <codeClass>C</codeClass>
             <codeDistVerUpper>STD</codeDistVerUpper>
             <valDistVerUpper>65</valDistVerUpper>
@@ -187,7 +257,7 @@ describe AIXM::Feature::Airspace do
     end
 
     describe :to_xml do
-      it "must build correct OFMX" do
+      it "builds correct OFMX" do
         AIXM.ofmx!
         subject.to_xml.must_equal <<~"END"
           <!-- Airspace: [D] POLYGON AIRSPACE -->

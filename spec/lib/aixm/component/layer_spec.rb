@@ -15,17 +15,17 @@ describe AIXM::Component::Layer do
 
     describe :class= do
       it "fails on invalid values" do
-        -> { subject.class = 'X' }.must_raise ArgumentError
+        [:X, 'X'].wont_be_written_to subject, :class
       end
 
-      it "symbolizes and upcases value" do
+      it "symbolizes and upcases valid values" do
         subject.tap { |s| s.class = 'c' }.class.must_equal :C
       end
     end
 
     describe :vertical_limits= do
       it "fails on invalid values" do
-        -> { subject.vertical_limits = 'foobar' }.must_raise ArgumentError
+        [nil, :foobar, 123].wont_be_written_to subject, :vertical_limits
       end
     end
 
@@ -35,7 +35,7 @@ describe AIXM::Component::Layer do
 
     describe :selective= do
       it "fails on invalid values" do
-        -> { subject.selective = 'N' }.must_raise ArgumentError
+        [nil, 'N', 0].wont_be_written_to subject, :selective
       end
     end
 
@@ -44,7 +44,7 @@ describe AIXM::Component::Layer do
     end
 
     describe :to_xml do
-      it "must build correct OFMX" do
+      it "builds correct OFMX" do
         AIXM.ofmx!
         subject.to_xml.must_equal <<~END
           <codeDistVerUpper>STD</codeDistVerUpper>
@@ -63,7 +63,7 @@ describe AIXM::Component::Layer do
         END
       end
 
-      it "must build correct AIXM" do
+      it "builds correct AIXM" do
         AIXM.aixm!
         subject.to_xml.wont_match(/<codeSelAvbl>/)
         subject.to_xml.wont_match(/<Att>/)
@@ -77,7 +77,7 @@ describe AIXM::Component::Layer do
       AIXM::Factory.layer
     end
 
-    it "must build correct OFMX" do
+    it "builds correct OFMX" do
       AIXM.ofmx!
       subject.to_xml.must_equal <<~END
         <codeClass>C</codeClass>
@@ -101,7 +101,7 @@ describe AIXM::Component::Layer do
       END
     end
 
-    it "must build correct AIXM" do
+    it "builds correct AIXM" do
       AIXM.aixm!
       subject.to_xml.wont_match(/<codeSelAvbl>/)
     end

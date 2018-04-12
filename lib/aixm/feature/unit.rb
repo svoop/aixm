@@ -15,7 +15,7 @@ module AIXM
     #     type: TYPES
     #     class: :icao or :other
     #   )
-    #   unit.airport = AIXM.airport
+    #   unit.airport = AIXM.airport or nil
     #   unit.remarks = String or nil
     #   unit.add_service(AIXM.service)
     #
@@ -52,10 +52,10 @@ module AIXM
       # @return [Symbol] type of unit (see {TYPES})
       attr_reader :type
 
-      # @return [AIXM::Feature::Airport] airport
+      # @return [AIXM::Feature::Airport, nil] airport
       attr_reader :airport
 
-      # @return [String] free text remarks
+      # @return [String, nil] free text remarks
       attr_reader :remarks
 
       def initialize(source: nil, region: nil, organisation:, name:, type:, class:)
@@ -81,7 +81,7 @@ module AIXM
       end
 
       def type=(value)
-        @type = TYPES.lookup(value&.to_sym, nil) || fail(ArgumentError, "invalid type")
+        @type = TYPES.lookup(value&.to_s&.to_sym, nil) || fail(ArgumentError, "invalid type")
       end
 
       # @!attribute class
@@ -91,11 +91,11 @@ module AIXM
       end
 
       def class=(value)
-        @klass = CLASSES.lookup(value&.to_sym, nil) || fail(ArgumentError, "invalid class")
+        @klass = CLASSES.lookup(value&.to_s&.to_sym, nil) || fail(ArgumentError, "invalid class")
       end
 
       def airport=(value)
-        fail(ArgumentError, "invalid airport") unless value.is_a? AIXM::Feature::Airport
+        fail(ArgumentError, "invalid airport") unless value.nil? || value.is_a?(AIXM::Feature::Airport)
         @airport = value
       end
 
@@ -131,6 +131,7 @@ module AIXM
       # @return [String] AIXM or OFMX markup
       def to_xml
         builder = Builder::XmlMarkup.new(indent: 2)
+        builder.comment! "Unit: #{name}"
         builder.Uni({ source: (source if AIXM.ofmx?) }.compact) do |uni|
           uni << to_uid.indent(2)
           uni << organisation.to_uid.indent(2)

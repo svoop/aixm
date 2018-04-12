@@ -7,11 +7,14 @@ describe AIXM::Feature::NavigationalAid::Marker do
 
   describe :type= do
     it "fails on invalid values" do
-      -> { subject.type = :foobar }.must_raise ArgumentError
-      -> { subject.type = nil }.must_raise ArgumentError
+      [:foobar, 123].wont_be_written_to subject, :type
     end
 
-    it "accepts valid values" do
+    it "accepts nil value" do
+      [nil].must_be_written_to subject, :name
+    end
+
+    it "looks up valid values" do
       subject.tap { |s| s.type = :middle }.type.must_equal :middle
       subject.tap { |s| s.type = :O }.type.must_equal :outer
     end
@@ -24,7 +27,7 @@ describe AIXM::Feature::NavigationalAid::Marker do
   end
 
   describe :to_xml do
-    it "must build correct OFMX" do
+    it "builds correct complete OFMX" do
       AIXM.ofmx!
       subject.to_xml.must_equal <<~END
         <!-- NavigationalAid: [Marker:O] MARKER NAVAID -->
@@ -48,6 +51,27 @@ describe AIXM::Feature::NavigationalAid::Marker do
             <codeWorkHr>H24</codeWorkHr>
           </Mtt>
           <txtRmk>marker navaid</txtRmk>
+        </Mkr>
+      END
+    end
+
+    it "builds correct minimal OFMX" do
+      AIXM.ofmx!
+      subject.type = subject.name = subject.z = subject.schedule = subject.remarks = nil
+      subject.to_xml.must_equal <<~END
+        <!-- NavigationalAid: [Marker] UNNAMED -->
+        <Mkr source="LF|GEN|0.0 FACTORY|0|0">
+          <MkrUid region="LF">
+            <codeId>---</codeId>
+            <geoLat>47.85916667N</geoLat>
+            <geoLong>007.56000000E</geoLong>
+          </MkrUid>
+          <OrgUid region="LF">
+            <txtName>FRANCE</txtName>
+          </OrgUid>
+          <valFreq>75</valFreq>
+          <uomFreq>MHZ</uomFreq>
+          <codeDatum>WGE</codeDatum>
         </Mkr>
       END
     end

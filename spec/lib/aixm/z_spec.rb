@@ -7,7 +7,7 @@ describe AIXM::Z do
 
   describe :alt= do
     it "fails on invalid values" do
-      -> { subject.alt = :foo }.must_raise ArgumentError
+      [:foobar].wont_be_written_to subject, :alt
     end
 
     it "converts Numeric to Integer" do
@@ -17,7 +17,7 @@ describe AIXM::Z do
 
   describe :code= do
     it "fails on invalid values" do
-      -> { subject.code = :foo }.must_raise ArgumentError
+      [nil, :foobar].wont_be_written_to subject, :code
     end
 
     it "symbolizes and downcases values" do

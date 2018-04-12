@@ -13,7 +13,7 @@ describe AIXM::Document do
 
   describe :namespace= do
     it "fails on invalid values" do
-      -> { subject.namespace = 'foobar' }.must_raise ArgumentError
+      ['foobar', :foobar].wont_be_written_to subject, :namespace
     end
 
     it "sets random UUID for nil value" do
@@ -21,14 +21,13 @@ describe AIXM::Document do
     end
 
     it "accepts UUID value" do
-      uuid = SecureRandom.uuid
-      subject.tap { |s| s.namespace = uuid }.namespace.must_equal uuid
+      [SecureRandom.uuid].must_be_written_to subject, :namespace
     end
   end
 
   describe :created_at= do
     it "fails on invalid values" do
-      -> { subject.created_at = :foobar }.must_raise ArgumentError
+      [:foobar, 123].wont_be_written_to subject, :created_at
     end
 
     it "parses dates and times" do
@@ -50,7 +49,7 @@ describe AIXM::Document do
 
   describe :effective_at= do
     it "fails on invalid values" do
-      -> { subject.effective_at = :foobar }.must_raise ArgumentError
+      [:foobar, 123].wont_be_written_to subject, :effective_at
     end
 
     it "parses dates and times" do
@@ -80,7 +79,7 @@ describe AIXM::Document do
       subject.errors.must_equal []
     end
 
-#   it "must build correct AIXM" do
+#   it "builds correct AIXM" do
 #     subject.to_xml.must_equal <<~"END"
 #     END
 #   end
@@ -96,7 +95,7 @@ describe AIXM::Document do
       subject.errors.must_equal []
     end
 
-#   it "must build correct OFMX" do
+#   it "builds correct OFMX" do
 #     subject.to_xml.must_equal <<~"END"
 #     END
 #   end

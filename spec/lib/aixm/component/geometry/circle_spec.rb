@@ -10,19 +10,17 @@ describe AIXM::Component::Geometry::Circle do
 
   describe :center_xy= do
     it "fails on invalid values" do
-      -> { subject.center_xy = 123 }.must_raise ArgumentError
+      [nil, 123].wont_be_written_to subject, :center_xy
     end
 
     it "accepts valid values" do
-      subject.tap { |s| s.center_xy = AIXM::Factory.xy }.center_xy.must_equal AIXM::Factory.xy
+      [AIXM::Factory.xy].must_be_written_to subject, :center_xy
     end
   end
 
   describe :radius= do
     it "fails on invalid values" do
-      -> { subject.radius = :foo }.must_raise ArgumentError
-      -> { subject.radius = 0 }.must_raise ArgumentError
-      -> { subject.radius = -5 }.must_raise ArgumentError
+      [nil, 0, -5].wont_be_written_to subject, :radius
     end
 
     it "converts Numeric to Float" do
@@ -37,7 +35,7 @@ describe AIXM::Component::Geometry::Circle do
   end
 
   describe :to_xml do
-    it "must build correct AIXM for circles not near the equator" do
+    it "builds correct AIXM for circles not near the equator" do
       subject = AIXM.circle(
         center_xy: AIXM.xy(lat: 11.1, long: 22.2),
         radius: 25
@@ -55,7 +53,7 @@ describe AIXM::Component::Geometry::Circle do
       END
     end
 
-    it "must build correct AIXM for circles near the equator" do
+    it "builds correct AIXM for circles near the equator" do
       subject = AIXM.circle(
         center_xy: AIXM.xy(lat: -0.0005, long: -22.2),
         radius: 50

@@ -10,12 +10,12 @@ describe AIXM::Component::Geometry::Border do
 
   describe :name= do
     it "fails on invalid values" do
-      -> { subject.name = :foobar }.must_raise ArgumentError
+      [nil, :foobar, 123].wont_be_written_to subject, :name
     end
   end
 
   describe :to_xml do
-    it "must build correct AIXM" do
+    it "builds correct AIXM" do
       AIXM.aixm!
       subject.to_xml.must_equal <<~END
         <Avx>

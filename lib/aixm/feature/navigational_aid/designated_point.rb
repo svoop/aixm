@@ -40,7 +40,7 @@ module AIXM
         end
 
         def type=(value)
-          @type = TYPES.lookup(value&.to_sym, nil) || fail(ArgumentError, "invalid type")
+          @type = TYPES.lookup(value&.to_s&.to_sym, nil) || fail(ArgumentError, "invalid type")
         end
 
         # @return [String] UID markup

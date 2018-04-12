@@ -14,21 +14,27 @@ describe AIXM::Component::Runway do
     it "sets defaults for unidirectional runways" do
       subject = AIXM::Component::Runway.new(name: '30')
       subject.forth.name.must_equal '30'
-      subject.back.must_be :nil?
+      subject.back.must_be_nil
     end
   end
 
   describe :name= do
-    it "upcases and transcodes value" do
+    it "fails on invalid values" do
+      [nil, :foobar, 123].wont_be_written_to subject, :name
+    end
+
+    it "upcases and transcodes valid values" do
       subject.tap { |s| s.name = '10r/28l' }.name.must_equal '10R/28L'
     end
   end
 
   describe :length= do
     it "fails on invalid values" do
-      -> { subject.length = :foobar }.must_raise ArgumentError
-      -> { subject.length = nil }.must_raise ArgumentError
-      -> { subject.length = -1 }.must_raise ArgumentError
+      [:foobar, 0, -1].wont_be_written_to subject, :length
+    end
+
+    it "accepts nil value" do
+      [nil].must_be_written_to subject, :length
     end
 
     it "converts valid values to integer" do
@@ -38,9 +44,11 @@ describe AIXM::Component::Runway do
 
   describe :width= do
     it "fails on invalid values" do
-      -> { subject.width = :foobar }.must_raise ArgumentError
-      -> { subject.width = nil }.must_raise ArgumentError
-      -> { subject.width = -1 }.must_raise ArgumentError
+      [:foobar, 0, -1].wont_be_written_to subject, :width
+    end
+
+    it "accepts nil value" do
+      [nil].must_be_written_to subject, :width
     end
 
     it "converts valid values to integer" do
@@ -50,11 +58,14 @@ describe AIXM::Component::Runway do
 
   describe :composition= do
     it "fails on invalid values" do
-      -> { subject.composition = :foobar }.must_raise ArgumentError
-      -> { subject.composition = nil }.must_raise ArgumentError
+      [:foobar, 123].wont_be_written_to subject, :composition
     end
 
-    it "normalizes valid values" do
+    it "accepts nil value" do
+      [nil].must_be_written_to subject, :composition
+    end
+
+    it "looks up valid values" do
       subject.tap { |s| s.composition = :macadam }.composition.must_equal :macadam
       subject.tap { |s| s.composition = :GRADE }.composition.must_equal :graded_earth
     end
@@ -62,14 +73,14 @@ describe AIXM::Component::Runway do
 
   describe :status= do
     it "fails on invalid values" do
-      -> { subject.status = :foobar }.must_raise ArgumentError
+      [:foobar, 123].wont_be_written_to subject, :status
     end
 
-    it "accepts nil values" do
-      subject.tap { |s| s.status = nil }.status.must_be :nil?
+    it "accepts nil value" do
+      [nil].must_be_written_to subject, :status
     end
 
-    it "normalizes valid values" do
+    it "looks up valid values" do
       subject.tap { |s| s.status = :closed }.status.must_equal :closed
       subject.tap { |s| s.status = :SPOWER }.status.must_equal :secondary_power
     end
@@ -78,6 +89,184 @@ describe AIXM::Component::Runway do
   describe :remarks= do
     macro :remarks
   end
+
+  describe :xml= do
+    it "builds correct complete OFMX" do
+      AIXM.ofmx!
+      subject.to_xml.must_equal <<~END
+        <Rwy>
+          <RwyUid>
+            <AhpUid region="LF">
+              <codeId>LFNT</codeId>
+            </AhpUid>
+            <txtDesig>16L/34R</txtDesig>
+          </RwyUid>
+          <valLen>650</valLen>
+          <valWid>80</valWid>
+          <uomDimRwy>M</uomDimRwy>
+          <codeComposition>GRADE</codeComposition>
+          <codeSts>CLSD</codeSts>
+          <txtRmk>Markings eroded</txtRmk>
+        </Rwy>
+        <Rdn>
+          <RdnUid>
+            <RwyUid>
+              <AhpUid region="LF">
+                <codeId>LFNT</codeId>
+              </AhpUid>
+              <txtDesig>16L/34R</txtDesig>
+            </RwyUid>
+            <txtDesig>16L</txtDesig>
+          </RdnUid>
+          <geoLat>44.00211944N</geoLat>
+          <geoLong>004.75216944E</geoLong>
+          <valTrueBrg>165</valTrueBrg>
+          <valMagBrg>166</valMagBrg>
+          <valElevTdz>147</valElevTdz>
+          <uomElevTdz>FT</uomElevTdz>
+          <txtRmk>forth remarks</txtRmk>
+        </Rdn>
+        <Rdd>
+          <RddUid>
+            <RdnUid>
+              <RwyUid>
+                <AhpUid region="LF">
+                  <codeId>LFNT</codeId>
+                </AhpUid>
+                <txtDesig>16L/34R</txtDesig>
+              </RwyUid>
+              <txtDesig>16L</txtDesig>
+            </RdnUid>
+            <codeType>DPLM</codeType>
+            <codeDayPeriod>A</codeDayPeriod>
+          </RddUid>
+          <valDist>131</valDist>
+          <uomDist>M</uomDist>
+          <txtRmk>forth remarks</txtRmk>
+        </Rdd>
+        <Rdn>
+          <RdnUid>
+            <RwyUid>
+              <AhpUid region="LF">
+                <codeId>LFNT</codeId>
+              </AhpUid>
+              <txtDesig>16L/34R</txtDesig>
+            </RwyUid>
+            <txtDesig>34R</txtDesig>
+          </RdnUid>
+          <geoLat>43.99036389N</geoLat>
+          <geoLong>004.75645556E</geoLong>
+          <valTrueBrg>345</valTrueBrg>
+          <valMagBrg>346</valMagBrg>
+          <txtRmk>back remarks</txtRmk>
+        </Rdn>
+        <Rdd>
+          <RddUid>
+            <RdnUid>
+              <RwyUid>
+                <AhpUid region="LF">
+                  <codeId>LFNT</codeId>
+                </AhpUid>
+                <txtDesig>16L/34R</txtDesig>
+              </RwyUid>
+              <txtDesig>34R</txtDesig>
+            </RdnUid>
+            <codeType>DPLM</codeType>
+            <codeDayPeriod>A</codeDayPeriod>
+          </RddUid>
+          <valDist>209</valDist>
+          <uomDist>M</uomDist>
+          <txtRmk>back remarks</txtRmk>
+        </Rdd>
+      END
+    end
+
+    it "builds correct minimal OFMX" do
+      AIXM.ofmx!
+      %i(length width composition status remarks).each { |a| subject.send(:"#{a}=", nil) }
+      subject.to_xml.must_equal <<~END
+        <Rwy>
+          <RwyUid>
+            <AhpUid region=\"LF\">
+              <codeId>LFNT</codeId>
+            </AhpUid>
+            <txtDesig>16L/34R</txtDesig>
+          </RwyUid>
+        </Rwy>
+        <Rdn>
+          <RdnUid>
+            <RwyUid>
+              <AhpUid region=\"LF\">
+                <codeId>LFNT</codeId>
+              </AhpUid>
+              <txtDesig>16L/34R</txtDesig>
+            </RwyUid>
+            <txtDesig>16L</txtDesig>
+          </RdnUid>
+          <geoLat>44.00211944N</geoLat>
+          <geoLong>004.75216944E</geoLong>
+          <valTrueBrg>165</valTrueBrg>
+          <valMagBrg>166</valMagBrg>
+          <valElevTdz>147</valElevTdz>
+          <uomElevTdz>FT</uomElevTdz>
+          <txtRmk>forth remarks</txtRmk>
+        </Rdn>
+        <Rdd>
+          <RddUid>
+            <RdnUid>
+              <RwyUid>
+                <AhpUid region=\"LF\">
+                  <codeId>LFNT</codeId>
+                </AhpUid>
+                <txtDesig>16L/34R</txtDesig>
+              </RwyUid>
+              <txtDesig>16L</txtDesig>
+            </RdnUid>
+            <codeType>DPLM</codeType>
+            <codeDayPeriod>A</codeDayPeriod>
+          </RddUid>
+          <valDist>131</valDist>
+          <uomDist>M</uomDist>
+          <txtRmk>forth remarks</txtRmk>
+        </Rdd>
+        <Rdn>
+          <RdnUid>
+            <RwyUid>
+              <AhpUid region=\"LF\">
+                <codeId>LFNT</codeId>
+              </AhpUid>
+              <txtDesig>16L/34R</txtDesig>
+            </RwyUid>
+            <txtDesig>34R</txtDesig>
+          </RdnUid>
+          <geoLat>43.99036389N</geoLat>
+          <geoLong>004.75645556E</geoLong>
+          <valTrueBrg>345</valTrueBrg>
+          <valMagBrg>346</valMagBrg>
+          <txtRmk>back remarks</txtRmk>
+        </Rdn>
+        <Rdd>
+          <RddUid>
+            <RdnUid>
+              <RwyUid>
+                <AhpUid region=\"LF\">
+                  <codeId>LFNT</codeId>
+                </AhpUid>
+                <txtDesig>16L/34R</txtDesig>
+              </RwyUid>
+              <txtDesig>34R</txtDesig>
+            </RdnUid>
+            <codeType>DPLM</codeType>
+            <codeDayPeriod>A</codeDayPeriod>
+          </RddUid>
+          <valDist>209</valDist>
+          <uomDist>M</uomDist>
+          <txtRmk>back remarks</txtRmk>
+        </Rdd>
+      END
+    end
+  end
+
 end
 
 describe AIXM::Component::Runway::Direction do
@@ -95,30 +284,36 @@ describe AIXM::Component::Runway::Direction do
 
   describe :geographic_orientation= do
     it "fails on invalid values" do
-      -> { subject.geographic_orientation = :foobar }.must_raise ArgumentError
-      -> { subject.geographic_orientation = -1 }.must_raise ArgumentError
-      -> { subject.geographic_orientation = 360 }.must_raise ArgumentError
+      [:foobar, -1, 360].wont_be_written_to subject, :geographic_orientation
     end
 
-    it "converts valid values to integer" do
+    it "converts valid Numeric values to integer" do
       subject.tap { |s| s.geographic_orientation = 100.5 }.geographic_orientation.must_equal 100
     end
   end
 
   describe :xy= do
     macro :xy
+
+    it "fails on nil value" do
+      [nil].wont_be_written_to subject, :xy
+    end
   end
 
   describe :z= do
     macro :z_qnh
+
+    it "accepts nil value" do
+      [nil].must_be_written_to subject, :z
+    end
   end
 
   describe :displaced_threshold= do
     it "fails on invalid values" do
-      -> { subject.displaced_threshold = nil }.must_raise ArgumentError
+      [:foobar].wont_be_written_to subject, :displaced_threshold
     end
 
-    it "converts valid values to integer" do
+    it "converts valid Numeric values to Integer" do
       subject.tap { |s| s.displaced_threshold = 222.0 }.displaced_threshold.must_equal 222
     end
 
@@ -139,4 +334,69 @@ describe AIXM::Component::Runway::Direction do
       subject.magnetic_orientation.must_equal 17
     end
   end
+
+  describe :xml= do
+    it "builds correct complete OFMX" do
+      AIXM.ofmx!
+      subject.to_xml.must_equal <<~END
+        <Rdn>
+          <RdnUid>
+            <RwyUid>
+              <AhpUid region="LF">
+                <codeId>LFNT</codeId>
+              </AhpUid>
+              <txtDesig>16L/34R</txtDesig>
+            </RwyUid>
+            <txtDesig>16L</txtDesig>
+          </RdnUid>
+          <geoLat>44.00211944N</geoLat>
+          <geoLong>004.75216944E</geoLong>
+          <valTrueBrg>165</valTrueBrg>
+          <valMagBrg>166</valMagBrg>
+          <valElevTdz>147</valElevTdz>
+          <uomElevTdz>FT</uomElevTdz>
+          <txtRmk>forth remarks</txtRmk>
+        </Rdn>
+        <Rdd>
+          <RddUid>
+            <RdnUid>
+              <RwyUid>
+                <AhpUid region="LF">
+                  <codeId>LFNT</codeId>
+                </AhpUid>
+                <txtDesig>16L/34R</txtDesig>
+              </RwyUid>
+              <txtDesig>16L</txtDesig>
+            </RdnUid>
+            <codeType>DPLM</codeType>
+            <codeDayPeriod>A</codeDayPeriod>
+          </RddUid>
+          <valDist>131</valDist>
+          <uomDist>M</uomDist>
+          <txtRmk>forth remarks</txtRmk>
+        </Rdd>
+      END
+    end
+
+    it "builds correct minimal OFMX" do
+      AIXM.ofmx!
+      %i(geographic_orientation z displaced_threshold remarks).each { |a| subject.send(:"#{a}=", nil) }
+      subject.to_xml.must_equal <<~END
+        <Rdn>
+          <RdnUid>
+            <RwyUid>
+              <AhpUid region="LF">
+                <codeId>LFNT</codeId>
+              </AhpUid>
+              <txtDesig>16L/34R</txtDesig>
+            </RwyUid>
+            <txtDesig>16L</txtDesig>
+          </RdnUid>
+          <geoLat>44.00211944N</geoLat>
+          <geoLong>004.75216944E</geoLong>
+        </Rdn>
+      END
+    end
+  end
+
 end

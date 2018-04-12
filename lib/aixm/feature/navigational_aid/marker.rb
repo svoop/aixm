@@ -48,7 +48,7 @@ module AIXM
         end
 
         def type=(value)
-          @type = TYPES.lookup(value&.to_sym, nil) || fail(ArgumentError, "invalid type")
+          @type = value.nil? ? nil : TYPES.lookup(value.to_s.to_sym, nil) || fail(ArgumentError, "invalid type")
         end
 
         # @return [String] UID markup
@@ -67,7 +67,7 @@ module AIXM
           builder.Mkr({ source: (source if AIXM.ofmx?) }.compact) do |mkr|
             mkr << to_uid.indent(2)
             mkr << organisation.to_uid.indent(2)
-            mkr.codePsnIls(type_key.to_s)
+            mkr.codePsnIls(type_key.to_s) if type_key
             mkr.valFreq(75)
             mkr.uomFreq('MHZ')
             mkr.txtName(name) if name

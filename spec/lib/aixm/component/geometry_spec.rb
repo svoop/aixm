@@ -74,7 +74,7 @@ describe AIXM::Component::Geometry do
       subject.segments.count.must_equal 4
     end
 
-    it "must build valid AIXM" do
+    it "builds valid AIXM" do
       AIXM.aixm!
       subject.to_xml.must_equal <<~END
         <Avx>
@@ -140,7 +140,7 @@ describe AIXM::Component::Geometry do
       subject.must_be :closed?
     end
 
-    it "must build valid AIXM" do
+    it "builds valid AIXM" do
       AIXM.aixm!
       subject.to_xml.must_equal <<~END
         <Avx>
@@ -201,7 +201,7 @@ describe AIXM::Component::Geometry do
       subject.must_be :closed?
     end
 
-    it "must build valid AIXM" do
+    it "builds valid AIXM" do
       AIXM.aixm!
       subject.to_xml.must_equal <<~END
         <Avx>
@@ -261,7 +261,7 @@ describe AIXM::Component::Geometry do
       subject.must_be :closed?
     end
 
-    it "must build valid AIXM" do
+    it "builds valid AIXM" do
       AIXM.aixm!
       subject.to_xml.must_equal <<~END
         <Avx>

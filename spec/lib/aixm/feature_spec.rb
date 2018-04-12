@@ -7,11 +7,11 @@ describe AIXM::Feature do
 
   describe :source= do
     it "fails on invalid values" do
-      -> { subject.source = 123 }.must_raise ArgumentError
+      [:foobar, 123].wont_be_written_to subject, :source
     end
 
     it "accepts nil value" do
-      subject.tap { |s| s.source = nil }.source.must_be :nil?
+      [nil].must_be_written_to subject, :source
     end
   end
 
@@ -21,7 +21,7 @@ describe AIXM::Feature do
     end
 
     it "accepts nil value" do
-      subject.tap { |s| s.region = nil }.region.must_be :nil?
+      subject.tap { |s| s.region = nil }.region.must_be_nil
     end
 
     it "upcases value" do

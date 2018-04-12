@@ -7,7 +7,7 @@ describe AIXM::Feature::Organisation do
 
   describe :name= do
     it "fails on invalid values" do
-      -> { subject.name = nil }.must_raise ArgumentError
+      [nil, :foobar, 123].wont_be_written_to subject, :name
     end
 
     it "upcases and transcodes valid values" do
@@ -17,11 +17,10 @@ describe AIXM::Feature::Organisation do
 
   describe :type= do
     it "fails on invalid values" do
-      -> { subject.type = :foobar }.must_raise ArgumentError
-      -> { subject.type = nil }.must_raise ArgumentError
+      [nil, :foobar, 123].wont_be_written_to subject, :type
     end
 
-    it "accepts valid values" do
+    it "looks up valid values" do
       subject.tap { |s| s.type = :state }.type.must_equal :state
       subject.tap { |s| s.type = :IO }.type.must_equal :international_organisation
     end
@@ -29,11 +28,11 @@ describe AIXM::Feature::Organisation do
 
   describe :id= do
     it "fails on invalid values" do
-      -> { subject.id = :foobar }.must_raise ArgumentError
+      [:foobar, 123].wont_be_written_to subject, :id
     end
 
-    it "accepts nil values" do
-      subject.tap { |s| s.id = nil }.id.must_be :nil?
+    it "accepts nil value" do
+      [nil].must_be_written_to subject, :id
     end
 
     it "upcases valid values" do
@@ -46,9 +45,10 @@ describe AIXM::Feature::Organisation do
   end
 
   describe :to_xml do
-    it "must build correct OFMX" do
+    it "builds correct complete OFMX" do
       AIXM.ofmx!
       subject.to_xml.must_equal <<~END
+        <!-- Organisation: FRANCE -->
         <Org source="LF|GEN|0.0 FACTORY|0|0">
           <OrgUid region="LF">
             <txtName>FRANCE</txtName>
@@ -56,6 +56,20 @@ describe AIXM::Feature::Organisation do
           <codeId>LF</codeId>
           <codeType>S</codeType>
           <txtRmk>Oversea departments not included</txtRmk>
+        </Org>
+      END
+    end
+
+    it "builds correct minimal OFMX" do
+      AIXM.ofmx!
+      subject.id = subject.remarks = nil
+      subject.to_xml.must_equal <<~END
+        <!-- Organisation: FRANCE -->
+        <Org source="LF|GEN|0.0 FACTORY|0|0">
+          <OrgUid region="LF">
+            <txtName>FRANCE</txtName>
+          </OrgUid>
+          <codeType>S</codeType>
         </Org>
       END
     end

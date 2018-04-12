@@ -16,15 +16,17 @@ module AIXM
     #   runway = AIXM.runway(
     #     name: String
     #   )
-    #   runway.length = Integer   # meters
-    #   runway.width = Integer    # meters
-    #   runway.composition = COMPOSITIONS
-    #   runway.status = STATUSES
+    #   runway.length = Integer or nil   # meters
+    #   runway.width = Integer or nil    # meters
+    #   runway.composition = COMPOSITIONS or nil
+    #   runway.status = STATUSES or nil
     #   runway.remarks = String or nil
     #   runway.forth.name = String   # preset based on the runway name
-    #   runway.forth.geographic_orientation = Integer   # degrees
+    #   runway.forth.geographic_orientation = Integer or nil   # degrees
     #   runway.forth.xy = AIXM.xy
-    #   runway.forth.displaced_threshold = nil or Integer   # meters
+    #   runway.forth.z = AIXM.z or nil
+    #   runway.forth.displaced_threshold = Integer or nil   # meters
+    #   runway.forth.remarks = String or nil
     #
     # @example Bidirectional runway
     #   runway = AIXM.runway(name: '16L/34R')
@@ -71,19 +73,19 @@ module AIXM
       # @return [String] full name of runway (e.g. "12/30" or "16L/34R")
       attr_reader :name
 
-      # @return [Integer] length in meters
+      # @return [Integer, nil] length in meters
       attr_reader :length
 
-      # @return [Integer] width in meters
+      # @return [Integer, nil] width in meters
       attr_reader :width
 
-      # @return [Symbol] composition of the surface (see {COMPOSITIONS})
+      # @return [Symbol, nil] composition of the surface (see {COMPOSITIONS})
       attr_reader :composition
 
       # @return [Symbol, nil] status of the runway (see {STATUSES}) or +nil+ for normal operation
       attr_reader :status
 
-      # @return [String] free text remarks
+      # @return [String, nil] free text remarks
       attr_reader :remarks
 
       # @return [AIXM::Component::Runway::Direction] main direction
@@ -117,21 +119,21 @@ module AIXM
       end
 
       def length=(value)
-        fail(ArgumentError, "invalid length") unless value.is_a?(Numeric) && value > 0
-        @length = value.to_i
+        fail(ArgumentError, "invalid length") unless value.nil? || (value.is_a?(Numeric) && value > 0)
+        @length = value.nil? ? nil : value.to_i
       end
 
       def width=(value)
-        fail(ArgumentError, "invalid width") unless value.is_a?(Numeric)  && value > 0
-        @width = value.to_i
+        fail(ArgumentError, "invalid width") unless value.nil? || (value.is_a?(Numeric)  && value > 0)
+        @width = value.nil? ? nil : value.to_i
       end
 
       def composition=(value)
-        @composition = COMPOSITIONS.lookup(value&.to_sym, nil) || fail(ArgumentError, "invalid composition")
+        @composition = value.nil? ? nil : COMPOSITIONS.lookup(value.to_s.to_sym, nil) || fail(ArgumentError, "invalid composition")
       end
 
       def status=(value)
-        @status = value.nil? ? nil : (STATUSES.lookup(value&.to_sym, nil) || fail(ArgumentError, "invalid status"))
+        @status = value.nil? ? nil : (STATUSES.lookup(value.to_s.to_sym, nil) || fail(ArgumentError, "invalid status"))
       end
 
       def remarks=(value)
@@ -177,25 +179,30 @@ module AIXM
         # @return [String] partial name of runway (e.g. "12" or "16L")
         attr_reader :name
 
-        # @return [Integer] geographic orientation (true bearing) in degrees
+        # @return [Integer, nil] geographic orientation (true bearing) in degrees
         attr_reader :geographic_orientation
 
         # @return [AIXM::XY] beginning point (middle of the runway width)
         attr_reader :xy
 
-        # @return [AIXM::Z] elevation of the touch down zone in +qnh+
+        # @return [AIXM::Z, nil] elevation of the touch down zone in +qnh+
         attr_reader :z
 
-        # @return [AIXM::XY, Integer] displaced threshold point either as
+        # @return [AIXM::XY, Integer, nil] displaced threshold point either as
         #   coordinates (AIXM::XY) or distance (Integer) in meters from the
         #   beginning point
         attr_reader :displaced_threshold
 
-        # @return [String] free text remarks
+        # @return [String, nil] free text remarks
         attr_reader :remarks
 
         def initialize(runway:, name:)
           self.runway, self.name = runway, name
+        end
+
+        # @return [String]
+        def inspect
+          %Q(#<#{self.class} name=#{name.inspect}>)
         end
 
         def runway=(value)
@@ -210,7 +217,8 @@ module AIXM
         end
 
         def geographic_orientation=(value)
-          fail(ArgumentError, "invalid geographic orientation") unless value.respond_to? :to_i
+          return @geographic_orientation = nil if value.nil?
+          fail(ArgumentError, "invalid geographic orientation") unless value.is_a? Numeric
           @geographic_orientation = value.to_i
           fail(ArgumentError, "invalid geographic orientation") unless (0..359).include? @geographic_orientation
         end
@@ -221,7 +229,7 @@ module AIXM
         end
 
         def z=(value)
-          fail(ArgumentError, "invalid z") unless value.is_a?(AIXM::Z) && value.qnh?
+          fail(ArgumentError, "invalid z") unless value.nil? || (value.is_a?(AIXM::Z) && value.qnh?)
           @z = value
         end
 
@@ -229,6 +237,7 @@ module AIXM
           @displaced_threshold = case value
             when AIXM::XY then @xy.distance(value).to_i
             when Numeric then value.to_i
+            when NilClass then nil
             else fail(ArgumentError, "invalid displaced threshold")
           end
         end
@@ -254,8 +263,8 @@ module AIXM
             end
             rdn.geoLat(xy.lat(AIXM.schema))
             rdn.geoLong(xy.long(AIXM.schema))
-            rdn.valTrueBrg(geographic_orientation)
-            rdn.valMagBrg(magnetic_orientation)
+            rdn.valTrueBrg(geographic_orientation) if geographic_orientation
+            rdn.valMagBrg(magnetic_orientation) if magnetic_orientation
             if z
               rdn.valElevTdz(z.alt)
               rdn.uomElevTdz(z.unit.upcase.to_s)
@@ -277,6 +286,7 @@ module AIXM
               rdd.txtRmk(remarks) if remarks
             end
           end
+          builder.target!
         end
       end
     end

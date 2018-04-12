@@ -7,7 +7,7 @@ describe AIXM::Feature::NavigationalAid::TACAN do
 
   describe :channel= do
     it "fails on invalid values" do
-      -> { subject.channel = 123 }.must_raise ArgumentError
+      [nil, :foobar, 123].wont_be_written_to subject, :channel
     end
 
     it "upcases value" do
@@ -22,7 +22,7 @@ describe AIXM::Feature::NavigationalAid::TACAN do
   end
 
   describe :to_xml do
-    it "must build correct OFMX" do
+    it "builds correct complete OFMX" do
       AIXM.ofmx!
       subject.to_xml.must_equal <<~END
         <!-- NavigationalAid: [TACAN] TACAN NAVAID -->
@@ -44,6 +44,26 @@ describe AIXM::Feature::NavigationalAid::TACAN do
             <codeWorkHr>H24</codeWorkHr>
           </Ttt>
           <txtRmk>tacan navaid</txtRmk>
+        </Tcn>
+      END
+    end
+
+    it "builds correct minimal OFMX" do
+      AIXM.ofmx!
+      subject.name = subject.z = subject.schedule = subject.remarks = nil
+      subject.to_xml.must_equal <<~END
+        <!-- NavigationalAid: [TACAN] UNNAMED -->
+        <Tcn source="LF|GEN|0.0 FACTORY|0|0">
+          <TcnUid region="LF">
+            <codeId>TTT</codeId>
+            <geoLat>47.85916667N</geoLat>
+            <geoLong>007.56000000E</geoLong>
+          </TcnUid>
+          <OrgUid region="LF">
+            <txtName>FRANCE</txtName>
+          </OrgUid>
+          <codeChannel>29X</codeChannel>
+          <codeDatum>WGE</codeDatum>
         </Tcn>
       END
     end

@@ -11,7 +11,7 @@ module AIXM
     #     region: String or nil (falls back to AIXM.config.region)
     #     id: String
     #     type: String or Symbol
-    #     name: String
+    #     name: String or nil
     #     short_name: String or nil
     #   )
     #   airspace.geometry << AIXM.point or AIXM.arc or AIXM.border or AIXM.circle
@@ -71,10 +71,10 @@ module AIXM
       # @return [Symbol] type of airspace (see {TYPES})
       attr_reader :type
 
-      # @return [String] full name (e.g. "LF P 81 CHERBOURG")
+      # @return [String, nil] full name (e.g. "LF P 81 CHERBOURG")
       attr_reader :name
 
-      # @return [String] short name (e.g. "LF P 81")
+      # @return [String, nil] short name (e.g. "LF P 81")
       attr_reader :short_name
 
       # @return [AIXM::Component::Geometry] horizontal geometrical shape
@@ -83,7 +83,7 @@ module AIXM
       # @return [Array<AIXM::Compoment::Layer>] vertical layers
       attr_accessor :layers
 
-      def initialize(source: nil, region: nil, id: nil, type:, name:, short_name: nil)
+      def initialize(source: nil, region: nil, id: nil, type:, name: nil, short_name: nil)
         super(source: source, region: region)
         self.type, self.name, self.short_name = type, name, short_name
         self.id = id
@@ -102,12 +102,12 @@ module AIXM
       end
 
       def type=(value)
-        @type = TYPES.lookup(value&.to_sym, nil) || fail(ArgumentError, "invalid type")
+        @type = TYPES.lookup(value&.to_s&.to_sym, nil) || fail(ArgumentError, "invalid type")
       end
 
       def name=(value)
-        fail(ArgumentError, "invalid name") unless value.is_a? String
-        @name = value.uptrans
+        fail(ArgumentError, "invalid name") unless value.nil? || value.is_a?(String)
+        @name = value&.uptrans
       end
 
       def short_name=(value)
@@ -130,14 +130,14 @@ module AIXM
       def to_xml
         fail(LayerError, "no layers defined") unless layers.any?
         builder = Builder::XmlMarkup.new(indent: 2)
-        builder.comment! "Airspace: [#{TYPES.key(type)}] #{name}"
+        builder.comment! "Airspace: [#{TYPES.key(type)}] #{name || :UNNAMED}"
         builder.Ase({
           source: (source if AIXM.ofmx?),
           classLayers: (layers.count if AIXM.ofmx? && layered?)
         }.compact) do |ase|
           ase << to_uid.indent(2)
           ase.txtLocalType(short_name) if short_name && short_name != name
-          ase.txtName(name)
+          ase.txtName(name) if name
           unless layered?
             ase << layers.first.to_xml.indent(2)
           end

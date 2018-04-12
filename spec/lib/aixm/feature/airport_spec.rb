@@ -21,17 +21,13 @@ describe AIXM::Feature::Airport do
 
   describe :organisation= do
     it "fails on invalid values" do
-      -> { subject.organisation = :foobar }.must_raise ArgumentError
-      -> { subject.organisation = nil }.must_raise ArgumentError
+      [nil, :foobar].wont_be_written_to subject, :organisation
     end
   end
 
   describe :code= do
     it "fails on invalid values" do
-      -> { subject.code = 'A' }.must_raise ArgumentError
-      -> { subject.code = 'AB' }.must_raise ArgumentError
-      -> { subject.code = 'ABCDE' }.must_raise ArgumentError
-      -> { subject.code = 'AB12345' }.must_raise ArgumentError
+      [nil, 'A', 'AB', 'ABCDE', 'AB12345'].wont_be_written_to subject, :code
     end
 
     it "upcases valid values" do
@@ -41,7 +37,7 @@ describe AIXM::Feature::Airport do
 
   describe :name= do
     it "fails on invalid values" do
-      -> { subject.name = nil }.must_raise ArgumentError
+      [nil, 123].wont_be_written_to subject, :name
     end
 
     it "upcases and transcodes valid values" do
@@ -51,11 +47,11 @@ describe AIXM::Feature::Airport do
 
   describe :gps= do
     it "fails on invalid values" do
-      -> { subject.gps = :foobar }.must_raise ArgumentError
+      [:foobar, 123].wont_be_written_to subject, :gps
     end
 
     it "accepts nil value" do
-      subject.tap { |s| s.gps = nil }.gps.must_be :nil?
+      [nil].must_be_written_to subject, :gps
     end
 
     it "upcases valid values" do
@@ -65,15 +61,14 @@ describe AIXM::Feature::Airport do
 
   describe :type= do
     it "fails on invalid values" do
-      -> { subject.type = :foobar }.must_raise ArgumentError
-      -> { subject.type = nil }.must_raise ArgumentError
+      [nil, :foobar].wont_be_written_to subject, :type
     end
 
     it "fails on values derived from runways and helipads" do
-      -> { subject.type = :aerodrome }.must_raise ArgumentError
+      [:aerodrome, :heliport, :aerodrome_and_heliport].wont_be_written_to subject, :type
     end
 
-    it "accepts valid values" do
+    it "looks up valid values" do
       subject.tap { |s| s.type = :landing_site }.type.must_equal :landing_site
       subject.tap { |s| s.type = :LS }.type.must_equal :landing_site
     end
@@ -85,19 +80,30 @@ describe AIXM::Feature::Airport do
 
   describe :xy= do
     macro :xy
+
+    it "fails on nil values" do
+      [nil].wont_be_written_to subject, :xy
+    end
   end
 
   describe :z= do
     macro :z_qnh
+
+    it "accepts nil value" do
+      [nil].must_be_written_to subject, :z
+    end
   end
 
   describe :declination= do
     it "fails on invalid values" do
-      -> { subject.declination = nil }.must_raise ArgumentError
-      -> { subject.declination = :foobar }.must_raise ArgumentError
+      [:foobar, false].wont_be_written_to subject, :declination
     end
 
-    it "normalizes valid values" do
+    it "accepts nil value" do
+      [nil].must_be_written_to subject, :declination
+    end
+
+    it "converts valid values to Float" do
       subject.tap { |s| s.declination = 10 }.declination.must_equal 10.0
       subject.tap { |s| s.declination = 20.0 }.declination.must_equal 20.0
     end
@@ -105,12 +111,11 @@ describe AIXM::Feature::Airport do
 
   describe :transition_z= do
     it "fails on invalid values" do
-      -> { subject.z = 123 }.must_raise ArgumentError
-      -> { subject.z = AIXM.z(123, :qfe) }.must_raise ArgumentError
+      [123, AIXM.z(123, :qfe)].wont_be_written_to subject, :transition_z
     end
 
     it "accepts valid values" do
-      subject.tap { |s| s.z = AIXM.z(123, :qnh) }.z.must_equal AIXM.z(123, :qnh)
+      [nil, AIXM.z(123, :qnh)].must_be_written_to subject, :transition_z
     end
   end
 
@@ -174,9 +179,10 @@ describe AIXM::Feature::Airport do
   end
 
   describe :to_xml do
-    it "must build correct OFMX" do
+    it "builds correct complete OFMX" do
       AIXM.ofmx!
       subject.to_xml.must_equal <<~END
+        <!-- Airport: LFNT AVIGNON-PUJAUT -->
         <Ahp source="LF|GEN|0.0 FACTORY|0|0">
           <AhpUid region="LF">
             <codeId>LFNT</codeId>
@@ -330,6 +336,31 @@ describe AIXM::Feature::Airport do
         </Ahu>
       END
     end
+
+    it "builds correct minimal OFMX" do
+      AIXM.ofmx!
+      subject.z = subject.declination = subject.transition_z = subject.remarks = nil
+      subject.instance_variable_set(:'@runways', [])
+      subject.instance_variable_set(:'@helipads', [])
+      subject.instance_variable_set(:'@usage_limitations', [])
+      subject.to_xml.must_equal <<~END
+        <!-- Airport: LFNT AVIGNON-PUJAUT -->
+        <Ahp source="LF|GEN|0.0 FACTORY|0|0">
+          <AhpUid region="LF">
+            <codeId>LFNT</codeId>
+          </AhpUid>
+          <OrgUid region="LF">
+            <txtName>FRANCE</txtName>
+          </OrgUid>
+          <txtName>AVIGNON-PUJAUT</txtName>
+          <codeIcao>LFNT</codeIcao>
+          <codeGps>LFPUJAUT</codeGps>
+          <geoLat>43.99611111N</geoLat>
+          <geoLong>004.75444444E</geoLong>
+          <codeDatum>WGE</codeDatum>
+        </Ahp>
+      END
+    end
   end
 end
 
@@ -346,11 +377,10 @@ describe AIXM::Feature::Airport::UsageLimitation do
 
   describe :type= do
     it "fails on invalid values" do
-      -> { subject.type = :foobar }.must_raise ArgumentError
-      -> { subject.type = nil }.must_raise ArgumentError
+      [nil, :foobar].wont_be_written_to subject, :type
     end
 
-    it "accepts valid values" do
+    it "looks up valid values" do
       subject.tap { |s| s.type = :permitted }.type.must_equal :permitted
       subject.tap { |s| s.type = :RESERV }.type.must_equal :reservation_required
     end
@@ -363,6 +393,41 @@ describe AIXM::Feature::Airport::UsageLimitation do
   describe :remarks= do
     macro :remarks
   end
+
+  describe :xml= do
+    it "builds correct complete OFMX" do
+      AIXM.ofmx!
+      subject = AIXM::Factory.airport.usage_limitations.last
+      subject.to_xml.must_equal <<~END
+        <UsageLimitation>
+          <codeUsageLimitation>RESERV</codeUsageLimitation>
+          <UsageCondition>
+            <AircraftClass>
+              <codeType>E</codeType>
+            </AircraftClass>
+          </UsageCondition>
+          <UsageCondition>
+            <FlightClass>
+              <codeOrigin>INTL</codeOrigin>
+            </FlightClass>
+          </UsageCondition>
+          <Timetable>
+            <codeWorkHr>H24</codeWorkHr>
+          </Timetable>
+          <txtRmk>reservation remarks</txtRmk>
+        </UsageLimitation>
+      END
+    end
+
+    it "builds correct minimal OFMX" do
+      AIXM.ofmx!
+      subject.to_xml.must_equal <<~END
+        <UsageLimitation>
+          <codeUsageLimitation>PERMIT</codeUsageLimitation>
+        </UsageLimitation>
+      END
+    end
+  end
 end
 
 describe AIXM::Feature::Airport::UsageLimitation::Condition do
@@ -372,11 +437,14 @@ describe AIXM::Feature::Airport::UsageLimitation::Condition do
 
   describe :aircraft= do
     it "fails on invalid values" do
-      -> { subject.aircraft = :foobar }.must_raise ArgumentError
-      -> { subject.aircraft = nil }.must_raise ArgumentError
+      [:foobar, 123].wont_be_written_to subject, :aircraft
     end
 
-    it "accepts valid values" do
+    it "accepts nil value" do
+      [nil].must_be_written_to subject, :aircraft
+    end
+
+    it "looks up valid values" do
       subject.tap { |s| s.aircraft = :glider }.aircraft.must_equal :glider
       subject.tap { |s| s.aircraft = :H }.aircraft.must_equal :helicopter
     end
@@ -384,11 +452,14 @@ describe AIXM::Feature::Airport::UsageLimitation::Condition do
 
   describe :rule= do
     it "fails on invalid values" do
-      -> { subject.rule = :foobar }.must_raise ArgumentError
-      -> { subject.rule = nil }.must_raise ArgumentError
+      [:foobar, 123].wont_be_written_to subject, :rule
     end
 
-    it "accepts valid values" do
+    it "accepts nil value" do
+      [nil].must_be_written_to subject, :rule
+    end
+
+    it "looks up valid values" do
       subject.tap { |s| s.rule = :ifr }.rule.must_equal :ifr
       subject.tap { |s| s.rule = :IV }.rule.must_equal :ifr_and_vfr
     end
@@ -396,11 +467,14 @@ describe AIXM::Feature::Airport::UsageLimitation::Condition do
 
   describe :realm= do
     it "fails on invalid values" do
-      -> { subject.realm = :foobar }.must_raise ArgumentError
-      -> { subject.realm = nil }.must_raise ArgumentError
+      [:foobar, 123].wont_be_written_to subject, :realm
     end
 
-    it "accepts valid values" do
+    it "accepts nil value" do
+      [nil].must_be_written_to subject, :realm
+    end
+
+    it "looks up valid values" do
       subject.tap { |s| s.realm = :civilian }.realm.must_equal :civilian
       subject.tap { |s| s.realm = :MIL }.realm.must_equal :military
     end
@@ -408,11 +482,14 @@ describe AIXM::Feature::Airport::UsageLimitation::Condition do
 
   describe :origin= do
     it "fails on invalid values" do
-      -> { subject.origin = :foobar }.must_raise ArgumentError
-      -> { subject.origin = nil }.must_raise ArgumentError
+      [:foobar, 123].wont_be_written_to subject, :origin
     end
 
-    it "accepts valid values" do
+    it "accepts nil value" do
+      [nil].must_be_written_to subject, :origin
+    end
+
+    it "looks up valid values" do
       subject.tap { |s| s.origin = :international }.origin.must_equal :international
       subject.tap { |s| s.origin = :NTL }.origin.must_equal :national
     end
@@ -420,13 +497,50 @@ describe AIXM::Feature::Airport::UsageLimitation::Condition do
 
   describe :purpose= do
     it "fails on invalid values" do
-      -> { subject.purpose = :foobar }.must_raise ArgumentError
-      -> { subject.purpose = nil }.must_raise ArgumentError
+      [:foobar, 123].wont_be_written_to subject, :purpose
     end
 
-    it "accepts valid values" do
+    it "accepts nil value" do
+      [nil].must_be_written_to subject, :purpose
+    end
+
+    it "looks up valid values" do
       subject.tap { |s| s.purpose = :private }.purpose.must_equal :private
       subject.tap { |s| s.purpose = :TRG }.purpose.must_equal :school_or_training
+    end
+  end
+
+  describe :xml= do
+    it "builds correct complete OFMX" do
+      subject.rule = :vfr
+      subject.realm = :military
+      subject.origin = :international
+      subject.purpose = :school_or_training
+      AIXM.ofmx!
+      subject.to_xml.must_equal <<~END
+        <UsageCondition>
+          <AircraftClass>
+            <codeType>E</codeType>
+          </AircraftClass>
+          <FlightClass>
+            <codeRule>V</codeRule>
+            <codeMil>MIL</codeMil>
+            <codeOrigin>INTL</codeOrigin>
+            <codePurpose>TRG</codePurpose>
+          </FlightClass>
+        </UsageCondition>
+      END
+    end
+
+    it "builds correct minimal OFMX" do
+      AIXM.ofmx!
+      subject.to_xml.must_equal <<~END
+        <UsageCondition>
+          <AircraftClass>
+            <codeType>E</codeType>
+          </AircraftClass>
+        </UsageCondition>
+      END
     end
   end
 end

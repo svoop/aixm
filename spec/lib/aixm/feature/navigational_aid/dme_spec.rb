@@ -11,7 +11,7 @@ describe AIXM::Feature::NavigationalAid::DME do
 
   describe :channel= do
     it "fails on invalid values" do
-      -> { subject.channel = 123 }.must_raise ArgumentError
+      [nil, :foobar, 123].wont_be_written_to subject, :channel
     end
 
     it "upcases value" do
@@ -26,7 +26,7 @@ describe AIXM::Feature::NavigationalAid::DME do
   end
 
   describe :to_xml do
-    it "must build correct OFMX" do
+    it "builds correct complete OFMX" do
       AIXM.ofmx!
       subject.to_xml.must_equal <<~END
         <!-- NavigationalAid: [DME] DME NAVAID -->
@@ -48,6 +48,26 @@ describe AIXM::Feature::NavigationalAid::DME do
             <codeWorkHr>H24</codeWorkHr>
           </Dtt>
           <txtRmk>dme navaid</txtRmk>
+        </Dme>
+      END
+    end
+
+    it "builds correct minimal OFMX" do
+      AIXM.ofmx!
+      subject.name = subject.z = subject.schedule = subject.remarks = nil
+      subject.to_xml.must_equal <<~END
+        <!-- NavigationalAid: [DME] UNNAMED -->
+        <Dme source="LF|GEN|0.0 FACTORY|0|0">
+          <DmeUid region="LF">
+            <codeId>MMM</codeId>
+            <geoLat>47.85916667N</geoLat>
+            <geoLong>007.56000000E</geoLong>
+          </DmeUid>
+          <OrgUid region=\"LF\">
+            <txtName>FRANCE</txtName>
+          </OrgUid>
+          <codeChannel>95X</codeChannel>
+          <codeDatum>WGE</codeDatum>
         </Dme>
       END
     end

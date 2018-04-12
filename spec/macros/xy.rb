@@ -1,11 +1,11 @@
 describe nil do
 
   it "fails on invalid values" do
-    -> { subject.xy = 123 }.must_raise ArgumentError
+    [:foobar, 123].wont_be_written_to subject, :xy
   end
 
   it "accepts valid values" do
-    subject.tap { |s| s.xy = AIXM::Factory.xy }.xy.must_equal AIXM::Factory.xy
+    [AIXM::Factory.xy].must_be_written_to subject, :xy
   end
 
 end

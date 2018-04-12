@@ -6,6 +6,10 @@ describe AIXM::XY do
   end
 
   describe :lat= do
+    it "fails on invalid values" do
+      [91, "foobar"].wont_be_written_to subject, :lat
+    end
+
     it "parses valid DD values" do
       subject.tap { |s| s.lat = 11.2233 }.lat.must_equal 11.2233
     end
@@ -13,11 +17,6 @@ describe AIXM::XY do
     it "parses valid DMS values"  do
       subject.tap { |s| s.lat = %q(11°22'33"N) }.lat.must_equal(11.37583333)
       subject.tap { |s| s.lat = %q(11°22'33"S) }.lat.must_equal(-11.37583333)
-    end
-
-    it "fails on invalid values" do
-      -> { subject.lat = 91 }.must_raise ArgumentError
-      -> { subject.lat = "foo" }.must_raise ArgumentError
     end
   end
 
@@ -60,6 +59,10 @@ describe AIXM::XY do
   end
 
   describe :long= do
+    it "fails on invalid values" do
+      [181, "foobar"].wont_be_written_to subject, :lat
+    end
+
     it "parses valid DD values" do
       subject.tap { |s| s.long = 22.3344 }.long.must_equal 22.3344
     end
@@ -67,11 +70,6 @@ describe AIXM::XY do
     it "parses valid DMS values"  do
       subject.tap { |s| s.long = %q(22°33'44"E) }.long.must_equal(22.56222222)
       subject.tap { |s| s.long = %q(22°33'44"W) }.long.must_equal(-22.56222222)
-    end
-
-    it "fails on invalid values" do
-      -> { subject.long = 181 }.must_raise ArgumentError
-      -> { subject.long = "foo" }.must_raise ArgumentError
     end
   end
 

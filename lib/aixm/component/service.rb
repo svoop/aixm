@@ -89,7 +89,7 @@ module AIXM
       # @return [AIXM::Component::Schedule, nil] operating hours
       attr_reader :schedule
 
-      # @return [String] free text remarks
+      # @return [String, nil] free text remarks
       attr_reader :remarks
 
       # @return [Array<AIXM::Component::Frequency>] frequencies used by this service
@@ -117,7 +117,7 @@ module AIXM
       end
 
       def type=(value)
-        @type = TYPES.lookup(value&.to_sym, nil) || fail(ArgumentError, "invalid type")
+        @type = TYPES.lookup(value&.to_s&.to_sym, nil) || fail(ArgumentError, "invalid type")
       end
 
       def schedule=(value)

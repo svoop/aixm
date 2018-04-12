@@ -32,7 +32,7 @@ describe AIXM::Component::Service do
       -> { subject.type = nil }.must_raise ArgumentError
     end
 
-    it "accepts valid values" do
+    it "looks up valid values" do
       subject.tap { |s| s.type = :area_control_service }.type.must_equal :area_control_service
       subject.tap { |s| s.type = :ATIS }.type.must_equal :automated_terminal_information_service
     end

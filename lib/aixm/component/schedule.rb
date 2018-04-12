@@ -31,7 +31,7 @@ module AIXM
       # @return [Symbol] schedule code (see {CODES})
       attr_reader :code
 
-      # @return [String] free text remarks
+      # @return [String, nil] free text remarks
       attr_reader :remarks
 
       def initialize(code:)
@@ -44,7 +44,7 @@ module AIXM
       end
 
       def code=(value)
-        @code = CODES.lookup(value&.to_sym, nil) || fail(ArgumentError, "invalid code")
+        @code = CODES.lookup(value&.to_s&.to_sym, nil) || fail(ArgumentError, "invalid code")
       end
 
       def remarks=(value)

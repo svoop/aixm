@@ -30,7 +30,7 @@ module AIXM
         # @return [String] radio channel
         attr_reader :channel
 
-        # @return [AIXM::Feature::NavigationalAid::VOR] associated VOR
+        # @return [AIXM::Feature::NavigationalAid::VOR, nil] associated VOR
         attr_reader :vor
 
         def initialize(channel:, **arguments)

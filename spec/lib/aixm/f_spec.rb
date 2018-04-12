@@ -7,7 +7,7 @@ describe AIXM::F do
 
   describe :freq= do
     it "fails on invalid values" do
-      -> { subject.freq = :foo }.must_raise ArgumentError
+      [:foobar].wont_be_written_to subject, :freq
     end
 
     it "converts Numeric to Float" do
@@ -17,7 +17,7 @@ describe AIXM::F do
 
   describe :unit= do
     it "fails on invalid values" do
-      -> { subject.unit = :foo }.must_raise ArgumentError
+      [:foobar, 123].wont_be_written_to subject, :unit
     end
 
     it "symbolizes and downcases values" do
