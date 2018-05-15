@@ -58,7 +58,7 @@ module AIXM
 
       # @return [String] AIXM or OFMX markup
       def to_xml
-        fail(GeometryError, "geometry is not closed") unless closed?
+        fail(GeometryError.new("geometry is not closed", self)) unless closed?
         @result_array.map { |h| h.to_xml }.join
       end
 

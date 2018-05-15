@@ -129,7 +129,7 @@ module AIXM
       # @raise [AIXM::LayerError] if no layers are defined
       # @return [String] AIXM or OFMX markup
       def to_xml
-        fail(LayerError, "no layers defined") unless layers.any?
+        fail(LayerError.new("no layers defined", self)) unless layers.any?
         builder = Builder::XmlMarkup.new(indent: 2)
         builder.comment! "Airspace: [#{TYPES.key(type)}] #{name || :UNNAMED}"
         builder.Ase({
