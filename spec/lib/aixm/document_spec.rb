@@ -82,7 +82,7 @@ describe AIXM::Document do
     it "builds correct AIXM" do
       subject.to_xml.must_equal <<~"END"
         <?xml version="1.0" encoding="UTF-8"?>
-        <AIXM-Snapshot xmlns:xsi="http://www.aixm.aero/schema/4.5/AIXM-Snapshot.xsd" version="4.5" origin="rubygem aixm-0.3.0" created="2018-01-01T12:00:00+01:00" effective="2018-01-01T12:00:00+01:00">
+        <AIXM-Snapshot xmlns:xsi="http://www.aixm.aero/schema/4.5/AIXM-Snapshot.xsd" version="4.5" origin="rubygem aixm-#{AIXM::VERSION}" created="2018-01-01T12:00:00+01:00" effective="2018-01-01T12:00:00+01:00">
           <!-- Organisation: FRANCE -->
           <Org>
             <OrgUid>
@@ -629,7 +629,7 @@ describe AIXM::Document do
     it "builds correct OFMX" do
       subject.to_xml.must_equal <<~"END"
         <?xml version="1.0" encoding="UTF-8"?>
-        <OFMX-Snapshot xmlns:xsi="http://openflightmaps.org/schema/0/OFMX-Snapshot.xsd" version="0" origin="rubygem aixm-0.3.0" namespace="00000000-0000-0000-0000-000000000000" created="2018-01-01T12:00:00+01:00" effective="2018-01-01T12:00:00+01:00">
+        <OFMX-Snapshot xmlns:xsi="http://openflightmaps.org/schema/0/OFMX-Snapshot.xsd" version="0" origin="rubygem aixm-#{AIXM::VERSION}" namespace="00000000-0000-0000-0000-000000000000" created="2018-01-01T12:00:00+01:00" effective="2018-01-01T12:00:00+01:00">
           <!-- Organisation: FRANCE -->
           <Org source="LF|GEN|0.0 FACTORY|0|0">
             <OrgUid region="LF">
