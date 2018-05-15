@@ -8,6 +8,7 @@ module AIXM
     # has to be a point with the same coordinates as the first).
     #
     # For a geometry to be valid, it must be comprised of either:
+    # * exactly one point
     # * exactly one circle
     # * at least three points, arcs or borders (the last of which a point with
     #   identical coordinates as the first)
@@ -53,7 +54,7 @@ module AIXM
 
       # @return [Boolean] whether the geometry is closed
       def closed?
-        circle? || polygon?
+        point? || circle? || polygon?
       end
 
       # @return [String] AIXM or OFMX markup
@@ -63,6 +64,11 @@ module AIXM
       end
 
       private
+
+      def point?
+        @result_array.size == 1 &&
+          @result_array.first.is_a?(AIXM::Component::Geometry::Point)
+      end
 
       def circle?
         @result_array.size == 1 &&

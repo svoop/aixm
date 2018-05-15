@@ -2,6 +2,7 @@
 
 #### Additions
 * `AIXM::Error` base error which reveals the `subject`
+* Consider single point geometries to be closed
 
 ## 0.3.0
 

@@ -7,6 +7,7 @@ describe AIXM::Component::Geometry do
     end
 
     it "must fail checks" do
+      subject.wont_be :point?
       subject.wont_be :circle?
       subject.wont_be :polygon?
       subject.wont_be :closed?
@@ -24,14 +25,27 @@ describe AIXM::Component::Geometry do
       end
     end
 
-    it "must fail checks" do
+    it "must pass checks" do
+      subject.must_be :point?
       subject.wont_be :circle?
       subject.wont_be :polygon?
-      subject.wont_be :closed?
+      subject.must_be :closed?
     end
 
-    it "must fail to build AIXM" do
-      -> { subject.to_xml }.must_raise AIXM::GeometryError
+    it "must return elements" do
+      subject.segments.count.must_equal 1
+    end
+
+    it "builds valid AIXM" do
+      AIXM.aixm!
+      subject.to_xml.must_equal <<~END
+        <Avx>
+          <codeType>GRC</codeType>
+          <geoLat>110000.00N</geoLat>
+          <geoLong>0220000.00E</geoLong>
+          <codeDatum>WGE</codeDatum>
+        </Avx>
+      END
     end
   end
 
@@ -44,6 +58,7 @@ describe AIXM::Component::Geometry do
     end
 
     it "must fail checks" do
+      subject.wont_be :point?
       subject.wont_be :circle?
       subject.wont_be :polygon?
       subject.wont_be :closed?
@@ -65,6 +80,7 @@ describe AIXM::Component::Geometry do
     end
 
     it "must pass checks" do
+      subject.wont_be :point?
       subject.wont_be :circle?
       subject.must_be :polygon?
       subject.must_be :closed?
@@ -115,6 +131,7 @@ describe AIXM::Component::Geometry do
     end
 
     it "must fail checks" do
+      subject.wont_be :point?
       subject.wont_be :circle?
       subject.wont_be :polygon?
       subject.wont_be :closed?
@@ -135,6 +152,7 @@ describe AIXM::Component::Geometry do
     end
 
     it "must pass checks" do
+      subject.wont_be :point?
       subject.wont_be :circle?
       subject.must_be :polygon?
       subject.must_be :closed?
@@ -176,6 +194,7 @@ describe AIXM::Component::Geometry do
     end
 
     it "must fail checks" do
+      subject.wont_be :point?
       subject.wont_be :circle?
       subject.wont_be :polygon?
       subject.wont_be :closed?
@@ -196,6 +215,7 @@ describe AIXM::Component::Geometry do
     end
 
     it "must pass checks" do
+      subject.wont_be :point?
       subject.wont_be :circle?
       subject.must_be :polygon?
       subject.must_be :closed?
@@ -238,6 +258,7 @@ describe AIXM::Component::Geometry do
     end
 
     it "must fail checks" do
+      subject.wont_be :point?
       subject.wont_be :circle?
       subject.wont_be :polygon?
       subject.wont_be :closed?
@@ -256,6 +277,7 @@ describe AIXM::Component::Geometry do
     end
 
     it "must pass checks" do
+      subject.wont_be :point?
       subject.must_be :circle?
       subject.wont_be :polygon?
       subject.must_be :closed?
@@ -285,6 +307,7 @@ describe AIXM::Component::Geometry do
     end
 
     it "must fail checks when additional elements are present" do
+      subject.wont_be :point?
       subject.wont_be :circle?
       subject.wont_be :polygon?
       subject.wont_be :closed?
