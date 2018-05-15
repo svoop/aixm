@@ -45,6 +45,10 @@ module AIXM
             tcn << vor.to_uid.indent(2) if vor
             tcn.txtName(name) if name
             tcn.codeChannel(channel)
+            if !vor && AIXM.ofmx?
+              tcn.valGhostFreq(ghost_f.freq.trim)
+              tcn.uomGhostFreq('MHZ')
+            end
             tcn.codeDatum('WGE')
             if z
               tcn.valElev(z.alt)

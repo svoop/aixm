@@ -420,6 +420,8 @@ describe AIXM::Document do
             </OrgUid>
             <txtName>DME NAVAID</txtName>
             <codeChannel>95X</codeChannel>
+            <valGhostFreq>114.8</valGhostFreq>
+            <uomGhostFreq>MHZ</uomGhostFreq>
             <codeDatum>WGE</codeDatum>
             <valElev>500</valElev>
             <uomDistVer>FT</uomDistVer>
@@ -970,6 +972,8 @@ describe AIXM::Document do
             </OrgUid>
             <txtName>DME NAVAID</txtName>
             <codeChannel>95X</codeChannel>
+            <valGhostFreq>114.8</valGhostFreq>
+            <uomGhostFreq>MHZ</uomGhostFreq>
             <codeDatum>WGE</codeDatum>
             <valElev>500</valElev>
             <uomDistVer>FT</uomDistVer>
@@ -1034,6 +1038,8 @@ describe AIXM::Document do
             </OrgUid>
             <txtName>TACAN NAVAID</txtName>
             <codeChannel>29X</codeChannel>
+            <valGhostFreq>109.2</valGhostFreq>
+            <uomGhostFreq>MHZ</uomGhostFreq>
             <codeDatum>WGE</codeDatum>
             <valElev>500</valElev>
             <uomDistVer>FT</uomDistVer>

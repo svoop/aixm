@@ -27,6 +27,8 @@ module AIXM
       class DME < NavigationalAid
         public_class_method :new
 
+        CHANNEL_PATTERN = /\A([1-9]|[1-9]\d|1[0-1]\d|12[0-6])[XY]\z/.freeze
+
         # @return [String] radio channel
         attr_reader :channel
 
@@ -39,8 +41,24 @@ module AIXM
         end
 
         def channel=(value)
-          fail(ArgumentError, "invalid channel") unless value.is_a? String
-          @channel = value.upcase
+          fail(ArgumentError, "invalid channel") unless value.is_a?(String) && value.match?(CHANNEL_PATTERN)
+          @channel = value
+        end
+
+        # @return [AIXM::F] ghost frequency matching the channel
+        def ghost_f
+          if channel
+            number, letter = channel.split(/(?=[XY])/)
+            integer = case number.to_i
+              when (1..16) then 13430
+              when (17..59) then 10630
+              when (60..69) then 12730
+              when (70..126) then 10530
+            end
+            integer += number.to_i * 10
+            integer += 5 if letter == 'Y'
+            AIXM.f(integer.to_f / 100, :mhz)
+          end
         end
 
         def vor=(value)
@@ -68,6 +86,10 @@ module AIXM
             dme << vor.to_uid.indent(2) if vor
             dme.txtName(name) if name
             dme.codeChannel(channel)
+            unless vor
+              dme.valGhostFreq(ghost_f.freq.trim)
+              dme.uomGhostFreq('MHZ')
+            end
             dme.codeDatum('WGE')
             if z
               dme.valElev(z.alt)

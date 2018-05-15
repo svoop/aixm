@@ -11,11 +11,24 @@ describe AIXM::Feature::NavigationalAid::DME do
 
   describe :channel= do
     it "fails on invalid values" do
-      [nil, :foobar, 123].wont_be_written_to subject, :channel
+      [nil, :foobar, 123, '0X', '127Y', '12Z'].wont_be_written_to subject, :channel
     end
+  end
 
-    it "upcases value" do
-      subject.tap { |s| s.channel = '3x' }.channel.must_equal '3X'
+  describe :ghost_f do
+    it "must be derived from the channel" do
+      subject.tap { |s| s.channel = '1X' }.ghost_f.freq.must_equal 134.4
+      subject.tap { |s| s.channel = '12Y' }.ghost_f.freq.must_equal 135.55
+      subject.tap { |s| s.channel = '16Y' }.ghost_f.freq.must_equal 135.95
+      subject.tap { |s| s.channel = '17X' }.ghost_f.freq.must_equal 108
+      subject.tap { |s| s.channel = '30X' }.ghost_f.freq.must_equal 109.3
+      subject.tap { |s| s.channel = '59Y' }.ghost_f.freq.must_equal 112.25
+      subject.tap { |s| s.channel = '60X' }.ghost_f.freq.must_equal 133.3
+      subject.tap { |s| s.channel = '64Y' }.ghost_f.freq.must_equal 133.75
+      subject.tap { |s| s.channel = '69Y' }.ghost_f.freq.must_equal 134.25
+      subject.tap { |s| s.channel = '70X' }.ghost_f.freq.must_equal 112.30
+      subject.tap { |s| s.channel = '100X' }.ghost_f.freq.must_equal 115.3
+      subject.tap { |s| s.channel = '126Y' }.ghost_f.freq.must_equal 117.95
     end
   end
 
@@ -41,6 +54,8 @@ describe AIXM::Feature::NavigationalAid::DME do
           </OrgUid>
           <txtName>DME NAVAID</txtName>
           <codeChannel>95X</codeChannel>
+          <valGhostFreq>114.8</valGhostFreq>
+          <uomGhostFreq>MHZ</uomGhostFreq>
           <codeDatum>WGE</codeDatum>
           <valElev>500</valElev>
           <uomDistVer>FT</uomDistVer>
@@ -67,6 +82,8 @@ describe AIXM::Feature::NavigationalAid::DME do
             <txtName>FRANCE</txtName>
           </OrgUid>
           <codeChannel>95X</codeChannel>
+          <valGhostFreq>114.8</valGhostFreq>
+          <uomGhostFreq>MHZ</uomGhostFreq>
           <codeDatum>WGE</codeDatum>
         </Dme>
       END

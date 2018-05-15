@@ -7949,6 +7949,16 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
           <xsd:documentation>Channel</xsd:documentation>
         </xsd:annotation>
       </xsd:element>
+      <xsd:element name="valGhostFreq" type="valFreq" minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation>Frequency of virtual VHF facility</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="uomGhostFreq" type="uomFreq" minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation>Unit of measurement [frequency of virtual VHF facility]</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
       <xsd:element name="valDeclination" type="valAngleMagVar" minOccurs="0">
         <xsd:annotation>
           <xsd:documentation>Station declination</xsd:documentation>
@@ -9546,7 +9556,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
           <xsd:documentation>Datum</xsd:documentation>
         </xsd:annotation>
       </xsd:element>
-      <xsd:element name="ZoomLevel" minOccurs="1" maxOccurs="7">
+      <xsd:element name="ZoomLevel" minOccurs="1" maxOccurs="unbounded">
         <xsd:annotation>
           <xsd:documentation>Divergent position and label value based on the zoom level.</xsd:documentation>
         </xsd:annotation>
