@@ -4,6 +4,7 @@
 * `AIXM::Error` base error which reveals the `subject`
 * Consider single point geometries to be closed
 * Calculate `DME#ghost_f` from `DME#channel`
+* `Layer#activity`
 
 ## 0.3.0
 

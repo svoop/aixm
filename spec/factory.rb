@@ -40,6 +40,7 @@ module AIXM
           class: :C,
           vertical_limits: vertical_limits
         ).tap do |layer|
+          layer.activity = :aerodrome_traffic
           layer.timetable = AIXM::H24
           layer.selective = true
           layer.remarks = 'airspace layer'

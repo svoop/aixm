@@ -29,6 +29,17 @@ describe AIXM::Component::Layer do
       end
     end
 
+    describe :activity= do
+      it "fails on invalid values" do
+        [:foobar, 123].wont_be_written_to subject, :activity
+      end
+
+      it "looks up valid values" do
+        subject.tap { |s| s.activity = :aerodrome_traffic }.activity.must_equal :aerodrome_traffic
+        subject.tap { |s| s.activity = :GLIDER }.activity.must_equal :gliding
+      end
+    end
+
     describe :timetable= do
       macro :timetable
     end
@@ -81,6 +92,7 @@ describe AIXM::Component::Layer do
       AIXM.ofmx!
       subject.to_xml.must_equal <<~END
         <codeClass>C</codeClass>
+        <codeActivity>TFC-AD</codeActivity>
         <codeDistVerUpper>STD</codeDistVerUpper>
         <valDistVerUpper>65</valDistVerUpper>
         <uomDistVerUpper>FL</uomDistVerUpper>
