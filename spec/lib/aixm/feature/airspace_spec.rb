@@ -132,6 +132,7 @@ describe AIXM::Feature::Airspace do
             <txtLocalType>POLYGON</txtLocalType>
             <txtName>POLYGON AIRSPACE</txtName>
             <codeClass>C</codeClass>
+            <codeLocInd>XXXX</codeLocInd>
             <codeActivity>TFC-AD</codeActivity>
             <codeDistVerUpper>STD</codeDistVerUpper>
             <valDistVerUpper>65</valDistVerUpper>
@@ -196,6 +197,7 @@ describe AIXM::Feature::Airspace do
               <codeId>PA</codeId>
             </AseUid>
             <codeClass>C</codeClass>
+            <codeLocInd>XXXX</codeLocInd>
             <codeActivity>TFC-AD</codeActivity>
             <codeDistVerUpper>STD</codeDistVerUpper>
             <valDistVerUpper>65</valDistVerUpper>
@@ -309,6 +311,7 @@ describe AIXM::Feature::Airspace do
             </AseUid>
             <txtName>POLYGON AIRSPACE LAYER 1</txtName>
             <codeClass>C</codeClass>
+            <codeLocInd>XXXX</codeLocInd>
             <codeActivity>TFC-AD</codeActivity>
             <codeDistVerUpper>STD</codeDistVerUpper>
             <valDistVerUpper>65</valDistVerUpper>
@@ -347,6 +350,7 @@ describe AIXM::Feature::Airspace do
             </AseUid>
             <txtName>POLYGON AIRSPACE LAYER 2</txtName>
             <codeClass>C</codeClass>
+            <codeLocInd>XXXX</codeLocInd>
             <codeActivity>TFC-AD</codeActivity>
             <codeDistVerUpper>STD</codeDistVerUpper>
             <valDistVerUpper>65</valDistVerUpper>

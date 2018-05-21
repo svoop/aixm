@@ -23,6 +23,20 @@ describe AIXM::Component::Layer do
       end
     end
 
+    describe :location_indicator= do
+      it "fails on invalid values" do
+        [:foobar, 123, 'XXX', 'XXXXX'].wont_be_written_to subject, :location_indicator
+      end
+
+      it "accepts nil value" do
+        [nil].must_be_written_to subject, :location_indicator
+      end
+
+      it "upcases value" do
+        subject.tap { |s| s.location_indicator = 'lfbb' }.location_indicator.must_equal 'LFBB'
+      end
+    end
+
     describe :vertical_limits= do
       it "fails on invalid values" do
         [nil, :foobar, 123].wont_be_written_to subject, :vertical_limits
@@ -92,6 +106,7 @@ describe AIXM::Component::Layer do
       AIXM.ofmx!
       subject.to_xml.must_equal <<~END
         <codeClass>C</codeClass>
+        <codeLocInd>XXXX</codeLocInd>
         <codeActivity>TFC-AD</codeActivity>
         <codeDistVerUpper>STD</codeDistVerUpper>
         <valDistVerUpper>65</valDistVerUpper>

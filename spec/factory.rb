@@ -38,6 +38,7 @@ module AIXM
       def layer
         AIXM.layer(
           class: :C,
+          location_indicator: 'XXXX',
           vertical_limits: vertical_limits
         ).tap do |layer|
           layer.activity = :aerodrome_traffic

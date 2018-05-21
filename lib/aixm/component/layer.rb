@@ -9,6 +9,7 @@ module AIXM
     # ===Cheat Sheet in Pseudo Code:
     #   layer = AIXM.layer(
     #     class: String or nil
+    #     location_indicator: String or nil
     #     vertical_limits: AIXM.vertical_limits
     #   )
     #   layer.activity = String or nil
@@ -82,6 +83,9 @@ module AIXM
         OTHER: :other
       }.freeze
 
+      # @return [String, nil] four letter location identifier as published in the ICAO DOC 7910
+      attr_reader :location_indicator
+
       # @return [AIXM::Component::VerticalLimits] vertical limits of this layer
       attr_reader :vertical_limits
 
@@ -94,9 +98,9 @@ module AIXM
       # @return [String, nil] free text remarks
       attr_reader :remarks
 
-      def initialize(class: nil, vertical_limits:)
+      def initialize(class: nil, location_indicator: nil, vertical_limits:)
         self.class = binding.local_variable_get(:class)
-        self.vertical_limits = vertical_limits
+        self.location_indicator, self.vertical_limits = location_indicator, vertical_limits
         self.selective = false
       end
 
@@ -114,6 +118,11 @@ module AIXM
       def class=(value)
         @klass = value&.to_sym&.upcase
         fail(ArgumentError, "invalid class") unless @klass.nil? || CLASSES.include?(@klass)
+      end
+
+      def location_indicator=(value)
+        fail(ArgumentError, "invalid location indicator") unless value.nil? || (value.is_a?(String) && value.length == 4)
+        @location_indicator = value&.uptrans
       end
 
       def vertical_limits=(value)
@@ -149,6 +158,7 @@ module AIXM
       def to_xml
         builder = Builder::XmlMarkup.new(indent: 2)
         builder.codeClass(self.class.to_s) if self.class
+        builder.codeLocInd(location_indicator) if location_indicator
         builder.codeActivity(ACTIVITIES.key(activity).to_s) if activity
         builder << vertical_limits.to_xml
         builder << timetable.to_xml(as: :Att) if timetable

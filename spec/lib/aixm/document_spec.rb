@@ -306,6 +306,7 @@ describe AIXM::Document do
             <txtLocalType>POLYGON</txtLocalType>
             <txtName>POLYGON AIRSPACE</txtName>
             <codeClass>C</codeClass>
+            <codeLocInd>XXXX</codeLocInd>
             <codeActivity>TFC-AD</codeActivity>
             <codeDistVerUpper>STD</codeDistVerUpper>
             <valDistVerUpper>65</valDistVerUpper>
@@ -364,6 +365,7 @@ describe AIXM::Document do
             <txtLocalType>CIRCLE</txtLocalType>
             <txtName>CIRCLE AIRSPACE</txtName>
             <codeClass>C</codeClass>
+            <codeLocInd>XXXX</codeLocInd>
             <codeActivity>TFC-AD</codeActivity>
             <codeDistVerUpper>STD</codeDistVerUpper>
             <valDistVerUpper>65</valDistVerUpper>
@@ -858,6 +860,7 @@ describe AIXM::Document do
             <txtLocalType>POLYGON</txtLocalType>
             <txtName>POLYGON AIRSPACE</txtName>
             <codeClass>C</codeClass>
+            <codeLocInd>XXXX</codeLocInd>
             <codeActivity>TFC-AD</codeActivity>
             <codeDistVerUpper>STD</codeDistVerUpper>
             <valDistVerUpper>65</valDistVerUpper>
@@ -917,6 +920,7 @@ describe AIXM::Document do
             <txtLocalType>CIRCLE</txtLocalType>
             <txtName>CIRCLE AIRSPACE</txtName>
             <codeClass>C</codeClass>
+            <codeLocInd>XXXX</codeLocInd>
             <codeActivity>TFC-AD</codeActivity>
             <codeDistVerUpper>STD</codeDistVerUpper>
             <valDistVerUpper>65</valDistVerUpper>

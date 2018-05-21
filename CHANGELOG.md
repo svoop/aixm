@@ -4,7 +4,7 @@
 * `AIXM::Error` base error which reveals the `subject`
 * Consider single point geometries to be closed
 * Calculate `DME#ghost_f` from `DME#channel`
-* `Layer#activity`
+* `Layer#location_indicator` and `Layer#activity`
 
 #### Breaking Changes
 * Renamed `Airspace#short_name` to `Airspace#local_type`
