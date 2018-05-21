@@ -6,6 +6,9 @@
 * Calculate `DME#ghost_f` from `DME#channel`
 * `Layer#activity`
 
+#### Breaking Changes
+* Renamed `Airspace#short_name` to `Airspace#local_type`
+
 ## 0.3.0
 
 #### Breaking Additions

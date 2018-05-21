@@ -81,8 +81,8 @@ module AIXM
           region: 'LF',
           id: 'PA',
           type: :danger_area,
-          name: 'POLYGON AIRSPACE',
-          short_name: 'POLYGON'
+          local_type: 'POLYGON',
+          name: 'POLYGON AIRSPACE'
         ).tap do |airspace|
           airspace.layers << layer
           airspace.geometry = polygon_geometry
@@ -95,8 +95,8 @@ module AIXM
           region: 'LF',
           id: 'CA',
           type: :danger_area,
-          name: 'CIRCLE AIRSPACE',
-          short_name: 'CIRCLE'
+          local_type: 'CIRCLE',
+          name: 'CIRCLE AIRSPACE'
         ).tap do |airspace|
           airspace.layers << layer
           airspace.geometry = circle_geometry

@@ -11,8 +11,8 @@ module AIXM
     #     region: String or nil (falls back to AIXM.config.region)
     #     id: String
     #     type: String or Symbol
+    #     local_type: String or nil
     #     name: String or nil
-    #     short_name: String or nil
     #   )
     #   airspace.geometry << AIXM.point or AIXM.arc or AIXM.border or AIXM.circle
     #   airspace.layers << AIXM.layer
@@ -65,18 +65,18 @@ module AIXM
       }.freeze
 
       # @note When assigning +nil+, a 4 byte hex derived from {#type}, {#name}
-      #   and {#short_name} is written instead.
+      #   and {#local_type} is written instead.
       # @return [String] published identifier (e.g. "LFP81")
       attr_reader :id
 
       # @return [Symbol] type of airspace (see {TYPES})
       attr_reader :type
 
+      # @return [String, nil] short name (e.g. "LF P 81")
+      attr_reader :local_type
+
       # @return [String, nil] full name (e.g. "LF P 81 CHERBOURG")
       attr_reader :name
-
-      # @return [String, nil] short name (e.g. "LF P 81")
-      attr_reader :short_name
 
       # @return [AIXM::Component::Geometry] horizontal geometrical shape
       attr_accessor :geometry
@@ -84,9 +84,9 @@ module AIXM
       # @return [Array<AIXM::Compoment::Layer>] vertical layers
       attr_accessor :layers
 
-      def initialize(source: nil, region: nil, id: nil, type:, name: nil, short_name: nil)
+      def initialize(source: nil, region: nil, id: nil, type:, local_type: nil, name: nil)
         super(source: source, region: region)
-        self.type, self.name, self.short_name = type, name, short_name
+        self.type, self.local_type, self.name = type, local_type, name
         self.id = id
         @geometry = AIXM.geometry
         @layers = []
@@ -99,21 +99,21 @@ module AIXM
 
       def id=(value)
         fail(ArgumentError, "invalid id") unless value.nil? || value.is_a?(String)
-        @id = value&.uptrans || [type, name, short_name].to_digest.upcase
+        @id = value&.uptrans || [type, name, local_type].to_digest.upcase
       end
 
       def type=(value)
         @type = TYPES.lookup(value&.to_s&.to_sym, nil) || fail(ArgumentError, "invalid type")
       end
 
+      def local_type=(value)
+        fail(ArgumentError, "invalid short name") unless value.nil? || value.is_a?(String)
+        @local_type = value&.uptrans
+      end
+
       def name=(value)
         fail(ArgumentError, "invalid name") unless value.nil? || value.is_a?(String)
         @name = value&.uptrans
-      end
-
-      def short_name=(value)
-        fail(ArgumentError, "invalid short name") unless value.nil? || value.is_a?(String)
-        @short_name = value&.uptrans
       end
 
       # @return [String] UID markup
@@ -137,7 +137,7 @@ module AIXM
           classLayers: (layers.count if AIXM.ofmx? && layered?)
         }.compact) do |ase|
           ase << to_uid.indent(2)
-          ase.txtLocalType(short_name) if short_name && short_name != name
+          ase.txtLocalType(local_type) if local_type && local_type != name
           ase.txtName(name) if name
           unless layered?
             ase << layers.first.to_xml.indent(2)

@@ -20,7 +20,7 @@ describe AIXM::Feature::Airspace do
         [:foobar, 123].wont_be_written_to subject, :id
       end
 
-      it "falls back to id derived from digest of id, name and short_name" do
+      it "falls back to id derived from digest of id, local_type and name" do
         subject.tap { |s| s.id = nil }.id.must_equal '22E2F734'
       end
 
@@ -40,6 +40,20 @@ describe AIXM::Feature::Airspace do
       end
     end
 
+    describe :local_type= do
+      it "fails on invalid values" do
+        [:foobar, 123].wont_be_written_to subject, :local_type
+      end
+
+      it "accepts nil value" do
+        [nil].must_be_written_to subject, :local_type
+      end
+
+      it "upcases value" do
+        subject.tap { |s| s.local_type = 'löl' }.local_type.must_equal 'LOEL'
+      end
+    end
+
     describe :name= do
       it "fails on invalid values" do
         [:foobar, 123].wont_be_written_to subject, :name
@@ -51,20 +65,6 @@ describe AIXM::Feature::Airspace do
 
       it "upcases value" do
         subject.tap { |s| s.name = 'löl' }.name.must_equal 'LOEL'
-      end
-    end
-
-    describe :short_name= do
-      it "fails on invalid values" do
-        [:foobar, 123].wont_be_written_to subject, :short_name
-      end
-
-      it "accepts nil value" do
-        [nil].must_be_written_to subject, :short_name
-      end
-
-      it "upcases value" do
-        subject.tap { |s| s.short_name = 'löl' }.short_name.must_equal 'LOEL'
       end
     end
 
@@ -187,7 +187,7 @@ describe AIXM::Feature::Airspace do
 
       it "builds correct minimal OFMX" do
         AIXM.ofmx!
-        subject.short_name = subject.name = nil
+        subject.local_type = subject.name = nil
         subject.to_xml.must_equal <<~"END"
           <!-- Airspace: [D] UNNAMED -->
           <Ase source="LF|GEN|0.0 FACTORY|0|0">
