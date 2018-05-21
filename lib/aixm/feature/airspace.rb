@@ -99,7 +99,7 @@ module AIXM
 
       def id=(value)
         fail(ArgumentError, "invalid id") unless value.nil? || value.is_a?(String)
-        @id = value&.uptrans || [type, name, local_type].to_digest.upcase
+        @id = value&.uptrans || [type, local_type, name].to_digest.upcase
       end
 
       def type=(value)
