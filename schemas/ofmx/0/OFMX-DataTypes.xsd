@@ -1850,12 +1850,12 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
   <xsd:simpleType name="codeIdAdHpBase">
     <xsd:restriction base="alphanumeric">
       <xsd:minLength value="3"/>
-      <xsd:maxLength value="6"/>
+      <xsd:pattern value="([A-Z]{3,4}|[A-Z]{2}[A-Z\d]{4,})"/>
     </xsd:restriction>
   </xsd:simpleType>
   <xsd:complexType name="codeIdAdHp">
     <xsd:annotation>
-      <xsd:documentation>A coded identifier for an Aerodrome/Heliport.   The rules according to which this identifier should be formed are as follows:  1) If the AD/HP has an ICAO four letter location indicator, this will become the CODE_ID for the Aerodrome/Heliport;  2) If the AD/HP does not have an ICAO four letter location indicator but has an IATA three letter code, then this will become the CODE_ID for the Aerodrome/Heliport;  3) If the AD/HP does not have either an ICAO four letter location indicator or an IATA three letter code, an artificially generated code will be used. This will contain a group of letters and a number. The group of letters could be  the 2 letter code of the State responsible for the Aerodrome/Heliport (or one of these, if there are more than one, like ED and ET for Germany) and the number could  be an integer between 0001 and 9999. </xsd:documentation>
+      <xsd:documentation>A coded identifier for an Aerodrome/Heliport.   The rules according to which this identifier should be formed are as follows:  1) If the AD/HP has an ICAO four letter location indicator, this will become the CODE_ID for the Aerodrome/Heliport;  2) If the AD/HP does not have an ICAO four letter location indicator but has an IATA three letter code, then this will become the CODE_ID for the Aerodrome/Heliport;  3) If the AD/HP does not have either an ICAO four letter location indicator or an IATA three letter code, an artificially generated code will be used. This will contain a group of letters and a number. The group of letters could be the 2 letter code of the State responsible for the Aerodrome/Heliport (or one of these, if there are more than one, like ED and ET for Germany) and the number could  be an integer between 0001 and 9999;  4) As an alternative to 3, it is also possible use the 2 letter code of the State responsible for the Aerodrome/Heliport and add at least four letters and/or numbers to it.</xsd:documentation>
     </xsd:annotation>
     <xsd:simpleContent>
       <xsd:extension base="codeIdAdHpBase">

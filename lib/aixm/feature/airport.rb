@@ -30,7 +30,7 @@ module AIXM
     class Airport < Feature
       public_class_method :new
 
-      CODE_PATTERN = /^[A-Z]{2}([A-Z]{1,2}|\d{4})$/.freeze
+      CODE_PATTERN = /^([A-Z]{3,4}|[A-Z]{2}[A-Z\d]{4,})$/.freeze
 
       TYPES = {
         AD: :aerodrome,
@@ -42,11 +42,13 @@ module AIXM
       # @return [AIXM::Feature::Organisation] superior organisation
       attr_reader :organisation
 
-      # ICAO indicator, IATA indicator or ICAO serial number
+      # ICAO indicator, IATA indicator or generated indicator
       #
       # * four letter ICAO indicator (e.g. "LFMV")
       # * three letter IATA indicator (e.g. "AVN")
       # * two letter ICAO country code + four digit number (e.g. "LF1234")
+      # * two letter ICAO country code + at least four letters/digits (e.g.
+      #   "LFFOOBAR123" or "LF" + GPS code)
       #
       # @return [String] airport indicator code
       attr_reader :code

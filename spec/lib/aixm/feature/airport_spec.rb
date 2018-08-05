@@ -27,7 +27,7 @@ describe AIXM::Feature::Airport do
 
   describe :code= do
     it "fails on invalid values" do
-      [nil, 'A', 'AB', 'ABCDE', 'AB12345'].wont_be_written_to subject, :code
+      [nil, 'A', 'AB', 'ABCDE', 'AB 1234'].wont_be_written_to subject, :code
     end
 
     it "upcases valid values" do

@@ -9,6 +9,10 @@
 #### Breaking Changes
 * Renamed `Airspace#short_name` to `Airspace#local_type`
 
+#### Changes
+* Be more permissive on `Ahp#code` in order to accomodate generated codes
+  built by concatting the `Ahp#region` and `Ahp#gps`.
+
 ## 0.3.0
 
 #### Breaking Additions
