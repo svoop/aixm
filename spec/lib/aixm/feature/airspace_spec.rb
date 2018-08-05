@@ -265,7 +265,7 @@ describe AIXM::Feature::Airspace do
         AIXM.ofmx!
         subject.to_xml.must_equal <<~"END"
           <!-- Airspace: [D] POLYGON AIRSPACE -->
-          <Ase source="LF|GEN|0.0 FACTORY|0|0" classLayers="2">
+          <Ase source="LF|GEN|0.0 FACTORY|0|0">
             <AseUid region="LF">
               <codeType>D</codeType>
               <codeId>PA</codeId>

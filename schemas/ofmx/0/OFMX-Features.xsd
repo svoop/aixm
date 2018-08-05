@@ -1392,7 +1392,6 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
       </xsd:element>
     </xsd:sequence>
     <xsd:attribute ref="source"/>
-    <xsd:attribute name="classLayers" type="counter"/>
   </xsd:complexType>
   <xsd:complexType name="AirspaceUidType">
     <xsd:annotation>
@@ -7138,6 +7137,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
         </xsd:annotation>
       </xsd:element>
     </xsd:sequence>
+    <xsd:attribute ref="source"/>
   </xsd:complexType>
   <xsd:complexType name="ServiceUidType">
     <xsd:annotation>
@@ -7160,6 +7160,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
         </xsd:annotation>
       </xsd:element>
     </xsd:sequence>
+    <xsd:attribute ref="region" use="required"/>
     <xsd:attribute ref="mid"/>
   </xsd:complexType>
   <xsd:complexType name="SidServiceType">

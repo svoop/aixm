@@ -133,8 +133,7 @@ module AIXM
         builder = Builder::XmlMarkup.new(indent: 2)
         builder.comment! "Airspace: [#{TYPES.key(type)}] #{name || :UNNAMED}"
         builder.Ase({
-          source: (source if AIXM.ofmx?),
-          classLayers: (layers.count if AIXM.ofmx? && layered?)
+          source: (source if AIXM.ofmx?)
         }.compact) do |ase|
           ase << to_uid.indent(2)
           ase.txtLocalType(local_type) if local_type && local_type != name

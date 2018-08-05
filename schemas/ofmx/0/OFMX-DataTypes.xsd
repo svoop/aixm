@@ -284,6 +284,8 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
       <xsd:enumeration value="TR4"/>
       <xsd:enumeration value="TS-1"/>
       <xsd:enumeration value="RT"/>
+      <xsd:enumeration value="DIESEL"/>
+      <xsd:enumeration value="OCT100"/>
       <xsd:enumeration value="ALL"/>
       <xsd:enumeration value="OTHER"/>
     </xsd:restriction>
