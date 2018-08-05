@@ -86,7 +86,7 @@ describe AIXM::Feature::Unit do
           <txtRmk>A/A FR only</txtRmk>
         </Uni>
         <Ser>
-          <SerUid>
+          <SerUid region="LF">
             <UniUid region="LF">
               <txtName>PUJAUT TWR</txtName>
             </UniUid>
@@ -100,7 +100,7 @@ describe AIXM::Feature::Unit do
         </Ser>
         <Fqy>
           <FqyUid>
-            <SerUid>
+            <SerUid region="LF">
               <UniUid region="LF">
                 <txtName>PUJAUT TWR</txtName>
               </UniUid>
@@ -125,7 +125,7 @@ describe AIXM::Feature::Unit do
           </Cdl>
         </Fqy>
         <Ser>
-          <SerUid>
+          <SerUid region="LF">
             <UniUid region="LF">
               <txtName>PUJAUT TWR</txtName>
             </UniUid>
@@ -139,7 +139,7 @@ describe AIXM::Feature::Unit do
         </Ser>
         <Fqy>
           <FqyUid>
-            <SerUid>
+            <SerUid region="LF">
               <UniUid region="LF">
                 <txtName>PUJAUT TWR</txtName>
               </UniUid>
@@ -164,7 +164,7 @@ describe AIXM::Feature::Unit do
           </Cdl>
         </Fqy>
         <Ser>
-          <SerUid>
+          <SerUid region="LF">
             <UniUid region="LF">
               <txtName>PUJAUT TWR</txtName>
             </UniUid>
@@ -178,7 +178,7 @@ describe AIXM::Feature::Unit do
         </Ser>
         <Fqy>
           <FqyUid>
-            <SerUid>
+            <SerUid region="LF">
               <UniUid region="LF">
                 <txtName>PUJAUT TWR</txtName>
               </UniUid>

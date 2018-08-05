@@ -661,7 +661,7 @@ describe AIXM::Document do
             <txtRmk>A/A FR only</txtRmk>
           </Uni>
           <Ser>
-            <SerUid>
+            <SerUid region="LF">
               <UniUid region="LF">
                 <txtName>PUJAUT TWR</txtName>
               </UniUid>
@@ -675,7 +675,7 @@ describe AIXM::Document do
           </Ser>
           <Fqy>
             <FqyUid>
-              <SerUid>
+              <SerUid region="LF">
                 <UniUid region="LF">
                   <txtName>PUJAUT TWR</txtName>
                 </UniUid>
