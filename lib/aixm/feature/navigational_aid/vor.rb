@@ -11,7 +11,6 @@ module AIXM
       # ===Cheat Sheet in Pseudo Code:
       #   vor = AIXM.vor(
       #     source: String or nil
-      #     region: String or nil (falls back to AIXM.config.region)
       #     organisation: AIXM.organisation
       #     id: String
       #     name: String
@@ -79,21 +78,21 @@ module AIXM
         # Associate a DME which turns the VOR into a VOR/DME
         def associate_dme(channel:)
           @dme = AIXM.dme(organisation: organisation, id: id, name: name, xy: xy, z: z, channel: channel)
-          @dme.region, @dme.timetable, @dme.remarks = region, timetable, remarks
+          @dme.timetable, @dme.remarks = timetable, remarks
           @dme.send(:vor=, self)
         end
 
         # Associate a TACAN which turns the VOR into a VORTAC
         def associate_tacan(channel:)
           @tacan = AIXM.tacan(organisation: organisation, id: id, name: name, xy: xy, z: z, channel: channel)
-          @tacan.region, @tacan.timetable, @tacan.remarks = region, timetable, remarks
+          @tacan.timetable, @tacan.remarks = timetable, remarks
           @tacan.send(:vor=, self)
         end
 
         # @return [String] UID markup
         def to_uid
           builder = Builder::XmlMarkup.new(indent: 2)
-          builder.VorUid({ region: (region if AIXM.ofmx?) }.compact) do |vor_uid|
+          builder.VorUid do |vor_uid|
             vor_uid.codeId(id)
             vor_uid.geoLat(xy.lat(AIXM.schema))
             vor_uid.geoLong(xy.long(AIXM.schema))

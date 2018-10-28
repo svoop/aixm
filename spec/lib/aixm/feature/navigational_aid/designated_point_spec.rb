@@ -28,7 +28,7 @@ describe AIXM::Feature::NavigationalAid::DesignatedPoint do
       subject.to_xml.must_equal <<~END
         <!-- NavigationalAid: [DesignatedPoint:ICAO] DESIGNATED POINT NAVAID -->
         <Dpn source="LF|GEN|0.0 FACTORY|0|0">
-          <DpnUid region="LF">
+          <DpnUid>
             <codeId>DDD</codeId>
             <geoLat>47.85916667N</geoLat>
             <geoLong>007.56000000E</geoLong>
@@ -47,7 +47,7 @@ describe AIXM::Feature::NavigationalAid::DesignatedPoint do
       subject.to_xml.must_equal <<~END
         <!-- NavigationalAid: [DesignatedPoint:ICAO] UNNAMED -->
         <Dpn source="LF|GEN|0.0 FACTORY|0|0">
-          <DpnUid region="LF">
+          <DpnUid>
             <codeId>DDD</codeId>
             <geoLat>47.85916667N</geoLat>
             <geoLong>007.56000000E</geoLong>

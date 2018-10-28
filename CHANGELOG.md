@@ -7,12 +7,13 @@
 * `Layer#location_indicator` and `Layer#activity`
 
 #### Breaking Changes
-* Renamed `Airspace#code` to `Airspace#id`
+* Renamed `Airport#code` to `Airport#id`
 * Renamed `Airspace#short_name` to `Airspace#local_type`
+* Moved `region` attribute from features to Document 
 
 #### Changes
-* Be more permissive on `Ahp#code` in order to accomodate generated codes
-  built by concatting the `Ahp#region` and `Ahp#gps`.
+* Be more permissive on `Airport#id` in order to accomodate generated codes
+  built by concatting the `region` and `Airport#gps`.
 
 ## 0.3.0
 
@@ -38,12 +39,12 @@
 ## 0.2.3
 
 #### Breaking Changes
-* VOR types renamed from :vor to :conventional and :doppler_vor to :doppler
+* VOR types renamed from `:vor` to `:conventional` and `:doppler_vor` to `:doppler`
 * NBR types added
 * Marker types added
 
 #### Changes
-* "mid" attributes on all navigational aid features
+* `mid` attributes on all navigational aid features
 
 ## 0.2.2
 
@@ -57,7 +58,7 @@
 * DVOR and VORDME confusion fixed
 * VOR can be associated with DME (-> VOR/DME) or TACAN (-> VORTAC) now
 * `to_xml` renamed to `to_aixm` everywhere
-* Removed :other from all value lists
+* Removed `:other` from all value lists
 
 #### Changes
 * Schedule added to navigational aids
@@ -65,7 +66,7 @@
 ## 0.2.0
 
 #### Breaking Changes
-* Symbols such as :qnh, :ofm or :mhz are downcased now
+* Symbols such as `:qnh`, `:ofm` or `:mhz` are downcased now
 
 #### Additions
 * Frequency

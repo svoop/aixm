@@ -44,12 +44,12 @@ describe AIXM::Feature::NavigationalAid::DME do
       subject.to_xml.must_equal <<~END
         <!-- NavigationalAid: [DME] DME NAVAID -->
         <Dme source="LF|GEN|0.0 FACTORY|0|0">
-          <DmeUid region="LF">
+          <DmeUid>
             <codeId>MMM</codeId>
             <geoLat>47.85916667N</geoLat>
             <geoLong>007.56000000E</geoLong>
           </DmeUid>
-          <OrgUid region=\"LF\">
+          <OrgUid>
             <txtName>FRANCE</txtName>
           </OrgUid>
           <txtName>DME NAVAID</txtName>
@@ -73,12 +73,12 @@ describe AIXM::Feature::NavigationalAid::DME do
       subject.to_xml.must_equal <<~END
         <!-- NavigationalAid: [DME] UNNAMED -->
         <Dme source="LF|GEN|0.0 FACTORY|0|0">
-          <DmeUid region="LF">
+          <DmeUid>
             <codeId>MMM</codeId>
             <geoLat>47.85916667N</geoLat>
             <geoLong>007.56000000E</geoLong>
           </DmeUid>
-          <OrgUid region=\"LF\">
+          <OrgUid>
             <txtName>FRANCE</txtName>
           </OrgUid>
           <codeChannel>95X</codeChannel>

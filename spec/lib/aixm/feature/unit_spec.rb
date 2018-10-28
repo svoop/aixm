@@ -72,13 +72,13 @@ describe AIXM::Feature::Unit do
       subject.to_xml.must_equal <<~END
         <!-- Unit: PUJAUT TWR -->
         <Uni source="LF|GEN|0.0 FACTORY|0|0">
-          <UniUid region="LF">
+          <UniUid>
             <txtName>PUJAUT TWR</txtName>
           </UniUid>
-          <OrgUid region="LF">
+          <OrgUid>
             <txtName>FRANCE</txtName>
           </OrgUid>
-          <AhpUid region="LF">
+          <AhpUid>
             <codeId>LFNT</codeId>
           </AhpUid>
           <codeType>TWR</codeType>
@@ -86,8 +86,8 @@ describe AIXM::Feature::Unit do
           <txtRmk>A/A FR only</txtRmk>
         </Uni>
         <Ser>
-          <SerUid region="LF">
-            <UniUid region="LF">
+          <SerUid>
+            <UniUid>
               <txtName>PUJAUT TWR</txtName>
             </UniUid>
             <codeType>AFIS</codeType>
@@ -100,8 +100,8 @@ describe AIXM::Feature::Unit do
         </Ser>
         <Fqy>
           <FqyUid>
-            <SerUid region="LF">
-              <UniUid region="LF">
+            <SerUid>
+              <UniUid>
                 <txtName>PUJAUT TWR</txtName>
               </UniUid>
               <codeType>AFIS</codeType>
@@ -125,8 +125,8 @@ describe AIXM::Feature::Unit do
           </Cdl>
         </Fqy>
         <Ser>
-          <SerUid region="LF">
-            <UniUid region="LF">
+          <SerUid>
+            <UniUid>
               <txtName>PUJAUT TWR</txtName>
             </UniUid>
             <codeType>AFIS</codeType>
@@ -139,8 +139,8 @@ describe AIXM::Feature::Unit do
         </Ser>
         <Fqy>
           <FqyUid>
-            <SerUid region="LF">
-              <UniUid region="LF">
+            <SerUid>
+              <UniUid>
                 <txtName>PUJAUT TWR</txtName>
               </UniUid>
               <codeType>AFIS</codeType>
@@ -164,8 +164,8 @@ describe AIXM::Feature::Unit do
           </Cdl>
         </Fqy>
         <Ser>
-          <SerUid region="LF">
-            <UniUid region="LF">
+          <SerUid>
+            <UniUid>
               <txtName>PUJAUT TWR</txtName>
             </UniUid>
             <codeType>APP</codeType>
@@ -178,8 +178,8 @@ describe AIXM::Feature::Unit do
         </Ser>
         <Fqy>
           <FqyUid>
-            <SerUid region="LF">
-              <UniUid region="LF">
+            <SerUid>
+              <UniUid>
                 <txtName>PUJAUT TWR</txtName>
               </UniUid>
               <codeType>APP</codeType>
@@ -212,10 +212,10 @@ describe AIXM::Feature::Unit do
       subject.to_xml.must_equal <<~END
         <!-- Unit: PUJAUT TWR -->
         <Uni source="LF|GEN|0.0 FACTORY|0|0">
-          <UniUid region="LF">
+          <UniUid>
             <txtName>PUJAUT TWR</txtName>
           </UniUid>
-          <OrgUid region="LF">
+          <OrgUid>
             <txtName>FRANCE</txtName>
           </OrgUid>
           <codeType>TWR</codeType>

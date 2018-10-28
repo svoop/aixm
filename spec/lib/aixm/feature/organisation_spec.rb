@@ -50,7 +50,7 @@ describe AIXM::Feature::Organisation do
       subject.to_xml.must_equal <<~END
         <!-- Organisation: FRANCE -->
         <Org source="LF|GEN|0.0 FACTORY|0|0">
-          <OrgUid region="LF">
+          <OrgUid>
             <txtName>FRANCE</txtName>
           </OrgUid>
           <codeId>LF</codeId>
@@ -66,7 +66,7 @@ describe AIXM::Feature::Organisation do
       subject.to_xml.must_equal <<~END
         <!-- Organisation: FRANCE -->
         <Org source="LF|GEN|0.0 FACTORY|0|0">
-          <OrgUid region="LF">
+          <OrgUid>
             <txtName>FRANCE</txtName>
           </OrgUid>
           <codeType>S</codeType>

@@ -10,7 +10,6 @@ module AIXM
       # ===Cheat Sheet in Pseudo Code:
       #   ndb = AIXM.ndb(
       #     source: String or nil
-      #     region: String or nil (falls back to AIXM.config.region)
       #     organisation: AIXM.organisation
       #     id: String
       #     name: String
@@ -56,7 +55,7 @@ module AIXM
         # @return [String] UID markup
         def to_uid
           builder = Builder::XmlMarkup.new(indent: 2)
-          builder.NdbUid({ region: (region if AIXM.ofmx?) }.compact) do |ndb_uid|
+          builder.NdbUid do |ndb_uid|
             ndb_uid.codeId(id)
             ndb_uid.geoLat(xy.lat(AIXM.schema))
             ndb_uid.geoLong(xy.long(AIXM.schema))

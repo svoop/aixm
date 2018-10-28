@@ -10,7 +10,6 @@ module AIXM
       # ===Cheat Sheet in Pseudo Code:
       #   designated_point = AIXM.designated_point(
       #     source: String or nil
-      #     region: String or nil (falls back to AIXM.config.region)
       #     id: String
       #     name: String or nil
       #     xy: AIXM.xy
@@ -46,7 +45,7 @@ module AIXM
         # @return [String] UID markup
         def to_uid
           builder = Builder::XmlMarkup.new(indent: 2)
-          builder.DpnUid({ region: (region if AIXM.ofmx?) }.compact) do |dpn_uid|
+          builder.DpnUid do |dpn_uid|
             dpn_uid.codeId(id)
             dpn_uid.geoLat(xy.lat(AIXM.schema))
             dpn_uid.geoLong(xy.long(AIXM.schema))

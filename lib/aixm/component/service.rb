@@ -143,7 +143,7 @@ module AIXM
       # @return [String] UID markup
       def to_uid
         builder = Builder::XmlMarkup.new(indent: 2)
-        builder.SerUid({ region: (unit.region if AIXM.ofmx?) }.compact) do |ser_uid|
+        builder.SerUid do |ser_uid|
           ser_uid << unit.to_uid.indent(2)
           ser_uid.codeType(TYPES.key(type).to_s)
           ser_uid.noSeq(@sequence)

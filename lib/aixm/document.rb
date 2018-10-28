@@ -17,6 +17,9 @@ module AIXM
   class Document
     NAMESPACE_PATTERN = /\A[a-f\d]{8}-[a-f\d]{4}-[a-f\d]{4}-[a-f\d]{4}-[a-f\d]{12}\z/.freeze
 
+    # @return [String] OFMX region all features in this document belong to
+    attr_reader :region
+
     # @return [String] UUID to namespace the data contained in this document
     attr_reader :namespace
 
@@ -29,14 +32,19 @@ module AIXM
     # @return [Array<AIXM::Feature>] airspaces, airports and other features
     attr_accessor :features
 
-    def initialize(namespace: nil, created_at: nil, effective_at: nil)
-      self.namespace, self.created_at, self.effective_at = namespace, created_at, effective_at
+    def initialize(region: nil, namespace: nil, created_at: nil, effective_at: nil)
+      self.region, self.namespace, self.created_at, self.effective_at = region, namespace, created_at, effective_at
       @features = []
     end
 
     # @return [String]
     def inspect
       %Q(#<#{self.class} created_at=#{created_at.inspect}>)
+    end
+
+    def region=(value)
+      fail(ArgumentError, "invalid region") unless value.nil? || value.is_a?(String)
+      @region = value&.upcase
     end
 
     def namespace=(value)
@@ -76,6 +84,7 @@ module AIXM
         'xmlns:xsi': AIXM.schema(:namespace),
         version: AIXM.schema(:version),
         origin: "rubygem aixm-#{AIXM::VERSION}",
+        region: (region if AIXM.ofmx?),
         namespace: (namespace if AIXM.ofmx?),
         created: @created_at.xmlschema,
         effective: @effective_at.xmlschema

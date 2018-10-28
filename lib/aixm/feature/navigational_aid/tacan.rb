@@ -11,7 +11,6 @@ module AIXM
       # ===Cheat Sheet in Pseudo Code:
       #   tacan = AIXM.tacan(
       #     source: String or nil
-      #     region: String or nil (to use +AIXM.config.region+)
       #     organisation: AIXM.organisation
       #     id: String
       #     name: String
@@ -29,7 +28,7 @@ module AIXM
         # @return [String] UID markup
         def to_uid
           builder = Builder::XmlMarkup.new(indent: 2)
-          builder.TcnUid({ region: (region if AIXM.ofmx?) }.compact) do |tcn_uid|
+          builder.TcnUid do |tcn_uid|
             tcn_uid.codeId(id)
             tcn_uid.geoLat(xy.lat(AIXM.schema))
             tcn_uid.geoLong(xy.long(AIXM.schema))

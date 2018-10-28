@@ -184,10 +184,10 @@ describe AIXM::Feature::Airport do
       subject.to_xml.must_equal <<~END
         <!-- Airport: LFNT AVIGNON-PUJAUT -->
         <Ahp source="LF|GEN|0.0 FACTORY|0|0">
-          <AhpUid region="LF">
+          <AhpUid>
             <codeId>LFNT</codeId>
           </AhpUid>
-          <OrgUid region="LF">
+          <OrgUid>
             <txtName>FRANCE</txtName>
           </OrgUid>
           <txtName>AVIGNON-PUJAUT</txtName>
@@ -206,7 +206,7 @@ describe AIXM::Feature::Airport do
         </Ahp>
         <Rwy>
           <RwyUid>
-            <AhpUid region="LF">
+            <AhpUid>
               <codeId>LFNT</codeId>
             </AhpUid>
             <txtDesig>16L/34R</txtDesig>
@@ -221,7 +221,7 @@ describe AIXM::Feature::Airport do
         <Rdn>
           <RdnUid>
             <RwyUid>
-              <AhpUid region="LF">
+              <AhpUid>
                 <codeId>LFNT</codeId>
               </AhpUid>
               <txtDesig>16L/34R</txtDesig>
@@ -240,7 +240,7 @@ describe AIXM::Feature::Airport do
           <RddUid>
             <RdnUid>
               <RwyUid>
-                <AhpUid region="LF">
+                <AhpUid>
                   <codeId>LFNT</codeId>
                 </AhpUid>
                 <txtDesig>16L/34R</txtDesig>
@@ -257,7 +257,7 @@ describe AIXM::Feature::Airport do
         <Rdn>
           <RdnUid>
             <RwyUid>
-              <AhpUid region="LF">
+              <AhpUid>
                 <codeId>LFNT</codeId>
               </AhpUid>
               <txtDesig>16L/34R</txtDesig>
@@ -274,7 +274,7 @@ describe AIXM::Feature::Airport do
           <RddUid>
             <RdnUid>
               <RwyUid>
-                <AhpUid region="LF">
+                <AhpUid>
                   <codeId>LFNT</codeId>
                 </AhpUid>
                 <txtDesig>16L/34R</txtDesig>
@@ -290,7 +290,7 @@ describe AIXM::Feature::Airport do
         </Rdd>
         <Tla>
           <TlaUid>
-            <AhpUid region=\"LF\">
+            <AhpUid>
               <codeId>LFNT</codeId>
             </AhpUid>
             <txtDesig>H1</txtDesig>
@@ -309,7 +309,7 @@ describe AIXM::Feature::Airport do
         </Tla>
         <Ahu>
           <AhuUid>
-            <AhpUid region="LF">
+            <AhpUid>
               <codeId>LFNT</codeId>
             </AhpUid>
           </AhuUid>
@@ -346,10 +346,10 @@ describe AIXM::Feature::Airport do
       subject.to_xml.must_equal <<~END
         <!-- Airport: LFNT AVIGNON-PUJAUT -->
         <Ahp source="LF|GEN|0.0 FACTORY|0|0">
-          <AhpUid region="LF">
+          <AhpUid>
             <codeId>LFNT</codeId>
           </AhpUid>
-          <OrgUid region="LF">
+          <OrgUid>
             <txtName>FRANCE</txtName>
           </OrgUid>
           <txtName>AVIGNON-PUJAUT</txtName>

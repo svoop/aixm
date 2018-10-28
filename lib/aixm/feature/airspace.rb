@@ -8,7 +8,6 @@ module AIXM
     # ===Cheat Sheet in Pseudo Code:
     #   airspace = AIXM.airspace(
     #     source: String or nil
-    #     region: String or nil (falls back to AIXM.config.region)
     #     id: String
     #     type: String or Symbol
     #     local_type: String or nil
@@ -84,8 +83,8 @@ module AIXM
       # @return [Array<AIXM::Compoment::Layer>] vertical layers
       attr_accessor :layers
 
-      def initialize(source: nil, region: nil, id: nil, type:, local_type: nil, name: nil)
-        super(source: source, region: region)
+      def initialize(source: nil, id: nil, type:, local_type: nil, name: nil)
+        super(source: source)
         self.type, self.local_type, self.name = type, local_type, name
         self.id = id
         @geometry = AIXM.geometry
@@ -119,7 +118,7 @@ module AIXM
       # @return [String] UID markup
       def to_uid(as: :AseUid)
         builder = Builder::XmlMarkup.new(indent: 2)
-        builder.tag!(as, { region: (region if AIXM.ofmx?) }.compact) do |tag|
+        builder.tag!(as) do |tag|
           tag.codeType(TYPES.key(type).to_s)
           tag.codeId(id)
         end
@@ -150,7 +149,7 @@ module AIXM
         end
         if layered?
           layers.each.with_index do |layer, index|
-            layer_airspace = AIXM.airspace(region: region, type: 'CLASS', name: "#{name} LAYER #{index + 1}")
+            layer_airspace = AIXM.airspace(type: 'CLASS', name: "#{name} LAYER #{index + 1}")
             builder.Ase do |ase|
               ase << layer_airspace.to_uid.indent(2)
               ase.txtName(layer_airspace.name)

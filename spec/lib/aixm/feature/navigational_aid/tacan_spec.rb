@@ -40,12 +40,12 @@ describe AIXM::Feature::NavigationalAid::TACAN do
       subject.to_xml.must_equal <<~END
         <!-- NavigationalAid: [TACAN] TACAN NAVAID -->
         <Tcn source="LF|GEN|0.0 FACTORY|0|0">
-          <TcnUid region="LF">
+          <TcnUid>
             <codeId>TTT</codeId>
             <geoLat>47.85916667N</geoLat>
             <geoLong>007.56000000E</geoLong>
           </TcnUid>
-          <OrgUid region="LF">
+          <OrgUid>
             <txtName>FRANCE</txtName>
           </OrgUid>
           <txtName>TACAN NAVAID</txtName>
@@ -69,12 +69,12 @@ describe AIXM::Feature::NavigationalAid::TACAN do
       subject.to_xml.must_equal <<~END
         <!-- NavigationalAid: [TACAN] UNNAMED -->
         <Tcn source="LF|GEN|0.0 FACTORY|0|0">
-          <TcnUid region="LF">
+          <TcnUid>
             <codeId>TTT</codeId>
             <geoLat>47.85916667N</geoLat>
             <geoLong>007.56000000E</geoLong>
           </TcnUid>
-          <OrgUid region="LF">
+          <OrgUid>
             <txtName>FRANCE</txtName>
           </OrgUid>
           <codeChannel>29X</codeChannel>

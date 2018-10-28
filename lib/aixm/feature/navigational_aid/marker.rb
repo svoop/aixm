@@ -11,7 +11,6 @@ module AIXM
       # ===Cheat Sheet in Pseudo Code:
       #   marker = AIXM.marker(
       #     source: String or nil
-      #     region: String or nil (falls back to AIXM.config.region)
       #     organisation: AIXM.organisation
       #     id: String
       #     name: String
@@ -54,7 +53,7 @@ module AIXM
         # @return [String] UID markup
         def to_uid
           builder = Builder::XmlMarkup.new(indent: 2)
-          builder.MkrUid({ region: (region if AIXM.ofmx?) }.compact) do |mkr_uid|
+          builder.MkrUid do |mkr_uid|
             mkr_uid.codeId(id)
             mkr_uid.geoLat(xy.lat(AIXM.schema))
             mkr_uid.geoLong(xy.long(AIXM.schema))

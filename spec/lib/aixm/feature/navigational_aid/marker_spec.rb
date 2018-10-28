@@ -32,12 +32,12 @@ describe AIXM::Feature::NavigationalAid::Marker do
       subject.to_xml.must_equal <<~END
         <!-- NavigationalAid: [Marker:O] MARKER NAVAID -->
         <Mkr source="LF|GEN|0.0 FACTORY|0|0">
-          <MkrUid region="LF">
+          <MkrUid>
             <codeId>---</codeId>
             <geoLat>47.85916667N</geoLat>
             <geoLong>007.56000000E</geoLong>
           </MkrUid>
-          <OrgUid region="LF">
+          <OrgUid>
             <txtName>FRANCE</txtName>
           </OrgUid>
           <codePsnIls>O</codePsnIls>
@@ -61,12 +61,12 @@ describe AIXM::Feature::NavigationalAid::Marker do
       subject.to_xml.must_equal <<~END
         <!-- NavigationalAid: [Marker] UNNAMED -->
         <Mkr source="LF|GEN|0.0 FACTORY|0|0">
-          <MkrUid region="LF">
+          <MkrUid>
             <codeId>---</codeId>
             <geoLat>47.85916667N</geoLat>
             <geoLong>007.56000000E</geoLong>
           </MkrUid>
-          <OrgUid region="LF">
+          <OrgUid>
             <txtName>FRANCE</txtName>
           </OrgUid>
           <valFreq>75</valFreq>

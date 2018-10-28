@@ -28,8 +28,8 @@ module AIXM
       # @return [String, nil] free text remarks
       attr_reader :remarks
 
-      def initialize(source: nil, region: nil, organisation:, id:, name: nil, xy:, z: nil)
-        super(source: source, region: region)
+      def initialize(source: nil, organisation:, id:, name: nil, xy:, z: nil)
+        super(source: source)
         self.organisation, self.id, self.name, self.xy, self.z = organisation, id, name, xy, z
       end
 

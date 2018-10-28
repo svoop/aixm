@@ -50,12 +50,12 @@ describe AIXM::Feature::NavigationalAid::VOR do
         subject.to_xml.must_equal <<~END
           <!-- NavigationalAid: [VOR:VOR] VOR NAVAID -->
           <Vor source="LF|GEN|0.0 FACTORY|0|0">
-            <VorUid region="LF">
+            <VorUid>
               <codeId>VVV</codeId>
               <geoLat>47.85916667N</geoLat>
               <geoLong>007.56000000E</geoLong>
             </VorUid>
-            <OrgUid region="LF">
+            <OrgUid>
               <txtName>FRANCE</txtName>
             </OrgUid>
             <txtName>VOR NAVAID</txtName>
@@ -80,12 +80,12 @@ describe AIXM::Feature::NavigationalAid::VOR do
         subject.to_xml.must_equal <<~END
           <!-- NavigationalAid: [VOR:VOR] UNNAMED -->
           <Vor source="LF|GEN|0.0 FACTORY|0|0">
-            <VorUid region="LF">
+            <VorUid>
               <codeId>VVV</codeId>
               <geoLat>47.85916667N</geoLat>
               <geoLong>007.56000000E</geoLong>
             </VorUid>
-            <OrgUid region="LF">
+            <OrgUid>
               <txtName>FRANCE</txtName>
             </OrgUid>
             <codeType>VOR</codeType>
@@ -120,12 +120,12 @@ describe AIXM::Feature::NavigationalAid::VOR do
         subject.to_xml.must_equal <<~END
           <!-- NavigationalAid: [VOR:VOR] VOR/DME NAVAID -->
           <Vor source="LF|GEN|0.0 FACTORY|0|0">
-            <VorUid region="LF">
+            <VorUid>
               <codeId>VVV</codeId>
               <geoLat>47.85916667N</geoLat>
               <geoLong>007.56000000E</geoLong>
             </VorUid>
-            <OrgUid region="LF">
+            <OrgUid>
               <txtName>FRANCE</txtName>
             </OrgUid>
             <txtName>VOR/DME NAVAID</txtName>
@@ -143,15 +143,15 @@ describe AIXM::Feature::NavigationalAid::VOR do
           </Vor>
           <!-- NavigationalAid: [DME] VOR/DME NAVAID -->
           <Dme>
-            <DmeUid region="LF">
+            <DmeUid>
               <codeId>VVV</codeId>
               <geoLat>47.85916667N</geoLat>
               <geoLong>007.56000000E</geoLong>
             </DmeUid>
-            <OrgUid region="LF">
+            <OrgUid>
               <txtName>FRANCE</txtName>
             </OrgUid>
-            <VorUid region="LF">
+            <VorUid>
               <codeId>VVV</codeId>
               <geoLat>47.85916667N</geoLat>
               <geoLong>007.56000000E</geoLong>
@@ -192,12 +192,12 @@ describe AIXM::Feature::NavigationalAid::VOR do
         subject.to_xml.must_equal <<~END
           <!-- NavigationalAid: [VOR:VOR] VORTAC NAVAID -->
           <Vor source="LF|GEN|0.0 FACTORY|0|0">
-            <VorUid region="LF">
+            <VorUid>
               <codeId>VVV</codeId>
               <geoLat>47.85916667N</geoLat>
               <geoLong>007.56000000E</geoLong>
             </VorUid>
-            <OrgUid region="LF">
+            <OrgUid>
               <txtName>FRANCE</txtName>
             </OrgUid>
             <txtName>VORTAC NAVAID</txtName>
@@ -215,15 +215,15 @@ describe AIXM::Feature::NavigationalAid::VOR do
           </Vor>
           <!-- NavigationalAid: [TACAN] VORTAC NAVAID -->
           <Tcn>
-            <TcnUid region="LF">
+            <TcnUid>
               <codeId>VVV</codeId>
               <geoLat>47.85916667N</geoLat>
               <geoLong>007.56000000E</geoLong>
             </TcnUid>
-            <OrgUid region="LF">
+            <OrgUid>
               <txtName>FRANCE</txtName>
             </OrgUid>
-            <VorUid region="LF">
+            <VorUid>
               <codeId>VVV</codeId>
               <geoLat>47.85916667N</geoLat>
               <geoLong>007.56000000E</geoLong>

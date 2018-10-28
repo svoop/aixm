@@ -9,7 +9,6 @@ module AIXM
     # ===Cheat Sheet in Pseudo Code:
     #   airport = AIXM.airport(
     #     source: String or nil
-    #     region: String or nil (falls back to AIXM.config.region)
     #     organisation: AIXM.organisation
     #     id: String
     #     name: String
@@ -91,8 +90,8 @@ module AIXM
       # @return [Array<AIXM::Feature::Airport::UsageLimitation>] usage limitations
       attr_accessor :usage_limitations
 
-      def initialize(source: nil, region: nil, organisation:, id:, name:, xy:)
-        super(source: source, region: region)
+      def initialize(source: nil, organisation:, id:, name:, xy:)
+        super(source: source)
         self.organisation, self.id, self.name, self.xy = organisation, id, name, xy
         @runways, @helipads, @usage_limitations = [], [], []
       end
@@ -232,7 +231,7 @@ module AIXM
       # @return [String] UID markup
       def to_uid
         builder = Builder::XmlMarkup.new(indent: 2)
-        builder.AhpUid({ region: (region if AIXM.ofmx?) }.compact) do |ahp_uid|
+        builder.AhpUid do |ahp_uid|
           ahp_uid.codeId(id)
         end
       end

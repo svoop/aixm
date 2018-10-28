@@ -9,7 +9,6 @@ module AIXM
     # ===Cheat Sheet in Pseudo Code:
     #   unit = AIXM.unit(
     #     source: String or nil
-    #     region: String or nil (falls back to +AIXM.config.region+)
     #     organisation: AIXM.organisation
     #     name: String
     #     type: TYPES
@@ -58,8 +57,8 @@ module AIXM
       # @return [String, nil] free text remarks
       attr_reader :remarks
 
-      def initialize(source: nil, region: nil, organisation:, name:, type:, class:)
-        super(source: source, region: region)
+      def initialize(source: nil, organisation:, name:, type:, class:)
+        super(source: source)
         self.organisation, self.name, self.type = organisation, name, type
         self.class = binding.local_variable_get(:class)
         @services = []
@@ -123,7 +122,7 @@ module AIXM
       # @return [String] UID markup
       def to_uid
         builder = Builder::XmlMarkup.new(indent: 2)
-        builder.UniUid({ region: (region if AIXM.ofmx?) }.compact) do |uni_uid|
+        builder.UniUid do |uni_uid|
           uni_uid.txtName(name)
         end
       end

@@ -50,7 +50,6 @@ The following configuration options are available for setting and getting:
 
 ```ruby
 AIXM.config.schema           # either :aixm (default) or :ofmx
-AIXM.config.region           # fallback region
 AIXM.config.ignored_errors   # ignore XML schema errors which match this regex
 ```
 

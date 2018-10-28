@@ -95,7 +95,7 @@ describe AIXM::Component::Helipad do
       subject.to_xml.must_equal <<~END
         <Tla>
           <TlaUid>
-            <AhpUid region="LF">
+            <AhpUid>
               <codeId>LFNT</codeId>
             </AhpUid>
             <txtDesig>H1</txtDesig>
@@ -121,7 +121,7 @@ describe AIXM::Component::Helipad do
       subject.to_xml.must_equal <<~END
         <Tla>
           <TlaUid>
-            <AhpUid region="LF">
+            <AhpUid>
               <codeId>LFNT</codeId>
             </AhpUid>
             <txtDesig>H1</txtDesig>

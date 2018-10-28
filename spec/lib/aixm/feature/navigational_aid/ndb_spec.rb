@@ -42,12 +42,12 @@ describe AIXM::Feature::NavigationalAid::NDB do
       subject.to_xml.must_equal <<~END
         <!-- NavigationalAid: [NDB:B] NDB NAVAID -->
         <Ndb source="LF|GEN|0.0 FACTORY|0|0">
-          <NdbUid region="LF">
+          <NdbUid>
             <codeId>NNN</codeId>
             <geoLat>47.85916667N</geoLat>
             <geoLong>007.56000000E</geoLong>
           </NdbUid>
-          <OrgUid region="LF">
+          <OrgUid>
             <txtName>FRANCE</txtName>
           </OrgUid>
           <txtName>NDB NAVAID</txtName>
@@ -71,12 +71,12 @@ describe AIXM::Feature::NavigationalAid::NDB do
       subject.to_xml.must_equal <<~END
         <!-- NavigationalAid: [NDB] UNNAMED -->
         <Ndb source="LF|GEN|0.0 FACTORY|0|0">
-          <NdbUid region="LF">
+          <NdbUid>
             <codeId>NNN</codeId>
             <geoLat>47.85916667N</geoLat>
             <geoLong>007.56000000E</geoLong>
           </NdbUid>
-          <OrgUid region="LF">
+          <OrgUid>
             <txtName>FRANCE</txtName>
           </OrgUid>
           <valFreq>555</valFreq>
