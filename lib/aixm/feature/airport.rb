@@ -125,6 +125,7 @@ module AIXM
       # however, this may be overridden by setting an alternative value, most
       # notably +:landing_site+.
       #
+      # @!attribute type
       # @return [Symbol] type of airport (see {TYPES})
       def type
         @type = case
