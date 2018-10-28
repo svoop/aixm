@@ -68,19 +68,20 @@ module AIXM
       other.is_a?(self.class) && lat == other.lat && long == other.long
     end
 
-    # @return [Float] distance in meters as calculated by use of the Haversine formula
+    # @return [AIXM::D] distance as calculated by use of the Haversine formula
     def distance(other)
       if self == other
-        0
+        AIXM.d(0, :m)
       else
-        2 * EARTH_RADIUS * Math.asin(
+        value = 2 * EARTH_RADIUS * Math.asin(
           Math.sqrt(
             Math.sin((other.lat.to_rad - lat.to_rad) / 2) ** 2 +
               Math.cos(lat.to_rad) * Math.cos(other.lat.to_rad) *
               Math.sin((other.long.to_rad - long.to_rad) / 2) ** 2
           )
         )
-      end.round
+        AIXM.d(value.round, :m)
+      end
     end
 
     private

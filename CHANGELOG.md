@@ -1,3 +1,14 @@
+## 0.3.2
+
+#### Additions
+* `AIXM::D` (distance)
+
+#### Breaking Changes
+* All distances (circle geometry radius, helipad and runway length/width) must
+  be `AIXM::D`.
+* `AIXM::XY#distance` now returns `AIXM::D`
+* Removed obsolete refinement `Float#to_km`
+
 ## 0.3.1
 
 #### Additions
@@ -9,7 +20,7 @@
 #### Breaking Changes
 * Renamed `Airport#code` to `Airport#id`
 * Renamed `Airspace#short_name` to `Airspace#local_type`
-* Moved `region` attribute from features to Document 
+* Moved `region` attribute from features to Document
 
 #### Changes
 * Be more permissive on `Airport#id` in order to accomodate generated codes
@@ -27,7 +38,7 @@
 * Removed `Array#to_digest`
 * Removed `Document#complete?`
 * Renamed Schedule to Timetable
-* Timetable and remarks moved from Airspace to to Layer (formerly known as class layer)
+* Timetable and remarks moved from Airspace to Layer (formerly known as class layer)
 
 #### Additions
 * Organization and Unit features
@@ -69,7 +80,7 @@
 * Symbols such as `:qnh`, `:ofm` or `:mhz` are downcased now
 
 #### Additions
-* Frequency
+* `AIXM::F` (frequency)
 * Navigational aids features
 * `AIXM::Z#qfe?` and friends
 
@@ -111,11 +122,11 @@
 ## 0.1.0
 
 #### Initial Implementation
-* XY Coordinate
-* Z Altitude
+* `AIXM::XY` (coordinates)
+* `AIXM::Z` (altitude or elevation)
 * AIXM-Snapshot 4.5 Document
 * Airspace feature
-* Vertical Limits
+* Vertical limits
 * Geometry
   * Point
   * Arc

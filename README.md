@@ -74,6 +74,7 @@ AIXM.schema(:version)   # => 0
 * [Document](http://www.rubydoc.info/gems/aixm/AIXM/Document.html)
 * [XY (longitude and latitude)](http://www.rubydoc.info/gems/aixm/AIXM/XY.html)
 * [Z (height, elevation or altitude)](http://www.rubydoc.info/gems/aixm/AIXM/Z.html)
+* [D (distance or length)](http://www.rubydoc.info/gems/aixm/AIXM/D.html)
 * [F (frequency)](http://www.rubydoc.info/gems/aixm/AIXM/F.html)
 
 ### Features

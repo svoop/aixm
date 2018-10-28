@@ -272,7 +272,7 @@ describe AIXM::Component::Geometry do
   context "circle" do
     subject do
       AIXM.geometry.tap do |geometry|
-        geometry << AIXM.circle(center_xy: AIXM.xy(lat: 11, long: 22), radius: 10)
+        geometry << AIXM.circle(center_xy: AIXM.xy(lat: 11, long: 22), radius: AIXM.d(10, :km))
       end
     end
 
@@ -301,7 +301,7 @@ describe AIXM::Component::Geometry do
   context "circle with additional elements" do
     subject do
       AIXM.geometry.tap do |geometry|
-        geometry << AIXM.circle(center_xy: AIXM.xy(lat: 11, long: 22), radius: 10)
+        geometry << AIXM.circle(center_xy: AIXM.xy(lat: 11, long: 22), radius: AIXM.d(10, :km))
         geometry << AIXM.point(xy: AIXM.xy(lat: 22, long: 33))
       end
     end

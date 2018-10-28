@@ -14,6 +14,7 @@ require_relative 'aixm/errors'
 require_relative 'aixm/document'
 require_relative 'aixm/xy'
 require_relative 'aixm/z'
+require_relative 'aixm/d'
 require_relative 'aixm/f'
 
 require_relative 'aixm/component'

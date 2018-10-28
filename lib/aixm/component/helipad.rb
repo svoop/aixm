@@ -11,8 +11,8 @@ module AIXM
     #   )
     #   helipad.xy = AIXM.xy
     #   helipad.z = AIXM.z or nil
-    #   helipad.length = Integer or nil   # meters
-    #   helipad.width = Integer or nil    # meters
+    #   helipad.length = AIXM.d or nil   # must use same unit as width
+    #   helipad.width = AIXM.d or nil    # must use same unit as length
     #   helipad.composition = COMPOSITIONS or nil
     #   helipad.status = STATUSES or nil
     #   helipad.remarks = String or nil
@@ -50,13 +50,13 @@ module AIXM
       # @return [AIXM::XY] center point
       attr_reader :xy
 
-      # @return [AIXM:Z, nil] elevation in +:qnh+
+      # @return [AIXM::Z, nil] elevation in +:qnh+
       attr_reader :z
 
-      # @return [Integer, nil] length in meters
+      # @return [AIXM::D, nil] length
       attr_reader :length
 
-      # @return [Integer, nil] width in meters
+      # @return [AIXM::D, nil] width
       attr_reader :width
 
       # @return [Symbol, nil] composition of the surface (see {COMPOSITIONS})
@@ -99,13 +99,19 @@ module AIXM
       end
 
       def length=(value)
-        fail(ArgumentError, "invalid length") unless value.nil? || (value.is_a?(Numeric) && value > 0)
-        @length = value.nil? ? nil : value.to_i
+        @length = if value
+          fail(ArgumentError, "invalid length") unless value.is_a?(AIXM::D) && value.dist > 0
+          fail(ArgumentError, "invalid length unit") if width && width.unit != value.unit
+          @length = value
+        end
       end
 
       def width=(value)
-        fail(ArgumentError, "invalid width") unless value.nil? || (value.is_a?(Numeric)  && value > 0)
-        @width = value.nil? ? nil : value.to_i
+        @width = if value
+          fail(ArgumentError, "invalid width") unless value.is_a?(AIXM::D)  && value.dist > 0
+          fail(ArgumentError, "invalid width unit") if length && length.unit != value.unit
+          @width = value
+        end
       end
 
       def composition=(value)
@@ -141,9 +147,10 @@ module AIXM
             tla.valElev(z.alt)
             tla.uomDistVer(z.unit.upcase.to_s)
           end
-          tla.valLen(length) if length
-          tla.valWid(width) if width
-          tla.uomDim('M') if length || width
+          tla.valLen(length.dist.trim) if length
+          tla.valWid(width.dist.trim) if width
+          tla.uomDim(length.unit.to_s.upcase) if length
+          tla.uomDim(width.unit.to_s.upcase) if width && !length
           tla.codeComposition(COMPOSITIONS.key(composition).to_s) if composition
           tla.codeSts(STATUSES.key(status).to_s) if status
           tla.txtRmk(remarks) if remarks

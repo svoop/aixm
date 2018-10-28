@@ -12,6 +12,10 @@ module AIXM
         AIXM.z(1000, :qnh)
       end
 
+      def d
+        AIXM.d(123, :m)
+      end
+
       def f
         AIXM.f(123.35, :mhz)
       end
@@ -69,7 +73,7 @@ module AIXM
         AIXM.geometry.tap do |geometry|
           geometry << AIXM.circle(
             center_xy: AIXM.xy(lat: %q(47°35'00"N), long: %q(004°53'00"E)),
-            radius: 10
+            radius: AIXM.d(10, :km)
           )
         end
       end
@@ -313,8 +317,8 @@ module AIXM
 
       def runway
         AIXM.runway(name: '16L/34R').tap do |runway|
-          runway.length = 650
-          runway.width = 80
+          runway.length = AIXM.d(650, :m)
+          runway.width = AIXM.d(80, :m)
           runway.composition = :graded_earth
           runway.status = :closed
           runway.remarks = "Markings eroded"
@@ -335,8 +339,8 @@ module AIXM
         AIXM.helipad(name: 'H1').tap do |helipad|
           helipad.xy = AIXM.xy(lat: %q(43°59'56.94"N), long: %q(004°45'05.56"E))
           helipad.z = AIXM.z(141, :qnh)
-          helipad.length = 20
-          helipad.width = 20
+          helipad.length = AIXM.d(20, :m)
+          helipad.width = AIXM.d(20, :m)
           helipad.composition = :grass
           helipad.status = :other
           helipad.remarks = "Authorizaton by AD operator required"

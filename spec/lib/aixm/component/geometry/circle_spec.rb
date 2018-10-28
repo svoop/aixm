@@ -4,7 +4,7 @@ describe AIXM::Component::Geometry::Circle do
   subject do
     AIXM.circle(
       center_xy: AIXM.xy(lat: 12.12345678, long: -23.12345678),
-      radius: 15
+      radius: AIXM.d(15, :km)
     )
   end
 
@@ -20,11 +20,7 @@ describe AIXM::Component::Geometry::Circle do
 
   describe :radius= do
     it "fails on invalid values" do
-      [nil, 0, -5].wont_be_written_to subject, :radius
-    end
-
-    it "converts Numeric to Float" do
-      subject.tap { |s| s.radius = 5 }.radius.must_equal 5.0
+      [nil, 0, 2, AIXM.d(0, :m)].wont_be_written_to subject, :radius
     end
   end
 
@@ -38,7 +34,7 @@ describe AIXM::Component::Geometry::Circle do
     it "builds correct AIXM for circles not near the equator" do
       subject = AIXM.circle(
         center_xy: AIXM.xy(lat: 11.1, long: 22.2),
-        radius: 25
+        radius: AIXM.d(25, :km)
       )
       AIXM.aixm!
       subject.to_xml.must_equal <<~END
@@ -56,7 +52,7 @@ describe AIXM::Component::Geometry::Circle do
     it "builds correct AIXM for circles near the equator" do
       subject = AIXM.circle(
         center_xy: AIXM.xy(lat: -0.0005, long: -22.2),
-        radius: 50
+        radius: AIXM.d(50, :km)
       )
       AIXM.aixm!
       subject.to_xml.must_equal <<~END

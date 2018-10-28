@@ -137,12 +137,12 @@ describe AIXM::XY do
     end
 
     it "calculates the distance between the same point as zero" do
-      subject.distance(subject).must_equal 0
+      subject.distance(subject).must_equal AIXM.d(0, :m)
     end
 
-    it "calculates the distance between two points correctly in meters" do
+    it "calculates the distance between two points correctly" do
       other = AIXM.xy(lat: %q(43°59'25.31"N), long: %q(004°45'23.24"E))
-      subject.distance(other).must_equal 1351
+      subject.distance(other).must_equal AIXM.d(1351, :m)
     end
   end
 end

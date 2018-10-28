@@ -16,8 +16,8 @@ module AIXM
     #   runway = AIXM.runway(
     #     name: String
     #   )
-    #   runway.length = Integer or nil   # meters
-    #   runway.width = Integer or nil    # meters
+    #   runway.length = AIXM.d or nil   # must use same unit as width
+    #   runway.width = AIXM.d or nil    # must use same unit as length
     #   runway.composition = COMPOSITIONS or nil
     #   runway.status = STATUSES or nil
     #   runway.remarks = String or nil
@@ -25,7 +25,7 @@ module AIXM
     #   runway.forth.geographic_orientation = Integer or nil   # degrees
     #   runway.forth.xy = AIXM.xy
     #   runway.forth.z = AIXM.z or nil
-    #   runway.forth.displaced_threshold = Integer or nil   # meters
+    #   runway.forth.displaced_threshold = AIXM.xy or AIXM.d or nil
     #   runway.forth.remarks = String or nil
     #
     # @example Bidirectional runway
@@ -73,10 +73,10 @@ module AIXM
       # @return [String] full name of runway (e.g. "12/30" or "16L/34R")
       attr_reader :name
 
-      # @return [Integer, nil] length in meters
+      # @return [AIXM::D, nil] length
       attr_reader :length
 
-      # @return [Integer, nil] width in meters
+      # @return [AIXM::D, nil] width
       attr_reader :width
 
       # @return [Symbol, nil] composition of the surface (see {COMPOSITIONS})
@@ -119,13 +119,19 @@ module AIXM
       end
 
       def length=(value)
-        fail(ArgumentError, "invalid length") unless value.nil? || (value.is_a?(Numeric) && value > 0)
-        @length = value.nil? ? nil : value.to_i
+        @length = if value
+          fail(ArgumentError, "invalid length") unless value.is_a?(AIXM::D) && value.dist > 0
+          fail(ArgumentError, "invalid length unit") if width && width.unit != value.unit
+          @length = value
+        end
       end
 
       def width=(value)
-        fail(ArgumentError, "invalid width") unless value.nil? || (value.is_a?(Numeric)  && value > 0)
-        @width = value.nil? ? nil : value.to_i
+        @width = if value
+          fail(ArgumentError, "invalid width") unless value.is_a?(AIXM::D)  && value.dist > 0
+          fail(ArgumentError, "invalid width unit") if length && length.unit != value.unit
+          @width = value
+        end
       end
 
       def composition=(value)
@@ -154,9 +160,10 @@ module AIXM
         builder = Builder::XmlMarkup.new(indent: 2)
         builder.Rwy do |rwy|
           rwy << to_uid.indent(2)
-          rwy.valLen(length) if length
-          rwy.valWid(width) if width
-          rwy.uomDimRwy('M') if length || width
+          rwy.valLen(length.dist.trim) if length
+          rwy.valWid(width.dist.trim) if width
+          rwy.uomDimRwy(length.unit.to_s.upcase) if length
+          rwy.uomDimRwy(width.unit.to_s.upcase) if width && !length
           rwy.codeComposition(COMPOSITIONS.key(composition).to_s) if composition
           rwy.codeSts(STATUSES.key(status).to_s) if status
           rwy.txtRmk(remarks) if remarks
@@ -188,9 +195,9 @@ module AIXM
         # @return [AIXM::Z, nil] elevation of the touch down zone in +qnh+
         attr_reader :z
 
-        # @return [AIXM::XY, Integer, nil] displaced threshold point either as
-        #   coordinates (AIXM::XY) or distance (Integer) in meters from the
-        #   beginning point
+        # @return [AIXM::XY, AIXM::D, nil] displaced threshold point either as
+        #   coordinates (AIXM::XY) or distance (AIXM::D) from the beginning
+        #   point
         attr_reader :displaced_threshold
 
         # @return [String, nil] free text remarks
@@ -234,11 +241,16 @@ module AIXM
         end
 
         def displaced_threshold=(value)
-          @displaced_threshold = case value
-            when AIXM::XY then @xy.distance(value).to_i
-            when Numeric then value.to_i
-            when NilClass then nil
-            else fail(ArgumentError, "invalid displaced threshold")
+          case value
+          when AIXM::XY
+            @displaced_threshold = @xy.distance(value)
+          when AIXM::D
+            fail(ArgumentError, "invalid displaced threshold") unless value.dist > 0
+            @displaced_threshold = value
+          when NilClass
+            @displaced_threshold = nil
+          else
+            fail(ArgumentError, "invalid displaced threshold")
           end
         end
 
@@ -281,8 +293,8 @@ module AIXM
                 rdd_uid.codeType('DPLM')
                 rdd_uid.codeDayPeriod('A')
               end
-              rdd.valDist(displaced_threshold)
-              rdd.uomDist('M')
+              rdd.valDist(displaced_threshold.dist.trim)
+              rdd.uomDist(displaced_threshold.unit.to_s.upcase)
               rdd.txtRmk(remarks) if remarks
             end
           end

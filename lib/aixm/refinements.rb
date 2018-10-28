@@ -13,13 +13,6 @@ module AIXM
       "Ø" => "Oe"
     }.freeze
 
-    KM_FACTORS = {
-      km: 1,
-      m: 0.001,
-      nm: 1.852,
-      ft: 0.0003048
-    }.freeze
-
     # @!method to_digest
     #   Builds a 4 byte hex digest from the Array payload.
     #
@@ -187,27 +180,6 @@ module AIXM
           minutes.abs.truncate,
           seconds.abs
         ]
-      end
-    end
-
-    # @!method to_km(from:)
-    #   Convert a distance from the source unit +from+ to kilometers.
-    #
-    #   @example
-    #     10.to_km(from: :nm)
-    #     # => 18.52
-    #     10.to_km(from: :foobar)
-    #     # => ArgumentError
-    #
-    #   @note This is a refinement for +Float+
-    #   @param from [Symbol] source unit (see {KM_FACTORS})
-    #   @raise [ArgumentError] if the specified unit is not supported
-    #   @return [Float] value converted to kilometers
-    refine Float do
-      def to_km(from:)
-        self * KM_FACTORS.fetch(from.downcase.to_sym)
-      rescue KeyError
-        raise(ArgumentError, "unit `#{from}' not supported")
       end
     end
   end

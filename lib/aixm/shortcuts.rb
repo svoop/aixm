@@ -4,6 +4,7 @@ module AIXM
     document: Document,
     xy: XY,
     z: Z,
+    d: D,
     f: F,
     organisation: Feature::Organisation,
     unit: Feature::Unit,

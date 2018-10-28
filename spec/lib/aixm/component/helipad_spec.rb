@@ -29,29 +29,21 @@ describe AIXM::Component::Helipad do
 
   describe :length= do
     it "fails on invalid values" do
-      [:foobar, 0, -1].wont_be_written_to subject, :length
+      [:foobar, 0, 1, AIXM.d(0, :m)].wont_be_written_to subject, :length
     end
 
     it "accepts nil value" do
       [nil].must_be_written_to subject, :length
     end
-
-    it "converts valid Numeric values to Integer" do
-      subject.tap { |s| s.length = 1000.5 }.length.must_equal 1000
-    end
   end
 
   describe :width= do
     it "fails on invalid values" do
-      [:foobar, 0, -1].wont_be_written_to subject, :width
+      [:foobar, 0, 1, AIXM.d(0, :m)].wont_be_written_to subject, :width
     end
 
     it "accepts nil value" do
       [nil].must_be_written_to subject, :width
-    end
-
-    it "converts valid Numeric values to Integer" do
-      subject.tap { |s| s.width = 150.5 }.width.must_equal 150
     end
   end
 
