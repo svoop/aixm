@@ -2,7 +2,7 @@
 <!--
 ********************************************************************************
 
-OFMX 0.1.0 - open flightmaps exchange format
+OFMX XML 0.1.0 - open flightmaps exchange format
 
 This is a fork of AIXM 4.5 to accomodate extensions and backports for
 open flightmaps.
@@ -37,7 +37,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 -->
 <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <xsd:annotation>
-    <xsd:documentation>Version: 4.5-1</xsd:documentation>
+    <xsd:documentation>Version: 0.1.0</xsd:documentation>
   </xsd:annotation>
   <xsd:include schemaLocation="OFMX-Features.xsd"/>
   <xsd:attributeGroup name="Changes"/>
@@ -190,6 +190,11 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
       <xsd:attribute name="version" type="xsd:string" use="required">
         <xsd:annotation>
           <xsd:documentation>The version of the OFMX-Snapshot.xsd schema to which the message conforms</xsd:documentation>
+        </xsd:annotation>
+      </xsd:attribute>
+      <xsd:attribute name="region" type="codeRegion">
+        <xsd:annotation>
+          <xsd:documentation>Region the data in this document belongs to</xsd:documentation>
         </xsd:annotation>
       </xsd:attribute>
       <xsd:attribute name="origin" type="xsd:string" use="required">

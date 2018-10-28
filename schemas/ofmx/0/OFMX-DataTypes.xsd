@@ -2,7 +2,7 @@
 <!--
 ********************************************************************************
 
-OFMX 0.1.0 - open flightmaps exchange format
+OFMX XML 0.1.0 - open flightmaps exchange format
 
 This is a fork of AIXM 4.5 to accomodate extensions and backports for
 open flightmaps.
@@ -37,7 +37,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 -->
 <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <xsd:annotation>
-    <xsd:documentation>Version: 4.5-1</xsd:documentation>
+    <xsd:documentation>Version: 0.1.0</xsd:documentation>
   </xsd:annotation>
   <!-- OFMX predefined simple data types -->
   <xsd:simpleType name="alpha">
@@ -3677,6 +3677,46 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
       </xsd:extension>
     </xsd:simpleContent>
   </xsd:complexType>
+  <xsd:simpleType name="codeTypeObstacleBase">
+    <xsd:restriction base="xsd:string">
+      <xsd:enumeration value="ANTENNA"/>
+      <xsd:enumeration value="BUILDING"/>
+      <xsd:enumeration value="CHIMNEY"/>
+      <xsd:enumeration value="CRANE"/>
+      <xsd:enumeration value="MAST"/>
+      <xsd:enumeration value="TOWER"/>
+      <xsd:enumeration value="TREE"/>
+      <xsd:enumeration value="WINDTURBINE"/>
+      <xsd:enumeration value="OTHER"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:complexType name="codeTypeObstacle">
+    <xsd:annotation>
+      <xsd:documentation>A code indicating the type of the obstacle.</xsd:documentation>
+    </xsd:annotation>
+    <xsd:simpleContent>
+      <xsd:extension base="codeTypeObstacleBase">
+        <xsd:attributeGroup ref="Changes"/>
+      </xsd:extension>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <xsd:simpleType name="codeTypeObstacleLinkBase">
+    <xsd:restriction base="xsd:string">
+      <xsd:enumeration value="CABLE"/>
+      <xsd:enumeration value="SOLID"/>
+      <xsd:enumeration value="OTHER"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:complexType name="codeTypeObstacleLink">
+    <xsd:annotation>
+      <xsd:documentation>A code indicating the type of link between two obstacles.</xsd:documentation>
+    </xsd:annotation>
+    <xsd:simpleContent>
+      <xsd:extension base="codeTypeObstacleLinkBase">
+        <xsd:attributeGroup ref="Changes"/>
+      </xsd:extension>
+    </xsd:simpleContent>
+  </xsd:complexType>
   <xsd:simpleType name="codeTypeOpsRwyBase">
     <xsd:restriction base="xsd:string">
       <xsd:enumeration value="APCH"/>
@@ -4587,6 +4627,22 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
     </xsd:annotation>
     <xsd:simpleContent>
       <xsd:extension base="txtDesigRteBase">
+        <xsd:attributeGroup ref="Changes"/>
+      </xsd:extension>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <xsd:simpleType name="txtGroupNameBase">
+    <xsd:restriction base="character2">
+      <xsd:minLength value="1"/>
+      <xsd:maxLength value="100"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:complexType name="txtGroupName">
+    <xsd:annotation>
+      <xsd:documentation>Name or short description of an obstacle group.</xsd:documentation>
+    </xsd:annotation>
+    <xsd:simpleContent>
+      <xsd:extension base="txtGroupNameBase">
         <xsd:attributeGroup ref="Changes"/>
       </xsd:extension>
     </xsd:simpleContent>
