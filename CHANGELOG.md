@@ -7,6 +7,7 @@
 * `Layer#location_indicator` and `Layer#activity`
 
 #### Breaking Changes
+* Renamed `Airspace#code` to `Airspace#id`
 * Renamed `Airspace#short_name` to `Airspace#local_type`
 
 #### Changes

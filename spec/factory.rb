@@ -303,7 +303,7 @@ module AIXM
           source: 'LF|GEN|0.0 FACTORY|0|0',
           region: 'LF',
           organisation: organisation,
-          code: 'LFNT',
+          id: 'LFNT',
           name: 'Avignon-Pujaut',
           xy: AIXM.xy(lat: %q(43°59'46"N), long: %q(004°45'16"E))
         ).tap do |airport|

@@ -11,7 +11,7 @@ module AIXM
     #     source: String or nil
     #     region: String or nil (falls back to AIXM.config.region)
     #     organisation: AIXM.organisation
-    #     code: String
+    #     id: String
     #     name: String
     #     xy: AIXM.xy
     #   )
@@ -30,7 +30,7 @@ module AIXM
     class Airport < Feature
       public_class_method :new
 
-      CODE_PATTERN = /^([A-Z]{3,4}|[A-Z]{2}[A-Z\d]{4,})$/.freeze
+      ID_PATTERN = /^([A-Z]{3,4}|[A-Z]{2}[A-Z\d]{4,})$/.freeze
 
       TYPES = {
         AD: :aerodrome,
@@ -50,8 +50,8 @@ module AIXM
       # * two letter ICAO country code + at least four letters/digits (e.g.
       #   "LFFOOBAR123" or "LF" + GPS code)
       #
-      # @return [String] airport indicator code
-      attr_reader :code
+      # @return [String] airport indicator
+      attr_reader :id
 
       # @return [String] full name
       attr_reader :name
@@ -91,15 +91,15 @@ module AIXM
       # @return [Array<AIXM::Feature::Airport::UsageLimitation>] usage limitations
       attr_accessor :usage_limitations
 
-      def initialize(source: nil, region: nil, organisation:, code:, name:, xy:)
+      def initialize(source: nil, region: nil, organisation:, id:, name:, xy:)
         super(source: source, region: region)
-        self.organisation, self.code, self.name, self.xy = organisation, code, name, xy
+        self.organisation, self.id, self.name, self.xy = organisation, id, name, xy
         @runways, @helipads, @usage_limitations = [], [], []
       end
 
       # @return [String]
       def inspect
-        %Q(#<#{self.class} code=#{code.inspect}>)
+        %Q(#<#{self.class} id=#{id.inspect}>)
       end
 
       def organisation=(value)
@@ -107,9 +107,9 @@ module AIXM
         @organisation = value
       end
 
-      def code=(value)
-        fail(ArgumentError, "invalid code `#{code}'") unless value&.upcase&.match? CODE_PATTERN
-        @code = value.upcase
+      def id=(value)
+        fail(ArgumentError, "invalid id `#{id}'") unless value&.upcase&.match? ID_PATTERN
+        @id = value.upcase
       end
 
       def name=(value)
@@ -233,20 +233,20 @@ module AIXM
       def to_uid
         builder = Builder::XmlMarkup.new(indent: 2)
         builder.AhpUid({ region: (region if AIXM.ofmx?) }.compact) do |ahp_uid|
-          ahp_uid.codeId(code)
+          ahp_uid.codeId(id)
         end
       end
 
       # @return [String] AIXM or OFMX markup
       def to_xml
         builder = Builder::XmlMarkup.new(indent: 2)
-        builder.comment! "Airport: #{code} #{name}"
+        builder.comment! "Airport: #{id} #{name}"
         builder.Ahp({ source: (source if AIXM.ofmx?) }.compact) do |ahp|
           ahp << to_uid.indent(2)
           ahp << organisation.to_uid.indent(2)
           ahp.txtName(name)
-          ahp.codeIcao(code) if code.length == 4
-          ahp.codeIata(code) if code.length == 3
+          ahp.codeIcao(id) if id.length == 4
+          ahp.codeIata(id) if id.length == 3
           ahp.codeGps(gps) if AIXM.ofmx? && gps
           ahp.codeType(TYPES.key(type).to_s) if type
           ahp.geoLat(xy.lat(AIXM.schema))

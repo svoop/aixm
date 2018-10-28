@@ -9,7 +9,7 @@ describe AIXM::Feature::Airport do
     it "sets defaults" do
       subject = AIXM::Feature::Airport.new(
         organisation: AIXM::Factory.organisation,
-        code: 'LFNT',
+        id: 'LFNT',
         name: 'Avignon-Pujaut',
         xy: AIXM.xy(lat: %q(43°59'46"N), long: %q(004°45'16"E))
       )
@@ -25,13 +25,13 @@ describe AIXM::Feature::Airport do
     end
   end
 
-  describe :code= do
+  describe :id= do
     it "fails on invalid values" do
-      [nil, 'A', 'AB', 'ABCDE', 'AB 1234'].wont_be_written_to subject, :code
+      [nil, 'A', 'AB', 'ABCDE', 'AB 1234'].wont_be_written_to subject, :id
     end
 
     it "upcases valid values" do
-      subject.tap { |s| s.code = 'lfnt' }.code.must_equal 'LFNT'
+      subject.tap { |s| s.id = 'lfnt' }.id.must_equal 'LFNT'
     end
   end
 
