@@ -27,6 +27,8 @@ module AIXM
     tacan: Feature::NavigationalAid::TACAN,
     ndb: Feature::NavigationalAid::NDB,
     vor: Feature::NavigationalAid::VOR,
+    obstacle: Feature::Obstacle,
+    obstacle_group: Feature::ObstacleGroup,
     timetable: Component::Timetable
   }.freeze
 

@@ -1,13 +1,14 @@
 ## 0.3.2
 
 #### Additions
+* Obstacle and obstacle group features
 * `AIXM::D` (distance)
 
 #### Breaking Changes
 * All distances (circle geometry radius, helipad and runway length/width) must
   be `AIXM::D`.
 * `AIXM::XY#distance` now returns `AIXM::D`
-* Removed obsolete refinement `Float#to_km`
+* Removed obsolete refinement `Float#to_km` (use `AIXM::D#to_km` instead)
 
 ## 0.3.1
 

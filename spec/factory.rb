@@ -347,6 +347,102 @@ module AIXM
         end
       end
 
+      # Obstacle
+
+      def obstacle
+        AIXM.obstacle(
+          name: "Eiffel Tower",
+          type: :tower,
+          xy: AIXM.xy(lat: %q(48°51'29.7"N), long: %q(002°17'40.52"E)),
+          radius: AIXM.d(88, :m),
+          z: AIXM.z(1187 , :qnh)
+        ).tap do |obstacle|
+          obstacle.lighting = true
+          obstacle.lighting_remarks = "red strobes"
+          obstacle.marking = nil
+          obstacle.marking_remarks = nil
+          obstacle.height = AIXM.d(324, :m)
+          obstacle.xy_accuracy = AIXM.d(2, :m)
+          obstacle.z_accuracy = AIXM.d(1, :m)
+          obstacle.height_accurate = true
+          obstacle.valid_from = Time.parse('2018-01-01 12:00:00 +0100')
+          obstacle.valid_until = Time.parse('2019-01-01 12:00:00 +0100')
+          obstacle.remarks = "Temporary light installations (white strobes, gyro light etc)"
+        end
+      end
+
+      def unlinked_obstacle_group
+        AIXM.obstacle_group(
+          name: "Mirmande éoliennes"
+        ).tap do |obstacle_group|
+          obstacle_group.add_obstacle(
+            AIXM.obstacle(
+              name: "La Teissonière 1",
+              type: :wind_turbine,
+              xy: AIXM.xy(lat: %q(44°40'30.05"N), long: %q(004°52'21.24"E)),
+              radius: AIXM.d(80, :m),
+              z: AIXM.z(1764, :qnh)
+            ).tap do |obstacle|
+              obstacle.height = AIXM.d(80, :m)
+              obstacle.xy_accuracy = AIXM.d(50, :m)
+              obstacle.z_accuracy = AIXM.d(10, :m)
+              obstacle.height_accurate = false
+            end
+          )
+          obstacle_group.add_obstacle(
+            AIXM.obstacle(
+              name: "La Teissonière 2",
+              type: :wind_turbine,
+              xy: AIXM.xy(lat: %q(44°40'46.08"N), long: %q(004°52'25.72"E)),
+              radius: AIXM.d(80, :m),
+              z: AIXM.z(1738 , :qnh)
+            ).tap do |obstacle|
+              obstacle.height = AIXM.d(80, :m)
+              obstacle.xy_accuracy = AIXM.d(50, :m)
+              obstacle.z_accuracy = AIXM.d(10, :m)
+              obstacle.height_accurate = false
+            end
+          )
+        end
+      end
+
+      def linked_obstacle_group
+        AIXM.obstacle_group(
+          name: "Droitwich longwave antenna"
+        ).tap do |obstacle_group|
+          obstacle_group.add_obstacle(
+            AIXM.obstacle(
+              name: "Droitwich LW north",
+              type: :mast,
+              xy: AIXM.xy(lat: %q(52°17'47.03"N), long: %q(002°06'24.31"W)),
+              radius: AIXM.d(200, :m),
+              z: AIXM.z(848 , :qnh)
+            ).tap do |obstacle|
+              obstacle.height = AIXM.d(700, :ft)
+              obstacle.xy_accuracy = AIXM.d(0, :m)
+              obstacle.z_accuracy = AIXM.d(0, :ft)
+              obstacle.height_accurate = true
+            end
+          )
+          obstacle_group.add_obstacle(
+            AIXM.obstacle(
+              name: "Droitwich LW north",
+              type: :mast,
+              xy: AIXM.xy(lat: %q(52°17'40.48"N), long: %q(002°06'20.47"W)),
+              radius: AIXM.d(200, :m),
+              z: AIXM.z(848 , :qnh)
+            ).tap do |obstacle|
+              obstacle.height = AIXM.d(700, :ft)
+              obstacle.xy_accuracy = AIXM.d(0, :m)
+              obstacle.z_accuracy = AIXM.d(0, :ft)
+              obstacle.height_accurate = true
+            end,
+            linked_to: :previous,
+            link_type: :cable
+          )
+        end
+      end
+
       # Document
 
       def document
@@ -370,6 +466,9 @@ module AIXM
           document.features << vor
           document.features << vordme
           document.features << vortac
+          document.features << obstacle
+          document.features << unlinked_obstacle_group
+          document.features << linked_obstacle_group
         end
       end
 

@@ -43,5 +43,7 @@ require_relative 'aixm/feature/navigational_aid/marker'
 require_relative 'aixm/feature/navigational_aid/ndb'
 require_relative 'aixm/feature/navigational_aid/tacan'
 require_relative 'aixm/feature/navigational_aid/vor'
+require_relative 'aixm/feature/obstacle'
+require_relative 'aixm/feature/obstacle_group'
 
 require_relative 'aixm/shortcuts'

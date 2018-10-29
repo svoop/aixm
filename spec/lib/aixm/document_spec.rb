@@ -617,6 +617,98 @@ describe AIXM::Document do
             </Ttt>
             <txtRmk>vortac navaid</txtRmk>
           </Tcn>
+          <!-- Obstacle: [tower] 48.85825000N 002.29458889E EIFFEL TOWER -->
+          <Obs>
+            <ObsUid>
+              <geoLat>485129.70N</geoLat>
+              <geoLong>0021740.52E</geoLong>
+            </ObsUid>
+            <txtName>EIFFEL TOWER</txtName>
+            <txtDescrType>TOWER</txtDescrType>
+            <codeGroup>N</codeGroup>
+            <codeLgt>Y</codeLgt>
+            <txtDescrLgt>red strobes</txtDescrLgt>
+            <codeDatum>WGE</codeDatum>
+            <valGeoAccuracy>2</valGeoAccuracy>
+            <uomGeoAccuracy>M</uomGeoAccuracy>
+            <valElev>1187</valElev>
+            <valElevAccuracy>3</valElevAccuracy>
+            <valHgt>1063</valHgt>
+            <uomDistVer>FT</uomDistVer>
+            <txtRmk>Temporary light installations (white strobes, gyro light etc)</txtRmk>
+          </Obs>
+          <!-- Obstacle: [wind_turbine] 44.67501389N 004.87256667E LA TEISSONIERE 1 -->
+          <Obs>
+            <ObsUid>
+              <geoLat>444030.05N</geoLat>
+              <geoLong>0045221.24E</geoLong>
+            </ObsUid>
+            <txtName>LA TEISSONIERE 1</txtName>
+            <txtDescrType>WINDTURBINE</txtDescrType>
+            <codeGroup>Y</codeGroup>
+            <codeLgt>N</codeLgt>
+            <codeDatum>WGE</codeDatum>
+            <valGeoAccuracy>50</valGeoAccuracy>
+            <uomGeoAccuracy>M</uomGeoAccuracy>
+            <valElev>1764</valElev>
+            <valElevAccuracy>33</valElevAccuracy>
+            <valHgt>262</valHgt>
+            <uomDistVer>FT</uomDistVer>
+          </Obs>
+          <!-- Obstacle: [wind_turbine] 44.67946667N 004.87381111E LA TEISSONIERE 2 -->
+          <Obs>
+            <ObsUid>
+              <geoLat>444046.08N</geoLat>
+              <geoLong>0045225.72E</geoLong>
+            </ObsUid>
+            <txtName>LA TEISSONIERE 2</txtName>
+            <txtDescrType>WINDTURBINE</txtDescrType>
+            <codeGroup>Y</codeGroup>
+            <codeLgt>N</codeLgt>
+            <codeDatum>WGE</codeDatum>
+            <valGeoAccuracy>50</valGeoAccuracy>
+            <uomGeoAccuracy>M</uomGeoAccuracy>
+            <valElev>1738</valElev>
+            <valElevAccuracy>33</valElevAccuracy>
+            <valHgt>262</valHgt>
+            <uomDistVer>FT</uomDistVer>
+          </Obs>
+          <!-- Obstacle: [mast] 52.29639722N 002.10675278W DROITWICH LW NORTH -->
+          <Obs>
+            <ObsUid>
+              <geoLat>521747.03N</geoLat>
+              <geoLong>0020624.31W</geoLong>
+            </ObsUid>
+            <txtName>DROITWICH LW NORTH</txtName>
+            <txtDescrType>MAST</txtDescrType>
+            <codeGroup>Y</codeGroup>
+            <codeLgt>N</codeLgt>
+            <codeDatum>WGE</codeDatum>
+            <valGeoAccuracy>0</valGeoAccuracy>
+            <uomGeoAccuracy>M</uomGeoAccuracy>
+            <valElev>848</valElev>
+            <valElevAccuracy>0</valElevAccuracy>
+            <valHgt>700</valHgt>
+            <uomDistVer>FT</uomDistVer>
+          </Obs>
+          <!-- Obstacle: [mast] 52.29457778N 002.10568611W DROITWICH LW NORTH -->
+          <Obs>
+            <ObsUid>
+              <geoLat>521740.48N</geoLat>
+              <geoLong>0020620.47W</geoLong>
+            </ObsUid>
+            <txtName>DROITWICH LW NORTH</txtName>
+            <txtDescrType>MAST</txtDescrType>
+            <codeGroup>Y</codeGroup>
+            <codeLgt>N</codeLgt>
+            <codeDatum>WGE</codeDatum>
+            <valGeoAccuracy>0</valGeoAccuracy>
+            <uomGeoAccuracy>M</uomGeoAccuracy>
+            <valElev>848</valElev>
+            <valElevAccuracy>0</valElevAccuracy>
+            <valHgt>700</valHgt>
+            <uomDistVer>FT</uomDistVer>
+          </Obs>
         </AIXM-Snapshot>
       END
     end
@@ -1175,6 +1267,127 @@ describe AIXM::Document do
             </Ttt>
             <txtRmk>vortac navaid</txtRmk>
           </Tcn>
+          <!-- Obstacle: [tower] 48.85825000N 002.29458889E EIFFEL TOWER -->
+          <Obs>
+            <ObsUid>
+              <geoLat>48.85825000N</geoLat>
+              <geoLong>002.29458889E</geoLong>
+            </ObsUid>
+            <txtName>EIFFEL TOWER</txtName>
+            <codeType>TOWER</codeType>
+            <codeLgt>Y</codeLgt>
+            <txtDescrLgt>red strobes</txtDescrLgt>
+            <codeDatum>WGE</codeDatum>
+            <valGeoAccuracy>2</valGeoAccuracy>
+            <uomGeoAccuracy>M</uomGeoAccuracy>
+            <valElev>1187</valElev>
+            <valElevAccuracy>3</valElevAccuracy>
+            <valHgt>1063</valHgt>
+            <codeHgtAccuracy>Y</codeHgtAccuracy>
+            <uomDistVer>FT</uomDistVer>
+            <valRadius>88</valRadius>
+            <uomRadius>M</uomRadius>
+            <datetimeValidWef>2018-01-01T12:00:00+01:00</datetimeValidWef>
+            <datetimeValidTil>2019-01-01T12:00:00+01:00</datetimeValidTil>
+            <txtRmk>Temporary light installations (white strobes, gyro light etc)</txtRmk>
+          </Obs>
+          <!-- Obstacle: [wind_turbine] 44.67501389N 004.87256667E LA TEISSONIERE 1 -->
+          <Obs>
+            <ObsUid>
+              <geoLat>44.67501389N</geoLat>
+              <geoLong>004.87256667E</geoLong>
+            </ObsUid>
+            <txtName>LA TEISSONIERE 1</txtName>
+            <codeType>WINDTURBINE</codeType>
+            <codeLgt>N</codeLgt>
+            <codeMarking>N</codeMarking>
+            <codeDatum>WGE</codeDatum>
+            <valGeoAccuracy>50</valGeoAccuracy>
+            <uomGeoAccuracy>M</uomGeoAccuracy>
+            <valElev>1764</valElev>
+            <valElevAccuracy>33</valElevAccuracy>
+            <valHgt>262</valHgt>
+            <codeHgtAccuracy>N</codeHgtAccuracy>
+            <uomDistVer>FT</uomDistVer>
+            <valRadius>80</valRadius>
+            <uomRadius>M</uomRadius>
+            <codeGroupId>462c8d00-981a-0995-09aa-4ba39161bb41</codeGroupId>
+            <txtGroupName>MIRMANDE EOLIENNES</txtGroupName>
+          </Obs>
+          <!-- Obstacle: [wind_turbine] 44.67946667N 004.87381111E LA TEISSONIERE 2 -->
+          <Obs>
+            <ObsUid>
+              <geoLat>44.67946667N</geoLat>
+              <geoLong>004.87381111E</geoLong>
+            </ObsUid>
+            <txtName>LA TEISSONIERE 2</txtName>
+            <codeType>WINDTURBINE</codeType>
+            <codeLgt>N</codeLgt>
+            <codeMarking>N</codeMarking>
+            <codeDatum>WGE</codeDatum>
+            <valGeoAccuracy>50</valGeoAccuracy>
+            <uomGeoAccuracy>M</uomGeoAccuracy>
+            <valElev>1738</valElev>
+            <valElevAccuracy>33</valElevAccuracy>
+            <valHgt>262</valHgt>
+            <codeHgtAccuracy>N</codeHgtAccuracy>
+            <uomDistVer>FT</uomDistVer>
+            <valRadius>80</valRadius>
+            <uomRadius>M</uomRadius>
+            <codeGroupId>462c8d00-981a-0995-09aa-4ba39161bb41</codeGroupId>
+            <txtGroupName>MIRMANDE EOLIENNES</txtGroupName>
+          </Obs>
+          <!-- Obstacle: [mast] 52.29639722N 002.10675278W DROITWICH LW NORTH -->
+          <Obs>
+            <ObsUid>
+              <geoLat>52.29639722N</geoLat>
+              <geoLong>002.10675278W</geoLong>
+            </ObsUid>
+            <txtName>DROITWICH LW NORTH</txtName>
+            <codeType>MAST</codeType>
+            <codeLgt>N</codeLgt>
+            <codeMarking>N</codeMarking>
+            <codeDatum>WGE</codeDatum>
+            <valGeoAccuracy>0</valGeoAccuracy>
+            <uomGeoAccuracy>M</uomGeoAccuracy>
+            <valElev>848</valElev>
+            <valElevAccuracy>0</valElevAccuracy>
+            <valHgt>700</valHgt>
+            <codeHgtAccuracy>Y</codeHgtAccuracy>
+            <uomDistVer>FT</uomDistVer>
+            <valRadius>200</valRadius>
+            <uomRadius>M</uomRadius>
+            <codeGroupId>18e65683-798d-0941-8de4-cb65a6427035</codeGroupId>
+            <txtGroupName>DROITWICH LONGWAVE ANTENNA</txtGroupName>
+          </Obs>
+          <!-- Obstacle: [mast] 52.29457778N 002.10568611W DROITWICH LW NORTH -->
+          <Obs>
+            <ObsUid>
+              <geoLat>52.29457778N</geoLat>
+              <geoLong>002.10568611W</geoLong>
+            </ObsUid>
+            <txtName>DROITWICH LW NORTH</txtName>
+            <codeType>MAST</codeType>
+            <codeLgt>N</codeLgt>
+            <codeMarking>N</codeMarking>
+            <codeDatum>WGE</codeDatum>
+            <valGeoAccuracy>0</valGeoAccuracy>
+            <uomGeoAccuracy>M</uomGeoAccuracy>
+            <valElev>848</valElev>
+            <valElevAccuracy>0</valElevAccuracy>
+            <valHgt>700</valHgt>
+            <codeHgtAccuracy>Y</codeHgtAccuracy>
+            <uomDistVer>FT</uomDistVer>
+            <valRadius>200</valRadius>
+            <uomRadius>M</uomRadius>
+            <codeGroupId>18e65683-798d-0941-8de4-cb65a6427035</codeGroupId>
+            <txtGroupName>DROITWICH LONGWAVE ANTENNA</txtGroupName>
+            <ObsUidLink>
+              <geoLat>52.29639722N</geoLat>
+              <geoLong>002.10675278W</geoLong>
+            </ObsUidLink>
+            <codeLinkType>CABLE</codeLinkType>
+          </Obs>
         </OFMX-Snapshot>
       END
     end

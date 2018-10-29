@@ -89,6 +89,7 @@ AIXM.schema(:version)   # => 0
   * [NDB](http://www.rubydoc.info/gems/aixm/AIXM/Feature/NDB.html)
   * [TACAN](http://www.rubydoc.info/gems/aixm/AIXM/Feature/TACAN.html)
   * [VOR](http://www.rubydoc.info/gems/aixm/AIXM/Feature/VOR.html)
+* [Obstacle and obstacle group](http://www.rubydoc.info/gems/aixm/AIXM/Feature/Obstacle.html)
 
 ### Components
 * [Service](http://www.rubydoc.info/gems/aixm/AIXM/Component/Service.html)

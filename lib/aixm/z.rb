@@ -5,8 +5,8 @@ module AIXM
   # Height, elevation or altitude
   #
   # @example
-  #   AIXM.z(1000, :qfe)   # height: 1000 ft above ground
-  #   AIXM.z(2000, :qnh)   # elevation or altitude: 2000 ft above mean sea level
+  #   AIXM.z(1000, :qfe)   # height (ft): 1000 ft above ground
+  #   AIXM.z(2000, :qnh)   # elevation or altitude (ft): 2000 ft above mean sea level
   #   AIXM.z(45, :qne)     # altitude: flight level 45
   #
   # ===Shortcuts:
@@ -15,7 +15,7 @@ module AIXM
   class Z
     CODES = %i(qfe qnh qne).freeze
 
-    # @return [Integer] elevation or altitude value
+    # @return [Integer] altitude or elevation value
     attr_reader :alt
 
     # @return [Symbol] Q code - either +:qfe+ (height in feet), +:qnh+ (altitude in feet or +:qne+ (altitude as flight level)
