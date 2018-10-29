@@ -53,11 +53,11 @@ module AIXM
     end
 
     def created_at=(value)
-      @created_at = parse_time(value) || effective_at || Time.now
+      @created_at = value&.to_time || effective_at || Time.now
     end
 
     def effective_at=(value)
-      @effective_at = parse_time(value) || created_at || Time.now
+      @effective_at = value&.to_time || created_at || Time.now
     end
 
     # Validate the generated AIXM or OFMX atainst it's XSD.
@@ -93,18 +93,6 @@ module AIXM
       builder.instruct!
       builder.tag!(AIXM.schema(:root), meta) do |root|
         root << features.map { |f| f.to_xml }.join.indent(2)
-      end
-    end
-
-    private
-
-    def parse_time(value)
-      case value
-        when String then Time.parse(value)
-        when Date then value.to_time
-        when Time then value
-        when nil then nil
-        else fail(ArgumentError, "invalid date or time")
       end
     end
 

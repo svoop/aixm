@@ -36,6 +36,66 @@ describe AIXM::Refinements do
     end
   end
 
+  context Float do
+    describe :to_dms do
+      it "must convert +1. DD to DMS" do
+        1.37595556.to_dms.must_equal %q(001°22'33.44")
+      end
+
+      it "must convert -1. DD to DMS" do
+        -1.37595556.to_dms.must_equal %q(-001°22'33.44")
+      end
+
+      it "must convert +2. DD to DMS" do
+        11.37595556.to_dms.must_equal %q(011°22'33.44")
+      end
+
+      it "must convert -2. DD to DMS" do
+        -11.37595556.to_dms.must_equal %q(-011°22'33.44")
+      end
+
+      it "must convert +3. DD to DMS" do
+        111.37595556.to_dms.must_equal %q(111°22'33.44")
+      end
+
+      it "must convert -3. DD to DMS" do
+        -111.37595556.to_dms.must_equal %q(-111°22'33.44")
+      end
+
+      it "must convert DD to DMS with degrees only" do
+        11.0.to_dms.must_equal %q(011°00'00.00")
+      end
+
+      it "must convert DD to DMS with degrees and minutes only" do
+        11.36666667.to_dms.must_equal %q(011°22'00.00")
+      end
+
+      it "must convert DD to DMS with tenth of seconds only" do
+        1.37594444.to_dms.must_equal %q(001°22'33.40")
+      end
+
+      it "must convert DD to DMS with whole seconds only" do
+        1.37583333.to_dms.must_equal %q(001°22'33.00")
+      end
+
+      it "must convert DD to two zero padded DMS" do
+        1.37595556.to_dms(2).must_equal %q(01°22'33.44")
+      end
+
+      it "must convert DD to no zero padded DMS" do
+        1.37595556.to_dms(0).must_equal %q(1°22'33.44")
+      end
+    end
+
+    describe :to_rad do
+      it "must convert correctly" do
+        0.0.to_rad.must_equal 0
+        180.0.to_rad.must_equal Math::PI
+        -123.0.to_rad.must_equal(-2.1467549799530254)
+      end
+    end
+  end
+
   context Hash do
     describe :lookup do
       subject do
@@ -74,12 +134,6 @@ describe AIXM::Refinements do
       it "must indent multi line string" do
         "foo\nbar".indent(2).must_equal "  foo\n  bar"
         "foo\nbar\n".indent(2).must_equal "  foo\n  bar\n"
-      end
-    end
-
-    describe :uptrans do
-      it "must transliterate invalid characters" do
-        'DÉJÀ SCHÖN'.uptrans.must_equal 'DEJA SCHOEN'
       end
     end
 
@@ -173,64 +227,22 @@ describe AIXM::Refinements do
         end
       end
     end
-  end
 
-  context Float do
-    describe :to_rad do
-      it "must convert correctly" do
-        0.0.to_rad.must_equal 0
-        180.0.to_rad.must_equal Math::PI
-        -123.0.to_rad.must_equal(-2.1467549799530254)
+    describe :to_time do
+      it "must convert valid dates and times" do
+        subject = '2018-01-01 17:17 +00:00'
+        subject.to_time.must_equal Time.parse(subject)
+      end
+
+      it "fails on invalid dates and times" do
+        subject = '2018-01-77 17:17 +00:00'
+        -> { subject.to_time }.must_raise ArgumentError
       end
     end
 
-    describe :to_dms do
-      it "must convert +1. DD to DMS" do
-        1.37595556.to_dms.must_equal %q(001°22'33.44")
-      end
-
-      it "must convert -1. DD to DMS" do
-        -1.37595556.to_dms.must_equal %q(-001°22'33.44")
-      end
-
-      it "must convert +2. DD to DMS" do
-        11.37595556.to_dms.must_equal %q(011°22'33.44")
-      end
-
-      it "must convert -2. DD to DMS" do
-        -11.37595556.to_dms.must_equal %q(-011°22'33.44")
-      end
-
-      it "must convert +3. DD to DMS" do
-        111.37595556.to_dms.must_equal %q(111°22'33.44")
-      end
-
-      it "must convert -3. DD to DMS" do
-        -111.37595556.to_dms.must_equal %q(-111°22'33.44")
-      end
-
-      it "must convert DD to DMS with degrees only" do
-        11.0.to_dms.must_equal %q(011°00'00.00")
-      end
-
-      it "must convert DD to DMS with degrees and minutes only" do
-        11.36666667.to_dms.must_equal %q(011°22'00.00")
-      end
-
-      it "must convert DD to DMS with tenth of seconds only" do
-        1.37594444.to_dms.must_equal %q(001°22'33.40")
-      end
-
-      it "must convert DD to DMS with whole seconds only" do
-        1.37583333.to_dms.must_equal %q(001°22'33.00")
-      end
-
-      it "must convert DD to two zero padded DMS" do
-        1.37595556.to_dms(2).must_equal %q(01°22'33.44")
-      end
-
-      it "must convert DD to no zero padded DMS" do
-        1.37595556.to_dms(0).must_equal %q(1°22'33.44")
+    describe :uptrans do
+      it "must transliterate invalid characters" do
+        'DÉJÀ SCHÖN'.uptrans.must_equal 'DEJA SCHOEN'
       end
     end
   end

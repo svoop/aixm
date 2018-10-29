@@ -28,6 +28,67 @@ module AIXM
       end
     end
 
+    # @!method to_dms(padding=3)
+    #   Convert DD angle to DMS with the degrees zero padded to +padding+
+    #   length.
+    #
+    #   @example
+    #     43.22164444444445.to_dms(2)
+    #     # => "43°12'77.92\""
+    #     43.22164444444445.to_dms
+    #     # => "043°12'77.92\""
+    #
+    #   @note This is a refinement for +Float+
+    #   @param padding [Integer] number of digits for the degree part
+    #   @return [String] angle in DMS notation +{-}D°MM'SS.SS"+
+    refine Float do
+      def to_dms(padding=3)
+        degrees = self.abs.floor
+        minutes = ((self.abs - degrees) * 60).floor
+        seconds = (self.abs - degrees - minutes.to_f / 60) * 3600
+        minutes, seconds = minutes + 1, 0 if seconds.round(2) == 60
+        degrees, minutes = degrees + 1, 0 if minutes == 60
+        %Q(%s%0#{padding}d°%02d'%05.2f") % [
+          ('-' if self.negative?),
+          self.abs.truncate,
+          minutes.abs.truncate,
+          seconds.abs
+        ]
+      end
+    end
+
+    # @!method to_rad
+    #   Convert an angle from degree to radian.
+    #
+    #   @example
+    #     45.to_rad
+    #     # => 0.7853981633974483
+    #
+    #   @note This is a refinement for +Float+
+    #   @return [Float] radian angle
+    refine Float do
+      def to_rad
+        self * Math::PI / 180
+      end
+    end
+
+    # @!method trim
+    #   Convert whole numbers to Integer and leave all other untouched.
+    #
+    #   @example
+    #     3.0.trim
+    #     # => 3
+    #     3.3.trim
+    #     # => 3.3
+    #
+    #   @note This is a refinement for +Float+
+    #   @return [Integer, Float] converted Float
+    refine Float do
+      def trim
+        (self % 1).zero? ? self.to_i : self
+      end
+    end
+
     # @!method lookup(key_or_value, fallback=omitted=true)
     #   Fetch a value from the hash, but unlike +Hash#fetch+, if +key_or_value+
     #   is no hash key, check whether +key_or_value+ is a hash value and if so
@@ -72,32 +133,6 @@ module AIXM
       end
     end
 
-    # @!method uptrans
-    #   Upcase and transliterate to match the reduced character set for
-    #   AIXM names and titles.
-    #
-    #   See {UPTRANS_MAP} for supported diacryts and {UPTRANS_FILTER} for the
-    #   list of allowed characters in the returned value.
-    #
-    #   @example
-    #     "Nîmes-Alès".uptrans
-    #     # => "NIMES-ALES"
-    #     "Zürich".uptrans
-    #     # => "ZUERICH"
-    #
-    #   @note This is a refinement for +String+
-    #   @return [String] upcased and transliterated String
-    refine String do
-      def uptrans
-        self.dup.tap do |string|
-          string.upcase!
-          string.gsub!(/(#{UPTRANS_MAP.keys.join('|')})/, UPTRANS_MAP)
-          string.unicode_normalize!(:nfd)
-          string.gsub!(UPTRANS_FILTER, '')
-        end
-      end
-    end
-
     # @!method to_dd
     #   Convert DMS angle to DD or +nil+ if the notation is not recognized.
     #
@@ -122,64 +157,44 @@ module AIXM
       end
     end
 
-    # @!method trim
-    #   Convert whole numbers to Integer and leave all other untouched.
+    # @!method to_time
+    #   Parse string to date and time.
     #
     #   @example
-    #     3.0.trim
-    #     # => 3
-    #     3.3.trim
-    #     # => 3.3
+    #     '2018-01-01 15:00'.to_time
+    #     # => 2018-01-01 15:00:00 +0100
     #
-    #   @note This is a refinement for +Float+
-    #   @return [Integer, Float] converted Float
-    refine Float do
-      def trim
-        (self % 1).zero? ? self.to_i : self
+    #   @note This is a refinement for +String+
+    #   @return [Time] date and time
+    refine String do
+      def to_time
+        Time.parse(self)
       end
     end
 
-    # @!method to_rad
-    #   Convert an angle from degree to radian.
+    # @!method uptrans
+    #   Upcase and transliterate to match the reduced character set for
+    #   AIXM names and titles.
+    #
+    #   See {UPTRANS_MAP} for supported diacryts and {UPTRANS_FILTER} for the
+    #   list of allowed characters in the returned value.
     #
     #   @example
-    #     45.to_rad
-    #     # => 0.7853981633974483
+    #     "Nîmes-Alès".uptrans
+    #     # => "NIMES-ALES"
+    #     "Zürich".uptrans
+    #     # => "ZUERICH"
     #
-    #   @note This is a refinement for +Float+
-    #   @return [Float] radian angle
-    refine Float do
-      def to_rad
-        self * Math::PI / 180
-      end
-    end
-
-    # @!method to_dms(padding=3)
-    #   Convert DD angle to DMS with the degrees zero padded to +padding+
-    #   length.
-    #
-    #   @example
-    #     43.22164444444445.to_dms(2)
-    #     # => "43°12'77.92\""
-    #     43.22164444444445.to_dms
-    #     # => "043°12'77.92\""
-    #
-    #   @note This is a refinement for +Float+
-    #   @param padding [Integer] number of digits for the degree part
-    #   @return [String] angle in DMS notation +{-}D°MM'SS.SS"+
-    refine Float do
-      def to_dms(padding=3)
-        degrees = self.abs.floor
-        minutes = ((self.abs - degrees) * 60).floor
-        seconds = (self.abs - degrees - minutes.to_f / 60) * 3600
-        minutes, seconds = minutes + 1, 0 if seconds.round(2) == 60
-        degrees, minutes = degrees + 1, 0 if minutes == 60
-        %Q(%s%0#{padding}d°%02d'%05.2f") % [
-          ('-' if self.negative?),
-          self.abs.truncate,
-          minutes.abs.truncate,
-          seconds.abs
-        ]
+    #   @note This is a refinement for +String+
+    #   @return [String] upcased and transliterated String
+    refine String do
+      def uptrans
+        self.dup.tap do |string|
+          string.upcase!
+          string.gsub!(/(#{UPTRANS_MAP.keys.join('|')})/, UPTRANS_MAP)
+          string.unicode_normalize!(:nfd)
+          string.gsub!(UPTRANS_FILTER, '')
+        end
       end
     end
   end
