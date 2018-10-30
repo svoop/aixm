@@ -34,6 +34,36 @@ describe AIXM::Refinements do
         [nil].to_digest.must_equal "cf83e135"
       end
     end
+
+    describe :to_uuid do
+      it "must digest single string" do
+        %w(a).to_uuid.must_equal "0cc175b9-c0f1-b6a8-31c3-99e269772661"
+      end
+
+      it "must digest double string" do
+        %w(a b).to_uuid.must_equal "d0726241-0206-76b1-4aa6-298ce6a18b21"
+      end
+
+      it "must digest integer" do
+        [5].to_uuid.must_equal "e4da3b7f-bbce-2345-d777-2b0674a318d5"
+      end
+
+      it "must digest nested array" do
+        [1, [2, 3]].to_uuid.must_equal "02b12e93-0c8b-cc7e-92e7-4ff5d96ce118"
+      end
+
+      it "must digest float" do
+        [5.0].to_uuid.must_equal "336669db-e720-233e-d557-7ddf81b653d3"
+      end
+
+      it "must digest boolean" do
+        [true, false].to_uuid.must_equal "215c2d45-b491-f5c8-15ac-e782ce450fdf"
+      end
+
+      it "must digest nil" do
+        [nil].to_uuid.must_equal "d41d8cd9-8f00-b204-e980-0998ecf8427e"
+      end
+    end
   end
 
   context Float do

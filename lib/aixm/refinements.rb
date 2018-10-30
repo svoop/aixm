@@ -28,6 +28,22 @@ module AIXM
       end
     end
 
+    # @!method to_uuid
+    #   Builds a UUID version 3 digest from the Array payload.
+    #
+    #   @example
+    #     ['foo', :bar, nil, [123]].to_uuid
+    #     # => "f3920098"
+    #
+    #   @note This is a refinement for +Array+
+    #   @return [String] UUID version 3
+    refine Array do
+      def to_uuid
+        ::Digest::MD5.hexdigest(flatten.map(&:to_s).join('|')).unpack("a8a4a4a4a12").join("-")
+      end
+    end
+
+
     # @!method to_dms(padding=3)
     #   Convert DD angle to DMS with the degrees zero padded to +padding+
     #   length.
