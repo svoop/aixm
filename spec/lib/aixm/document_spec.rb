@@ -727,7 +727,7 @@ describe AIXM::Document do
     it "builds correct OFMX" do
       subject.to_xml.must_equal <<~"END"
         <?xml version="1.0" encoding="UTF-8"?>
-        <OFMX-Snapshot xmlns:xsi="http://openflightmaps.org/schema/0/OFMX-Snapshot.xsd" version="0" origin="rubygem aixm-#{AIXM::VERSION}" region="LF" namespace="00000000-0000-0000-0000-000000000000" created="2018-01-01T12:00:00+01:00" effective="2018-01-01T12:00:00+01:00">
+        <OFMX-Snapshot xmlns:xsi="http://schema.openflightmaps.org/0/OFMX-Snapshot.xsd" version="0" origin="rubygem aixm-#{AIXM::VERSION}" region="LF" namespace="00000000-0000-0000-0000-000000000000" created="2018-01-01T12:00:00+01:00" effective="2018-01-01T12:00:00+01:00">
           <!-- Organisation: FRANCE -->
           <Org source="LF|GEN|0.0 FACTORY|0|0">
             <OrgUid>

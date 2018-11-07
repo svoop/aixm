@@ -1,3 +1,8 @@
+## 0.3.3
+
+#### Changes
+* Updated OFMX schema URI
+
 ## 0.3.2
 
 #### Additions
