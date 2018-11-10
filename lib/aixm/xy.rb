@@ -6,12 +6,13 @@ module AIXM
   #
   # ===Recognized notations:
   # * DD - examples: 12.12345678 (north or east), -12.12345678 (south or west)
-  # * DMS - examples: 11°22'33.44"N, 1112233.44W
+  # * DMS - examples: 11°22'33.44"N, 1112233.44W,
   #
   # @example All of the below are equivalent
-  #   AIXM.xy(lat: %q(11°22'33.44"), long: %q(-111°22'33.44"))
-  #   AIXM.xy(lat: '112233.44N', long: '1112233.44W')
   #   AIXM.xy(lat: 11.375955555555556, long: -111.37595555555555)
+  #   AIXM.xy(lat: %q(11°22'33.44"), long: %q(-111°22'33.44"))
+  #   AIXM.xy(lat: %q(11°22'33.44N"), long: %q(111°22'33.44W"))
+  #   AIXM.xy(lat: '112233.44N', long: '1112233.44W')
   #
   # @see https://github.com/openflightmaps/ofmx/wiki/Coordinates
   class XY
