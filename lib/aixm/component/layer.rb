@@ -106,8 +106,10 @@ module AIXM
 
       # @return [String]
       def inspect
-        %Q(#<#{self.class} class=#{@klass.inspect}>)
+        %Q(#<#{original_class} class=#{@klass.inspect}>)
       end
+
+      alias_method :original_class, :class
 
       # @!attribute class
       # @return [Symbol] class of layer (see {CLASSES})
