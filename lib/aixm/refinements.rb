@@ -33,7 +33,7 @@ module AIXM
     #
     #   @example
     #     ['foo', :bar, nil, [123]].to_uuid
-    #     # => "f3920098"
+    #     # => "a68e9aae-81ef-c6f1-d954-2eefe2820c50"
     #
     #   @note This is a refinement for +Array+
     #   @return [String] UUID version 3
