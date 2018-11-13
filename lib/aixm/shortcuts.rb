@@ -6,6 +6,7 @@ module AIXM
     z: Z,
     d: D,
     f: F,
+    h: H,
     organisation: Feature::Organisation,
     unit: Feature::Unit,
     service: Component::Service,

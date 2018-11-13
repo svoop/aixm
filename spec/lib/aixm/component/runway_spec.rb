@@ -7,14 +7,18 @@ describe AIXM::Component::Runway do
 
   describe :initialize do
     it "sets defaults for bidirectional runways" do
-      subject.forth.name.must_equal '16L'
-      subject.back.name.must_equal '34R'
+      subject.forth.name.must_equal AIXM.h('16L')
+      subject.back.name.must_equal AIXM.h('34R')
     end
 
     it "sets defaults for unidirectional runways" do
       subject = AIXM::Component::Runway.new(name: '30')
-      subject.forth.name.must_equal '30'
+      subject.forth.name.must_equal AIXM.h('30')
       subject.back.must_be_nil
+    end
+
+    it "fails on non-inverse bidirectional runways" do
+      -> { AIXM.runway(name: '16L/14R') }.must_raise ArgumentError
     end
   end
 
@@ -267,10 +271,14 @@ describe AIXM::Component::Runway::Direction do
   end
 
   describe :name= do
+    it "fails on invalid values" do
+      [nil, :foobar, '16R'].wont_be_written_to subject, :name
+    end
+
     it "overwrites preset name" do
-      subject.name.must_equal '16L'
-      subject.name = 'x01x'
-      subject.name.must_equal 'X01X'
+      subject.name.to_s.must_equal '16L'
+      subject.name = AIXM.h('34L')
+      subject.name.to_s.must_equal '34L'
     end
   end
 

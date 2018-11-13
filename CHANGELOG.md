@@ -1,5 +1,8 @@
 ## 0.3.3
 
+#### Additions
+* `AIXM::H` (heading)
+
 #### Changes
 * Updated OFMX schema URI
 

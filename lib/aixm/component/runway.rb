@@ -21,7 +21,7 @@ module AIXM
     #   runway.composition = COMPOSITIONS or nil
     #   runway.status = STATUSES or nil
     #   runway.remarks = String or nil
-    #   runway.forth.name = String   # preset based on the runway name
+    #   runway.forth.name = AIXM.h   # preset based on the runway name
     #   runway.forth.geographic_orientation = Integer or nil   # degrees
     #   runway.forth.xy = AIXM.xy
     #   runway.forth.z = AIXM.z or nil
@@ -31,15 +31,15 @@ module AIXM
     # @example Bidirectional runway
     #   runway = AIXM.runway(name: '16L/34R')
     #   runway.name   # => '16L/34R'
-    #   runway.forth.name = '16L'
+    #   runway.forth.name.to_s = '16L'
     #   runway.forth.geographic_orientation = 165
-    #   runway.back.name = '34R'
+    #   runway.back.name.to_s = '34R'
     #   runway.back.geographic_orientation = 345
     #
     # @example Unidirectional runway:
     #   runway = AIXM.runway(name: '16L')
     #   runway.name   # => '16L'
-    #   runway.forth.name = '16L'
+    #   runway.forth.name.to_s = '16L'
     #   runway.forth.geographic_orientation = 165
     #   runway.back = nil
     #
@@ -97,8 +97,9 @@ module AIXM
       def initialize(name:)
         self.name = name
         @name.split('/').tap do |forth, back|
-          @forth = Direction.new(runway: self, name: forth)
-          @back = Direction.new(runway: self, name: back) if back
+          @forth = Direction.new(runway: self, name: AIXM.h(forth))
+          @back = Direction.new(runway: self, name: AIXM.h(back)) if back
+          fail(ArgumentError, "invalid name") unless !@back || @back.name.inverse_of?(@forth.name)
         end
       end
 
@@ -183,7 +184,7 @@ module AIXM
         # @return [AIXM::Component::Runway] runway the runway direction is further describing
         attr_reader :runway
 
-        # @return [String] partial name of runway (e.g. "12" or "16L")
+        # @return [AIXM::H] partial name of runway (e.g. "12" or "16L")
         attr_reader :name
 
         # @return [Integer, nil] geographic orientation (true bearing) in degrees
@@ -219,8 +220,8 @@ module AIXM
         private :runway
 
         def name=(value)
-          fail(ArgumentError, "invalid name") unless value.is_a? String
-          @name = value.uptrans
+          fail(ArgumentError, "invalid name") unless value.is_a? AIXM::H
+          @name = value
         end
 
         def geographic_orientation=(value)

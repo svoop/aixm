@@ -20,6 +20,10 @@ module AIXM
         AIXM.f(123.35, :mhz)
       end
 
+      def h
+        AIXM.h('34L')
+      end
+
       # Components
 
       def timetable
