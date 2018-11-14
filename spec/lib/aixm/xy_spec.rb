@@ -111,6 +111,21 @@ describe AIXM::XY do
     end
   end
 
+  describe :distance do
+    subject do
+      AIXM.xy(lat: %q(44°00'07.63"N), long: %q(004°45'07.81"E))
+    end
+
+    it "calculates the distance between the same point as zero" do
+      subject.distance(subject).must_equal AIXM.d(0, :m)
+    end
+
+    it "calculates the distance between two points correctly" do
+      other = AIXM.xy(lat: %q(43°59'25.31"N), long: %q(004°45'23.24"E))
+      subject.distance(other).must_equal AIXM.d(1351, :m)
+    end
+  end
+
   describe :== do
     it "recognizes objects with identical latitude and longitude as equal" do
       a = AIXM.xy(lat: "112233N", long: "0223344E")
@@ -131,18 +146,14 @@ describe AIXM::XY do
     end
   end
 
-  describe :distance do
-    subject do
-      AIXM.xy(lat: %q(44°00'07.63"N), long: %q(004°45'07.81"E))
+  describe :hash do
+    it "returns an integer" do
+      subject.hash.must_be_instance_of Integer
     end
 
-    it "calculates the distance between the same point as zero" do
-      subject.distance(subject).must_equal AIXM.d(0, :m)
-    end
-
-    it "calculates the distance between two points correctly" do
-      other = AIXM.xy(lat: %q(43°59'25.31"N), long: %q(004°45'23.24"E))
-      subject.distance(other).must_equal AIXM.d(1351, :m)
+    it "allows for the use of instances as hash keys" do
+      dupe = subject.dup
+      { subject => true }[dupe].must_equal true
     end
   end
 end

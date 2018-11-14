@@ -46,11 +46,6 @@ module AIXM
       fail(ArgumentError, "invalid code") unless CODES.include? @code
     end
 
-    # @return [Boolean]
-    def ==(other)
-      other.is_a?(self.class) && alt == other.alt && code == other.code
-    end
-
     # @example
     #   z = AIXM.z(123, :qnh)
     #   z.qnh?   # => true
@@ -72,6 +67,19 @@ module AIXM
     # @return [Symbol] unit - either +:fl+ (flight level) or +:ft+ (feet)
     def unit
       qne? ? :fl : :ft
+    end
+
+    # @see Object#==
+    # @return [Boolean]
+    def ==(other)
+      self.class === other && alt == other.alt && code == other.code
+    end
+    alias_method :eql?, :==
+
+    # @see Object#hash
+    # @return [Integer]
+    def hash
+      to_s.hash
     end
 
   end

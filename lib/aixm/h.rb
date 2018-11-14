@@ -46,11 +46,6 @@ module AIXM
       @suffix = value&.to_s&.to_sym
     end
 
-    # @return [Boolean]
-    def ==(other)
-      other.is_a?(self.class) && deg == other.deg && suffix == other.suffix
-    end
-
     # Invert a heading by 180 degrees
     #
     # @example
@@ -75,6 +70,18 @@ module AIXM
       invert == other
     end
 
+    # @see Object#==
+    # @return [Boolean]
+    def ==(other)
+      self.class === other  && deg == other.deg && suffix == other.suffix
+    end
+    alias_method :eql?, :==
+
+    # @see Object#hash
+    # @return [Integer]
+    def hash
+      to_s.hash
+    end
   end
 
 end

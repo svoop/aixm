@@ -25,26 +25,6 @@ describe AIXM::Z do
     end
   end
 
-  describe :== do
-    it "recognizes objects with identical altitude and Q code as equal" do
-      a = AIXM.z(111, :qnh)
-      b = AIXM.z(111, :qnh)
-      a.must_equal b
-    end
-
-    it "recognizes objects with different altitude or Q code as unequal" do
-      a = AIXM.z(111, :qnh)
-      b = AIXM.z(222, :qnh)
-      a.wont_equal b
-    end
-
-    it "recognizes objects of different class as unequal" do
-      a = AIXM.z(111, :qnh)
-      b = :oggy
-      a.wont_equal b
-    end
-  end
-
   describe :qfe? do
     it "recognizes same Q code" do
       AIXM.z(111, :qfe).must_be :qfe?
@@ -68,6 +48,37 @@ describe AIXM::Z do
       AIXM.z(0, :qfe).unit.must_equal :ft
       AIXM.z(0, :qnh).unit.must_equal :ft
       AIXM.z(0, :qne).unit.must_equal :fl
+    end
+  end
+
+  describe :== do
+    it "recognizes objects with identical altitude and Q code as equal" do
+      a = AIXM.z(111, :qnh)
+      b = AIXM.z(111, :qnh)
+      a.must_equal b
+    end
+
+    it "recognizes objects with different altitude or Q code as unequal" do
+      a = AIXM.z(111, :qnh)
+      b = AIXM.z(222, :qnh)
+      a.wont_equal b
+    end
+
+    it "recognizes objects of different class as unequal" do
+      a = AIXM.z(111, :qnh)
+      b = :oggy
+      a.wont_equal b
+    end
+  end
+
+  describe :hash do
+    it "returns an integer" do
+      subject.hash.must_be_instance_of Integer
+    end
+
+    it "allows for the use of instances as hash keys" do
+      dupe = subject.dup
+      { subject => true }[dupe].must_equal true
     end
   end
 end

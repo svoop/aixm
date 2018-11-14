@@ -54,21 +54,6 @@ describe AIXM::H do
     end
   end
 
-  describe :== do
-    it "recognizes objects with identical deg and suffix as equal" do
-      AIXM.h('34L').must_equal AIXM.h('34L')
-    end
-
-    it "recognizes objects with different deg or suffix as unequal" do
-      AIXM.h('34L').wont_equal AIXM.h('35L')
-      AIXM.h('34L').wont_equal AIXM.h('34R')
-    end
-
-    it "recognizes objects of different class as unequal" do
-      subject.wont_equal :oggy
-    end
-  end
-
   describe :invert do
     it "must calculate inverse deg correctly" do
       {
@@ -97,6 +82,32 @@ describe AIXM::H do
 
     it "must return false for non-inverse pairs" do
       AIXM.h('34L').inverse_of?(AIXM.h('12L')).must_equal false
+    end
+  end
+
+  describe :== do
+    it "recognizes objects with identical deg and suffix as equal" do
+      AIXM.h('34L').must_equal AIXM.h('34L')
+    end
+
+    it "recognizes objects with different deg or suffix as unequal" do
+      AIXM.h('34L').wont_equal AIXM.h('35L')
+      AIXM.h('34L').wont_equal AIXM.h('34R')
+    end
+
+    it "recognizes objects of different class as unequal" do
+      subject.wont_equal :oggy
+    end
+  end
+
+  describe :hash do
+    it "returns an integer" do
+      subject.hash.must_be_instance_of Integer
+    end
+
+    it "allows for the use of instances as hash keys" do
+      dupe = subject.dup
+      { subject => true }[dupe].must_equal true
     end
   end
 end

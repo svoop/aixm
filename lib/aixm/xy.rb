@@ -64,11 +64,6 @@ module AIXM
       end
     end
 
-    # @return [Boolean]
-    def ==(other)
-      other.is_a?(self.class) && lat == other.lat && long == other.long
-    end
-
     # @return [AIXM::D] distance as calculated by use of the Haversine formula
     def distance(other)
       if self == other
@@ -83,6 +78,19 @@ module AIXM
         )
         AIXM.d(value.round, :m)
       end
+    end
+
+    # @see Object#==
+    # @return [Boolean]
+    def ==(other)
+      self.class === other && lat == other.lat && long == other.long
+    end
+    alias_method :eql?, :==
+
+    # @see Object#hash
+    # @return [Integer]
+    def hash
+      to_s.hash
     end
 
     private

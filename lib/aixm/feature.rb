@@ -19,7 +19,7 @@ module AIXM
 
     # @return [Boolean]
     def ==(other)
-      other.is_a?(self.class) && self.to_uid == other.to_uid
+      self.class === other && self.to_uid == other.to_uid
     end
   end
 

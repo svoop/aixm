@@ -5,6 +5,7 @@
 
 #### Changes
 * Updated OFMX schema URI
+* Added `eql?` and `hash` to `AIXM::XY|Z|D|H|F` to allow for instances of these classes to be used as Hash keys.
 
 ## 0.3.2
 

@@ -25,6 +25,23 @@ describe AIXM::F do
     end
   end
 
+  describe :between? do
+    subject do
+      AIXM.f(100, :mhz)
+    end
+
+    it "detect frequencies within a frequency band" do
+      subject.between?(90, 110, :mhz).must_equal true
+      subject.between?(90, 100, :mhz).must_equal true
+      subject.between?(100.0, 100.1, :mhz).must_equal true
+    end
+
+    it "detect frequencies outside of a frequency band" do
+      subject.between?(90, 110, :khz).must_equal false
+      subject.between?(90, 95, :mhz).must_equal false
+    end
+  end
+
   describe :== do
     it "recognizes objects with identical frequency and unit as equal" do
       a = AIXM.f(123.0, :mhz)
@@ -45,21 +62,14 @@ describe AIXM::F do
     end
   end
 
-  describe :between? do
-    subject do
-      AIXM.f(100, :mhz)
+  describe :hash do
+    it "returns an integer" do
+      subject.hash.must_be_instance_of Integer
     end
 
-    it "detect frequencies within a frequency band" do
-      subject.between?(90, 110, :mhz).must_equal true
-      subject.between?(90, 100, :mhz).must_equal true
-      subject.between?(100.0, 100.1, :mhz).must_equal true
-    end
-
-    it "detect frequencies outside of a frequency band" do
-      subject.between?(90, 110, :khz).must_equal false
-      subject.between?(90, 95, :mhz).must_equal false
+    it "allows for the use of instances as hash keys" do
+      dupe = subject.dup
+      { subject => true }[dupe].must_equal true
     end
   end
-
 end

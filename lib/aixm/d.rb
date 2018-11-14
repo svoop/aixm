@@ -47,10 +47,6 @@ module AIXM
       fail(ArgumentError, "invalid unit") unless UNITS.has_key? @unit
     end
 
-    def <=>(other)
-      to_m.dist <=> other.to_m.dist
-    end
-
     # @!method to_ft
     # @!method to_km
     # @!method to_m
@@ -61,6 +57,25 @@ module AIXM
         return self if unit == target_unit
         self.class.new((dist * UNITS[unit][target_unit]).round(8), target_unit)
       end
+    end
+
+    # @see Object#<=>
+    # @return [Integer]
+    def <=>(other)
+      to_m.dist <=> other.to_m.dist
+    end
+
+    # @see Object#==
+    # @return [Boolean]
+    def ==(other)
+      self.class === other  && (self <=> other).zero?
+    end
+    alias_method :eql?, :==
+
+    # @see Object#hash
+    # @return [Integer]
+    def hash
+      to_s.hash
     end
   end
 end

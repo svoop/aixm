@@ -40,14 +40,22 @@ module AIXM
       fail(ArgumentError, "invalid unit") unless UNITS.include? @unit
     end
 
-    # @return [Boolean]
-    def ==(other)
-      other.is_a?(self.class) && freq == other.freq && unit == other.unit
-    end
-
     # @return [Boolean] whether this frequency is part of a frequency band
     def between?(lower_freq, upper_freq, unit)
       freq.between?(lower_freq, upper_freq) && self.unit == unit
+    end
+
+    # @see Object#==
+    # @return [Boolean]
+    def ==(other)
+      self.class === other && freq == other.freq && unit == other.unit
+    end
+    alias_method :eql?, :==
+
+    # @see Object#hash
+    # @return [Integer]
+    def hash
+      to_s.hash
     end
 
   end

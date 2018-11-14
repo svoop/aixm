@@ -25,32 +25,6 @@ describe AIXM::D do
     end
   end
 
-  describe :<=> do
-    it "recognizes objects with identical unit and distance as equal" do
-      a = AIXM.d(123, :m)
-      b = AIXM.d(123.0, 'M')
-      a.must_equal b
-    end
-
-    it "recognizes objects with different units and converted distance as equal" do
-      a = AIXM.d(123, :m)
-      b = AIXM.d(403.54330709, 'FT')
-      a.must_equal b
-    end
-
-    it "recognizes objects with different units and identical distance as unequal" do
-      a = AIXM.d(123, :m)
-      b = AIXM.d(123, :ft)
-      a.wont_equal b
-    end
-
-    it "recognizes objects of different class as unequal" do
-      a = AIXM.d(123, :m)
-      b = :oggy
-      a.wont_equal b
-    end
-  end
-
   describe :to_ft do
     it "leaves feet untouched" do
       subject = AIXM.d(2, :ft)
@@ -127,4 +101,40 @@ describe AIXM::D do
     end
   end
 
+  describe :<=> do
+    it "recognizes objects with identical unit and distance as equal" do
+      a = AIXM.d(123, :m)
+      b = AIXM.d(123.0, 'M')
+      a.must_equal b
+    end
+
+    it "recognizes objects with different units and converted distance as equal" do
+      a = AIXM.d(123, :m)
+      b = AIXM.d(403.54330709, 'FT')
+      a.must_equal b
+    end
+
+    it "recognizes objects with different units and identical distance as unequal" do
+      a = AIXM.d(123, :m)
+      b = AIXM.d(123, :ft)
+      a.wont_equal b
+    end
+
+    it "recognizes objects of different class as unequal" do
+      a = AIXM.d(123, :m)
+      b = :oggy
+      a.wont_equal b
+    end
+  end
+
+  describe :hash do
+    it "returns an integer" do
+      subject.hash.must_be_instance_of Integer
+    end
+
+    it "allows for the use of instances as hash keys" do
+      dupe = subject.dup
+      { subject => true }[dupe].must_equal true
+    end
+  end
 end
