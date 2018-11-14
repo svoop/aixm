@@ -284,7 +284,7 @@ describe AIXM::Component::Runway::Direction do
 
   describe :geographic_orientation= do
     it "fails on invalid values" do
-      [:foobar, -1, 360].wont_be_written_to subject, :geographic_orientation
+      [:foobar, -1, 0, 361].wont_be_written_to subject, :geographic_orientation
     end
 
     it "converts valid Numeric values to integer" do

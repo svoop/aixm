@@ -228,7 +228,7 @@ module AIXM
           return @geographic_orientation = nil if value.nil?
           fail(ArgumentError, "invalid geographic orientation") unless value.is_a? Numeric
           @geographic_orientation = value.to_i
-          fail(ArgumentError, "invalid geographic orientation") unless (0..359).include? @geographic_orientation
+          fail(ArgumentError, "invalid geographic orientation") unless (1..360).include? @geographic_orientation
         end
 
         def xy=(value)
