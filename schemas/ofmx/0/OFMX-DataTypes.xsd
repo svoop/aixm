@@ -1522,6 +1522,8 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
       <xsd:enumeration value="MATS"/>
       <xsd:enumeration value="PSP"/>
       <xsd:enumeration value="WOOD"/>
+      <xsd:enumeration value="PAVED"/>
+      <xsd:enumeration value="UNPAVED"/>
       <xsd:enumeration value="OTHER"/>
     </xsd:restriction>
   </xsd:simpleType>
