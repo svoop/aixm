@@ -21,8 +21,8 @@ module AIXM
     #   runway.composition = COMPOSITIONS or nil
     #   runway.status = STATUSES or nil
     #   runway.remarks = String or nil
-    #   runway.forth.name = AIXM.h   # preset based on the runway name
-    #   runway.forth.geographic_orientation = Integer or nil   # degrees
+    #   runway.forth.name = AIXM.a[precision=2]   # preset based on the runway name
+    #   runway.forth.geographic_orientation = AIXM.a[precision=3] or nil
     #   runway.forth.xy = AIXM.xy
     #   runway.forth.z = AIXM.z or nil
     #   runway.forth.displaced_threshold = AIXM.xy or AIXM.d or nil
@@ -99,8 +99,8 @@ module AIXM
       def initialize(name:)
         self.name = name
         @name.split('/').tap do |forth, back|
-          @forth = Direction.new(runway: self, name: AIXM.h(forth))
-          @back = Direction.new(runway: self, name: AIXM.h(back)) if back
+          @forth = Direction.new(runway: self, name: AIXM.a(forth))
+          @back = Direction.new(runway: self, name: AIXM.a(back)) if back
           fail(ArgumentError, "invalid name") unless !@back || @back.name.inverse_of?(@forth.name)
         end
       end
@@ -189,10 +189,10 @@ module AIXM
         # @return [AIXM::Component::Runway] runway the runway direction is further describing
         attr_reader :runway
 
-        # @return [AIXM::H] partial name of runway (e.g. "12" or "16L")
+        # @return [AIXM::A] partial name of runway (e.g. "12" or "16L")
         attr_reader :name
 
-        # @return [Integer, nil] geographic orientation (true bearing) in degrees
+        # @return [AIXM::A, nil] geographic orientation (true bearing) in degrees
         attr_reader :geographic_orientation
 
         # @return [AIXM::XY] beginning point (middle of the runway width)
@@ -225,15 +225,14 @@ module AIXM
         private :runway
 
         def name=(value)
-          fail(ArgumentError, "invalid name") unless value.is_a? AIXM::H
+          fail(ArgumentError, "invalid name") unless value.is_a? AIXM::A
           @name = value
         end
 
         def geographic_orientation=(value)
           return @geographic_orientation = nil if value.nil?
-          fail(ArgumentError, "invalid geographic orientation") unless value.is_a? Numeric
-          @geographic_orientation = value.to_i
-          fail(ArgumentError, "invalid geographic orientation") unless (1..360).include? @geographic_orientation
+          fail(ArgumentError, "invalid geographic orientation") unless value.is_a? AIXM::A
+          @geographic_orientation = value
         end
 
         def xy=(value)
@@ -264,10 +263,10 @@ module AIXM
           @remarks = value&.to_s
         end
 
-        # @return [Integer] magnetic orientation (magnetic bearing) in degrees
+        # @return [AIXM::A] magnetic orientation (magnetic bearing) in degrees
         def magnetic_orientation
           if geographic_orientation && runway.airport.declination
-            (geographic_orientation + runway.airport.declination).round
+            geographic_orientation + runway.airport.declination
           end
         end
 

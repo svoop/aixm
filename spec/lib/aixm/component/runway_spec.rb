@@ -7,13 +7,13 @@ describe AIXM::Component::Runway do
 
   describe :initialize do
     it "sets defaults for bidirectional runways" do
-      subject.forth.name.must_equal AIXM.h('16L')
-      subject.back.name.must_equal AIXM.h('34R')
+      subject.forth.name.must_equal AIXM.a('16L')
+      subject.back.name.must_equal AIXM.a('34R')
     end
 
     it "sets defaults for unidirectional runways" do
       subject = AIXM::Component::Runway.new(name: '30')
-      subject.forth.name.must_equal AIXM.h('30')
+      subject.forth.name.must_equal AIXM.a('30')
       subject.back.must_be_nil
     end
 
@@ -277,18 +277,14 @@ describe AIXM::Component::Runway::Direction do
 
     it "overwrites preset name" do
       subject.name.to_s.must_equal '16L'
-      subject.name = AIXM.h('34L')
+      subject.name = AIXM.a('34L')
       subject.name.to_s.must_equal '34L'
     end
   end
 
   describe :geographic_orientation= do
     it "fails on invalid values" do
-      [:foobar, -1, 0, 361].wont_be_written_to subject, :geographic_orientation
-    end
-
-    it "converts valid Numeric values to integer" do
-      subject.tap { |s| s.geographic_orientation = 100.5 }.geographic_orientation.must_equal 100
+      [:foobar, -1, 10].wont_be_written_to subject, :geographic_orientation
     end
   end
 
@@ -326,8 +322,8 @@ describe AIXM::Component::Runway::Direction do
 
   describe :magnetic_orientation do
     it "is calculated correctly" do
-      subject.geographic_orientation = 16
-      subject.magnetic_orientation.must_equal 17
+      subject.geographic_orientation = AIXM.a(16)
+      subject.magnetic_orientation.must_equal AIXM.a(17)
     end
   end
 

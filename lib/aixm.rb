@@ -16,7 +16,7 @@ require_relative 'aixm/xy'
 require_relative 'aixm/z'
 require_relative 'aixm/d'
 require_relative 'aixm/f'
-require_relative 'aixm/h'
+require_relative 'aixm/a'
 
 require_relative 'aixm/component'
 require_relative 'aixm/component/service'

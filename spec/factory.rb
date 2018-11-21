@@ -20,8 +20,8 @@ module AIXM
         AIXM.f(123.35, :mhz)
       end
 
-      def h
-        AIXM.h('34L')
+      def a
+        AIXM.a('34L')
       end
 
       # Components
@@ -329,12 +329,12 @@ module AIXM
           runway.forth.xy = AIXM.xy(lat: %q(44°00'07.63"N), long: %q(004°45'07.81"E))
           runway.forth.z = AIXM.z(145, :qnh)
           runway.forth.displaced_threshold = AIXM.xy(lat: %q(44°00'03.54"N), long: %q(004°45'09.30"E))
-          runway.forth.geographic_orientation = 165
+          runway.forth.geographic_orientation = AIXM.a(165)
           runway.forth.remarks = "forth remarks"
           runway.back.xy = AIXM.xy(lat: %q(43°59'25.31"N), long: %q(004°45'23.24"E))
           runway.forth.z = AIXM.z(147, :qnh)
           runway.back.displaced_threshold = AIXM.xy(lat: %q(43°59'31.84"N), long: %q(004°45'20.85"E))
-          runway.back.geographic_orientation = 345
+          runway.back.geographic_orientation = AIXM.a(345)
           runway.back.remarks = "back remarks"
         end
       end
