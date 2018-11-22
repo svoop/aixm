@@ -46,8 +46,6 @@ module AIXM
     # @see https://github.com/openflightmaps/ofmx/wiki/Airport#rwy-runway
     class Runway
       COMPOSITIONS = {
-        PAVED: :paved,          # details unknown (OFMX only)
-        UNPAVED: :unpaved,      # details unknown (OFMX only)
         ASPH: :asphalt,
         BITUM: :bitumen,        # dug up, bound and rolled ground
         CONC: :concrete,
@@ -167,10 +165,7 @@ module AIXM
           rwy.valWid(width.dist.trim) if width
           rwy.uomDimRwy(length.unit.to_s.upcase) if length
           rwy.uomDimRwy(width.unit.to_s.upcase) if width && !length
-          if value = composition
-            value = :other if AIXM.aixm? && %i(paved unpaved).freeze.include?(value)
-            rwy.codeComposition(COMPOSITIONS.key(value).to_s)
-          end
+          rwy.codeComposition(COMPOSITIONS.key(composition).to_s) if composition
           rwy.codeSts(STATUSES.key(status).to_s) if status
           rwy.txtRmk(remarks) if remarks
         end
