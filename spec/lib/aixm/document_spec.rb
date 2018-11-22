@@ -177,9 +177,15 @@ describe AIXM::Document do
             <valLen>650</valLen>
             <valWid>80</valWid>
             <uomDimRwy>M</uomDimRwy>
-            <codeComposition>GRADE</codeComposition>
-            <codePreparation>ROLLED</codePreparation>
-            <codeCondSfc>FAIR</codeCondSfc>
+            <codeComposition>ASPH</codeComposition>
+            <codePreparation>PAVED</codePreparation>
+            <codeCondSfc>GOOD</codeCondSfc>
+            <valPcnClass>59</valPcnClass>
+            <codePcnPavementType>F</codePcnPavementType>
+            <codePcnPavementSubgrade>A</codePcnPavementSubgrade>
+            <codePcnMaxTirePressure>W</codePcnMaxTirePressure>
+            <codePcnEvalMethod>T</codePcnEvalMethod>
+            <txtPcnNote>Paved shoulder on 2.5m on each side of the RWY.</txtPcnNote>
             <codeSts>CLSD</codeSts>
             <txtRmk>Markings eroded</txtRmk>
           </Rwy>
@@ -268,7 +274,15 @@ describe AIXM::Document do
             <valLen>20</valLen>
             <valWid>20</valWid>
             <uomDim>M</uomDim>
-            <codeComposition>GRASS</codeComposition>
+            <codeComposition>CONC</codeComposition>
+            <codePreparation>PAVED</codePreparation>
+            <codeCondSfc>FAIR</codeCondSfc>
+            <valPcnClass>30</valPcnClass>
+            <codePcnPavementType>F</codePcnPavementType>
+            <codePcnPavementSubgrade>A</codePcnPavementSubgrade>
+            <codePcnMaxTirePressure>W</codePcnMaxTirePressure>
+            <codePcnEvalMethod>U</codePcnEvalMethod>
+            <txtPcnNote>Cracks near the center.</txtPcnNote>
             <codeSts>OTHER</codeSts>
             <txtRmk>Authorizaton by AD operator required</txtRmk>
           </Tla>
@@ -825,9 +839,15 @@ describe AIXM::Document do
             <valLen>650</valLen>
             <valWid>80</valWid>
             <uomDimRwy>M</uomDimRwy>
-            <codeComposition>GRADE</codeComposition>
-            <codePreparation>ROLLED</codePreparation>
-            <codeCondSfc>FAIR</codeCondSfc>
+            <codeComposition>ASPH</codeComposition>
+            <codePreparation>PAVED</codePreparation>
+            <codeCondSfc>GOOD</codeCondSfc>
+            <valPcnClass>59</valPcnClass>
+            <codePcnPavementType>F</codePcnPavementType>
+            <codePcnPavementSubgrade>A</codePcnPavementSubgrade>
+            <codePcnMaxTirePressure>W</codePcnMaxTirePressure>
+            <codePcnEvalMethod>T</codePcnEvalMethod>
+            <txtPcnNote>Paved shoulder on 2.5m on each side of the RWY.</txtPcnNote>
             <codeSts>CLSD</codeSts>
             <txtRmk>Markings eroded</txtRmk>
           </Rwy>
@@ -916,7 +936,15 @@ describe AIXM::Document do
             <valLen>20</valLen>
             <valWid>20</valWid>
             <uomDim>M</uomDim>
-            <codeComposition>GRASS</codeComposition>
+            <codeComposition>CONC</codeComposition>
+            <codePreparation>PAVED</codePreparation>
+            <codeCondSfc>FAIR</codeCondSfc>
+            <valPcnClass>30</valPcnClass>
+            <codePcnPavementType>F</codePcnPavementType>
+            <codePcnPavementSubgrade>A</codePcnPavementSubgrade>
+            <codePcnMaxTirePressure>W</codePcnMaxTirePressure>
+            <codePcnEvalMethod>U</codePcnEvalMethod>
+            <txtPcnNote>Cracks near the center.</txtPcnNote>
             <codeSts>OTHER</codeSts>
             <txtRmk>Authorizaton by AD operator required</txtRmk>
           </Tla>

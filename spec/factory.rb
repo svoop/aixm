@@ -323,9 +323,11 @@ module AIXM
         AIXM.runway(name: '16L/34R').tap do |runway|
           runway.length = AIXM.d(650, :m)
           runway.width = AIXM.d(80, :m)
-          runway.composition = :graded_earth
-          runway.preparation = :rolled
-          runway.condition = :fair
+          runway.surface.composition = :asphalt
+          runway.surface.preparation = :paved
+          runway.surface.condition = :good
+          runway.surface.pcn = "59/F/A/W/T"
+          runway.surface.remarks = "Paved shoulder on 2.5m on each side of the RWY."
           runway.status = :closed
           runway.remarks = "Markings eroded"
           runway.forth.xy = AIXM.xy(lat: %q(44°00'07.63"N), long: %q(004°45'07.81"E))
@@ -347,7 +349,11 @@ module AIXM
           helipad.z = AIXM.z(141, :qnh)
           helipad.length = AIXM.d(20, :m)
           helipad.width = AIXM.d(20, :m)
-          helipad.composition = :grass
+          helipad.surface.composition = :concrete
+          helipad.surface.preparation = :paved
+          helipad.surface.condition = :fair
+          helipad.surface.pcn = "30/F/A/W/U"
+          helipad.surface.remarks = "Cracks near the center."
           helipad.status = :other
           helipad.remarks = "Authorizaton by AD operator required"
         end

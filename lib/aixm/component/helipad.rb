@@ -13,25 +13,12 @@ module AIXM
     #   helipad.z = AIXM.z or nil
     #   helipad.length = AIXM.d or nil   # must use same unit as width
     #   helipad.width = AIXM.d or nil    # must use same unit as length
-    #   helipad.composition = COMPOSITIONS or nil
+    #   helipad.surface = AIXM.surface
     #   helipad.status = STATUSES or nil
     #   helipad.remarks = String or nil
     #
     # @see https://github.com/openflightmaps/ofmx/wiki/Airport#tla-helipad-tlof
     class Helipad
-      COMPOSITIONS = {
-        ASPH: :asphalt,
-        BITUM: :bitumen,        # dug up, bound and rolled ground
-        CONC: :concrete,
-        GRAVE: :gravel,         # small and midsize rounded stones
-        MACADAM: :macadam,      # small rounded stones
-        SAND: :sand,
-        GRADE: :graded_earth,   # graded or rolled earth possibly with some grass
-        GRASS: :grass,          # lawn
-        WATER: :water,
-        OTHER: :other           # specify in remarks
-      }.freeze
-
       STATUSES = {
         CLSD: :closed,
         WIP: :work_in_progress,          # e.g. construction work
@@ -59,8 +46,8 @@ module AIXM
       # @return [AIXM::D, nil] width
       attr_reader :width
 
-      # @return [Symbol, nil] composition of the surface (see {COMPOSITIONS})
-      attr_reader :composition
+      # @return [AIXM::Component::Surface] surface of the helipad
+      attr_reader :surface
 
       # @return [Symbol, nil] status of the helipad (see {STATUSES}) or +nil+ for normal operation
       attr_reader :status
@@ -70,6 +57,7 @@ module AIXM
 
       def initialize(name:)
         self.name = name
+        @surface = AIXM.surface
       end
 
       # @return [String]
@@ -114,10 +102,6 @@ module AIXM
         end
       end
 
-      def composition=(value)
-        @composition = value.nil? ? nil : COMPOSITIONS.lookup(value.to_s.to_sym, nil) || fail(ArgumentError, "invalid composition")
-      end
-
       def status=(value)
         @status = value.nil? ? nil : (STATUSES.lookup(value.to_s.to_sym, nil) || fail(ArgumentError, "invalid status"))
       end
@@ -151,7 +135,9 @@ module AIXM
           tla.valWid(width.dist.trim) if width
           tla.uomDim(length.unit.to_s.upcase) if length
           tla.uomDim(width.unit.to_s.upcase) if width && !length
-          tla.codeComposition(COMPOSITIONS.key(composition).to_s) if composition
+          unless  (xml = surface.to_xml).empty?
+            tla << xml.indent(2)
+          end
           tla.codeSts(STATUSES.key(status).to_s) if status
           tla.txtRmk(remarks) if remarks
         end

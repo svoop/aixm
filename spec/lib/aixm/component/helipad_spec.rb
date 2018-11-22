@@ -47,21 +47,6 @@ describe AIXM::Component::Helipad do
     end
   end
 
-  describe :composition= do
-    it "fails on invalid values" do
-      [:foobar, 123].wont_be_written_to subject, :composition
-    end
-
-    it "accepts nil value" do
-      [nil].must_be_written_to subject, :composition
-    end
-
-    it "looks up valid values" do
-      subject.tap { |s| s.composition = :macadam }.composition.must_equal :macadam
-      subject.tap { |s| s.composition = :GRADE }.composition.must_equal :graded_earth
-    end
-  end
-
   describe :status= do
     it "fails on invalid values" do
       [:foobar, 123].wont_be_written_to subject, :status
@@ -100,7 +85,15 @@ describe AIXM::Component::Helipad do
           <valLen>20</valLen>
           <valWid>20</valWid>
           <uomDim>M</uomDim>
-          <codeComposition>GRASS</codeComposition>
+          <codeComposition>CONC</codeComposition>
+          <codePreparation>PAVED</codePreparation>
+          <codeCondSfc>FAIR</codeCondSfc>
+          <valPcnClass>30</valPcnClass>
+          <codePcnPavementType>F</codePcnPavementType>
+          <codePcnPavementSubgrade>A</codePcnPavementSubgrade>
+          <codePcnMaxTirePressure>W</codePcnMaxTirePressure>
+          <codePcnEvalMethod>U</codePcnEvalMethod>
+          <txtPcnNote>Cracks near the center.</txtPcnNote>
           <codeSts>OTHER</codeSts>
           <txtRmk>Authorizaton by AD operator required</txtRmk>
         </Tla>
@@ -109,7 +102,8 @@ describe AIXM::Component::Helipad do
 
     it "builds correct minimal OFMX" do
       AIXM.ofmx!
-      subject.z = subject.length = subject.width = subject.composition = subject.status = subject.remarks = nil
+      %i(z length width status remarks).each { |a| subject.send(:"#{a}=", nil) }
+      %i(composition preparation condition pcn remarks).each { |a| subject.surface.send(:"#{a}=", nil) }
       subject.to_xml.must_equal <<~END
         <Tla>
           <TlaUid>

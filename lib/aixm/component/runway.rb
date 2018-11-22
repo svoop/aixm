@@ -18,9 +18,7 @@ module AIXM
     #   )
     #   runway.length = AIXM.d or nil   # must use same unit as width
     #   runway.width = AIXM.d or nil    # must use same unit as length
-    #   runway.composition = COMPOSITIONS or nil
-    #   runway.preparation = PREPARATIONS or nil
-    #   runway.condition = CONDITIONS or nil
+    #   runway.surface = AIXM.surface
     #   runway.status = STATUSES or nil
     #   runway.remarks = String or nil
     #   runway.forth.name = AIXM.a[precision=2]   # preset based on the runway name
@@ -47,38 +45,6 @@ module AIXM
     #
     # @see https://github.com/openflightmaps/ofmx/wiki/Airport#rwy-runway
     class Runway
-      COMPOSITIONS = {
-        ASPH: :asphalt,
-        BITUM: :bitumen,        # dug up, bound and rolled ground
-        CONC: :concrete,
-        GRAVE: :gravel,         # small and midsize rounded stones
-        MACADAM: :macadam,      # small rounded stones
-        SAND: :sand,
-        GRADE: :graded_earth,   # graded or rolled earth possibly with some grass
-        GRASS: :grass,          # lawn
-        WATER: :water,
-        OTHER: :other           # specify in remarks
-      }
-
-      PREPARATIONS = {
-        NATURAL: :no_treatment,
-        ROLLED: :rolled,
-        GROOVED: :grooved,      # cut or plastic grooved
-        OILED: :oiled,
-        PAVED: :paved,
-        PFC: :porous_friction_course,
-        AFSC: :aggregate_friction_seal_coat,
-        RFSC: :rubberized_friction_seal_coat,
-        OTHER: :other
-      }
-
-      CONDITIONS = {
-        GOOD: :good,
-        FAIR: :fair,
-        POOR: :poor,
-        OTHER: :other
-      }
-
       STATUSES = {
         CLSD: :closed,
         WIP: :work_in_progress,          # e.g. construction work
@@ -100,14 +66,8 @@ module AIXM
       # @return [AIXM::D, nil] width
       attr_reader :width
 
-      # @return [Symbol, nil] composition of the surface (see {COMPOSITIONS})
-      attr_reader :composition
-
-      # @return [Symbol, nil] preparation of the surface (see {PREPARATIONS})
-      attr_reader :preparation
-
-      # @return [Symbol, nil] condition of the surface (see {CONDITIONS})
-      attr_reader :condition
+      # @return [AIXM::Component::Surface] surface of the runway
+      attr_reader :surface
 
       # @return [Symbol, nil] status of the runway (see {STATUSES}) or +nil+ for normal operation
       attr_reader :status
@@ -128,6 +88,7 @@ module AIXM
           @back = Direction.new(runway: self, name: AIXM.a(back)) if back
           fail(ArgumentError, "invalid name") unless !@back || @back.name.inverse_of?(@forth.name)
         end
+        @surface = AIXM.surface
       end
 
       # @return [String]
@@ -162,18 +123,6 @@ module AIXM
         end
       end
 
-      def composition=(value)
-        @composition = value.nil? ? nil : COMPOSITIONS.lookup(value.to_s.to_sym, nil) || fail(ArgumentError, "invalid composition")
-      end
-
-      def preparation=(value)
-        @preparation = value.nil? ? nil : PREPARATIONS.lookup(value.to_s.to_sym, nil) || fail(ArgumentError, "invalid preparation")
-      end
-
-      def condition=(value)
-        @condition = value.nil? ? nil : CONDITIONS.lookup(value.to_s.to_sym, nil) || fail(ArgumentError, "invalid condition")
-      end
-
       def status=(value)
         @status = value.nil? ? nil : (STATUSES.lookup(value.to_s.to_sym, nil) || fail(ArgumentError, "invalid status"))
       end
@@ -200,9 +149,9 @@ module AIXM
           rwy.valWid(width.dist.trim) if width
           rwy.uomDimRwy(length.unit.to_s.upcase) if length
           rwy.uomDimRwy(width.unit.to_s.upcase) if width && !length
-          rwy.codeComposition(COMPOSITIONS.key(composition).to_s) if composition
-          rwy.codePreparation(PREPARATIONS.key(preparation).to_s) if preparation
-          rwy.codeCondSfc(CONDITIONS.key(condition).to_s) if condition
+          unless  (xml = surface.to_xml).empty?
+            rwy << xml.indent(2)
+          end
           rwy.codeSts(STATUSES.key(status).to_s) if status
           rwy.txtRmk(remarks) if remarks
         end

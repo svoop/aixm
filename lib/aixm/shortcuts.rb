@@ -14,6 +14,7 @@ module AIXM
     airport: Feature::Airport,
     runway: Component::Runway,
     helipad: Component::Helipad,
+    surface: Component::Surface,
     airspace: Feature::Airspace,
     layer: Component::Layer,
     geometry: Component::Geometry,
