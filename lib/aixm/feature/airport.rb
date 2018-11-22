@@ -155,7 +155,7 @@ module AIXM
       def declination=(value)
         return @declination = value if value.nil?
         fail(ArgumentError, "invalid declination") unless value.is_a?(Numeric) && (-180..180).include?(value)
-        @declination = value.to_f
+        @declination = value.to_f + 0   # adding zero prevents -0.0
       end
 
       def transition_z=(value)
