@@ -178,6 +178,8 @@ describe AIXM::Document do
             <valWid>80</valWid>
             <uomDimRwy>M</uomDimRwy>
             <codeComposition>GRADE</codeComposition>
+            <codePreparation>ROLLED</codePreparation>
+            <codeCondSfc>FAIR</codeCondSfc>
             <codeSts>CLSD</codeSts>
             <txtRmk>Markings eroded</txtRmk>
           </Rwy>
@@ -824,6 +826,8 @@ describe AIXM::Document do
             <valWid>80</valWid>
             <uomDimRwy>M</uomDimRwy>
             <codeComposition>GRADE</codeComposition>
+            <codePreparation>ROLLED</codePreparation>
+            <codeCondSfc>FAIR</codeCondSfc>
             <codeSts>CLSD</codeSts>
             <txtRmk>Markings eroded</txtRmk>
           </Rwy>

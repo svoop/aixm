@@ -1,7 +1,10 @@
 ## 0.3.4
 
+#### Additions
+* `Runway#preparation` and `Runway#condition`
+
 #### Breaking Changes
-* Rename `AIXM::H` to `AIXM::A` (angle) and add simple arithmetics to make it more versatile
+* Renamed `AIXM::H` to `AIXM::A` (angle) and add simple arithmetics to make it more versatile
 
 ## 0.3.3
 

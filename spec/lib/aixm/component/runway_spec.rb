@@ -67,6 +67,36 @@ describe AIXM::Component::Runway do
     end
   end
 
+  describe :preparation= do
+    it "fails on invalid values" do
+      [:foobar, 123].wont_be_written_to subject, :preparation
+    end
+
+    it "accepts nil value" do
+      [nil].must_be_written_to subject, :preparation
+    end
+
+    it "looks up valid values" do
+      subject.tap { |s| s.preparation = :rolled }.preparation.must_equal :rolled
+      subject.tap { |s| s.preparation = :NATURAL }.preparation.must_equal :no_treatment
+    end
+  end
+
+  describe :condition= do
+    it "fails on invalid values" do
+      [:foobar, 123].wont_be_written_to subject, :condition
+    end
+
+    it "accepts nil value" do
+      [nil].must_be_written_to subject, :condition
+    end
+
+    it "looks up valid values" do
+      subject.tap { |s| s.condition = :fair }.condition.must_equal :fair
+      subject.tap { |s| s.condition = :GOOD }.condition.must_equal :good
+    end
+  end
+
   describe :status= do
     it "fails on invalid values" do
       [:foobar, 123].wont_be_written_to subject, :status
@@ -101,6 +131,8 @@ describe AIXM::Component::Runway do
           <valWid>80</valWid>
           <uomDimRwy>M</uomDimRwy>
           <codeComposition>GRADE</codeComposition>
+          <codePreparation>ROLLED</codePreparation>
+          <codeCondSfc>FAIR</codeCondSfc>
           <codeSts>CLSD</codeSts>
           <txtRmk>Markings eroded</txtRmk>
         </Rwy>
@@ -179,7 +211,7 @@ describe AIXM::Component::Runway do
 
     it "builds correct minimal OFMX" do
       AIXM.ofmx!
-      %i(length width composition status remarks).each { |a| subject.send(:"#{a}=", nil) }
+      %i(length width composition preparation condition status remarks).each { |a| subject.send(:"#{a}=", nil) }
       subject.to_xml.must_equal <<~END
         <Rwy>
           <RwyUid>
