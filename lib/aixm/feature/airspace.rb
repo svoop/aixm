@@ -16,6 +16,13 @@ module AIXM
     #   airspace.geometry << AIXM.point or AIXM.arc or AIXM.border or AIXM.circle
     #   airspace.layers << AIXM.layer
     #
+    # Some regions define additional airspace types. In LF (France) for
+    # intance, the types RMZ (radio mandatory zone) and TMZ (transponder
+    # mandatory zone) exist. Such airspaces are usually specified together
+    # with a generic type such as +:regulated_airspace+:
+    #
+    #   airspace= AIXM.airspace(type: :regulated_airspace, local_type: "RMZ")
+    #
     # @see https://github.com/openflightmaps/ofmx/wiki/Airspace#ase-airspace
     class Airspace < Feature
       public_class_method :new
@@ -71,7 +78,9 @@ module AIXM
       # @return [Symbol] type of airspace (see {TYPES})
       attr_reader :type
 
-      # @return [String, nil] short name (e.g. "LF P 81")
+      # Some regions define additional types. They are usually specified with
+      #
+      # @return [String, nil] local type (e.g. "RMZ" or "TMZ")
       attr_reader :local_type
 
       # @return [String, nil] full name (e.g. "LF P 81 CHERBOURG")
