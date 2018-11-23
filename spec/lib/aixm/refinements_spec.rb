@@ -170,6 +170,7 @@ describe AIXM::Refinements do
     describe :to_dd do
       it "must convert +6.2 DMS to DD" do
         %q(12°34'56.78").to_dd.must_equal 12.58243888888889
+        %q(12°34'56.78'').to_dd.must_equal 12.58243888888889
         %q(12 34 56.78).to_dd.must_equal 12.58243888888889
         %q(123456.78).to_dd.must_equal 12.58243888888889
       end

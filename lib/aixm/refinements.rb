@@ -167,7 +167,7 @@ module AIXM
     #   @return [Float] angle in DD notation
     refine String do
       def to_dd
-        if self =~ /\A(-)?(\d{1,3})[° ]?(\d{2})[' ]?(\d{2}\.?\d{0,2})"?\z/
+        if self =~ /\A(-)?(\d{1,3})[° ]?(\d{2})[' ]?(\d{2}\.?\d{0,2})(?:"|'')?\z/
           ("#{$1}1".to_i * ($2.to_f + ($3.to_f/60) + ($4.to_f/3600)))
         end
       end
