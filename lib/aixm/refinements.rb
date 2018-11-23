@@ -1,7 +1,18 @@
 module AIXM
   module Refinements
 
-    UPTRANS_FILTER = %r{[^A-Z0-9, !"&#$%'\(\)\*\+\-\./:;<=>\?@\[\\\]\^_\|\{\}]}.freeze
+    DMS_PATTERN = %r(
+      (?<sgn>-)?
+      (?<deg>\d{1,3})[° ]*
+      (?<min>\d{2})[' ]*
+      (?<sec>\d{2}\.?\d{0,2})(?:"|'')?[ ]?
+      (?<hem_ne>[NE])?
+      (?<hem_sw>[SW])?
+    )xi.freeze
+
+    UPTRANS_FILTER = %r(
+      [^A-Z0-9, !"&#$%'\(\)\*\+\-\./:;<=>\?@\[\\\]\^_\|\{\}]
+    )x.freeze
 
     UPTRANS_MAP = {
       'Ä' => 'AE',
@@ -155,20 +166,26 @@ module AIXM
     #   @example
     #     %q(43°12'77.92").to_dd
     #     # => 43.22164444444445
+    #     "431277.92S".to_dd
+    #     # => -43.22164444444445
     #     %q(-123).to_dd
     #     # => nil
     #
     #   Supported notations:
-    #   * +{-}{DD}D°MM'SS{.SS}"+
-    #   * +{-}{DD}D MM SS{.SS}+
-    #   * +{-}{DD}DMMSS{.SS}+
+    #   * +{-}{DD}D°MM'SS{.SS}"{NESW}+
+    #   * +{-}{DD}D MM SS{.SS} {NESW}+
+    #   * +{-}{DD}DMMSS{.SS}{NESW}+
     #
     #   @note This is a refinement for +String+
     #   @return [Float] angle in DD notation
     refine String do
       def to_dd
-        if self =~ /\A(-)?(\d{1,3})[° ]?(\d{2})[' ]?(\d{2}\.?\d{0,2})(?:"|'')?\z/
-          ("#{$1}1".to_i * ($2.to_f + ($3.to_f/60) + ($4.to_f/3600)))
+        if match = self.match(DMS_PATTERN)
+          "#{match['sgn']}1".to_i * "#{:- if match['hem_sw']}1".to_i * (
+            match['deg'].to_f +
+            match['min'].to_f/60 +
+            match['sec'].to_f/3600
+          )
         end
       end
     end
