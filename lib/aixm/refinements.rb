@@ -2,12 +2,14 @@ module AIXM
   module Refinements
 
     DMS_PATTERN = %r(
-      (?<sgn>-)?
-      (?<deg>\d{1,3})[° ]*
-      (?<min>\d{2})[' ]*
-      (?<sec>\d{2}\.?\d{0,2})(?:"|'')?[ ]?
-      (?<hem_ne>[NE])?
-      (?<hem_sw>[SW])?
+      (?<dms>
+        (?<sgn>-)?
+        (?<deg>\d{1,3})[° ]*
+        (?<min>\d{2})[' ]*
+        (?<sec>\d{2}\.?\d{0,2})(?:"|'')?[ ]?
+        (?<hem_ne>[NE])?
+        (?<hem_sw>[SW])?
+      )
     )xi.freeze
 
     UPTRANS_FILTER = %r(

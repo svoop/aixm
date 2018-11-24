@@ -49,11 +49,13 @@ module AIXM
       }
 
       PCN_PATTERN = %r(
-        (?<capacity>\d+)\W+
-        (?<type>[RF])\W+
-        (?<subgrade>[A-D])\W+
-        (?<tire_pressure>[W-Z])\W+
-        (?<evaluation_method>[TU])
+        (?<pcn>
+          (?<capacity>\d+)\W+
+          (?<type>[RF])\W+
+          (?<subgrade>[A-D])\W+
+          (?<tire_pressure>[W-Z])\W+
+          (?<evaluation_method>[TU])
+        )
       )x.freeze
 
       # @return [Symbol, nil] composition of the surface (see {COMPOSITIONS})
@@ -97,7 +99,7 @@ module AIXM
       def pcn=(value)
         return @pcn = {} if value.nil?
         fail(ArgumentError, "invalid PCN") unless match = value.to_s.upcase.match(PCN_PATTERN)
-        @pcn = match.named_captures
+        @pcn = match.named_captures.reject{ |k| k == 'pcn' }
       end
 
       def remarks=(value)
