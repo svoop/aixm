@@ -173,84 +173,84 @@ describe AIXM::Refinements do
         %q(12°34'56.78").to_dd.must_equal 12.58243888888889
         %q(12°34'56.78'').to_dd.must_equal 12.58243888888889
         %q(12 34 56.78).to_dd.must_equal 12.58243888888889
-        %q(123456.78).to_dd.must_equal 12.58243888888889
+        %q(123456.78N).to_dd.must_equal 12.58243888888889
       end
 
       it "must convert -6.2 DMS to DD" do
         %q(12°34'56.78"S).to_dd.must_equal(-12.58243888888889)
         %q(-12°34'56.78").to_dd.must_equal(-12.58243888888889)
         %q(-12 34 56.78).to_dd.must_equal(-12.58243888888889)
-        %q(-123456.78).to_dd.must_equal(-12.58243888888889)
+        %q(123456.78S).to_dd.must_equal(-12.58243888888889)
       end
 
       it "must convert +7.2 DMS to DD" do
         %q(111°22'33.44"N).to_dd.must_equal 111.37595555555555
         %q(111°22'33.44").to_dd.must_equal 111.37595555555555
         %q(111 22 33.44).to_dd.must_equal 111.37595555555555
-        %q(1112233.44).to_dd.must_equal 111.37595555555555
+        %q(1112233.44N).to_dd.must_equal 111.37595555555555
       end
 
       it "must convert -7.2 DMS to DD" do
         %q(111°22'33.44"S).to_dd.must_equal(-111.37595555555555)
         %q(-111°22'33.44").to_dd.must_equal(-111.37595555555555)
         %q(-111 22 33.44).to_dd.must_equal(-111.37595555555555)
-        %q(-1112233.44).to_dd.must_equal(-111.37595555555555)
+        %q(1112233.44S).to_dd.must_equal(-111.37595555555555)
       end
 
       it "must convert +6.1 DMS to DD" do
-        %q(12°34'56.7").to_dd.must_equal 12.582416666666667
         %q(12°34'56.7"N).to_dd.must_equal 12.582416666666667
+        %q(12°34'56.7").to_dd.must_equal 12.582416666666667
         %q(12 34 56.7).to_dd.must_equal 12.582416666666667
-        %q(123456.7).to_dd.must_equal 12.582416666666667
+        %q(123456.7N).to_dd.must_equal 12.582416666666667
       end
 
       it "must convert -6.1 DMS to DD" do
         %q(12°34'56.7"S).to_dd.must_equal(-12.582416666666667)
         %q(-12°34'56.7").to_dd.must_equal(-12.582416666666667)
         %q(-12 34 56.7).to_dd.must_equal(-12.582416666666667)
-        %q(-123456.7).to_dd.must_equal(-12.582416666666667)
+        %q(123456.7S).to_dd.must_equal(-12.582416666666667)
       end
 
       it "must convert +7.1 DMS to DD" do
-        %q(111°22'33.4").to_dd.must_equal 111.37594444444444
         %q(111°22'33.4"N).to_dd.must_equal 111.37594444444444
+        %q(111°22'33.4").to_dd.must_equal 111.37594444444444
         %q(111 22 33.4).to_dd.must_equal 111.37594444444444
-        %q(1112233.4).to_dd.must_equal 111.37594444444444
+        %q(1112233.4N).to_dd.must_equal 111.37594444444444
       end
 
-      it "must convert +7.1 DMS to DD" do
+      it "must convert -7.1 DMS to DD" do
         %q(111°22'33.4"S).to_dd.must_equal(-111.37594444444444)
         %q(-111°22'33.4").to_dd.must_equal(-111.37594444444444)
         %q(-111 22 33.4).to_dd.must_equal(-111.37594444444444)
-        %q(-1112233.4).to_dd.must_equal(-111.37594444444444)
+        %q(1112233.4S).to_dd.must_equal(-111.37594444444444)
       end
 
       it "must convert +6.0 DMS to DD" do
         %q(12°34'56"N).to_dd.must_equal 12.582222222222223
         %q(12°34'56").to_dd.must_equal 12.582222222222223
         %q(12 34 56).to_dd.must_equal 12.582222222222223
-        %q(123456).to_dd.must_equal 12.582222222222223
+        %q(123456N).to_dd.must_equal 12.582222222222223
       end
 
       it "must convert -6.0 DMS to DD" do
         %q(12°34'56"S).to_dd.must_equal(-12.582222222222223)
         %q(-12°34'56").to_dd.must_equal(-12.582222222222223)
         %q(-12 34 56).to_dd.must_equal(-12.582222222222223)
-        %q(-123456).to_dd.must_equal(-12.582222222222223)
+        %q(123456S).to_dd.must_equal(-12.582222222222223)
       end
 
       it "must convert +7.0 DMS to DD" do
         %q(111°22'33"N).to_dd.must_equal 111.37583333333333
         %q(111°22'33").to_dd.must_equal 111.37583333333333
         %q(111 22 33).to_dd.must_equal 111.37583333333333
-        %q(1112233).to_dd.must_equal 111.37583333333333
+        %q(1112233N).to_dd.must_equal 111.37583333333333
       end
 
-      it "must convert +7.0 DMS to DD" do
-        %q(-111°22'33"N).to_dd.must_equal(-111.37583333333333)
+      it "must convert -7.0 DMS to DD" do
+        %q(111°22'33"S).to_dd.must_equal(-111.37583333333333)
         %q(-111°22'33").to_dd.must_equal(-111.37583333333333)
         %q(-111 22 33).to_dd.must_equal(-111.37583333333333)
-        %q(-1112233).to_dd.must_equal(-111.37583333333333)
+        %q(1112233S).to_dd.must_equal(-111.37583333333333)
       end
 
       it "must convert all cardinal directions to DD" do

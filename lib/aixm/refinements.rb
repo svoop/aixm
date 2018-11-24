@@ -4,11 +4,16 @@ module AIXM
     DMS_PATTERN = %r(
       (?<dms>
         (?<sgn>-)?
-        (?<deg>\d{1,3})[° ]*
-        (?<min>\d{2})[' ]*
-        (?<sec>\d{2}\.?\d{0,2})(?:"|'')?[ ]?
-        (?<hem_ne>[NE])?
-        (?<hem_sw>[SW])?
+        (?<deg>\d{1,3})[° ]{1,2}
+        (?<min>\d{2})[' ]{1,2}
+        (?<sec>\d{2}(?:\.\d{0,2})?)["' ]{0,2}
+        (?<hem_ne>[NE])?(?<hem_sw>[SW])?
+      |
+        (?<sgn>-)?
+        (?<deg>\d{1,3})
+        (?<min>\d{2})
+        (?<sec>\d{2}(?:\.\d{0,2})?)
+        (?:(?<hem_ne>[NE])|(?<hem_sw>[SW]))
       )
     )xi.freeze
 
@@ -174,9 +179,9 @@ module AIXM
     #     # => nil
     #
     #   Supported notations:
-    #   * +{-}{DD}D°MM'SS{.SS}"{NESW}+
-    #   * +{-}{DD}D MM SS{.SS} {NESW}+
-    #   * +{-}{DD}DMMSS{.SS}{NESW}+
+    #   * +{-}{DD}D°MM'SS{.SS}"{[NESW]}+
+    #   * +{-}{DD}D MM SS{.SS} {[NESW]}+
+    #   * +{-}{DD}DMMSS{.SS}[NESW]+
     #
     #   @note This is a refinement for +String+
     #   @return [Float] angle in DD notation
