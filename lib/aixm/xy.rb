@@ -98,7 +98,7 @@ module AIXM
     def float_for(value)
       case value
         when Numeric then value.to_f
-        when String then value[0..-2].to_dd * (value.match?(/[SW]$/) ? -1 : 1)
+        when String then value.to_dd
         else fail(ArgumentError, "invalid value class `#{value.class}'")
       end
     rescue
