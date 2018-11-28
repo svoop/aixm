@@ -230,10 +230,10 @@ module AIXM
       end
 
       # @return [String] UID markup
-      def to_uid
+      def to_uid(as: :AhpUid)
         builder = Builder::XmlMarkup.new(indent: 2)
-        builder.AhpUid do |ahp_uid|
-          ahp_uid.codeId(id)
+        builder.tag!(as) do |tag|
+          tag.codeId(id)
         end
       end
 

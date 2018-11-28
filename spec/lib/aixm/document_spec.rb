@@ -416,15 +416,18 @@ describe AIXM::Document do
               <geoLongArc>0045300.00E</geoLongArc>
             </Avx>
           </Abd>
-          <!-- NavigationalAid: [DesignatedPoint:ICAO] DESIGNATED POINT NAVAID -->
+          <!-- NavigationalAid: [DesignatedPoint:VFR-RP] DESIGNATED POINT NAVAID -->
           <Dpn>
             <DpnUid>
               <codeId>DDD</codeId>
               <geoLat>475133.00N</geoLat>
               <geoLong>0073336.00E</geoLong>
             </DpnUid>
+            <AhpUidAssoc>
+              <codeId>LFNT</codeId>
+            </AhpUidAssoc>
             <codeDatum>WGE</codeDatum>
-            <codeType>ICAO</codeType>
+            <codeType>OTHER</codeType>
             <txtName>DESIGNATED POINT NAVAID</txtName>
             <txtRmk>designated point navaid</txtRmk>
           </Dpn>
@@ -1080,15 +1083,18 @@ describe AIXM::Document do
               <geoLongArc>004.88333333E</geoLongArc>
             </Avx>
           </Abd>
-          <!-- NavigationalAid: [DesignatedPoint:ICAO] DESIGNATED POINT NAVAID -->
+          <!-- NavigationalAid: [DesignatedPoint:VFR-RP] DESIGNATED POINT NAVAID -->
           <Dpn source="LF|GEN|0.0 FACTORY|0|0">
             <DpnUid>
               <codeId>DDD</codeId>
               <geoLat>47.85916667N</geoLat>
               <geoLong>007.56000000E</geoLong>
             </DpnUid>
+            <AhpUidAssoc>
+              <codeId>LFNT</codeId>
+            </AhpUidAssoc>
             <codeDatum>WGE</codeDatum>
-            <codeType>ICAO</codeType>
+            <codeType>VFR-RP</codeType>
             <txtName>DESIGNATED POINT NAVAID</txtName>
             <txtRmk>designated point navaid</txtRmk>
           </Dpn>

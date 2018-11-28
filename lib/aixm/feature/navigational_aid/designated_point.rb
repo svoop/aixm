@@ -15,6 +15,7 @@ module AIXM
       #     xy: AIXM.xy
       #     type: TYPES
       #   )
+      #   designated_point.airport = AIXM.airport or nil
       #   designated_point.remarks = String or nil
       #
       # @see https://github.com/openflightmaps/ofmx/wiki/Navigational-aid#dpn-designated-point
@@ -24,14 +25,22 @@ module AIXM
         private :organisation
 
         TYPES = {
-          ICAO: :icao,           # five-letter ICAO name
-          ADHP: :adhp,           # airport related name
-          COORD: :coordinates,   # derived from geographical coordinates
-          OTHER: :other          # specify in remarks
+          ICAO: :icao,                                 # five-letter ICAO id
+          ADHP: :adhp,                                 # airport related id
+          COORD: :coordinates,                         # derived from geographical coordinates
+          'VFR-RP': :vfr_reporting_point,              # usually one or two letter id
+          'VFR-MRP': :vfr_mandatory_reporting_point,   # usually one or two letter id
+          'VFR-ENR': :vfr_en_route_point,
+          'VFR-GLD': :vfr_glider_point,
+          OTHER: :other                                # specify in remarks
         }.freeze
 
         # @return [Symbol] type of designated point
         attr_reader :type
+
+        # @return [AIXM::Feature::Airport] airport this designated point is
+        #   associated with
+        attr_reader :airport
 
         def initialize(type:, **arguments)
           super(organisation: false, z: nil, **arguments)
@@ -40,6 +49,11 @@ module AIXM
 
         def type=(value)
           @type = TYPES.lookup(value&.to_s&.to_sym, nil) || fail(ArgumentError, "invalid type")
+        end
+
+        def airport=(value)
+          fail(ArgumentError, "invalid airport") unless value.nil? || value.is_a?(AIXM::Feature::Airport)
+          @airport = value
         end
 
         # @return [String] UID markup
@@ -57,8 +71,9 @@ module AIXM
           builder = to_builder
           builder.Dpn({ source: (source if AIXM.ofmx?) }.compact) do |dpn|
             dpn << to_uid.indent(2)
+            dpn << airport.to_uid(as: :AhpUidAssoc).indent(2) if airport
             dpn.codeDatum('WGE')
-            dpn.codeType(type_key.to_s)
+            dpn.codeType(AIXM.aixm? && type_key =~ /^VFR/ ? 'OTHER' : type_key.to_s)
             dpn.txtName(name) if name
             dpn.txtRmk(remarks) if remarks
             dpn.target!

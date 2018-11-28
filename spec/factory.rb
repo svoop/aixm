@@ -119,8 +119,9 @@ module AIXM
           name: 'DESIGNATED POINT NAVAID',
           xy: AIXM.xy(lat: %q(47°51'33"N), long: %q(007°33'36"E)),
           z: AIXM.z(500, :qnh),
-          type: :ICAO
+          type: :vfr_reporting_point
         ).tap do |designated_point|
+          designated_point.airport = airport
           designated_point.timetable = AIXM::H24
           designated_point.remarks = 'designated point navaid'
         end
