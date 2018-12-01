@@ -17,7 +17,7 @@ module AIXM
   # ===Constants:
   # * +AIXM::MIN+ - characters recognized as DMS minute symbols
   # * +AIXM::SEC+ - characters recognized as DMS second symbols
-  # * +AIXM::DMS_RE+ - regular expression to match DMS coordinates
+  # * +AIXM::DMS_RE+ - regular expression to match DMS coordinate notations
   #
   # @see https://github.com/openflightmaps/ofmx/wiki/Coordinates
   class XY

@@ -14,6 +14,10 @@ module AIXM
     #   surface.pcn = String
     #   surface.remarks = String or nil
     #
+    # ===Constants:
+    # * +AIXM::PCN_RE+ - regular expression to match PCN notations
+    #
+    #
     # @see https://github.com/openflightmaps/ofmx/wiki/Airport#rwy-runway
     class Surface
       COMPOSITIONS = {
@@ -47,16 +51,6 @@ module AIXM
         POOR: :poor,
         OTHER: :other
       }
-
-      PCN_RE = %r(
-        (?<pcn>
-          (?<capacity>\d+)\W+
-          (?<type>[RF])\W+
-          (?<subgrade>[A-D])\W+
-          (?<tire_pressure>[W-Z])\W+
-          (?<evaluation_method>[TU])
-        )
-      )x.freeze
 
       # @return [Symbol, nil] composition of the surface (see {COMPOSITIONS})
       attr_reader :composition
