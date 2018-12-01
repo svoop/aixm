@@ -304,4 +304,29 @@ describe AIXM::Refinements do
     end
   end
 
+  context Regexp do
+    describe :decapture do
+      it "should replace capture groups with non-capture groups" do
+        /(foo) baz (bar)/.decapture.must_equal /(?-mix:(?:foo) baz (?:bar))/
+        /(foo) baz (bar)/i.decapture.must_equal /(?i-mx:(?:foo) baz (?:bar))/
+      end
+
+      it "should replace named capture groups with non-capture groups" do
+        /(?<a>foo) baz (?<b>bar)/.decapture.must_equal /(?-mix:(?:foo) baz (?:bar))/
+        /(?<a>foo) baz (?<b>bar)/i.decapture.must_equal /(?i-mx:(?:foo) baz (?:bar))/
+      end
+
+      it "should not replace special groups" do
+        /(?:foo) (?<=baz) bar/.decapture.must_equal /(?-mix:(?:foo) (?<=baz) bar)/
+      end
+
+      it "should not replace literal round brackets" do
+        /\(foo\)/.decapture.must_equal /(?-mix:\(foo\))/
+      end
+
+      it "should replace literal backslash followed by literal round brackets" do
+        /\\(foo\\)/.decapture.must_equal /(?-mix:\\(?:foo\\))/
+      end
+    end
+  end
 end

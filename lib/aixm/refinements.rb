@@ -1,12 +1,14 @@
 module AIXM
   module Refinements
 
+    MIN = %Q('\u2018\u2019\u00b4)
+    SEC = %Q("\u201c\u201d\u201f)
     DMS_PATTERN = %r(
       (?<dms>
         (?<sgn>-)?
         (?<deg>\d{1,3})[° ]{1,2}
-        (?<min>\d{2})['\u2018\u2019\u00b4 ]{1,2}
-        (?<sec>\d{2}(?:\.\d{0,2})?)["\u201c\u201d\u201f'\u2018\u2019\u00b4 ]{0,2}
+        (?<min>\d{2})[#{MIN} ]{1,2}
+        (?<sec>\d{2}(?:\.\d{0,2})?)[#{SEC}#{MIN} ]{0,2}
         (?<hem_ne>[NE])?(?<hem_sw>[SW])?
       |
         (?<sgn>-)?
@@ -147,6 +149,19 @@ module AIXM
         self[key_or_value] ||
           (key_or_value if has_value?(key_or_value)) ||
           (omitted ? fail(KeyError, "key or value `#{key_or_value}' not found") : fallback)
+      end
+    end
+
+    # @!method decapture
+    #   Replace all groups with non-caputuring groups
+    #
+    #   @example
+    #     /^(foo)(?<name>bar)/.decapture   # => /^(?:foo)(?:bar)/
+    #
+    #   @note This is a refinement for +Regexp+
+    refine Regexp do
+      def decapture
+        Regexp.new(to_s.gsub(/\(\?<\w+>|(?<![^\\]\\)\((?!\?)/, '(?:'))
       end
     end
 
