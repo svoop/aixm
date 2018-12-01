@@ -26,7 +26,7 @@ module AIXM
       class DME < NavigationalAid
         public_class_method :new
 
-        CHANNEL_PATTERN = /\A([1-9]|[1-9]\d|1[0-1]\d|12[0-6])[XY]\z/.freeze
+        CHANNEL_RE = /\A([1-9]|[1-9]\d|1[0-1]\d|12[0-6])[XY]\z/.freeze
 
         # @return [String] radio channel
         attr_reader :channel
@@ -40,7 +40,7 @@ module AIXM
         end
 
         def channel=(value)
-          fail(ArgumentError, "invalid channel") unless value.is_a?(String) && value.match?(CHANNEL_PATTERN)
+          fail(ArgumentError, "invalid channel") unless value.is_a?(String) && value.match?(CHANNEL_RE)
           @channel = value
         end
 

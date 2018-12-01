@@ -1,24 +1,6 @@
 module AIXM
   module Refinements
 
-    MIN = %Q('\u2018\u2019\u00b4)
-    SEC = %Q("\u201c\u201d\u201f)
-    DMS_PATTERN = %r(
-      (?<dms>
-        (?<sgn>-)?
-        (?<deg>\d{1,3})[° ]{1,2}
-        (?<min>\d{2})[#{MIN} ]{1,2}
-        (?<sec>\d{2}(?:\.\d{0,2})?)[#{SEC}#{MIN} ]{0,2}
-        (?<hem_ne>[NE])?(?<hem_sw>[SW])?
-      |
-        (?<sgn>-)?
-        (?<deg>\d{1,3})
-        (?<min>\d{2})
-        (?<sec>\d{2}(?:\.\d{0,2})?)
-        (?:(?<hem_ne>[NE])|(?<hem_sw>[SW]))
-      )
-    )xi.freeze
-
     UPTRANS_FILTER = %r(
       [^A-Z0-9, !"&#$%'\(\)\*\+\-\./:;<=>\?@\[\\\]\^_\|\{\}]
     )x.freeze
@@ -202,7 +184,7 @@ module AIXM
     #   @return [Float] angle in DD notation
     refine String do
       def to_dd
-        if match = self.match(DMS_PATTERN)
+        if match = self.match(DMS_RE)
           "#{match['sgn']}1".to_i * "#{:- if match['hem_sw']}1".to_i * (
             match['deg'].to_f +
             match['min'].to_f/60 +

@@ -29,7 +29,7 @@ module AIXM
     class Airport < Feature
       public_class_method :new
 
-      ID_PATTERN = /^([A-Z]{3,4}|[A-Z]{2}[A-Z\d]{4,})$/.freeze
+      ID_RE = /^([A-Z]{3,4}|[A-Z]{2}[A-Z\d]{4,})$/.freeze
 
       TYPES = {
         AD: :aerodrome,
@@ -107,7 +107,7 @@ module AIXM
       end
 
       def id=(value)
-        fail(ArgumentError, "invalid id `#{id}'") unless value&.upcase&.match? ID_PATTERN
+        fail(ArgumentError, "invalid id `#{id}'") unless value&.upcase&.match? ID_RE
         @id = value.upcase
       end
 

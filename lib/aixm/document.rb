@@ -15,7 +15,7 @@ module AIXM
   #
   # @see https://github.com/openflightmaps/ofmx/wiki/Snapshot
   class Document
-    NAMESPACE_PATTERN = /\A[a-f\d]{8}-[a-f\d]{4}-[a-f\d]{4}-[a-f\d]{4}-[a-f\d]{12}\z/.freeze
+    NAMESPACE_RE = /\A[a-f\d]{8}-[a-f\d]{4}-[a-f\d]{4}-[a-f\d]{4}-[a-f\d]{12}\z/.freeze
 
     # @return [String] OFMX region all features in this document belong to
     attr_reader :region
@@ -48,7 +48,7 @@ module AIXM
     end
 
     def namespace=(value)
-      fail(ArgumentError, "invalid namespace") unless value.nil? || value.match?(NAMESPACE_PATTERN)
+      fail(ArgumentError, "invalid namespace") unless value.nil? || value.match?(NAMESPACE_RE)
       @namespace = value || SecureRandom.uuid
     end
 

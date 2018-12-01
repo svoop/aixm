@@ -3,7 +3,7 @@
 #### Additions
 * `Runway#preparation` and `Runway#condition`
 * Surface for `Runway|Helipad#surface`
-* Extracted `AIXM::Refinements::DMS_PATTERN` to scan for coordinates in texts
+* Extracted `AIXM::MIN`, `AIXM::SEC` and `AIXM::DMS_RE` to scan for coordinates in texts
 
 #### Breaking Changes
 * Renamed `AIXM::H` to `AIXM::A` (angle) and add simple arithmetics to make it more versatile

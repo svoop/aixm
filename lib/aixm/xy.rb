@@ -14,6 +14,11 @@ module AIXM
   #   AIXM.xy(lat: %q(11°22'33.44N"), long: %q(111°22'33.44W"))
   #   AIXM.xy(lat: '112233.44N', long: '1112233.44W')
   #
+  # ===Constants:
+  # * +AIXM::MIN+ - characters recognized as DMS minute symbols
+  # * +AIXM::SEC+ - characters recognized as DMS second symbols
+  # * +AIXM::DMS_RE+ - regular expression to match DMS coordinates
+  #
   # @see https://github.com/openflightmaps/ofmx/wiki/Coordinates
   class XY
     EARTH_RADIUS = 6_371_008.8

@@ -48,7 +48,7 @@ module AIXM
         OTHER: :other
       }
 
-      PCN_PATTERN = %r(
+      PCN_RE = %r(
         (?<pcn>
           (?<capacity>\d+)\W+
           (?<type>[RF])\W+
@@ -98,7 +98,7 @@ module AIXM
 
       def pcn=(value)
         return @pcn = {} if value.nil?
-        fail(ArgumentError, "invalid PCN") unless match = value.to_s.upcase.match(PCN_PATTERN)
+        fail(ArgumentError, "invalid PCN") unless match = value.to_s.upcase.match(PCN_RE)
         @pcn = match.named_captures.reject{ |k| k == 'pcn' }
       end
 

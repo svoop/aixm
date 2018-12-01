@@ -1,6 +1,6 @@
 module AIXM
 
-  ELEMENTS = {
+  {
     document: Document,
     xy: XY,
     z: Z,
@@ -32,9 +32,7 @@ module AIXM
     obstacle: Feature::Obstacle,
     obstacle_group: Feature::ObstacleGroup,
     timetable: Component::Timetable
-  }.freeze
-
-  ELEMENTS.each do |element, klass|
+  }.each do |element, klass|
     define_singleton_method(element) do |*arguments|
       klass.new(*arguments)
     end

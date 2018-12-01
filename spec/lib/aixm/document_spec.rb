@@ -17,7 +17,7 @@ describe AIXM::Document do
     end
 
     it "sets random UUID for nil value" do
-      subject.tap { |s| s.namespace = nil }.namespace.must_match AIXM::Document::NAMESPACE_PATTERN
+      subject.tap { |s| s.namespace = nil }.namespace.must_match AIXM::Document::NAMESPACE_RE
     end
 
     it "accepts UUID value" do

@@ -7,6 +7,7 @@ require 'digest'
 require 'time'
 
 require_relative 'aixm/version'
+require_relative 'aixm/constants'
 require_relative 'aixm/refinements'
 require_relative 'aixm/config'
 require_relative 'aixm/errors'
