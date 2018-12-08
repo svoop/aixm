@@ -260,8 +260,11 @@ describe AIXM::Refinements do
         %q(111°22'33.44"W).to_dd.must_equal -111.37595555555555
       end
 
-      it "must convet edge cases to DD" do
+      it "must ignore minor typos when converting to DD" do
+        %q(111°22'33,44"N).to_dd.must_equal 111.37595555555555        
         %q(111°22'33.44"n).to_dd.must_equal 111.37595555555555
+        %q(111°22"33.44"N).to_dd.must_equal 111.37595555555555
+        %q(111°22'33.44'N).to_dd.must_equal 111.37595555555555
         %q(111°22'33.44" N).to_dd.must_equal 111.37595555555555
         %q(111° 22' 33.44" N).to_dd.must_equal 111.37595555555555
         %q(-111°22'33.44"S).to_dd.must_equal 111.37595555555555

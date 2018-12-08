@@ -180,6 +180,10 @@ module AIXM
     #   * +{-}{DD}D MM SS{.SS} {[NESW]}+
     #   * +{-}{DD}DMMSS{.SS}[NESW]+
     #
+    #   Quite a number of typos are tolerated such as the wrong use of
+    #   minute +'+ and second +"+ markers as well as the use of decimal
+    #   comma +,+ instead of dot +.+.
+    #
     #   @note This is a refinement for +String+
     #   @return [Float] angle in DD notation
     refine String do
@@ -188,7 +192,7 @@ module AIXM
           "#{match['sgn']}1".to_i * "#{:- if match['hem_sw']}1".to_i * (
             match['deg'].to_f +
             match['min'].to_f/60 +
-            match['sec'].to_f/3600
+            match['sec'].tr(',', '.').to_f/3600
           )
         end
       end
