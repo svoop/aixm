@@ -5,6 +5,7 @@ require 'nokogiri'
 require 'forwardable'
 require 'digest'
 require 'time'
+require 'pathname'
 
 require_relative 'aixm/version'
 require_relative 'aixm/constants'
