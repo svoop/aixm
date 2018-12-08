@@ -48,7 +48,7 @@ describe AIXM::Feature::NavigationalAid::VOR do
       it "builds correct complete OFMX" do
         AIXM.ofmx!
         subject.to_xml.must_equal <<~END
-          <!-- NavigationalAid: [VOR:VOR] VOR NAVAID -->
+          <!-- NavigationalAid: [VOR:VOR] VVV / VOR NAVAID -->
           <Vor source="LF|GEN|0.0 FACTORY|0|0">
             <VorUid>
               <codeId>VVV</codeId>
@@ -78,7 +78,7 @@ describe AIXM::Feature::NavigationalAid::VOR do
         AIXM.ofmx!
         subject.name = subject.z = subject.timetable = subject.remarks = nil
         subject.to_xml.must_equal <<~END
-          <!-- NavigationalAid: [VOR:VOR] UNNAMED -->
+          <!-- NavigationalAid: [VOR:VOR] VVV -->
           <Vor source="LF|GEN|0.0 FACTORY|0|0">
             <VorUid>
               <codeId>VVV</codeId>
@@ -118,7 +118,7 @@ describe AIXM::Feature::NavigationalAid::VOR do
       it "builds correct OFMX" do
         AIXM.ofmx!
         subject.to_xml.must_equal <<~END
-          <!-- NavigationalAid: [VOR:VOR] VOR/DME NAVAID -->
+          <!-- NavigationalAid: [VOR:VOR] VVV / VOR/DME NAVAID -->
           <Vor source="LF|GEN|0.0 FACTORY|0|0">
             <VorUid>
               <codeId>VVV</codeId>
@@ -141,7 +141,7 @@ describe AIXM::Feature::NavigationalAid::VOR do
             </Vtt>
             <txtRmk>vor/dme navaid</txtRmk>
           </Vor>
-          <!-- NavigationalAid: [DME] VOR/DME NAVAID -->
+          <!-- NavigationalAid: [DME] VVV / VOR/DME NAVAID -->
           <Dme>
             <DmeUid>
               <codeId>VVV</codeId>
@@ -190,7 +190,7 @@ describe AIXM::Feature::NavigationalAid::VOR do
       it "builds correct OFMX" do
         AIXM.ofmx!
         subject.to_xml.must_equal <<~END
-          <!-- NavigationalAid: [VOR:VOR] VORTAC NAVAID -->
+          <!-- NavigationalAid: [VOR:VOR] VVV / VORTAC NAVAID -->
           <Vor source="LF|GEN|0.0 FACTORY|0|0">
             <VorUid>
               <codeId>VVV</codeId>
@@ -213,7 +213,7 @@ describe AIXM::Feature::NavigationalAid::VOR do
             </Vtt>
             <txtRmk>vortac navaid</txtRmk>
           </Vor>
-          <!-- NavigationalAid: [TACAN] VORTAC NAVAID -->
+          <!-- NavigationalAid: [TACAN] VVV / VORTAC NAVAID -->
           <Tcn>
             <TcnUid>
               <codeId>VVV</codeId>

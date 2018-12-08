@@ -30,7 +30,7 @@ describe AIXM::Feature::NavigationalAid::Marker do
     it "builds correct complete OFMX" do
       AIXM.ofmx!
       subject.to_xml.must_equal <<~END
-        <!-- NavigationalAid: [Marker:O] MARKER NAVAID -->
+        <!-- NavigationalAid: [Marker:O] --- / MARKER NAVAID -->
         <Mkr source="LF|GEN|0.0 FACTORY|0|0">
           <MkrUid>
             <codeId>---</codeId>
@@ -59,7 +59,7 @@ describe AIXM::Feature::NavigationalAid::Marker do
       AIXM.ofmx!
       subject.type = subject.name = subject.z = subject.timetable = subject.remarks = nil
       subject.to_xml.must_equal <<~END
-        <!-- NavigationalAid: [Marker] UNNAMED -->
+        <!-- NavigationalAid: [Marker] --- -->
         <Mkr source="LF|GEN|0.0 FACTORY|0|0">
           <MkrUid>
             <codeId>---</codeId>

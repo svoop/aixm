@@ -36,7 +36,7 @@ describe AIXM::Feature::NavigationalAid::DesignatedPoint do
     it "builds correct complete OFMX" do
       AIXM.ofmx!
       subject.to_xml.must_equal <<~END
-        <!-- NavigationalAid: [DesignatedPoint:VFR-RP] DESIGNATED POINT NAVAID -->
+        <!-- NavigationalAid: [DesignatedPoint:VFR-RP] DDD / DESIGNATED POINT NAVAID -->
         <Dpn source="LF|GEN|0.0 FACTORY|0|0">
           <DpnUid>
             <codeId>DDD</codeId>
@@ -58,7 +58,7 @@ describe AIXM::Feature::NavigationalAid::DesignatedPoint do
       AIXM.ofmx!
       subject.name = subject.remarks = nil
       subject.to_xml.must_equal <<~END
-        <!-- NavigationalAid: [DesignatedPoint:VFR-RP] UNNAMED -->
+        <!-- NavigationalAid: [DesignatedPoint:VFR-RP] DDD -->
         <Dpn source="LF|GEN|0.0 FACTORY|0|0">
           <DpnUid>
             <codeId>DDD</codeId>
@@ -77,7 +77,7 @@ describe AIXM::Feature::NavigationalAid::DesignatedPoint do
     it "builds correct complete OFMX" do
       AIXM.aixm!
       subject.to_xml.must_equal <<~END
-        <!-- NavigationalAid: [DesignatedPoint:VFR-RP] DESIGNATED POINT NAVAID -->
+        <!-- NavigationalAid: [DesignatedPoint:VFR-RP] DDD / DESIGNATED POINT NAVAID -->
         <Dpn>
           <DpnUid>
             <codeId>DDD</codeId>

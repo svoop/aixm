@@ -85,7 +85,7 @@ module AIXM
 
       def to_builder
         builder = Builder::XmlMarkup.new(indent: 2)
-        builder.comment! "NavigationalAid: [#{kind}] #{name || :UNNAMED}"
+        builder.comment! "NavigationalAid: [#{kind}] #{[id, name].compact.join(' / ')}"
         builder
       end
     end

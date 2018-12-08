@@ -40,7 +40,7 @@ describe AIXM::Feature::NavigationalAid::NDB do
     it "builds correct complete OFMX" do
       AIXM.ofmx!
       subject.to_xml.must_equal <<~END
-        <!-- NavigationalAid: [NDB:B] NDB NAVAID -->
+        <!-- NavigationalAid: [NDB:B] NNN / NDB NAVAID -->
         <Ndb source="LF|GEN|0.0 FACTORY|0|0">
           <NdbUid>
             <codeId>NNN</codeId>
@@ -69,7 +69,7 @@ describe AIXM::Feature::NavigationalAid::NDB do
       AIXM.ofmx!
       subject.name = subject.type = subject.z = subject.timetable = subject.remarks = nil
       subject.to_xml.must_equal <<~END
-        <!-- NavigationalAid: [NDB] UNNAMED -->
+        <!-- NavigationalAid: [NDB] NNN -->
         <Ndb source="LF|GEN|0.0 FACTORY|0|0">
           <NdbUid>
             <codeId>NNN</codeId>

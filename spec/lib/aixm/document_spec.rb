@@ -416,7 +416,7 @@ describe AIXM::Document do
               <geoLongArc>0045300.00E</geoLongArc>
             </Avx>
           </Abd>
-          <!-- NavigationalAid: [DesignatedPoint:VFR-RP] DESIGNATED POINT NAVAID -->
+          <!-- NavigationalAid: [DesignatedPoint:VFR-RP] DDD / DESIGNATED POINT NAVAID -->
           <Dpn>
             <DpnUid>
               <codeId>DDD</codeId>
@@ -431,7 +431,7 @@ describe AIXM::Document do
             <txtName>DESIGNATED POINT NAVAID</txtName>
             <txtRmk>designated point navaid</txtRmk>
           </Dpn>
-          <!-- NavigationalAid: [DME] DME NAVAID -->
+          <!-- NavigationalAid: [DME] MMM / DME NAVAID -->
           <Dme>
             <DmeUid>
               <codeId>MMM</codeId>
@@ -453,7 +453,7 @@ describe AIXM::Document do
             </Dtt>
             <txtRmk>dme navaid</txtRmk>
           </Dme>
-          <!-- NavigationalAid: [Marker:O] MARKER NAVAID -->
+          <!-- NavigationalAid: [Marker:O] --- / MARKER NAVAID -->
           <Mkr>
             <MkrUid>
               <codeId>---</codeId>
@@ -475,7 +475,7 @@ describe AIXM::Document do
             </Mtt>
             <txtRmk>marker navaid</txtRmk>
           </Mkr>
-          <!-- NavigationalAid: [NDB:B] NDB NAVAID -->
+          <!-- NavigationalAid: [NDB:B] NNN / NDB NAVAID -->
           <Ndb>
             <NdbUid>
               <codeId>NNN</codeId>
@@ -497,7 +497,7 @@ describe AIXM::Document do
             </Ntt>
             <txtRmk>ndb navaid</txtRmk>
           </Ndb>
-          <!-- NavigationalAid: [TACAN] TACAN NAVAID -->
+          <!-- NavigationalAid: [TACAN] TTT / TACAN NAVAID -->
           <Tcn>
             <TcnUid>
               <codeId>TTT</codeId>
@@ -517,7 +517,7 @@ describe AIXM::Document do
             </Ttt>
             <txtRmk>tacan navaid</txtRmk>
           </Tcn>
-          <!-- NavigationalAid: [VOR:VOR] VOR NAVAID -->
+          <!-- NavigationalAid: [VOR:VOR] VVV / VOR NAVAID -->
           <Vor>
             <VorUid>
               <codeId>VVV</codeId>
@@ -540,7 +540,7 @@ describe AIXM::Document do
             </Vtt>
             <txtRmk>vor navaid</txtRmk>
           </Vor>
-          <!-- NavigationalAid: [VOR:VOR] VOR/DME NAVAID -->
+          <!-- NavigationalAid: [VOR:VOR] VDD / VOR/DME NAVAID -->
           <Vor>
             <VorUid>
               <codeId>VDD</codeId>
@@ -563,7 +563,7 @@ describe AIXM::Document do
             </Vtt>
             <txtRmk>vor/dme navaid</txtRmk>
           </Vor>
-          <!-- NavigationalAid: [DME] VOR/DME NAVAID -->
+          <!-- NavigationalAid: [DME] VDD / VOR/DME NAVAID -->
           <Dme>
             <DmeUid>
               <codeId>VDD</codeId>
@@ -588,7 +588,7 @@ describe AIXM::Document do
             </Dtt>
             <txtRmk>vor/dme navaid</txtRmk>
           </Dme>
-          <!-- NavigationalAid: [VOR:VOR] VORTAC NAVAID -->
+          <!-- NavigationalAid: [VOR:VOR] VTT / VORTAC NAVAID -->
           <Vor>
             <VorUid>
               <codeId>VTT</codeId>
@@ -611,7 +611,7 @@ describe AIXM::Document do
             </Vtt>
             <txtRmk>vortac navaid</txtRmk>
           </Vor>
-          <!-- NavigationalAid: [TACAN] VORTAC NAVAID -->
+          <!-- NavigationalAid: [TACAN] VTT / VORTAC NAVAID -->
           <Tcn>
             <TcnUid>
               <codeId>VTT</codeId>
@@ -1083,7 +1083,7 @@ describe AIXM::Document do
               <geoLongArc>004.88333333E</geoLongArc>
             </Avx>
           </Abd>
-          <!-- NavigationalAid: [DesignatedPoint:VFR-RP] DESIGNATED POINT NAVAID -->
+          <!-- NavigationalAid: [DesignatedPoint:VFR-RP] DDD / DESIGNATED POINT NAVAID -->
           <Dpn source="LF|GEN|0.0 FACTORY|0|0">
             <DpnUid>
               <codeId>DDD</codeId>
@@ -1098,7 +1098,7 @@ describe AIXM::Document do
             <txtName>DESIGNATED POINT NAVAID</txtName>
             <txtRmk>designated point navaid</txtRmk>
           </Dpn>
-          <!-- NavigationalAid: [DME] DME NAVAID -->
+          <!-- NavigationalAid: [DME] MMM / DME NAVAID -->
           <Dme source="LF|GEN|0.0 FACTORY|0|0">
             <DmeUid>
               <codeId>MMM</codeId>
@@ -1120,7 +1120,7 @@ describe AIXM::Document do
             </Dtt>
             <txtRmk>dme navaid</txtRmk>
           </Dme>
-          <!-- NavigationalAid: [Marker:O] MARKER NAVAID -->
+          <!-- NavigationalAid: [Marker:O] --- / MARKER NAVAID -->
           <Mkr source="LF|GEN|0.0 FACTORY|0|0">
             <MkrUid>
               <codeId>---</codeId>
@@ -1142,7 +1142,7 @@ describe AIXM::Document do
             </Mtt>
             <txtRmk>marker navaid</txtRmk>
           </Mkr>
-          <!-- NavigationalAid: [NDB:B] NDB NAVAID -->
+          <!-- NavigationalAid: [NDB:B] NNN / NDB NAVAID -->
           <Ndb source="LF|GEN|0.0 FACTORY|0|0">
             <NdbUid>
               <codeId>NNN</codeId>
@@ -1164,7 +1164,7 @@ describe AIXM::Document do
             </Ntt>
             <txtRmk>ndb navaid</txtRmk>
           </Ndb>
-          <!-- NavigationalAid: [TACAN] TACAN NAVAID -->
+          <!-- NavigationalAid: [TACAN] TTT / TACAN NAVAID -->
           <Tcn source="LF|GEN|0.0 FACTORY|0|0">
             <TcnUid>
               <codeId>TTT</codeId>
@@ -1186,7 +1186,7 @@ describe AIXM::Document do
             </Ttt>
             <txtRmk>tacan navaid</txtRmk>
           </Tcn>
-          <!-- NavigationalAid: [VOR:VOR] VOR NAVAID -->
+          <!-- NavigationalAid: [VOR:VOR] VVV / VOR NAVAID -->
           <Vor source="LF|GEN|0.0 FACTORY|0|0">
             <VorUid>
               <codeId>VVV</codeId>
@@ -1209,7 +1209,7 @@ describe AIXM::Document do
             </Vtt>
             <txtRmk>vor navaid</txtRmk>
           </Vor>
-          <!-- NavigationalAid: [VOR:VOR] VOR/DME NAVAID -->
+          <!-- NavigationalAid: [VOR:VOR] VDD / VOR/DME NAVAID -->
           <Vor source="LF|GEN|0.0 FACTORY|0|0">
             <VorUid>
               <codeId>VDD</codeId>
@@ -1232,7 +1232,7 @@ describe AIXM::Document do
             </Vtt>
             <txtRmk>vor/dme navaid</txtRmk>
           </Vor>
-          <!-- NavigationalAid: [DME] VOR/DME NAVAID -->
+          <!-- NavigationalAid: [DME] VDD / VOR/DME NAVAID -->
           <Dme>
             <DmeUid>
               <codeId>VDD</codeId>
@@ -1257,7 +1257,7 @@ describe AIXM::Document do
             </Dtt>
             <txtRmk>vor/dme navaid</txtRmk>
           </Dme>
-          <!-- NavigationalAid: [VOR:VOR] VORTAC NAVAID -->
+          <!-- NavigationalAid: [VOR:VOR] VTT / VORTAC NAVAID -->
           <Vor source="LF|GEN|0.0 FACTORY|0|0">
             <VorUid>
               <codeId>VTT</codeId>
@@ -1280,7 +1280,7 @@ describe AIXM::Document do
             </Vtt>
             <txtRmk>vortac navaid</txtRmk>
           </Vor>
-          <!-- NavigationalAid: [TACAN] VORTAC NAVAID -->
+          <!-- NavigationalAid: [TACAN] VTT / VORTAC NAVAID -->
           <Tcn>
             <TcnUid>
               <codeId>VTT</codeId>

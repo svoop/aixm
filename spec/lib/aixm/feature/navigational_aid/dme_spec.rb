@@ -42,7 +42,7 @@ describe AIXM::Feature::NavigationalAid::DME do
     it "builds correct complete OFMX" do
       AIXM.ofmx!
       subject.to_xml.must_equal <<~END
-        <!-- NavigationalAid: [DME] DME NAVAID -->
+        <!-- NavigationalAid: [DME] MMM / DME NAVAID -->
         <Dme source="LF|GEN|0.0 FACTORY|0|0">
           <DmeUid>
             <codeId>MMM</codeId>
@@ -71,7 +71,7 @@ describe AIXM::Feature::NavigationalAid::DME do
       AIXM.ofmx!
       subject.name = subject.z = subject.timetable = subject.remarks = nil
       subject.to_xml.must_equal <<~END
-        <!-- NavigationalAid: [DME] UNNAMED -->
+        <!-- NavigationalAid: [DME] MMM -->
         <Dme source="LF|GEN|0.0 FACTORY|0|0">
           <DmeUid>
             <codeId>MMM</codeId>

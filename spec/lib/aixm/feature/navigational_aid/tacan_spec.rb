@@ -38,7 +38,7 @@ describe AIXM::Feature::NavigationalAid::TACAN do
     it "builds correct complete OFMX" do
       AIXM.ofmx!
       subject.to_xml.must_equal <<~END
-        <!-- NavigationalAid: [TACAN] TACAN NAVAID -->
+        <!-- NavigationalAid: [TACAN] TTT / TACAN NAVAID -->
         <Tcn source="LF|GEN|0.0 FACTORY|0|0">
           <TcnUid>
             <codeId>TTT</codeId>
@@ -67,7 +67,7 @@ describe AIXM::Feature::NavigationalAid::TACAN do
       AIXM.ofmx!
       subject.name = subject.z = subject.timetable = subject.remarks = nil
       subject.to_xml.must_equal <<~END
-        <!-- NavigationalAid: [TACAN] UNNAMED -->
+        <!-- NavigationalAid: [TACAN] TTT -->
         <Tcn source="LF|GEN|0.0 FACTORY|0|0">
           <TcnUid>
             <codeId>TTT</codeId>
