@@ -7,6 +7,7 @@
 * Refinement `String#payload_hash`
 
 #### Breaking Changes
+* Require Ruby 2.6
 * Renamed `AIXM::H` to `AIXM::A` (angle) and add simple arithmetics to make it more versatile
 * `Runway|Helipad#composition` moved to `Runway|Helipad#surface`
 * DMS notation `{-}{DD}DMMSS{.SS}[NESW]` now requires compulsory cardinal direction (N, E, S or W) at the end
@@ -145,6 +146,7 @@
 ## 0.1.0
 
 #### Initial Implementation
+* Require Ruby 2.5
 * `AIXM::XY` (coordinates)
 * `AIXM::Z` (altitude or elevation)
 * AIXM-Snapshot 4.5 Document
