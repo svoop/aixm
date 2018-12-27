@@ -164,6 +164,38 @@ module AIXM
       end
     end
 
+    # @!method payload_hash(region:, element:)
+    #   Calculate the UUIDv3 hash of an OFMX XML string.
+    #
+    #   A word of warning: This is a minimalistic implementation for the AIXM
+    #   gem and won't work unless the following conditions are met:
+    #   * the XML string must be OFMX
+    #   * the XML string must be valid
+    #   * the XML string must be pretty-printed
+    #
+    #   @example from https://github.com/openflightmaps/ofmx/wiki/Functions
+    #     xml.payload_hash(region: 'LF', element: 'Ser')
+    #     # => "269b1f18-cabe-3c9e-1d71-48a7414a4cb9"
+    #
+    #   @note This is a refinement for +String+
+    #   @param region [String] OFMX region (e.g. "LF")
+    #   @param element [String] tag to calculate the payload hash for
+    #   @return [String] UUID version 3
+    refine String do
+      def payload_hash(region:, element:)
+        gsub(%r(mid="[^"]*"), '').   # remove existing mid attributes
+          sub(%r(\A.*?(?=<#{element}))m, '').   # remove everything before first <element>
+          sub(%r(</#{element}>.*\z)m, '').   # remove everything after first </element>
+          scan(%r(<([\w-]+)([^>]*)>([^<]*))).each_with_object([region]) do |(e, a, t), m|
+            m << e << a.scan(%r(([\w-]+)="([^"]*)")).sort.flatten << t
+          end.
+          flatten.
+          keep_if { |s| s.match?(/[^[:space:]]/m) }.
+          compact.
+          to_uuid
+      end
+    end
+
     # @!method to_dd
     #   Convert DMS angle to DD or +nil+ if the notation is not recognized.
     #

@@ -155,6 +155,32 @@ describe AIXM::Refinements do
     end
   end
 
+  context Regexp do
+    describe :decapture do
+      it "should replace capture groups with non-capture groups" do
+        /(foo) baz (bar)/.decapture.must_equal /(?-mix:(?:foo) baz (?:bar))/
+        /(foo) baz (bar)/i.decapture.must_equal /(?i-mx:(?:foo) baz (?:bar))/
+      end
+
+      it "should replace named capture groups with non-capture groups" do
+        /(?<a>foo) baz (?<b>bar)/.decapture.must_equal /(?-mix:(?:foo) baz (?:bar))/
+        /(?<a>foo) baz (?<b>bar)/i.decapture.must_equal /(?i-mx:(?:foo) baz (?:bar))/
+      end
+
+      it "should not replace special groups" do
+        /(?:foo) (?<=baz) bar/.decapture.must_equal /(?-mix:(?:foo) (?<=baz) bar)/
+      end
+
+      it "should not replace literal round brackets" do
+        /\(foo\)/.decapture.must_equal /(?-mix:\(foo\))/
+      end
+
+      it "should replace literal backslash followed by literal round brackets" do
+        /\\(foo\\)/.decapture.must_equal /(?-mix:\\(?:foo\\))/
+      end
+    end
+  end
+
   context String do
     describe :indent do
       it "must indent single line string" do
@@ -164,6 +190,36 @@ describe AIXM::Refinements do
       it "must indent multi line string" do
         "foo\nbar".indent(2).must_equal "  foo\n  bar"
         "foo\nbar\n".indent(2).must_equal "  foo\n  bar\n"
+      end
+    end
+
+    describe :payload_hash do
+      subject do
+        <<~END
+          <?xml version="1.0" encoding="utf-8"?>
+          <OFMX-Snapshot region="LF">
+            <Ser type="essential" active="true">
+              <SerUid>
+                <UniUid>
+                  <txtName>STRASBOURG APP</txtName>
+                </UniUid>
+                <codeType version="1" subversion="2">APP</codeType>
+                <noSeq>1</noSeq>
+              </SerUid>
+              <Stt priority="1">
+                <codeWorkHr>H24</codeWorkHr>
+              </Stt>
+              <Stt priority="2">
+                <codeWorkHr>HX</codeWorkHr>
+              </Stt>
+              <txtRmk>aka STRASBOURG approche</txtRmk>
+            </Ser>
+          </OFMX-Snapshot>
+        END
+      end
+
+      it "must calculate the hash" do
+        subject.payload_hash(region: 'LF', element: 'Ser').must_equal "269b1f18-cabe-3c9e-1d71-48a7414a4cb9"
       end
     end
 
@@ -261,7 +317,7 @@ describe AIXM::Refinements do
       end
 
       it "must ignore minor typos when converting to DD" do
-        %q(111°22'33,44"N).to_dd.must_equal 111.37595555555555        
+        %q(111°22'33,44"N).to_dd.must_equal 111.37595555555555
         %q(111°22'33.44"n).to_dd.must_equal 111.37595555555555
         %q(111°22"33.44"N).to_dd.must_equal 111.37595555555555
         %q(111°22'33.44'N).to_dd.must_equal 111.37595555555555
@@ -303,32 +359,6 @@ describe AIXM::Refinements do
     describe :uptrans do
       it "must transliterate invalid characters" do
         'DÉJÀ SCHÖN'.uptrans.must_equal 'DEJA SCHOEN'
-      end
-    end
-  end
-
-  context Regexp do
-    describe :decapture do
-      it "should replace capture groups with non-capture groups" do
-        /(foo) baz (bar)/.decapture.must_equal /(?-mix:(?:foo) baz (?:bar))/
-        /(foo) baz (bar)/i.decapture.must_equal /(?i-mx:(?:foo) baz (?:bar))/
-      end
-
-      it "should replace named capture groups with non-capture groups" do
-        /(?<a>foo) baz (?<b>bar)/.decapture.must_equal /(?-mix:(?:foo) baz (?:bar))/
-        /(?<a>foo) baz (?<b>bar)/i.decapture.must_equal /(?i-mx:(?:foo) baz (?:bar))/
-      end
-
-      it "should not replace special groups" do
-        /(?:foo) (?<=baz) bar/.decapture.must_equal /(?-mix:(?:foo) (?<=baz) bar)/
-      end
-
-      it "should not replace literal round brackets" do
-        /\(foo\)/.decapture.must_equal /(?-mix:\(foo\))/
-      end
-
-      it "should replace literal backslash followed by literal round brackets" do
-        /\\(foo\\)/.decapture.must_equal /(?-mix:\\(?:foo\\))/
       end
     end
   end

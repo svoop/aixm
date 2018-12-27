@@ -4,6 +4,7 @@
 * `Runway#preparation` and `Runway#condition`
 * Surface for `Runway|Helipad#surface`
 * Extracted `AIXM::MIN`, `AIXM::SEC` and `AIXM::DMS_RE` to scan for coordinates in texts
+* Refinement `String#payload_hash`
 
 #### Breaking Changes
 * Renamed `AIXM::H` to `AIXM::A` (angle) and add simple arithmetics to make it more versatile
