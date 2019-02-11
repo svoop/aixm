@@ -111,8 +111,9 @@ describe AIXM::Component::Runway do
           <geoLong>004.75216944E</geoLong>
           <valTrueBrg>165</valTrueBrg>
           <valMagBrg>166</valMagBrg>
-          <valElevTdz>147</valElevTdz>
+          <valElevTdz>145</valElevTdz>
           <uomElevTdz>FT</uomElevTdz>
+          <codeVfrPattern>E</codeVfrPattern>
           <txtRmk>forth remarks</txtRmk>
         </Rdn>
         <Rdd>
@@ -147,6 +148,9 @@ describe AIXM::Component::Runway do
           <geoLong>004.75645556E</geoLong>
           <valTrueBrg>345</valTrueBrg>
           <valMagBrg>346</valMagBrg>
+          <valElevTdz>147</valElevTdz>
+          <uomElevTdz>FT</uomElevTdz>
+          <codeVfrPattern>L</codeVfrPattern>
           <txtRmk>back remarks</txtRmk>
         </Rdn>
         <Rdd>
@@ -197,8 +201,9 @@ describe AIXM::Component::Runway do
           <geoLong>004.75216944E</geoLong>
           <valTrueBrg>165</valTrueBrg>
           <valMagBrg>166</valMagBrg>
-          <valElevTdz>147</valElevTdz>
+          <valElevTdz>145</valElevTdz>
           <uomElevTdz>FT</uomElevTdz>
+          <codeVfrPattern>E</codeVfrPattern>
           <txtRmk>forth remarks</txtRmk>
         </Rdn>
         <Rdd>
@@ -233,6 +238,9 @@ describe AIXM::Component::Runway do
           <geoLong>004.75645556E</geoLong>
           <valTrueBrg>345</valTrueBrg>
           <valMagBrg>346</valMagBrg>
+          <valElevTdz>147</valElevTdz>
+          <uomElevTdz>FT</uomElevTdz>
+          <codeVfrPattern>L</codeVfrPattern>
           <txtRmk>back remarks</txtRmk>
         </Rdn>
         <Rdd>
@@ -310,6 +318,21 @@ describe AIXM::Component::Runway::Direction do
     end
   end
 
+  describe :vfr_pattern= do
+    it "fails on invalid values" do
+      [:foobar, 123].wont_be_written_to subject, :vfr_pattern
+    end
+
+    it "accepts nil value" do
+      [nil].must_be_written_to subject, :vfr_pattern
+    end
+
+    it "looks up valid values" do
+      subject.tap { |s| s.vfr_pattern = :left }.vfr_pattern.must_equal :left
+      subject.tap { |s| s.vfr_pattern = :E }.vfr_pattern.must_equal :left_or_right
+    end
+  end
+
   describe :remarks= do
     macro :remarks
   end
@@ -339,8 +362,9 @@ describe AIXM::Component::Runway::Direction do
           <geoLong>004.75216944E</geoLong>
           <valTrueBrg>165</valTrueBrg>
           <valMagBrg>166</valMagBrg>
-          <valElevTdz>147</valElevTdz>
+          <valElevTdz>145</valElevTdz>
           <uomElevTdz>FT</uomElevTdz>
+          <codeVfrPattern>E</codeVfrPattern>
           <txtRmk>forth remarks</txtRmk>
         </Rdn>
         <Rdd>
@@ -366,7 +390,7 @@ describe AIXM::Component::Runway::Direction do
 
     it "builds correct minimal OFMX" do
       AIXM.ofmx!
-      %i(geographic_orientation z displaced_threshold remarks).each { |a| subject.send(:"#{a}=", nil) }
+      %i(geographic_orientation z displaced_threshold vfr_pattern remarks).each { |a| subject.send(:"#{a}=", nil) }
       subject.to_xml.must_equal <<~END
         <Rdn>
           <RdnUid>

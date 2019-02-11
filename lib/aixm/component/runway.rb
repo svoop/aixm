@@ -26,6 +26,7 @@ module AIXM
     #   runway.forth.xy = AIXM.xy
     #   runway.forth.z = AIXM.z or nil
     #   runway.forth.displaced_threshold = AIXM.xy or AIXM.d or nil
+    #   runway.forth.vfr_pattern = VFR_PATTERNS or nil
     #   runway.forth.remarks = String or nil
     #
     # @example Bidirectional runway
@@ -167,6 +168,12 @@ module AIXM
       #
       # @see https://github.com/openflightmaps/ofmx/wiki/Airport#rdn-runway-direction
       class Direction
+        VFR_PATTERNS = {
+          L: :left,
+          R: :right,
+          E: :left_or_right
+        }
+
         # @return [AIXM::Component::Runway] runway the runway direction is further describing
         attr_reader :runway
 
@@ -186,6 +193,9 @@ module AIXM
         #   coordinates (AIXM::XY) or distance (AIXM::D) from the beginning
         #   point
         attr_reader :displaced_threshold
+
+        # @return [Symbol, nil] direction of the VFR flight pattern (see {VFR_PATTERNS})
+        attr_reader :vfr_pattern
 
         # @return [String, nil] free text remarks
         attr_reader :remarks
@@ -240,6 +250,10 @@ module AIXM
           end
         end
 
+        def vfr_pattern=(value)
+          @vfr_pattern = value.nil? ? nil : (VFR_PATTERNS.lookup(value.to_s.to_sym, nil) || fail(ArgumentError, "invalid VFR pattern"))
+        end
+
         def remarks=(value)
           @remarks = value&.to_s
         end
@@ -267,6 +281,7 @@ module AIXM
               rdn.valElevTdz(z.alt)
               rdn.uomElevTdz(z.unit.upcase.to_s)
             end
+            rdn.codeVfrPattern(VFR_PATTERNS.key(vfr_pattern).to_s) if vfr_pattern
             rdn.txtRmk(remarks) if remarks
           end
           if displaced_threshold

@@ -335,11 +335,13 @@ module AIXM
           runway.forth.z = AIXM.z(145, :qnh)
           runway.forth.displaced_threshold = AIXM.xy(lat: %q(44°00'03.54"N), long: %q(004°45'09.30"E))
           runway.forth.geographic_orientation = AIXM.a(165)
+          runway.forth.vfr_pattern = :left_or_right
           runway.forth.remarks = "forth remarks"
           runway.back.xy = AIXM.xy(lat: %q(43°59'25.31"N), long: %q(004°45'23.24"E))
-          runway.forth.z = AIXM.z(147, :qnh)
+          runway.back.z = AIXM.z(147, :qnh)
           runway.back.displaced_threshold = AIXM.xy(lat: %q(43°59'31.84"N), long: %q(004°45'20.85"E))
           runway.back.geographic_orientation = AIXM.a(345)
+          runway.back.vfr_pattern = :left
           runway.back.remarks = "back remarks"
         end
       end

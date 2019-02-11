@@ -203,8 +203,9 @@ describe AIXM::Document do
             <geoLong>0044507.81E</geoLong>
             <valTrueBrg>165</valTrueBrg>
             <valMagBrg>166</valMagBrg>
-            <valElevTdz>147</valElevTdz>
+            <valElevTdz>145</valElevTdz>
             <uomElevTdz>FT</uomElevTdz>
+            <codeVfrPattern>E</codeVfrPattern>
             <txtRmk>forth remarks</txtRmk>
           </Rdn>
           <Rdd>
@@ -239,6 +240,9 @@ describe AIXM::Document do
             <geoLong>0044523.24E</geoLong>
             <valTrueBrg>345</valTrueBrg>
             <valMagBrg>346</valMagBrg>
+            <valElevTdz>147</valElevTdz>
+            <uomElevTdz>FT</uomElevTdz>
+            <codeVfrPattern>L</codeVfrPattern>
             <txtRmk>back remarks</txtRmk>
           </Rdn>
           <Rdd>
@@ -868,8 +872,9 @@ describe AIXM::Document do
             <geoLong>004.75216944E</geoLong>
             <valTrueBrg>165</valTrueBrg>
             <valMagBrg>166</valMagBrg>
-            <valElevTdz>147</valElevTdz>
+            <valElevTdz>145</valElevTdz>
             <uomElevTdz>FT</uomElevTdz>
+            <codeVfrPattern>E</codeVfrPattern>
             <txtRmk>forth remarks</txtRmk>
           </Rdn>
           <Rdd>
@@ -904,6 +909,9 @@ describe AIXM::Document do
             <geoLong>004.75645556E</geoLong>
             <valTrueBrg>345</valTrueBrg>
             <valMagBrg>346</valMagBrg>
+            <valElevTdz>147</valElevTdz>
+            <uomElevTdz>FT</uomElevTdz>
+            <codeVfrPattern>L</codeVfrPattern>
             <txtRmk>back remarks</txtRmk>
           </Rdn>
           <Rdd>

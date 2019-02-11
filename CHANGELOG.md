@@ -1,7 +1,7 @@
 ## 0.3.4
 
 #### Additions
-* `Runway#preparation` and `Runway#condition`
+* `Runway#preparation`, `Runway#condition` and `Runway#vfr_pattern`
 * Surface for `Runway|Helipad#surface`
 * Extracted `AIXM::MIN`, `AIXM::SEC` and `AIXM::DMS_RE` to scan for coordinates in texts
 * Refinement `String#payload_hash`
