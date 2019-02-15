@@ -58,4 +58,14 @@ describe AIXM::Component::Service do
     end
   end
 
+  describe :guess_unit_type do
+    it "finds the probably unit type for a matchable service" do
+      subject.tap { |s| s.type = :flight_information_service }.guessed_unit_type.must_equal :flight_information_centre
+    end
+
+    it "returns nil for an unmatchable service" do
+      subject.tap { |s| s.type = :aeronautical_mobile_satellite_service }.guessed_unit_type.must_be_nil
+    end
+  end
+
 end

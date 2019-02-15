@@ -2,6 +2,7 @@
 
 #### Additions
 * `Runway#preparation`, `Runway#condition` and `Runway#vfr_pattern`
+* `Service#guessed_unit_type`
 * Surface for `Runway|Helipad#surface`
 * Extracted `AIXM::MIN`, `AIXM::SEC` and `AIXM::DMS_RE` to scan for coordinates in texts
 * Refinement `String#payload_hash`

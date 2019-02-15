@@ -77,6 +77,54 @@ module AIXM
         OTHER: :other   # specify in remarks
       }.freeze
 
+      # Map service types to guessed unit types
+      GUESSED_UNIT_TYPES_MAP = {
+        :advisory_service => :advisory_centre,
+        :aerodrome_control_tower_service => :aerodrome_control_tower,
+        :aerodrome_flight_information_service => :aerodrome_control_tower,
+        :aeronautical_information_service => :aeronautical_information_services_office,
+        :air_route_traffic_control_centre_service => :air_route_traffic_control_centre,
+        :air_traffic_control_service => :air_traffic_control_centre,
+        :air_traffic_flow_management_service => :air_traffic_flow_management_unit,
+        :air_traffic_management_service => :air_traffic_management_unit,
+        :air_traffic_service => :air_traffic_services_unit,
+        :approach_control_service => :approach_control_office,
+        :approach_control_service_for_arrival => :arrivals_approach_control_office,
+        :approach_control_service_for_departure => :depatures_approach_control_office,
+        :area_control_service => :area_control_centre,
+        :automated_terminal_information_service => :aerodrome_control_tower,
+        :automated_terminal_information_service_for_arrival => :aerodrome_control_tower,
+        :automated_terminal_information_service_for_departure => :aerodrome_control_tower,
+        :automatic_dependent_surveillance_service => :automatic_dependent_surveillance_unit,
+        :briefing_service => :briefing_office,
+        :commercial_broadcasting_service => :commercial_broadcasting_station,
+        :communications_service => :communications_office,
+        :flight_information_service => :flight_information_centre,
+        :flight_service_station_service => :flight_service_station,
+        :forecasting_service => :forecasting_office,
+        :ground_controlled_approach_service => :ground_controlled_approach_systems_office,
+        :international_notam_service => :international_notam_office,
+        :meteorological_service => :meteorological_office,
+        :oceanic_area_control_service => :oceanic_control_centre,
+        :precision_approach_radar_service => :precision_approach_radar_centre,
+        :radar_service => :radar_office,
+        :regional_area_forecasting_service => :regional_area_forecast_centre,
+        :rescue_coordination_service => :rescue_coordination_centre,
+        :search_and_rescue_service => :search_and_rescue_centre,
+        :secondary_surveillance_radar_service => :secondary_surveillance_radar_centre,
+        :sigmet_service => :meteorological_office,
+        :surface_movement_control_service => :surface_movement_control_office,
+        :surface_movement_radar_service => :surface_movement_radar_office,
+        :surveillance_radar_approach_service => :surveillance_radar_approach_centre,
+        :terminal_area_radar_service => :terminal_area_surveillance_radar_centre,
+        :transcribed_weather_broadcast_service => :meteorological_office,
+        :uhf_direction_finding_service => :uhf_direction_finding_station,
+        :upper_area_control_service => :upper_area_control_centre,
+        :vhf_direction_finding_service => :vdf_direction_finding_station,
+        :volmet_service => :meteorological_office,
+        :other => :other
+}
+
       # @return [AIXM::Feature::Unit] unit providing this service
       attr_reader :unit
 
@@ -129,7 +177,7 @@ module AIXM
         @remarks = value&.to_s
       end
 
-      # Add a frequency used by this service.
+      # Add a frequency used by this service
       #
       # @param frequency [AIXM::Component::Frequency] frequency instance
       # @return [self]
@@ -138,6 +186,13 @@ module AIXM
         frequency.send(:service=, self)
         @frequencies << frequency
         self
+      end
+
+      # Guess the unit type for this service
+      #
+      # @return [Symbol, nil] guessed unit type or +nil+ if unmappable
+      def guessed_unit_type
+        GUESSED_UNIT_TYPES_MAP[type]
       end
 
       # @return [String] UID markup
