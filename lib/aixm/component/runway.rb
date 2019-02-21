@@ -94,7 +94,7 @@ module AIXM
 
       # @return [String]
       def inspect
-        %Q(#<#{self.class} name=#{name.inspect}>)
+        %Q(#<#{self.class} airport=#{airport&.id.inspect} name=#{name.inspect}>)
       end
 
       def airport=(value)
@@ -206,7 +206,7 @@ module AIXM
 
         # @return [String]
         def inspect
-          %Q(#<#{self.class} name=#{name.inspect}>)
+          %Q(#<#{self.class} airport=#{runway&.airport&.id.inspect} name=#{name.inspect}>)
         end
 
         def runway=(value)
