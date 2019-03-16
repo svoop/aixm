@@ -13,10 +13,6 @@ module AIXM
       #
       # @see https://github.com/openflightmaps/ofmx/wiki/Airspace#point
       class Point
-        extend Forwardable
-
-        def_delegators :xy
-
         # @return [AIXM::XY] (starting) point
         attr_reader :xy
 
