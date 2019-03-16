@@ -8,6 +8,7 @@ module AIXM
   #   AIXM.d(123, :m)
   class D
     include Comparable
+    extend Forwardable
 
     UNITS = {
       ft: { km: 0.0003048, m: 0.3048, nm: 0.000164578833554 },
@@ -15,6 +16,10 @@ module AIXM
       m: { ft: 3.280839895, km: 0.001, nm: 0.000539956803 },
       nm: { ft: 6076.11548554, km: 1.852, m: 1852 }
     }.freeze
+
+    # @!method zero?
+    #   @return [Boolean] whether length is zero
+    def_delegator :@dist, :zero?
 
     # @return [Float] distance
     attr_reader :dist

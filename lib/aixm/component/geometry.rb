@@ -33,6 +33,10 @@ module AIXM
       include Enumerable
       extend Forwardable
 
+      # @!method each
+      #   @return [Enumerator] see Array#each
+      # @!method <<
+      #   @return [Array] see Array#<<
       def_delegators :@result_array, :each, :<<
 
       def initialize(*segments)

@@ -81,4 +81,14 @@ describe AIXM::Z do
       { subject => true }[dupe].must_equal true
     end
   end
+
+  describe :zero? do
+    it "returns true for zero height, elevation or altitude" do
+      subject.tap { |s| s.alt = 0 }.must_be :zero?
+    end
+
+    it "returns false for non-zero height, elevation or altitude" do
+      subject.tap { |s| s.alt = 1 }.wont_be :zero?
+    end
+  end
 end

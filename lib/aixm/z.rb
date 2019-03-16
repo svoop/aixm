@@ -13,7 +13,13 @@ module AIXM
   # * +AIXM::GROUND+ - surface expressed as "0 ft QFE"
   # * +AIXM::UNLIMITED+ - no upper limit expressed as "FL 999"
   class Z
+    extend Forwardable
+
     CODES = %i(qfe qnh qne).freeze
+
+    # @!method zero?
+    #   @return [Boolean] whether height, elevation or altitude is zero
+    def_delegator :@alt, :zero?
 
     # @return [Integer] altitude or elevation value
     attr_reader :alt

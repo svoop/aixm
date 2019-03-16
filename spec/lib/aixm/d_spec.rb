@@ -137,4 +137,14 @@ describe AIXM::D do
       { subject => true }[dupe].must_equal true
     end
   end
+
+  describe :zero? do
+    it "returns true for zero length" do
+      subject.tap { |s| s.dist = 0 }.must_be :zero?
+    end
+
+    it "returns false for non-zero length" do
+      subject.tap { |s| s.dist = 1 }.wont_be :zero?
+    end
+  end
 end

@@ -7,7 +7,13 @@ module AIXM
   # @example
   #   AIXM.f(123.35, :mhz)
   class F
+    extend Forwardable
+
     UNITS = %i(ghz mhz khz).freeze
+
+    # @!method zero?
+    #   @return [Boolean] whether frequency is zero
+    def_delegator :@freq, :zero?
 
     # @return [Float] frequency
     attr_reader :freq
