@@ -4083,6 +4083,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
         </xsd:annotation>
       </xsd:element>
     </xsd:sequence>
+    <xsd:attribute ref="source"/>
   </xsd:complexType>
   <xsd:complexType name="IlsUidType">
     <xsd:annotation>

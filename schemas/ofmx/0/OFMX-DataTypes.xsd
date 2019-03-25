@@ -87,7 +87,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
       <xsd:documentation>Reference to the source AIP document.</xsd:documentation>
     </xsd:annotation>
     <xsd:restriction base="xsd:string">
-      <xsd:pattern value="[A-Z]{2,4}\|(GEN|ENR|AD|AIRAC|VAC)\|.{3,}\|[\d-]+\|\d+"/>
+      <xsd:pattern value="[A-Z]{2,4}\|(GEN|ENR|AD|AIRAC|VAC)\|.+\|[\d-]+\|\d+"/>
     </xsd:restriction>
   </xsd:simpleType>
   <xsd:simpleType name="codeAcftEngineNoBase">
