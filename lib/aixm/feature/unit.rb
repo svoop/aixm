@@ -50,7 +50,7 @@ module AIXM
         MWO: :meteorological_watch_office,
         NOF: :international_notam_office,
         OAC: :oceanic_control_centre,
-        PAR: :precision_aproach_radar_centre,
+        PAR: :precision_approach_radar_centre,
         RAD: :radar_office,
         RAFC: :regional_area_forecast_centre,
         RCC: :rescue_coordination_centre,
