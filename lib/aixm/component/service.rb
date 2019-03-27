@@ -206,7 +206,7 @@ module AIXM
       end
 
       # @return [String] AIXM or OFMX markup
-      def to_xml(sequence=1)
+      def to_xml(sequence:)
         @sequence = sequence
         builder = Builder::XmlMarkup.new(indent: 2)
         builder.Ser do |ser|

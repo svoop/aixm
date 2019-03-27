@@ -175,7 +175,7 @@ module AIXM
         end
         services.each.with_object({}) do |service, sequences|
           sequences[service.type] = (sequences[service.type] || 0) + 1
-          builder << service.to_xml(sequences[service.type])
+          builder << service.to_xml(sequence: sequences[service.type])
         end
         builder.target!
       end
