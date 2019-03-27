@@ -31,7 +31,7 @@ module AIXM
           type: :radio_frequency,
           address: "123.35"
         ).tap do |address|
-          address.remarks = "A/A"
+          address.remarks = "A/A (callsign PUJAUT)"
         end
       end
 
@@ -274,7 +274,7 @@ module AIXM
           class: :icao
         ).tap do |unit|
           unit.airport = airport
-          unit.remarks = 'A/A FR only'
+          unit.remarks = 'FR only'
           unit.add_service(service)
         end
       end

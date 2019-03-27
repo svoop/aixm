@@ -83,7 +83,7 @@ describe AIXM::Feature::Unit do
           </AhpUid>
           <codeType>TWR</codeType>
           <codeClass>ICAO</codeClass>
-          <txtRmk>A/A FR only</txtRmk>
+          <txtRmk>FR only</txtRmk>
         </Uni>
         <Ser>
           <SerUid>

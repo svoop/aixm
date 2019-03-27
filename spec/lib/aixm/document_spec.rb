@@ -105,7 +105,7 @@ describe AIXM::Document do
             </AhpUid>
             <codeType>TWR</codeType>
             <codeClass>ICAO</codeClass>
-            <txtRmk>A/A FR only</txtRmk>
+            <txtRmk>FR only</txtRmk>
           </Uni>
           <Ser>
             <SerUid>
@@ -176,7 +176,7 @@ describe AIXM::Document do
               <noSeq>1</noSeq>
             </AhaUid>
             <txtAddress>123.35</txtAddress>
-            <txtRmk>A/A</txtRmk>
+            <txtRmk>A/A (callsign PUJAUT)</txtRmk>
           </Aha>
           <Rwy>
             <RwyUid>
@@ -784,7 +784,7 @@ describe AIXM::Document do
             </AhpUid>
             <codeType>TWR</codeType>
             <codeClass>ICAO</codeClass>
-            <txtRmk>A/A FR only</txtRmk>
+            <txtRmk>FR only</txtRmk>
           </Uni>
           <Ser>
             <SerUid>
@@ -856,7 +856,7 @@ describe AIXM::Document do
               <noSeq>1</noSeq>
             </AhaUid>
             <txtAddress>123.35</txtAddress>
-            <txtRmk>A/A</txtRmk>
+            <txtRmk>A/A (callsign PUJAUT)</txtRmk>
           </Aha>
           <Rwy>
             <RwyUid>

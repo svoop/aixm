@@ -228,7 +228,7 @@ describe AIXM::Feature::Airport do
             <noSeq>1</noSeq>
           </AhaUid>
           <txtAddress>123.35</txtAddress>
-          <txtRmk>A/A</txtRmk>
+          <txtRmk>A/A (callsign PUJAUT)</txtRmk>
         </Aha>
         <Aha>
           <AhaUid>

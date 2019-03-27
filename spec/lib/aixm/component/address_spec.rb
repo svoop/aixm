@@ -31,7 +31,7 @@ describe AIXM::Component::Address do
             <noSeq>1</noSeq>
           </XxxUid>
           <txtAddress>123.35</txtAddress>
-          <txtRmk>A/A</txtRmk>
+          <txtRmk>A/A (callsign PUJAUT)</txtRmk>
         </Xxx>
       END
     end
