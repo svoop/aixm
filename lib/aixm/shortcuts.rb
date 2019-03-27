@@ -1,6 +1,7 @@
 module AIXM
 
-  {
+  # List of shorthand names and their corresponding AIXM classes
+  CLASSES = {
     document: Document,
     xy: XY,
     z: Z,
@@ -31,15 +32,23 @@ module AIXM
     vor: Feature::NavigationalAid::VOR,
     obstacle: Feature::Obstacle,
     obstacle_group: Feature::ObstacleGroup,
+    address: Component::Address,
     timetable: Component::Timetable
-  }.each do |element, klass|
+  }.freeze
+
+  CLASSES.each do |element, klass|
     define_singleton_method(element) do |*arguments|
       klass.new(*arguments)
     end
   end
 
+  # Ground level
   GROUND = z(0, :qfe).freeze
+
+  # Max flight level used to signal "no upper limit"
   UNLIMITED = z(999, :qne).freeze
+
+  # Timetable used to signal "always active"
   H24 = timetable(code: :H24).freeze
 
 end

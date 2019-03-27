@@ -21,6 +21,7 @@ require_relative 'aixm/f'
 require_relative 'aixm/a'
 
 require_relative 'aixm/component'
+require_relative 'aixm/component/address'
 require_relative 'aixm/component/service'
 require_relative 'aixm/component/frequency'
 require_relative 'aixm/component/geometry'

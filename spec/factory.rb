@@ -26,6 +26,15 @@ module AIXM
 
       # Components
 
+      def address
+        AIXM.address(
+          type: :radio_frequency,
+          address: "123.35"
+        ).tap do |address|
+          address.remarks = "A/A"
+        end
+      end
+
       def timetable
         AIXM.timetable(
           code: :sunrise_to_sunset
@@ -308,6 +317,7 @@ module AIXM
           airport.declination = 1.08
           airport.transition_z = AIXM.z(10_000, :qnh)
           airport.remarks = "Restricted access"
+          airport.add_address(address)
           airport.add_runway(runway)
           airport.add_helipad(helipad)
           airport.add_usage_limitation :permitted

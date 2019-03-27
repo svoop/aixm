@@ -37,12 +37,14 @@ document.aixm!   # not really necessary since AIXM is the default schema
 document.to_xml
 ```
 
-You can initialize all elements either traditionally or by use of shorter AIXM class methods. The following two statements are identical:
+You can initialize all elements either traditionally or by use of the corresponding shorthand AIXM class method. The following two statements are identical:
 
 ```ruby
 AIXM::Feature::NavigationalAid::DesignatedPoint.new(...)
 AIXM.designated_point(...)
 ```
+
+See `AIXM::CLASSES` for the complete list of shorthand names.
 
 ## Configuration
 

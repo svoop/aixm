@@ -5,9 +5,6 @@ describe AIXM::Component::Surface do
     AIXM::Factory.airport.runways.first.surface
   end
 
-  describe :initialize do
-  end
-
   describe :composition= do
     it "fails on invalid values" do
       [:foobar, 123].wont_be_written_to subject, :composition

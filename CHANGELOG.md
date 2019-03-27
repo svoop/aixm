@@ -1,6 +1,7 @@
 ## 0.3.4
 
 #### Additions
+* Address
 * `Runway#preparation`, `Runway#condition` and `Runway#vfr_pattern`
 * `Service#guessed_unit_type`
 * Surface for `Runway|Helipad#surface`

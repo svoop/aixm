@@ -13,6 +13,7 @@ describe AIXM::Feature::Airport do
         name: 'Avignon-Pujaut',
         xy: AIXM.xy(lat: %q(43°59'46"N), long: %q(004°45'16"E))
       )
+      subject.addresses.must_equal []
       subject.runways.must_equal []
       subject.helipads.must_equal []
       subject.usage_limitations.must_equal []
@@ -127,6 +128,18 @@ describe AIXM::Feature::Airport do
     macro :remarks
   end
 
+  describe :add_address do
+    it "fails on invalid arguments" do
+      -> { subject.add_address nil }.must_raise ArgumentError
+    end
+
+    it "adds address to the array" do
+      count = subject.addresses.count
+      subject.add_address(AIXM::Factory.address)
+      subject.addresses.count.must_equal count + 1
+    end
+  end
+
   describe :add_runway do
     it "fails on invalid arguments" do
       -> { subject.add_runway nil }.must_raise ArgumentError
@@ -181,6 +194,8 @@ describe AIXM::Feature::Airport do
   describe :to_xml do
     it "builds correct complete OFMX" do
       AIXM.ofmx!
+      subject.add_address(AIXM.address(type: :url, address: 'https://lfnt.tower.zone'))
+      subject.add_address(AIXM.address(type: :url, address: 'https://planeur-avignon-pujaut.fr'))
       subject.to_xml.must_equal <<~END
         <!-- Airport: LFNT AVIGNON-PUJAUT -->
         <Ahp source="LF|GEN|0.0 FACTORY|0|0">
@@ -204,6 +219,37 @@ describe AIXM::Feature::Airport do
           <uomTransitionAlt>FT</uomTransitionAlt>
           <txtRmk>Restricted access</txtRmk>
         </Ahp>
+        <Aha>
+          <AhaUid>
+            <AhpUid>
+              <codeId>LFNT</codeId>
+            </AhpUid>
+            <codeType>RADIO</codeType>
+            <noSeq>1</noSeq>
+          </AhaUid>
+          <txtAddress>123.35</txtAddress>
+          <txtRmk>A/A</txtRmk>
+        </Aha>
+        <Aha>
+          <AhaUid>
+            <AhpUid>
+              <codeId>LFNT</codeId>
+            </AhpUid>
+            <codeType>URL</codeType>
+            <noSeq>1</noSeq>
+          </AhaUid>
+          <txtAddress>https://lfnt.tower.zone</txtAddress>
+        </Aha>
+        <Aha>
+          <AhaUid>
+            <AhpUid>
+              <codeId>LFNT</codeId>
+            </AhpUid>
+            <codeType>URL</codeType>
+            <noSeq>2</noSeq>
+          </AhaUid>
+          <txtAddress>https://planeur-avignon-pujaut.fr</txtAddress>
+        </Aha>
         <Rwy>
           <RwyUid>
             <AhpUid>
@@ -360,6 +406,7 @@ describe AIXM::Feature::Airport do
     it "builds correct minimal OFMX" do
       AIXM.ofmx!
       subject.z = subject.declination = subject.transition_z = subject.remarks = nil
+      subject.instance_variable_set(:'@addresses', [])
       subject.instance_variable_set(:'@runways', [])
       subject.instance_variable_set(:'@helipads', [])
       subject.instance_variable_set(:'@usage_limitations', [])

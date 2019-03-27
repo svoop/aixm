@@ -167,6 +167,17 @@ describe AIXM::Document do
             <uomTransitionAlt>FT</uomTransitionAlt>
             <txtRmk>Restricted access</txtRmk>
           </Ahp>
+          <Aha>
+            <AhaUid>
+              <AhpUid>
+                <codeId>LFNT</codeId>
+              </AhpUid>
+              <codeType>RADIO</codeType>
+              <noSeq>1</noSeq>
+            </AhaUid>
+            <txtAddress>123.35</txtAddress>
+            <txtRmk>A/A</txtRmk>
+          </Aha>
           <Rwy>
             <RwyUid>
               <AhpUid>
@@ -836,6 +847,17 @@ describe AIXM::Document do
             <uomTransitionAlt>FT</uomTransitionAlt>
             <txtRmk>Restricted access</txtRmk>
           </Ahp>
+          <Aha>
+            <AhaUid>
+              <AhpUid>
+                <codeId>LFNT</codeId>
+              </AhpUid>
+              <codeType>RADIO</codeType>
+              <noSeq>1</noSeq>
+            </AhaUid>
+            <txtAddress>123.35</txtAddress>
+            <txtRmk>A/A</txtRmk>
+          </Aha>
           <Rwy>
             <RwyUid>
               <AhpUid>
