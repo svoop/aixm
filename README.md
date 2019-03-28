@@ -81,8 +81,10 @@ AIXM.schema(:version)   # => 0
 * [A (angle)](http://www.rubydoc.info/gems/aixm/AIXM/A.html)
 
 ### Features
+* [Address](http://www.rubydoc.info/gems/aixm/AIXM/Feature/Address.html)
 * [Organisation](http://www.rubydoc.info/gems/aixm/AIXM/Feature/Organisation.html)
 * [Unit](http://www.rubydoc.info/gems/aixm/AIXM/Feature/Unit.html)
+* [Service](http://www.rubydoc.info/gems/aixm/AIXM/Component/Service.html)
 * [Airport](http://www.rubydoc.info/gems/aixm/AIXM/Feature/Airport.html)
 * [Airspace](http://www.rubydoc.info/gems/aixm/AIXM/Feature/Airspace.html)
 * [Navigational aid](http://www.rubydoc.info/gems/aixm/AIXM/NavigationalAid.html)
@@ -95,7 +97,6 @@ AIXM.schema(:version)   # => 0
 * [Obstacle and obstacle group](http://www.rubydoc.info/gems/aixm/AIXM/Feature/Obstacle.html)
 
 ### Components
-* [Service](http://www.rubydoc.info/gems/aixm/AIXM/Component/Service.html)
 * [Frequency](http://www.rubydoc.info/gems/aixm/AIXM/Component/Frequency.html)
 * [Geometry](http://www.rubydoc.info/gems/aixm/AIXM/Component/Geometry.html)
   * [Point](http://www.rubydoc.info/gems/aixm/AIXM/Component/Point.html)

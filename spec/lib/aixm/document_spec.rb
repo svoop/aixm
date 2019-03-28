@@ -107,6 +107,7 @@ describe AIXM::Document do
             <codeClass>ICAO</codeClass>
             <txtRmk>FR only</txtRmk>
           </Uni>
+          <!-- Service: APP by PUJAUT TWR -->
           <Ser>
             <SerUid>
               <UniUid>
@@ -167,17 +168,6 @@ describe AIXM::Document do
             <uomTransitionAlt>FT</uomTransitionAlt>
             <txtRmk>Restricted access</txtRmk>
           </Ahp>
-          <Aha>
-            <AhaUid>
-              <AhpUid>
-                <codeId>LFNT</codeId>
-              </AhpUid>
-              <codeType>RADIO</codeType>
-              <noSeq>1</noSeq>
-            </AhaUid>
-            <txtAddress>123.35</txtAddress>
-            <txtRmk>A/A (callsign PUJAUT)</txtRmk>
-          </Aha>
           <Rwy>
             <RwyUid>
               <AhpUid>
@@ -328,6 +318,18 @@ describe AIXM::Document do
               <txtRmk>reservation remarks</txtRmk>
             </UsageLimitation>
           </Ahu>
+          <!-- Address: RADIO for LFNT -->
+          <Aha>
+            <AhaUid>
+              <AhpUid>
+                <codeId>LFNT</codeId>
+              </AhpUid>
+              <codeType>RADIO</codeType>
+              <noSeq>1</noSeq>
+            </AhaUid>
+            <txtAddress>123.35</txtAddress>
+            <txtRmk>A/A (callsign PUJAUT)</txtRmk>
+          </Aha>
           <!-- Airspace: [D] POLYGON AIRSPACE -->
           <Ase>
             <AseUid>
@@ -786,7 +788,8 @@ describe AIXM::Document do
             <codeClass>ICAO</codeClass>
             <txtRmk>FR only</txtRmk>
           </Uni>
-          <Ser>
+          <!-- Service: APP by PUJAUT TWR -->
+          <Ser source="LF|GEN|0.0 FACTORY|0|0">
             <SerUid>
               <UniUid>
                 <txtName>PUJAUT TWR</txtName>
@@ -847,17 +850,6 @@ describe AIXM::Document do
             <uomTransitionAlt>FT</uomTransitionAlt>
             <txtRmk>Restricted access</txtRmk>
           </Ahp>
-          <Aha>
-            <AhaUid>
-              <AhpUid>
-                <codeId>LFNT</codeId>
-              </AhpUid>
-              <codeType>RADIO</codeType>
-              <noSeq>1</noSeq>
-            </AhaUid>
-            <txtAddress>123.35</txtAddress>
-            <txtRmk>A/A (callsign PUJAUT)</txtRmk>
-          </Aha>
           <Rwy>
             <RwyUid>
               <AhpUid>
@@ -1008,6 +1000,18 @@ describe AIXM::Document do
               <txtRmk>reservation remarks</txtRmk>
             </UsageLimitation>
           </Ahu>
+          <!-- Address: RADIO for LFNT -->
+          <Aha source="LF|GEN|0.0 FACTORY|0|0">
+            <AhaUid>
+              <AhpUid>
+                <codeId>LFNT</codeId>
+              </AhpUid>
+              <codeType>RADIO</codeType>
+              <noSeq>1</noSeq>
+            </AhaUid>
+            <txtAddress>123.35</txtAddress>
+            <txtRmk>A/A (callsign PUJAUT)</txtRmk>
+          </Aha>
           <!-- Airspace: [D] POLYGON AIRSPACE -->
           <Ase source="LF|GEN|0.0 FACTORY|0|0">
             <AseUid>

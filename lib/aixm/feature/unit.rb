@@ -138,19 +138,19 @@ module AIXM
 
       # Add a service provided by this unit.
       #
-      # @param service [AIXM::Component::Service] service instance
+      # @param service [AIXM::Feature::Service] service instance
       # @return [self]
       def add_service(service)
-        fail(ArgumentError, "invalid service") unless service.is_a? AIXM::Component::Service
+        fail(ArgumentError, "invalid service") unless service.is_a? AIXM::Feature::Service
         service.send(:unit=, self)
         @services << service
         self
       end
 
       # @!attribute [r] services
-      # @return [Array<AIXM::Component::Service>] services provided by this unit
+      # @return [Array<AIXM::Feature::Service>] services provided by this unit
       def services
-        @services.sort { |a, b| [a.type, a.name] <=> [b.type, b.name] }
+        @services.sort { |a, b| a.type <=> b.type }
       end
 
       # @return [String] UID markup

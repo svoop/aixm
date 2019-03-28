@@ -28,6 +28,7 @@ module AIXM
 
       def address
         AIXM.address(
+          source: 'LF|GEN|0.0 FACTORY|0|0',
           type: :radio_frequency,
           address: "123.35"
         ).tap do |address|
@@ -281,7 +282,7 @@ module AIXM
 
       def service
         AIXM.service(
-          name: "PUJAUT TOWER",
+          source: 'LF|GEN|0.0 FACTORY|0|0',
           type: :approach_control_service
         ).tap do |service|
           service.timetable = AIXM::H24
@@ -317,7 +318,6 @@ module AIXM
           airport.declination = 1.08
           airport.transition_z = AIXM.z(10_000, :qnh)
           airport.remarks = "Restricted access"
-          airport.add_address(address)
           airport.add_runway(runway)
           airport.add_helipad(helipad)
           airport.add_usage_limitation :permitted
@@ -327,6 +327,7 @@ module AIXM
             reservation_required.timetable = AIXM::H24
             reservation_required.remarks = "reservation remarks"
           end
+          airport.add_address(address)
         end
       end
 

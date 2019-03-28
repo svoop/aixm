@@ -1,13 +1,13 @@
 using AIXM::Refinements
 
 module AIXM
-  class Component
+  class Feature
 
     # Service provided by a unit.
     #
     # ===Cheat Sheet in Pseudo Code:
     #   service = AIXM.service(
-    #     name: String
+    #     source: String or nil
     #     type: TYPES
     #   )
     #   service.timetable = AIXM.timetable or nil
@@ -15,7 +15,9 @@ module AIXM
     #   service.add_frequency(AIXM.frequency)
     #
     # @see https://github.com/openflightmaps/ofmx/wiki/Organisation#ser-service
-    class Service
+    class Service < Feature
+      public_class_method :new
+
       TYPES = {
         ACS: :area_control_service,
         ADS: :automatic_dependent_surveillance_service,
@@ -128,9 +130,6 @@ module AIXM
       # @return [AIXM::Feature::Unit] unit providing this service
       attr_reader :unit
 
-      # @return [String] full name
-      attr_reader :name
-
       # @return [Symbol] type of service (see {TYPES})
       attr_reader :type
 
@@ -143,8 +142,9 @@ module AIXM
       # @return [Array<AIXM::Component::Frequency>] frequencies used by this service
       attr_reader :frequencies
 
-      def initialize(name:, type:)
-        self.name, self.type = name, type
+      def initialize(source: nil, type:)
+        super(source: source)
+        self.type = type
         @frequencies = []
       end
 
@@ -158,11 +158,6 @@ module AIXM
         @unit = value
       end
       private :unit=
-
-      def name=(value)
-        fail(ArgumentError, "invalid name") unless value.is_a? String
-        @name = value.uptrans
-      end
 
       def type=(value)
         @type = TYPES.lookup(value&.to_s&.to_sym, nil) || fail(ArgumentError, "invalid type")
@@ -209,7 +204,8 @@ module AIXM
       def to_xml(sequence:)
         @sequence = sequence
         builder = Builder::XmlMarkup.new(indent: 2)
-        builder.Ser do |ser|
+        builder.comment! ["Service: #{TYPES.key(type)}", unit&.name].compact.join(' by ')
+        builder.Ser({ source: (source if AIXM.ofmx?) }.compact) do |ser|
           ser << to_uid.indent(2)
           ser << timetable.to_xml(as: :Stt).indent(2) if timetable
           ser.txtRmk(remarks) if remarks

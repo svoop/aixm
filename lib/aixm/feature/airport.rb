@@ -21,10 +21,10 @@ module AIXM
     #   airport.transition_z = AIXM.z or nil
     #   airport.timetable = AIXM.timetable or nil
     #   airport.remarks = String or nil
-    #   airport.add_address(AIXM.address)
     #   airport.add_runway(AIXM.runway)
     #   airport.add_helipad(AIXM.helipad)
     #   airport.add_usage_limitation(UsageLimitation::TYPES)
+    #   airport.add_address(AIXM.address)
     #
     # @see https://github.com/openflightmaps/ofmx/wiki/Airport#ahp-airport
     class Airport < Feature
@@ -82,9 +82,6 @@ module AIXM
       # @return [String, nil] free text remarks
       attr_reader :remarks
 
-      # @return [Array<AIXM::Component::Address>] postal address, url, A/A or A/G frequency etc
-      attr_reader :addresses
-
       # @return [Array<AIXM::Component::Runway>] runways present at this airport
       attr_reader :runways
 
@@ -94,10 +91,13 @@ module AIXM
       # @return [Array<AIXM::Feature::Airport::UsageLimitation>] usage limitations
       attr_accessor :usage_limitations
 
+      # @return [Array<AIXM::Feature::Address>] postal address, url, A/A or A/G frequency etc
+      attr_reader :addresses
+
       def initialize(source: nil, organisation:, id:, name:, xy:)
         super(source: source)
         self.organisation, self.id, self.name, self.xy = organisation, id, name, xy
-        @addresses, @runways, @helipads, @usage_limitations = [], [], [], []
+        @runways, @helipads, @usage_limitations, @addresses = [], [], [], []
       end
 
       # @return [String]
@@ -176,17 +176,6 @@ module AIXM
         @remarks = value&.to_s
       end
 
-      # Add an address (postal address, url, A/A or A/G frequency etc) to the airport.
-      #
-      # @params address [AIXM::Component::Address] address instance
-      # @return [self]
-      def add_address(address)
-        fail(ArgumentError, "invalid address") unless address.is_a? AIXM::Component::Address
-        address.send(:addressable=, self)
-        @addresses << address
-        self
-      end
-
       # Add a runway to the airport.
       #
       # @param runway [AIXM::Component::Runway] runway instance
@@ -244,6 +233,17 @@ module AIXM
         self
       end
 
+      # Add an address (postal address, url, A/A or A/G frequency etc) to the airport.
+      #
+      # @params address [AIXM::Feature::Address] address instance
+      # @return [self]
+      def add_address(address)
+        fail(ArgumentError, "invalid address") unless address.is_a? AIXM::Feature::Address
+        address.send(:addressable=, self)
+        @addresses << address
+        self
+      end
+
       # @return [String] UID markup
       def to_uid(as: :AhpUid)
         builder = Builder::XmlMarkup.new(indent: 2)
@@ -279,10 +279,6 @@ module AIXM
           ahp << timetable.to_xml(as: :Aht).indent(2) if timetable
           ahp.txtRmk(remarks) if remarks
         end
-        addresses.each.with_object({}) do |address, sequences|
-          sequences[address.type] = (sequences[address.type] || 0) + 1
-          builder << address.to_xml(as: :Aha, sequence: sequences[address.type])
-        end
         runways.each do |runway|
           builder << runway.to_xml
         end
@@ -298,6 +294,10 @@ module AIXM
               ahu << usage_limitation.to_xml.indent(2)
             end
           end
+        end
+        addresses.each.with_object({}) do |address, sequences|
+          sequences[address.type] = (sequences[address.type] || 0) + 1
+          builder << address.to_xml(as: :Aha, sequence: sequences[address.type])
         end
         builder.target!
       end

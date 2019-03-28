@@ -194,8 +194,8 @@ describe AIXM::Feature::Airport do
   describe :to_xml do
     it "builds correct complete OFMX" do
       AIXM.ofmx!
-      subject.add_address(AIXM.address(type: :url, address: 'https://lfnt.tower.zone'))
-      subject.add_address(AIXM.address(type: :url, address: 'https://planeur-avignon-pujaut.fr'))
+      subject.add_address(AIXM.address(source: "LF|GEN|0.0 FACTORY|0|0", type: :url, address: 'https://lfnt.tower.zone'))
+      subject.add_address(AIXM.address(source: "LF|GEN|0.0 FACTORY|0|0", type: :url, address: 'https://planeur-avignon-pujaut.fr'))
       subject.to_xml.must_equal <<~END
         <!-- Airport: LFNT AVIGNON-PUJAUT -->
         <Ahp source="LF|GEN|0.0 FACTORY|0|0">
@@ -219,37 +219,6 @@ describe AIXM::Feature::Airport do
           <uomTransitionAlt>FT</uomTransitionAlt>
           <txtRmk>Restricted access</txtRmk>
         </Ahp>
-        <Aha>
-          <AhaUid>
-            <AhpUid>
-              <codeId>LFNT</codeId>
-            </AhpUid>
-            <codeType>RADIO</codeType>
-            <noSeq>1</noSeq>
-          </AhaUid>
-          <txtAddress>123.35</txtAddress>
-          <txtRmk>A/A (callsign PUJAUT)</txtRmk>
-        </Aha>
-        <Aha>
-          <AhaUid>
-            <AhpUid>
-              <codeId>LFNT</codeId>
-            </AhpUid>
-            <codeType>URL</codeType>
-            <noSeq>1</noSeq>
-          </AhaUid>
-          <txtAddress>https://lfnt.tower.zone</txtAddress>
-        </Aha>
-        <Aha>
-          <AhaUid>
-            <AhpUid>
-              <codeId>LFNT</codeId>
-            </AhpUid>
-            <codeType>URL</codeType>
-            <noSeq>2</noSeq>
-          </AhaUid>
-          <txtAddress>https://planeur-avignon-pujaut.fr</txtAddress>
-        </Aha>
         <Rwy>
           <RwyUid>
             <AhpUid>
@@ -400,6 +369,40 @@ describe AIXM::Feature::Airport do
             <txtRmk>reservation remarks</txtRmk>
           </UsageLimitation>
         </Ahu>
+        <!-- Address: RADIO for LFNT -->
+        <Aha source="LF|GEN|0.0 FACTORY|0|0">
+          <AhaUid>
+            <AhpUid>
+              <codeId>LFNT</codeId>
+            </AhpUid>
+            <codeType>RADIO</codeType>
+            <noSeq>1</noSeq>
+          </AhaUid>
+          <txtAddress>123.35</txtAddress>
+          <txtRmk>A/A (callsign PUJAUT)</txtRmk>
+        </Aha>
+        <!-- Address: URL for LFNT -->
+        <Aha source="LF|GEN|0.0 FACTORY|0|0">
+          <AhaUid>
+            <AhpUid>
+              <codeId>LFNT</codeId>
+            </AhpUid>
+            <codeType>URL</codeType>
+            <noSeq>1</noSeq>
+          </AhaUid>
+          <txtAddress>https://lfnt.tower.zone</txtAddress>
+        </Aha>
+        <!-- Address: URL for LFNT -->
+        <Aha source="LF|GEN|0.0 FACTORY|0|0">
+          <AhaUid>
+            <AhpUid>
+              <codeId>LFNT</codeId>
+            </AhpUid>
+            <codeType>URL</codeType>
+            <noSeq>2</noSeq>
+          </AhaUid>
+          <txtAddress>https://planeur-avignon-pujaut.fr</txtAddress>
+        </Aha>
       END
     end
 

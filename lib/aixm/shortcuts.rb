@@ -8,9 +8,10 @@ module AIXM
     d: D,
     f: F,
     a: A,
+    address: Feature::Address,
     organisation: Feature::Organisation,
     unit: Feature::Unit,
-    service: Component::Service,
+    service: Feature::Service,
     frequency: Component::Frequency,
     airport: Feature::Airport,
     runway: Component::Runway,
@@ -32,7 +33,6 @@ module AIXM
     vor: Feature::NavigationalAid::VOR,
     obstacle: Feature::Obstacle,
     obstacle_group: Feature::ObstacleGroup,
-    address: Component::Address,
     timetable: Component::Timetable
   }.freeze
 

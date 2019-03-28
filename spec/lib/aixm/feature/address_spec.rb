@@ -1,6 +1,6 @@
 require_relative '../../../spec_helper'
 
-describe AIXM::Component::Address do
+describe AIXM::Feature::Address do
   subject do
     AIXM::Factory.address
   end
@@ -25,7 +25,8 @@ describe AIXM::Component::Address do
     it "builds correct OFMX" do
       AIXM.ofmx!
       subject.to_xml(as: :Xxx, sequence: 1).must_equal <<~END
-        <Xxx>
+        <!-- Address: RADIO -->
+        <Xxx source="LF|GEN|0.0 FACTORY|0|0">
           <XxxUid>
             <codeType>RADIO</codeType>
             <noSeq>1</noSeq>
@@ -40,6 +41,7 @@ describe AIXM::Component::Address do
       AIXM.aixm!
       subject = AIXM.address(type: :weather_url, address: 'https://www.foo.bar')
       subject.to_xml(as: :Xxx, sequence: 1).must_equal <<~END
+        <!-- Address: URL-MET -->
         <Xxx>
           <XxxUid>
             <codeType>URL</codeType>

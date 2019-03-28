@@ -1,28 +1,16 @@
 require_relative '../../../spec_helper'
 
-describe AIXM::Component::Service do
+describe AIXM::Feature::Service do
   subject do
     AIXM::Factory.service
   end
 
   describe :initialize do
     it "sets defaults" do
-      subject = AIXM::Component::Service.new(
-        name: "PUJAUT TOWER",
+      subject = AIXM::Feature::Service.new(
         type: :approach_control_service
       )
       subject.frequencies.must_equal []
-    end
-  end
-
-  describe :name= do
-    it "fails on invalid values" do
-      -> { subject.name = :foobar }.must_raise ArgumentError
-      -> { subject.name = nil }.must_raise ArgumentError
-    end
-
-    it "upcases and transcodes valid values" do
-      subject.tap { |s| s.name = 'Nîmes-Alès' }.name.must_equal 'NIMES-ALES'
     end
   end
 

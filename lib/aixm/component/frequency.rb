@@ -32,7 +32,7 @@ module AIXM
         OTHER: :other   # specify in remarks
       }.freeze
 
-      # @return [AIXM::Component::Service] service the frequency belongs to
+      # @return [AIXM::Feature::Service] service the frequency belongs to
       attr_reader :service
 
       # @return [AIXM::F] frequency for transmission (outgoing)
@@ -69,7 +69,7 @@ module AIXM
       end
 
       def service=(value)
-        fail(ArgumentError, "invalid service") unless value.is_a? AIXM::Component::Service
+        fail(ArgumentError, "invalid service") unless value.is_a? AIXM::Feature::Service
         @service = value
       end
       private :service=

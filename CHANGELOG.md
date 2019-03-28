@@ -1,7 +1,7 @@
 ## 0.3.4
 
 #### Additions
-* Address
+* Address feature
 * `Runway#preparation`, `Runway#condition` and `Runway#vfr_pattern`
 * `Service#guessed_unit_type`
 * Surface for `Runway|Helipad#surface`
@@ -13,6 +13,9 @@
 * Renamed `AIXM::H` to `AIXM::A` (angle) and add simple arithmetics to make it more versatile
 * `Runway|Helipad#composition` moved to `Runway|Helipad#surface`
 * DMS notation `{-}{DD}DMMSS{.SS}[NESW]` now requires compulsory cardinal direction (N, E, S or W) at the end
+
+#### Changes
+* Service is a feature now
 
 ## 0.3.3
 

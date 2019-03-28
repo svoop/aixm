@@ -85,7 +85,8 @@ describe AIXM::Feature::Unit do
           <codeClass>ICAO</codeClass>
           <txtRmk>FR only</txtRmk>
         </Uni>
-        <Ser>
+        <!-- Service: AFIS by PUJAUT TWR -->
+        <Ser source="LF|GEN|0.0 FACTORY|0|0">
           <SerUid>
             <UniUid>
               <txtName>PUJAUT TWR</txtName>
@@ -124,7 +125,8 @@ describe AIXM::Feature::Unit do
             <codeLang>FR</codeLang>
           </Cdl>
         </Fqy>
-        <Ser>
+        <!-- Service: AFIS by PUJAUT TWR -->
+        <Ser source="LF|GEN|0.0 FACTORY|0|0">
           <SerUid>
             <UniUid>
               <txtName>PUJAUT TWR</txtName>
@@ -163,7 +165,8 @@ describe AIXM::Feature::Unit do
             <codeLang>FR</codeLang>
           </Cdl>
         </Fqy>
-        <Ser>
+        <!-- Service: APP by PUJAUT TWR -->
+        <Ser source="LF|GEN|0.0 FACTORY|0|0">
           <SerUid>
             <UniUid>
               <txtName>PUJAUT TWR</txtName>
