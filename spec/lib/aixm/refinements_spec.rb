@@ -4,6 +4,22 @@ using AIXM::Refinements
 
 describe AIXM::Refinements do
 
+  context Object do
+    describe :then_if do
+      subject do
+        "foobar"
+      end
+
+      it "must return self if the condition is false" do
+        subject.then_if(false) { |s| s.gsub(/o/, 'i') }.must_equal subject
+      end
+
+      it "must return apply the block if the condition is true" do
+        subject.then_if(true) { |s| s.gsub(/o/, 'i') }.must_equal 'fiibar'
+      end
+    end
+  end
+
   context Array do
     describe :to_digest do
       it "must digest single string" do

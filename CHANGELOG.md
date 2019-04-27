@@ -1,6 +1,7 @@
 ## 0.3.5 (unreleased)
 
-Nothing so far
+#### Additions
+* Refinement `Object#then_if`
 
 ## 0.3.4
 

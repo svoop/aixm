@@ -79,7 +79,7 @@ module AIXM
         builder = Builder::XmlMarkup.new(indent: 2)
         builder.tag!(as) do |tag|
           tag << addressable.to_uid.indent(2) if addressable
-          tag.codeType(TYPES.key(type).to_s.then { |t| AIXM.aixm? ? t.sub(/-\w+$/, '') : t })
+          tag.codeType(TYPES.key(type).to_s.then_if(AIXM.aixm?) { |t| t.sub(/-\w+$/, '') })
           tag.noSeq(sequence)
         end
       end
