@@ -25,6 +25,7 @@ module AIXM
         ACCIDENT: :accident_investigation,
         ACROBAT: :acrobatics,
         AIRGUN: :aerial_gunnery,
+        AIRMODEL: :aeromodelling,
         AIRSHOW: :air_show,
         ANTIHAIL: :anti_hail_rocket,
         ARTILERY: :artillary_firing,
@@ -161,7 +162,9 @@ module AIXM
         builder = Builder::XmlMarkup.new(indent: 2)
         builder.codeClass(self.class.to_s) if self.class
         builder.codeLocInd(location_indicator) if location_indicator
-        builder.codeActivity(ACTIVITIES.key(activity).to_s) if activity
+        if activity
+          builder.codeActivity(ACTIVITIES.key(activity).to_s.then_if(AIXM.aixm?) { |a| a.sub('AIRMODEL', 'UAV') })
+        end
         builder << vertical_limits.to_xml
         builder << timetable.to_xml(as: :Att) if timetable
         builder.codeSelAvbl(selective? ? 'Y' : 'N') if AIXM.ofmx?

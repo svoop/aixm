@@ -2,6 +2,7 @@
 
 #### Additions
 * Refinement `Object#then_if`
+* Airspace activity type `:aeromodelling`
 
 ## 0.3.4
 
