@@ -26,7 +26,7 @@ module AIXM
 
         # @return [String]
         def inspect
-          %Q(#<#{self.class} xy="#{xy.to_s}">)
+          %Q(#<#{self.class} center_xy="#{center_xy}" radius="#{radius.to_s}">)
         end
 
         def center_xy=(value)

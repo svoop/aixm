@@ -25,7 +25,7 @@ module AIXM
 
         # @return [String]
         def inspect
-          %Q(#<#{self.class} xy="#{xy.to_s}">)
+          %Q(#<#{self.class} xy="#{xy}" name=#{name.inspect}>)
         end
 
         def name=(value)
