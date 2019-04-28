@@ -6,15 +6,17 @@ module AIXM
     # Vertical limits define a 3D airspace vertically. They are often noted in
     # AIP as follows:
     #
-    #   upper_z (or max_z whichever is higher)
+    #   upper_z
+    #   (max_z)   whichever is higher
     #   -------
-    #   lower_z (or min_z whichever is lower)
+    #   lower_z
+    #   (min_z)   whichever is lower
     #
     # ===Cheat Sheet in Pseudo Code:
     #   vertical_limits = AIXM.vertical_limits(
     #     upper_z: AIXM.z
-    #     lower_z: AIXM.z
     #     max_z: AIXM.z or nil
+    #     lower_z: AIXM.z
     #     min_z: AIXM.z or nil
     #   )
     #
@@ -25,7 +27,7 @@ module AIXM
     # @see https://github.com/openflightmaps/ofmx/wiki/Airspace#ase-airspace
     class VerticalLimits
       # @api private
-      TAGS = { upper: :Upper, lower: :Lower, max: :Max, min: :Mnm }.freeze
+      TAGS = { upper_z: :Upper, lower_z: :Lower, max_z: :Max, min_z: :Mnm }.freeze
 
       # @api private
       CODES = { qfe: :HEI, qnh: :ALT, qne: :STD }.freeze
@@ -42,13 +44,14 @@ module AIXM
       # @return [AIXM::Z] alternative lower limit ("whichever is lower")
       attr_reader :min_z
 
-      def initialize(upper_z:, lower_z:, max_z: nil, min_z: nil)
-        self.upper_z, self.lower_z, self.max_z, self.min_z = upper_z, lower_z, max_z, min_z
+      def initialize(upper_z:, max_z: nil, lower_z:, min_z: nil)
+        self.upper_z, self.max_z, self.lower_z, self.min_z = upper_z, max_z, lower_z, min_z
       end
 
       # @return [String]
       def inspect
-        %Q(#<#{self.class} upper_z="#{upper_z.to_s}" lower_z="#{lower_z.to_s}">)
+        payload = %i(upper_z max_z lower_z min_z).map { |l| %Q(#{l}="#{send(l)}") if send(l) }.compact
+        %Q(#<#{self.class} #{payload.join(' ')}>)
       end
 
       def upper_z=(value)
@@ -56,14 +59,14 @@ module AIXM
         @upper_z = value
       end
 
-      def lower_z=(value)
-        fail(ArgumentError, "invalid lower_z") unless value.is_a? AIXM::Z
-        @lower_z = value
-      end
-
       def max_z=(value)
         fail(ArgumentError, "invalid max_z") unless value.nil? || value.is_a?(AIXM::Z)
         @max_z = value
+      end
+
+      def lower_z=(value)
+        fail(ArgumentError, "invalid lower_z") unless value.is_a? AIXM::Z
+        @lower_z = value
       end
 
       def min_z=(value)
@@ -73,8 +76,8 @@ module AIXM
 
       # @return [String] AIXM or OFMX markup
       def to_xml
-        %i(upper lower max min).each_with_object(Builder::XmlMarkup.new(indent: 2)) do |limit, builder|
-          if z = send(:"#{limit}_z")
+        TAGS.keys.each_with_object(Builder::XmlMarkup.new(indent: 2)) do |limit, builder|
+          if z = send(limit)
             builder.tag!(:"codeDistVer#{TAGS[limit]}", CODES[z.code].to_s)
             builder.tag!(:"valDistVer#{TAGS[limit]}", z.alt.to_s)
             builder.tag!(:"uomDistVer#{TAGS[limit]}", z.unit.upcase.to_s)

@@ -11,12 +11,6 @@ describe AIXM::Component::VerticalLimits do
     end
   end
 
-  describe :lower_z= do
-    it "fails on invalid values" do
-      [nil, :foobar, 123].wont_be_written_to subject, :lower_z
-    end
-  end
-
   describe :max_z= do
     it "fails on invalid values" do
       [:foobar, 123].wont_be_written_to subject, :max_z
@@ -24,6 +18,12 @@ describe AIXM::Component::VerticalLimits do
 
     it "accepts nil value" do
       [nil].must_be_written_to subject, :max_z
+    end
+  end
+
+  describe :lower_z= do
+    it "fails on invalid values" do
+      [nil, :foobar, 123].wont_be_written_to subject, :lower_z
     end
   end
 
@@ -57,8 +57,8 @@ describe AIXM::Component::VerticalLimits do
     it "builds correct AIXM with additional max_z" do
       subject = AIXM.vertical_limits(
         upper_z: AIXM.z(65, :qne),
-        lower_z: AIXM.z(1000, :qfe),
-        max_z: AIXM.z(6000, :qnh)
+        max_z: AIXM.z(6000, :qnh),
+        lower_z: AIXM.z(1000, :qfe)
       )
       AIXM.aixm!
       subject.to_xml.must_equal <<~END
