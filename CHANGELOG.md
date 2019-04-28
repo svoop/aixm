@@ -2,7 +2,10 @@
 
 #### Additions
 * Refinement `Object#then_if`
-* Airspace activity type `:aeromodelling`
+* Airspace activity types `:aeromodelling` and `:glider_winch`
+
+#### Breaking Changes
+* Renamed airspace activity type "TOWING" from `:winch_activity` to `:towing_traffic`
 
 ## 0.3.4
 

@@ -72,7 +72,7 @@ module AIXM
         TECHNICAL:  :technical_activity,
         'TFC-AD': :aerodrome_traffic,
         'TFC-HELI': :helicopter_traffic,
-        TOWING: :winch_activity,
+        TOWING: :towing_traffic,
         TRG: :training,
         UAV: :drone,
         ULM: :ultra_light_flight,
@@ -80,6 +80,7 @@ module AIXM
         'VIP-PRES': :president,
         'VIP-VICE': :vice_president,
         WATERBLAST: :underwater_explosion,
+        WINCH: :glider_winch,
         WORK: :aerial_work,
         OTHER: :other
       }.freeze
@@ -163,7 +164,7 @@ module AIXM
         builder.codeClass(self.class.to_s) if self.class
         builder.codeLocInd(location_indicator) if location_indicator
         if activity
-          builder.codeActivity(ACTIVITIES.key(activity).to_s.then_if(AIXM.aixm?) { |a| a.sub('AIRMODEL', 'UAV') })
+          builder.codeActivity(ACTIVITIES.key(activity).to_s.then_if(AIXM.aixm?) { |a| { 'AIRMODEL' => 'UAV', 'WINCH' => 'GLIDER' }[a] || a })
         end
         builder << vertical_limits.to_xml
         builder << timetable.to_xml(as: :Att) if timetable

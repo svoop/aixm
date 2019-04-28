@@ -173,6 +173,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
       <xsd:enumeration value="EQUIPMENT-833"/>
       <xsd:enumeration value="PROCEDURE"/>
       <xsd:enumeration value="AIRMODEL"/>
+      <xsd:enumeration value="WINCH"/>
       <xsd:enumeration value="OTHER"/>
     </xsd:restriction>
   </xsd:simpleType>
