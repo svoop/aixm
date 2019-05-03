@@ -100,6 +100,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
         <xsd:element name="Oaa" type="OrganisationAuthorityAddressType"/>
         <xsd:element name="Oae" type="AirspaceObstacleType"/>
         <xsd:element name="Oas" type="OrganisationAuthorityAssociationType"/>
+        <xsd:element name="Ogr" type="ObstacleGroupType"/>
         <xsd:element name="Obs" type="ObstacleType"/>
         <xsd:element name="Ofa" type="AirspaceAuthorityType"/>
         <xsd:element name="Oil" type="OilType"/>

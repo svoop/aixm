@@ -5377,6 +5377,72 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
     </xsd:sequence>
     <xsd:attributeGroup ref="Changes"/>
   </xsd:complexType>
+  <xsd:complexType name="ObstacleGroupType">
+    <xsd:annotation>
+      <xsd:documentation>Obstacle group</xsd:documentation>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:element name="OgrUid" type="ObstacleGroupUidType">
+        <xsd:annotation>
+          <xsd:documentation>a version of Obstacle group</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="codeDatum" type="codeDatum">
+        <xsd:annotation>
+          <xsd:documentation>Datum</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="valGeoAccuracy" type="valDistHorz" minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation>Geographical accuracy</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="uomGeoAccuracy" type="uomDistHorz" minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation>Unit of measurement [geographical accuracy]</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="valElevAccuracy" type="valDistVer" minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation>Elevation accuracy</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="uomElevAccuracy" type="uomElev" minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation>Unit of measurement [elevation accuracy]</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="txtRmk" type="txtRmk" minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation>Remark</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+    </xsd:sequence>
+    <xsd:attribute ref="source"/>
+  </xsd:complexType>
+  <xsd:complexType name="ObstacleGroupUidType">
+    <xsd:annotation>
+      <xsd:documentation>Obstacle group - UID</xsd:documentation>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:element name="txtName" type="txtName">
+        <xsd:annotation>
+          <xsd:documentation>Name</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="geoLat" type="geoLat">
+        <xsd:annotation>
+          <xsd:documentation>Group reference point latitude</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="geoLong" type="geoLong">
+        <xsd:annotation>
+          <xsd:documentation>Group reference point longitude</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+    </xsd:sequence>
+    <xsd:attribute ref="mid"/>
+  </xsd:complexType>
   <xsd:complexType name="ObstacleType">
     <xsd:annotation>
       <xsd:documentation>Obstacle</xsd:documentation>
@@ -5402,7 +5468,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
           <xsd:documentation>Type details</xsd:documentation>
         </xsd:annotation>
       </xsd:element>
-      <xsd:element name="codeGroup" type="codeYesNo"  minOccurs="0">
+      <xsd:element name="codeGroup" type="codeYesNo" minOccurs="0">
         <xsd:annotation>
           <xsd:documentation>Group of obstacles</xsd:documentation>
         </xsd:annotation>
@@ -5432,34 +5498,14 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
           <xsd:documentation>Datum</xsd:documentation>
         </xsd:annotation>
       </xsd:element>
-      <xsd:element name="valGeoAccuracy" type="valDistHorz" minOccurs="0">
-        <xsd:annotation>
-          <xsd:documentation>Geographical accuracy</xsd:documentation>
-        </xsd:annotation>
-      </xsd:element>
-      <xsd:element name="uomGeoAccuracy" type="uomDistHorz" minOccurs="0">
-        <xsd:annotation>
-          <xsd:documentation>Unit of measurement [geographical accuracy]</xsd:documentation>
-        </xsd:annotation>
-      </xsd:element>
       <xsd:element name="valElev" type="valDistVer">
         <xsd:annotation>
           <xsd:documentation>Elevation</xsd:documentation>
         </xsd:annotation>
       </xsd:element>
-      <xsd:element name="valElevAccuracy" type="valDistVer" minOccurs="0">
-        <xsd:annotation>
-          <xsd:documentation>Elevation accuracy</xsd:documentation>
-        </xsd:annotation>
-      </xsd:element>
       <xsd:element name="valHgt" type="valDistVer" minOccurs="0">
         <xsd:annotation>
           <xsd:documentation>Height</xsd:documentation>
-        </xsd:annotation>
-      </xsd:element>
-      <xsd:element name="codeHgtAccuracy" type="codeYesNo" minOccurs="0">
-        <xsd:annotation>
-          <xsd:documentation>Height accuracy</xsd:documentation>
         </xsd:annotation>
       </xsd:element>
       <xsd:element name="valGeoidUndulation" type="valDistVer" minOccurs="0">
@@ -5472,24 +5518,19 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
           <xsd:documentation>Unit of measurement [vertical distance]</xsd:documentation>
         </xsd:annotation>
       </xsd:element>
-      <xsd:element name="valRadius" type="valDistHorz">
+      <xsd:element name="codeHgtAccuracy" type="codeYesNo" minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation>Height accuracy</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="valRadius" type="valDistHorz" minOccurs="0">
         <xsd:annotation>
           <xsd:documentation>Radius</xsd:documentation>
         </xsd:annotation>
       </xsd:element>
-      <xsd:element name="uomRadius" type="uomDistHorz">
+      <xsd:element name="uomRadius" type="uomDistHorz" minOccurs="0">
         <xsd:annotation>
           <xsd:documentation>Unit of measurement [radius]</xsd:documentation>
-        </xsd:annotation>
-      </xsd:element>
-      <xsd:element name="codeGroupId" type="uuid" minOccurs="0">
-        <xsd:annotation>
-          <xsd:documentation>Group identifier (identical on all group members)</xsd:documentation>
-        </xsd:annotation>
-      </xsd:element>
-      <xsd:element name="txtGroupName" type="txtGroupName" minOccurs="0">
-        <xsd:annotation>
-          <xsd:documentation>Group name or short description</xsd:documentation>
         </xsd:annotation>
       </xsd:element>
       <xsd:element name="ObsUidLink" type="ObstacleUidType" minOccurs="0">
@@ -5528,13 +5569,17 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
         </xsd:annotation>
       </xsd:element>
     </xsd:sequence>
-    <xsd:attribute ref="source"/>
   </xsd:complexType>
   <xsd:complexType name="ObstacleUidType">
     <xsd:annotation>
       <xsd:documentation>Obstacle - UID</xsd:documentation>
     </xsd:annotation>
     <xsd:sequence>
+      <xsd:element name="OgrUid" type="ObstacleGroupUidType">
+        <xsd:annotation>
+          <xsd:documentation>a version of Obstacle group</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
       <xsd:element name="geoLat" type="geoLat">
         <xsd:annotation>
           <xsd:documentation>Latitude</xsd:documentation>
@@ -8431,7 +8476,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                 <xsd:documentation>Time reference system</xsd:documentation>
               </xsd:annotation>
             </xsd:element>
-            <xsd:element name="codeType" type="codeTypeHrNavAid">
+            <xsd:element name="codeType" type="codeTypeHrNavAid" minOccurs="0">
               <xsd:annotation>
                 <xsd:documentation>Type</xsd:documentation>
               </xsd:annotation>
