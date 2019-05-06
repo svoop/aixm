@@ -35,6 +35,6 @@ module AIXM
   )x.freeze
 
   # Pattern matching timetable working hour codes
-  H_RE = /H(?:24|J|N|X|O)/.freeze
+  H_RE = /(?<code>H24|HJ|HN|HX|HO)/.freeze
 
 end
