@@ -3,6 +3,7 @@
 #### Additions
 * Refinement `Object#then_if`
 * Airspace activity types `:aeromodelling` and `:glider_winch`
+* `AIXM::XY#to_point` convenience method
 
 #### Breaking Changes
 * Renamed airspace activity type "TOWING" from `:winch_activity` to `:towing_traffic`

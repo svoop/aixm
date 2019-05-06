@@ -69,6 +69,11 @@ module AIXM
       end
     end
 
+    # @return [AIXM::Component::Geometry::Point] convert to point
+    def to_point
+      AIXM.point(xy: self)
+    end
+
     # @return [AIXM::D] distance as calculated by use of the Haversine formula
     def distance(other)
       if self == other

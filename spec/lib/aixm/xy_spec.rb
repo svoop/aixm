@@ -111,6 +111,16 @@ describe AIXM::XY do
     end
   end
 
+  describe :to_point do
+    subject do
+      AIXM.xy(lat: %q(44°00'07.63"N), long: %q(004°45'07.81"E))
+    end
+
+    it "must return a point object with these coordinates" do
+      subject.to_point.xy.must_equal AIXM.point(xy: subject).xy
+    end
+  end
+
   describe :distance do
     subject do
       AIXM.xy(lat: %q(44°00'07.63"N), long: %q(004°45'07.81"E))
