@@ -401,6 +401,9 @@ module AIXM
         AIXM.obstacle_group(
           name: "Mirmande éoliennes"
         ).tap do |obstacle_group|
+          obstacle_group.xy_accuracy = AIXM.d(50, :m)
+          obstacle_group.z_accuracy = AIXM.d(10, :m)
+          obstacle_group.remarks = "Extension planned"
           obstacle_group.add_obstacle(
             AIXM.obstacle(
               name: "La Teissonière 1",
@@ -410,8 +413,6 @@ module AIXM
               z: AIXM.z(1764, :qnh)
             ).tap do |obstacle|
               obstacle.height = AIXM.d(80, :m)
-              obstacle.xy_accuracy = AIXM.d(50, :m)
-              obstacle.z_accuracy = AIXM.d(10, :m)
               obstacle.height_accurate = false
             end
           )
@@ -424,8 +425,6 @@ module AIXM
               z: AIXM.z(1738 , :qnh)
             ).tap do |obstacle|
               obstacle.height = AIXM.d(80, :m)
-              obstacle.xy_accuracy = AIXM.d(50, :m)
-              obstacle.z_accuracy = AIXM.d(10, :m)
               obstacle.height_accurate = false
             end
           )
@@ -436,6 +435,9 @@ module AIXM
         AIXM.obstacle_group(
           name: "Droitwich longwave antenna"
         ).tap do |obstacle_group|
+          obstacle_group.xy_accuracy = AIXM.d(0, :m)
+          obstacle_group.z_accuracy = AIXM.d(0, :ft)
+          obstacle_group.remarks = "Destruction planned"
           obstacle_group.add_obstacle(
             AIXM.obstacle(
               name: "Droitwich LW north",
@@ -445,8 +447,6 @@ module AIXM
               z: AIXM.z(848 , :qnh)
             ).tap do |obstacle|
               obstacle.height = AIXM.d(700, :ft)
-              obstacle.xy_accuracy = AIXM.d(0, :m)
-              obstacle.z_accuracy = AIXM.d(0, :ft)
               obstacle.height_accurate = true
             end
           )
@@ -459,8 +459,6 @@ module AIXM
               z: AIXM.z(848 , :qnh)
             ).tap do |obstacle|
               obstacle.height = AIXM.d(700, :ft)
-              obstacle.xy_accuracy = AIXM.d(0, :m)
-              obstacle.z_accuracy = AIXM.d(0, :ft)
               obstacle.height_accurate = true
             end,
             linked_to: :previous,

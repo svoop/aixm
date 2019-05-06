@@ -140,9 +140,7 @@ module AIXM
         fail(LayerError.new("no layers defined", self)) unless layers.any?
         builder = Builder::XmlMarkup.new(indent: 2)
         builder.comment! "Airspace: [#{TYPES.key(type)}] #{name || :UNNAMED}"
-        builder.Ase({
-          source: (source if AIXM.ofmx?)
-        }.compact) do |ase|
+        builder.Ase({ source: (source if AIXM.ofmx?) }.compact) do |ase|
           ase << to_uid.indent(2)
           ase.txtLocalType(local_type) if local_type && local_type != name
           ase.txtName(name) if name

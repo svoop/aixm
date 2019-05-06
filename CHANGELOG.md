@@ -7,6 +7,7 @@
 
 #### Breaking Changes
 * Renamed airspace activity type "TOWING" from `:winch_activity` to `:towing_traffic`
+* Updated obstacles and obstacle groups to reflect recent changes in OFMX
 
 ## 0.3.4
 
