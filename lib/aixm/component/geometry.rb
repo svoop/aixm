@@ -26,7 +26,7 @@ module AIXM
     # @example Built by adding elements
     #   geometry = AIXM.geometry
     #   geometry << AIXM.point(...)
-    #   geometry << AIXM.point(...)
+    #   geometry.concat [AIXM.point(...), AIXM.point(...), ...]
     #
     # @see https://github.com/openflightmaps/ofmx/wiki/Airspace#avx-border-vertex
     class Geometry
@@ -37,7 +37,9 @@ module AIXM
       #   @return [Enumerator] see Array#each
       # @!method <<
       #   @return [Array] see Array#<<
-      def_delegators :@result_array, :each, :<<
+      # @!method concat
+      #   @return [Array] see Array#concat
+      def_delegators :@result_array, :each, :<<, :concat
 
       def initialize(*segments)
         @result_array = segments
