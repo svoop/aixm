@@ -25,6 +25,16 @@ describe AIXM::Document do
     end
   end
 
+  describe :region= do
+    it "fails on invalid values" do
+      ['x', 'foobar', :foobar].wont_be_written_to subject, :region
+    end
+
+    it "upcases valid values" do
+      subject.tap { |s| s.region = 'lf' }.region.must_equal 'LF'
+    end
+  end
+
   describe :created_at= do
     it "fails on invalid values" do
       ['foobar', '2018-01-77'].wont_be_written_to subject, :created_at

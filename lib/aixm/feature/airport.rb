@@ -26,6 +26,9 @@ module AIXM
     #   airport.add_usage_limitation(UsageLimitation::TYPES)
     #   airport.add_address(AIXM.address)
     #
+    # For airports without an +id+, you may assign the two character region
+    # (e.g. "LF") which will be combined with an 8 character digest of +name+.
+    #
     # @see https://github.com/openflightmaps/ofmx/wiki/Airport#ahp-airport
     class Airport < Feature
       public_class_method :new
@@ -94,7 +97,7 @@ module AIXM
       # @return [Array<AIXM::Feature::Address>] postal address, url, A/A or A/G frequency etc
       attr_reader :addresses
 
-      def initialize(source: nil, organisation:, id:, name:, xy:)
+      def initialize(source: nil, organisation:, id: nil, name:, xy:)
         super(source: source)
         self.organisation, self.id, self.name, self.xy = organisation, id, name, xy
         @runways, @helipads, @usage_limitations, @addresses = [], [], [], []
@@ -110,8 +113,11 @@ module AIXM
         @organisation = value
       end
 
+      # For airports without an +id+, you may assign the two character region
+      # (e.g. "LF") which will be combined with an 8 character digest of +name+.
       def id=(value)
-        fail(ArgumentError, "invalid id `#{id}'") unless value&.upcase&.match? ID_RE
+        value = [value, [name].to_digest].join.upcase if value&.upcase&.match? AIXM::Document::REGION_RE
+        fail(ArgumentError, "invalid id") unless value&.upcase&.match? ID_RE
         @id = value.upcase
       end
 

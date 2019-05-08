@@ -1,5 +1,7 @@
 ## 0.3.6 (unreleased)
-Nothing so far
+
+#### Changes
+* Generate `Airport#id` from region and `Airport#name`
 
 ## 0.3.5
 

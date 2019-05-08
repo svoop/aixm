@@ -8,13 +8,17 @@ module AIXM
     # ===Cheat Sheet in Pseudo Code:
     #   airspace = AIXM.airspace(
     #     source: String or nil
-    #     id: String
+    #     id: String or nil   # nil is converted to an 8 character digest
     #     type: String or Symbol
     #     local_type: String or nil
     #     name: String or nil
     #   )
     #   airspace.geometry << AIXM.point or AIXM.arc or AIXM.border or AIXM.circle
     #   airspace.layers << AIXM.layer
+    #
+    # The +id+ is mandatory, however, you may omit it when initializing a new
+    # airspace or assign +nil+ to an existing airspace which will generate a 8
+    # character digest from +type+, +local_type+ and +name+.
     #
     # Some regions define additional airspace types. In LF (France) for
     # intance, the types RMZ (radio mandatory zone) and TMZ (transponder
@@ -105,6 +109,8 @@ module AIXM
         %Q(#<#{self.class} type=#{type.inspect} name=#{name.inspect}>)
       end
 
+      # The +id+ is mandatory, however, you may assign +nil+ which will generate
+      # an 8 character digest from +type+, +local_type+ and +name+.
       def id=(value)
         fail(ArgumentError, "invalid id") unless value.nil? || value.is_a?(String)
         @id = value&.uptrans || [type, local_type, name].to_digest.upcase

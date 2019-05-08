@@ -15,6 +15,8 @@ module AIXM
   #
   # @see https://github.com/openflightmaps/ofmx/wiki/Snapshot
   class Document
+    REGION_RE = /\A[A-Z]{2}\z/.freeze
+
     NAMESPACE_RE = /\A[a-f\d]{8}-[a-f\d]{4}-[a-f\d]{4}-[a-f\d]{4}-[a-f\d]{12}\z/.freeze
 
     # @return [String] OFMX region all features in this document belong to
@@ -43,7 +45,7 @@ module AIXM
     end
 
     def region=(value)
-      fail(ArgumentError, "invalid region") unless value.nil? || value.is_a?(String)
+      fail(ArgumentError, "invalid region") unless value.nil? || value&.upcase&.match?(REGION_RE)
       @region = value&.upcase
     end
 

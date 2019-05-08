@@ -28,7 +28,11 @@ describe AIXM::Feature::Airport do
 
   describe :id= do
     it "fails on invalid values" do
-      [nil, 'A', 'AB', 'ABCDE', 'AB 1234'].wont_be_written_to subject, :id
+      [nil, 'A', 'ABCDE', 'AB 1234'].wont_be_written_to subject, :id
+    end
+
+    it "combines 2 character region with an 8 characters digest from name" do
+      subject.tap { |s| s.id = 'lf' }.id.must_equal 'LFD18754F5'
     end
 
     it "upcases valid values" do
