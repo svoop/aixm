@@ -31,6 +31,7 @@ require_relative 'aixm/component/layer'
 require_relative 'aixm/component/vertical_limits'
 require_relative 'aixm/component/timetable'
 require_relative 'aixm/component/runway'
+require_relative 'aixm/component/fato'
 require_relative 'aixm/component/helipad'
 require_relative 'aixm/component/surface'
 

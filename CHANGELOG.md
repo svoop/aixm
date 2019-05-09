@@ -1,5 +1,9 @@
 ## 0.3.6 (unreleased)
 
+#### Additions
+* `AIXM::Component::FATO`
+* `AIXM::Component::Helipad#helicopter_class` and `AIXM::Component::Helipad#marking` 
+
 #### Changes
 * Generate `Airport#id` from region and `Airport#name`
 

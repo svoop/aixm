@@ -3,22 +3,33 @@ using AIXM::Refinements
 module AIXM
   class Component
 
-    # Helipads are TLOF (touch-down and lift-off areas) e.g. for helicopters.
+    # Helipads are TLOF (touch-down and lift-off areas) for vertical take-off
+    # aircraft such as helicopters.
     #
     # ===Cheat Sheet in Pseudo Code:
     #   helipad = AIXM.helipad(
     #     name: String
     #   )
+    #   helipad.fato = AIXM.fato or nil
     #   helipad.xy = AIXM.xy
     #   helipad.z = AIXM.z or nil
     #   helipad.length = AIXM.d or nil   # must use same unit as width
     #   helipad.width = AIXM.d or nil    # must use same unit as length
     #   helipad.surface = AIXM.surface
+    #   helipad.helicopter_class = HELICOPTER_CLASSES or nil
+    #   helipad.marking = String or nil
     #   helipad.status = STATUSES or nil
     #   helipad.remarks = String or nil
     #
     # @see https://github.com/openflightmaps/ofmx/wiki/Airport#tla-helipad-tlof
     class Helipad
+      HELICOPTER_CLASSES = {
+        '1': :'1',
+        '2': :'2',
+        '3': :'3',
+        OTHER: :other   # specify in remarks
+      }.freeze
+
       STATUSES = {
         CLSD: :closed,
         WIP: :work_in_progress,          # e.g. construction work
@@ -34,6 +45,9 @@ module AIXM
       # @return [String] full name (e.g. "H1")
       attr_reader :name
 
+      # @return [AIXM::Component::FATO, nil] FATO the helipad is situated on
+      attr_reader :fato
+
       # @return [AIXM::XY] center point
       attr_reader :xy
 
@@ -48,6 +62,12 @@ module AIXM
 
       # @return [AIXM::Component::Surface] surface of the helipad
       attr_reader :surface
+
+      # @return [Integer, Symbol, nil] suitable helicopter class
+      attr_reader :helicopter_class
+
+      # @return [String, nil] markings
+      attr_reader :marking
 
       # @return [Symbol, nil] status of the helipad (see {STATUSES}) or +nil+ for normal operation
       attr_reader :status
@@ -76,6 +96,11 @@ module AIXM
         @name = value.uptrans
       end
 
+      def fato=(value)
+        fail(ArgumentError, "invalid FATO") unless value.nil? || value.is_a?(AIXM::Component::FATO)
+        @fato = value
+      end
+
       def xy=(value)
         fail(ArgumentError, "invalid xy") unless value.is_a? AIXM::XY
         @xy = value
@@ -102,6 +127,14 @@ module AIXM
         end
       end
 
+      def helicopter_class=(value)
+        @helicopter_class = value.nil? ? nil : (HELICOPTER_CLASSES.lookup(value.to_s.to_sym, nil) || fail(ArgumentError, "invalid helicopter class"))
+      end
+
+      def marking=(value)
+        @marking = value&.to_s
+      end
+
       def status=(value)
         @status = value.nil? ? nil : (STATUSES.lookup(value.to_s.to_sym, nil) || fail(ArgumentError, "invalid status"))
       end
@@ -124,6 +157,7 @@ module AIXM
         builder = Builder::XmlMarkup.new(indent: 2)
         builder.Tla do |tla|
           tla << to_uid.indent(2)
+          tla << fato.to_uid.indent(2) if fato
           tla.geoLat(xy.lat(AIXM.schema))
           tla.geoLong(xy.long(AIXM.schema))
           tla.codeDatum('WGE')
@@ -138,6 +172,8 @@ module AIXM
           unless  (xml = surface.to_xml).empty?
             tla << xml.indent(2)
           end
+          tla.codeClassHel(HELICOPTER_CLASSES.key(helicopter_class).to_s) if helicopter_class
+          tla.txtMarking(marking) if marking
           tla.codeSts(STATUSES.key(status).to_s) if status
           tla.txtRmk(remarks) if remarks
         end

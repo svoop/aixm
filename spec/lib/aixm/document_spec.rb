@@ -274,6 +274,30 @@ describe AIXM::Document do
             <uomDist>M</uomDist>
             <txtRmk>back remarks</txtRmk>
           </Rdd>
+          <Fto>
+            <FtoUid>
+              <AhpUid>
+                <codeId>LFNT</codeId>
+              </AhpUid>
+              <txtDesig>H1</txtDesig>
+            </FtoUid>
+            <valLen>35</valLen>
+            <valWid>35</valWid>
+            <uomDim>M</uomDim>
+            <codeComposition>CONC</codeComposition>
+            <codePreparation>PAVED</codePreparation>
+            <codeCondSfc>FAIR</codeCondSfc>
+            <valPcnClass>30</valPcnClass>
+            <codePcnPavementType>F</codePcnPavementType>
+            <codePcnPavementSubgrade>A</codePcnPavementSubgrade>
+            <codePcnMaxTirePressure>W</codePcnMaxTirePressure>
+            <codePcnEvalMethod>U</codePcnEvalMethod>
+            <txtPcnNote>Cracks near the center</txtPcnNote>
+            <txtProfile>Northwest from RWY 12/30</txtProfile>
+            <txtMarking>Dashed white lines</txtMarking>
+            <codeSts>OTHER</codeSts>
+            <txtRmk>Authorizaton by AD operator required</txtRmk>
+          </Fto>
           <Tla>
             <TlaUid>
               <AhpUid>
@@ -281,6 +305,12 @@ describe AIXM::Document do
               </AhpUid>
               <txtDesig>H1</txtDesig>
             </TlaUid>
+            <FtoUid>
+              <AhpUid>
+                <codeId>LFNT</codeId>
+              </AhpUid>
+              <txtDesig>H1</txtDesig>
+            </FtoUid>
             <geoLat>435956.94N</geoLat>
             <geoLong>0044505.56E</geoLong>
             <codeDatum>WGE</codeDatum>
@@ -297,7 +327,9 @@ describe AIXM::Document do
             <codePcnPavementSubgrade>A</codePcnPavementSubgrade>
             <codePcnMaxTirePressure>W</codePcnMaxTirePressure>
             <codePcnEvalMethod>U</codePcnEvalMethod>
-            <txtPcnNote>Cracks near the center.</txtPcnNote>
+            <txtPcnNote>Cracks near the center</txtPcnNote>
+            <codeClassHel>1</codeClassHel>
+            <txtMarking>Continuous white lines</txtMarking>
             <codeSts>OTHER</codeSts>
             <txtRmk>Authorizaton by AD operator required</txtRmk>
           </Tla>
@@ -956,6 +988,30 @@ describe AIXM::Document do
             <uomDist>M</uomDist>
             <txtRmk>back remarks</txtRmk>
           </Rdd>
+          <Fto>
+            <FtoUid>
+              <AhpUid>
+                <codeId>LFNT</codeId>
+              </AhpUid>
+              <txtDesig>H1</txtDesig>
+            </FtoUid>
+            <valLen>35</valLen>
+            <valWid>35</valWid>
+            <uomDim>M</uomDim>
+            <codeComposition>CONC</codeComposition>
+            <codePreparation>PAVED</codePreparation>
+            <codeCondSfc>FAIR</codeCondSfc>
+            <valPcnClass>30</valPcnClass>
+            <codePcnPavementType>F</codePcnPavementType>
+            <codePcnPavementSubgrade>A</codePcnPavementSubgrade>
+            <codePcnMaxTirePressure>W</codePcnMaxTirePressure>
+            <codePcnEvalMethod>U</codePcnEvalMethod>
+            <txtPcnNote>Cracks near the center</txtPcnNote>
+            <txtProfile>Northwest from RWY 12/30</txtProfile>
+            <txtMarking>Dashed white lines</txtMarking>
+            <codeSts>OTHER</codeSts>
+            <txtRmk>Authorizaton by AD operator required</txtRmk>
+          </Fto>
           <Tla>
             <TlaUid>
               <AhpUid>
@@ -963,6 +1019,12 @@ describe AIXM::Document do
               </AhpUid>
               <txtDesig>H1</txtDesig>
             </TlaUid>
+            <FtoUid>
+              <AhpUid>
+                <codeId>LFNT</codeId>
+              </AhpUid>
+              <txtDesig>H1</txtDesig>
+            </FtoUid>
             <geoLat>43.99915000N</geoLat>
             <geoLong>004.75154444E</geoLong>
             <codeDatum>WGE</codeDatum>
@@ -979,7 +1041,9 @@ describe AIXM::Document do
             <codePcnPavementSubgrade>A</codePcnPavementSubgrade>
             <codePcnMaxTirePressure>W</codePcnMaxTirePressure>
             <codePcnEvalMethod>U</codePcnEvalMethod>
-            <txtPcnNote>Cracks near the center.</txtPcnNote>
+            <txtPcnNote>Cracks near the center</txtPcnNote>
+            <codeClassHel>1</codeClassHel>
+            <txtMarking>Continuous white lines</txtMarking>
             <codeSts>OTHER</codeSts>
             <txtRmk>Authorizaton by AD operator required</txtRmk>
           </Tla>

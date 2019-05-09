@@ -319,7 +319,9 @@ module AIXM
           airport.transition_z = AIXM.z(10_000, :qnh)
           airport.remarks = "Restricted access"
           airport.add_runway(runway)
+          airport.add_fato(fato)
           airport.add_helipad(helipad)
+          airport.helipads.first.fato = airport.fatos.first   # necessary when using factories only
           airport.add_usage_limitation :permitted
           airport.add_usage_limitation(:reservation_required) do |reservation_required|
             reservation_required.add_condition { |c| c.aircraft = :glider }
@@ -357,6 +359,22 @@ module AIXM
         end
       end
 
+      def fato
+        AIXM.fato(name: 'H1').tap do |fato|
+          fato.length = AIXM.d(35, :m)
+          fato.width = AIXM.d(35, :m)
+          fato.surface.composition = :concrete
+          fato.surface.preparation = :paved
+          fato.surface.condition = :fair
+          fato.surface.pcn = "30/F/A/W/U"
+          fato.surface.remarks = "Cracks near the center"
+          fato.profile = "Northwest from RWY 12/30"
+          fato.marking = "Dashed white lines"
+          fato.status = :other
+          fato.remarks = "Authorizaton by AD operator required"
+        end
+      end
+
       def helipad
         AIXM.helipad(name: 'H1').tap do |helipad|
           helipad.xy = AIXM.xy(lat: %q(43°59'56.94"N), long: %q(004°45'05.56"E))
@@ -367,7 +385,9 @@ module AIXM
           helipad.surface.preparation = :paved
           helipad.surface.condition = :fair
           helipad.surface.pcn = "30/F/A/W/U"
-          helipad.surface.remarks = "Cracks near the center."
+          helipad.surface.remarks = "Cracks near the center"
+          helipad.helicopter_class = 1
+          helipad.marking = "Continuous white lines"
           helipad.status = :other
           helipad.remarks = "Authorizaton by AD operator required"
         end
@@ -470,11 +490,10 @@ module AIXM
       # Document
 
       def document
-        time = Time.parse('2018-01-01 12:00:00 +0100')
         AIXM.document(
           region: 'LF',
           namespace: '00000000-0000-0000-0000-000000000000',
-          created_at: time,
+          created_at: (time = Time.parse('2018-01-01 12:00:00 +0100')),
           effective_at: time
         ).tap do |document|
           document.features << organisation

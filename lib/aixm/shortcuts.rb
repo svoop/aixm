@@ -15,6 +15,7 @@ module AIXM
     frequency: Component::Frequency,
     airport: Feature::Airport,
     runway: Component::Runway,
+    fato: Component::FATO,
     helipad: Component::Helipad,
     surface: Component::Surface,
     airspace: Feature::Airspace,

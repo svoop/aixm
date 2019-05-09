@@ -22,6 +22,7 @@ module AIXM
     #   airport.timetable = AIXM.timetable or nil
     #   airport.remarks = String or nil
     #   airport.add_runway(AIXM.runway)
+    #   airport.add_fato(AIXM.fato)
     #   airport.add_helipad(AIXM.helipad)
     #   airport.add_usage_limitation(UsageLimitation::TYPES)
     #   airport.add_address(AIXM.address)
@@ -88,6 +89,9 @@ module AIXM
       # @return [Array<AIXM::Component::Runway>] runways present at this airport
       attr_reader :runways
 
+      # @return [Array<AIXM::Component::FATO>] FATOs present at this airport
+      attr_reader :fatos
+
       # @return [Array<AIXM::Component::Helipad>] helipads present at this airport
       attr_reader :helipads
 
@@ -100,7 +104,7 @@ module AIXM
       def initialize(source: nil, organisation:, id: nil, name:, xy:)
         super(source: source)
         self.organisation, self.id, self.name, self.xy = organisation, id, name, xy
-        @runways, @helipads, @usage_limitations, @addresses = [], [], [], []
+        @runways, @fatos, @helipads, @usage_limitations, @addresses = [], [], [], [], []
       end
 
       # @return [String]
@@ -140,9 +144,9 @@ module AIXM
       def type
         @type = case
           when @type then @type
-          when runways.any? && helipads.any? then :aerodrome_and_heliport
+          when runways.any? && (helipads.any? || fatos.any?) then :aerodrome_and_heliport
           when runways.any? then :aerodrome
-          when helipads.any? then :heliport
+          when helipads.any? || fatos.any? then :heliport
         end
       end
 
@@ -190,6 +194,17 @@ module AIXM
         fail(ArgumentError, "invalid runway") unless runway.is_a? AIXM::Component::Runway
         runway.send(:airport=, self)
         @runways << runway
+        self
+      end
+
+      # Add a FATO to the airport.
+      #
+      # @param FATO [AIXM::Component::FATO] FATO instance
+      # @return [self]
+      def add_fato(fato)
+        fail(ArgumentError, "invalid FATO") unless fato.is_a? AIXM::Component::FATO
+        fato.send(:airport=, self)
+        @fatos << fato
         self
       end
 
@@ -287,6 +302,9 @@ module AIXM
         end
         runways.each do |runway|
           builder << runway.to_xml
+        end
+        fatos.each do |fato|
+          builder << fato.to_xml
         end
         helipads.each do |helipad|
           builder << helipad.to_xml
