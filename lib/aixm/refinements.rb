@@ -15,21 +15,6 @@ module AIXM
       "Ø" => "Oe"
     }.freeze
 
-    # @!method then_if
-    #   Same as +Object#then+ but only applied if the condition is true.
-    #
-    #   @example
-    #     "foobar".then_if(false) { |s| s.gsub(/o/, 'i') }   # => "foobar"
-    #     "foobar".then_if(true) { |s| s.gsub(/o/, 'i') }    # => "fiibar"
-    #
-    #   @note This is a refinement for +Object+
-    #   @return [Object]
-    refine Object do
-      def then_if(condition, &block)
-        condition ? self.then(&block) : self
-      end
-    end
-
     # @!method to_digest
     #   Builds a 4 byte hex digest from the Array payload.
     #
@@ -146,6 +131,21 @@ module AIXM
         self[key_or_value] ||
           (key_or_value if has_value?(key_or_value)) ||
           (omitted ? fail(KeyError, "key or value `#{key_or_value}' not found") : fallback)
+      end
+    end
+
+    # @!method then_if
+    #   Same as +Object#then+ but only applied if the condition is true.
+    #
+    #   @example
+    #     "foobar".then_if(false) { |s| s.gsub(/o/, 'i') }   # => "foobar"
+    #     "foobar".then_if(true) { |s| s.gsub(/o/, 'i') }    # => "fiibar"
+    #
+    #   @note This is a refinement for +Object+
+    #   @return [Object]
+    refine Object do
+      def then_if(condition, &block)
+        condition ? self.then(&block) : self
       end
     end
 
