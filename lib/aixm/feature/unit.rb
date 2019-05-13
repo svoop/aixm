@@ -100,7 +100,7 @@ module AIXM
 
       # @return [String]
       def inspect
-        %Q(#<#{self.class} name=#{name.inspect} type=#{type.inspect}>)
+        %Q(#<#{original_class} name=#{name.inspect} type=#{type.inspect}>)
       end
 
       def organisation=(value)
@@ -118,7 +118,9 @@ module AIXM
       end
 
       # @!attribute class
+      # @note Use +original_class+ to query the Ruby object class.
       # @return [Symbol] class of unit (see {CLASSES})
+      alias_method :original_class, :class
       def class
         @klass
       end

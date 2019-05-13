@@ -111,10 +111,10 @@ module AIXM
         %Q(#<#{original_class} class=#{@klass.inspect}>)
       end
 
-      alias_method :original_class, :class
-
       # @!attribute class
+      # @note Use +original_class+ to query the Ruby object class.
       # @return [Symbol] class of layer (see {CLASSES})
+      alias_method :original_class, :class
       def class
         @klass
       end
