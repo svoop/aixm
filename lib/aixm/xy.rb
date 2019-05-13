@@ -69,6 +69,12 @@ module AIXM
       end
     end
 
+    # @return [Boolean] +false+ if both longitude and latitude have zero DMS
+    #   seconds which may indicate rounded or estimated coordinates
+    def seconds?
+      !(long.to_dms[-6,5].to_f.zero? && lat.to_dms[-6,5].to_f.zero?)
+    end
+
     # @return [AIXM::Component::Geometry::Point] convert to point
     def to_point
       AIXM.point(xy: self)

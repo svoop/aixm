@@ -2,7 +2,8 @@
 
 #### Additions
 * `AIXM::Component::FATO`
-* `AIXM::Component::Helipad#helicopter_class` and `AIXM::Component::Helipad#marking` 
+* `AIXM::Component::Helipad#helicopter_class` and `AIXM::Component::Helipad#marking`
+* `AIXM::XY#seconds?` to detect possibly rounded or estimated coordinates
 
 #### Changes
 * Generate `Airport#id` from region and `Airport#name`

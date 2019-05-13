@@ -111,6 +111,17 @@ describe AIXM::XY do
     end
   end
 
+  describe :seconds? do
+    it "must detect coordinates with zero DMS seconds" do
+      AIXM.xy(lat: %q(44°33'00"N), long: %q(004°03'00"E)).wont_be :seconds?
+      AIXM.xy(lat: %q(44°33'00.01"N), long: %q(004°03'00"E)).must_be :seconds?
+      AIXM.xy(lat: %q(44°33'00"N), long: %q(004°03'00.01"E)).must_be :seconds?
+      AIXM.xy(lat: %q(47°29'10"N), long: %q(000°33'15"W)).must_be :seconds?
+      AIXM.xy(lat: %q(44°36'50"N), long: %q(004°23'50"E)).must_be :seconds?
+      AIXM.xy(lat: %q(44°48'00"N), long: %q(000°34'27"W)).must_be :seconds?
+    end
+  end
+
   describe :to_point do
     subject do
       AIXM.xy(lat: %q(44°00'07.63"N), long: %q(004°45'07.81"E))
