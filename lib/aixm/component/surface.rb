@@ -11,7 +11,7 @@ module AIXM
     #     preparation: PREPARATIONS or nil
     #     condition: CONDITIONS or nil
     #   )
-    #   surface.pcn = String
+    #   surface.pcn = String or nil
     #   surface.remarks = String or nil
     #
     # ===Constants:
