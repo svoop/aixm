@@ -104,6 +104,7 @@ AIXM.schema(:version)   # => 0
   * [Circle](http://www.rubydoc.info/gems/aixm/AIXM/Component/Circle.html)
 * [Runway](http://www.rubydoc.info/gems/aixm/AIXM/Component/Runway.html)
 * [Helipad](http://www.rubydoc.info/gems/aixm/AIXM/Component/Helipad.html)
+* [FATO](http://www.rubydoc.info/gems/aixm/AIXM/Component/FATO.html)
 * [Surface](http://www.rubydoc.info/gems/aixm/AIXM/Component/Surface.html)
 * [Layer](http://www.rubydoc.info/gems/aixm/AIXM/Component/Layer.html)
 * [Vertical limits](http://www.rubydoc.info/gems/aixm/AIXM/Component/VerticalLimits.html)
