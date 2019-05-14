@@ -27,6 +27,7 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'minitest-matchers'
   spec.add_development_dependency 'guard'
   spec.add_development_dependency 'guard-minitest'
+  spec.add_development_dependency 'yard'
 
   spec.add_runtime_dependency 'builder', '~> 3'
   spec.add_runtime_dependency 'nokogiri', '~> 1'

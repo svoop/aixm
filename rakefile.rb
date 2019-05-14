@@ -9,4 +9,14 @@ Rake::TestTask.new do |t|
   t.warning = true
 end
 
+desc "Run local YARD documentation server"
+task :yard do
+  `rm -rf ./.yardoc`
+  Thread.new do
+    sleep 2
+    `open http://localhost:8808`
+  end
+  `yard server -r`
+end  
+
 task default: :test
