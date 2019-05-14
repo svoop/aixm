@@ -35,6 +35,10 @@ describe AIXM::Component::FATO do
     end
   end
 
+  describe :marking= do
+    macro :marking
+  end
+
   describe :profile= do
     it "accepts nil value" do
       [nil].must_be_written_to subject, :profile
@@ -44,11 +48,6 @@ describe AIXM::Component::FATO do
       subject.tap { |s| s.profile = 'foobar' }.profile.must_equal 'foobar'
       subject.tap { |s| s.profile = 123 }.profile.must_equal '123'
     end
-  end
-
-
-  describe :marking= do
-    macro :marking
   end
 
   describe :status= do

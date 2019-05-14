@@ -9,15 +9,15 @@ module AIXM
     # ===Cheat Sheet in Pseudo Code:
     #   helipad = AIXM.helipad(
     #     name: String
+    #     xy = AIXM.xy
     #   )
-    #   helipad.fato = AIXM.fato or nil
-    #   helipad.xy = AIXM.xy
     #   helipad.z = AIXM.z or nil
     #   helipad.length = AIXM.d or nil   # must use same unit as width
     #   helipad.width = AIXM.d or nil    # must use same unit as length
     #   helipad.surface = AIXM.surface
-    #   helipad.helicopter_class = HELICOPTER_CLASSES or nil
     #   helipad.marking = String or nil
+    #   helipad.fato = AIXM.fato or nil
+    #   helipad.helicopter_class = HELICOPTER_CLASSES or nil
     #   helipad.status = STATUSES or nil
     #   helipad.remarks = String or nil
     #
@@ -45,9 +45,6 @@ module AIXM
       # @return [String] full name (e.g. "H1")
       attr_reader :name
 
-      # @return [AIXM::Component::FATO, nil] FATO the helipad is situated on
-      attr_reader :fato
-
       # @return [AIXM::XY] center point
       attr_reader :xy
 
@@ -63,11 +60,14 @@ module AIXM
       # @return [AIXM::Component::Surface] surface of the helipad
       attr_reader :surface
 
-      # @return [Integer, Symbol, nil] suitable helicopter class
-      attr_reader :helicopter_class
-
       # @return [String, nil] markings
       attr_reader :marking
+
+      # @return [AIXM::Component::FATO, nil] FATO the helipad is situated on
+      attr_reader :fato
+
+      # @return [Integer, Symbol, nil] suitable helicopter class
+      attr_reader :helicopter_class
 
       # @return [Symbol, nil] status of the helipad (see {STATUSES}) or +nil+ for normal operation
       attr_reader :status
@@ -75,8 +75,8 @@ module AIXM
       # @return [String, nil] free text remarks
       attr_reader :remarks
 
-      def initialize(name:)
-        self.name = name
+      def initialize(name:, xy:)
+        self.name, self.xy = name, xy
         @surface = AIXM.surface
       end
 
@@ -94,11 +94,6 @@ module AIXM
       def name=(value)
         fail(ArgumentError, "invalid name") unless value.is_a? String
         @name = value.uptrans
-      end
-
-      def fato=(value)
-        fail(ArgumentError, "invalid FATO") unless value.nil? || value.is_a?(AIXM::Component::FATO)
-        @fato = value
       end
 
       def xy=(value)
@@ -127,12 +122,17 @@ module AIXM
         end
       end
 
-      def helicopter_class=(value)
-        @helicopter_class = value.nil? ? nil : (HELICOPTER_CLASSES.lookup(value.to_s.to_sym, nil) || fail(ArgumentError, "invalid helicopter class"))
-      end
-
       def marking=(value)
         @marking = value&.to_s
+      end
+
+      def fato=(value)
+        fail(ArgumentError, "invalid FATO") unless value.nil? || value.is_a?(AIXM::Component::FATO)
+        @fato = value
+      end
+
+      def helicopter_class=(value)
+        @helicopter_class = value.nil? ? nil : (HELICOPTER_CLASSES.lookup(value.to_s.to_sym, nil) || fail(ArgumentError, "invalid helicopter class"))
       end
 
       def status=(value)

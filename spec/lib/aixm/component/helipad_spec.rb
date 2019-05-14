@@ -47,6 +47,20 @@ describe AIXM::Component::Helipad do
     end
   end
 
+  describe :marking= do
+    macro :marking
+  end
+
+  describe :fato= do
+    it "fails on invalid values" do
+      [:foobar, 0].wont_be_written_to subject, :fato
+    end
+
+    it "accepts valid values" do
+      [nil, AIXM::Factory.fato].must_be_written_to subject, :fato
+    end
+  end
+
   describe :helicopter_class= do
     it "fails on invalid values" do
       [:foobar, 123].wont_be_written_to subject, :helicopter_class
@@ -60,10 +74,6 @@ describe AIXM::Component::Helipad do
       subject.tap { |s| s.helicopter_class = 1 }.helicopter_class.must_equal :'1'
       subject.tap { |s| s.helicopter_class = :OTHER }.helicopter_class.must_equal :other
     end
-  end
-
-  describe :marking= do
-    macro :marking
   end
 
   describe :status= do

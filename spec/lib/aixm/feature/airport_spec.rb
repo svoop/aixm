@@ -163,7 +163,7 @@ describe AIXM::Feature::Airport do
 
     it "adds helipad to the array" do
       count = subject.helipads.count
-      subject.add_helipad(AIXM.helipad(name: 'H2'))
+      subject.add_helipad(AIXM.helipad(name: 'H2', xy: AIXM::Factory.xy))
       subject.helipads.count.must_equal count + 1
     end
   end

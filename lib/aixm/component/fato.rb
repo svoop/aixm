@@ -13,8 +13,8 @@ module AIXM
     #   fato.length = AIXM.d or nil   # must use same unit as width
     #   fato.width = AIXM.d or nil    # must use same unit as length
     #   fato.surface = AIXM.surface
-    #   fato.profile = String or nil
     #   fato.marking = String or nil
+    #   fato.profile = String or nil
     #   fato.status = STATUSES or nil
     #   fato.remarks = String or nil
     #
@@ -44,11 +44,11 @@ module AIXM
       # @return [AIXM::Component::Surface] surface of the FATO
       attr_reader :surface
 
-      # @return [String, nil] profile description
-      attr_reader :profile
-
       # @return [String, nil] markings
       attr_reader :marking
+
+      # @return [String, nil] profile description
+      attr_reader :profile
 
       # @return [Symbol, nil] status of the FATO (see {STATUSES}) or +nil+ for normal operation
       attr_reader :status
@@ -93,12 +93,12 @@ module AIXM
         end
       end
 
-      def profile=(value)
-        @profile = value&.to_s
-      end
-
       def marking=(value)
         @marking = value&.to_s
+      end
+
+      def profile=(value)
+        @profile = value&.to_s
       end
 
       def status=(value)

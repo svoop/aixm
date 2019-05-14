@@ -376,8 +376,10 @@ module AIXM
       end
 
       def helipad
-        AIXM.helipad(name: 'H1').tap do |helipad|
-          helipad.xy = AIXM.xy(lat: %q(43°59'56.94"N), long: %q(004°45'05.56"E))
+        AIXM.helipad(
+          name: 'H1',
+          xy: AIXM.xy(lat: %q(43°59'56.94"N), long: %q(004°45'05.56"E))
+        ).tap do |helipad|
           helipad.z = AIXM.z(141, :qnh)
           helipad.length = AIXM.d(20, :m)
           helipad.width = AIXM.d(20, :m)
@@ -386,8 +388,8 @@ module AIXM
           helipad.surface.condition = :fair
           helipad.surface.pcn = "30/F/A/W/U"
           helipad.surface.remarks = "Cracks near the center"
-          helipad.helicopter_class = 1
           helipad.marking = "Continuous white lines"
+          helipad.helicopter_class = 1
           helipad.status = :other
           helipad.remarks = "Authorizaton by AD operator required"
         end
