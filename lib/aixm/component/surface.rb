@@ -24,11 +24,15 @@ module AIXM
         ASPH: :asphalt,
         BITUM: :bitumen,        # dug up, bound and rolled ground
         CONC: :concrete,
+        'CONC+ASPH': :concrete_and_asphalt,
+        'CONC+GRS': :concrete_and_grass,
         GRADE: :graded_earth,   # graded or rolled earth possibly with some grass
         GRASS: :grass,          # lawn
         GRAVE: :gravel,         # small and midsize rounded stones
         MACADAM: :macadam,      # small rounded stones
+        METAL: :metal,
         SAND: :sand,
+        SNOW: :snow,
         WATER: :water,
         OTHER: :other           # specify in remarks
       }
