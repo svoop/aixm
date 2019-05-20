@@ -24,6 +24,14 @@ module AIXM
         AIXM.a('34L')
       end
 
+      def w
+        AIXM.w(1.5, :t)
+      end
+
+      def p
+        AIXM.p(0.5, :mpa)
+      end
+
       # Components
 
       def address

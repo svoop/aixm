@@ -19,6 +19,8 @@ require_relative 'aixm/z'
 require_relative 'aixm/d'
 require_relative 'aixm/f'
 require_relative 'aixm/a'
+require_relative 'aixm/w'
+require_relative 'aixm/p'
 
 require_relative 'aixm/component'
 require_relative 'aixm/component/frequency'

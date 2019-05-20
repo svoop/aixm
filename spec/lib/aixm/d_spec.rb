@@ -139,11 +139,11 @@ describe AIXM::D do
   end
 
   describe :zero? do
-    it "returns true for zero length" do
+    it "returns true for zero distance" do
       subject.tap { |s| s.dist = 0 }.must_be :zero?
     end
 
-    it "returns false for non-zero length" do
+    it "returns false for non-zero distance" do
       subject.tap { |s| s.dist = 1 }.wont_be :zero?
     end
   end

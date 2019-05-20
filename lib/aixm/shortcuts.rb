@@ -8,6 +8,8 @@ module AIXM
     d: D,
     f: F,
     a: A,
+    w: W,
+    p: P,
     address: Feature::Address,
     organisation: Feature::Organisation,
     unit: Feature::Unit,
