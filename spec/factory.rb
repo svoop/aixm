@@ -349,6 +349,9 @@ module AIXM
           runway.surface.preparation = :paved
           runway.surface.condition = :good
           runway.surface.pcn = "59/F/A/W/T"
+          runway.surface.siwl_weight = AIXM.w(1500, :kg)
+          runway.surface.siwl_tire_pressure = AIXM.p(0.5, :mpa)
+          runway.surface.auw_weight = AIXM.w(30, :t)
           runway.surface.remarks = "Paved shoulder on 2.5m on each side of the RWY."
           runway.status = :closed
           runway.remarks = "Markings eroded"
@@ -375,6 +378,9 @@ module AIXM
           fato.surface.preparation = :paved
           fato.surface.condition = :fair
           fato.surface.pcn = "30/F/A/W/U"
+          fato.surface.siwl_weight = AIXM.w(1500, :kg)
+          fato.surface.siwl_tire_pressure = AIXM.p(0.5, :mpa)
+          fato.surface.auw_weight = AIXM.w(8, :t)
           fato.surface.remarks = "Cracks near the center"
           fato.profile = "Northwest from RWY 12/30"
           fato.marking = "Dashed white lines"
@@ -395,6 +401,9 @@ module AIXM
           helipad.surface.preparation = :paved
           helipad.surface.condition = :fair
           helipad.surface.pcn = "30/F/A/W/U"
+          helipad.surface.siwl_weight = AIXM.w(1500, :kg)
+          helipad.surface.siwl_tire_pressure = AIXM.p(0.5, :mpa)
+          helipad.surface.auw_weight = AIXM.w(8, :t)
           helipad.surface.remarks = "Cracks near the center"
           helipad.marking = "Continuous white lines"
           helipad.helicopter_class = 1

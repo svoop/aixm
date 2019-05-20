@@ -1,11 +1,12 @@
 ## 0.3.6 (unreleased)
 
 #### Additions
-* `AIXM::W` (weight)
-* `AIXM::P` (pressure)
 * `AIXM::Component::FATO`
 * `AIXM::Component::Helipad#helicopter_class` and `AIXM::Component::Helipad#marking`
 * `AIXM::XY#seconds?` to detect possibly rounded or estimated coordinates
+* `AIXM::W` (weight)
+* `AIXM::P` (pressure)
+* Surface details `siwl_weight`, `siwl_tire_pressure` and `auw_weight`
 
 #### Changes
 * Generate `Airport#id` from region and `Airport#name`

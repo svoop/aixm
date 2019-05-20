@@ -66,6 +66,36 @@ describe AIXM::Component::Surface do
     end
   end
 
+  describe :siwl_weight= do
+    it "fails on invalid values" do
+      [:foobar, 123].wont_be_written_to subject, :siwl_weight
+    end
+
+    it "accepts valid values" do
+      [nil, AIXM::Factory.w].must_be_written_to subject, :siwl_weight
+    end
+  end
+
+  describe :siwl_tire_pressure= do
+    it "fails on invalid values" do
+      [:foobar, 123].wont_be_written_to subject, :siwl_tire_pressure
+    end
+
+    it "accepts valid values" do
+      [nil, AIXM::Factory.p].must_be_written_to subject, :siwl_tire_pressure
+    end
+  end
+
+  describe :auw_weight= do
+    it "fails on invalid values" do
+      [:foobar, 123].wont_be_written_to subject, :auw_weight
+    end
+
+    it "accepts valid values" do
+      [nil, AIXM::Factory.w].must_be_written_to subject, :auw_weight
+    end
+  end
+
   describe :remarks= do
     macro :remarks
   end
@@ -82,6 +112,12 @@ describe AIXM::Component::Surface do
         <codePcnMaxTirePressure>W</codePcnMaxTirePressure>
         <codePcnEvalMethod>T</codePcnEvalMethod>
         <txtPcnNote>Paved shoulder on 2.5m on each side of the RWY.</txtPcnNote>
+        <valSiwlWeight>1500</valSiwlWeight>
+        <uomSiwlWeight>KG</uomSiwlWeight>
+        <valSiwlTirePressure>0.5</valSiwlTirePressure>
+        <uomSiwlTirePressure>MPA</uomSiwlTirePressure>
+        <valAuwWeight>30</valAuwWeight>
+        <uomAuwWeight>T</uomAuwWeight>
       END
     end
   end

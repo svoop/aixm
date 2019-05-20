@@ -92,6 +92,12 @@ describe AIXM::Component::FATO do
           <codePcnMaxTirePressure>W</codePcnMaxTirePressure>
           <codePcnEvalMethod>U</codePcnEvalMethod>
           <txtPcnNote>Cracks near the center</txtPcnNote>
+          <valSiwlWeight>1500</valSiwlWeight>
+          <uomSiwlWeight>KG</uomSiwlWeight>
+          <valSiwlTirePressure>0.5</valSiwlTirePressure>
+          <uomSiwlTirePressure>MPA</uomSiwlTirePressure>
+          <valAuwWeight>8</valAuwWeight>
+          <uomAuwWeight>T</uomAuwWeight>
           <txtProfile>Northwest from RWY 12/30</txtProfile>
           <txtMarking>Dashed white lines</txtMarking>
           <codeSts>OTHER</codeSts>
@@ -103,7 +109,7 @@ describe AIXM::Component::FATO do
     it "builds correct minimal OFMX" do
       AIXM.ofmx!
       %i(length width profile marking status remarks).each { |a| subject.send(:"#{a}=", nil) }
-      %i(composition preparation condition pcn remarks).each { |a| subject.surface.send(:"#{a}=", nil) }
+      %i(composition preparation condition pcn siwl_weight siwl_tire_pressure auw_weight remarks).each { |a| subject.surface.send(:"#{a}=", nil) }
       subject.to_xml.must_equal <<~END
         <Fto>
           <FtoUid>

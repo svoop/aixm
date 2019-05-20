@@ -197,6 +197,12 @@ describe AIXM::Document do
             <codePcnMaxTirePressure>W</codePcnMaxTirePressure>
             <codePcnEvalMethod>T</codePcnEvalMethod>
             <txtPcnNote>Paved shoulder on 2.5m on each side of the RWY.</txtPcnNote>
+            <valSiwlWeight>1500</valSiwlWeight>
+            <uomSiwlWeight>KG</uomSiwlWeight>
+            <valSiwlTirePressure>0.5</valSiwlTirePressure>
+            <uomSiwlTirePressure>MPA</uomSiwlTirePressure>
+            <valAuwWeight>30</valAuwWeight>
+            <uomAuwWeight>T</uomAuwWeight>
             <codeSts>CLSD</codeSts>
             <txtRmk>Markings eroded</txtRmk>
           </Rwy>
@@ -293,6 +299,12 @@ describe AIXM::Document do
             <codePcnMaxTirePressure>W</codePcnMaxTirePressure>
             <codePcnEvalMethod>U</codePcnEvalMethod>
             <txtPcnNote>Cracks near the center</txtPcnNote>
+            <valSiwlWeight>1500</valSiwlWeight>
+            <uomSiwlWeight>KG</uomSiwlWeight>
+            <valSiwlTirePressure>0.5</valSiwlTirePressure>
+            <uomSiwlTirePressure>MPA</uomSiwlTirePressure>
+            <valAuwWeight>8</valAuwWeight>
+            <uomAuwWeight>T</uomAuwWeight>
             <txtProfile>Northwest from RWY 12/30</txtProfile>
             <txtMarking>Dashed white lines</txtMarking>
             <codeSts>OTHER</codeSts>
@@ -328,6 +340,12 @@ describe AIXM::Document do
             <codePcnMaxTirePressure>W</codePcnMaxTirePressure>
             <codePcnEvalMethod>U</codePcnEvalMethod>
             <txtPcnNote>Cracks near the center</txtPcnNote>
+            <valSiwlWeight>1500</valSiwlWeight>
+            <uomSiwlWeight>KG</uomSiwlWeight>
+            <valSiwlTirePressure>0.5</valSiwlTirePressure>
+            <uomSiwlTirePressure>MPA</uomSiwlTirePressure>
+            <valAuwWeight>8</valAuwWeight>
+            <uomAuwWeight>T</uomAuwWeight>
             <codeClassHel>1</codeClassHel>
             <txtMarking>Continuous white lines</txtMarking>
             <codeSts>OTHER</codeSts>
@@ -911,6 +929,12 @@ describe AIXM::Document do
             <codePcnMaxTirePressure>W</codePcnMaxTirePressure>
             <codePcnEvalMethod>T</codePcnEvalMethod>
             <txtPcnNote>Paved shoulder on 2.5m on each side of the RWY.</txtPcnNote>
+            <valSiwlWeight>1500</valSiwlWeight>
+            <uomSiwlWeight>KG</uomSiwlWeight>
+            <valSiwlTirePressure>0.5</valSiwlTirePressure>
+            <uomSiwlTirePressure>MPA</uomSiwlTirePressure>
+            <valAuwWeight>30</valAuwWeight>
+            <uomAuwWeight>T</uomAuwWeight>
             <codeSts>CLSD</codeSts>
             <txtRmk>Markings eroded</txtRmk>
           </Rwy>
@@ -1007,6 +1031,12 @@ describe AIXM::Document do
             <codePcnMaxTirePressure>W</codePcnMaxTirePressure>
             <codePcnEvalMethod>U</codePcnEvalMethod>
             <txtPcnNote>Cracks near the center</txtPcnNote>
+            <valSiwlWeight>1500</valSiwlWeight>
+            <uomSiwlWeight>KG</uomSiwlWeight>
+            <valSiwlTirePressure>0.5</valSiwlTirePressure>
+            <uomSiwlTirePressure>MPA</uomSiwlTirePressure>
+            <valAuwWeight>8</valAuwWeight>
+            <uomAuwWeight>T</uomAuwWeight>
             <txtProfile>Northwest from RWY 12/30</txtProfile>
             <txtMarking>Dashed white lines</txtMarking>
             <codeSts>OTHER</codeSts>
@@ -1042,6 +1072,12 @@ describe AIXM::Document do
             <codePcnMaxTirePressure>W</codePcnMaxTirePressure>
             <codePcnEvalMethod>U</codePcnEvalMethod>
             <txtPcnNote>Cracks near the center</txtPcnNote>
+            <valSiwlWeight>1500</valSiwlWeight>
+            <uomSiwlWeight>KG</uomSiwlWeight>
+            <valSiwlTirePressure>0.5</valSiwlTirePressure>
+            <uomSiwlTirePressure>MPA</uomSiwlTirePressure>
+            <valAuwWeight>8</valAuwWeight>
+            <uomAuwWeight>T</uomAuwWeight>
             <codeClassHel>1</codeClassHel>
             <txtMarking>Continuous white lines</txtMarking>
             <codeSts>OTHER</codeSts>

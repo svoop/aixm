@@ -129,6 +129,12 @@ describe AIXM::Component::Helipad do
           <codePcnMaxTirePressure>W</codePcnMaxTirePressure>
           <codePcnEvalMethod>U</codePcnEvalMethod>
           <txtPcnNote>Cracks near the center</txtPcnNote>
+          <valSiwlWeight>1500</valSiwlWeight>
+          <uomSiwlWeight>KG</uomSiwlWeight>
+          <valSiwlTirePressure>0.5</valSiwlTirePressure>
+          <uomSiwlTirePressure>MPA</uomSiwlTirePressure>
+          <valAuwWeight>8</valAuwWeight>
+          <uomAuwWeight>T</uomAuwWeight>
           <codeClassHel>1</codeClassHel>
           <txtMarking>Continuous white lines</txtMarking>
           <codeSts>OTHER</codeSts>
@@ -140,7 +146,7 @@ describe AIXM::Component::Helipad do
     it "builds correct minimal OFMX" do
       AIXM.ofmx!
       %i(z length width helicopter_class marking status remarks).each { |a| subject.send(:"#{a}=", nil) }
-      %i(composition preparation condition pcn remarks).each { |a| subject.surface.send(:"#{a}=", nil) }
+      %i(composition preparation condition pcn siwl_weight siwl_tire_pressure auw_weight remarks).each { |a| subject.surface.send(:"#{a}=", nil) }
       subject.to_xml.must_equal <<~END
         <Tla>
           <TlaUid>

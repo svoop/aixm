@@ -12,6 +12,9 @@ module AIXM
     #     condition: CONDITIONS or nil
     #   )
     #   surface.pcn = String or nil
+    #   surface.siwl_weight = AIXM.w
+    #   surface.siwl_tire_pressure = AIXM.p
+    #   surface.auw_weight = AIXM.w
     #   surface.remarks = String or nil
     #
     # ===Constants:
@@ -65,6 +68,15 @@ module AIXM
       # @return [Symbol, nil] condition of the surface (see {CONDITIONS})
       attr_reader :condition
 
+      # @return [AIXM::W, nil] single isolated wheel load weight
+      attr_reader :siwl_weight
+
+      # @return [AIXM::P, nil] single isolated wheel load tire pressure
+      attr_reader :siwl_tire_pressure
+
+      # @return [AIXM::W, nil] all-up wheel weight
+      attr_reader :auw_weight
+
       # @return [String, nil] free text remarks
       attr_reader :remarks
 
@@ -100,6 +112,21 @@ module AIXM
         @pcn = match.named_captures.reject{ |k| k == 'pcn' }
       end
 
+      def siwl_weight=(value)
+        fail(ArgumentError, "invalid siwl_weight") unless value.nil? || value.is_a?(AIXM::W)
+        @siwl_weight = value
+      end
+
+      def siwl_tire_pressure=(value)
+        fail(ArgumentError, "invalid siwl_tire_pressure") unless value.nil? || value.is_a?(AIXM::P)
+        @siwl_tire_pressure = value
+      end
+
+      def auw_weight=(value)
+        fail(ArgumentError, "invalid auw_weight") unless value.nil? || value.is_a?(AIXM::W)
+        @auw_weight = value
+      end
+
       def remarks=(value)
         @remarks = value&.to_s
       end
@@ -118,6 +145,18 @@ module AIXM
           builder.codePcnEvalMethod(@pcn['evaluation_method'])
         end
         builder.txtPcnNote(@remarks) if remarks
+        if siwl_weight
+          builder.valSiwlWeight(siwl_weight.wgt.trim)
+          builder.uomSiwlWeight(siwl_weight.unit.to_s.upcase)
+        end
+        if siwl_tire_pressure
+          builder.valSiwlTirePressure(siwl_tire_pressure.pres.trim)
+          builder.uomSiwlTirePressure(siwl_tire_pressure.unit.to_s.upcase)
+        end
+        if auw_weight
+          builder.valAuwWeight(auw_weight.wgt.trim)
+          builder.uomAuwWeight(auw_weight.unit.to_s.upcase)
+        end
         builder.target!
       end
     end
