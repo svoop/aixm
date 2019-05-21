@@ -6,7 +6,7 @@ module AIXM
     # Surface of a runway, helipad etc
     #
     # ===Cheat Sheet in Pseudo Code:
-    #   surface = AIXM.surfaceservice(
+    #   surface = AIXM.surface(
     #     composition: COMPOSITIONS or nil
     #     preparation: PREPARATIONS or nil
     #     condition: CONDITIONS or nil

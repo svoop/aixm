@@ -310,6 +310,20 @@ describe AIXM::Document do
             <codeSts>OTHER</codeSts>
             <txtRmk>Authorizaton by AD operator required</txtRmk>
           </Fto>
+          <Fdn>
+            <FdnUid>
+              <FtoUid>
+                <AhpUid>
+                  <codeId>LFNT</codeId>
+                </AhpUid>
+                <txtDesig>H1</txtDesig>
+              </FtoUid>
+              <txtDesig>35</txtDesig>
+            </FdnUid>
+            <valTrueBrg>355</valTrueBrg>
+            <valMagBrg>356</valMagBrg>
+            <txtRmk>Avoid flight over residental area</txtRmk>
+          </Fdn>
           <Tla>
             <TlaUid>
               <AhpUid>
@@ -1042,6 +1056,20 @@ describe AIXM::Document do
             <codeSts>OTHER</codeSts>
             <txtRmk>Authorizaton by AD operator required</txtRmk>
           </Fto>
+          <Fdn>
+            <FdnUid>
+              <FtoUid>
+                <AhpUid>
+                  <codeId>LFNT</codeId>
+                </AhpUid>
+                <txtDesig>H1</txtDesig>
+              </FtoUid>
+              <txtDesig>35</txtDesig>
+            </FdnUid>
+            <valTrueBrg>355</valTrueBrg>
+            <valMagBrg>356</valMagBrg>
+            <txtRmk>Avoid flight over residental area</txtRmk>
+          </Fdn>
           <Tla>
             <TlaUid>
               <AhpUid>

@@ -270,7 +270,6 @@ describe AIXM::Component::Runway do
       END
     end
   end
-
 end
 
 describe AIXM::Component::Runway::Direction do
@@ -414,5 +413,4 @@ describe AIXM::Component::Runway::Direction do
       END
     end
   end
-
 end

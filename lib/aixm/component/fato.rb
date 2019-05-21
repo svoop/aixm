@@ -17,6 +17,12 @@ module AIXM
     #   fato.profile = String or nil
     #   fato.status = STATUSES or nil
     #   fato.remarks = String or nil
+    #   fato.add_direction(
+    #     name: String
+    #   ) do |direction|
+    #     direction.geographic_orientation = AIXM.a[precision=3] or nil
+    #     direction.remarks = String or nil
+    #   end
     #
     # @see https://github.com/openflightmaps/ofmx/wiki/Airport#fto-fato
     class FATO
@@ -56,9 +62,13 @@ module AIXM
       # @return [String, nil] free text remarks
       attr_reader :remarks
 
+      # @return [Hash{String => AIXM::Component::FATO::Direction}] maps added direction names to full FATO directions
+      attr_reader :directions
+
       def initialize(name:)
         self.name = name
         @surface = AIXM.surface
+        @directions = {}
       end
 
       # @return [String]
@@ -109,6 +119,12 @@ module AIXM
         @remarks = value&.to_s
       end
 
+      def add_direction(name:)
+        direction = Direction.new(fato: self, name: name)
+        yield direction
+        @directions[name] = direction
+      end
+
       # @return [String] UID markup
       def to_uid
         builder = Builder::XmlMarkup.new(indent: 2)
@@ -134,6 +150,80 @@ module AIXM
           fto.txtMarking(marking) if marking
           fto.codeSts(STATUSES.key(status).to_s) if status
           fto.txtRmk(remarks) if remarks
+        end
+        directions.values.each do |direction|
+          builder << direction.to_xml
+        end
+        builder.target!
+      end
+
+      # FATO directions further describe each direction to and from the FATO.
+      #
+      # @see https://github.com/openflightmaps/ofmx/wiki/Airport#fdn-fato-direction
+      class Direction
+
+        # @return [AIXM::Component::FATO] FATO the FATO direction is further describing
+        attr_reader :fato
+
+        # @return [AIXM::A] name of the FATO direction (e.g. "12" or "16L")
+        attr_reader :name
+
+        # @return [AIXM::A, nil] geographic orientation (true bearing) in degrees
+        attr_reader :geographic_orientation
+
+        # @return [String, nil] free text remarks
+        attr_reader :remarks
+
+        def initialize(fato:, name:)
+          self.fato, self.name = fato, name
+        end
+
+        # @return [String]
+        def inspect
+          %Q(#<#{self.class} airport=#{fato&.airport&.id.inspect} name=#{name.inspect}>)
+        end
+
+        def fato=(value)
+          fail(ArgumentError, "invalid FATO") unless value.is_a? AIXM::Component::FATO
+          @fato = value
+        end
+        private :fato
+
+        def name=(value)
+          fail(ArgumentError, "invalid name") unless value.is_a? String
+          @name = AIXM.a(value)
+        end
+
+        def geographic_orientation=(value)
+          return @geographic_orientation = nil if value.nil?
+          fail(ArgumentError, "invalid geographic orientation") unless value.is_a? AIXM::A
+          @geographic_orientation = value
+        end
+
+        def remarks=(value)
+          @remarks = value&.to_s
+        end
+
+        # @return [AIXM::A] magnetic orientation (magnetic bearing) in degrees
+        def magnetic_orientation
+          if geographic_orientation && fato.airport.declination
+            geographic_orientation + fato.airport.declination
+          end
+        end
+
+        # @return [String] AIXM or OFMX markup
+        def to_xml
+          builder = Builder::XmlMarkup.new(indent: 2)
+          builder.Fdn do |fdn|
+            fdn.FdnUid do |fdn_uid|
+              fdn_uid << fato.to_uid.indent(4)
+              fdn_uid.txtDesig(name)
+            end
+            fdn.valTrueBrg(geographic_orientation) if geographic_orientation
+            fdn.valMagBrg(magnetic_orientation) if magnetic_orientation
+            fdn.txtRmk(remarks) if remarks
+          end
+          builder.target!   # TODO: necessary?
         end
       end
     end

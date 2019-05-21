@@ -386,6 +386,10 @@ module AIXM
           fato.marking = "Dashed white lines"
           fato.status = :other
           fato.remarks = "Authorizaton by AD operator required"
+          fato.add_direction(name: '35') do |direction|
+            direction.geographic_orientation = AIXM.a(355)
+            direction.remarks = "Avoid flight over residental area"
+          end
         end
       end
 

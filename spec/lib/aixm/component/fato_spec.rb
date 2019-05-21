@@ -103,6 +103,20 @@ describe AIXM::Component::FATO do
           <codeSts>OTHER</codeSts>
           <txtRmk>Authorizaton by AD operator required</txtRmk>
         </Fto>
+        <Fdn>
+          <FdnUid>
+            <FtoUid>
+              <AhpUid>
+                <codeId>LFNT</codeId>
+              </AhpUid>
+              <txtDesig>H1</txtDesig>
+            </FtoUid>
+            <txtDesig>35</txtDesig>
+          </FdnUid>
+          <valTrueBrg>355</valTrueBrg>
+          <valMagBrg>356</valMagBrg>
+          <txtRmk>Avoid flight over residental area</txtRmk>
+        </Fdn>
       END
     end
 
@@ -119,6 +133,89 @@ describe AIXM::Component::FATO do
             <txtDesig>H1</txtDesig>
           </FtoUid>
         </Fto>
+        <Fdn>
+          <FdnUid>
+            <FtoUid>
+              <AhpUid>
+                <codeId>LFNT</codeId>
+              </AhpUid>
+              <txtDesig>H1</txtDesig>
+            </FtoUid>
+            <txtDesig>35</txtDesig>
+          </FdnUid>
+          <valTrueBrg>355</valTrueBrg>
+          <valMagBrg>356</valMagBrg>
+          <txtRmk>Avoid flight over residental area</txtRmk>
+        </Fdn>
+      END
+    end
+  end
+end
+
+describe AIXM::Component::FATO::Direction do
+  subject do
+    AIXM::Factory.airport.fatos.first.directions['35']
+  end
+
+  describe :name= do
+    it "fails on invalid values" do
+      [nil, :foobar, 'OGGY'].wont_be_written_to subject, :name
+    end
+  end
+
+  describe :geographic_orientation= do
+    it "fails on invalid values" do
+      [:foobar, -1, 10].wont_be_written_to subject, :geographic_orientation
+    end
+  end
+
+  describe :remarks= do
+    macro :remarks
+  end
+
+  describe :magnetic_orientation do
+    it "is calculated correctly" do
+      subject.geographic_orientation = AIXM.a(16)
+      subject.magnetic_orientation.must_equal AIXM.a(17)
+    end
+  end
+
+  describe :xml= do
+    it "builds correct complete OFMX" do
+      AIXM.ofmx!
+      subject.to_xml.must_equal <<~END
+        <Fdn>
+          <FdnUid>
+            <FtoUid>
+              <AhpUid>
+                <codeId>LFNT</codeId>
+              </AhpUid>
+              <txtDesig>H1</txtDesig>
+            </FtoUid>
+            <txtDesig>35</txtDesig>
+          </FdnUid>
+          <valTrueBrg>355</valTrueBrg>
+          <valMagBrg>356</valMagBrg>
+          <txtRmk>Avoid flight over residental area</txtRmk>
+        </Fdn>
+      END
+    end
+
+    it "builds correct minimal OFMX" do
+      AIXM.ofmx!
+      %i(geographic_orientation remarks).each { |a| subject.send(:"#{a}=", nil) }
+      subject.to_xml.must_equal <<~END
+      <Fdn>
+        <FdnUid>
+          <FtoUid>
+            <AhpUid>
+              <codeId>LFNT</codeId>
+            </AhpUid>
+            <txtDesig>H1</txtDesig>
+          </FtoUid>
+          <txtDesig>35</txtDesig>
+        </FdnUid>
+      </Fdn>
       END
     end
   end
