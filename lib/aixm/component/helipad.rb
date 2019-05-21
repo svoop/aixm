@@ -75,9 +75,13 @@ module AIXM
       # @return [String, nil] free text remarks
       attr_reader :remarks
 
+      # @return [Array<AIXM::Component::Lighting>] installed lighting systems
+      attr_reader :lightings
+
       def initialize(name:, xy:)
         self.name, self.xy = name, xy
         @surface = AIXM.surface
+        @lightings = []
       end
 
       # @return [String]
@@ -143,6 +147,17 @@ module AIXM
         @remarks = value&.to_s
       end
 
+      # Add a lighting system to the runway direction.
+      #
+      # @param lighting [AIXM::Component::Lighting] lighting instance
+      # @return [self]
+      def add_lighting(lighting)
+        fail(ArgumentError, "invalid lighting") unless lighting.is_a? AIXM::Component::Lighting
+        lighting.send(:lightable=, self)
+        @lightings << lighting
+        self
+      end
+
       # @return [String] UID markup
       def to_uid
         builder = Builder::XmlMarkup.new(indent: 2)
@@ -177,6 +192,10 @@ module AIXM
           tla.codeSts(STATUSES.key(status).to_s) if status
           tla.txtRmk(remarks) if remarks
         end
+        lightings.each do |lighting|
+          builder << lighting.to_xml(as: :Tls)
+        end
+        builder.target!
       end
     end
   end

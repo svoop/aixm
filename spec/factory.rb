@@ -44,11 +44,22 @@ module AIXM
         end
       end
 
+      def lighting
+        AIXM.lighting(
+          position: :aiming_point
+        ).tap do |lighting|
+          lighting.description = "omnidirectional"
+          lighting.intensity = :medium
+          lighting.color = :green
+          lighting.remarks = "lighting remarks"
+        end
+      end
+
       def timetable
         AIXM.timetable(
           code: :sunrise_to_sunset
         ).tap do |timetable|
-          timetable.remarks =  "timetable remarks"
+          timetable.remarks = "timetable remarks"
         end
       end
 
@@ -361,12 +372,14 @@ module AIXM
           runway.forth.geographic_orientation = AIXM.a(165)
           runway.forth.vfr_pattern = :left_or_right
           runway.forth.remarks = "forth remarks"
+          runway.forth.add_lighting(lighting)
           runway.back.xy = AIXM.xy(lat: %q(43°59'25.31"N), long: %q(004°45'23.24"E))
           runway.back.z = AIXM.z(147, :qnh)
           runway.back.displaced_threshold = AIXM.xy(lat: %q(43°59'31.84"N), long: %q(004°45'20.85"E))
           runway.back.geographic_orientation = AIXM.a(345)
           runway.back.vfr_pattern = :left
           runway.back.remarks = "back remarks"
+          runway.back.add_lighting(lighting)
         end
       end
 
@@ -389,6 +402,7 @@ module AIXM
           fato.add_direction(name: '35') do |direction|
             direction.geographic_orientation = AIXM.a(355)
             direction.remarks = "Avoid flight over residental area"
+            direction.add_lighting(lighting)
           end
         end
       end
@@ -413,6 +427,7 @@ module AIXM
           helipad.helicopter_class = 1
           helipad.status = :other
           helipad.remarks = "Authorizaton by AD operator required"
+          helipad.add_lighting(lighting)
         end
       end
 

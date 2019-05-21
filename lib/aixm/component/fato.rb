@@ -174,8 +174,12 @@ module AIXM
         # @return [String, nil] free text remarks
         attr_reader :remarks
 
+        # @return [Array<AIXM::Component::Lighting>] installed lighting systems
+        attr_reader :lightings
+
         def initialize(fato:, name:)
           self.fato, self.name = fato, name
+          @lightings = []
         end
 
         # @return [String]
@@ -204,6 +208,17 @@ module AIXM
           @remarks = value&.to_s
         end
 
+        # Add a lighting system to the FATO direction.
+        #
+        # @param lighting [AIXM::Component::Lighting] lighting instance
+        # @return [self]
+        def add_lighting(lighting)
+          fail(ArgumentError, "invalid lighting") unless lighting.is_a? AIXM::Component::Lighting
+          lighting.send(:lightable=, self)
+          @lightings << lighting
+          self
+        end
+
         # @return [AIXM::A] magnetic orientation (magnetic bearing) in degrees
         def magnetic_orientation
           if geographic_orientation && fato.airport.declination
@@ -211,19 +226,28 @@ module AIXM
           end
         end
 
+        # @return [String] UID markup
+        def to_uid
+          builder = Builder::XmlMarkup.new(indent: 2)
+          builder.FdnUid do |fdn_uid|
+            fdn_uid << fato.to_uid.indent(2)
+            fdn_uid.txtDesig(name)
+          end
+        end
+
         # @return [String] AIXM or OFMX markup
         def to_xml
           builder = Builder::XmlMarkup.new(indent: 2)
           builder.Fdn do |fdn|
-            fdn.FdnUid do |fdn_uid|
-              fdn_uid << fato.to_uid.indent(4)
-              fdn_uid.txtDesig(name)
-            end
+            fdn << to_uid.indent(2)
             fdn.valTrueBrg(geographic_orientation) if geographic_orientation
             fdn.valMagBrg(magnetic_orientation) if magnetic_orientation
             fdn.txtRmk(remarks) if remarks
           end
-          builder.target!   # TODO: necessary?
+          lightings.each do |lighting|
+            builder << lighting.to_xml(as: :Fls)
+          end
+          builder.target!
         end
       end
     end

@@ -20,6 +20,7 @@ module AIXM
     fato: Component::FATO,
     helipad: Component::Helipad,
     surface: Component::Surface,
+    lighting: Component::Lighting,
     airspace: Feature::Airspace,
     layer: Component::Layer,
     geometry: Component::Geometry,

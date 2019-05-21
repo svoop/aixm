@@ -6,6 +6,7 @@
 * `AIXM::XY#seconds?` to detect possibly rounded or estimated coordinates
 * `AIXM::W` (weight)
 * `AIXM::P` (pressure)
+* `AIXM::Component::Lighting` for use with runways, helipads and FATOs
 * Surface details `siwl_weight`, `siwl_tire_pressure` and `auw_weight`
 
 #### Changes

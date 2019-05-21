@@ -157,8 +157,9 @@ module AIXM
           rwy.txtRmk(remarks) if remarks
         end
         %i(@forth @back).each do |direction|
-          direction = instance_variable_get(direction)
-          builder << direction.to_xml if direction
+          if direction = instance_variable_get(direction)
+            builder << direction.to_xml
+          end
         end
         builder.target!
       end
@@ -200,8 +201,12 @@ module AIXM
         # @return [String, nil] free text remarks
         attr_reader :remarks
 
+        # @return [Array<AIXM::Component::Lighting>] installed lighting systems
+        attr_reader :lightings
+
         def initialize(runway:, name:)
           self.runway, self.name = runway, name
+          @lightings = []
         end
 
         # @return [String]
@@ -258,6 +263,17 @@ module AIXM
           @remarks = value&.to_s
         end
 
+        # Add a lighting system to the runway direction.
+        #
+        # @param lighting [AIXM::Component::Lighting] lighting instance
+        # @return [self]
+        def add_lighting(lighting)
+          fail(ArgumentError, "invalid lighting") unless lighting.is_a? AIXM::Component::Lighting
+          lighting.send(:lightable=, self)
+          @lightings << lighting
+          self
+        end
+
         # @return [AIXM::A] magnetic orientation (magnetic bearing) in degrees
         def magnetic_orientation
           if geographic_orientation && runway.airport.declination
@@ -265,14 +281,20 @@ module AIXM
           end
         end
 
+        # @return [String] UID markup
+        def to_uid
+          builder = Builder::XmlMarkup.new(indent: 2)
+          builder.RdnUid do |rdn_uid|
+            rdn_uid << runway.to_uid.indent(2)
+            rdn_uid.txtDesig(name)
+          end
+        end
+
         # @return [String] AIXM or OFMX markup
         def to_xml
           builder = Builder::XmlMarkup.new(indent: 2)
           builder.Rdn do |rdn|
-            rdn.RdnUid do |rdn_uid|
-              rdn_uid << runway.to_uid.indent(4)
-              rdn_uid.txtDesig(name)
-            end
+            rdn << to_uid.indent(2)
             rdn.geoLat(xy.lat(AIXM.schema))
             rdn.geoLong(xy.long(AIXM.schema))
             rdn.valTrueBrg(geographic_orientation) if geographic_orientation
@@ -298,6 +320,9 @@ module AIXM
               rdd.uomDist(displaced_threshold.unit.to_s.upcase)
               rdd.txtRmk(remarks) if remarks
             end
+          end
+          lightings.each do |lighting|
+            builder << lighting.to_xml(as: :Rls)
           end
           builder.target!
         end

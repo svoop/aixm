@@ -140,6 +140,24 @@ describe AIXM::Component::Runway do
           <uomDist>M</uomDist>
           <txtRmk>forth remarks</txtRmk>
         </Rdd>
+        <Rls>
+          <RlsUid>
+            <RdnUid>
+              <RwyUid>
+                <AhpUid>
+                  <codeId>LFNT</codeId>
+                </AhpUid>
+                <txtDesig>16L/34R</txtDesig>
+              </RwyUid>
+              <txtDesig>16L</txtDesig>
+            </RdnUid>
+            <codePsn>AIM</codePsn>
+          </RlsUid>
+          <txtDescr>omnidirectional</txtDescr>
+          <codeIntst>LIM</codeIntst>
+          <codeColour>GRN</codeColour>
+          <txtRmk>lighting remarks</txtRmk>
+        </Rls>
         <Rdn>
           <RdnUid>
             <RwyUid>
@@ -177,6 +195,24 @@ describe AIXM::Component::Runway do
           <uomDist>M</uomDist>
           <txtRmk>back remarks</txtRmk>
         </Rdd>
+        <Rls>
+          <RlsUid>
+            <RdnUid>
+              <RwyUid>
+                <AhpUid>
+                  <codeId>LFNT</codeId>
+                </AhpUid>
+                <txtDesig>16L/34R</txtDesig>
+              </RwyUid>
+              <txtDesig>34R</txtDesig>
+            </RdnUid>
+            <codePsn>AIM</codePsn>
+          </RlsUid>
+          <txtDescr>omnidirectional</txtDescr>
+          <codeIntst>LIM</codeIntst>
+          <codeColour>GRN</codeColour>
+          <txtRmk>lighting remarks</txtRmk>
+        </Rls>
       END
     end
 
@@ -184,6 +220,7 @@ describe AIXM::Component::Runway do
       AIXM.ofmx!
       %i(length width status remarks).each { |a| subject.send(:"#{a}=", nil) }
       %i(composition preparation condition pcn siwl_weight siwl_tire_pressure auw_weight remarks).each { |a| subject.surface.send(:"#{a}=", nil) }
+      %i(forth back).each { |d| subject.send(d).instance_eval { @lightings.clear } }
       subject.to_xml.must_equal <<~END
         <Rwy>
           <RwyUid>
@@ -390,12 +427,31 @@ describe AIXM::Component::Runway::Direction do
           <uomDist>M</uomDist>
           <txtRmk>forth remarks</txtRmk>
         </Rdd>
+        <Rls>
+          <RlsUid>
+            <RdnUid>
+              <RwyUid>
+                <AhpUid>
+                  <codeId>LFNT</codeId>
+                </AhpUid>
+                <txtDesig>16L/34R</txtDesig>
+              </RwyUid>
+              <txtDesig>16L</txtDesig>
+            </RdnUid>
+            <codePsn>AIM</codePsn>
+          </RlsUid>
+          <txtDescr>omnidirectional</txtDescr>
+          <codeIntst>LIM</codeIntst>
+          <codeColour>GRN</codeColour>
+          <txtRmk>lighting remarks</txtRmk>
+        </Rls>
       END
     end
 
     it "builds correct minimal OFMX" do
       AIXM.ofmx!
       %i(geographic_orientation z displaced_threshold vfr_pattern remarks).each { |a| subject.send(:"#{a}=", nil) }
+      subject.instance_eval { @lightings.clear }
       subject.to_xml.must_equal <<~END
         <Rdn>
           <RdnUid>

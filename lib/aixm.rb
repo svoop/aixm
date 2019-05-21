@@ -36,6 +36,7 @@ require_relative 'aixm/component/runway'
 require_relative 'aixm/component/fato'
 require_relative 'aixm/component/helipad'
 require_relative 'aixm/component/surface'
+require_relative 'aixm/component/lighting'
 
 require_relative 'aixm/feature'
 require_relative 'aixm/feature/address'

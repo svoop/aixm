@@ -140,6 +140,21 @@ describe AIXM::Component::Helipad do
           <codeSts>OTHER</codeSts>
           <txtRmk>Authorizaton by AD operator required</txtRmk>
         </Tla>
+        <Tls>
+          <TlsUid>
+            <TlaUid>
+              <AhpUid>
+                <codeId>LFNT</codeId>
+              </AhpUid>
+              <txtDesig>H1</txtDesig>
+            </TlaUid>
+            <codePsn>AIM</codePsn>
+          </TlsUid>
+          <txtDescr>omnidirectional</txtDescr>
+          <codeIntst>LIM</codeIntst>
+          <codeColour>GRN</codeColour>
+          <txtRmk>lighting remarks</txtRmk>
+        </Tls>
       END
     end
 
@@ -147,6 +162,7 @@ describe AIXM::Component::Helipad do
       AIXM.ofmx!
       %i(z length width helicopter_class marking status remarks).each { |a| subject.send(:"#{a}=", nil) }
       %i(composition preparation condition pcn siwl_weight siwl_tire_pressure auw_weight remarks).each { |a| subject.surface.send(:"#{a}=", nil) }
+      subject.instance_eval { @lightings.clear }
       subject.to_xml.must_equal <<~END
         <Tla>
           <TlaUid>

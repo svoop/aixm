@@ -288,6 +288,24 @@ describe AIXM::Feature::Airport do
           <uomDist>M</uomDist>
           <txtRmk>forth remarks</txtRmk>
         </Rdd>
+        <Rls>
+          <RlsUid>
+            <RdnUid>
+              <RwyUid>
+                <AhpUid>
+                  <codeId>LFNT</codeId>
+                </AhpUid>
+                <txtDesig>16L/34R</txtDesig>
+              </RwyUid>
+              <txtDesig>16L</txtDesig>
+            </RdnUid>
+            <codePsn>AIM</codePsn>
+          </RlsUid>
+          <txtDescr>omnidirectional</txtDescr>
+          <codeIntst>LIM</codeIntst>
+          <codeColour>GRN</codeColour>
+          <txtRmk>lighting remarks</txtRmk>
+        </Rls>
         <Rdn>
           <RdnUid>
             <RwyUid>
@@ -325,6 +343,24 @@ describe AIXM::Feature::Airport do
           <uomDist>M</uomDist>
           <txtRmk>back remarks</txtRmk>
         </Rdd>
+        <Rls>
+          <RlsUid>
+            <RdnUid>
+              <RwyUid>
+                <AhpUid>
+                  <codeId>LFNT</codeId>
+                </AhpUid>
+                <txtDesig>16L/34R</txtDesig>
+              </RwyUid>
+              <txtDesig>34R</txtDesig>
+            </RdnUid>
+            <codePsn>AIM</codePsn>
+          </RlsUid>
+          <txtDescr>omnidirectional</txtDescr>
+          <codeIntst>LIM</codeIntst>
+          <codeColour>GRN</codeColour>
+          <txtRmk>lighting remarks</txtRmk>
+        </Rls>
         <Fto>
           <FtoUid>
             <AhpUid>
@@ -369,6 +405,24 @@ describe AIXM::Feature::Airport do
           <valMagBrg>356</valMagBrg>
           <txtRmk>Avoid flight over residental area</txtRmk>
         </Fdn>
+        <Fls>
+          <FlsUid>
+            <FdnUid>
+              <FtoUid>
+                <AhpUid>
+                  <codeId>LFNT</codeId>
+                </AhpUid>
+                <txtDesig>H1</txtDesig>
+              </FtoUid>
+              <txtDesig>35</txtDesig>
+            </FdnUid>
+            <codePsn>AIM</codePsn>
+          </FlsUid>
+          <txtDescr>omnidirectional</txtDescr>
+          <codeIntst>LIM</codeIntst>
+          <codeColour>GRN</codeColour>
+          <txtRmk>lighting remarks</txtRmk>
+        </Fls>
         <Tla>
           <TlaUid>
             <AhpUid>
@@ -410,6 +464,21 @@ describe AIXM::Feature::Airport do
           <codeSts>OTHER</codeSts>
           <txtRmk>Authorizaton by AD operator required</txtRmk>
         </Tla>
+        <Tls>
+          <TlsUid>
+            <TlaUid>
+              <AhpUid>
+                <codeId>LFNT</codeId>
+              </AhpUid>
+              <txtDesig>H1</txtDesig>
+            </TlaUid>
+            <codePsn>AIM</codePsn>
+          </TlsUid>
+          <txtDescr>omnidirectional</txtDescr>
+          <codeIntst>LIM</codeIntst>
+          <codeColour>GRN</codeColour>
+          <txtRmk>lighting remarks</txtRmk>
+        </Tls>
         <Ahu>
           <AhuUid>
             <AhpUid>

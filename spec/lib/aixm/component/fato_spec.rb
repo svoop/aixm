@@ -117,6 +117,24 @@ describe AIXM::Component::FATO do
           <valMagBrg>356</valMagBrg>
           <txtRmk>Avoid flight over residental area</txtRmk>
         </Fdn>
+        <Fls>
+          <FlsUid>
+            <FdnUid>
+              <FtoUid>
+                <AhpUid>
+                  <codeId>LFNT</codeId>
+                </AhpUid>
+                <txtDesig>H1</txtDesig>
+              </FtoUid>
+              <txtDesig>35</txtDesig>
+            </FdnUid>
+            <codePsn>AIM</codePsn>
+          </FlsUid>
+          <txtDescr>omnidirectional</txtDescr>
+          <codeIntst>LIM</codeIntst>
+          <codeColour>GRN</codeColour>
+          <txtRmk>lighting remarks</txtRmk>
+        </Fls>
       END
     end
 
@@ -124,6 +142,7 @@ describe AIXM::Component::FATO do
       AIXM.ofmx!
       %i(length width profile marking status remarks).each { |a| subject.send(:"#{a}=", nil) }
       %i(composition preparation condition pcn siwl_weight siwl_tire_pressure auw_weight remarks).each { |a| subject.surface.send(:"#{a}=", nil) }
+      subject.directions['35'].instance_eval { @lightings.clear }
       subject.to_xml.must_equal <<~END
         <Fto>
           <FtoUid>
@@ -198,12 +217,31 @@ describe AIXM::Component::FATO::Direction do
           <valMagBrg>356</valMagBrg>
           <txtRmk>Avoid flight over residental area</txtRmk>
         </Fdn>
+        <Fls>
+          <FlsUid>
+            <FdnUid>
+              <FtoUid>
+                <AhpUid>
+                  <codeId>LFNT</codeId>
+                </AhpUid>
+                <txtDesig>H1</txtDesig>
+              </FtoUid>
+              <txtDesig>35</txtDesig>
+            </FdnUid>
+            <codePsn>AIM</codePsn>
+          </FlsUid>
+          <txtDescr>omnidirectional</txtDescr>
+          <codeIntst>LIM</codeIntst>
+          <codeColour>GRN</codeColour>
+          <txtRmk>lighting remarks</txtRmk>
+        </Fls>
       END
     end
 
     it "builds correct minimal OFMX" do
       AIXM.ofmx!
       %i(geographic_orientation remarks).each { |a| subject.send(:"#{a}=", nil) }
+      subject.instance_eval { @lightings.clear }
       subject.to_xml.must_equal <<~END
       <Fdn>
         <FdnUid>
