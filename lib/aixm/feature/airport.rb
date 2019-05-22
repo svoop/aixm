@@ -20,6 +20,7 @@ module AIXM
     #   airport.declination = Float or nil
     #   airport.transition_z = AIXM.z or nil
     #   airport.timetable = AIXM.timetable or nil
+    #   airport.operator = String or nil
     #   airport.remarks = String or nil
     #   airport.add_runway(AIXM.runway)
     #   airport.add_fato(AIXM.fato)
@@ -82,6 +83,9 @@ module AIXM
 
       # @return [AIXM::Component::Timetable, nil] operating hours
       attr_reader :timetable
+
+      # @return [String, nil] operator of the airport
+      attr_reader :operator
 
       # @return [String, nil] free text remarks
       attr_reader :remarks
@@ -180,6 +184,11 @@ module AIXM
       def timetable=(value)
         fail(ArgumentError, "invalid timetable") unless value.nil? || value.is_a?(AIXM::Component::Timetable)
         @timetable = value
+      end
+
+      def operator=(value)
+        fail(ArgumentError, "invalid name") unless value.nil? || value.is_a?(String)
+        @operator = value&.uptrans
       end
 
       def remarks=(value)
@@ -293,6 +302,7 @@ module AIXM
             ahp.uomDistVer(z.unit.upcase.to_s)
           end
           ahp.valMagVar(declination) if declination
+          ahp.txtNameAdmin(operator) if operator
           if transition_z
             ahp.valTransitionAlt(transition_z.alt)
             ahp.uomTransitionAlt(transition_z.unit.upcase.to_s)

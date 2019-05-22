@@ -128,6 +128,20 @@ describe AIXM::Feature::Airport do
     macro :timetable
   end
 
+  describe :operator= do
+    it "fails on invalid values" do
+      [123].wont_be_written_to subject, :operator
+    end
+
+    it "accepts nil value" do
+      [nil].must_be_written_to subject, :operator
+    end
+
+    it "upcases and transcodes valid values" do
+      subject.tap { |s| s.operator = 'Municipality of Nîmes-Alès' }.operator.must_equal 'MUNICIPALITY OF NIMES-ALES'
+    end
+  end
+
   describe :remarks= do
     macro :remarks
   end
@@ -219,6 +233,7 @@ describe AIXM::Feature::Airport do
           <valElev>146</valElev>
           <uomDistVer>FT</uomDistVer>
           <valMagVar>1.08</valMagVar>
+          <txtNameAdmin>MUNICIPALITY OF PUJAUT</txtNameAdmin>
           <valTransitionAlt>10000</valTransitionAlt>
           <uomTransitionAlt>FT</uomTransitionAlt>
           <txtRmk>Restricted access</txtRmk>
@@ -545,12 +560,12 @@ describe AIXM::Feature::Airport do
 
     it "builds correct minimal OFMX" do
       AIXM.ofmx!
-      subject.z = subject.declination = subject.transition_z = subject.remarks = nil
-      subject.instance_variable_set(:'@addresses', [])
-      subject.instance_variable_set(:'@runways', [])
-      subject.instance_variable_set(:'@fatos', [])
-      subject.instance_variable_set(:'@helipads', [])
-      subject.instance_variable_set(:'@usage_limitations', [])
+      %i(z declination transition_z operator remarks).each { |a| subject.send(:"#{a}=", nil) }
+      subject.instance_eval { @addresses.clear }
+      subject.instance_eval { @runways.clear }
+      subject.instance_eval { @fatos.clear }
+      subject.instance_eval { @helipads.clear }
+      subject.instance_eval { @usage_limitations.clear }
       subject.to_xml.must_equal <<~END
         <!-- Airport: LFNT AVIGNON-PUJAUT -->
         <Ahp source="LF|GEN|0.0 FACTORY|0|0">

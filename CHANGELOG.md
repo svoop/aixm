@@ -4,6 +4,7 @@
 * `AIXM::Component::FATO`
 * `AIXM::Component::Helipad#helicopter_class` and `AIXM::Component::Helipad#marking`
 * `AIXM::XY#seconds?` to detect possibly rounded or estimated coordinates
+* `AIXM::Features::Airport#operator`
 * `AIXM::W` (weight)
 * `AIXM::P` (pressure)
 * `AIXM::Component::Lighting` for use with runways, helipads and FATOs

@@ -336,6 +336,7 @@ module AIXM
           airport.z = AIXM.z(146, :qnh)
           airport.declination = 1.08
           airport.transition_z = AIXM.z(10_000, :qnh)
+          airport.operator = "Municipality of Pujaut"
           airport.remarks = "Restricted access"
           airport.add_runway(runway)
           airport.add_fato(fato)

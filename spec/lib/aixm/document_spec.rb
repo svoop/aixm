@@ -174,6 +174,7 @@ describe AIXM::Document do
             <valElev>146</valElev>
             <uomDistVer>FT</uomDistVer>
             <valMagVar>1.08</valMagVar>
+            <txtNameAdmin>MUNICIPALITY OF PUJAUT</txtNameAdmin>
             <valTransitionAlt>10000</valTransitionAlt>
             <uomTransitionAlt>FT</uomTransitionAlt>
             <txtRmk>Restricted access</txtRmk>
@@ -989,6 +990,7 @@ describe AIXM::Document do
             <valElev>146</valElev>
             <uomDistVer>FT</uomDistVer>
             <valMagVar>1.08</valMagVar>
+            <txtNameAdmin>MUNICIPALITY OF PUJAUT</txtNameAdmin>
             <valTransitionAlt>10000</valTransitionAlt>
             <uomTransitionAlt>FT</uomTransitionAlt>
             <txtRmk>Restricted access</txtRmk>
