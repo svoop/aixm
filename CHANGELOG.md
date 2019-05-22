@@ -1,4 +1,4 @@
-## 0.3.6 (unreleased)
+## 0.3.6
 
 #### Additions
 * `AIXM::Component::FATO`
