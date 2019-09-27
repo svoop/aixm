@@ -1,5 +1,7 @@
 ## 0.3.7 (unreleased)
-Nothing so far
+
+#### Additions
+* `AIXM::Document#select_features`
 
 ## 0.3.6
 

@@ -79,6 +79,30 @@ describe AIXM::Document do
     end
   end
 
+  describe :select_features do
+    subject do
+      AIXM::Factory.document
+    end
+
+    it "returns array of features by class" do
+      subject.select_features(:airport).map(&:id).must_equal %w(LFNT)
+      subject.select_features(AIXM::Feature::Airport).map(&:id).must_equal %w(LFNT)
+    end
+
+    it "returns array of features by class and attributes" do
+      subject.select_features(:airport, id: "LFNT").map(&:id).must_equal %w(LFNT)
+      subject.select_features(AIXM::Feature::Airport, id: "LFNT").map(&:id).must_equal %w(LFNT)
+    end
+
+    it "returns empty array if nothing matches" do
+      subject.select_features(:airport, id: "FAKE").must_equal []
+    end
+
+    it "fails on invalid shortcut" do
+      -> { subject.select_features(:fake) }.must_raise ArgumentError
+    end
+  end
+
   context "AIXM" do
     subject do
       AIXM.aixm!

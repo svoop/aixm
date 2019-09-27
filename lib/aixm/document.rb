@@ -62,6 +62,31 @@ module AIXM
       @effective_at = value&.to_time || created_at || Time.now
     end
 
+    # Search features and return those matching the given class and attribute
+    # values
+    #
+    # @example
+    #   select_features(:airport, id: "LFNT")
+    #
+    # @param klass [Class, Symbol] feature class like AIXM::Feature::Airport or
+    #   AIXM::Feature::NavigationalAid::VOR, shorthand notations as symbols
+    #   e.g. :airport or :vor as listed in AIXM::CLASSES are recognized as well
+    # @param attributes [Hash] search attributes by their values
+    # @return [Array<AIXM::Feature>]
+    def select_features(klass, attributes={})
+      if klass.is_a? Symbol
+        klass = AIXM::CLASSES.fetch(klass, nil)
+        fail(ArgumentError, "unknown feature shortcut") unless klass
+      end
+      features.select do |feature|
+        if feature.is_a? klass
+          attributes.reduce(true) do |memo, (attribute, value)|
+            memo && feature.send(attribute) == value
+          end
+        end
+      end
+    end
+
     # Validate the generated AIXM or OFMX atainst it's XSD.
     #
     # @return [Boolean] whether valid or not
