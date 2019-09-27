@@ -107,7 +107,8 @@ module AIXM
 
       def initialize(source: nil, organisation:, id: nil, name:, xy:)
         super(source: source)
-        self.organisation, self.id, self.name, self.xy = organisation, id, name, xy
+        self.organisation, self.name, self.xy = organisation, name, xy
+        self.id = id   # name must already be set
         @runways, @fatos, @helipads, @usage_limitations, @addresses = [], [], [], [], []
       end
 

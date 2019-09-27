@@ -33,6 +33,7 @@ describe AIXM::Feature::Airport do
 
     it "combines 2 character region with an 8 characters digest from name" do
       subject.tap { |s| s.id = 'lf' }.id.must_equal 'LFD18754F5'
+      subject.tap { |s| s.name = 'OTHER'; s.id = 'lf' }.id.must_equal 'LFD646E0F9'      
     end
 
     it "upcases valid values" do
