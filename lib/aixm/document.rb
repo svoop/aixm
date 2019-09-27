@@ -87,6 +87,28 @@ module AIXM
       end
     end
 
+    # Compare all ungrouped obstacles and create new obstacle groups whose
+    # members are located within +max_distance+ pairwise.
+    #
+    # @param max_distance [AIXM::D] max distance between obstacle group member
+    #   pairs (default: 1 NM)
+    # @return [Integer] number of obstacle groups added
+    def group_obstacles!(max_distance: AIXM.d(1, :nm))
+      obstacles, list = select_features(:obstacle), {}
+      while subject = obstacles.shift
+        obstacles.each do |obstacle|
+          if subject.xy.distance(obstacle.xy) <= max_distance
+            [subject, obstacle].each { |o| list[o] = list[subject] || SecureRandom.uuid }
+          end
+        end
+      end
+      list.group_by(&:last).each do |_, grouped_list|
+        obstacle_group = AIXM.obstacle_group(source: grouped_list.first.first.source)
+        grouped_list.each { |o, _| obstacle_group.obstacles << features.delete(o) }
+        features << obstacle_group
+      end.count
+    end
+
     # Validate the generated AIXM or OFMX atainst it's XSD.
     #
     # @return [Boolean] whether valid or not

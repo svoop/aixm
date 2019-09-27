@@ -2,6 +2,7 @@
 
 #### Additions
 * `AIXM::Document#select_features`
+* `AIXM::Document#group_obstacles!`
 
 ## 0.3.6
 

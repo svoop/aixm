@@ -103,6 +103,59 @@ describe AIXM::Document do
     end
   end
 
+  describe :group_obstacles! do
+    subject do
+      AIXM.document.tap do |document|
+        {
+          1 => AIXM.xy(lat: 32.665623, long: -111.488584),   # 4 north ends:
+          2 => AIXM.xy(lat: 32.665613, long: -111.487701),   # 84m distance between each
+          3 => AIXM.xy(lat: 32.665603, long: -111.486796),   # 505m distance to south ends
+          4 => AIXM.xy(lat: 32.665611, long: -111.485902),
+          5 => AIXM.xy(lat: 32.661062, long: -111.488624),   # 4 south ends:
+          6 => AIXM.xy(lat: 32.661061, long: -111.487731),   # 84m distance between each
+          7 => AIXM.xy(lat: 32.661042, long: -111.486814),   # 505m distance to north ends
+          8 => AIXM.xy(lat: 32.661054, long: -111.485931),
+          9 => AIXM.xy(lat: 0, long: 0)                      # far away from the others
+        }.to_a.shuffle.each do |index, xy|
+          document.features << AIXM.obstacle(
+            source: index.to_s,
+            name: index.to_s,
+            type: :other,
+            xy: xy,
+            radius: AIXM.d(10, :m),
+            z: AIXM.z(1680 , :qnh)
+          )
+        end
+      end
+    end
+
+    it "adds 1 group of obstacles with default max distance" do
+      subject.group_obstacles!.must_equal 1
+      obstacle_group = subject.select_features(:obstacle_group).first
+      obstacle_group.obstacles.count.must_equal 8
+    end
+
+    it "adds 2 groups of obstacles with max distance 400m" do
+      subject.group_obstacles!(max_distance: AIXM.d(400, :m)).must_equal 2
+      obstacle_groups = subject.features.select { |f| f.is_a? AIXM::Feature::ObstacleGroup }
+      obstacle_groups.each do |obstacle_group|
+        names = obstacle_group.obstacles.map(&:name).sort
+        names.must_equal names.include?('1') ? %w(1 2 3 4) : %w(5 6 7 8)
+      end
+    end
+
+    it "leaves ungrouped obstacles untouched" do
+      subject.group_obstacles!
+      subject.select_features(:obstacle).count.must_equal 1
+    end
+
+    it "copies source of first obstacle to obstacle group" do
+      subject.group_obstacles!
+      obstacle_group = subject.select_features(:obstacle_group).first
+      obstacle_group.source.must_equal obstacle_group.obstacles.first.source
+    end
+  end
+
   context "AIXM" do
     subject do
       AIXM.aixm!
