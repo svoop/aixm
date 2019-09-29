@@ -1,4 +1,4 @@
-## 0.3.7 (unreleased)
+## 0.3.7
 
 #### Additions
 * `AIXM::Document#select_features`
