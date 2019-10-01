@@ -9,49 +9,49 @@ describe AIXM::Feature::Unit do
     macro :organisation
 
     it "fails on nil value" do
-      [nil].wont_be_written_to subject, :organisation
+      _([nil]).wont_be_written_to subject, :organisation
     end
   end
 
   describe :name= do
     it "fails on invalid values" do
-      [nil, :foobar, 123].wont_be_written_to subject, :name
+      _([nil, :foobar, 123]).wont_be_written_to subject, :name
     end
 
     it "upcases and transcodes valid values" do
-      subject.tap { |s| s.name = 'Nîmes-Alès APP' }.name.must_equal 'NIMES-ALES APP'
+      _(subject.tap { |s| s.name = 'Nîmes-Alès APP' }.name).must_equal 'NIMES-ALES APP'
     end
   end
 
   describe :type= do
     it "fails on invalid values" do
-      [nil, :foobar, 123].wont_be_written_to subject, :type
+      _([nil, :foobar, 123]).wont_be_written_to subject, :type
     end
 
     it "looks up valid values" do
-      subject.tap { |s| s.type = :flight_information_centre }.type.must_equal :flight_information_centre
-      subject.tap { |s| s.type = :MET }.type.must_equal :meteorological_office
+      _(subject.tap { |s| s.type = :flight_information_centre }.type).must_equal :flight_information_centre
+      _(subject.tap { |s| s.type = :MET }.type).must_equal :meteorological_office
     end
   end
 
   describe :class= do
     it "fails on invalid values" do
-      [nil, :foobar, 123].wont_be_written_to subject, :class
+      _([nil, :foobar, 123]).wont_be_written_to subject, :class
     end
 
     it "looks up valid values" do
-      subject.tap { |s| s.class = :icao }.class.must_equal :icao
-      subject.tap { |s| s.class = :OTHER }.class.must_equal :other
+      _(subject.tap { |s| s.class = :icao }.class).must_equal :icao
+      _(subject.tap { |s| s.class = :OTHER }.class).must_equal :other
     end
   end
 
   describe :airport= do
     it "fails on invalid values" do
-      [:foobar, 123].wont_be_written_to subject, :airport
+      _([:foobar, 123]).wont_be_written_to subject, :airport
     end
 
     it "accepts valid values" do
-      [nil, AIXM::Factory.airport].must_be_written_to subject, :airport
+      _([nil, AIXM::Factory.airport]).must_be_written_to subject, :airport
     end
   end
 
@@ -69,7 +69,7 @@ describe AIXM::Feature::Unit do
     it "builds correct complete OFMX" do
       2.times { subject.add_service(service) }
       AIXM.ofmx!
-      subject.to_xml.must_equal <<~END
+      _(subject.to_xml).must_equal <<~END
         <!-- Unit: PUJAUT TWR -->
         <Uni source="LF|GEN|0.0 FACTORY|0|0">
           <UniUid>
@@ -212,7 +212,7 @@ describe AIXM::Feature::Unit do
       AIXM.ofmx!
       subject.airport = subject.remarks = nil
       subject.instance_variable_set(:'@services', [])
-      subject.to_xml.must_equal <<~END
+      _(subject.to_xml).must_equal <<~END
         <!-- Unit: PUJAUT TWR -->
         <Uni source="LF|GEN|0.0 FACTORY|0|0">
           <UniUid>

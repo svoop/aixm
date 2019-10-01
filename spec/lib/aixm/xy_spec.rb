@@ -7,16 +7,16 @@ describe AIXM::XY do
 
   describe :lat= do
     it "fails on invalid values" do
-      [91, "foobar"].wont_be_written_to subject, :lat
+      _([91, "foobar"]).wont_be_written_to subject, :lat
     end
 
     it "parses valid DD values" do
-      subject.tap { |s| s.lat = 11.2233 }.lat.must_equal 11.2233
+      _(subject.tap { |s| s.lat = 11.2233 }.lat).must_equal 11.2233
     end
 
     it "parses valid DMS values"  do
-      subject.tap { |s| s.lat = %q(11°22'33"N) }.lat.must_equal(11.37583333)
-      subject.tap { |s| s.lat = %q(11°22'33"S) }.lat.must_equal(-11.37583333)
+      _(subject.tap { |s| s.lat = %q(11°22'33"N) }.lat).must_equal(11.37583333)
+      _(subject.tap { |s| s.lat = %q(11°22'33"S) }.lat).must_equal(-11.37583333)
     end
   end
 
@@ -27,15 +27,15 @@ describe AIXM::XY do
       end
 
       it "must format DD (default) correctly" do
-        subject.lat.must_equal 1.1234
+        _(subject.lat).must_equal 1.1234
       end
 
       it "must format AIXM correctly" do
-        subject.lat(:aixm).must_equal %q(010724.24N)
+        _(subject.lat(:aixm)).must_equal %q(010724.24N)
       end
 
       it "must format OFM correctly" do
-        subject.lat(:ofmx).must_equal '01.12340000N'
+        _(subject.lat(:ofmx)).must_equal '01.12340000N'
       end
     end
 
@@ -45,31 +45,31 @@ describe AIXM::XY do
       end
 
       it "must format DD (default) correctly" do
-        subject.lat.must_equal(-1.1234)
+        _(subject.lat).must_equal(-1.1234)
       end
 
       it "must format AIXM correctly" do
-        subject.lat(:aixm).must_equal %q(010724.24S)
+        _(subject.lat(:aixm)).must_equal %q(010724.24S)
       end
 
       it "must format OFM correctly" do
-        subject.lat(:ofmx).must_equal '01.12340000S'
+        _(subject.lat(:ofmx)).must_equal '01.12340000S'
       end
     end
   end
 
   describe :long= do
     it "fails on invalid values" do
-      [181, "foobar"].wont_be_written_to subject, :lat
+      _([181, "foobar"]).wont_be_written_to subject, :lat
     end
 
     it "parses valid DD values" do
-      subject.tap { |s| s.long = 22.3344 }.long.must_equal 22.3344
+      _(subject.tap { |s| s.long = 22.3344 }.long).must_equal 22.3344
     end
 
     it "parses valid DMS values"  do
-      subject.tap { |s| s.long = %q(22°33'44"E) }.long.must_equal(22.56222222)
-      subject.tap { |s| s.long = %q(22°33'44"W) }.long.must_equal(-22.56222222)
+      _(subject.tap { |s| s.long = %q(22°33'44"E) }.long).must_equal(22.56222222)
+      _(subject.tap { |s| s.long = %q(22°33'44"W) }.long).must_equal(-22.56222222)
     end
   end
 
@@ -80,15 +80,15 @@ describe AIXM::XY do
       end
 
       it "must format DD (default) correctly" do
-        subject.long.must_equal 1.1234
+        _(subject.long).must_equal 1.1234
       end
 
       it "must format AIXM correctly" do
-        subject.long(:aixm).must_equal %q(0010724.24E)
+        _(subject.long(:aixm)).must_equal %q(0010724.24E)
       end
 
       it "must format OFM correctly" do
-        subject.long(:ofmx).must_equal '001.12340000E'
+        _(subject.long(:ofmx)).must_equal '001.12340000E'
       end
     end
 
@@ -98,27 +98,27 @@ describe AIXM::XY do
       end
 
       it "must format DD (default) correctly" do
-        subject.long.must_equal(-1.1234)
+        _(subject.long).must_equal(-1.1234)
       end
 
       it "must format AIXM correctly" do
-        subject.long(:aixm).must_equal %q(0010724.24W)
+        _(subject.long(:aixm)).must_equal %q(0010724.24W)
       end
 
       it "must format OFM correctly" do
-        subject.long(:ofmx).must_equal '001.12340000W'
+        _(subject.long(:ofmx)).must_equal '001.12340000W'
       end
     end
   end
 
   describe :seconds? do
     it "must detect coordinates with zero DMS seconds" do
-      AIXM.xy(lat: %q(44°33'00"N), long: %q(004°03'00"E)).wont_be :seconds?
-      AIXM.xy(lat: %q(44°33'00.01"N), long: %q(004°03'00"E)).must_be :seconds?
-      AIXM.xy(lat: %q(44°33'00"N), long: %q(004°03'00.01"E)).must_be :seconds?
-      AIXM.xy(lat: %q(47°29'10"N), long: %q(000°33'15"W)).must_be :seconds?
-      AIXM.xy(lat: %q(44°36'50"N), long: %q(004°23'50"E)).must_be :seconds?
-      AIXM.xy(lat: %q(44°48'00"N), long: %q(000°34'27"W)).must_be :seconds?
+      _(AIXM.xy(lat: %q(44°33'00"N), long: %q(004°03'00"E))).wont_be :seconds?
+      _(AIXM.xy(lat: %q(44°33'00.01"N), long: %q(004°03'00"E))).must_be :seconds?
+      _(AIXM.xy(lat: %q(44°33'00"N), long: %q(004°03'00.01"E))).must_be :seconds?
+      _(AIXM.xy(lat: %q(47°29'10"N), long: %q(000°33'15"W))).must_be :seconds?
+      _(AIXM.xy(lat: %q(44°36'50"N), long: %q(004°23'50"E))).must_be :seconds?
+      _(AIXM.xy(lat: %q(44°48'00"N), long: %q(000°34'27"W))).must_be :seconds?
     end
   end
 
@@ -128,7 +128,7 @@ describe AIXM::XY do
     end
 
     it "must return a point object with these coordinates" do
-      subject.to_point.xy.must_equal AIXM.point(xy: subject).xy
+      _(subject.to_point.xy).must_equal AIXM.point(xy: subject).xy
     end
   end
 
@@ -138,12 +138,12 @@ describe AIXM::XY do
     end
 
     it "calculates the distance between the same point as zero" do
-      subject.distance(subject).must_equal AIXM.d(0, :m)
+      _(subject.distance(subject)).must_equal AIXM.d(0, :m)
     end
 
     it "calculates the distance between two points correctly" do
       other = AIXM.xy(lat: %q(43°59'25.31"N), long: %q(004°45'23.24"E))
-      subject.distance(other).must_equal AIXM.d(1351, :m)
+      _(subject.distance(other)).must_equal AIXM.d(1351, :m)
     end
   end
 
@@ -151,30 +151,30 @@ describe AIXM::XY do
     it "recognizes objects with identical latitude and longitude as equal" do
       a = AIXM.xy(lat: "112233N", long: "0223344E")
       b = AIXM.xy(lat: 11.37583333, long: 22.56222222)
-      a.must_equal b
+      _(a).must_equal b
     end
 
     it "recognizes objects with different latitude or longitude as unequal" do
       a = AIXM.xy(lat: "112233.44N", long: "0223344.55E")
       b = AIXM.xy(lat: 11, long: 22)
-      a.wont_equal b
+      _(a).wont_equal b
     end
 
     it "recognizes objects of different class as unequal" do
       a = AIXM.xy(lat: "112233.44N", long: "0223344.55E")
       b = :oggy
-      a.wont_equal b
+      _(a).wont_equal b
     end
   end
 
   describe :hash do
     it "returns an integer" do
-      subject.hash.must_be_instance_of Integer
+      _(subject.hash).must_be_instance_of Integer
     end
 
     it "allows for the use of instances as hash keys" do
       dupe = subject.dup
-      { subject => true }[dupe].must_equal true
+      _({ subject => true }[dupe]).must_equal true
     end
   end
 end

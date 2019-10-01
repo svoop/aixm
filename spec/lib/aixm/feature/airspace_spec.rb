@@ -9,81 +9,81 @@ describe AIXM::Feature::Airspace do
 
     describe :initialize do
       it "sets defaults" do
-        subject.id.must_equal 'C55466EC'
-        subject.layers.must_equal []
-        subject.geometry.must_be_instance_of AIXM::Component::Geometry
+        _(subject.id).must_equal 'C55466EC'
+        _(subject.layers).must_equal []
+        _(subject.geometry).must_be_instance_of AIXM::Component::Geometry
       end
     end
 
     describe :id= do
       it "fails on invalid values" do
-        [:foobar, 123].wont_be_written_to subject, :id
+        _([:foobar, 123]).wont_be_written_to subject, :id
       end
 
       it "falls back to id derived from digest of type, local_type and name" do
-        subject.tap { |s| s.id = nil }.id.must_equal 'C55466EC'
+        _(subject.tap { |s| s.id = nil }.id).must_equal 'C55466EC'
       end
 
       it "upcases value" do
-        subject.tap { |s| s.id = 'löl' }.id.must_equal 'LOEL'
+        _(subject.tap { |s| s.id = 'löl' }.id).must_equal 'LOEL'
       end
     end
 
     describe :type= do
       it "fails on invalid values" do
-        [nil, :foobar, 123].wont_be_written_to subject, :type
+        _([nil, :foobar, 123]).wont_be_written_to subject, :type
       end
 
       it "looks up valid values" do
-        subject.tap { |s| s.type = :danger_area }.type.must_equal :danger_area
-        subject.tap { |s| s.type = :P }.type.must_equal :prohibited_area
+        _(subject.tap { |s| s.type = :danger_area }.type).must_equal :danger_area
+        _(subject.tap { |s| s.type = :P }.type).must_equal :prohibited_area
       end
     end
 
     describe :local_type= do
       it "fails on invalid values" do
-        [:foobar, 123].wont_be_written_to subject, :local_type
+        _([:foobar, 123]).wont_be_written_to subject, :local_type
       end
 
       it "accepts nil value" do
-        [nil].must_be_written_to subject, :local_type
+        _([nil]).must_be_written_to subject, :local_type
       end
 
       it "upcases value" do
-        subject.tap { |s| s.local_type = 'löl' }.local_type.must_equal 'LOEL'
+        _(subject.tap { |s| s.local_type = 'löl' }.local_type).must_equal 'LOEL'
       end
     end
 
     describe :name= do
       it "fails on invalid values" do
-        [:foobar, 123].wont_be_written_to subject, :name
+        _([:foobar, 123]).wont_be_written_to subject, :name
       end
 
       it "accepts nil value" do
-        [nil].must_be_written_to subject, :name
+        _([nil]).must_be_written_to subject, :name
       end
 
       it "upcases value" do
-        subject.tap { |s| s.name = 'löl' }.name.must_equal 'LOEL'
+        _(subject.tap { |s| s.name = 'löl' }.name).must_equal 'LOEL'
       end
     end
 
     describe :to_uid do
       it "builds with arbitrary tag" do
-        subject.to_uid.must_match(/<AseUid>/)
-        subject.to_uid(as: :FooBar).must_match(/<FooBar>/)
+        _(subject.to_uid).must_match(/<AseUid>/)
+        _(subject.to_uid(as: :FooBar)).must_match(/<FooBar>/)
       end
     end
 
     describe :to_xml do
       it "fails to build AIXM since geometry is not closed" do
         subject.layers << AIXM::Factory.layer
-        -> { subject.to_xml }.must_raise AIXM::GeometryError
+        _{ subject.to_xml }.must_raise AIXM::GeometryError
       end
 
       it "fails to build AIXM since layers are not defined" do
         subject.geometry = AIXM::Factory.circle_geometry
-        -> { subject.to_xml }.must_raise AIXM::LayerError
+        _{ subject.to_xml }.must_raise AIXM::LayerError
       end
     end
   end
@@ -99,17 +99,17 @@ describe AIXM::Feature::Airspace do
     describe :to_xml do
       it "builds correct AIXM without id" do
         AIXM.aixm!
-        subject.to_xml.must_match(%r{<codeId>C55466EC</codeId>})
+        _(subject.to_xml).must_match(%r{<codeId>C55466EC</codeId>})
       end
 
       it "builds correct AIXM without short name" do
         AIXM.aixm!
-        subject.to_xml.wont_match(/<txtLocalType>/)
+        _(subject.to_xml).wont_match(/<txtLocalType>/)
       end
 
       it "builds correct AIXM with identical name and short name" do
         AIXM.aixm!
-        subject.to_xml.wont_match(/<txtLocalType>/)
+        _(subject.to_xml).wont_match(/<txtLocalType>/)
       end
     end
   end
@@ -122,7 +122,7 @@ describe AIXM::Feature::Airspace do
     describe :to_xml do
       it "builds correct complete OFMX" do
         AIXM.ofmx!
-        subject.to_xml.must_equal <<~"END"
+        _(subject.to_xml).must_equal <<~"END"
           <!-- Airspace: [D] POLYGON AIRSPACE -->
           <Ase source="LF|GEN|0.0 FACTORY|0|0">
             <AseUid>
@@ -189,7 +189,7 @@ describe AIXM::Feature::Airspace do
       it "builds correct minimal OFMX" do
         AIXM.ofmx!
         subject.local_type = subject.name = nil
-        subject.to_xml.must_equal <<~"END"
+        _(subject.to_xml).must_equal <<~"END"
           <!-- Airspace: [D] UNNAMED -->
           <Ase source="LF|GEN|0.0 FACTORY|0|0">
             <AseUid>
@@ -263,7 +263,7 @@ describe AIXM::Feature::Airspace do
     describe :to_xml do
       it "builds correct OFMX" do
         AIXM.ofmx!
-        subject.to_xml.must_equal <<~"END"
+        _(subject.to_xml).must_equal <<~"END"
           <!-- Airspace: [D] POLYGON AIRSPACE -->
           <Ase source="LF|GEN|0.0 FACTORY|0|0">
             <AseUid>

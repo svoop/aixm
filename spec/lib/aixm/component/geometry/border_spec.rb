@@ -10,14 +10,14 @@ describe AIXM::Component::Geometry::Border do
 
   describe :name= do
     it "fails on invalid values" do
-      [nil, :foobar, 123].wont_be_written_to subject, :name
+      _([nil, :foobar, 123]).wont_be_written_to subject, :name
     end
   end
 
   describe :to_xml do
     it "builds correct AIXM" do
       AIXM.aixm!
-      subject.to_xml.must_equal <<~END
+      _(subject.to_xml).must_equal <<~END
         <Avx>
           <GbrUid>
             <txtName>FRANCE-SWITZERLAND</txtName>

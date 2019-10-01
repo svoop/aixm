@@ -7,31 +7,31 @@ describe AIXM::Component::FATO do
 
   describe :name= do
     it "fails on invalid values" do
-      [nil, :foobar, 123].wont_be_written_to subject, :name
+      _([nil, :foobar, 123]).wont_be_written_to subject, :name
     end
 
     it "upcases and transcodes valid values" do
-      subject.tap { |s| s.name = 'h1' }.name.must_equal 'H1'
+      _(subject.tap { |s| s.name = 'h1' }.name).must_equal 'H1'
     end
   end
 
   describe :length= do
     it "fails on invalid values" do
-      [:foobar, 0, 1, AIXM.d(0, :m)].wont_be_written_to subject, :length
+      _([:foobar, 0, 1, AIXM.d(0, :m)]).wont_be_written_to subject, :length
     end
 
     it "accepts nil value" do
-      [nil].must_be_written_to subject, :length
+      _([nil]).must_be_written_to subject, :length
     end
   end
 
   describe :width= do
     it "fails on invalid values" do
-      [:foobar, 0, 1, AIXM.d(0, :m)].wont_be_written_to subject, :width
+      _([:foobar, 0, 1, AIXM.d(0, :m)]).wont_be_written_to subject, :width
     end
 
     it "accepts nil value" do
-      [nil].must_be_written_to subject, :width
+      _([nil]).must_be_written_to subject, :width
     end
   end
 
@@ -41,27 +41,27 @@ describe AIXM::Component::FATO do
 
   describe :profile= do
     it "accepts nil value" do
-      [nil].must_be_written_to subject, :profile
+      _([nil]).must_be_written_to subject, :profile
     end
 
     it "stringifies valid values" do
-      subject.tap { |s| s.profile = 'foobar' }.profile.must_equal 'foobar'
-      subject.tap { |s| s.profile = 123 }.profile.must_equal '123'
+      _(subject.tap { |s| s.profile = 'foobar' }.profile).must_equal 'foobar'
+      _(subject.tap { |s| s.profile = 123 }.profile).must_equal '123'
     end
   end
 
   describe :status= do
     it "fails on invalid values" do
-      [:foobar, 123].wont_be_written_to subject, :status
+      _([:foobar, 123]).wont_be_written_to subject, :status
     end
 
     it "accepts nil value" do
-      [nil].must_be_written_to subject, :status
+      _([nil]).must_be_written_to subject, :status
     end
 
     it "looks up valid values" do
-      subject.tap { |s| s.status = :closed }.status.must_equal :closed
-      subject.tap { |s| s.status = :SPOWER }.status.must_equal :secondary_power
+      _(subject.tap { |s| s.status = :closed }.status).must_equal :closed
+      _(subject.tap { |s| s.status = :SPOWER }.status).must_equal :secondary_power
     end
   end
 
@@ -72,7 +72,7 @@ describe AIXM::Component::FATO do
   describe :xml= do
     it "builds correct complete OFMX" do
       AIXM.ofmx!
-      subject.to_xml.must_equal <<~END
+      _(subject.to_xml).must_equal <<~END
         <Fto>
           <FtoUid>
             <AhpUid>
@@ -143,7 +143,7 @@ describe AIXM::Component::FATO do
       %i(length width profile marking status remarks).each { |a| subject.send(:"#{a}=", nil) }
       %i(composition preparation condition pcn siwl_weight siwl_tire_pressure auw_weight remarks).each { |a| subject.surface.send(:"#{a}=", nil) }
       subject.directions['35'].instance_eval { @lightings.clear }
-      subject.to_xml.must_equal <<~END
+      _(subject.to_xml).must_equal <<~END
         <Fto>
           <FtoUid>
             <AhpUid>
@@ -178,13 +178,13 @@ describe AIXM::Component::FATO::Direction do
 
   describe :name= do
     it "fails on invalid values" do
-      [nil, :foobar, 'OGGY'].wont_be_written_to subject, :name
+      _([nil, :foobar, 'OGGY']).wont_be_written_to subject, :name
     end
   end
 
   describe :geographic_orientation= do
     it "fails on invalid values" do
-      [:foobar, -1, 10].wont_be_written_to subject, :geographic_orientation
+      _([:foobar, -1, 10]).wont_be_written_to subject, :geographic_orientation
     end
   end
 
@@ -195,14 +195,14 @@ describe AIXM::Component::FATO::Direction do
   describe :magnetic_orientation do
     it "is calculated correctly" do
       subject.geographic_orientation = AIXM.a(16)
-      subject.magnetic_orientation.must_equal AIXM.a(17)
+      _(subject.magnetic_orientation).must_equal AIXM.a(17)
     end
   end
 
   describe :xml= do
     it "builds correct complete OFMX" do
       AIXM.ofmx!
-      subject.to_xml.must_equal <<~END
+      _(subject.to_xml).must_equal <<~END
         <Fdn>
           <FdnUid>
             <FtoUid>
@@ -242,7 +242,7 @@ describe AIXM::Component::FATO::Direction do
       AIXM.ofmx!
       %i(geographic_orientation remarks).each { |a| subject.send(:"#{a}=", nil) }
       subject.instance_eval { @lightings.clear }
-      subject.to_xml.must_equal <<~END
+      _(subject.to_xml).must_equal <<~END
       <Fdn>
         <FdnUid>
           <FtoUid>

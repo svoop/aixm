@@ -13,7 +13,7 @@ describe AIXM::Component::Geometry::Point do
     it "builds correct AIXM for N/E points" do
       subject = AIXM.point(xy: AIXM.xy(lat: 11.1, long: 22.2))
       AIXM.aixm!
-      subject.to_xml.must_equal <<~END
+      _(subject.to_xml).must_equal <<~END
         <Avx>
           <codeType>GRC</codeType>
           <geoLat>110600.00N</geoLat>
@@ -26,7 +26,7 @@ describe AIXM::Component::Geometry::Point do
     it "builds correct AIXM for S/W points" do
       subject = AIXM.point(xy: AIXM.xy(lat: -11.1, long: -22.2))
       AIXM.aixm!
-      subject.to_xml.must_equal <<~END
+      _(subject.to_xml).must_equal <<~END
         <Avx>
           <codeType>GRC</codeType>
           <geoLat>110600.00S</geoLat>

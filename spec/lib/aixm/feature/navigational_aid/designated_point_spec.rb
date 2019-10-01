@@ -7,35 +7,35 @@ describe AIXM::Feature::NavigationalAid::DesignatedPoint do
 
   describe :type= do
     it "fails on invalid values" do
-      [nil, :foobar, 123].wont_be_written_to subject, :type
+      _([nil, :foobar, 123]).wont_be_written_to subject, :type
     end
 
     it "looks up valid values" do
-      subject.tap { |s| s.type = :icao }.type.must_equal :icao
-      subject.tap { |s| s.type = :'VFR-RP' }.type.must_equal :vfr_reporting_point
+      _(subject.tap { |s| s.type = :icao }.type).must_equal :icao
+      _(subject.tap { |s| s.type = :'VFR-RP' }.type).must_equal :vfr_reporting_point
     end
   end
 
   describe :airport= do
     it "fails on invalid values" do
-      [:foobar, 123].wont_be_written_to subject, :airport
+      _([:foobar, 123]).wont_be_written_to subject, :airport
     end
 
     it "accepts valid values" do
-      [nil, AIXM::Factory.airport].must_be_written_to subject, :airport
+      _([nil, AIXM::Factory.airport]).must_be_written_to subject, :airport
     end
   end
 
   describe :kind do
     it "must return class/type combo" do
-      subject.kind.must_equal "DesignatedPoint:VFR-RP"
+      _(subject.kind).must_equal "DesignatedPoint:VFR-RP"
     end
   end
 
   describe :to_xml do
     it "builds correct complete OFMX" do
       AIXM.ofmx!
-      subject.to_xml.must_equal <<~END
+      _(subject.to_xml).must_equal <<~END
         <!-- NavigationalAid: [DesignatedPoint:VFR-RP] DDD / DESIGNATED POINT NAVAID -->
         <Dpn source="LF|GEN|0.0 FACTORY|0|0">
           <DpnUid>
@@ -57,7 +57,7 @@ describe AIXM::Feature::NavigationalAid::DesignatedPoint do
     it "builds correct minimal OFMX" do
       AIXM.ofmx!
       subject.name = subject.remarks = nil
-      subject.to_xml.must_equal <<~END
+      _(subject.to_xml).must_equal <<~END
         <!-- NavigationalAid: [DesignatedPoint:VFR-RP] DDD -->
         <Dpn source="LF|GEN|0.0 FACTORY|0|0">
           <DpnUid>
@@ -76,7 +76,7 @@ describe AIXM::Feature::NavigationalAid::DesignatedPoint do
 
     it "builds correct complete OFMX" do
       AIXM.aixm!
-      subject.to_xml.must_equal <<~END
+      _(subject.to_xml).must_equal <<~END
         <!-- NavigationalAid: [DesignatedPoint:VFR-RP] DDD / DESIGNATED POINT NAVAID -->
         <Dpn>
           <DpnUid>

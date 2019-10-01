@@ -7,63 +7,63 @@ describe AIXM::Component::Runway do
 
   describe :initialize do
     it "sets defaults for bidirectional runways" do
-      subject.forth.name.must_equal AIXM.a('16L')
-      subject.back.name.must_equal AIXM.a('34R')
+      _(subject.forth.name).must_equal AIXM.a('16L')
+      _(subject.back.name).must_equal AIXM.a('34R')
     end
 
     it "sets defaults for unidirectional runways" do
       subject = AIXM::Component::Runway.new(name: '30')
-      subject.forth.name.must_equal AIXM.a('30')
-      subject.back.must_be_nil
+      _(subject.forth.name).must_equal AIXM.a('30')
+      _(subject.back).must_be_nil
     end
 
     it "fails on non-inverse bidirectional runways" do
-      -> { AIXM.runway(name: '16L/14R') }.must_raise ArgumentError
+      _{ AIXM.runway(name: '16L/14R') }.must_raise ArgumentError
     end
   end
 
   describe :name= do
     it "fails on invalid values" do
-      [nil, :foobar, 123].wont_be_written_to subject, :name
+      _([nil, :foobar, 123]).wont_be_written_to subject, :name
     end
 
     it "upcases and transcodes valid values" do
-      subject.tap { |s| s.name = '10r/28l' }.name.must_equal '10R/28L'
+      _(subject.tap { |s| s.name = '10r/28l' }.name).must_equal '10R/28L'
     end
   end
 
   describe :length= do
     it "fails on invalid values" do
-      [:foobar, 0, 1, AIXM.d(0, :m)].wont_be_written_to subject, :length
+      _([:foobar, 0, 1, AIXM.d(0, :m)]).wont_be_written_to subject, :length
     end
 
     it "accepts nil value" do
-      [nil].must_be_written_to subject, :length
+      _([nil]).must_be_written_to subject, :length
     end
   end
 
   describe :width= do
     it "fails on invalid values" do
-      [:foobar, 0, 1, AIXM.d(0, :m)].wont_be_written_to subject, :width
+      _([:foobar, 0, 1, AIXM.d(0, :m)]).wont_be_written_to subject, :width
     end
 
     it "accepts nil value" do
-      [nil].must_be_written_to subject, :width
+      _([nil]).must_be_written_to subject, :width
     end
   end
 
   describe :status= do
     it "fails on invalid values" do
-      [:foobar, 123].wont_be_written_to subject, :status
+      _([:foobar, 123]).wont_be_written_to subject, :status
     end
 
     it "accepts nil value" do
-      [nil].must_be_written_to subject, :status
+      _([nil]).must_be_written_to subject, :status
     end
 
     it "looks up valid values" do
-      subject.tap { |s| s.status = :closed }.status.must_equal :closed
-      subject.tap { |s| s.status = :SPOWER }.status.must_equal :secondary_power
+      _(subject.tap { |s| s.status = :closed }.status).must_equal :closed
+      _(subject.tap { |s| s.status = :SPOWER }.status).must_equal :secondary_power
     end
   end
 
@@ -74,7 +74,7 @@ describe AIXM::Component::Runway do
   describe :xml= do
     it "builds correct complete OFMX" do
       AIXM.ofmx!
-      subject.to_xml.must_equal <<~END
+      _(subject.to_xml).must_equal <<~END
         <Rwy>
           <RwyUid>
             <AhpUid>
@@ -221,7 +221,7 @@ describe AIXM::Component::Runway do
       %i(length width status remarks).each { |a| subject.send(:"#{a}=", nil) }
       %i(composition preparation condition pcn siwl_weight siwl_tire_pressure auw_weight remarks).each { |a| subject.surface.send(:"#{a}=", nil) }
       %i(forth back).each { |d| subject.send(d).instance_eval { @lightings.clear } }
-      subject.to_xml.must_equal <<~END
+      _(subject.to_xml).must_equal <<~END
         <Rwy>
           <RwyUid>
             <AhpUid>
@@ -316,19 +316,19 @@ describe AIXM::Component::Runway::Direction do
 
   describe :name= do
     it "fails on invalid values" do
-      [nil, :foobar, '16R'].wont_be_written_to subject, :name
+      _([nil, :foobar, '16R']).wont_be_written_to subject, :name
     end
 
     it "overwrites preset name" do
-      subject.name.to_s.must_equal '16L'
+      _(subject.name.to_s).must_equal '16L'
       subject.name = AIXM.a('34L')
-      subject.name.to_s.must_equal '34L'
+      _(subject.name.to_s).must_equal '34L'
     end
   end
 
   describe :geographic_orientation= do
     it "fails on invalid values" do
-      [:foobar, -1, 10].wont_be_written_to subject, :geographic_orientation
+      _([:foobar, -1, 10]).wont_be_written_to subject, :geographic_orientation
     end
   end
 
@@ -336,7 +336,7 @@ describe AIXM::Component::Runway::Direction do
     macro :xy
 
     it "fails on nil value" do
-      [nil].wont_be_written_to subject, :xy
+      _([nil]).wont_be_written_to subject, :xy
     end
   end
 
@@ -344,34 +344,34 @@ describe AIXM::Component::Runway::Direction do
     macro :z_qnh
 
     it "accepts nil value" do
-      [nil].must_be_written_to subject, :z
+      _([nil]).must_be_written_to subject, :z
     end
   end
 
   describe :displaced_threshold= do
     it "fails on invalid values" do
-      [:foobar, 1, AIXM.d(0, :m)].wont_be_written_to subject, :displaced_threshold
+      _([:foobar, 1, AIXM.d(0, :m)]).wont_be_written_to subject, :displaced_threshold
     end
 
     it "converts coordinates to distance" do
       subject.xy = AIXM.xy(lat: %q(43°59'54.71"N), long: %q(004°45'28.35"E))
       subject.displaced_threshold = AIXM.xy(lat: %q(43°59'48.47"N), long: %q(004°45'30.62"E))
-      subject.displaced_threshold.must_equal AIXM.d(199, :m)
+      _(subject.displaced_threshold).must_equal AIXM.d(199, :m)
     end
   end
 
   describe :vfr_pattern= do
     it "fails on invalid values" do
-      [:foobar, 123].wont_be_written_to subject, :vfr_pattern
+      _([:foobar, 123]).wont_be_written_to subject, :vfr_pattern
     end
 
     it "accepts nil value" do
-      [nil].must_be_written_to subject, :vfr_pattern
+      _([nil]).must_be_written_to subject, :vfr_pattern
     end
 
     it "looks up valid values" do
-      subject.tap { |s| s.vfr_pattern = :left }.vfr_pattern.must_equal :left
-      subject.tap { |s| s.vfr_pattern = :E }.vfr_pattern.must_equal :left_or_right
+      _(subject.tap { |s| s.vfr_pattern = :left }.vfr_pattern).must_equal :left
+      _(subject.tap { |s| s.vfr_pattern = :E }.vfr_pattern).must_equal :left_or_right
     end
   end
 
@@ -382,14 +382,14 @@ describe AIXM::Component::Runway::Direction do
   describe :magnetic_orientation do
     it "is calculated correctly" do
       subject.geographic_orientation = AIXM.a(16)
-      subject.magnetic_orientation.must_equal AIXM.a(17)
+      _(subject.magnetic_orientation).must_equal AIXM.a(17)
     end
   end
 
   describe :xml= do
     it "builds correct complete OFMX" do
       AIXM.ofmx!
-      subject.to_xml.must_equal <<~END
+      _(subject.to_xml).must_equal <<~END
         <Rdn>
           <RdnUid>
             <RwyUid>
@@ -452,7 +452,7 @@ describe AIXM::Component::Runway::Direction do
       AIXM.ofmx!
       %i(geographic_orientation z displaced_threshold vfr_pattern remarks).each { |a| subject.send(:"#{a}=", nil) }
       subject.instance_eval { @lightings.clear }
-      subject.to_xml.must_equal <<~END
+      _(subject.to_xml).must_equal <<~END
         <Rdn>
           <RdnUid>
             <RwyUid>

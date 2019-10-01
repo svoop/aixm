@@ -11,25 +11,25 @@ describe AIXM::Feature::NavigationalAid do
 
   describe :id= do
     it "fails on invalid values" do
-      -> { subject.id = 123 }.must_raise ArgumentError
+      _{ subject.id = 123 }.must_raise ArgumentError
     end
 
     it "upcases value" do
-      subject.tap { |s| s.id = 'lol' }.id.must_equal 'LOL'
+      _(subject.tap { |s| s.id = 'lol' }.id).must_equal 'LOL'
     end
   end
 
   describe :name= do
     it "fails on invalid values" do
-      [:foobar, 123].wont_be_written_to subject, :name
+      _([:foobar, 123]).wont_be_written_to subject, :name
     end
 
     it "accepts nil value" do
-      [nil].must_be_written_to subject, :name
+      _([nil]).must_be_written_to subject, :name
     end
 
     it "upcases and transcodes value" do
-      subject.tap { |s| s.name = 'löl' }.name.must_equal 'LOEL'
+      _(subject.tap { |s| s.name = 'löl' }.name).must_equal 'LOEL'
     end
   end
 
@@ -41,7 +41,7 @@ describe AIXM::Feature::NavigationalAid do
     macro :z_qnh
 
     it "accepts nil value" do
-      [nil].must_be_written_to subject, :z
+      _([nil]).must_be_written_to subject, :z
     end
   end
 

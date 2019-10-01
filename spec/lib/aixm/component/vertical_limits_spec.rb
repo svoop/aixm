@@ -7,33 +7,33 @@ describe AIXM::Component::VerticalLimits do
 
   describe :upper_z= do
     it "fails on invalid values" do
-      [nil, :foobar, 123].wont_be_written_to subject, :upper_z
+      _([nil, :foobar, 123]).wont_be_written_to subject, :upper_z
     end
   end
 
   describe :max_z= do
     it "fails on invalid values" do
-      [:foobar, 123].wont_be_written_to subject, :max_z
+      _([:foobar, 123]).wont_be_written_to subject, :max_z
     end
 
     it "accepts nil value" do
-      [nil].must_be_written_to subject, :max_z
+      _([nil]).must_be_written_to subject, :max_z
     end
   end
 
   describe :lower_z= do
     it "fails on invalid values" do
-      [nil, :foobar, 123].wont_be_written_to subject, :lower_z
+      _([nil, :foobar, 123]).wont_be_written_to subject, :lower_z
     end
   end
 
   describe :min_z= do
     it "fails on invalid values" do
-      [:foobar, 123].wont_be_written_to subject, :min_z
+      _([:foobar, 123]).wont_be_written_to subject, :min_z
     end
 
     it "accepts nil value" do
-      [nil].must_be_written_to subject, :max_z
+      _([nil]).must_be_written_to subject, :max_z
     end
   end
 
@@ -44,7 +44,7 @@ describe AIXM::Component::VerticalLimits do
         lower_z: AIXM::GROUND
       )
       AIXM.aixm!
-      subject.to_xml.must_equal <<~END
+      _(subject.to_xml).must_equal <<~END
         <codeDistVerUpper>ALT</codeDistVerUpper>
         <valDistVerUpper>2000</valDistVerUpper>
         <uomDistVerUpper>FT</uomDistVerUpper>
@@ -61,7 +61,7 @@ describe AIXM::Component::VerticalLimits do
         lower_z: AIXM.z(1000, :qfe)
       )
       AIXM.aixm!
-      subject.to_xml.must_equal <<~END
+      _(subject.to_xml).must_equal <<~END
         <codeDistVerUpper>STD</codeDistVerUpper>
         <valDistVerUpper>65</valDistVerUpper>
         <uomDistVerUpper>FL</uomDistVerUpper>
@@ -81,7 +81,7 @@ describe AIXM::Component::VerticalLimits do
         min_z: AIXM.z(3000, :qnh)
       )
       AIXM.aixm!
-      subject.to_xml.must_equal <<~END
+      _(subject.to_xml).must_equal <<~END
         <codeDistVerUpper>STD</codeDistVerUpper>
         <valDistVerUpper>65</valDistVerUpper>
         <uomDistVerUpper>FL</uomDistVerUpper>

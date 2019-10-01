@@ -11,37 +11,37 @@ describe AIXM::Feature::ObstacleGroup do
         subject = AIXM.obstacle_group(
           name: "Mirmande éoliennes"
         )
-        subject.obstacles.must_equal []
+        _(subject.obstacles).must_equal []
       end
     end
 
     describe :name= do
       it "fails on invalid values" do
-        [:foobar, 123].wont_be_written_to subject, :name
+        _([:foobar, 123]).wont_be_written_to subject, :name
       end
 
       it "upcases and transcodes valid values" do
-        subject.name.must_equal 'MIRMANDE EOLIENNES'
+        _(subject.name).must_equal 'MIRMANDE EOLIENNES'
       end
     end
 
     describe :xy_accuracy= do
       it "fails on invalid values" do
-        [:foobar, 123].wont_be_written_to subject, :xy_accuracy
+        _([:foobar, 123]).wont_be_written_to subject, :xy_accuracy
       end
 
       it "accepts valid values" do
-        [nil, AIXM::Factory.d, AIXM.d(0, :m)].must_be_written_to subject, :xy_accuracy
+        _([nil, AIXM::Factory.d, AIXM.d(0, :m)]).must_be_written_to subject, :xy_accuracy
       end
     end
 
     describe :z_accuracy= do
       it "fails on invalid values" do
-        [:foobar, 123].wont_be_written_to subject, :z_accuracy
+        _([:foobar, 123]).wont_be_written_to subject, :z_accuracy
       end
 
       it "accepts valid values" do
-        [nil, AIXM::Factory.d, AIXM.d(0, :m)].must_be_written_to subject, :z_accuracy
+        _([nil, AIXM::Factory.d, AIXM.d(0, :m)]).must_be_written_to subject, :z_accuracy
       end
     end
 
@@ -52,8 +52,8 @@ describe AIXM::Feature::ObstacleGroup do
     describe :add_obstacle do
       it "adds an obstacle to the obstacle group" do
         subject.add_obstacle(AIXM::Factory.obstacle)
-        subject.obstacles.count.must_equal 1
-        subject.obstacles.first.obstacle_group.must_equal subject
+        _(subject.obstacles.count).must_equal 1
+        _(subject.obstacles.first.obstacle_group).must_equal subject
       end
     end
 
@@ -64,7 +64,7 @@ describe AIXM::Feature::ObstacleGroup do
 
       it "builds correct AIXM" do
         AIXM.aixm!
-        subject.to_xml.must_equal <<~END
+        _(subject.to_xml).must_equal <<~END
           <!-- Obstacle: [wind_turbine] 44.67501389N 004.87256667E LA TEISSONIERE 1 -->
           <Obs>
             <ObsUid>
@@ -106,7 +106,7 @@ describe AIXM::Feature::ObstacleGroup do
 
       it "builds correct OFMX" do
         AIXM.ofmx!
-        subject.to_xml.must_equal <<~END
+        _(subject.to_xml).must_equal <<~END
           <!-- Obstacle group: MIRMANDE EOLIENNES -->
           <Ogr>
             <OgrUid>
@@ -183,17 +183,17 @@ describe AIXM::Feature::ObstacleGroup do
       it "adds an obstacle to the obstacle group and links it to previous" do
         subject.add_obstacle(AIXM::Factory.obstacle)
         subject.add_obstacle(AIXM::Factory.obstacle, linked_to: :previous, link_type: :cable)
-        subject.obstacles.count.must_equal 2
-        subject.obstacles.last.linked_to.must_equal subject.obstacles.first
-        subject.obstacles.last.link_type.must_equal :cable
+        _(subject.obstacles.count).must_equal 2
+        _(subject.obstacles.last.linked_to).must_equal subject.obstacles.first
+        _(subject.obstacles.last.link_type).must_equal :cable
       end
 
       it "adds an obstacle to the obstacle group and links it to another obstacle" do
         subject.add_obstacle(AIXM::Factory.obstacle)
         subject.add_obstacle(AIXM::Factory.obstacle, linked_to: subject.obstacles.first, link_type: :solid)
-        subject.obstacles.count.must_equal 2
-        subject.obstacles.last.linked_to.must_equal subject.obstacles.first
-        subject.obstacles.last.link_type.must_equal :solid
+        _(subject.obstacles.count).must_equal 2
+        _(subject.obstacles.last.linked_to).must_equal subject.obstacles.first
+        _(subject.obstacles.last.link_type).must_equal :solid
       end
     end
 
@@ -204,7 +204,7 @@ describe AIXM::Feature::ObstacleGroup do
 
       it "builds correct AIXM" do
         AIXM.aixm!
-        subject.to_xml.must_equal <<~END
+        _(subject.to_xml).must_equal <<~END
           <!-- Obstacle: [mast] 52.29639722N 002.10675278W DROITWICH LW NORTH -->
           <Obs>
             <ObsUid>
@@ -246,7 +246,7 @@ describe AIXM::Feature::ObstacleGroup do
 
       it "builds correct OFMX" do
         AIXM.ofmx!
-        subject.to_xml.must_equal <<~END
+        _(subject.to_xml).must_equal <<~END
           <!-- Obstacle group: DROITWICH LONGWAVE ANTENNA -->
           <Ogr>
             <OgrUid>

@@ -9,48 +9,48 @@ describe AIXM::Component::Layer do
 
     describe :initialize do
       it "sets defaults" do
-        subject.wont_be :selective?
+        _(subject).wont_be :selective?
       end
     end
 
     describe :class= do
       it "fails on invalid values" do
-        [:X, 'X'].wont_be_written_to subject, :class
+        _([:X, 'X']).wont_be_written_to subject, :class
       end
 
       it "symbolizes and upcases valid values" do
-        subject.tap { |s| s.class = 'c' }.class.must_equal :C
+        _(subject.tap { |s| s.class = 'c' }.class).must_equal :C
       end
     end
 
     describe :location_indicator= do
       it "fails on invalid values" do
-        [:foobar, 123, 'XXX', 'XXXXX'].wont_be_written_to subject, :location_indicator
+        _([:foobar, 123, 'XXX', 'XXXXX']).wont_be_written_to subject, :location_indicator
       end
 
       it "accepts nil value" do
-        [nil].must_be_written_to subject, :location_indicator
+        _([nil]).must_be_written_to subject, :location_indicator
       end
 
       it "upcases value" do
-        subject.tap { |s| s.location_indicator = 'lfbb' }.location_indicator.must_equal 'LFBB'
+        _(subject.tap { |s| s.location_indicator = 'lfbb' }.location_indicator).must_equal 'LFBB'
       end
     end
 
     describe :vertical_limits= do
       it "fails on invalid values" do
-        [nil, :foobar, 123].wont_be_written_to subject, :vertical_limits
+        _([nil, :foobar, 123]).wont_be_written_to subject, :vertical_limits
       end
     end
 
     describe :activity= do
       it "fails on invalid values" do
-        [:foobar, 123].wont_be_written_to subject, :activity
+        _([:foobar, 123]).wont_be_written_to subject, :activity
       end
 
       it "looks up valid values" do
-        subject.tap { |s| s.activity = :aerodrome_traffic }.activity.must_equal :aerodrome_traffic
-        subject.tap { |s| s.activity = :GLIDER }.activity.must_equal :gliding
+        _(subject.tap { |s| s.activity = :aerodrome_traffic }.activity).must_equal :aerodrome_traffic
+        _(subject.tap { |s| s.activity = :GLIDER }.activity).must_equal :gliding
       end
     end
 
@@ -60,7 +60,7 @@ describe AIXM::Component::Layer do
 
     describe :selective= do
       it "fails on invalid values" do
-        [nil, 'N', 0].wont_be_written_to subject, :selective
+        _([nil, 'N', 0]).wont_be_written_to subject, :selective
       end
     end
 
@@ -71,7 +71,7 @@ describe AIXM::Component::Layer do
     describe :to_xml do
       it "builds correct OFMX" do
         AIXM.ofmx!
-        subject.to_xml.must_equal <<~END
+        _(subject.to_xml).must_equal <<~END
           <codeDistVerUpper>STD</codeDistVerUpper>
           <valDistVerUpper>65</valDistVerUpper>
           <uomDistVerUpper>FL</uomDistVerUpper>
@@ -90,9 +90,9 @@ describe AIXM::Component::Layer do
 
       it "builds correct AIXM" do
         AIXM.aixm!
-        subject.to_xml.wont_match(/<codeSelAvbl>/)
-        subject.to_xml.wont_match(/<Att>/)
-        subject.to_xml.wont_match(/<txtRmk>/)
+        _(subject.to_xml).wont_match(/<codeSelAvbl>/)
+        _(subject.to_xml).wont_match(/<Att>/)
+        _(subject.to_xml).wont_match(/<txtRmk>/)
       end
     end
   end
@@ -104,7 +104,7 @@ describe AIXM::Component::Layer do
 
     it "builds correct OFMX" do
       AIXM.ofmx!
-      subject.to_xml.must_equal <<~END
+      _(subject.to_xml).must_equal <<~END
         <codeClass>C</codeClass>
         <codeLocInd>XXXX</codeLocInd>
         <codeActivity>TFC-AD</codeActivity>
@@ -130,7 +130,7 @@ describe AIXM::Component::Layer do
 
     it "builds correct AIXM" do
       AIXM.aixm!
-      subject.to_xml.wont_match(/<codeSelAvbl>/)
+      _(subject.to_xml).wont_match(/<codeSelAvbl>/)
     end
   end
 

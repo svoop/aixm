@@ -7,13 +7,13 @@ describe AIXM::Feature::Address do
 
   describe :type= do
     it "fails on invalid values" do
-      -> { subject.type = :foobar }.must_raise ArgumentError
-      -> { subject.type = nil }.must_raise ArgumentError
+      _{ subject.type = :foobar }.must_raise ArgumentError
+      _{ subject.type = nil }.must_raise ArgumentError
     end
 
     it "looks up valid values" do
-      subject.tap { |s| s.type = :phone }.type.must_equal :phone
-      subject.tap { |s| s.type = :RADIO }.type.must_equal :radio_frequency
+      _(subject.tap { |s| s.type = :phone }.type).must_equal :phone
+      _(subject.tap { |s| s.type = :RADIO }.type).must_equal :radio_frequency
     end
   end
 
@@ -24,7 +24,7 @@ describe AIXM::Feature::Address do
   describe :xml= do
     it "builds correct OFMX" do
       AIXM.ofmx!
-      subject.to_xml(as: :Xxx, sequence: 1).must_equal <<~END
+      _(subject.to_xml(as: :Xxx, sequence: 1)).must_equal <<~END
         <!-- Address: RADIO -->
         <Xxx source="LF|GEN|0.0 FACTORY|0|0">
           <XxxUid>
@@ -40,7 +40,7 @@ describe AIXM::Feature::Address do
     it "builds correct AIXM" do
       AIXM.aixm!
       subject = AIXM.address(type: :weather_url, address: 'https://www.foo.bar')
-      subject.to_xml(as: :Xxx, sequence: 1).must_equal <<~END
+      _(subject.to_xml(as: :Xxx, sequence: 1)).must_equal <<~END
         <!-- Address: URL-MET -->
         <Xxx>
           <XxxUid>

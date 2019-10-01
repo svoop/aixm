@@ -7,11 +7,11 @@ describe AIXM::Component::Helipad do
 
   describe :name= do
     it "fails on invalid values" do
-      [nil, :foobar, 123].wont_be_written_to subject, :name
+      _([nil, :foobar, 123]).wont_be_written_to subject, :name
     end
 
     it "upcases and transcodes valid values" do
-      subject.tap { |s| s.name = 'h1' }.name.must_equal 'H1'
+      _(subject.tap { |s| s.name = 'h1' }.name).must_equal 'H1'
     end
   end
 
@@ -19,7 +19,7 @@ describe AIXM::Component::Helipad do
     macro :xy
 
     it "fails on nil value" do
-      [nil].wont_be_written_to subject, :xy
+      _([nil]).wont_be_written_to subject, :xy
     end
   end
 
@@ -29,21 +29,21 @@ describe AIXM::Component::Helipad do
 
   describe :length= do
     it "fails on invalid values" do
-      [:foobar, 0, 1, AIXM.d(0, :m)].wont_be_written_to subject, :length
+      _([:foobar, 0, 1, AIXM.d(0, :m)]).wont_be_written_to subject, :length
     end
 
     it "accepts nil value" do
-      [nil].must_be_written_to subject, :length
+      _([nil]).must_be_written_to subject, :length
     end
   end
 
   describe :width= do
     it "fails on invalid values" do
-      [:foobar, 0, 1, AIXM.d(0, :m)].wont_be_written_to subject, :width
+      _([:foobar, 0, 1, AIXM.d(0, :m)]).wont_be_written_to subject, :width
     end
 
     it "accepts nil value" do
-      [nil].must_be_written_to subject, :width
+      _([nil]).must_be_written_to subject, :width
     end
   end
 
@@ -53,41 +53,41 @@ describe AIXM::Component::Helipad do
 
   describe :fato= do
     it "fails on invalid values" do
-      [:foobar, 0].wont_be_written_to subject, :fato
+      _([:foobar, 0]).wont_be_written_to subject, :fato
     end
 
     it "accepts valid values" do
-      [nil, AIXM::Factory.fato].must_be_written_to subject, :fato
+      _([nil, AIXM::Factory.fato]).must_be_written_to subject, :fato
     end
   end
 
   describe :helicopter_class= do
     it "fails on invalid values" do
-      [:foobar, 123].wont_be_written_to subject, :helicopter_class
+      _([:foobar, 123]).wont_be_written_to subject, :helicopter_class
     end
 
     it "accepts nil value" do
-      [nil].must_be_written_to subject, :helicopter_class
+      _([nil]).must_be_written_to subject, :helicopter_class
     end
 
     it "looks up valid values" do
-      subject.tap { |s| s.helicopter_class = 1 }.helicopter_class.must_equal :'1'
-      subject.tap { |s| s.helicopter_class = :OTHER }.helicopter_class.must_equal :other
+      _(subject.tap { |s| s.helicopter_class = 1 }.helicopter_class).must_equal :'1'
+      _(subject.tap { |s| s.helicopter_class = :OTHER }.helicopter_class).must_equal :other
     end
   end
 
   describe :status= do
     it "fails on invalid values" do
-      [:foobar, 123].wont_be_written_to subject, :status
+      _([:foobar, 123]).wont_be_written_to subject, :status
     end
 
     it "accepts nil value" do
-      [nil].must_be_written_to subject, :status
+      _([nil]).must_be_written_to subject, :status
     end
 
     it "looks up valid values" do
-      subject.tap { |s| s.status = :closed }.status.must_equal :closed
-      subject.tap { |s| s.status = :SPOWER }.status.must_equal :secondary_power
+      _(subject.tap { |s| s.status = :closed }.status).must_equal :closed
+      _(subject.tap { |s| s.status = :SPOWER }.status).must_equal :secondary_power
     end
   end
 
@@ -98,7 +98,7 @@ describe AIXM::Component::Helipad do
   describe :xml= do
     it "builds correct complete OFMX" do
       AIXM.ofmx!
-      subject.to_xml.must_equal <<~END
+      _(subject.to_xml).must_equal <<~END
         <Tla>
           <TlaUid>
             <AhpUid>
@@ -163,7 +163,7 @@ describe AIXM::Component::Helipad do
       %i(z length width helicopter_class marking status remarks).each { |a| subject.send(:"#{a}=", nil) }
       %i(composition preparation condition pcn siwl_weight siwl_tire_pressure auw_weight remarks).each { |a| subject.surface.send(:"#{a}=", nil) }
       subject.instance_eval { @lightings.clear }
-      subject.to_xml.must_equal <<~END
+      _(subject.to_xml).must_equal <<~END
         <Tla>
           <TlaUid>
             <AhpUid>

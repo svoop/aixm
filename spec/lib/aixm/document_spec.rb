@@ -7,75 +7,75 @@ describe AIXM::Document do
 
   describe :initialize do
     it "sets defaults" do
-      subject.features.must_equal []
+      _(subject.features).must_equal []
     end
   end
 
   describe :namespace= do
     it "fails on invalid values" do
-      ['foobar', :foobar].wont_be_written_to subject, :namespace
+      _(['foobar', :foobar]).wont_be_written_to subject, :namespace
     end
 
     it "sets random UUID for nil value" do
-      subject.tap { |s| s.namespace = nil }.namespace.must_match AIXM::Document::NAMESPACE_RE
+      _(subject.tap { |s| s.namespace = nil }.namespace).must_match AIXM::Document::NAMESPACE_RE
     end
 
     it "accepts UUID value" do
-      [SecureRandom.uuid].must_be_written_to subject, :namespace
+      _([SecureRandom.uuid]).must_be_written_to subject, :namespace
     end
   end
 
   describe :region= do
     it "fails on invalid values" do
-      ['x', 'foobar', :foobar].wont_be_written_to subject, :region
+      _(['x', 'foobar', :foobar]).wont_be_written_to subject, :region
     end
 
     it "upcases valid values" do
-      subject.tap { |s| s.region = 'lf' }.region.must_equal 'LF'
+      _(subject.tap { |s| s.region = 'lf' }.region).must_equal 'LF'
     end
   end
 
   describe :created_at= do
     it "fails on invalid values" do
-      ['foobar', '2018-01-77'].wont_be_written_to subject, :created_at
+      _(['foobar', '2018-01-77']).wont_be_written_to subject, :created_at
     end
 
     it "parses dates and times" do
       string = '2018-01-01 12:00:00 +0100'
-      subject.tap { |s| s.created_at = string }.created_at.must_equal Time.parse(string)
+      _(subject.tap { |s| s.created_at = string }.created_at).must_equal Time.parse(string)
     end
 
     it "falls back to effective_at first" do
       subject.effective_at = Time.now
       subject.created_at = nil
-      subject.created_at.must_equal subject.effective_at
+      _(subject.created_at).must_equal subject.effective_at
     end
 
     it "falls back to now second" do
       subject.created_at = nil
-      subject.created_at.must_be_close_to Time.now
+      _(subject.created_at).must_be_close_to Time.now
     end
   end
 
   describe :effective_at= do
     it "fails on invalid values" do
-      ['foobar', '2018-01-77'].wont_be_written_to subject, :effective_at
+      _(['foobar', '2018-01-77']).wont_be_written_to subject, :effective_at
     end
 
     it "parses dates and times" do
       string = '2018-01-01 12:00:00 +0100'
-      subject.tap { |s| s.effective_at = string }.effective_at.must_equal Time.parse(string)
+      _(subject.tap { |s| s.effective_at = string }.effective_at).must_equal Time.parse(string)
     end
 
     it "falls back to created_at first" do
       subject.effective_at = Time.now
       subject.effective_at = nil
-      subject.effective_at.must_equal subject.created_at
+      _(subject.effective_at).must_equal subject.created_at
     end
 
     it "falls back to now second" do
       subject.effective_at = nil
-      subject.effective_at.must_be_close_to Time.now
+      _(subject.effective_at).must_be_close_to Time.now
     end
   end
 
@@ -85,21 +85,21 @@ describe AIXM::Document do
     end
 
     it "returns array of features by class" do
-      subject.select_features(:airport).map(&:id).must_equal %w(LFNT)
-      subject.select_features(AIXM::Feature::Airport).map(&:id).must_equal %w(LFNT)
+      _(subject.select_features(:airport).map(&:id)).must_equal %w(LFNT)
+      _(subject.select_features(AIXM::Feature::Airport).map(&:id)).must_equal %w(LFNT)
     end
 
     it "returns array of features by class and attributes" do
-      subject.select_features(:airport, id: "LFNT").map(&:id).must_equal %w(LFNT)
-      subject.select_features(AIXM::Feature::Airport, id: "LFNT").map(&:id).must_equal %w(LFNT)
+      _(subject.select_features(:airport, id: "LFNT").map(&:id)).must_equal %w(LFNT)
+      _(subject.select_features(AIXM::Feature::Airport, id: "LFNT").map(&:id)).must_equal %w(LFNT)
     end
 
     it "returns empty array if nothing matches" do
-      subject.select_features(:airport, id: "FAKE").must_equal []
+      _(subject.select_features(:airport, id: "FAKE")).must_equal []
     end
 
     it "fails on invalid shortcut" do
-      -> { subject.select_features(:fake) }.must_raise ArgumentError
+      _{ subject.select_features(:fake) }.must_raise ArgumentError
     end
   end
 
@@ -130,29 +130,29 @@ describe AIXM::Document do
     end
 
     it "adds 1 group of obstacles with default max distance" do
-      subject.group_obstacles!.must_equal 1
+      _(subject.group_obstacles!).must_equal 1
       obstacle_group = subject.select_features(:obstacle_group).first
-      obstacle_group.obstacles.count.must_equal 8
+      _(obstacle_group.obstacles.count).must_equal 8
     end
 
     it "adds 2 groups of obstacles with max distance 400m" do
-      subject.group_obstacles!(max_distance: AIXM.d(400, :m)).must_equal 2
+      _(subject.group_obstacles!(max_distance: AIXM.d(400, :m))).must_equal 2
       obstacle_groups = subject.features.select { |f| f.is_a? AIXM::Feature::ObstacleGroup }
       obstacle_groups.each do |obstacle_group|
         names = obstacle_group.obstacles.map(&:name).sort
-        names.must_equal names.include?('1') ? %w(1 2 3 4) : %w(5 6 7 8)
+        _(names).must_equal names.include?('1') ? %w(1 2 3 4) : %w(5 6 7 8)
       end
     end
 
     it "leaves ungrouped obstacles untouched" do
       subject.group_obstacles!
-      subject.select_features(:obstacle).count.must_equal 1
+      _(subject.select_features(:obstacle).count).must_equal 1
     end
 
     it "copies source of first obstacle to obstacle group" do
       subject.group_obstacles!
       obstacle_group = subject.select_features(:obstacle_group).first
-      obstacle_group.source.must_equal obstacle_group.obstacles.first.source
+      _(obstacle_group.source).must_equal obstacle_group.obstacles.first.source
     end
   end
 
@@ -163,11 +163,11 @@ describe AIXM::Document do
     end
 
     it "won't have errors" do
-      subject.errors.must_equal []
+      _(subject.errors).must_equal []
     end
 
     it "builds correct AIXM" do
-      subject.to_xml.must_equal <<~"END"
+      _(subject.to_xml).must_equal <<~"END"
         <?xml version="1.0" encoding="UTF-8"?>
         <AIXM-Snapshot xmlns:xsi="http://www.aixm.aero/schema/4.5/AIXM-Snapshot.xsd" version="4.5" origin="rubygem aixm-#{AIXM::VERSION}" created="2018-01-01T12:00:00+01:00" effective="2018-01-01T12:00:00+01:00">
           <!-- Organisation: FRANCE -->
@@ -978,11 +978,11 @@ describe AIXM::Document do
     end
 
     it "won't have errors" do
-      subject.errors.must_equal []
+      _(subject.errors).must_equal []
     end
 
     it "builds correct OFMX" do
-      subject.to_xml.must_equal <<~"END"
+      _(subject.to_xml).must_equal <<~"END"
         <?xml version="1.0" encoding="UTF-8"?>
         <OFMX-Snapshot xmlns:xsi="http://schema.openflightmaps.org/0/OFMX-Snapshot.xsd" version="0" origin="rubygem aixm-#{AIXM::VERSION}" region="LF" namespace="00000000-0000-0000-0000-000000000000" created="2018-01-01T12:00:00+01:00" effective="2018-01-01T12:00:00+01:00">
           <!-- Organisation: FRANCE -->
