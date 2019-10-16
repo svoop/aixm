@@ -15,7 +15,7 @@ For now, only the parts needed to automize the AIP import of [open flightmaps](h
 
 ## Install
 
-Add this to your `Gemfile`:
+Add this to your <tt>Gemfile</tt> or <tt>gems.rb</tt>:
 
 ```ruby
 gem aixm
