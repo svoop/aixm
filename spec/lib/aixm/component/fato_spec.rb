@@ -114,7 +114,7 @@ describe AIXM::Component::FATO do
             <txtDesig>35</txtDesig>
           </FdnUid>
           <valTrueBrg>355</valTrueBrg>
-          <valMagBrg>356</valMagBrg>
+          <valMagBrg>354</valMagBrg>
           <txtRmk>Avoid flight over residental area</txtRmk>
         </Fdn>
         <Fls>
@@ -163,7 +163,7 @@ describe AIXM::Component::FATO do
             <txtDesig>35</txtDesig>
           </FdnUid>
           <valTrueBrg>355</valTrueBrg>
-          <valMagBrg>356</valMagBrg>
+          <valMagBrg>354</valMagBrg>
           <txtRmk>Avoid flight over residental area</txtRmk>
         </Fdn>
       END
@@ -195,7 +195,7 @@ describe AIXM::Component::FATO::Direction do
   describe :magnetic_orientation do
     it "is calculated correctly" do
       subject.geographic_orientation = AIXM.a(16)
-      _(subject.magnetic_orientation).must_equal AIXM.a(17)
+      _(subject.magnetic_orientation).must_equal AIXM.a(15)
     end
   end
 
@@ -214,7 +214,7 @@ describe AIXM::Component::FATO::Direction do
             <txtDesig>35</txtDesig>
           </FdnUid>
           <valTrueBrg>355</valTrueBrg>
-          <valMagBrg>356</valMagBrg>
+          <valMagBrg>354</valMagBrg>
           <txtRmk>Avoid flight over residental area</txtRmk>
         </Fdn>
         <Fls>

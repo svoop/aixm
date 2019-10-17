@@ -74,6 +74,9 @@ module AIXM
       # declination represents the magnetic north is to the right (aka: east)
       # by this angle.
       #
+      # To convert a magnetic bearing to the corresponding geographic (aka:
+      # true) bearing, the declination has to be added.
+      #
       # @see https://en.wikipedia.org/wiki/Magnetic_declination
       # @return [Float, nil] magnetic declination in degrees
       attr_reader :declination

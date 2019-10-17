@@ -280,7 +280,7 @@ describe AIXM::Feature::Airport do
           <geoLat>44.00211944N</geoLat>
           <geoLong>004.75216944E</geoLong>
           <valTrueBrg>165</valTrueBrg>
-          <valMagBrg>166</valMagBrg>
+          <valMagBrg>164</valMagBrg>
           <valElevTdz>145</valElevTdz>
           <uomElevTdz>FT</uomElevTdz>
           <codeVfrPattern>E</codeVfrPattern>
@@ -335,7 +335,7 @@ describe AIXM::Feature::Airport do
           <geoLat>43.99036389N</geoLat>
           <geoLong>004.75645556E</geoLong>
           <valTrueBrg>345</valTrueBrg>
-          <valMagBrg>346</valMagBrg>
+          <valMagBrg>344</valMagBrg>
           <valElevTdz>147</valElevTdz>
           <uomElevTdz>FT</uomElevTdz>
           <codeVfrPattern>L</codeVfrPattern>
@@ -418,7 +418,7 @@ describe AIXM::Feature::Airport do
             <txtDesig>35</txtDesig>
           </FdnUid>
           <valTrueBrg>355</valTrueBrg>
-          <valMagBrg>356</valMagBrg>
+          <valMagBrg>354</valMagBrg>
           <txtRmk>Avoid flight over residental area</txtRmk>
         </Fdn>
         <Fls>

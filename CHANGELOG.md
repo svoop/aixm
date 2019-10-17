@@ -1,5 +1,7 @@
 ## 0.3.8 (unreleased)
-Nothing so far
+
+#### Changes
+* Fix calculation of magnetic bearing
 
 ## 0.3.7
 

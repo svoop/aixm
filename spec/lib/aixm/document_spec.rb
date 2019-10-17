@@ -297,7 +297,7 @@ describe AIXM::Document do
             <geoLat>440007.63N</geoLat>
             <geoLong>0044507.81E</geoLong>
             <valTrueBrg>165</valTrueBrg>
-            <valMagBrg>166</valMagBrg>
+            <valMagBrg>164</valMagBrg>
             <valElevTdz>145</valElevTdz>
             <uomElevTdz>FT</uomElevTdz>
             <codeVfrPattern>E</codeVfrPattern>
@@ -352,7 +352,7 @@ describe AIXM::Document do
             <geoLat>435925.31N</geoLat>
             <geoLong>0044523.24E</geoLong>
             <valTrueBrg>345</valTrueBrg>
-            <valMagBrg>346</valMagBrg>
+            <valMagBrg>344</valMagBrg>
             <valElevTdz>147</valElevTdz>
             <uomElevTdz>FT</uomElevTdz>
             <codeVfrPattern>L</codeVfrPattern>
@@ -435,7 +435,7 @@ describe AIXM::Document do
               <txtDesig>35</txtDesig>
             </FdnUid>
             <valTrueBrg>355</valTrueBrg>
-            <valMagBrg>356</valMagBrg>
+            <valMagBrg>354</valMagBrg>
             <txtRmk>Avoid flight over residental area</txtRmk>
           </Fdn>
           <Fls>
@@ -1113,7 +1113,7 @@ describe AIXM::Document do
             <geoLat>44.00211944N</geoLat>
             <geoLong>004.75216944E</geoLong>
             <valTrueBrg>165</valTrueBrg>
-            <valMagBrg>166</valMagBrg>
+            <valMagBrg>164</valMagBrg>
             <valElevTdz>145</valElevTdz>
             <uomElevTdz>FT</uomElevTdz>
             <codeVfrPattern>E</codeVfrPattern>
@@ -1168,7 +1168,7 @@ describe AIXM::Document do
             <geoLat>43.99036389N</geoLat>
             <geoLong>004.75645556E</geoLong>
             <valTrueBrg>345</valTrueBrg>
-            <valMagBrg>346</valMagBrg>
+            <valMagBrg>344</valMagBrg>
             <valElevTdz>147</valElevTdz>
             <uomElevTdz>FT</uomElevTdz>
             <codeVfrPattern>L</codeVfrPattern>
@@ -1251,7 +1251,7 @@ describe AIXM::Document do
               <txtDesig>35</txtDesig>
             </FdnUid>
             <valTrueBrg>355</valTrueBrg>
-            <valMagBrg>356</valMagBrg>
+            <valMagBrg>354</valMagBrg>
             <txtRmk>Avoid flight over residental area</txtRmk>
           </Fdn>
           <Fls>

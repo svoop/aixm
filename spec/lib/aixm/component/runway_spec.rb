@@ -116,7 +116,7 @@ describe AIXM::Component::Runway do
           <geoLat>44.00211944N</geoLat>
           <geoLong>004.75216944E</geoLong>
           <valTrueBrg>165</valTrueBrg>
-          <valMagBrg>166</valMagBrg>
+          <valMagBrg>164</valMagBrg>
           <valElevTdz>145</valElevTdz>
           <uomElevTdz>FT</uomElevTdz>
           <codeVfrPattern>E</codeVfrPattern>
@@ -171,7 +171,7 @@ describe AIXM::Component::Runway do
           <geoLat>43.99036389N</geoLat>
           <geoLong>004.75645556E</geoLong>
           <valTrueBrg>345</valTrueBrg>
-          <valMagBrg>346</valMagBrg>
+          <valMagBrg>344</valMagBrg>
           <valElevTdz>147</valElevTdz>
           <uomElevTdz>FT</uomElevTdz>
           <codeVfrPattern>L</codeVfrPattern>
@@ -243,7 +243,7 @@ describe AIXM::Component::Runway do
           <geoLat>44.00211944N</geoLat>
           <geoLong>004.75216944E</geoLong>
           <valTrueBrg>165</valTrueBrg>
-          <valMagBrg>166</valMagBrg>
+          <valMagBrg>164</valMagBrg>
           <valElevTdz>145</valElevTdz>
           <uomElevTdz>FT</uomElevTdz>
           <codeVfrPattern>E</codeVfrPattern>
@@ -280,7 +280,7 @@ describe AIXM::Component::Runway do
           <geoLat>43.99036389N</geoLat>
           <geoLong>004.75645556E</geoLong>
           <valTrueBrg>345</valTrueBrg>
-          <valMagBrg>346</valMagBrg>
+          <valMagBrg>344</valMagBrg>
           <valElevTdz>147</valElevTdz>
           <uomElevTdz>FT</uomElevTdz>
           <codeVfrPattern>L</codeVfrPattern>
@@ -382,7 +382,7 @@ describe AIXM::Component::Runway::Direction do
   describe :magnetic_orientation do
     it "is calculated correctly" do
       subject.geographic_orientation = AIXM.a(16)
-      _(subject.magnetic_orientation).must_equal AIXM.a(17)
+      _(subject.magnetic_orientation).must_equal AIXM.a(15)
     end
   end
 
@@ -403,7 +403,7 @@ describe AIXM::Component::Runway::Direction do
           <geoLat>44.00211944N</geoLat>
           <geoLong>004.75216944E</geoLong>
           <valTrueBrg>165</valTrueBrg>
-          <valMagBrg>166</valMagBrg>
+          <valMagBrg>164</valMagBrg>
           <valElevTdz>145</valElevTdz>
           <uomElevTdz>FT</uomElevTdz>
           <codeVfrPattern>E</codeVfrPattern>

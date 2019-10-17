@@ -222,7 +222,7 @@ module AIXM
         # @return [AIXM::A] magnetic orientation (magnetic bearing) in degrees
         def magnetic_orientation
           if geographic_orientation && fato.airport.declination
-            geographic_orientation + fato.airport.declination
+            geographic_orientation - fato.airport.declination
           end
         end
 
