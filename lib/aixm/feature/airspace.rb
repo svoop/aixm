@@ -136,7 +136,15 @@ module AIXM
         builder.tag!(as) do |tag|
           tag.codeType(TYPES.key(type).to_s)
           tag.codeId(id)
-        end
+        end.insert_payload_hash(region: AIXM.config.mid_region)
+      end
+
+      # @return [String] UID markup
+      def to_wrapped_uid(as: :AseUid, with:)
+        builder = Builder::XmlMarkup.new(indent: 2)
+        builder.tag!(with) do |tag|
+          tag << to_uid(as: as).indent(2)
+        end.insert_payload_hash(region: AIXM.config.mid_region)
       end
 
       # @raise [AIXM::GeometryError] if the geometry is not closed
@@ -155,9 +163,7 @@ module AIXM
           end
         end
         builder.Abd do |abd|
-          abd.AbdUid do |abd_uid|
-            abd_uid << to_uid.indent(4)
-          end
+          abd << to_wrapped_uid(with: :AbdUid).indent(2)
           abd << geometry.to_xml.indent(2)
         end
         if layered?
@@ -169,9 +175,7 @@ module AIXM
               ase << layers[index].to_xml.indent(2)
             end
             builder.Adg do |adg|
-              adg.AdgUid do |adg_uid|
-                adg_uid << layer_airspace.to_uid.indent(4)
-              end
+              adg << layer_airspace.to_wrapped_uid(with: :AdgUid).indent(2)
               adg << to_uid(as: :AseUidSameExtent).indent(2)
             end
           end
@@ -184,7 +188,6 @@ module AIXM
       def layered?
         layers.count > 1
       end
-
     end
   end
 end

@@ -36,7 +36,6 @@ describe AIXM::Component::Geometry::Circle do
         center_xy: AIXM.xy(lat: 11.1, long: 22.2),
         radius: AIXM.d(25, :km)
       )
-      AIXM.aixm!
       _(subject.to_xml).must_equal <<~END
         <Avx>
           <codeType>CWA</codeType>
@@ -54,7 +53,6 @@ describe AIXM::Component::Geometry::Circle do
         center_xy: AIXM.xy(lat: -0.0005, long: -22.2),
         radius: AIXM.d(50, :km)
       )
-      AIXM.aixm!
       _(subject.to_xml).must_equal <<~END
         <Avx>
           <codeType>CWA</codeType>

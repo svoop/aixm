@@ -131,7 +131,7 @@ module AIXM
         builder.FtoUid do |fto_uid|
           fto_uid << airport.to_uid.indent(2)
           fto_uid.txtDesig(name)
-        end
+        end.insert_payload_hash(region: AIXM.config.mid_region)
       end
 
       # @return [String] AIXM or OFMX markup
@@ -232,7 +232,7 @@ module AIXM
           builder.FdnUid do |fdn_uid|
             fdn_uid << fato.to_uid.indent(2)
             fdn_uid.txtDesig(name)
-          end
+          end.insert_payload_hash(region: AIXM.config.mid_region)
         end
 
         # @return [String] AIXM or OFMX markup

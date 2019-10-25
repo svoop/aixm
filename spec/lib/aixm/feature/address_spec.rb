@@ -37,8 +37,13 @@ describe AIXM::Feature::Address do
       END
     end
 
+    it "builds OFMX with mid" do
+      AIXM.ofmx!
+      AIXM.config.mid_region = 'LF'
+      _(subject.to_xml(as: :Xxx, sequence: 1)).must_match /<XxxUid mid="126bee70-4d4e-0032-ada9-81d3318fe6b7">/
+    end
+
     it "builds correct AIXM" do
-      AIXM.aixm!
       subject = AIXM.address(type: :weather_url, address: 'https://www.foo.bar')
       _(subject.to_xml(as: :Xxx, sequence: 1)).must_equal <<~END
         <!-- Address: URL-MET -->

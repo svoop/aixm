@@ -22,7 +22,6 @@ describe AIXM::Component::Timetable do
 
   describe :to_xml do
     it "builds correct complete AIXM" do
-      AIXM.aixm!
       _(subject.to_xml).must_equal <<~END
         <Timetable>
           <codeWorkHr>HJ</codeWorkHr>
@@ -32,7 +31,6 @@ describe AIXM::Component::Timetable do
     end
 
     it "builds correct minimal AIXM" do
-      AIXM.aixm!
       subject.remarks = nil
       _(subject.to_xml).must_equal <<~END
         <Timetable>

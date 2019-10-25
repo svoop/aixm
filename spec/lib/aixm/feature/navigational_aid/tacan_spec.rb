@@ -84,5 +84,11 @@ describe AIXM::Feature::NavigationalAid::TACAN do
         </Tcn>
       END
     end
+
+    it "builds OFMX with mid" do
+      AIXM.ofmx!
+      AIXM.config.mid_region = 'LF'
+      _(subject.to_xml).must_match /<TcnUid mid="8776071f-114a-4996-84ef-2d7848c503f5">/
+    end
   end
 end

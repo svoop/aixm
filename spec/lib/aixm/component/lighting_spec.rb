@@ -84,5 +84,11 @@ describe AIXM::Component::Lighting do
         </Rls>
       END
     end
+
+    it "builds OFMX with mid" do
+      AIXM.ofmx!
+      AIXM.config.mid_region = 'LF'
+      _(subject.to_xml(as: :Rls)).must_match /<RlsUid mid="e96565dc-d6b4-35ca-6e42-7c465cfbec52">/
+    end
   end
 end

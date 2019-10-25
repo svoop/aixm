@@ -33,13 +33,19 @@ module AIXM
           @name = value
         end
 
+        # @return [String] UID markup
+        def to_uid(as: :GbrUid)
+          builder = Builder::XmlMarkup.new(indent: 2)
+          builder.tag!(as) do |tag|
+            tag.txtName(name.to_s)
+          end.insert_payload_hash(region: AIXM.config.mid_region)
+        end
+
         # @return [String] AIXM or OFMX markup
         def to_xml
           builder = Builder::XmlMarkup.new(indent: 2)
           builder.Avx do |avx|
-            avx.GbrUid do |gbr_uid|
-              gbr_uid.txtName(name.to_s)
-            end
+            avx << to_uid.indent(2)
             avx.codeType('FNT')
             avx.geoLat(xy.lat(AIXM.schema))
             avx.geoLong(xy.long(AIXM.schema))

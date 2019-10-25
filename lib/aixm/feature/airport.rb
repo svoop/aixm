@@ -283,7 +283,15 @@ module AIXM
         builder = Builder::XmlMarkup.new(indent: 2)
         builder.tag!(as) do |tag|
           tag.codeId(id)
-        end
+        end.insert_payload_hash(region: AIXM.config.mid_region)
+      end
+
+      # @return [String] UID markup
+      def to_wrapped_uid(as: :AhpUid, with:)
+        builder = Builder::XmlMarkup.new(indent: 2)
+        builder.tag!(with) do |tag|
+          tag << to_uid(as: as).indent(2)
+        end.insert_payload_hash(region: AIXM.config.mid_region)
       end
 
       # @return [String] AIXM or OFMX markup
@@ -325,9 +333,7 @@ module AIXM
         end
         if usage_limitations.any?
           builder.Ahu do |ahu|
-            ahu.AhuUid do |ahu_uid|
-              ahu_uid << to_uid.indent(4)
-            end
+            ahu << to_wrapped_uid(with: :AhuUid).indent(2)
             usage_limitations.each do |usage_limitation|
               ahu << usage_limitation.to_xml.indent(2)
             end

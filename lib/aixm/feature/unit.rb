@@ -160,7 +160,7 @@ module AIXM
         builder = Builder::XmlMarkup.new(indent: 2)
         builder.UniUid do |uni_uid|
           uni_uid.txtName(name)
-        end
+        end.insert_payload_hash(region: AIXM.config.mid_region)
       end
 
       # @return [String] AIXM or OFMX markup

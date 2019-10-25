@@ -89,7 +89,6 @@ describe AIXM::Component::Layer do
       end
 
       it "builds correct AIXM" do
-        AIXM.aixm!
         _(subject.to_xml).wont_match(/<codeSelAvbl>/)
         _(subject.to_xml).wont_match(/<Att>/)
         _(subject.to_xml).wont_match(/<txtRmk>/)
@@ -129,7 +128,6 @@ describe AIXM::Component::Layer do
     end
 
     it "builds correct AIXM" do
-      AIXM.aixm!
       _(subject.to_xml).wont_match(/<codeSelAvbl>/)
     end
   end

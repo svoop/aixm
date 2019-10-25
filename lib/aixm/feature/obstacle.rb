@@ -237,7 +237,7 @@ module AIXM
           tag << obstacle_group.to_uid.indent(2) if AIXM.ofmx?
           tag.geoLat((xy.lat(AIXM.schema)))
           tag.geoLong((xy.long(AIXM.schema)))
-        end
+        end.insert_payload_hash(region: AIXM.config.mid_region)
       end
 
       # @return [String] AIXM or OFMX markup

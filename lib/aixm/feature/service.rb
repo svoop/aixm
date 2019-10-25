@@ -197,7 +197,7 @@ module AIXM
           ser_uid << unit.to_uid.indent(2)
           ser_uid.codeType(TYPES.key(type).to_s)
           ser_uid.noSeq(@sequence)
-        end
+        end.insert_payload_hash(region: AIXM.config.mid_region)
       end
 
       # @return [String] AIXM or OFMX markup

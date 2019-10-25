@@ -73,5 +73,11 @@ describe AIXM::Feature::Organisation do
         </Org>
       END
     end
+
+    it "builds OFMX with mid" do
+      AIXM.ofmx!
+      AIXM.config.mid_region = 'LF'
+      _(subject.to_xml).must_match /<OrgUid mid="b5fef8e2-ea45-7326-6b2f-38cb45cd21a8">/
+    end
   end
 end

@@ -1,5 +1,9 @@
 ## 0.3.8 (unreleased)
 
+#### Additions
+* `AIXM.config.mid_region` to generate `mid` attributes on all features
+* Refinement `String#insert_payload_hash`
+
 #### Changes
 * Fix calculation of magnetic bearing
 
@@ -42,14 +46,17 @@
 * `Runway#preparation`, `Runway#condition` and `Runway#vfr_pattern`
 * `Service#guessed_unit_type`
 * Surface for `Runway|Helipad#surface`
-* Extracted `AIXM::MIN`, `AIXM::SEC` and `AIXM::DMS_RE` to scan for coordinates in texts
+* Extracted `AIXM::MIN`, `AIXM::SEC` and `AIXM::DMS_RE` to scan for coordinates
+  in texts
 * Refinement `String#payload_hash`
 
 #### Breaking Changes
 * Require Ruby 2.6
-* Renamed `AIXM::H` to `AIXM::A` (angle) and add simple arithmetics to make it more versatile
+* Renamed `AIXM::H` to `AIXM::A` (angle) and add simple arithmetics to make it
+  more versatile
 * `Runway|Helipad#composition` moved to `Runway|Helipad#surface`
-* DMS notation `{-}{DD}DMMSS{.SS}[NESW]` now requires compulsory cardinal direction (N, E, S or W) at the end
+* DMS notation `{-}{DD}DMMSS{.SS}[NESW]` now requires compulsory cardinal
+  direction (N, E, S or W) at the end
 
 #### Changes
 * Service is a feature now
@@ -61,7 +68,8 @@
 
 #### Changes
 * Updated OFMX schema URI
-* Added `eql?` and `hash` to `AIXM::XY|Z|D|H|F` to allow for instances of these classes to be used as Hash keys.
+* Added `eql?` and `hash` to `AIXM::XY|Z|D|H|F` to allow for instances of these
+  classes to be used as Hash keys.
 
 ## 0.3.2
 

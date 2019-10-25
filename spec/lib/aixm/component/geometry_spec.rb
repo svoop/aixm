@@ -37,7 +37,6 @@ describe AIXM::Component::Geometry do
     end
 
     it "builds valid AIXM" do
-      AIXM.aixm!
       _(subject.to_xml).must_equal <<~END
         <Avx>
           <codeType>GRC</codeType>
@@ -91,7 +90,6 @@ describe AIXM::Component::Geometry do
     end
 
     it "builds valid AIXM" do
-      AIXM.aixm!
       _(subject.to_xml).must_equal <<~END
         <Avx>
           <codeType>GRC</codeType>
@@ -159,7 +157,6 @@ describe AIXM::Component::Geometry do
     end
 
     it "builds valid AIXM" do
-      AIXM.aixm!
       _(subject.to_xml).must_equal <<~END
         <Avx>
           <codeType>CWA</codeType>
@@ -222,7 +219,6 @@ describe AIXM::Component::Geometry do
     end
 
     it "builds valid AIXM" do
-      AIXM.aixm!
       _(subject.to_xml).must_equal <<~END
         <Avx>
           <GbrUid>
@@ -284,7 +280,6 @@ describe AIXM::Component::Geometry do
     end
 
     it "builds valid AIXM" do
-      AIXM.aixm!
       _(subject.to_xml).must_equal <<~END
         <Avx>
           <codeType>CWA</codeType>

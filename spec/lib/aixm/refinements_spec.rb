@@ -209,12 +209,12 @@ describe AIXM::Refinements do
       end
     end
 
-    describe :payload_hash do
+    context "hash function" do
       subject do
         <<~END
           <?xml version="1.0" encoding="utf-8"?>
           <OFMX-Snapshot region="LF">
-            <Ser type="essential" active="true">
+            <Ser active="true" type="essential">
               <SerUid>
                 <UniUid>
                   <txtName>STRASBOURG APP</txtName>
@@ -234,8 +234,57 @@ describe AIXM::Refinements do
         END
       end
 
-      it "must calculate the hash" do
-        _(subject.payload_hash(region: 'LF', element: 'Ser')).must_equal "269b1f18-cabe-3c9e-1d71-48a7414a4cb9"
+      describe :payload_hash do
+        it "must calculate and return the hash" do
+          _(subject.payload_hash(region: 'LF', element: 'Ser')).must_equal "269b1f18-cabe-3c9e-1d71-48a7414a4cb9"
+        end
+
+        it "must upcase the region" do
+          _(subject.payload_hash(region: 'lf', element: 'Ser')).must_equal "269b1f18-cabe-3c9e-1d71-48a7414a4cb9"
+        end
+
+        it "must ignore name extensions of named associations" do
+          named_subject = subject.gsub(/<(.?)SerUid/, '<\1SerUidWithName')
+          _(named_subject.payload_hash(region: 'LF', element: 'SerUidWithName')).must_equal subject.payload_hash(region: 'LF', element: 'SerUid')
+        end
+
+        it "must ignore mid attributes" do
+          subject_with_mid = subject.sub(/(active="true")/, 'mid="123" \1')
+          _(subject_with_mid.payload_hash(region: 'LF', element: 'Ser')).must_equal "269b1f18-cabe-3c9e-1d71-48a7414a4cb9"
+        end
+
+        it "must ignore source attributes" do
+          subject_with_source = subject.sub(/(active="true")/, 'source="123" \1')
+          _(subject_with_source.payload_hash(region: 'LF', element: 'Ser')).must_equal "269b1f18-cabe-3c9e-1d71-48a7414a4cb9"
+        end
+
+        it "must order the element arguments alphabetically" do
+          subject_with_swap = subject.sub(/(active="true") (type="essential")/, '\2 \1')
+          _(subject_with_swap.payload_hash(region: 'LF', element: 'Ser')).must_equal "269b1f18-cabe-3c9e-1d71-48a7414a4cb9"
+        end
+
+        it "must use the first non-declaration element in string by default" do
+          _(subject.payload_hash(region: 'LF')).must_equal "fddbfb76-4868-0cd7-2afe-9f43e91867fb"
+        end
+      end
+
+      describe :insert_payload_hash do
+        it "must insert hash as mid attribute into element with arguments" do
+          _(subject.insert_payload_hash(region: 'LF', element: 'Ser')).must_match /<Ser mid="269b1f18-cabe-3c9e-1d71-48a7414a4cb9" active/
+        end
+
+        it "must insert hash as mid attribute into element without arguments" do
+          _(subject.insert_payload_hash(region: 'LF', element: 'txtRmk')).must_match /<txtRmk mid="8b23c36b-ff51-adfd-963f-03fcb012c0cf">/
+        end
+
+        it "must overwrite an already existing mid attribute" do
+          subject_with_mid = subject.sub(/(active="true")/, 'mid="123" \1')
+          _(subject_with_mid.insert_payload_hash(region: 'LF', element: 'Ser')).must_match /<Ser mid="269b1f18-cabe-3c9e-1d71-48a7414a4cb9" active/
+        end
+
+        it "must return string untouched if falsey region is passed" do
+          _(subject.insert_payload_hash(region: nil)).must_equal subject
+        end
       end
     end
 

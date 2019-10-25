@@ -96,6 +96,12 @@ describe AIXM::Feature::NavigationalAid::VOR do
           </Vor>
         END
       end
+
+      it "builds OFMX with mid" do
+        AIXM.ofmx!
+        AIXM.config.mid_region = 'LF'
+        _(subject.to_xml).must_match /<VorUid mid="627bea52-cca8-f407-88be-90a85a333741">/
+      end
     end
   end
 

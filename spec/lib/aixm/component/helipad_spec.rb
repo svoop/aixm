@@ -183,5 +183,11 @@ describe AIXM::Component::Helipad do
         </Tla>
       END
     end
+
+    it "builds OFMX with mid" do
+      AIXM.ofmx!
+      AIXM.config.mid_region = 'LF'
+      _(subject.to_xml).must_match /<TlaUid mid="c1f675f9-ed0f-e52e-b117-f9fe6a00fe7c">/
+    end
   end
 end

@@ -138,7 +138,7 @@ module AIXM
         builder.RwyUid do |rwy_uid|
           rwy_uid << airport.to_uid.indent(2)
           rwy_uid.txtDesig(name)
-        end
+        end.insert_payload_hash(region: AIXM.config.mid_region)
       end
 
       # @return [String] AIXM or OFMX markup
@@ -287,7 +287,7 @@ module AIXM
           builder.RdnUid do |rdn_uid|
             rdn_uid << runway.to_uid.indent(2)
             rdn_uid.txtDesig(name)
-          end
+          end.insert_payload_hash(region: AIXM.config.mid_region)
         end
 
         # @return [String] AIXM or OFMX markup
@@ -309,10 +309,7 @@ module AIXM
           if displaced_threshold
             builder.Rdd do |rdd|
               rdd.RddUid do |rdd_uid|
-                rdd_uid.RdnUid do |rdn_uid|
-                  rdn_uid << runway.to_uid.indent(6)
-                  rdn_uid.txtDesig(name)
-                end
+                rdd_uid << to_uid.indent(4)
                 rdd_uid.codeType('DPLM')
                 rdd_uid.codeDayPeriod('A')
               end

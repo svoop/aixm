@@ -40,7 +40,6 @@ describe AIXM::Component::Geometry::Arc do
         center_xy: AIXM.xy(lat: 22.2, long: 33.3),
         clockwise: true
       )
-      AIXM.aixm!
       _(subject.to_xml).must_equal <<~END
         <Avx>
           <codeType>CWA</codeType>
@@ -59,7 +58,6 @@ describe AIXM::Component::Geometry::Arc do
         center_xy: AIXM.xy(lat: 22.2, long: 33.3),
         clockwise: false
       )
-      AIXM.aixm!
       _(subject.to_xml).must_equal <<~END
         <Avx>
           <codeType>CCA</codeType>

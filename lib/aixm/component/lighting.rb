@@ -113,7 +113,7 @@ module AIXM
         builder.tag!(as) do |tag|
           tag << lightable.to_uid.indent(2)
           tag.codePsn(POSITIONS.key(position).to_s)
-        end
+        end.insert_payload_hash(region: AIXM.config.mid_region)
       end
 
       # @return [String] AIXM or OFMX markup

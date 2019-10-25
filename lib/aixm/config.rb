@@ -77,7 +77,8 @@ module AIXM
     # @return [OpenStruct]
     def initialize_config
       @@config = OpenStruct.new(
-        schema: :aixm
+        schema: :aixm,
+        mid: false
       )
     end
 

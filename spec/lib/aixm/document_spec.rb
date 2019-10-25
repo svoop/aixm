@@ -158,7 +158,6 @@ describe AIXM::Document do
 
   context "AIXM" do
     subject do
-      AIXM.aixm!
       AIXM::Factory.document
     end
 
@@ -1870,6 +1869,16 @@ describe AIXM::Document do
           </Obs>
         </OFMX-Snapshot>
       END
+    end
+
+    it "builds OFMX with one mid for every *Uid" do
+      AIXM.ofmx!
+      AIXM.config.mid_region = 'LF'
+      xml = subject.to_xml
+#require 'pry'; binding.pry
+      count_mid = xml.scan(/mid=/).count
+      count_uid = xml.scan(/<\w+Uid[\s>]/).count
+      _(count_mid).must_equal count_uid
     end
   end
 end

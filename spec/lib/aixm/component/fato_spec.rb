@@ -168,6 +168,13 @@ describe AIXM::Component::FATO do
         </Fdn>
       END
     end
+
+    it "builds OFMX with mid" do
+      AIXM.ofmx!
+      AIXM.config.mid_region = 'LF'
+      _(subject.to_xml).must_match /<FtoUid mid="9753290e-774e-2600-9b16-f7f951e06e9d">/
+      _(subject.to_xml).must_match /<FdnUid mid="ac550e74-73e2-4feb-4934-d0b4aafccfe6">/
+    end
   end
 end
 

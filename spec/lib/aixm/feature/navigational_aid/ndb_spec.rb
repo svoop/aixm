@@ -85,5 +85,11 @@ describe AIXM::Feature::NavigationalAid::NDB do
         </Ndb>
       END
     end
+
+    it "builds OFMX with mid" do
+      AIXM.ofmx!
+      AIXM.config.mid_region = 'LF'
+      _(subject.to_xml).must_match /<NdbUid mid="be82074f-4044-8044-5f64-d6080ce3d0e4">/
+    end
   end
 end

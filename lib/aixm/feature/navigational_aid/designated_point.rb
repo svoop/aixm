@@ -63,7 +63,7 @@ module AIXM
             dpn_uid.codeId(id)
             dpn_uid.geoLat(xy.lat(AIXM.schema))
             dpn_uid.geoLong(xy.long(AIXM.schema))
-          end
+          end.insert_payload_hash(region: AIXM.config.mid_region)
         end
 
         # @return [String] AIXM or OFMX markup

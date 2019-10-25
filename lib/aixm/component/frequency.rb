@@ -108,7 +108,7 @@ module AIXM
         builder.FqyUid do |fqy_uid|
           fqy_uid << service.to_uid.indent(2)
           fqy_uid.valFreqTrans(transmission_f.freq)
-        end
+        end.insert_payload_hash(region: AIXM.config.mid_region)
       end
 
       # @return [String] AIXM or OFMX markup

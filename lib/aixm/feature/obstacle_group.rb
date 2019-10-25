@@ -114,7 +114,7 @@ module AIXM
           ogr_uid.txtName(name)
           ogr_uid.geoLat(obstacles.first.xy.lat(AIXM.schema))
           ogr_uid.geoLong(obstacles.first.xy.long(AIXM.schema))
-        end
+        end.insert_payload_hash(region: AIXM.config.mid_region)
       end
 
       # @return [String] AIXM or OFMX markup

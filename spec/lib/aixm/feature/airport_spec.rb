@@ -586,6 +586,12 @@ describe AIXM::Feature::Airport do
       END
     end
   end
+
+  it "builds OFMX with mid" do
+    AIXM.ofmx!
+    AIXM.config.mid_region = 'LF'
+    _(subject.to_xml).must_match /<AhpUid mid="c63504f4-c1d9-1b88-f2ca-2c35a25d8bf3">/
+  end
 end
 
 describe AIXM::Feature::Airport::UsageLimitation do

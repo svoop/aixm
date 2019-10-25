@@ -88,5 +88,11 @@ describe AIXM::Feature::NavigationalAid::DME do
         </Dme>
       END
     end
+
+    it "builds OFMX with mid" do
+      AIXM.ofmx!
+      AIXM.config.mid_region = 'LF'
+      _(subject.to_xml).must_match /<DmeUid mid="b3ecd57d-529d-4941-97b8-af5ffa089051">/
+    end
   end
 end

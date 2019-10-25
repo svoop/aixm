@@ -32,7 +32,7 @@ module AIXM
             tcn_uid.codeId(id)
             tcn_uid.geoLat(xy.lat(AIXM.schema))
             tcn_uid.geoLong(xy.long(AIXM.schema))
-          end
+          end.insert_payload_hash(region: AIXM.config.mid_region)
         end
 
         # @return [String] AIXM or OFMX markup

@@ -7,6 +7,7 @@ module AIXM
   #
   # ===Cheat Sheet in Pseudo Code:
   #   document = AIXM.document(
+  #     region: String
   #     namespace: String (UUID)
   #     created_at: Time or Date or String
   #     effective_at: Time or Date or String

@@ -16,7 +16,6 @@ describe AIXM::Component::Geometry::Border do
 
   describe :to_xml do
     it "builds correct AIXM" do
-      AIXM.aixm!
       _(subject.to_xml).must_equal <<~END
         <Avx>
           <GbrUid>
@@ -29,5 +28,11 @@ describe AIXM::Component::Geometry::Border do
         </Avx>
       END
     end
+  end
+
+  it "builds OFMX with mid" do
+    AIXM.ofmx!
+    AIXM.config.mid_region = 'LF'
+    _(subject.to_xml).must_match /<GbrUid mid="6be76b9b-567e-50f1-5c98-80a76163eebe">/
   end
 end

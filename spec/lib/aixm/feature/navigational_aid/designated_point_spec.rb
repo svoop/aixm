@@ -74,8 +74,13 @@ describe AIXM::Feature::NavigationalAid::DesignatedPoint do
       END
     end
 
-    it "builds correct complete OFMX" do
-      AIXM.aixm!
+    it "builds OFMX with mid" do
+      AIXM.ofmx!
+      AIXM.config.mid_region = 'LF'
+      _(subject.to_xml).must_match /<DpnUid mid="b2977fe4-c591-0e72-8a5f-2e30d80f92d6">/
+    end
+
+    it "builds correct complete AIXM" do
       _(subject.to_xml).must_equal <<~END
         <!-- NavigationalAid: [DesignatedPoint:VFR-RP] DDD / DESIGNATED POINT NAVAID -->
         <Dpn>

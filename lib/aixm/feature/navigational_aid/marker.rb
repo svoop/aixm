@@ -57,7 +57,7 @@ module AIXM
             mkr_uid.codeId(id)
             mkr_uid.geoLat(xy.lat(AIXM.schema))
             mkr_uid.geoLong(xy.long(AIXM.schema))
-          end
+          end.insert_payload_hash(region: AIXM.config.mid_region)
         end
 
         # @return [String] AIXM or OFMX markup

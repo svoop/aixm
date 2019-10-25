@@ -43,7 +43,6 @@ describe AIXM::Component::VerticalLimits do
         upper_z: AIXM.z(2000, :qnh),
         lower_z: AIXM::GROUND
       )
-      AIXM.aixm!
       _(subject.to_xml).must_equal <<~END
         <codeDistVerUpper>ALT</codeDistVerUpper>
         <valDistVerUpper>2000</valDistVerUpper>
@@ -60,7 +59,6 @@ describe AIXM::Component::VerticalLimits do
         max_z: AIXM.z(6000, :qnh),
         lower_z: AIXM.z(1000, :qfe)
       )
-      AIXM.aixm!
       _(subject.to_xml).must_equal <<~END
         <codeDistVerUpper>STD</codeDistVerUpper>
         <valDistVerUpper>65</valDistVerUpper>
@@ -80,7 +78,6 @@ describe AIXM::Component::VerticalLimits do
         lower_z: AIXM.z(45, :qne),
         min_z: AIXM.z(3000, :qnh)
       )
-      AIXM.aixm!
       _(subject.to_xml).must_equal <<~END
         <codeDistVerUpper>STD</codeDistVerUpper>
         <valDistVerUpper>65</valDistVerUpper>

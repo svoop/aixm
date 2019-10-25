@@ -47,11 +47,12 @@ See `AIXM::CLASSES` for the complete list of shorthand names.
 
 ## Configuration
 
-The following configuration options are available for setting and getting:
+### AIXM.config.schema
+
+The schema is either `:aixm` (default) or `:ofmx`:
 
 ```ruby
-AIXM.config.schema           # either :aixm (default) or :ofmx
-AIXM.config.ignored_errors   # ignore XML schema errors which match this regex
+AIXM.config.schema = :ofmx   # =>:ofmx
 ```
 
 There are shortcuts to set and get the schema:
@@ -63,6 +64,23 @@ AIXM.ofmx!              # => :ofmx
 AIXM.ofmx?              # => true
 AIXM.schema             # => :ofmx
 AIXM.schema(:version)   # => 0
+```
+
+### AIXM.config.mid_region
+
+In order to insert [OFMX-compliant `mid` attributes]() for all `*Uid` elements, set this configuration option to the OFMX region the element belongs to. By default, no `mid` attributes are inserted.
+
+```ruby
+AIXM.config.mid_region          # => nil  - don't insert any mid attributes
+AIXM.config.mid_region = 'LF'   # => 'LF' - insert mid attributes for region LF
+```
+
+### AIXM.config.ignored_errors
+
+In case you want to ignore certain XML schema validation errors, set this configuration option to a regular expression which matches the error messages to ignore. By default, no errors are ignored.
+
+```ruby
+AIXM.config.ignored_errors = /invalid date/i
 ```
 
 ## Validation

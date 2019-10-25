@@ -226,5 +226,13 @@ describe AIXM::Feature::Unit do
         </Uni>
       END
     end
+
+    it "builds OFMX with mid" do
+      AIXM.ofmx!
+      AIXM.config.mid_region = 'LF'
+      _(subject.to_xml).must_match /<UniUid mid="92534b75-1c12-edc5-351b-740cb82e87dd">/
+      _(subject.to_xml).must_match /<SerUid mid="9240cf80-9cba-7ea5-ae39-6b682305db78">/
+      _(subject.to_xml).must_match /<FqyUid mid="48d8e7db-88b1-8e2f-2f27-2c2521e7ac27">/      
+    end
   end
 end

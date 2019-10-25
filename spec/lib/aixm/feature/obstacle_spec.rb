@@ -205,7 +205,6 @@ describe AIXM::Feature::Obstacle do
 
   describe :to_xml do
     it "builds correct AIXM" do
-      AIXM.aixm!
       _(subject.to_xml).must_equal <<~END
         <!-- Obstacle: [tower] 48.85825000N 002.29458889E EIFFEL TOWER -->
         <Obs>
@@ -274,6 +273,12 @@ describe AIXM::Feature::Obstacle do
           <txtRmk>Temporary light installations (white strobes, gyro light etc)</txtRmk>
         </Obs>
       END
+    end
+
+    it "builds OFMX with mid" do
+      AIXM.ofmx!
+      AIXM.config.mid_region = 'LF'
+      _(subject.to_xml).must_match /<ObsUid mid="864b252b-0b1d-66c4-22cd-14dbda287467">/
     end
   end
 end

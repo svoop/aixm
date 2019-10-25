@@ -81,7 +81,7 @@ module AIXM
           tag << addressable.to_uid.indent(2) if addressable
           tag.codeType(TYPES.key(type).to_s.then_if(AIXM.aixm?) { |t| t.sub(/-\w+$/, '') })
           tag.noSeq(sequence)
-        end
+        end.insert_payload_hash(region: AIXM.config.mid_region)
       end
 
       # @return [String] AIXM or OFMX markup

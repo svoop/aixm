@@ -75,5 +75,11 @@ describe AIXM::Feature::NavigationalAid::Marker do
         </Mkr>
       END
     end
+
+    it "builds OFMX with mid" do
+      AIXM.ofmx!
+      AIXM.config.mid_region = 'LF'
+      _(subject.to_xml).must_match /<MkrUid mid="f3463c39-b380-d31f-b42a-5dfa0b4edb12">/
+    end
   end
 end

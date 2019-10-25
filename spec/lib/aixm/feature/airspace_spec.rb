@@ -98,17 +98,14 @@ describe AIXM::Feature::Airspace do
 
     describe :to_xml do
       it "builds correct AIXM without id" do
-        AIXM.aixm!
         _(subject.to_xml).must_match(%r{<codeId>C55466EC</codeId>})
       end
 
       it "builds correct AIXM without short name" do
-        AIXM.aixm!
         _(subject.to_xml).wont_match(/<txtLocalType>/)
       end
 
       it "builds correct AIXM with identical name and short name" do
-        AIXM.aixm!
         _(subject.to_xml).wont_match(/<txtLocalType>/)
       end
     end
@@ -250,6 +247,13 @@ describe AIXM::Feature::Airspace do
           </Abd>
         END
       end
+    end
+
+    it "builds OFMX with mid" do
+      AIXM.ofmx!
+      AIXM.config.mid_region = 'LF'
+      _(subject.to_xml).must_match /<AseUid mid="8894c821-b486-8128-48f2-a47c2e9f4c13">/
+#      _(subject.to_xml).must_match /<AbdUid mid="">/
     end
   end
 

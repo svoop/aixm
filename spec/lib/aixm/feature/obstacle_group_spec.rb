@@ -63,7 +63,6 @@ describe AIXM::Feature::ObstacleGroup do
       end
 
       it "builds correct AIXM" do
-        AIXM.aixm!
         _(subject.to_xml).must_equal <<~END
           <!-- Obstacle: [wind_turbine] 44.67501389N 004.87256667E LA TEISSONIERE 1 -->
           <Obs>
@@ -171,6 +170,12 @@ describe AIXM::Feature::ObstacleGroup do
           </Obs>
         END
       end
+
+      it "builds OFMX with mid" do
+        AIXM.ofmx!
+        AIXM.config.mid_region = 'LF'
+        _(subject.to_xml).must_match /<OgrUid mid="c099ea7c-2056-3921-5c1c-b28090537332">/
+      end
     end
   end
 
@@ -203,7 +208,6 @@ describe AIXM::Feature::ObstacleGroup do
       end
 
       it "builds correct AIXM" do
-        AIXM.aixm!
         _(subject.to_xml).must_equal <<~END
           <!-- Obstacle: [mast] 52.29639722N 002.10675278W DROITWICH LW NORTH -->
           <Obs>

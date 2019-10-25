@@ -71,5 +71,4 @@ describe AIXM::Component::Frequency do
   describe :remarks= do
     macro :remarks
   end
-
 end

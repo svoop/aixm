@@ -164,7 +164,7 @@ module AIXM
         builder.TlaUid do |tla_uid|
           tla_uid << airport.to_uid.indent(2)
           tla_uid.txtDesig(name)
-        end
+        end.insert_payload_hash(region: AIXM.config.mid_region)
       end
 
       # @return [String] AIXM or OFMX markup
