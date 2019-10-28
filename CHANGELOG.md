@@ -1,4 +1,4 @@
-## 0.3.8 (unreleased)
+## 0.3.8
 
 #### Additions
 * `AIXM.config.mid_region` to generate `mid` attributes on all features
