@@ -289,7 +289,7 @@ module AIXM
         AIXM.unit(
           source: 'LF|GEN|0.0 FACTORY|0|0',
           organisation: organisation,
-          name: 'PUJAUT TWR',
+          name: 'PUJAUT',
           type: :aerodrome_control_tower,
           class: :icao
         ).tap do |unit|

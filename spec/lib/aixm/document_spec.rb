@@ -181,7 +181,7 @@ describe AIXM::Document do
           <!-- Unit: PUJAUT TWR -->
           <Uni>
             <UniUid>
-              <txtName>PUJAUT TWR</txtName>
+              <txtName>PUJAUT</txtName>
             </UniUid>
             <OrgUid>
               <txtName>FRANCE</txtName>
@@ -197,7 +197,7 @@ describe AIXM::Document do
           <Ser>
             <SerUid>
               <UniUid>
-                <txtName>PUJAUT TWR</txtName>
+                <txtName>PUJAUT</txtName>
               </UniUid>
               <codeType>APP</codeType>
               <noSeq>1</noSeq>
@@ -211,7 +211,7 @@ describe AIXM::Document do
             <FqyUid>
               <SerUid>
                 <UniUid>
-                  <txtName>PUJAUT TWR</txtName>
+                  <txtName>PUJAUT</txtName>
                 </UniUid>
                 <codeType>APP</codeType>
                 <noSeq>1</noSeq>
@@ -996,7 +996,8 @@ describe AIXM::Document do
           <!-- Unit: PUJAUT TWR -->
           <Uni source="LF|GEN|0.0 FACTORY|0|0">
             <UniUid>
-              <txtName>PUJAUT TWR</txtName>
+              <txtName>PUJAUT</txtName>
+              <codeType>TWR</codeType>
             </UniUid>
             <OrgUid>
               <txtName>FRANCE</txtName>
@@ -1004,7 +1005,6 @@ describe AIXM::Document do
             <AhpUid>
               <codeId>LFNT</codeId>
             </AhpUid>
-            <codeType>TWR</codeType>
             <codeClass>ICAO</codeClass>
             <txtRmk>FR only</txtRmk>
           </Uni>
@@ -1012,7 +1012,8 @@ describe AIXM::Document do
           <Ser source="LF|GEN|0.0 FACTORY|0|0">
             <SerUid>
               <UniUid>
-                <txtName>PUJAUT TWR</txtName>
+                <txtName>PUJAUT</txtName>
+                <codeType>TWR</codeType>
               </UniUid>
               <codeType>APP</codeType>
               <noSeq>1</noSeq>
@@ -1026,7 +1027,8 @@ describe AIXM::Document do
             <FqyUid>
               <SerUid>
                 <UniUid>
-                  <txtName>PUJAUT TWR</txtName>
+                  <txtName>PUJAUT</txtName>
+                  <codeType>TWR</codeType>
                 </UniUid>
                 <codeType>APP</codeType>
                 <noSeq>1</noSeq>

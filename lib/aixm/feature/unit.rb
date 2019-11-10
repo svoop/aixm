@@ -160,18 +160,19 @@ module AIXM
         builder = Builder::XmlMarkup.new(indent: 2)
         builder.UniUid do |uni_uid|
           uni_uid.txtName(name)
+          uni_uid.codeType(TYPES.key(type).to_s) if AIXM.ofmx?
         end.insert_payload_hash(region: AIXM.config.mid_region)
       end
 
       # @return [String] AIXM or OFMX markup
       def to_xml
         builder = Builder::XmlMarkup.new(indent: 2)
-        builder.comment! "Unit: #{name}"
+        builder.comment! "Unit: #{name_with_type}"
         builder.Uni({ source: (source if AIXM.ofmx?) }.compact) do |uni|
           uni << to_uid.indent(2)
           uni << organisation.to_uid.indent(2)
           uni << airport.to_uid.indent(2) if airport
-          uni.codeType(TYPES.key(type).to_s)
+          uni.codeType(TYPES.key(type).to_s) unless AIXM.ofmx?
           uni.codeClass(CLASSES.key(self.class).to_s)
           uni.txtRmk(remarks) if remarks
         end
@@ -180,6 +181,12 @@ module AIXM
           builder << service.to_xml(sequence: sequences[service.type])
         end
         builder.target!
+      end
+
+      private
+
+      def name_with_type
+        [name, TYPES.key(type)].join(' ')
       end
     end
 

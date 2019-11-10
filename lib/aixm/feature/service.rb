@@ -204,7 +204,7 @@ module AIXM
       def to_xml(sequence:)
         @sequence = sequence
         builder = Builder::XmlMarkup.new(indent: 2)
-        builder.comment! ["Service: #{TYPES.key(type)}", unit&.name].compact.join(' by ')
+        builder.comment! ["Service: #{TYPES.key(type)}", unit&.send(:name_with_type)].compact.join(' by ')
         builder.Ser({ source: (source if AIXM.ofmx?) }.compact) do |ser|
           ser << to_uid.indent(2)
           ser << timetable.to_xml(as: :Stt).indent(2) if timetable

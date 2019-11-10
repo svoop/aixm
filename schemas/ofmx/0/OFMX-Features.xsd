@@ -9279,11 +9279,6 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
           <xsd:documentation>Organisation unit providing services is located at Aerodrome / Heliport</xsd:documentation>
         </xsd:annotation>
       </xsd:element>
-      <xsd:element name="codeType" type="codeTypeUnit">
-        <xsd:annotation>
-          <xsd:documentation>Type</xsd:documentation>
-        </xsd:annotation>
-      </xsd:element>
       <xsd:element name="codeClass" type="codeClassUnit">
         <xsd:annotation>
           <xsd:documentation>Classification</xsd:documentation>
@@ -9325,6 +9320,11 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
       <xsd:element name="txtName" type="txtName">
         <xsd:annotation>
           <xsd:documentation>Name</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="codeType" type="codeTypeUnit">
+        <xsd:annotation>
+          <xsd:documentation>Type</xsd:documentation>
         </xsd:annotation>
       </xsd:element>
     </xsd:sequence>
