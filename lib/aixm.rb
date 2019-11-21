@@ -13,6 +13,8 @@ require_relative 'aixm/refinements'
 require_relative 'aixm/config'
 require_relative 'aixm/errors'
 
+require_relative 'aixm/mid'
+
 require_relative 'aixm/document'
 require_relative 'aixm/xy'
 require_relative 'aixm/z'

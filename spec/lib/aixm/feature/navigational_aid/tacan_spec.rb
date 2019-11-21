@@ -35,6 +35,8 @@ describe AIXM::Feature::NavigationalAid::TACAN do
   end
 
   describe :to_xml do
+    macro :mid
+
     it "builds correct complete OFMX" do
       AIXM.ofmx!
       _(subject.to_xml).must_equal <<~END
@@ -87,7 +89,8 @@ describe AIXM::Feature::NavigationalAid::TACAN do
 
     it "builds OFMX with mid" do
       AIXM.ofmx!
-      AIXM.config.mid_region = 'LF'
+      AIXM.config.mid = true
+      AIXM.config.region = 'LF'
       _(subject.to_xml).must_match /<TcnUid mid="8776071f-114a-4996-84ef-2d7848c503f5">/
     end
   end

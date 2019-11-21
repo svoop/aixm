@@ -21,7 +21,13 @@ describe AIXM::Feature::Address do
     macro :remarks
   end
 
-  describe :xml= do
+  describe :to_xml do
+    it "populates the mid attribute" do
+      _(subject.mid).must_be :nil?
+      subject.to_xml(as: :Xxx, sequence: 1)
+      _(subject.mid).wont_be :nil?
+    end
+
     it "builds correct OFMX" do
       AIXM.ofmx!
       _(subject.to_xml(as: :Xxx, sequence: 1)).must_equal <<~END
@@ -39,7 +45,8 @@ describe AIXM::Feature::Address do
 
     it "builds OFMX with mid" do
       AIXM.ofmx!
-      AIXM.config.mid_region = 'LF'
+      AIXM.config.mid = true
+      AIXM.config.region = 'LF'
       _(subject.to_xml(as: :Xxx, sequence: 1)).must_match /<XxxUid mid="126bee70-4d4e-0032-ada9-81d3318fe6b7">/
     end
 

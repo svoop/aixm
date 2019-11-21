@@ -158,10 +158,12 @@ module AIXM
       # @return [String] UID markup
       def to_uid
         builder = Builder::XmlMarkup.new(indent: 2)
-        builder.UniUid do |uni_uid|
-          uni_uid.txtName(name)
-          uni_uid.codeType(TYPES.key(type).to_s) if AIXM.ofmx?
-        end.insert_payload_hash(region: AIXM.config.mid_region)
+        insert_mid(
+          builder.UniUid do |uni_uid|
+            uni_uid.txtName(name)
+            uni_uid.codeType(TYPES.key(type).to_s) if AIXM.ofmx?
+          end
+        )
       end
 
       # @return [String] AIXM or OFMX markup

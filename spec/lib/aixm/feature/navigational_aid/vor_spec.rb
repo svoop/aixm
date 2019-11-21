@@ -45,6 +45,8 @@ describe AIXM::Feature::NavigationalAid::VOR do
     end
 
     describe :to_xml do
+      macro :mid
+
       it "builds correct complete OFMX" do
         AIXM.ofmx!
         _(subject.to_xml).must_equal <<~END
@@ -99,7 +101,8 @@ describe AIXM::Feature::NavigationalAid::VOR do
 
       it "builds OFMX with mid" do
         AIXM.ofmx!
-        AIXM.config.mid_region = 'LF'
+        AIXM.config.mid = true
+        AIXM.config.region = 'LF'
         _(subject.to_xml).must_match /<VorUid mid="627bea52-cca8-f407-88be-90a85a333741">/
       end
     end
@@ -121,6 +124,8 @@ describe AIXM::Feature::NavigationalAid::VOR do
     end
 
     describe :to_xml do
+      macro :mid
+
       it "builds correct OFMX" do
         AIXM.ofmx!
         _(subject.to_xml).must_equal <<~END
@@ -193,6 +198,8 @@ describe AIXM::Feature::NavigationalAid::VOR do
     end
 
     describe :to_xml do
+      macro :mid
+
       it "builds correct OFMX" do
         AIXM.ofmx!
         _(subject.to_xml).must_equal <<~END

@@ -1,10 +1,19 @@
 ## 0.3.9 (unreleased)
-Noting so far
+
+### Additions
+* `mid` reader on all features and components with a `to_uid` method
+* `AIXM.config.mid` now defines whether `mid` attributes are inserted or not
+  provided the selected schema is OFMX
+
+### Changes
+* Renamed `AIXM.config.mid_region` to `AIXM.config.region` which is implicitly
+  set via `Document#region` as well
+* Refinedment `String#insert_payload_hash`removed again
 
 ## 0.3.8
 
 #### Additions
-* `AIXM.config.mid_region` to generate `mid` attributes on all features
+* `AIXM.config.mid_region` to insert `mid` attributes
 * Refinement `String#insert_payload_hash`
 
 #### Changes

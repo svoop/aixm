@@ -26,6 +26,8 @@ module AIXM
     #
     # @see https://github.com/openflightmaps/ofmx/wiki/Airport#fto-fato
     class FATO
+      include AIXM::Mid
+
       STATUSES = {
         CLSD: :closed,
         WIP: :work_in_progress,          # e.g. construction work
@@ -128,10 +130,12 @@ module AIXM
       # @return [String] UID markup
       def to_uid
         builder = Builder::XmlMarkup.new(indent: 2)
-        builder.FtoUid do |fto_uid|
-          fto_uid << airport.to_uid.indent(2)
-          fto_uid.txtDesig(name)
-        end.insert_payload_hash(region: AIXM.config.mid_region)
+        insert_mid(
+          builder.FtoUid do |fto_uid|
+            fto_uid << airport.to_uid.indent(2)
+            fto_uid.txtDesig(name)
+          end
+        )
       end
 
       # @return [String] AIXM or OFMX markup
@@ -161,6 +165,7 @@ module AIXM
       #
       # @see https://github.com/openflightmaps/ofmx/wiki/Airport#fdn-fato-direction
       class Direction
+        include AIXM::Mid
 
         # @return [AIXM::Component::FATO] FATO the FATO direction is further describing
         attr_reader :fato
@@ -229,10 +234,12 @@ module AIXM
         # @return [String] UID markup
         def to_uid
           builder = Builder::XmlMarkup.new(indent: 2)
-          builder.FdnUid do |fdn_uid|
-            fdn_uid << fato.to_uid.indent(2)
-            fdn_uid.txtDesig(name)
-          end.insert_payload_hash(region: AIXM.config.mid_region)
+          insert_mid(
+            builder.FdnUid do |fdn_uid|
+              fdn_uid << fato.to_uid.indent(2)
+              fdn_uid.txtDesig(name)
+            end
+          )
         end
 
         # @return [String] AIXM or OFMX markup

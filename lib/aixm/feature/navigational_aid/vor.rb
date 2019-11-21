@@ -92,11 +92,13 @@ module AIXM
         # @return [String] UID markup
         def to_uid
           builder = Builder::XmlMarkup.new(indent: 2)
-          builder.VorUid do |vor_uid|
-            vor_uid.codeId(id)
-            vor_uid.geoLat(xy.lat(AIXM.schema))
-            vor_uid.geoLong(xy.long(AIXM.schema))
-          end.insert_payload_hash(region: AIXM.config.mid_region)
+          insert_mid(
+            builder.VorUid do |vor_uid|
+              vor_uid.codeId(id)
+              vor_uid.geoLat(xy.lat(AIXM.schema))
+              vor_uid.geoLong(xy.long(AIXM.schema))
+            end
+          )
         end
 
         # @return [String] AIXM or OFMX markup

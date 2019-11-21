@@ -218,30 +218,6 @@ module AIXM
       end
     end
 
-    # @!method insert_payload_hash(region:, element:)
-    #   Calculate the UUIDv3 hash of an AIXM/OFMX XML string and insert it into
-    #   the AIXM/OFMX XML string as an mid attribute.
-    #
-    #   If the region is explicitly set to +nil+ or false, the AIXM/OFMX string
-    #   is returned unchanged.
-    #
-    #   @note This is a refinement for +String+
-    #   @see String#payload_hash
-    #   @param region [String] OFMX region (e.g. "LF")
-    #   @param element [String] tag to calculate the payload hash for (default:
-    #     first element in the string)
-    #   @return [String] AIXM/OFMX XML with UUIDv3 inserted as mid attribute
-    #   @raise [ArgumentError] if the given element is not found or no element
-    #     at all
-    refine String do
-      def insert_payload_hash(region:, element: nil)
-        return self unless region
-        element = $1 if element.nil? && match(/<([^?].*?)[\s>]/)
-        hash = payload_hash(region: region, element: element)
-        sub(/(<#{element})([^>]*?)(\s+mid=".*?")?/, %Q(\\1 mid="#{hash}"\\2))
-      end
-    end
-
     # @!method to_dd
     #   Convert DMS angle to DD or +nil+ if the notation is not recognized.
     #

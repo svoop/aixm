@@ -2,6 +2,8 @@ module AIXM
 
   # @abstract
   class Feature
+    include AIXM::Mid
+
     private_class_method :new
 
     # @return [String] reference to source of the feature data

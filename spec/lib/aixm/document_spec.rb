@@ -33,6 +33,11 @@ describe AIXM::Document do
     it "upcases valid values" do
       _(subject.tap { |s| s.region = 'lf' }.region).must_equal 'LF'
     end
+
+    it "sets the region config as well" do
+      subject.region = 'XY'
+      _(AIXM.config.region).must_equal 'XY'
+    end
   end
 
   describe :created_at= do
@@ -154,6 +159,11 @@ describe AIXM::Document do
       obstacle_group = subject.select_features(:obstacle_group).first
       _(obstacle_group.source).must_equal obstacle_group.obstacles.first.source
     end
+
+    it "returns number of groups" do
+      _(subject.group_obstacles!).must_equal 1
+    end
+  end
   end
 
   context "AIXM" do
@@ -1875,9 +1885,9 @@ describe AIXM::Document do
 
     it "builds OFMX with one mid for every *Uid" do
       AIXM.ofmx!
-      AIXM.config.mid_region = 'LF'
+      AIXM.config.mid = true
+      AIXM.config.region = 'LF'
       xml = subject.to_xml
-#require 'pry'; binding.pry
       count_mid = xml.scan(/mid=/).count
       count_uid = xml.scan(/<\w+Uid[\s>]/).count
       _(count_mid).must_equal count_uid

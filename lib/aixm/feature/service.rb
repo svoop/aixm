@@ -193,11 +193,13 @@ module AIXM
       # @return [String] UID markup
       def to_uid
         builder = Builder::XmlMarkup.new(indent: 2)
-        builder.SerUid do |ser_uid|
-          ser_uid << unit.to_uid.indent(2)
-          ser_uid.codeType(TYPES.key(type).to_s)
-          ser_uid.noSeq(@sequence)
-        end.insert_payload_hash(region: AIXM.config.mid_region)
+        insert_mid(
+          builder.SerUid do |ser_uid|
+            ser_uid << unit.to_uid.indent(2)
+            ser_uid.codeType(TYPES.key(type).to_s)
+            ser_uid.noSeq(@sequence)
+          end
+        )
       end
 
       # @return [String] AIXM or OFMX markup

@@ -46,6 +46,8 @@ module AIXM
     #
     # @see https://github.com/openflightmaps/ofmx/wiki/Airport#rwy-runway
     class Runway
+      include AIXM::Mid
+
       STATUSES = {
         CLSD: :closed,
         WIP: :work_in_progress,          # e.g. construction work
@@ -135,10 +137,12 @@ module AIXM
       # @return [String] UID markup
       def to_uid
         builder = Builder::XmlMarkup.new(indent: 2)
-        builder.RwyUid do |rwy_uid|
-          rwy_uid << airport.to_uid.indent(2)
-          rwy_uid.txtDesig(name)
-        end.insert_payload_hash(region: AIXM.config.mid_region)
+        insert_mid(
+          builder.RwyUid do |rwy_uid|
+            rwy_uid << airport.to_uid.indent(2)
+            rwy_uid.txtDesig(name)
+          end
+        )
       end
 
       # @return [String] AIXM or OFMX markup
@@ -169,6 +173,8 @@ module AIXM
       #
       # @see https://github.com/openflightmaps/ofmx/wiki/Airport#rdn-runway-direction
       class Direction
+        include AIXM::Mid
+
         VFR_PATTERNS = {
           L: :left,
           R: :right,
@@ -284,10 +290,12 @@ module AIXM
         # @return [String] UID markup
         def to_uid
           builder = Builder::XmlMarkup.new(indent: 2)
-          builder.RdnUid do |rdn_uid|
-            rdn_uid << runway.to_uid.indent(2)
-            rdn_uid.txtDesig(name)
-          end.insert_payload_hash(region: AIXM.config.mid_region)
+          insert_mid(
+            builder.RdnUid do |rdn_uid|
+              rdn_uid << runway.to_uid.indent(2)
+              rdn_uid.txtDesig(name)
+            end
+          )
         end
 
         # @return [String] AIXM or OFMX markup

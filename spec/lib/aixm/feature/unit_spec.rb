@@ -72,6 +72,16 @@ describe AIXM::Feature::Unit do
       end
     end
 
+    it "populates the mid attribute" do
+      _(subject.mid).must_be :nil?
+      _(subject.services.first.mid).must_be :nil?
+      _(subject.services.first.frequencies.first.mid).must_be :nil?
+      subject.to_xml
+      _(subject.mid).wont_be :nil?
+      _(subject.services.first.mid).wont_be :nil?
+      _(subject.services.first.frequencies.first.mid).wont_be :nil?
+    end
+
     it "builds correct complete AIXM" do
       2.times { subject.add_service(service) }
       AIXM.aixm!
@@ -383,7 +393,8 @@ describe AIXM::Feature::Unit do
 
     it "builds OFMX with mid" do
       AIXM.ofmx!
-      AIXM.config.mid_region = 'LF'
+      AIXM.config.mid = true
+      AIXM.config.region = 'LF'
       _(subject.to_xml).must_match /<UniUid mid="81a07b56-50cc-90af-e45d-d1d69a0b6c27">/
       _(subject.to_xml).must_match /<SerUid mid="02afe8d9-5f61-0e48-26d9-e2d5a1e560cc">/
       _(subject.to_xml).must_match /<FqyUid mid="dc6b09b4-bcd4-e2b1-1a54-c8cf09bfb253">/

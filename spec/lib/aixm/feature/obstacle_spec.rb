@@ -204,6 +204,8 @@ describe AIXM::Feature::Obstacle do
   end
 
   describe :to_xml do
+    macro :mid
+
     it "builds correct AIXM" do
       _(subject.to_xml).must_equal <<~END
         <!-- Obstacle: [tower] 48.85825000N 002.29458889E EIFFEL TOWER -->
@@ -277,7 +279,8 @@ describe AIXM::Feature::Obstacle do
 
     it "builds OFMX with mid" do
       AIXM.ofmx!
-      AIXM.config.mid_region = 'LF'
+      AIXM.config.mid = true
+      AIXM.config.region = 'LF'
       _(subject.to_xml).must_match /<ObsUid mid="864b252b-0b1d-66c4-22cd-14dbda287467">/
     end
   end

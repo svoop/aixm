@@ -211,6 +211,8 @@ describe AIXM::Feature::Airport do
   end
 
   describe :to_xml do
+    macro :mid
+
     it "builds correct complete OFMX" do
       AIXM.ofmx!
       subject.add_address(AIXM.address(source: "LF|GEN|0.0 FACTORY|0|0", type: :url, address: 'https://lfnt.tower.zone'))
@@ -589,7 +591,8 @@ describe AIXM::Feature::Airport do
 
   it "builds OFMX with mid" do
     AIXM.ofmx!
-    AIXM.config.mid_region = 'LF'
+    AIXM.config.mid = true
+    AIXM.config.region = 'LF'
     _(subject.to_xml).must_match /<AhpUid mid="c63504f4-c1d9-1b88-f2ca-2c35a25d8bf3">/
   end
 end
@@ -624,7 +627,7 @@ describe AIXM::Feature::Airport::UsageLimitation do
     macro :remarks
   end
 
-  describe :xml= do
+  describe :to_xml do
     it "builds correct complete OFMX" do
       AIXM.ofmx!
       subject = AIXM::Factory.airport.usage_limitations.last
@@ -740,7 +743,7 @@ describe AIXM::Feature::Airport::UsageLimitation::Condition do
     end
   end
 
-  describe :xml= do
+  describe :to_xml do
     it "builds correct complete OFMX" do
       subject.rule = :vfr
       subject.realm = :military

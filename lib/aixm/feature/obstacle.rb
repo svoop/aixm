@@ -233,11 +233,13 @@ module AIXM
       def to_uid(as: :ObsUid)
         self.obstacle_group ||= singleton_obstacle_group
         builder = Builder::XmlMarkup.new(indent: 2)
-        builder.tag!(as) do |tag|
-          tag << obstacle_group.to_uid.indent(2) if AIXM.ofmx?
-          tag.geoLat((xy.lat(AIXM.schema)))
-          tag.geoLong((xy.long(AIXM.schema)))
-        end.insert_payload_hash(region: AIXM.config.mid_region)
+        insert_mid(
+          builder.tag!(as) do |tag|
+            tag << obstacle_group.to_uid.indent(2) if AIXM.ofmx?
+            tag.geoLat((xy.lat(AIXM.schema)))
+            tag.geoLong((xy.long(AIXM.schema)))
+          end
+        )
       end
 
       # @return [String] AIXM or OFMX markup

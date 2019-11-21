@@ -47,7 +47,7 @@ module AIXM
 
     def region=(value)
       fail(ArgumentError, "invalid region") unless value.nil? || value&.upcase&.match?(REGION_RE)
-      @region = value&.upcase
+      @region = AIXM.config.region = value&.upcase
     end
 
     def namespace=(value)

@@ -22,6 +22,8 @@ module AIXM
     #
     # @see https://github.com/openflightmaps/ofmx/wiki/Organisation#fqy-frequency
     class Frequency
+      include AIXM::Mid
+
       TYPES = {
         STD: :standard,
         ALT: :alternative,
@@ -105,10 +107,12 @@ module AIXM
       # @return [String] UID markup
       def to_uid
         builder = Builder::XmlMarkup.new(indent: 2)
-        builder.FqyUid do |fqy_uid|
-          fqy_uid << service.to_uid.indent(2)
-          fqy_uid.valFreqTrans(transmission_f.freq)
-        end.insert_payload_hash(region: AIXM.config.mid_region)
+        insert_mid(
+          builder.FqyUid do |fqy_uid|
+            fqy_uid << service.to_uid.indent(2)
+            fqy_uid.valFreqTrans(transmission_f.freq)
+          end
+        )
       end
 
       # @return [String] AIXM or OFMX markup

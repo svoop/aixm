@@ -18,6 +18,8 @@ module AIXM
     # @see https://github.com/openflightmaps/ofmx/wiki/Airport#fls-fato-direction-lighting
     # @see https://github.com/openflightmaps/ofmx/wiki/Airport#tls-helipad-tlof-lighting
     class Lighting
+      include AIXM::Mid
+
       POSITIONS = {
         TDZ: :touch_down_zone,
         AIM: :aiming_point,
@@ -110,10 +112,12 @@ module AIXM
       # @return [String] UID markup
       def to_uid(as:)
         builder = Builder::XmlMarkup.new(indent: 2)
-        builder.tag!(as) do |tag|
-          tag << lightable.to_uid.indent(2)
-          tag.codePsn(POSITIONS.key(position).to_s)
-        end.insert_payload_hash(region: AIXM.config.mid_region)
+        insert_mid(
+          builder.tag!(as) do |tag|
+            tag << lightable.to_uid.indent(2)
+            tag.codePsn(POSITIONS.key(position).to_s)
+          end
+        )
       end
 
       # @return [String] AIXM or OFMX markup

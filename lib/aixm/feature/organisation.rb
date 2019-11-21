@@ -74,9 +74,11 @@ module AIXM
       # @return [String] UID markup
       def to_uid
         builder = Builder::XmlMarkup.new(indent: 2)
-        builder.OrgUid do |org_uid|
-          org_uid.txtName(name)
-        end.insert_payload_hash(region: AIXM.config.mid_region)
+        insert_mid(
+          builder.OrgUid do |org_uid|
+            org_uid.txtName(name)
+          end
+        )
       end
 
       # @return [String] AIXM or OFMX markup

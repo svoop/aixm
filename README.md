@@ -26,13 +26,15 @@ gem aixm
 Here's how to build a document object, populate it with a simple feature and then render it as AIXM:
 
 ```ruby
-document = AIXM.document
+document = AIXM.document(
+  region: 'LF'
+)
 document.features << AIXM.designated_point(
   id: "ABIXI",
   xy: AIXM.xy(lat: %q(46°31'54.3"N), long: %q(002°19'55.2"W)),
   type: :icao
 )
-document.aixm!   # not really necessary since AIXM is the default schema
+AIXM.ofmx!
 document.to_xml
 ```
 
@@ -44,6 +46,26 @@ AIXM.designated_point(...)
 ```
 
 See `AIXM::CLASSES` for the complete list of shorthand names.
+
+Once you have called `to_xml`, [OFMX-compliant `mid` values](https://gitlab.com/openflightmaps/ofmx/wikis/Identifiers#mid) can be read from the features:
+
+```ruby
+document = AIXM.document(
+  region: 'LF'
+)
+document.features << AIXM.designated_point(
+  id: "ABIXI",
+  xy: AIXM.xy(lat: %q(46°31'54.3"N), long: %q(002°19'55.2"W)),
+  type: :icao
+)
+AIXM.ofmx!
+designated_point = document.features.first
+designated_point.mid   # => nil
+document.to_xml
+designated_point.mid   # => "47a0641d-6595-7c2f-9e6f-c782632525b3"
+```
+
+:warning: The `mid` values are only calculated and re-calculated when `to_uid` is called on a feature which happens implicitly when calling `to_xml`. Subsequent changes on the payload of a feature won't automatically update the `mid` value. Make sure you have read the [AIXM.config.mid](#aixmconfigmid) section below.
 
 ## Configuration
 
@@ -66,13 +88,27 @@ AIXM.schema             # => :ofmx
 AIXM.schema(:version)   # => 0
 ```
 
-### AIXM.config.mid_region
+### AIXM.config.mid
 
-In order to insert [OFMX-compliant `mid` attributes]() for all `*Uid` elements, set this configuration option to the OFMX region the element belongs to. By default, no `mid` attributes are inserted.
+In order to insert [OFMX-compliant `mid` attributes](https://gitlab.com/openflightmaps/ofmx/wikis/Identifiers#mid) into all `*Uid` elements, you have to chose the OFMX schema and set the mid configuration option to `true`.
 
 ```ruby
-AIXM.config.mid_region          # => nil  - don't insert any mid attributes
-AIXM.config.mid_region = 'LF'   # => 'LF' - insert mid attributes for region LF
+AIXM.ofmx!
+AIXM.config.mid          # => false - don't insert mid attributes by default
+AIXM.config.mid = true   # => true  - insert mid attributes
+```
+
+:warning: The region is part of the algorithm to calculate `mid` values. It's therefore important to set it either on the document or (if you work with individual features) using region config. You'll get a lot of warnings if you forget to do so:
+
+```ruby
+# Set the region on the document
+document = AIXM.document(
+  region: 'LF',
+  ...
+)
+
+# Set the region using the region config
+AIXM.config.region = 'LF'
 ```
 
 ### AIXM.config.ignored_errors

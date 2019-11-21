@@ -267,25 +267,6 @@ describe AIXM::Refinements do
           _(subject.payload_hash(region: 'LF')).must_equal "fddbfb76-4868-0cd7-2afe-9f43e91867fb"
         end
       end
-
-      describe :insert_payload_hash do
-        it "must insert hash as mid attribute into element with arguments" do
-          _(subject.insert_payload_hash(region: 'LF', element: 'Ser')).must_match /<Ser mid="269b1f18-cabe-3c9e-1d71-48a7414a4cb9" active/
-        end
-
-        it "must insert hash as mid attribute into element without arguments" do
-          _(subject.insert_payload_hash(region: 'LF', element: 'txtRmk')).must_match /<txtRmk mid="8b23c36b-ff51-adfd-963f-03fcb012c0cf">/
-        end
-
-        it "must overwrite an already existing mid attribute" do
-          subject_with_mid = subject.sub(/(active="true")/, 'mid="123" \1')
-          _(subject_with_mid.insert_payload_hash(region: 'LF', element: 'Ser')).must_match /<Ser mid="269b1f18-cabe-3c9e-1d71-48a7414a4cb9" active/
-        end
-
-        it "must return string untouched if falsey region is passed" do
-          _(subject.insert_payload_hash(region: nil)).must_equal subject
-        end
-      end
     end
 
     describe :to_dd do

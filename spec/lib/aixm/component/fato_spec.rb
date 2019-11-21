@@ -69,7 +69,9 @@ describe AIXM::Component::FATO do
     macro :remarks
   end
 
-  describe :xml= do
+  describe :to_xml do
+    macro :mid
+
     it "builds correct complete OFMX" do
       AIXM.ofmx!
       _(subject.to_xml).must_equal <<~END
@@ -171,7 +173,8 @@ describe AIXM::Component::FATO do
 
     it "builds OFMX with mid" do
       AIXM.ofmx!
-      AIXM.config.mid_region = 'LF'
+      AIXM.config.mid = true
+      AIXM.config.region = 'LF'
       _(subject.to_xml).must_match /<FtoUid mid="9753290e-774e-2600-9b16-f7f951e06e9d">/
       _(subject.to_xml).must_match /<FdnUid mid="ac550e74-73e2-4feb-4934-d0b4aafccfe6">/
     end
@@ -206,7 +209,9 @@ describe AIXM::Component::FATO::Direction do
     end
   end
 
-  describe :xml= do
+  describe :to_xml do
+    macro :mid
+
     it "builds correct complete OFMX" do
       AIXM.ofmx!
       _(subject.to_xml).must_equal <<~END
