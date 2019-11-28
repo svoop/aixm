@@ -1,5 +1,5 @@
 [![Version](https://img.shields.io/gem/v/aixm.svg?style=flat)](https://rubygems.org/gems/aixm)
-[![Tests](https://github.com/svoop/aixm/workflows/Test/badge.svg)](https://github.com/svoop/aixm/actions?workflow=Test)
+[![Tests](https://img.shields.io/github/workflow/status/svoop/aixm/Test.svg?style=flat&label=tests)](https://github.com/svoop/aixm/actions?workflow=Test)
 [![Code Climate](https://img.shields.io/codeclimate/maintainability/svoop/aixm.svg?style=flat)](https://codeclimate.com/github/svoop/aixm/)
 [![Donorbox](https://img.shields.io/badge/donate-on_donorbox-yellow.svg)](https://donorbox.org/bitcetera)
 
