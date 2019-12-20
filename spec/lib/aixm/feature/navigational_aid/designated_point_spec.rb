@@ -16,16 +16,6 @@ describe AIXM::Feature::NavigationalAid::DesignatedPoint do
     end
   end
 
-  describe :airport= do
-    it "fails on invalid values" do
-      _([:foobar, 123]).wont_be_written_to subject, :airport
-    end
-
-    it "accepts valid values" do
-      _([nil, AIXM::Factory.airport]).must_be_written_to subject, :airport
-    end
-  end
-
   describe :kind do
     it "must return class/type combo" do
       _(subject.kind).must_equal "DesignatedPoint:VFR-RP"

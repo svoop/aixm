@@ -5,14 +5,6 @@ describe AIXM::Feature::Unit do
     AIXM::Factory.unit
   end
 
-  describe :organisation= do
-    macro :organisation
-
-    it "fails on nil value" do
-      _([nil]).wont_be_written_to subject, :organisation
-    end
-  end
-
   describe :name= do
     it "fails on invalid values" do
       _([nil, :foobar, 123]).wont_be_written_to subject, :name
@@ -42,16 +34,6 @@ describe AIXM::Feature::Unit do
     it "looks up valid values" do
       _(subject.tap { |s| s.class = :icao }.class).must_equal :icao
       _(subject.tap { |s| s.class = :OTHER }.class).must_equal :other
-    end
-  end
-
-  describe :airport= do
-    it "fails on invalid values" do
-      _([:foobar, 123]).wont_be_written_to subject, :airport
-    end
-
-    it "accepts valid values" do
-      _([nil, AIXM::Factory.airport]).must_be_written_to subject, :airport
     end
   end
 
@@ -374,7 +356,8 @@ describe AIXM::Feature::Unit do
 
     it "builds correct minimal OFMX" do
       AIXM.ofmx!
-      subject.airport = subject.remarks = nil
+      subject.instance_variable_set(:@airport, nil)
+      subject.remarks = nil
       subject.instance_variable_set(:'@services', [])
       _(subject.to_xml).must_equal <<~END
         <!-- Unit: PUJAUT TWR -->

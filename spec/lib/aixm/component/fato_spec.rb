@@ -144,7 +144,7 @@ describe AIXM::Component::FATO do
       AIXM.ofmx!
       %i(length width profile marking status remarks).each { |a| subject.send(:"#{a}=", nil) }
       %i(composition preparation condition pcn siwl_weight siwl_tire_pressure auw_weight remarks).each { |a| subject.surface.send(:"#{a}=", nil) }
-      subject.directions['35'].instance_eval { @lightings.clear }
+      subject.directions.first.instance_eval { @lightings.clear }
       _(subject.to_xml).must_equal <<~END
         <Fto>
           <FtoUid>
@@ -183,7 +183,7 @@ end
 
 describe AIXM::Component::FATO::Direction do
   subject do
-    AIXM::Factory.airport.fatos.first.directions['35']
+    AIXM::Factory.airport.fatos.first.directions.first
   end
 
   describe :name= do

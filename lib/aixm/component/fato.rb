@@ -26,6 +26,7 @@ module AIXM
     #
     # @see https://github.com/openflightmaps/ofmx/wiki/Airport#fto-fato
     class FATO
+      include AIXM::Association
       include AIXM::Mid
 
       STATUSES = {
@@ -37,8 +38,26 @@ module AIXM
         OTHER: :other                    # specify in remarks
       }.freeze
 
-      # @return [AIXM::Feature::Airport] airport this FATO belongs to
-      attr_reader :airport
+      # @!method surface
+      #   @return [AIXM::Component::Surface] surface of the FATO
+      # @!method surface=
+      #   @param [AIXM::Component::Surface]
+      has_one :surface
+
+      # @!method directions
+      #   @return [Array<AIXM::Component::FATO::Direction>] maps added direction names to full FATO directions
+      # @!method add_direction
+      #   @param [AIXM::A] name of the FATO direction (e.g. "12" or "16L")
+      #   @return [self]
+      has_many :directions, accept: 'AIXM::Component::FATO::Direction' do |direction, name:| end
+
+      # @!method airport
+      #   @return [AIXM::Feature::Airport] airport this FATO belongs to
+      belongs_to :airport
+
+      # @!method helipad
+      #   @return [AIXM::Component::Helipad] helipad situated on this FATO
+      belongs_to :helipad
 
       # @return [String] full name (e.g. "H1")
       attr_reader :name
@@ -48,9 +67,6 @@ module AIXM
 
       # @return [AIXM::D, nil] width
       attr_reader :width
-
-      # @return [AIXM::Component::Surface] surface of the FATO
-      attr_reader :surface
 
       # @return [String, nil] markings
       attr_reader :marking
@@ -64,25 +80,15 @@ module AIXM
       # @return [String, nil] free text remarks
       attr_reader :remarks
 
-      # @return [Hash{String => AIXM::Component::FATO::Direction}] maps added direction names to full FATO directions
-      attr_reader :directions
-
       def initialize(name:)
         self.name = name
-        @surface = AIXM.surface
-        @directions = {}
+        self.surface = AIXM.surface
       end
 
       # @return [String]
       def inspect
         %Q(#<#{self.class} airport=#{airport&.id.inspect} name=#{name.inspect}>)
       end
-
-      def airport=(value)
-        fail(ArgumentError, "invalid airport") unless value.is_a? AIXM::Feature::Airport
-        @airport = value
-      end
-      private :airport=
 
       def name=(value)
         fail(ArgumentError, "invalid name") unless value.is_a? String
@@ -121,12 +127,6 @@ module AIXM
         @remarks = value&.to_s
       end
 
-      def add_direction(name:)
-        direction = Direction.new(fato: self, name: name)
-        yield direction
-        @directions[name] = direction
-      end
-
       # @return [String] UID markup
       def to_uid
         builder = Builder::XmlMarkup.new(indent: 2)
@@ -155,7 +155,7 @@ module AIXM
           fto.codeSts(STATUSES.key(status).to_s) if status
           fto.txtRmk(remarks) if remarks
         end
-        directions.values.each do |direction|
+        directions.each do |direction|
           builder << direction.to_xml
         end
         builder.target!
@@ -165,10 +165,18 @@ module AIXM
       #
       # @see https://github.com/openflightmaps/ofmx/wiki/Airport#fdn-fato-direction
       class Direction
+        include AIXM::Association
         include AIXM::Mid
 
-        # @return [AIXM::Component::FATO] FATO the FATO direction is further describing
-        attr_reader :fato
+        # @!method lightings
+        #   @return [Array<AIXM::Component::Lighting>] installed lighting systems
+        # @!method add_lighting
+        #   @param [AIXM::Component::Lighting]
+        has_many :lightings, as: :lightable
+
+        # @!method fato
+        #   @return [AIXM::Component::FATO] FATO the FATO direction is further describing
+        belongs_to :fato
 
         # @return [AIXM::A] name of the FATO direction (e.g. "12" or "16L")
         attr_reader :name
@@ -179,24 +187,14 @@ module AIXM
         # @return [String, nil] free text remarks
         attr_reader :remarks
 
-        # @return [Array<AIXM::Component::Lighting>] installed lighting systems
-        attr_reader :lightings
-
-        def initialize(fato:, name:)
-          self.fato, self.name = fato, name
-          @lightings = []
+        def initialize(name:)
+          self.name = name
         end
 
         # @return [String]
         def inspect
           %Q(#<#{self.class} airport=#{fato&.airport&.id.inspect} name=#{name.inspect}>)
         end
-
-        def fato=(value)
-          fail(ArgumentError, "invalid FATO") unless value.is_a? AIXM::Component::FATO
-          @fato = value
-        end
-        private :fato
 
         def name=(value)
           fail(ArgumentError, "invalid name") unless value.is_a? String
@@ -211,17 +209,6 @@ module AIXM
 
         def remarks=(value)
           @remarks = value&.to_s
-        end
-
-        # Add a lighting system to the FATO direction.
-        #
-        # @param lighting [AIXM::Component::Lighting] lighting instance
-        # @return [self]
-        def add_lighting(lighting)
-          fail(ArgumentError, "invalid lighting") unless lighting.is_a? AIXM::Component::Lighting
-          lighting.send(:lightable=, self)
-          @lightings << lighting
-          self
         end
 
         # @return [AIXM::A] magnetic orientation (magnetic bearing) in degrees

@@ -6,15 +6,6 @@ describe AIXM::Feature::ObstacleGroup do
       AIXM.obstacle_group(name: "Mirmande éoliennes")
     end
 
-    describe :initialize do
-      it "sets defaults" do
-        subject = AIXM.obstacle_group(
-          name: "Mirmande éoliennes"
-        )
-        _(subject.obstacles).must_equal []
-      end
-    end
-
     describe :name= do
       it "fails on invalid values" do
         _([:foobar, 123]).wont_be_written_to subject, :name
@@ -47,14 +38,6 @@ describe AIXM::Feature::ObstacleGroup do
 
     describe :remarks= do
       macro :remarks
-    end
-
-    describe :add_obstacle do
-      it "adds an obstacle to the obstacle group" do
-        subject.add_obstacle(AIXM::Factory.obstacle)
-        _(subject.obstacles.count).must_equal 1
-        _(subject.obstacles.first.obstacle_group).must_equal subject
-      end
     end
 
     describe :to_xml do

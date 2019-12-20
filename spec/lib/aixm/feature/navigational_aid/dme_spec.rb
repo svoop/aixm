@@ -5,10 +5,6 @@ describe AIXM::Feature::NavigationalAid::DME do
     AIXM::Factory.dme
   end
 
-  describe :organisation= do
-    macro :organisation
-  end
-
   describe :channel= do
     it "fails on invalid values" do
       _([nil, :foobar, 123, '0X', '127Y', '12Z']).wont_be_written_to subject, :channel

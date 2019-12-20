@@ -78,7 +78,8 @@ module AIXM
     def initialize_config
       @@config = OpenStruct.new(
         schema: :aixm,
-        mid: false
+        mid: false,
+        inflector: Dry::Inflector.new
       )
     end
 

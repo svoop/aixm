@@ -20,6 +20,8 @@ module AIXM
     #
     # @see https://github.com/openflightmaps/ofmx/wiki/Organisation#uni-unit
     class Unit < Feature
+      include AIXM::Association
+
       public_class_method :new
 
       TYPES = {
@@ -76,17 +78,25 @@ module AIXM
         OTHER: :other   # specify in remarks
       }.freeze
 
-      # @return [AIXM::Feature::Organisation] superior organisation
-      attr_reader :organisation
+      # @!method services
+      #   @return [Array<AIXM::Feature::Service>] services provided by this unit
+      # @!method add_service
+      #   @param [AIXM::Feature::Service]
+      has_many :services
+
+      # @!method organisation
+      #   @return [AIXM::Feature::Organisation] superior organisation
+      belongs_to :organisation, as: :member
+
+      # @!method airport
+      #   @return [AIXM::Feature::Airport, nil] airport
+      belongs_to :airport
 
       # @return [String] name of unit (e.g. "MARSEILLE ACS")
       attr_reader :name
 
       # @return [Symbol] type of unit (see {TYPES})
       attr_reader :type
-
-      # @return [AIXM::Feature::Airport, nil] airport
-      attr_reader :airport
 
       # @return [String, nil] free text remarks
       attr_reader :remarks
@@ -95,17 +105,11 @@ module AIXM
         super(source: source)
         self.organisation, self.name, self.type = organisation, name, type
         self.class = binding.local_variable_get(:class)
-        @services = []
       end
 
       # @return [String]
       def inspect
-        %Q(#<#{original_class} name=#{name.inspect} type=#{type.inspect}>)
-      end
-
-      def organisation=(value)
-        fail(ArgumentError, "invalid organisation") unless value.is_a? AIXM::Feature::Organisation
-        @organisation = value
+        %Q(#<#{__class__} name=#{name.inspect} type=#{type.inspect}>)
       end
 
       def name=(value)
@@ -118,9 +122,8 @@ module AIXM
       end
 
       # @!attribute class
-      # @note Use +original_class+ to query the Ruby object class.
+      # @note Use +Object#__class__+ alias to query the Ruby object class.
       # @return [Symbol] class of unit (see {CLASSES})
-      alias_method :original_class, :class
       def class
         @klass
       end
@@ -129,30 +132,8 @@ module AIXM
         @klass = CLASSES.lookup(value&.to_s&.to_sym, nil) || fail(ArgumentError, "invalid class")
       end
 
-      def airport=(value)
-        fail(ArgumentError, "invalid airport") unless value.nil? || value.is_a?(AIXM::Feature::Airport)
-        @airport = value
-      end
-
       def remarks=(value)
         @remarks = value&.to_s
-      end
-
-      # Add a service provided by this unit.
-      #
-      # @param service [AIXM::Feature::Service] service instance
-      # @return [self]
-      def add_service(service)
-        fail(ArgumentError, "invalid service") unless service.is_a? AIXM::Feature::Service
-        service.send(:unit=, self)
-        @services << service
-        self
-      end
-
-      # @!attribute [r] services
-      # @return [Array<AIXM::Feature::Service>] services provided by this unit
-      def services
-        @services.sort { |a, b| a.type <=> b.type }
       end
 
       # @return [String] UID markup
@@ -178,7 +159,7 @@ module AIXM
           uni.codeClass(CLASSES.key(self.class).to_s)
           uni.txtRmk(remarks) if remarks
         end
-        services.each.with_object({}) do |service, sequences|
+        services.sort { |a, b| a.type <=> b.type }.each.with_object({}) do |service, sequences|
           sequences[service.type] = (sequences[service.type] || 0) + 1
           builder << service.to_xml(sequence: sequences[service.type])
         end

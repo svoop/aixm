@@ -20,9 +20,9 @@ module AIXM
       #
       # @see https://github.com/openflightmaps/ofmx/wiki/Navigational-aid#dpn-designated-point
       class DesignatedPoint < NavigationalAid
+        include AIXM::Association
+
         public_class_method :new
-        private :organisation=
-        private :organisation
 
         TYPES = {
           ICAO: :icao,                                 # five-letter ICAO id
@@ -35,25 +35,20 @@ module AIXM
           OTHER: :other                                # specify in remarks
         }.freeze
 
+        # @return [AIXM::Feature::Airport] airport this designated point is
+        #   associated with
+        belongs_to :airport
+
         # @return [Symbol] type of designated point
         attr_reader :type
 
-        # @return [AIXM::Feature::Airport] airport this designated point is
-        #   associated with
-        attr_reader :airport
-
         def initialize(type:, **arguments)
-          super(organisation: false, z: nil, **arguments)
+          super(organisation: nil, z: nil, **arguments)
           self.type = type
         end
 
         def type=(value)
           @type = TYPES.lookup(value&.to_s&.to_sym, nil) || fail(ArgumentError, "invalid type")
-        end
-
-        def airport=(value)
-          fail(ArgumentError, "invalid airport") unless value.nil? || value.is_a?(AIXM::Feature::Airport)
-          @airport = value
         end
 
         # @return [String] UID markup

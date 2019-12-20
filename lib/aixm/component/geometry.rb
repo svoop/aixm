@@ -3,9 +3,7 @@ using AIXM::Refinements
 module AIXM
   class Component
 
-    # Geometries define a 3D airspace horizontally. It's either exactly one
-    # circle or at least three points, arcs and borders (the last of which
-    # has to be a point with the same coordinates as the first).
+    # Geometries define a 3D airspace horizontally.
     #
     # For a geometry to be valid, it must be comprised of either:
     # * exactly one point
@@ -15,7 +13,7 @@ module AIXM
     #
     # ===Cheat Sheet in Pseudo Code:
     #   geometry = AIXM.geometry
-    #   geometry << AIXM.point or AIXM.arc or AIXM.border or AIXM.circle
+    #   geometry.add_segment(AIXM.point or AIXM.arc or AIXM.border or AIXM.circle)
     #
     # @example Built by passing elements to the initializer
     #   geometry = AIXM.geometry(
@@ -23,39 +21,38 @@ module AIXM
     #     AIXM.point(...)
     #   )
     #
-    # @example Built by adding elements
+    # @example Built by adding segments
     #   geometry = AIXM.geometry
-    #   geometry << AIXM.point(...)
-    #   geometry.concat [AIXM.point(...), AIXM.point(...), ...]
+    #   geometry.add_segment(AIXM.point(...))
     #
     # @see https://github.com/openflightmaps/ofmx/wiki/Airspace#avx-border-vertex
     class Geometry
-      include Enumerable
-      extend Forwardable
+      include AIXM::Association
 
-      # @!method each
-      #   @return [Enumerator] see Array#each
-      # @!method <<
-      #   @return [Array] see Array#<<
-      # @!method concat
-      #   @return [Array] see Array#concat
-      def_delegators :@result_array, :each, :<<, :concat
+      # @!method segments
+      #   @return [Array<AIXM::Component::Geometry::Point,
+      #     AIXM::Component::Geometry::Arc,
+      #     AIXM::Component::Geometry::Border,
+      #     AIXM::Component::Geometry::Circle>] points, arcs, borders or circle
+      # @!method add_segment
+      #   @param [AIXM::Component::Geometry::Point,
+      #     AIXM::Component::Geometry::Arc,
+      #     AIXM::Component::Geometry::Border,
+      #     AIXM::Component::Geometry::Circle]
+      #   @return [self]
+      has_many :segments, accept: %i(point arc border circle)
+
+      # @!method airspace
+      #   @return [AIXM::Feature::Airspace] airspace the geometry defines
+      belongs_to :airspace
 
       def initialize(*segments)
-        @result_array = segments
+        segments.each { |s| add_segment(s) }
       end
 
       # @return [String]
       def inspect
         %Q(#<#{self.class} segments=#{segments.count.inspect}>)
-      end
-
-      # @return [Array<AIXM::Component::Geometry::Point,
-      #   AIXM::Component::Geometry::Arc,
-      #   AIXM::Component::Geometry::Border,
-      #   AIXM::Component::Geometry::Circle>] points, arcs, borders or circle
-      def segments
-        @result_array
       end
 
       # @return [Boolean] whether the geometry is closed
@@ -66,26 +63,26 @@ module AIXM
       # @return [String] AIXM or OFMX markup
       def to_xml
         fail(GeometryError.new("geometry is not closed", self)) unless closed?
-        @result_array.map { |h| h.to_xml }.join
+        segments.map { |h| h.to_xml }.join
       end
 
       private
 
       def point?
-        @result_array.size == 1 &&
-          @result_array.first.is_a?(AIXM::Component::Geometry::Point)
+        segments.size == 1 &&
+          segments.first.is_a?(AIXM::Component::Geometry::Point)
       end
 
       def circle?
-        @result_array.size == 1 &&
-          @result_array.first.is_a?(AIXM::Component::Geometry::Circle)
+        segments.size == 1 &&
+          segments.first.is_a?(AIXM::Component::Geometry::Circle)
       end
 
       def polygon?
-        @result_array.size >= 3 &&
-          !@result_array.any? { |h| h.is_a?(AIXM::Component::Geometry::Circle) } &&
-          @result_array.last.is_a?(AIXM::Component::Geometry::Point) &&
-          @result_array.first.xy == @result_array.last.xy
+        segments.size >= 3 &&
+          !segments.any? { |h| h.is_a?(AIXM::Component::Geometry::Circle) } &&
+          segments.last.is_a?(AIXM::Component::Geometry::Point) &&
+          segments.first.xy == segments.last.xy
       end
     end
 

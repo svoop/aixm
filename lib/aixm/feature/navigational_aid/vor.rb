@@ -42,6 +42,18 @@ module AIXM
           OTHER: :other        # specify in remarks
         }.freeze
 
+        # @!method dme
+        #   @return [AIXM::Feature::NavigationalAid::DME, nil] associated DME
+        # @!method dme=
+        #   @param [AIXM::Feature::NavigationalAid::DME, nil]
+        has_one :dme, allow_nil: true
+
+        # @!method tacan
+        #   @return [AIXM::Feature::NavigationalAid::TACAN, nil] associated TACAN
+        # @!method tacan=
+        #   @param [AIXM::Feature::NavigationalAid::TACAN, nil]
+        has_one :tacan, allow_nil: true
+
         # @return [Symbol] type of VOR (see {TYPES})
         attr_reader :type
 
@@ -50,12 +62,6 @@ module AIXM
 
         # @return [Symbol] north indication (see {NORTHS})
         attr_reader :north
-
-        # @return [AIXM::Feature::NavigationalAid::DME, nil] associated DME
-        attr_reader :dme
-
-        # @return [AIXM::Feature::NavigationalAid::TACAN, nil] associated TACAN
-        attr_reader :tacan
 
         def initialize(type:, f:, north:, **arguments)
           super(**arguments)
@@ -77,16 +83,14 @@ module AIXM
 
         # Associate a DME which turns the VOR into a VOR/DME
         def associate_dme(channel:)
-          @dme = AIXM.dme(organisation: organisation, id: id, name: name, xy: xy, z: z, channel: channel)
-          @dme.timetable, @dme.remarks = timetable, remarks
-          @dme.send(:vor=, self)
+          self.dme = AIXM.dme(organisation: organisation, id: id, name: name, xy: xy, z: z, channel: channel)
+          dme.timetable, @dme.remarks = timetable, remarks
         end
 
         # Associate a TACAN which turns the VOR into a VORTAC
         def associate_tacan(channel:)
-          @tacan = AIXM.tacan(organisation: organisation, id: id, name: name, xy: xy, z: z, channel: channel)
-          @tacan.timetable, @tacan.remarks = timetable, remarks
-          @tacan.send(:vor=, self)
+          self.tacan = AIXM.tacan(organisation: organisation, id: id, name: name, xy: xy, z: z, channel: channel)
+          tacan.timetable, @tacan.remarks = timetable, remarks
         end
 
         # @return [String] UID markup

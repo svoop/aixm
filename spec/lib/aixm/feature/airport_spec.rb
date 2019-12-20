@@ -5,27 +5,6 @@ describe AIXM::Feature::Airport do
     AIXM::Factory.airport
   end
 
-  describe :initialize do
-    it "sets defaults" do
-      subject = AIXM::Feature::Airport.new(
-        organisation: AIXM::Factory.organisation,
-        id: 'LFNT',
-        name: 'Avignon-Pujaut',
-        xy: AIXM.xy(lat: %q(43°59'46"N), long: %q(004°45'16"E))
-      )
-      _(subject.addresses).must_equal []
-      _(subject.runways).must_equal []
-      _(subject.helipads).must_equal []
-      _(subject.usage_limitations).must_equal []
-    end
-  end
-
-  describe :organisation= do
-    it "fails on invalid values" do
-      _([nil, :foobar]).wont_be_written_to subject, :organisation
-    end
-  end
-
   describe :id= do
     it "fails on invalid values" do
       _([nil, 'A', 'ABCDE', 'AB 1234']).wont_be_written_to subject, :id
@@ -147,51 +126,15 @@ describe AIXM::Feature::Airport do
     macro :remarks
   end
 
-  describe :add_address do
-    it "fails on invalid arguments" do
-      _{ subject.add_address nil }.must_raise ArgumentError
-    end
-
-    it "adds address to the array" do
-      count = subject.addresses.count
-      subject.add_address(AIXM::Factory.address)
-      _(subject.addresses.count).must_equal count + 1
-    end
-  end
-
-  describe :add_runway do
-    it "fails on invalid arguments" do
-      _{ subject.add_runway nil }.must_raise ArgumentError
-    end
-
-    it "adds runway to the array" do
-      count = subject.runways.count
-      subject.add_runway(AIXM.runway(name: '10'))
-      _(subject.runways.count).must_equal count + 1
-    end
-  end
-
-  describe :add_helipad do
-    it "fails on invalid arguments" do
-      _{ subject.add_helipad nil }.must_raise ArgumentError
-    end
-
-    it "adds helipad to the array" do
-      count = subject.helipads.count
-      subject.add_helipad(AIXM.helipad(name: 'H2', xy: AIXM::Factory.xy))
-      _(subject.helipads.count).must_equal count + 1
-    end
-  end
-
   describe :add_usage_limitation do
     it "fails on invalid arguments" do
-      _{ subject.add_usage_limitation(:foobar) }.must_raise ArgumentError
+      _{ subject.add_usage_limitation(type: :foobar) }.must_raise ArgumentError
     end
 
     context "without block" do
       it "accepts simple limitation" do
         count = subject.usage_limitations.count
-        subject.add_usage_limitation(:permitted)
+        subject.add_usage_limitation(type: :permitted)
         _(subject.usage_limitations.count).must_equal count + 1
         _(subject.usage_limitations.last.type).must_equal :permitted
       end
@@ -200,7 +143,7 @@ describe AIXM::Feature::Airport do
     context "with block" do
       it "accepts complex limitation" do
         count = subject.usage_limitations.count
-        subject.add_usage_limitation(:permitted) do |permitted|
+        subject.add_usage_limitation(type: :permitted) do |permitted|
           permitted.add_condition { |c| c.aircraft = :glider }
           permitted.add_condition { |c| c.rule = :ifr }
         end
@@ -600,12 +543,6 @@ end
 describe AIXM::Feature::Airport::UsageLimitation do
   subject do
     AIXM::Factory.airport.usage_limitations.first
-  end
-
-  describe :initialize do
-    it "sets defaults" do
-      _(subject.conditions).must_equal []
-    end
   end
 
   describe :type= do

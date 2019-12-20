@@ -33,6 +33,8 @@ module AIXM
     #
     # @see https://github.com/openflightmaps/ofmx/wiki/Airport#ahp-airport
     class Airport < Feature
+      include AIXM::Association
+
       public_class_method :new
 
       ID_RE = /^([A-Z]{3,4}|[A-Z]{2}[A-Z\d]{4,})$/.freeze
@@ -44,8 +46,53 @@ module AIXM
         LS: :landing_site
       }.freeze
 
-      # @return [AIXM::Feature::Organisation] superior organisation
-      attr_reader :organisation
+      # @!method addresses
+      #   @return [Array<AIXM::Feature::Address>] postal address, url, A/A or A/G frequency etc
+      # @!method add_address
+      #   @param [AIXM::Feature::Address]
+      #   @return [self]
+      has_many :addresses, as: :addressable
+
+      # @!method fatos
+      #   @return [Array<AIXM::Component::FATO>] FATOs present at this airport
+      # @!method add_fato
+      #   @param [AIXM::Component::FATO]
+      has_many :fatos
+
+      # @!method helipads
+      #   @return [Array<AIXM::Component::Helipad>] helipads present at this airport
+      # @!method add_helipad
+      #   @param [AIXM::Component::Helipad]
+      has_many :helipads
+
+      # @!method runways
+      #   @return [Array<AIXM::Component::Runway>] runways present at this airport
+      # @!method add_runway
+      #   @param [AIXM::Component::Runway]
+      has_many :runways
+
+      # @!method usage_limitations
+      #   @return [Array<AIXM::Feature::Airport::UsageLimitation>] usage limitations
+      # @!method add_usage_limitation
+      #   @yield [AIXM::Feature::Airport::UsageLimitation]
+      #   @return [self]
+      has_many :usage_limitations, accept: 'AIXM::Feature::Airport::UsageLimitation' do |usage_limitation, type:| end
+
+      # @!method designated_points
+      #   @return [Array<AIXM::Feature::NavigationalAid::DesignatedPoint>] designated points
+      # @!method add_designated_point
+      #   @param [AIXM::Feature::NavigationalAid::DesignatedPoint]
+      has_many :designated_points
+
+      # @!method units
+      #   @return [Array<AIXM::Feature::Unit>] units
+      # @!method add_unit
+      #   @param [AIXM::Feature::Unit]
+      has_many :units
+
+      # @!method organisation
+      #   @return [AIXM::Feature::Organisation] superior organisation
+      belongs_to :organisation, as: :member
 
       # ICAO indicator, IATA indicator or generated indicator
       #
@@ -93,36 +140,15 @@ module AIXM
       # @return [String, nil] free text remarks
       attr_reader :remarks
 
-      # @return [Array<AIXM::Component::Runway>] runways present at this airport
-      attr_reader :runways
-
-      # @return [Array<AIXM::Component::FATO>] FATOs present at this airport
-      attr_reader :fatos
-
-      # @return [Array<AIXM::Component::Helipad>] helipads present at this airport
-      attr_reader :helipads
-
-      # @return [Array<AIXM::Feature::Airport::UsageLimitation>] usage limitations
-      attr_accessor :usage_limitations
-
-      # @return [Array<AIXM::Feature::Address>] postal address, url, A/A or A/G frequency etc
-      attr_reader :addresses
-
       def initialize(source: nil, organisation:, id: nil, name:, xy:)
         super(source: source)
         self.organisation, self.name, self.xy = organisation, name, xy
         self.id = id   # name must already be set
-        @runways, @fatos, @helipads, @usage_limitations, @addresses = [], [], [], [], []
       end
 
       # @return [String]
       def inspect
         %Q(#<#{self.class} id=#{id.inspect}>)
-      end
-
-      def organisation=(value)
-        fail(ArgumentError, "invalid organisation") unless value.is_a? AIXM::Feature::Organisation
-        @organisation = value
       end
 
       # For airports without an +id+, you may assign the two character region
@@ -197,85 +223,6 @@ module AIXM
 
       def remarks=(value)
         @remarks = value&.to_s
-      end
-
-      # Add a runway to the airport.
-      #
-      # @param runway [AIXM::Component::Runway] runway instance
-      # @return [self]
-      def add_runway(runway)
-        fail(ArgumentError, "invalid runway") unless runway.is_a? AIXM::Component::Runway
-        runway.send(:airport=, self)
-        @runways << runway
-        self
-      end
-
-      # Add a FATO to the airport.
-      #
-      # @param FATO [AIXM::Component::FATO] FATO instance
-      # @return [self]
-      def add_fato(fato)
-        fail(ArgumentError, "invalid FATO") unless fato.is_a? AIXM::Component::FATO
-        fato.send(:airport=, self)
-        @fatos << fato
-        self
-      end
-
-      # Add a helipad to the airport.
-      #
-      # @param helipad [AIXM::Component::Helipad] helipad instance
-      # @return [self]
-      def add_helipad(helipad)
-        fail(ArgumentError, "invalid helipad") unless helipad.is_a? AIXM::Component::Helipad
-        helipad.send(:airport=, self)
-        @helipads << helipad
-        self
-      end
-
-      # Add an airport usage limitation.
-      #
-      # See {AIXM::Feature::Airport::UsageLimitation::TYPES UsageLimitation::TYPES}
-      # for recognized limitations and {AIXM::Feature::Airport::UsageLimitation#add_condition UsageLimitation#add_condition}
-      # for recognized conditions.
-      #
-      # Multiple conditions are joined with an implicit *or* whereas the
-      # specifics of a condition (aircraft, rule etc) are joined with an
-      # implicit *and*.
-      #
-      # @example Limitation applying to any traffic
-      #   airport.add_usage_limitation(:permitted)
-      #
-      # @example Limitation applying to specific traffic
-      #   airport.add_usage_limitation(:reservation_required) do |reservation_required|
-      #     reservation_required.add_condition do |condition|
-      #       condition.aircraft = :glider
-      #     end
-      #     reservation_required.add_condition do |condition|
-      #       condition.rule = :ifr
-      #       condition.origin = :international
-      #     end
-      #     reservation_required.timetable = AIXM::H24
-      #     reservation_required.remarks = "Reservation 24 HRS prior to arrival"
-      #   end
-      #
-      # @yieldparam usage_limitation [AIXM::Feature::Airport::UsageLimitation]
-      # @return [self]
-      def add_usage_limitation(type)
-        usage_limitation = UsageLimitation.new(type: type)
-        yield(usage_limitation) if block_given?
-        @usage_limitations << usage_limitation
-        self
-      end
-
-      # Add an address (postal address, url, A/A or A/G frequency etc) to the airport.
-      #
-      # @params address [AIXM::Feature::Address] address instance
-      # @return [self]
-      def add_address(address)
-        fail(ArgumentError, "invalid address") unless address.is_a? AIXM::Feature::Address
-        address.send(:addressable=, self)
-        @addresses << address
-        self
       end
 
       # @return [String] UID markup
@@ -354,9 +301,35 @@ module AIXM
       # Limitations concerning the availability of an airport for certain flight
       # types, aircraft types etc during specific hours.
       #
+      # See {AIXM::Feature::Airport::UsageLimitation::TYPES UsageLimitation::TYPES}
+      # for recognized limitations and {AIXM::Feature::Airport::UsageLimitation#add_condition UsageLimitation#add_condition}
+      # for recognized conditions.
+      #
+      # Multiple conditions are joined with an implicit *or* whereas the
+      # specifics of a condition (aircraft, rule etc) are joined with an
+      # implicit *and*.
+      #
+      # @example Limitation applying to any traffic
+      #   airport.add_usage_limitation(type: :permitted)
+      #
+      # @example Limitation applying to specific traffic
+      #   airport.add_usage_limitation(type: :reservation_required) do |reservation_required|
+      #     reservation_required.add_condition do |condition|
+      #       condition.aircraft = :glider
+      #     end
+      #     reservation_required.add_condition do |condition|
+      #       condition.rule = :ifr
+      #       condition.origin = :international
+      #     end
+      #     reservation_required.timetable = AIXM::H24
+      #     reservation_required.remarks = "Reservation 24 HRS prior to arrival"
+      #   end
+      #
       # @see AIXM::Feature::Airport#add_usage_limitation
       # @see https://github.com/openflightmaps/ofmx/wiki/Airport#ahu-airport-usage
       class UsageLimitation
+        include AIXM::Association
+
         TYPES = {
           PERMIT: :permitted,
           FORBID: :forbidden,
@@ -364,14 +337,19 @@ module AIXM
           OTHER: :other                    # specify in remarks
         }.freeze
 
-        # @return [AIXM::Feature::Airport] airport this usage limitation is assigned to
-        attr_reader :airport
+        # @!method conditions
+        #   @return [Array<AIXM::Feature::Airport::UsageLimitation::Condition>] conditions for this limitation to apply
+        # @!method add_condition
+        #   @yield [AIXM::Feature::Airport::UsageLimitation::Condition]
+        #   @return [self]
+        has_many :conditions, accept: 'AIXM::Feature::Airport::UsageLimitation::Condition' do |condition| end
+
+        # @!method airport
+        #   @return [AIXM::Feature::Airport] airport this usage limitation is assigned to
+        belongs_to :airport
 
         # @return [Symbol] type of limitation
         attr_reader :type
-
-        # @return [Array<AIXM::Feature::Airport::UsageLimitation::Condition>] conditions for this limitation to apply
-        attr_reader :conditions
 
         # @return [AIXM::Component::Timetable, nil] limitation application hours
         attr_reader :timetable
@@ -381,7 +359,6 @@ module AIXM
 
         def initialize(type:)
           self.type = type
-          @conditions = []
         end
 
         # @return [String]
@@ -391,17 +368,6 @@ module AIXM
 
         def type=(value)
           @type = TYPES.lookup(value&.to_s&.to_sym, nil) || fail(ArgumentError, "invalid type")
-        end
-
-        # Add a condition to the usage limitation.
-        #
-        # @yieldparam condition [AIXM::Feature::Airport::UsageLimitation::Condition]
-        # @return [self]
-        def add_condition
-          condition = Condition.new
-          yield(condition)
-          @conditions << condition
-          self
         end
 
         def timetable=(value)
@@ -432,6 +398,8 @@ module AIXM
         # @see AIXM::Feature::Airport#add_usage_limitation
         # @see https://github.com/openflightmaps/ofmx/wiki/Airport#ahu-airport-usage
         class Condition
+          include AIXM::Association
+
           AIRCRAFT = {
             L: :landplane,
             S: :seaplane,
@@ -476,6 +444,10 @@ module AIXM
             WORK: :aerial_work,
             OTHER: :other               # specify in remarks
           }.freeze
+
+          # @!method usage_limitation
+          #   @return [AIXM::Feature::Airport::UsageLimitation] usage limitation the condition belongs to
+          belongs_to :usage_limitation
 
           # @return [Symbol, nil] kind of aircraft (see {AIRCRAFT})
           attr_reader :aircraft

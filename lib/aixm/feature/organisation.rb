@@ -17,6 +17,8 @@ module AIXM
     #
     # @see https://github.com/openflightmaps/ofmx/wiki/Organisation#org-organisation
     class Organisation < Feature
+      include AIXM::Association
+
       public_class_method :new
 
       TYPES = {
@@ -30,6 +32,17 @@ module AIXM
         A: :national_authority,
         OTHER: :other                          # specify in remarks
       }.freeze
+
+      # @!method members
+      #   @return [Array<AIXM::Feature::Airport,
+      #     AIXM::Feature::Unit,
+      #     AIXM::Feature::NavigationalAid>] aiports, units or navigational aids
+      # @!method add_member
+      #   @param [AIXM::Feature::Airport,
+      #     AIXM::Feature::Unit,
+      #     AIXM::Feature::NavigationalAid]
+      #   @return [self]
+      has_many :members, accept: [:airport, :unit, 'AIXM::Feature::NavigationalAid']
 
       # @return [String] name of organisation (e.g. "FRANCE")
       attr_reader :name

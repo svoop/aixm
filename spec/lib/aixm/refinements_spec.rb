@@ -64,6 +64,42 @@ describe AIXM::Refinements do
         _([nil].to_uuid).must_equal "d41d8cd9-8f00-b204-e980-0998ecf8427e"
       end
     end
+
+    describe :find do
+      subject do
+        [AIXM::Factory.dme, AIXM::Factory.ndb, AIXM::Factory.vor]
+      end
+
+      it "finds elements by exact class" do
+        _(subject.find(is_a: AIXM::Feature::NavigationalAid::DME).count).must_equal 1
+      end
+
+      it "finds elements by fuzzy class" do
+        _(subject.find(kind_of: AIXM::Feature).count).must_equal 3
+      end
+
+      it "finds elements by attribute" do
+        _(subject.find(id: 'MMM').count).must_equal 1
+      end
+
+      it "finds elements by class and attributes" do
+        _(subject.find(is_a: AIXM::Feature::NavigationalAid::DME, id: 'MMM', name: 'DME NAVAID').count).must_equal 1
+      end
+
+      it "returns empty array if nothing is found" do
+        _(subject.find(is_a: Array).count).must_equal 0
+      end
+    end
+
+    describe :duplicates do
+      it "returns an array containing the duplicates" do
+        _(%w(a b c b d e d f b).duplicates).must_equal %w(b d)
+      end
+
+      it "returns an empty array if no duplicates are present" do
+        _(%w(a b c d e f g h i).duplicates).must_equal []
+      end
+    end
   end
 
   context Float do
@@ -198,6 +234,34 @@ describe AIXM::Refinements do
   end
 
   context String do
+    describe :to_class do
+      it "must resolve class name to class" do
+        _("String".to_class).must_equal String
+      end
+
+      it "must resolve namespaced class name to class" do
+        _("AIXM::Feature::Address".to_class).must_equal AIXM::Feature::Address
+      end
+    end
+
+    describe :inflect do
+      subject do
+        "AIXM::Feature::NavigationalAid"
+      end
+
+      it "must apply no inflection" do
+        _(subject.inflect).must_equal subject
+      end
+
+      it "must apply single inflection" do
+        _(subject.inflect(:demodulize)).must_equal "NavigationalAid"
+      end
+
+      it "must apply multiple inflections" do
+        _(subject.inflect(:demodulize, :tableize, :pluralize)).must_equal "navigational_aids"
+      end
+    end
+
     describe :indent do
       it "must indent single line string" do
         _('foobar'.indent(2)).must_equal '  foobar'

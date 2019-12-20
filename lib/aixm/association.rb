@@ -1,0 +1,224 @@
+using AIXM::Refinements
+
+module AIXM
+
+  # Associate features and components with a minimalistic implementation of
+  # +has_many+, +has_one+ and +belongs_to+ associations.
+  #
+  # When adding or assigning an object on the associator (where the +has_many+
+  # or +has_one+ declaration is made), the object is verified and must be an
+  # instance of the declared class or a superclass thereof.
+  #
+  # When assigning an object on the associated (where the +belongs_to+
+  # declaration is made), the object is not verified. However, since the actual
+  # assignment is always delegated to the associator, unacceptable objects will
+  # raise errors.
+  #
+  # @example Simple +has_many+ association
+  #   class Blog
+  #     has_many :posts   # :post has to be a key in AIXM::CLASSES
+  #   end
+  #   class Post
+  #     belongs_to :blog
+  #   end
+  #   blog, post = Blog.new, Post.new
+  #   blog.add_post(post)
+  #   blog.posts.count           # => 1
+  #   blog.posts.first == post   # => true
+  #   post.blog == blog          # => true
+  #   blog.remove_post(post)
+  #   blog.posts.count           # => 0
+  #   # --or--
+  #   post.blog = blog
+  #   blog.posts.count           # => 1
+  #   blog.posts.first == post   # => true
+  #   post.blog == blog          # => true
+  #   post.blog = nil
+  #   blog.posts.count           # => 0
+  #
+  # @example Simple +has_one+ association
+  #   class Blog
+  #     has_one :posts   # :post has to be a key in AIXM::CLASSES
+  #   end
+  #   class Post
+  #     belongs_to :blog
+  #   end
+  #   blog, post = Blog.new, Post.new
+  #   blog.post = post
+  #   blog.post == post   # => true
+  #   post.blog == blog   # => true
+  #   blog.post = nil
+  #   blog.post           # => nil
+  #   post.blog           # => nil
+  #   # --or--
+  #   post.blog = blog
+  #   post.blog == blog   # => true
+  #   blog.post == post   # => true
+  #   post.blog = nil
+  #   post.blog           # => nil
+  #   blog.post           # => nil
+  #
+  # @example Association with readonly +belongs_to+ (idem for +has_one+)
+  #   class Blog
+  #     has_many :posts   # :post has to be a key in AIXM::CLASSES
+  #   end
+  #   class Post
+  #     belongs_to :blog, readonly: true
+  #   end
+  #   blog, post = Blog.new, Post.new
+  #   post.blog = blog           # => NoMethodError
+  #
+  # @example Association with explicit class (idem for +has_one+)
+  #   class Blog
+  #     include AIXM::Association
+  #     has_many :posts, accept: 'Picture'
+  #   end
+  #   class Picture
+  #     include AIXM::Association
+  #     belongs_to :blog
+  #   end
+  #   blog, picture = Blog.new, Picture.new
+  #   blog.add_post(picture)
+  #   blog.posts.first == picture   # => true
+  #
+  # @example Polymorphic associator (idem for +has_one+)
+  #   class Blog
+  #     has_many :posts, as: :postable
+  #   end
+  #   class Feed
+  #     has_many :posts, as: :postable
+  #   end
+  #   class Post
+  #     belongs_to :postable
+  #   end
+  #   blog, feed, post_1, post_2, post_3 = Blog.new, Feed.new, Post.new, Post.new, Post.new
+  #   blog.add_post(post_1)
+  #   post_1.postable == blog   # => true
+  #   feed.add_post(post_2)
+  #   post_2.postable == feed   # => true
+  #   post_3.postable = blog    # => NoMethodError
+  #
+  # @example Polymorphic associated (idem for +has_one+)
+  #   class Blog
+  #     include AIXM::Association
+  #     has_many :items, accept: ['Post', :picture]
+  #   end
+  #   class Post
+  #     include AIXM::Association
+  #     belongs_to :blog, as: :item
+  #   end
+  #   class Picture
+  #     include AIXM::Association
+  #     belongs_to :blog, as: :item
+  #   end
+  #   blog, post, picture = Blog.new, Post.new, Picture.new
+  #   blog.add_item(post)
+  #   blog.add_item(picture)
+  #   blog.items.count             # => 2
+  #   blog.items.first == post     # => true
+  #   blog.items.last == picture   # => true
+  #   post.blog == blog            # => true
+  #   picture.blog == blog         # => true
+  #
+  # @example Add method which enriches passed associated object (+has_many+ only)
+  #   class Blog
+  #     has_many :posts do |post, related_to: nil|      # this defines the signature of add_post
+  #       post.related_to = related_to || @posts.last   # executes in the context of the current blog
+  #     end
+  #   end
+  #   class Post
+  #     belongs_to :blog
+  #     attr_accessor :related_to
+  #   end
+  #   blog, post_1, post_2, post_3 = Blog.new, Post.new, Post.new, Post.new
+  #   blog.add_post(post_1)
+  #   post_1.related_to             # => nil
+  #   blog.add_post(post_2)
+  #   post_2.related_to == post_1   # => true
+  #   blog.add_post(post_3, related_to: post_1)
+  #   post_3.related_to == post_1   # => true
+  #
+  # @example Add method which builds and yields new associated object (+has_many+ only)
+  #   class Blog
+  #     include AIXM::Association
+  #     has_many :posts do |post, title:| end
+  #   end
+  #   class Post
+  #     include AIXM::Association
+  #     belongs_to :blog
+  #     attr_accessor :title, :text
+  #     def initialize(title:)   # same signature as "has_many" block above
+  #       @title = title
+  #     end
+  #   end
+  #   blog = Blog.new
+  #   blog.add_post(title: "title") do |post|   # note that no post instance is passed
+  #     post.text = "text"
+  #   end
+  #   blog.posts.first.title   # => "title"
+  #   blog.posts.first.text    # => "text"
+  module Association
+    module ClassMethods
+      def has_many(attribute, as: nil, accept: nil, &association_block)
+        association = attribute.to_s.inflect(:singularize)
+        inversion = as || self.to_s.inflect(:demodulize, :tableize, :singularize)
+        class_names = [accept || association].flatten.map { |n| AIXM::CLASSES[n.to_sym] || n }
+        define_method(attribute) do
+          instance_eval("@#{attribute} ||= []")
+        end
+        define_method(:"add_#{association}") do |object=nil, **options, &add_block|
+          unless object
+            fail(ArgumentError, "must pass object to add") if class_names.count > 1
+            object = class_names.first.to_class.new(**options)
+            add_block.call(object) if add_block
+          end
+          instance_exec(object, **options, &association_block) if association_block
+          fail(ArgumentError, "#{object.__class__} not allowed") unless class_names.reduce(false){ |m, c| m || object.is_a?(c.to_class) }
+          send(attribute) << object
+          object.instance_variable_set(:"@#{inversion}", self)
+          self
+        end
+        define_method(:"remove_#{association}") do |object|
+          send(attribute).delete(object)
+          object.instance_variable_set(:"@#{inversion}", nil)
+          self
+        end
+      end
+
+      def has_one(attribute, as: nil, accept: nil, allow_nil: false)
+        association = attribute.to_s
+        inversion = (as || self.to_s.inflect(:demodulize, :tableize, :singularize)).to_s
+        class_names = [accept || association].flatten.map { |n| AIXM::CLASSES[n.to_sym] || n }
+        class_names << 'NilClass' if allow_nil
+        attr_reader attribute
+        define_method(:"#{association}=") do |object|
+          fail(ArgumentError, "#{object.__class__} not allowed") unless class_names.reduce(false){ |m, c| m || object.is_a?(c.to_class) }
+          instance_variable_get(:"@#{attribute}")&.instance_variable_set(:"@#{inversion}", nil)
+          instance_variable_set(:"@#{attribute}", object)
+          object&.instance_variable_set(:"@#{inversion}", self)
+        end
+        alias_method(:"add_#{association}", :"#{association}=")
+        define_method(:"remove_#{association}") do |_|
+          send(:"#{association}=", nil)
+          self
+        end
+      end
+
+      def belongs_to(attribute, as: nil, readonly: false)
+        association = self.to_s.inflect(:demodulize, :tableize, :singularize)
+        inversion = (as || association).to_s
+        attr_reader attribute
+        unless readonly
+          define_method(:"#{attribute}=") do |object|
+            instance_variable_get(:"@#{attribute}")&.send(:"remove_#{inversion}", self)
+            object&.send(:"add_#{inversion}", self)
+          end
+        end
+      end
+    end
+
+    def self.included(base)
+      base.extend(ClassMethods)
+    end
+  end
+end

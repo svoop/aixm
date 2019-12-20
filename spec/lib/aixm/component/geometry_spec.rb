@@ -20,9 +20,9 @@ describe AIXM::Component::Geometry do
 
   context "point" do
     subject do
-      AIXM.geometry.tap do |geometry|
-        geometry << AIXM.point(xy: AIXM.xy(lat: 11, long: 22))
-      end
+      AIXM.geometry(
+        AIXM.point(xy: AIXM.xy(lat: 11, long: 22))
+      )
     end
 
     it "must pass checks" do
@@ -50,10 +50,10 @@ describe AIXM::Component::Geometry do
 
   context "line" do
     subject do
-      AIXM.geometry.tap do |geometry|
-        geometry << AIXM.point(xy: AIXM.xy(lat: 11, long: 22))
-        geometry << AIXM.point(xy: AIXM.xy(lat: 22, long: 33))
-      end
+      AIXM.geometry(
+        AIXM.point(xy: AIXM.xy(lat: 11, long: 22)),
+        AIXM.point(xy: AIXM.xy(lat: 22, long: 33))
+      )
     end
 
     it "must fail checks" do
@@ -70,12 +70,12 @@ describe AIXM::Component::Geometry do
 
   context "closed polygon" do
     subject do
-      AIXM.geometry.tap do |geometry|
-        geometry << AIXM.point(xy: AIXM.xy(lat: 11, long: 22))
-        geometry << AIXM.point(xy: AIXM.xy(lat: 22, long: 33))
-        geometry << AIXM.point(xy: AIXM.xy(lat: 33, long: 44))
-        geometry << AIXM.point(xy: AIXM.xy(lat: 11, long: 22))
-      end
+      AIXM.geometry(
+        AIXM.point(xy: AIXM.xy(lat: 11, long: 22)),
+        AIXM.point(xy: AIXM.xy(lat: 22, long: 33)),
+        AIXM.point(xy: AIXM.xy(lat: 33, long: 44)),
+        AIXM.point(xy: AIXM.xy(lat: 11, long: 22))
+      )
     end
 
     it "must pass checks" do
@@ -121,11 +121,11 @@ describe AIXM::Component::Geometry do
 
   context "unclosed polygon" do
     subject do
-      AIXM.geometry.tap do |geometry|
-        geometry << AIXM.point(xy: AIXM.xy(lat: 11, long: 22))
-        geometry << AIXM.point(xy: AIXM.xy(lat: 22, long: 33))
-        geometry << AIXM.point(xy: AIXM.xy(lat: 33, long: 44))
-      end
+      AIXM.geometry(
+        AIXM.point(xy: AIXM.xy(lat: 11, long: 22)),
+        AIXM.point(xy: AIXM.xy(lat: 22, long: 33)),
+        AIXM.point(xy: AIXM.xy(lat: 33, long: 44))
+      )
     end
 
     it "must fail checks" do
@@ -142,11 +142,11 @@ describe AIXM::Component::Geometry do
 
   context "closed arc" do
     subject do
-      AIXM.geometry.tap do |geometry|
-        geometry << AIXM.arc(xy: AIXM.xy(lat: 11, long: 22), center_xy: AIXM.xy(lat: 10, long: 20), clockwise: true)
-        geometry << AIXM.point(xy: AIXM.xy(lat: 22, long: 33))
-        geometry << AIXM.point(xy: AIXM.xy(lat: 11, long: 22))
-      end
+      AIXM.geometry(
+        AIXM.arc(xy: AIXM.xy(lat: 11, long: 22), center_xy: AIXM.xy(lat: 10, long: 20), clockwise: true),
+        AIXM.point(xy: AIXM.xy(lat: 22, long: 33)),
+        AIXM.point(xy: AIXM.xy(lat: 11, long: 22))
+      )
     end
 
     it "must pass checks" do
@@ -184,10 +184,10 @@ describe AIXM::Component::Geometry do
 
   context "unclosed arc" do
     subject do
-      AIXM.geometry.tap do |geometry|
-        geometry << AIXM.arc(xy: AIXM.xy(lat: 11, long: 22), center_xy: AIXM.xy(lat: 10, long: 20), clockwise: true)
-        geometry << AIXM.point(xy: AIXM.xy(lat: 22, long: 33))
-      end
+      AIXM.geometry(
+        AIXM.arc(xy: AIXM.xy(lat: 11, long: 22), center_xy: AIXM.xy(lat: 10, long: 20), clockwise: true),
+        AIXM.point(xy: AIXM.xy(lat: 22, long: 33))
+      )
     end
 
     it "must fail checks" do
@@ -204,11 +204,11 @@ describe AIXM::Component::Geometry do
 
   context "closed border" do
     subject do
-      AIXM.geometry.tap do |geometry|
-        geometry << AIXM.border(xy: AIXM.xy(lat: 11, long: 22), name: 'foobar')
-        geometry << AIXM.point(xy: AIXM.xy(lat: 22, long: 33))
-        geometry << AIXM.point(xy: AIXM.xy(lat: 11, long: 22))
-      end
+      AIXM.geometry(
+        AIXM.border(xy: AIXM.xy(lat: 11, long: 22), name: 'foobar'),
+        AIXM.point(xy: AIXM.xy(lat: 22, long: 33)),
+        AIXM.point(xy: AIXM.xy(lat: 11, long: 22))
+      )
     end
 
     it "must pass checks" do
@@ -247,10 +247,10 @@ describe AIXM::Component::Geometry do
 
   context "unclosed border" do
     subject do
-      AIXM.geometry.tap do |geometry|
-        geometry << AIXM.border(xy: AIXM.xy(lat: 11, long: 22), name: 'foobar')
-        geometry << AIXM.point(xy: AIXM.xy(lat: 22, long: 33))
-      end
+      AIXM.geometry(
+        AIXM.border(xy: AIXM.xy(lat: 11, long: 22), name: 'foobar'),
+        AIXM.point(xy: AIXM.xy(lat: 22, long: 33))
+      )
     end
 
     it "must fail checks" do
@@ -267,9 +267,9 @@ describe AIXM::Component::Geometry do
 
   context "circle" do
     subject do
-      AIXM.geometry.tap do |geometry|
-        geometry << AIXM.circle(center_xy: AIXM.xy(lat: 11, long: 22), radius: AIXM.d(10, :km))
-      end
+      AIXM.geometry(
+        AIXM.circle(center_xy: AIXM.xy(lat: 11, long: 22), radius: AIXM.d(10, :km))
+      )
     end
 
     it "must pass checks" do
@@ -295,10 +295,10 @@ describe AIXM::Component::Geometry do
 
   context "circle with additional elements" do
     subject do
-      AIXM.geometry.tap do |geometry|
-        geometry << AIXM.circle(center_xy: AIXM.xy(lat: 11, long: 22), radius: AIXM.d(10, :km))
-        geometry << AIXM.point(xy: AIXM.xy(lat: 22, long: 33))
-      end
+      AIXM.geometry(
+        AIXM.circle(center_xy: AIXM.xy(lat: 11, long: 22), radius: AIXM.d(10, :km)),
+        AIXM.point(xy: AIXM.xy(lat: 22, long: 33))
+      )
     end
 
     it "must fail checks when additional elements are present" do

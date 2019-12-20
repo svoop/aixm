@@ -5,12 +5,6 @@ describe AIXM::Document do
     AIXM.document
   end
 
-  describe :initialize do
-    it "sets defaults" do
-      _(subject.features).must_equal []
-    end
-  end
-
   describe :namespace= do
     it "fails on invalid values" do
       _(['foobar', :foobar]).wont_be_written_to subject, :namespace
@@ -122,7 +116,7 @@ describe AIXM::Document do
           8 => AIXM.xy(lat: 32.661054, long: -111.485931),
           9 => AIXM.xy(lat: 0, long: 0)                      # far away from the others
         }.to_a.shuffle.each do |index, xy|
-          document.features << AIXM.obstacle(
+          document.add_feature AIXM.obstacle(
             source: index.to_s,
             name: index.to_s,
             type: :other,
@@ -163,7 +157,6 @@ describe AIXM::Document do
     it "returns number of groups" do
       _(subject.group_obstacles!).must_equal 1
     end
-  end
   end
 
   context "AIXM" do

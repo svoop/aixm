@@ -51,16 +51,6 @@ describe AIXM::Component::Helipad do
     macro :marking
   end
 
-  describe :fato= do
-    it "fails on invalid values" do
-      _([:foobar, 0]).wont_be_written_to subject, :fato
-    end
-
-    it "accepts valid values" do
-      _([nil, AIXM::Factory.fato]).must_be_written_to subject, :fato
-    end
-  end
-
   describe :helicopter_class= do
     it "fails on invalid values" do
       _([:foobar, 123]).wont_be_written_to subject, :helicopter_class
@@ -97,7 +87,7 @@ describe AIXM::Component::Helipad do
 
   describe :to_xml do
     macro :mid
-    
+
     it "builds correct complete OFMX" do
       AIXM.ofmx!
       _(subject.to_xml).must_equal <<~END

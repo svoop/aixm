@@ -35,7 +35,26 @@ module AIXM
     #
     # @see https://github.com/openflightmaps/ofmx/wiki/Obstacle
     class ObstacleGroup < Feature
+      include AIXM::Association
+
       public_class_method :new
+
+      # @!method obstacles
+      #   @return [Array<AIXM::Feature::Obstacle>] obstacles in this obstacle group
+      # @!method add_obstacle(obstacle, linked_to: nil, link_type: nil)
+      #   @param obstacle [AIXM::Feature::Obstacle] obstacle instance
+      #   @param linked_to [Symbol, AIXM::Feature::Obstacle, nil] Either:
+      #     * :previous - link to the obstacle last added to the obstacle group
+      #     * AIXM::Feature::Obstacle - link to this specific obstacle
+      #   @param link_type [Symbol, nil] type of link (see
+      #     {AIXM::Feature::Obstacle::LINK_TYPES})
+      #   @return [self]
+      has_many :obstacles do |obstacle, linked_to: nil, link_type: nil|
+        if linked_to
+          obstacle.send(:linked_to=, linked_to == :previous ? @obstacles.last : linked_to)
+          obstacle.send(:link_type=, (link_type || :other))
+        end
+      end
 
       # @!method source
       #   @return [String] reference to source of the feature data
@@ -54,13 +73,9 @@ module AIXM
       # @return [String, nil] free text remarks
       attr_reader :remarks
 
-      # @return [Array<AIXM::Feature::Obstacle>] obstacles in this obstacle group
-      attr_reader :obstacles
-
       def initialize(source: nil, name: nil)
         super(source: source)
         self.name = name
-        @obstacles = []
       end
 
       # @return [String]
@@ -85,26 +100,6 @@ module AIXM
 
       def remarks=(value)
         @remarks = value&.to_s
-      end
-
-      # Add an obstacle to the obstacle group and optionally link it to another
-      # obstacle from the obstacle group.
-      #
-      # @param obstacle [AIXM::Feature::Obstacle] obstacle instance
-      # @param linked_to [Symbol, AIXM::Feature::Obstacle, nil] Either:
-      #   * :previous - link to the obstacle last added to the obstacle group
-      #   * AIXM::Feature::Obstacle - link to this specific obstacle
-      # @param link_type [Symbol, nil] type of link (see
-      #   {AIXM::Feature::Obstacle::LINK_TYPES})
-      # @return [self]
-      def add_obstacle(obstacle, linked_to: nil, link_type: :other)
-        obstacle.send(:obstacle_group=, self)
-        if linked_to && link_type
-          obstacle.send(:linked_to=, linked_to == :previous ? @obstacles.last : linked_to)
-          obstacle.send(:link_type=, link_type)
-        end
-        @obstacles << obstacle
-        self
       end
 
       # @return [String] UID markup

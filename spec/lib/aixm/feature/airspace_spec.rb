@@ -10,7 +10,6 @@ describe AIXM::Feature::Airspace do
     describe :initialize do
       it "sets defaults" do
         _(subject.id).must_equal 'C55466EC'
-        _(subject.layers).must_equal []
         _(subject.geometry).must_be_instance_of AIXM::Component::Geometry
       end
     end
@@ -77,7 +76,7 @@ describe AIXM::Feature::Airspace do
 
     describe :to_xml do
       it "fails to build AIXM since geometry is not closed" do
-        subject.layers << AIXM::Factory.layer
+        subject.add_layer(AIXM::Factory.layer)
         _{ subject.to_xml }.must_raise AIXM::GeometryError
       end
 
@@ -92,7 +91,7 @@ describe AIXM::Feature::Airspace do
     subject do
       AIXM.airspace(type: "TMA", name: "Test TMA").tap do |airspace|
         airspace.geometry = AIXM::Factory.circle_geometry
-        airspace.layers << AIXM::Factory.layer
+        airspace.add_layer(AIXM::Factory.layer)
       end
     end
 
@@ -265,7 +264,7 @@ describe AIXM::Feature::Airspace do
   context "with two layers" do
     subject do
       AIXM::Factory.polygon_airspace.tap do |airspace|
-        airspace.layers << AIXM::Factory.layer
+        airspace.add_layer(AIXM::Factory.layer)
       end
     end
 

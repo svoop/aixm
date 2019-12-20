@@ -13,8 +13,8 @@ module AIXM
     #     local_type: String or nil
     #     name: String or nil
     #   )
-    #   airspace.geometry << AIXM.point or AIXM.arc or AIXM.border or AIXM.circle
-    #   airspace.layers << AIXM.layer
+    #   airspace.add_layer(AIXM.layer)
+    #   airspace.geometry.add_segment(AIXM.point or AIXM.arc or AIXM.border or AIXM.circle)
     #
     # The +id+ is mandatory, however, you may omit it when initializing a new
     # airspace or assign +nil+ to an existing airspace which will generate a 8
@@ -29,6 +29,8 @@ module AIXM
     #
     # @see https://github.com/openflightmaps/ofmx/wiki/Airspace#ase-airspace
     class Airspace < Feature
+      include AIXM::Association
+
       public_class_method :new
 
       TYPES = {
@@ -74,6 +76,18 @@ module AIXM
         PART: :part_of_airspace
       }.freeze
 
+      # @!method geometry
+      #   @return [AIXM::Component::Geometry] horizontal geometry shape
+      # @!method geometry=
+      #   @param [AIXM::Component::Geometry]
+      has_one :geometry
+
+      # @!method layers
+      #   @return [Array<AIXM::Compoment::Layer>] vertical layers
+      # @!method add_layer
+      #   @param [AIXM::Compoment::Layer]
+      has_many :layers
+
       # @note When assigning +nil+, a 4 byte hex derived from {#type}, {#name}
       #   and {#local_type} is written instead.
       # @return [String] published identifier (e.g. "LFP81")
@@ -90,18 +104,11 @@ module AIXM
       # @return [String, nil] full name (e.g. "LF P 81 CHERBOURG")
       attr_reader :name
 
-      # @return [AIXM::Component::Geometry] horizontal geometrical shape
-      attr_accessor :geometry
-
-      # @return [Array<AIXM::Compoment::Layer>] vertical layers
-      attr_accessor :layers
-
       def initialize(source: nil, id: nil, type:, local_type: nil, name: nil)
         super(source: source)
         self.type, self.local_type, self.name = type, local_type, name
         self.id = id
-        @geometry = AIXM.geometry
-        @layers = []
+        self.geometry = AIXM.geometry
       end
 
       # @return [String]

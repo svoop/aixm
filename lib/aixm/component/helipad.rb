@@ -23,6 +23,7 @@ module AIXM
     #
     # @see https://github.com/openflightmaps/ofmx/wiki/Airport#tla-helipad-tlof
     class Helipad
+      include AIXM::Association
       include AIXM::Mid
 
       HELICOPTER_CLASSES = {
@@ -41,8 +42,28 @@ module AIXM
         OTHER: :other                    # specify in remarks
       }.freeze
 
-      # @return [AIXM::Feature::Airport] airport this helipad belongs to
-      attr_reader :airport
+      # @!method fato
+      #   @return [AIXM::Component::FATO, nil] FATO the helipad is situated on
+      # @!method fato=
+      #   @param [AIXM::Component::FATO, nil]
+      has_one :fato, allow_nil: true
+
+      # @!method surface
+      #   @return [AIXM::Component::Surface] surface of the helipad
+      # @!method surface=
+      #   @param [AIXM::Component::Surface]
+      has_one :surface
+
+      # @!method lightings
+      #   @return [Array<AIXM::Component::Lighting>] installed lighting systems
+      # @!method add_lighting
+      #   @param [AIXM::Component::Lighting]
+      #   @return [self]
+      has_many :lightings, as: :lightable
+
+      # @!method airport
+      #   @return [AIXM::Feature::Airport] airport this helipad belongs to
+      belongs_to :airport
 
       # @return [String] full name (e.g. "H1")
       attr_reader :name
@@ -59,14 +80,8 @@ module AIXM
       # @return [AIXM::D, nil] width
       attr_reader :width
 
-      # @return [AIXM::Component::Surface] surface of the helipad
-      attr_reader :surface
-
       # @return [String, nil] markings
       attr_reader :marking
-
-      # @return [AIXM::Component::FATO, nil] FATO the helipad is situated on
-      attr_reader :fato
 
       # @return [Integer, Symbol, nil] suitable helicopter class
       attr_reader :helicopter_class
@@ -77,25 +92,15 @@ module AIXM
       # @return [String, nil] free text remarks
       attr_reader :remarks
 
-      # @return [Array<AIXM::Component::Lighting>] installed lighting systems
-      attr_reader :lightings
-
       def initialize(name:, xy:)
         self.name, self.xy = name, xy
-        @surface = AIXM.surface
-        @lightings = []
+        self.surface = AIXM.surface
       end
 
       # @return [String]
       def inspect
         %Q(#<#{self.class} airport=#{airport&.id.inspect} name=#{name.inspect}>)
       end
-
-      def airport=(value)
-        fail(ArgumentError, "invalid airport") unless value.is_a? AIXM::Feature::Airport
-        @airport = value
-      end
-      private :airport=
 
       def name=(value)
         fail(ArgumentError, "invalid name") unless value.is_a? String
@@ -132,11 +137,6 @@ module AIXM
         @marking = value&.to_s
       end
 
-      def fato=(value)
-        fail(ArgumentError, "invalid FATO") unless value.nil? || value.is_a?(AIXM::Component::FATO)
-        @fato = value
-      end
-
       def helicopter_class=(value)
         @helicopter_class = value.nil? ? nil : (HELICOPTER_CLASSES.lookup(value.to_s.to_sym, nil) || fail(ArgumentError, "invalid helicopter class"))
       end
@@ -147,17 +147,6 @@ module AIXM
 
       def remarks=(value)
         @remarks = value&.to_s
-      end
-
-      # Add a lighting system to the runway direction.
-      #
-      # @param lighting [AIXM::Component::Lighting] lighting instance
-      # @return [self]
-      def add_lighting(lighting)
-        fail(ArgumentError, "invalid lighting") unless lighting.is_a? AIXM::Component::Lighting
-        lighting.send(:lightable=, self)
-        @lightings << lighting
-        self
       end
 
       # @return [String] UID markup

@@ -4,7 +4,7 @@ describe AIXM::Component::Layer do
 
   context "only required attributes set" do
     subject do
-      AIXM.layer(vertical_limits: AIXM::Factory.vertical_limits)
+      AIXM.layer(vertical_limit: AIXM::Factory.vertical_limit)
     end
 
     describe :initialize do
@@ -34,12 +34,6 @@ describe AIXM::Component::Layer do
 
       it "upcases value" do
         _(subject.tap { |s| s.location_indicator = 'lfbb' }.location_indicator).must_equal 'LFBB'
-      end
-    end
-
-    describe :vertical_limits= do
-      it "fails on invalid values" do
-        _([nil, :foobar, 123]).wont_be_written_to subject, :vertical_limits
       end
     end
 

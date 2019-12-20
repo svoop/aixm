@@ -22,6 +22,7 @@ module AIXM
     #
     # @see https://github.com/openflightmaps/ofmx/wiki/Organisation#fqy-frequency
     class Frequency
+      include AIXM::Association
       include AIXM::Mid
 
       TYPES = {
@@ -34,8 +35,9 @@ module AIXM
         OTHER: :other   # specify in remarks
       }.freeze
 
-      # @return [AIXM::Feature::Service] service the frequency belongs to
-      attr_reader :service
+      # @!method service
+      #   @return [AIXM::Feature::Service] service the frequency belongs to
+      belongs_to :service
 
       # @return [AIXM::F] frequency for transmission (outgoing)
       attr_reader :transmission_f
@@ -69,12 +71,6 @@ module AIXM
       def inspect
         %Q(#<#{self.class} transmission_f=#{transmission_f.inspect} callsigns=#{callsigns.inspect}>)
       end
-
-      def service=(value)
-        fail(ArgumentError, "invalid service") unless value.is_a? AIXM::Feature::Service
-        @service = value
-      end
-      private :service=
 
       def transmission_f=(value)
         fail(ArgumentError, "invalid transmission_f") unless value.is_a? AIXM::F

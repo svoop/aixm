@@ -14,6 +14,12 @@ module AIXM
       #
       # @see https://github.com/openflightmaps/ofmx/wiki/Airspace#circle
       class Circle
+        include AIXM::Association
+
+        # @!method geometry
+        #   @return [AIXM::Component::Geometry] geometry the arc belongs to
+        belongs_to :geometry, as: :segment
+
         # @return [AIXM::XY] center point
         attr_reader :center_xy
 

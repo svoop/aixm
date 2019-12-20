@@ -15,6 +15,8 @@ module AIXM
     #
     # @see https://github.com/openflightmaps/ofmx/wiki/Airport#aha-airport-address
     class Address < Feature
+      include AIXM::Association
+
       public_class_method :new
 
       TYPES = {
@@ -33,8 +35,9 @@ module AIXM
         OTHER: :other   # specify in remarks
       }
 
-      # @return [AIXM::Feature] addressable feature
-      attr_reader :addressable
+      # @!method addressable
+      #   @return [AIXM::Feature] addressable feature
+      belongs_to :addressable
 
       # @return [Symbol] type of address (see {TYPES})
       attr_reader :type
@@ -54,12 +57,6 @@ module AIXM
       def inspect
         %Q(#<#{self.class} type=#{type.inspect}>)
       end
-
-      def addressable=(value)
-        fail(ArgumentError, "invalid addressable") unless value.is_a? AIXM::Feature
-        @addressable = value
-      end
-      private :addressable=
 
       def type=(value)
         @type = TYPES.lookup(value&.to_s&.to_sym, nil) || fail(ArgumentError, "invalid type")

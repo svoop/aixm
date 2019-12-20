@@ -13,6 +13,12 @@ module AIXM
       #
       # @see https://github.com/openflightmaps/ofmx/wiki/Airspace#point
       class Point
+        include AIXM::Association
+
+        # @!method geometry
+        #   @return [AIXM::Component::Geometry] geometry the arc belongs to
+        belongs_to :geometry, as: :segment
+
         # @return [AIXM::XY] (starting) point
         attr_reader :xy
 

@@ -161,7 +161,7 @@ AIXM.config.ignored_errors = /invalid date/i
 * [FATO](http://www.rubydoc.info/gems/aixm/AIXM/Component/FATO.html)
 * [Surface](http://www.rubydoc.info/gems/aixm/AIXM/Component/Surface.html)
 * [Layer](http://www.rubydoc.info/gems/aixm/AIXM/Component/Layer.html)
-* [Vertical limits](http://www.rubydoc.info/gems/aixm/AIXM/Component/VerticalLimits.html)
+* [Vertical limit](http://www.rubydoc.info/gems/aixm/AIXM/Component/VerticalLimit.html)
 * [Timetable](http://www.rubydoc.info/gems/aixm/AIXM/Component/Timetable.html)
 
 ## Refinements

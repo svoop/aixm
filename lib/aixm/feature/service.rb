@@ -16,6 +16,8 @@ module AIXM
     #
     # @see https://github.com/openflightmaps/ofmx/wiki/Organisation#ser-service
     class Service < Feature
+      include AIXM::Association
+
       public_class_method :new
 
       TYPES = {
@@ -125,10 +127,17 @@ module AIXM
         :vhf_direction_finding_service => :vdf_direction_finding_station,
         :volmet_service => :meteorological_office,
         :other => :other
-}
+      }.freeze
 
-      # @return [AIXM::Feature::Unit] unit providing this service
-      attr_reader :unit
+      # @!method frequencies
+      #   @return [Array<AIXM::Component::Frequency>] frequencies used by this service
+      # @!method add_frequency
+      #   @param [AIXM::Component::Frequency]
+      has_many :frequencies
+
+      # @!method unit
+      #   @return [AIXM::Feature::Unit] unit providing this service
+      belongs_to :unit
 
       # @return [Symbol] type of service (see {TYPES})
       attr_reader :type
@@ -139,25 +148,15 @@ module AIXM
       # @return [String, nil] free text remarks
       attr_reader :remarks
 
-      # @return [Array<AIXM::Component::Frequency>] frequencies used by this service
-      attr_reader :frequencies
-
       def initialize(source: nil, type:)
         super(source: source)
         self.type = type
-        @frequencies = []
       end
 
       # @return [String]
       def inspect
         %Q(#<#{self.class} type=#{type.inspect}>)
       end
-
-      def unit=(value)
-        fail(ArgumentError, "invalid unit") unless value.is_a? AIXM::Feature::Unit
-        @unit = value
-      end
-      private :unit=
 
       def type=(value)
         @type = TYPES.lookup(value&.to_s&.to_sym, nil) || fail(ArgumentError, "invalid type")
@@ -170,17 +169,6 @@ module AIXM
 
       def remarks=(value)
         @remarks = value&.to_s
-      end
-
-      # Add a frequency used by this service
-      #
-      # @param frequency [AIXM::Component::Frequency] frequency instance
-      # @return [self]
-      def add_frequency(frequency)
-        fail(ArgumentError, "invalid frequency") unless frequency.is_a? AIXM::Component::Frequency
-        frequency.send(:service=, self)
-        @frequencies << frequency
-        self
       end
 
       # Guess the unit type for this service

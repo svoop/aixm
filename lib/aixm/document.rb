@@ -12,13 +12,23 @@ module AIXM
   #     created_at: Time or Date or String
   #     effective_at: Time or Date or String
   #   )
-  #   document.features << AIXM::Feature
+  #   document.add_feature(AIXM::Feature)
   #
   # @see https://github.com/openflightmaps/ofmx/wiki/Snapshot
   class Document
+    include AIXM::Association
+
     REGION_RE = /\A[A-Z]{2}\z/.freeze
 
     NAMESPACE_RE = /\A[a-f\d]{8}-[a-f\d]{4}-[a-f\d]{4}-[a-f\d]{4}-[a-f\d]{12}\z/.freeze
+
+    # @!method features
+    #   @return [Array<AIXM::Feature>] features (e.g. airport or airspace) present
+    #     in this document
+    # @!method add_feature
+    #   @param [AIXM::Feature]
+    #   @return [self]
+    has_many :features, accept: ['AIXM::Feature']
 
     # @return [String] OFMX region all features in this document belong to
     attr_reader :region
@@ -32,12 +42,8 @@ module AIXM
     # @return [Time] effective after date and time (default: {#created_at} or now)
     attr_reader :effective_at
 
-    # @return [Array<AIXM::Feature>] airspaces, airports and other features
-    attr_accessor :features
-
     def initialize(region: nil, namespace: nil, created_at: nil, effective_at: nil)
       self.region, self.namespace, self.created_at, self.effective_at = region, namespace, created_at, effective_at
-      @features = []
     end
 
     # @return [String]
@@ -76,11 +82,10 @@ module AIXM
     # @return [Array<AIXM::Feature>]
     def select_features(klass, attributes={})
       if klass.is_a? Symbol
-        klass = AIXM::CLASSES.fetch(klass, nil)
-        fail(ArgumentError, "unknown feature shortcut") unless klass
+        klass = AIXM::CLASSES[klass]&.to_class or fail(ArgumentError, "unknown feature shortcut")
       end
       features.select do |feature|
-        if feature.is_a? klass
+        if feature.kind_of? klass
           attributes.reduce(true) do |memo, (attribute, value)|
             memo && feature.send(attribute) == value
           end

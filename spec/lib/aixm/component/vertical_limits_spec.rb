@@ -1,8 +1,8 @@
 require_relative '../../../spec_helper'
 
-describe AIXM::Component::VerticalLimits do
+describe AIXM::Component::VerticalLimit do
   subject do
-    AIXM::Factory.vertical_limits
+    AIXM::Factory.vertical_limit
   end
 
   describe :upper_z= do
@@ -39,7 +39,7 @@ describe AIXM::Component::VerticalLimits do
 
   describe :to_aixm do
     it "builds correct AIXM with only upper_z and lower_z" do
-      subject = AIXM.vertical_limits(
+      subject = AIXM.vertical_limit(
         upper_z: AIXM.z(2000, :qnh),
         lower_z: AIXM::GROUND
       )
@@ -54,7 +54,7 @@ describe AIXM::Component::VerticalLimits do
     end
 
     it "builds correct AIXM with additional max_z" do
-      subject = AIXM.vertical_limits(
+      subject = AIXM.vertical_limit(
         upper_z: AIXM.z(65, :qne),
         max_z: AIXM.z(6000, :qnh),
         lower_z: AIXM.z(1000, :qfe)
@@ -73,7 +73,7 @@ describe AIXM::Component::VerticalLimits do
     end
 
     it "builds correct AIXM with additional min_z" do
-      subject = AIXM.vertical_limits(
+      subject = AIXM.vertical_limit(
         upper_z: AIXM.z(65, :qne),
         lower_z: AIXM.z(45, :qne),
         min_z: AIXM.z(3000, :qnh)

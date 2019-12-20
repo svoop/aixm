@@ -5,6 +5,12 @@
 * `AIXM.config.mid` now defines whether `mid` attributes are inserted or not
   provided the selected schema is OFMX
 
+### Breaking Changes
+* Use `Document#add_feature` instead of `Document@features#<<`
+* Use `Airspace#add_layer` instead of `Airspace@layers#<<`
+* Use `Geometry#add_segment` instead of `Geometry#<<`
+* Renamed `VerticalLimits` to `VerticalLimit`
+
 ### Changes
 * Renamed `AIXM.config.mid_region` to `AIXM.config.region` which is implicitly
   set via `Document#region` as well

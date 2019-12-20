@@ -63,8 +63,8 @@ module AIXM
         end
       end
 
-      def vertical_limits
-        AIXM.vertical_limits(
+      def vertical_limit
+        AIXM.vertical_limit(
           upper_z: AIXM.z(65, :qne),
           max_z: AIXM.z(6000, :qnh),
           lower_z: AIXM.z(45, :qne),
@@ -76,7 +76,7 @@ module AIXM
         AIXM.layer(
           class: :C,
           location_indicator: 'XXXX',
-          vertical_limits: vertical_limits
+          vertical_limit: vertical_limit
         ).tap do |layer|
           layer.activity = :aerodrome_traffic
           layer.timetable = AIXM::H24
@@ -86,29 +86,37 @@ module AIXM
       end
 
       def polygon_geometry
-        AIXM.geometry.tap do |geometry|
-          geometry << AIXM.arc(
+        AIXM.geometry(
+          AIXM.arc(
             xy: AIXM.xy(lat: %q(47°51'33"N), long: %q(007°33'36"E)),
             center_xy: AIXM.xy(lat: %q(47°54'15"N), long: %q(007°33'48"E)),
             clockwise: true
-          )
-          geometry << AIXM.border(
+          ),
+          AIXM.border(
             xy: AIXM.xy(lat: %q(47°56'37"N), long: %q(007°35'45"E)),
             name: 'FRANCE_GERMANY'
-          )
-          geometry << AIXM.point(
+          ),
+          AIXM.point(
             xy: AIXM.xy(lat: %q(47°51'33"N), long: %q(007°33'36"E))
           )
-        end
+        )
       end
 
       def circle_geometry
-        AIXM.geometry.tap do |geometry|
-          geometry << AIXM.circle(
+        AIXM.geometry(
+          AIXM.circle(
             center_xy: AIXM.xy(lat: %q(47°35'00"N), long: %q(004°53'00"E)),
             radius: AIXM.d(10, :km)
           )
-        end
+        )
+      end
+
+      def point_geometry
+        AIXM.geometry(
+          AIXM.point(
+            xy: AIXM.xy(lat: %q(47°35'00"N), long: %q(004°53'00"E))
+          )
+        )
       end
 
       # Airspaces
@@ -121,7 +129,7 @@ module AIXM
           local_type: 'POLYGON',
           name: 'POLYGON AIRSPACE'
         ).tap do |airspace|
-          airspace.layers << layer
+          airspace.add_layer(layer)
           airspace.geometry = polygon_geometry
         end
       end
@@ -134,7 +142,7 @@ module AIXM
           local_type: 'CIRCLE',
           name: 'CIRCLE AIRSPACE'
         ).tap do |airspace|
-          airspace.layers << layer
+          airspace.add_layer(layer)
           airspace.geometry = circle_geometry
         end
       end
@@ -342,10 +350,14 @@ module AIXM
           airport.add_fato(fato)
           airport.add_helipad(helipad)
           airport.helipads.first.fato = airport.fatos.first   # necessary when using factories only
-          airport.add_usage_limitation :permitted
-          airport.add_usage_limitation(:reservation_required) do |reservation_required|
-            reservation_required.add_condition { |c| c.aircraft = :glider }
-            reservation_required.add_condition { |c| c.origin = :international }
+          airport.add_usage_limitation(type: :permitted)
+          airport.add_usage_limitation(type: :reservation_required) do |reservation_required|
+            reservation_required.add_condition do |condition|
+              condition.aircraft = :glider
+            end
+            reservation_required.add_condition do |condition|
+              condition.origin = :international
+            end
             reservation_required.timetable = AIXM::H24
             reservation_required.remarks = "reservation remarks"
           end
@@ -535,22 +547,22 @@ module AIXM
           created_at: (time = Time.parse('2018-01-01 12:00:00 +0100')),
           effective_at: time
         ).tap do |document|
-          document.features << organisation
-          document.features << unit
-          document.features << airport
-          document.features << polygon_airspace
-          document.features << circle_airspace
-          document.features << designated_point
-          document.features << dme
-          document.features << marker
-          document.features << ndb
-          document.features << tacan
-          document.features << vor
-          document.features << vordme
-          document.features << vortac
-          document.features << obstacle
-          document.features << unlinked_obstacle_group
-          document.features << linked_obstacle_group
+          document.add_feature organisation
+          document.add_feature unit
+          document.add_feature airport
+          document.add_feature polygon_airspace
+          document.add_feature circle_airspace
+          document.add_feature designated_point
+          document.add_feature dme
+          document.add_feature marker
+          document.add_feature ndb
+          document.add_feature tacan
+          document.add_feature vor
+          document.add_feature vordme
+          document.add_feature vortac
+          document.add_feature obstacle
+          document.add_feature unlinked_obstacle_group
+          document.add_feature linked_obstacle_group
         end
       end
 

@@ -38,6 +38,8 @@ module AIXM
     #
     # @see https://github.com/openflightmaps/ofmx/wiki/Obstacle
     class Obstacle < Feature
+      include AIXM::Association
+
       public_class_method :new
 
       TYPES = {
@@ -56,6 +58,10 @@ module AIXM
         SOLID: :solid,
         OTHER: :other
       }.freeze
+
+      # @!method obstacle_group
+      #   @return [AIXM::Feature::ObstacleGroup] group this obstacle belongs to
+      belongs_to :obstacle_group
 
       # @return [String] full name
       attr_reader :name
@@ -107,9 +113,6 @@ module AIXM
 
       # @return [String, nil] free text remarks
       attr_reader :remarks
-
-      # @return [AIXM::Feature::ObstacleGroup] group this obstacle belongs to
-      attr_reader :obstacle_group
 
       # @return [Symbol, nil] another obstacle to which a physical link exists
       attr_reader :linked_to
@@ -202,12 +205,6 @@ module AIXM
         @remarks = value&.to_s
       end
 
-      def obstacle_group=(value)
-        fail(ArgumentError, "invalid obstacle group") unless value.is_a?(AIXM::Feature::ObstacleGroup)
-        @obstacle_group = value
-      end
-      private :obstacle_group=
-
       def linked_to=(value)
         fail(ArgumentError, "invalid linked to") unless value.is_a?(AIXM::Feature::Obstacle)
         @linked_to = value
@@ -231,7 +228,7 @@ module AIXM
 
       # @return [String] UID markup
       def to_uid(as: :ObsUid)
-        self.obstacle_group ||= singleton_obstacle_group
+        obstacle_group = self.obstacle_group || singleton_obstacle_group
         builder = Builder::XmlMarkup.new(indent: 2)
         insert_mid(
           builder.tag!(as) do |tag|
@@ -244,7 +241,7 @@ module AIXM
 
       # @return [String] AIXM or OFMX markup
       def to_xml(delegate: true)
-        self.obstacle_group ||= singleton_obstacle_group
+        obstacle_group = self.obstacle_group || singleton_obstacle_group
         return obstacle_group.to_xml if delegate && AIXM.ofmx?
         builder = Builder::XmlMarkup.new(indent: 2)
         builder.comment! "Obstacle: [#{type}] #{xy.to_s} #{name}".strip

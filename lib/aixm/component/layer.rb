@@ -4,13 +4,13 @@ module AIXM
   class Component
 
     # Each airspace has one or more layers with optional airspace class and
-    # mandatory vertical limits.
+    # mandatory vertical limit.
     #
     # ===Cheat Sheet in Pseudo Code:
     #   layer = AIXM.layer(
     #     class: String or nil
     #     location_indicator: String or nil
-    #     vertical_limits: AIXM.vertical_limits
+    #     vertical_limit: AIXM.vertical_limit
     #   )
     #   layer.activity = String or nil
     #   layer.timetable = AIXM.timetable or nil
@@ -19,6 +19,8 @@ module AIXM
     #
     # @see https://github.com/openflightmaps/ofmx/wiki/Airspace
     class Layer
+      include AIXM::Association
+
       CLASSES = (:A..:G).freeze
 
       ACTIVITIES = {
@@ -85,11 +87,18 @@ module AIXM
         OTHER: :other
       }.freeze
 
+      # @!method vertical_limit
+      #   @return [AIXM::Component::VerticalLimit] vertical limit of this layer
+      # @!method vertical_limit=
+      #   @param [AIXM::Component::VerticalLimit]
+      has_one :vertical_limit
+
+      # @!method airspace
+      #   @return [AIXM::Feature::Airspace] airspace the layer defines
+      belongs_to :airspace
+
       # @return [String, nil] four letter location identifier as published in the ICAO DOC 7910
       attr_reader :location_indicator
-
-      # @return [AIXM::Component::VerticalLimits] vertical limits of this layer
-      attr_reader :vertical_limits
 
       # @return [String, nil] primary activity (e.g. "GLIDER")
       attr_reader :activity
@@ -100,21 +109,19 @@ module AIXM
       # @return [String, nil] free text remarks
       attr_reader :remarks
 
-      def initialize(class: nil, location_indicator: nil, vertical_limits:)
+      def initialize(class: nil, location_indicator: nil, vertical_limit:)
         self.class = binding.local_variable_get(:class)
-        self.location_indicator, self.vertical_limits = location_indicator, vertical_limits
+        self.location_indicator, self.vertical_limit = location_indicator, vertical_limit
         self.selective = false
       end
 
       # @return [String]
       def inspect
-        %Q(#<#{original_class} class=#{@klass.inspect}>)
+        %Q(#<#{__class__} class=#{@klass.inspect}>)
       end
 
       # @!attribute class
-      # @note Use +original_class+ to query the Ruby object class.
       # @return [Symbol] class of layer (see {CLASSES})
-      alias_method :original_class, :class
       def class
         @klass
       end
@@ -127,11 +134,6 @@ module AIXM
       def location_indicator=(value)
         fail(ArgumentError, "invalid location indicator") unless value.nil? || (value.is_a?(String) && value.length == 4)
         @location_indicator = value&.uptrans
-      end
-
-      def vertical_limits=(value)
-        fail(ArgumentError, "invalid vertical limits") unless value.is_a? AIXM::Component::VerticalLimits
-        @vertical_limits = value
       end
 
       def activity=(value)
@@ -166,7 +168,7 @@ module AIXM
         if activity
           builder.codeActivity(ACTIVITIES.key(activity).to_s.then_if(AIXM.aixm?) { |a| { 'AIRMODEL' => 'UAV', 'WINCH' => 'GLIDER' }[a] || a })
         end
-        builder << vertical_limits.to_xml
+        builder << vertical_limit.to_xml
         builder << timetable.to_xml(as: :Att) if timetable
         builder.codeSelAvbl(selective? ? 'Y' : 'N') if AIXM.ofmx?
         builder.txtRmk(remarks) if remarks

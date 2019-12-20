@@ -46,6 +46,7 @@ module AIXM
     #
     # @see https://github.com/openflightmaps/ofmx/wiki/Airport#rwy-runway
     class Runway
+      include AIXM::Association
       include AIXM::Mid
 
       STATUSES = {
@@ -57,8 +58,21 @@ module AIXM
         OTHER: :other                    # specify in remarks
       }
 
-      # @return [AIXM::Feature::Airport] airport the runway belongs to
-      attr_reader :airport
+      # @!method forth
+      #   @return [AIXM::Component::Runway::Direction] main direction
+      # @!method forth=
+      #   @param [AIXM::Component::Runway::Direction]
+      has_one :forth, accept: 'AIXM::Component::Runway::Direction'
+
+      # @!method back
+      #   @return [AIXM::Component::Runway::Direction, nil] reverse direction
+      # @!method back=
+      #   @param [AIXM::Component::Runway::Direction, nil]
+      has_one :back, accept: 'AIXM::Component::Runway::Direction', allow_nil: true
+
+      # @!method airport
+      #   @return [AIXM::Feature::Airport] airport the runway belongs to
+      belongs_to :airport
 
       # @return [String] full name of runway (e.g. "12/30" or "16L/34R")
       attr_reader :name
@@ -78,18 +92,12 @@ module AIXM
       # @return [String, nil] free text remarks
       attr_reader :remarks
 
-      # @return [AIXM::Component::Runway::Direction] main direction
-      attr_accessor :forth
-
-      # @return [AIXM::Component::Runway::Direction] reverse direction
-      attr_accessor :back
-
       def initialize(name:)
         self.name = name
-        @name.split("/").tap do |forth, back|
-          @forth = Direction.new(runway: self, name: AIXM.a(forth))
-          @back = Direction.new(runway: self, name: AIXM.a(back)) if back
-          fail(ArgumentError, "invalid name") unless !@back || @back.name.inverse_of?(@forth.name)
+        @name.split("/").tap do |forth_name, back_name|
+          self.forth = Direction.new(name: AIXM.a(forth_name))
+          self.back = Direction.new(name: AIXM.a(back_name)) if back_name
+          fail(ArgumentError, "invalid name") unless !back || back.name.inverse_of?(@forth.name)
         end
         @surface = AIXM.surface
       end
@@ -98,12 +106,6 @@ module AIXM
       def inspect
         %Q(#<#{self.class} airport=#{airport&.id.inspect} name=#{name.inspect}>)
       end
-
-      def airport=(value)
-        fail(ArgumentError, "invalid airport") unless value.is_a? AIXM::Feature::Airport
-        @airport = value
-      end
-      private :airport=
 
       def name=(value)
         fail(ArgumentError, "invalid name") unless value.is_a? String
@@ -173,6 +175,7 @@ module AIXM
       #
       # @see https://github.com/openflightmaps/ofmx/wiki/Airport#rdn-runway-direction
       class Direction
+        include AIXM::Association
         include AIXM::Mid
 
         VFR_PATTERNS = {
@@ -181,8 +184,16 @@ module AIXM
           E: :left_or_right
         }
 
-        # @return [AIXM::Component::Runway] runway the runway direction is further describing
-        attr_reader :runway
+        # @!method lightings
+        #   @return [Array<AIXM::Component::Lighting>] installed lighting systems
+        # @!method add_lighting
+        #   @param [AIXM::Component::Lighting]
+        #   @return [self]
+        has_many :lightings, as: :lightable
+
+        # @!method runway
+        #   @return [AIXM::Component::Runway] runway the runway direction is further describing
+        belongs_to :runway, readonly: true
 
         # @return [AIXM::A] partial name of runway (e.g. "12" or "16L")
         attr_reader :name
@@ -207,24 +218,14 @@ module AIXM
         # @return [String, nil] free text remarks
         attr_reader :remarks
 
-        # @return [Array<AIXM::Component::Lighting>] installed lighting systems
-        attr_reader :lightings
-
-        def initialize(runway:, name:)
-          self.runway, self.name = runway, name
-          @lightings = []
+        def initialize(name:)
+          self.name = name
         end
 
         # @return [String]
         def inspect
           %Q(#<#{self.class} airport=#{runway&.airport&.id.inspect} name=#{name.inspect}>)
         end
-
-        def runway=(value)
-          fail(ArgumentError, "invalid runway") unless value.is_a? AIXM::Component::Runway
-          @runway = value
-        end
-        private :runway
 
         def name=(value)
           fail(ArgumentError, "invalid name") unless value.is_a? AIXM::A
@@ -267,17 +268,6 @@ module AIXM
 
         def remarks=(value)
           @remarks = value&.to_s
-        end
-
-        # Add a lighting system to the runway direction.
-        #
-        # @param lighting [AIXM::Component::Lighting] lighting instance
-        # @return [self]
-        def add_lighting(lighting)
-          fail(ArgumentError, "invalid lighting") unless lighting.is_a? AIXM::Component::Lighting
-          lighting.send(:lightable=, self)
-          @lightings << lighting
-          self
         end
 
         # @return [AIXM::A] magnetic orientation (magnetic bearing) in degrees

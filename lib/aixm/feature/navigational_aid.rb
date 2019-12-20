@@ -5,10 +5,13 @@ module AIXM
 
     # @abstract
     class NavigationalAid < Feature
+      include AIXM::Association
+
       private_class_method :new
 
-      # @return [AIXM::Feature::Organisation] superior organisation
-      attr_reader :organisation
+      # @!method organisation
+      #   @return [AIXM::Feature::Organisation] superior organisation
+      belongs_to :organisation, as: :member
 
       # @return [String] published identifier
       attr_reader :id
@@ -36,11 +39,6 @@ module AIXM
       # @return [String]
       def inspect
         %Q(#<#{self.class} id=#{id.inspect} name=#{name.inspect}>)
-      end
-
-      def organisation=(value)
-        fail(ArgumentError, "invalid organisation") unless value == false || value.is_a?(AIXM::Feature::Organisation)
-        @organisation = value
       end
 
       def id=(value)

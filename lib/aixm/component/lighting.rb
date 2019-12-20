@@ -18,6 +18,7 @@ module AIXM
     # @see https://github.com/openflightmaps/ofmx/wiki/Airport#fls-fato-direction-lighting
     # @see https://github.com/openflightmaps/ofmx/wiki/Airport#tls-helipad-tlof-lighting
     class Lighting
+      include AIXM::Association
       include AIXM::Mid
 
       POSITIONS = {
@@ -56,8 +57,9 @@ module AIXM
         OTHER: :other   # specify in remarks
       }
 
-      # @return [AIXM::Component::Runway::Direction, AIXM::Component::FATO::Direction, AIXM::Component::Helipad] lighted entity
-      attr_reader :lightable
+      # @!method lightable
+      #   @return [AIXM::Component::Runway::Direction, AIXM::Component::FATO::Direction, AIXM::Component::Helipad] lighted entity
+      belongs_to :lightable
 
       # @return [Symbol, nil] position of the lighting system (see {POSITIONS})
       attr_reader :position
@@ -82,12 +84,6 @@ module AIXM
       def inspect
         %Q(#<#{self.class} position=#{position.inspect}>)
       end
-
-      def lightable=(value)
-        fail(ArgumentError, "invalid lightable") unless value.respond_to? :lightings
-        @lightable = value
-      end
-      private :lightable=
 
       def position=(value)
         @position = POSITIONS.lookup(value.to_s.to_sym, nil) || fail(ArgumentError, "invalid position")

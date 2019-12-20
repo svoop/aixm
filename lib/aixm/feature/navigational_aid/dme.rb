@@ -28,11 +28,12 @@ module AIXM
 
         CHANNEL_RE = /\A([1-9]|[1-9]\d|1[0-1]\d|12[0-6])[XY]\z/.freeze
 
+        # @!method vor
+        #   @return [AIXM::Feature::NavigationalAid::VOR, nil] associated VOR
+        belongs_to :vor, readonly: true
+
         # @return [String] radio channel
         attr_reader :channel
-
-        # @return [AIXM::Feature::NavigationalAid::VOR, nil] associated VOR
-        attr_reader :vor
 
         def initialize(channel:, **arguments)
           super(**arguments)
@@ -59,12 +60,6 @@ module AIXM
             AIXM.f(integer.to_f / 100, :mhz)
           end
         end
-
-        def vor=(value)
-          fail(ArgumentError, "invalid VOR") unless value.is_a? VOR
-          @vor = value
-        end
-        private :vor=
 
         # @return [String] UID markup
         def to_uid

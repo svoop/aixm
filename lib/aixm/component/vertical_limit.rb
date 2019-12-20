@@ -3,7 +3,7 @@ using AIXM::Refinements
 module AIXM
   class Component
 
-    # Vertical limits define a 3D airspace vertically. They are often noted in
+    # Vertical limit defines a 3D airspace vertically. It is often noted in
     # AIP as follows:
     #
     #   upper_z
@@ -13,7 +13,7 @@ module AIXM
     #   (min_z)   whichever is lower
     #
     # ===Cheat Sheet in Pseudo Code:
-    #   vertical_limits = AIXM.vertical_limits(
+    #   vertical_limit = AIXM.vertical_limit(
     #     upper_z: AIXM.z
     #     max_z: AIXM.z or nil
     #     lower_z: AIXM.z
@@ -25,12 +25,18 @@ module AIXM
     # * +AIXM::UNLIMITED+ - no upper limit expressed as "FL 999"
     #
     # @see https://github.com/openflightmaps/ofmx/wiki/Airspace#ase-airspace
-    class VerticalLimits
+    class VerticalLimit
+      include AIXM::Association
+
       # @api private
       TAGS = { upper_z: :Upper, lower_z: :Lower, max_z: :Max, min_z: :Mnm }.freeze
 
       # @api private
       CODES = { qfe: :HEI, qnh: :ALT, qne: :STD }.freeze
+
+      # @!method layer
+      #   @return [AIXM::Component::Layer] layer to which this vertical limit applies
+      belongs_to :layer
 
       # @return [AIXM::Z] upper limit
       attr_reader :upper_z

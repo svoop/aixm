@@ -5,15 +5,6 @@ describe AIXM::Feature::Service do
     AIXM::Factory.service
   end
 
-  describe :initialize do
-    it "sets defaults" do
-      subject = AIXM::Feature::Service.new(
-        type: :approach_control_service
-      )
-      _(subject.frequencies).must_equal []
-    end
-  end
-
   describe :type= do
     it "fails on invalid values" do
       _{ subject.type = :foobar }.must_raise ArgumentError
@@ -32,18 +23,6 @@ describe AIXM::Feature::Service do
 
   describe :remarks= do
     macro :remarks
-  end
-
-  describe :add_frequency do
-    it "fails on invalid arguments" do
-      _{ subject.add_frequency nil }.must_raise ArgumentError
-    end
-
-    it "adds frequency to the array" do
-      count = subject.frequencies.count
-      subject.add_frequency(AIXM::Factory.frequency)
-      _(subject.frequencies.count).must_equal count + 1
-    end
   end
 
   describe :guess_unit_type do
