@@ -6,6 +6,7 @@
   provided the selected schema is OFMX
 
 ### Breaking Changes
+* Require Ruby 2.7
 * Use `Document#add_feature` instead of `Document@features#<<`
 * Use `Airspace#add_layer` instead of `Airspace@layers#<<`
 * Use `Geometry#add_segment` instead of `Geometry#<<`
