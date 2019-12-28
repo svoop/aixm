@@ -8,6 +8,7 @@
 ### Breaking Changes
 * Require Ruby 2.7
 * Use `Document#add_feature` instead of `Document@features#<<`
+* Use `Document@features#find` instead of `Document#select_features`
 * Use `Airspace#add_layer` instead of `Airspace@layers#<<`
 * Use `Geometry#add_segment` instead of `Geometry#<<`
 * Renamed `VerticalLimits` to `VerticalLimit`

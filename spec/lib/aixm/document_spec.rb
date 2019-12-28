@@ -78,30 +78,6 @@ describe AIXM::Document do
     end
   end
 
-  describe :select_features do
-    subject do
-      AIXM::Factory.document
-    end
-
-    it "returns array of features by class" do
-      _(subject.select_features(:airport).map(&:id)).must_equal %w(LFNT)
-      _(subject.select_features(AIXM::Feature::Airport).map(&:id)).must_equal %w(LFNT)
-    end
-
-    it "returns array of features by class and attributes" do
-      _(subject.select_features(:airport, id: "LFNT").map(&:id)).must_equal %w(LFNT)
-      _(subject.select_features(AIXM::Feature::Airport, id: "LFNT").map(&:id)).must_equal %w(LFNT)
-    end
-
-    it "returns empty array if nothing matches" do
-      _(subject.select_features(:airport, id: "FAKE")).must_equal []
-    end
-
-    it "fails on invalid shortcut" do
-      _{ subject.select_features(:fake) }.must_raise ArgumentError
-    end
-  end
-
   describe :group_obstacles! do
     subject do
       AIXM.document.tap do |document|
@@ -130,7 +106,7 @@ describe AIXM::Document do
 
     it "adds 1 group of obstacles with default max distance" do
       _(subject.group_obstacles!).must_equal 1
-      obstacle_group = subject.select_features(:obstacle_group).first
+      obstacle_group = subject.features.find(:obstacle_group).first
       _(obstacle_group.obstacles.count).must_equal 8
     end
 
@@ -145,12 +121,12 @@ describe AIXM::Document do
 
     it "leaves ungrouped obstacles untouched" do
       subject.group_obstacles!
-      _(subject.select_features(:obstacle).count).must_equal 1
+      _(subject.features.find(:obstacle).count).must_equal 1
     end
 
     it "copies source of first obstacle to obstacle group" do
       subject.group_obstacles!
-      obstacle_group = subject.select_features(:obstacle_group).first
+      obstacle_group = subject.features.find(:obstacle_group).first
       _(obstacle_group.source).must_equal obstacle_group.obstacles.first.source
     end
 

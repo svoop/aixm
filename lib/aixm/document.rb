@@ -69,30 +69,6 @@ module AIXM
       @effective_at = value&.to_time || created_at || Time.now
     end
 
-    # Search features and return those matching the given class and attribute
-    # values
-    #
-    # @example
-    #   select_features(:airport, id: "LFNT")
-    #
-    # @param klass [Class, Symbol] feature class like AIXM::Feature::Airport or
-    #   AIXM::Feature::NavigationalAid::VOR, shorthand notations as symbols
-    #   e.g. :airport or :vor as listed in AIXM::CLASSES are recognized as well
-    # @param attributes [Hash] search attributes by their values
-    # @return [Array<AIXM::Feature>]
-    def select_features(klass, attributes={})
-      if klass.is_a? Symbol
-        klass = AIXM::CLASSES[klass]&.to_class or fail(ArgumentError, "unknown feature shortcut")
-      end
-      features.select do |feature|
-        if feature.kind_of? klass
-          attributes.reduce(true) do |memo, (attribute, value)|
-            memo && feature.send(attribute) == value
-          end
-        end
-      end
-    end
-
     # Compare all ungrouped obstacles and create new obstacle groups whose
     # members are located within +max_distance+ pairwise.
     #
@@ -100,7 +76,7 @@ module AIXM
     #   pairs (default: 1 NM)
     # @return [Integer] number of obstacle groups added
     def group_obstacles!(max_distance: AIXM.d(1, :nm))
-      obstacles, list = select_features(:obstacle), {}
+      obstacles, list = features.find(:obstacle), {}
       while subject = obstacles.shift
         obstacles.each do |obstacle|
           if subject.xy.distance(obstacle.xy) <= max_distance

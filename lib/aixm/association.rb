@@ -159,12 +159,15 @@ module AIXM
   #   blog.posts.first.text    # => "text"
   module Association
     module ClassMethods
+      attr_reader :has_many_attributes, :has_one_attributes, :belongs_to_attributes
+
       def has_many(attribute, as: nil, accept: nil, &association_block)
         association = attribute.to_s.inflect(:singularize)
         inversion = as || self.to_s.inflect(:demodulize, :tableize, :singularize)
         class_names = [accept || association].flatten.map { |n| AIXM::CLASSES[n.to_sym] || n }
+        (@has_many_attributes ||= []) << attribute
         define_method(attribute) do
-          instance_eval("@#{attribute} ||= []")
+          instance_eval("@#{attribute} ||= AIXM::Association::Array.new")
         end
         define_method(:"add_#{association}") do |object=nil, **options, &add_block|
           unless object
@@ -190,6 +193,7 @@ module AIXM
         inversion = (as || self.to_s.inflect(:demodulize, :tableize, :singularize)).to_s
         class_names = [accept || association].flatten.map { |n| AIXM::CLASSES[n.to_sym] || n }
         class_names << 'NilClass' if allow_nil
+        (@has_one_attributes ||= []) << attribute
         attr_reader attribute
         define_method(:"#{association}=") do |object|
           fail(ArgumentError, "#{object.__class__} not allowed") unless class_names.reduce(false){ |m, c| m || object.is_a?(c.to_class) }
@@ -207,6 +211,7 @@ module AIXM
       def belongs_to(attribute, as: nil, readonly: false)
         association = self.to_s.inflect(:demodulize, :tableize, :singularize)
         inversion = (as || association).to_s
+        (@belongs_to_attributes ||= []) << attribute
         attr_reader attribute
         unless readonly
           define_method(:"#{attribute}=") do |object|
@@ -219,6 +224,53 @@ module AIXM
 
     def self.included(base)
       base.extend(ClassMethods)
+    end
+
+    class Array < ::Array
+      # Find has_many associations by class and/or attribute values.
+      #
+      # @example
+      #   class Blog
+      #     include AIXM::Association
+      #     has_many :items, accept: %i(post picture)
+      #   end
+      #   class Post
+      #     include AIXM::Association
+      #     belongs_to :blog, as: :item
+      #     attr_accessor :title
+      #   end
+      #   class Picture
+      #     include AIXM::Association
+      #     belongs_to :blog, as: :item
+      #   end
+      #   blog, post, picture = Blog.new, Post.new, Picture.new
+      #   post.title = "title"
+      #   blog.add_item(post)
+      #   blog.add_item(picture)
+      #   blog.items.find(:post) == [post]             # => true
+      #   blog.items.find(Post) == [post]              # => true
+      #   blog.items.find(title: "title") == [post]    # => true
+      #   blog.items.find(Object) == [post, picture]   # => true
+      #
+      # @param klass [Class, Symbol] class (e.g. AIXM::Feature::Airport,
+      #   AIXM::Feature::NavigationalAid::VOR) or class shortcut (e.g.
+      #   :airport or :vor) as listed in AIXM::CLASSES
+      # @param attributes [Hash] search attributes by their values
+      # @return [AIXM::Association::Array]
+      def find(klass, attributes={})
+        if klass.is_a? Symbol
+          klass = AIXM::CLASSES[klass]&.to_class || fail(ArgumentError, "unknown class shortcut `#{klass}'")
+        end
+        self.class.new(
+          select do |element|
+            if element.kind_of? klass
+              attributes.reduce(true) do |memo, (attribute, value)|
+                memo && element.send(attribute) == value
+              end
+            end
+          end
+        )
+      end
     end
   end
 end
