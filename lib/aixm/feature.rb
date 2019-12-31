@@ -21,7 +21,7 @@ module AIXM
 
     # @return [Boolean]
     def ==(other)
-      self.class === other && self.to_uid == other.to_uid
+      self.__class__ === other && self.to_uid == other.to_uid
     end
   end
 
