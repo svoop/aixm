@@ -31,6 +31,7 @@ describe AIXM::Association do
 
         let(:blog) { Blog.new }
         let(:post) { Post.new }
+        let(:post_2) { Post.new }
         let(:picture) { Picture.new }
 
         it "keeps track of has_many associations" do
@@ -47,11 +48,26 @@ describe AIXM::Association do
           _(post.blog).must_equal blog
         end
 
+        it "adds posts to blog" do
+          _(blog.add_posts([post, post_2])).must_equal blog
+          _(blog.posts).must_equal [post, post_2]
+          _(post.blog).must_equal blog
+          _(post_2.blog).must_equal blog
+        end
+
         it "removes post from blog" do
           _(blog.add_post(post)).must_equal blog
           _(blog.remove_post(post)).must_equal blog
           _(blog.posts).must_equal []
           _(post.blog).must_be :nil?
+        end
+
+        it "removes posts from blog" do
+          _(blog.add_posts([post, post_2])).must_equal blog
+          _(blog.remove_posts([post_2, post])).must_equal blog
+          _(blog.posts).must_equal []
+          _(post.blog).must_be :nil?
+          _(post_2.blog).must_be :nil?
         end
 
         it "fails to add non-post to blog" do

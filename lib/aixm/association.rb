@@ -22,6 +22,7 @@ module AIXM
   #     belongs_to :blog
   #   end
   #   blog, post = Blog.new, Post.new
+  #   # --either--
   #   blog.add_post(post)
   #   blog.posts.count           # => 1
   #   blog.posts.first == post   # => true
@@ -35,6 +36,13 @@ module AIXM
   #   post.blog == blog          # => true
   #   post.blog = nil
   #   blog.posts.count           # => 0
+  #   # --or--
+  #   post_2 = Post.new
+  #   blog.add_posts([post, post_2])
+  #   blog.posts.count                    # => 2
+  #   blog.posts == [post, post_2]        # => true
+  #   blog.remove_posts([post_2, post])
+  #   blog.posts.count                    # => 0
   #
   # @example Simple +has_one+ association
   #   class Blog
@@ -44,6 +52,7 @@ module AIXM
   #     belongs_to :blog
   #   end
   #   blog, post = Blog.new, Post.new
+  #   # --either--
   #   blog.post = post
   #   blog.post == post   # => true
   #   post.blog == blog   # => true
@@ -166,9 +175,11 @@ module AIXM
         inversion = as || self.to_s.inflect(:demodulize, :tableize, :singularize)
         class_names = [accept || association].flatten.map { |n| AIXM::CLASSES[n.to_sym] || n }
         (@has_many_attributes ||= []) << attribute
+        # features
         define_method(attribute) do
           instance_eval("@#{attribute} ||= AIXM::Association::Array.new")
         end
+        # add_feature
         define_method(:"add_#{association}") do |object=nil, **options, &add_block|
           unless object
             fail(ArgumentError, "must pass object to add") if class_names.count > 1
@@ -181,9 +192,20 @@ module AIXM
           object.instance_variable_set(:"@#{inversion}", self)
           self
         end
+        # add_features
+        define_method(:"add_#{attribute}") do |objects=[], **options, &add_block|
+          objects.each { |o| send(:"add_#{association}", o, **options, &add_block) }
+          self
+        end
+        # remove_feature
         define_method(:"remove_#{association}") do |object|
           send(attribute).delete(object)
           object.instance_variable_set(:"@#{inversion}", nil)
+          self
+        end
+        # remove_features
+        define_method(:"remove_#{attribute}") do |objects=[]|
+          objects.each { |o| send(:"remove_#{association}", o) }
           self
         end
       end
@@ -194,7 +216,9 @@ module AIXM
         class_names = [accept || association].flatten.map { |n| AIXM::CLASSES[n.to_sym] || n }
         class_names << 'NilClass' if allow_nil
         (@has_one_attributes ||= []) << attribute
+        # feature
         attr_reader attribute
+        # feature= / add_feature
         define_method(:"#{association}=") do |object|
           fail(ArgumentError, "#{object.__class__} not allowed") unless class_names.reduce(false){ |m, c| m || object.is_a?(c.to_class) }
           instance_variable_get(:"@#{attribute}")&.instance_variable_set(:"@#{inversion}", nil)
@@ -202,6 +226,7 @@ module AIXM
           object&.instance_variable_set(:"@#{inversion}", self)
         end
         alias_method(:"add_#{association}", :"#{association}=")
+        # remove_feature
         define_method(:"remove_#{association}") do |_|
           send(:"#{association}=", nil)
           self
@@ -212,7 +237,9 @@ module AIXM
         association = self.to_s.inflect(:demodulize, :tableize, :singularize)
         inversion = (as || association).to_s
         (@belongs_to_attributes ||= []) << attribute
+        # feature
         attr_reader attribute
+        # feature=
         unless readonly
           define_method(:"#{attribute}=") do |object|
             instance_variable_get(:"@#{attribute}")&.send(:"remove_#{inversion}", self)
