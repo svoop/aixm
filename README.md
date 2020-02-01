@@ -5,7 +5,7 @@
 
 # AIXM
 
-Partial implementation of the [Aeronautical Information Exchange Model (AIXM 4.5)](http://aixm.aero) and it's dialect [Open FlightMaps eXchange format (OFMX 0)](https://github.com/openflightmaps/ofmx) for Ruby.
+Partial implementation of the [Aeronautical Information Exchange Model (AIXM 4.5)](http://aixm.aero) and it's dialect [Open FlightMaps eXchange format (OFMX 0)](https://gitlab.com/openflightmaps/ofmx/wikis) for Ruby.
 
 For now, only the parts needed to automize the AIP import of [open flightmaps](https://openflightmaps.org) are part of this gem. Most notably, the gem is only a builder for snapshot files and does not parse them.
 
@@ -47,7 +47,7 @@ AIXM.designated_point(...)
 
 See `AIXM::CLASSES` for the complete list of shorthand names.
 
-Once you have called `to_xml`, [OFMX-compliant `mid` values](https://gitlab.com/openflightmaps/ofmx/wikis/Identifiers#mid) can be read from the features:
+Once you have called `to_xml`, [OFMX-compliant `mid` values](https://gitlab.com/openflightmaps/ofmx/wikis/Features#mid) can be read from the features:
 
 ```ruby
 document = AIXM.document(
@@ -90,7 +90,7 @@ AIXM.schema(:version)   # => 0
 
 ### AIXM.config.mid
 
-In order to insert [OFMX-compliant `mid` attributes](https://gitlab.com/openflightmaps/ofmx/wikis/Identifiers#mid) into all `*Uid` elements, you have to chose the OFMX schema and set the mid configuration option to `true`.
+In order to insert [OFMX-compliant `mid` attributes](https://gitlab.com/openflightmaps/ofmx/wikis/Features#mid) into all `*Uid` elements, you have to chose the OFMX schema and set the mid configuration option to `true`.
 
 ```ruby
 AIXM.ofmx!
@@ -172,12 +172,12 @@ By `using AIXM::Refinements` you get a few handy [extensions to Ruby core classe
 
 ### AIXM
 * [AIXM](http://aixm.aero)
-* [AICM 4.5 documentation](https://openflightmaps.github.io/ofmx/aixm/4.5/manual/aicm/)
+* [AICM 4.5 documentation](https://openflightmaps.gitlab.io/ofmx/aixm/4.5/manual/aicm/)
 * [AIXM 4.5 specification](http://aixm.aero/document/aixm-45-specification)
 
 ### OFMX
-* [OFMX](https://github.com/openflightmaps/ofmx)
-* [OFMX documentation](https://github.com/openflightmaps/ofmx/wiki)
+* [OFMX](https://gitlab.com/openflightmaps/ofmx)
+* [OFMX documentation](https://gitlab.com/openflightmaps/ofmx/wikis)
 * [open flightmaps](https://openflightmaps.org)
 
 ## Tests
