@@ -24,7 +24,7 @@ module AIXM
     #     direction.remarks = String or nil
     #   end
     #
-    # @see https://github.com/openflightmaps/ofmx/wiki/Airport#fto-fato
+    # @see https://gitlab.com/openflightmaps/ofmx/wikis/Airport#fto-fato
     class FATO
       include AIXM::Association
       include AIXM::Mid
@@ -163,7 +163,7 @@ module AIXM
 
       # FATO directions further describe each direction to and from the FATO.
       #
-      # @see https://github.com/openflightmaps/ofmx/wiki/Airport#fdn-fato-direction
+      # @see https://gitlab.com/openflightmaps/ofmx/wikis/Airport#fdn-fato-direction
       class Direction
         include AIXM::Association
         include AIXM::Mid

@@ -9,6 +9,7 @@ module AIXM
     # ===Cheat Sheet in Pseudo Code:
     #   airport = AIXM.airport(
     #     source: String or nil
+    #     region: String or nil
     #     organisation: AIXM.organisation
     #     id: String
     #     name: String
@@ -31,7 +32,7 @@ module AIXM
     # For airports without an +id+, you may assign the two character region
     # (e.g. "LF") which will be combined with an 8 character digest of +name+.
     #
-    # @see https://github.com/openflightmaps/ofmx/wiki/Airport#ahp-airport
+    # @see https://gitlab.com/openflightmaps/ofmx/wikis/Airport#ahp-airport
     class Airport < Feature
       include AIXM::Association
 
@@ -140,8 +141,8 @@ module AIXM
       # @return [String, nil] free text remarks
       attr_reader :remarks
 
-      def initialize(source: nil, organisation:, id: nil, name:, xy:)
-        super(source: source)
+      def initialize(source: nil, region: nil, organisation:, id: nil, name:, xy:)
+        super(source: source, region: region)
         self.organisation, self.name, self.xy = organisation, name, xy
         self.id = id   # name must already be set
       end
@@ -154,7 +155,7 @@ module AIXM
       # For airports without an +id+, you may assign the two character region
       # (e.g. "LF") which will be combined with an 8 character digest of +name+.
       def id=(value)
-        value = [value, [name].to_digest].join.upcase if value&.upcase&.match? AIXM::Document::REGION_RE
+        value = [value, [name].to_digest].join.upcase if value&.upcase&.match? AIXM::Feature::REGION_RE
         fail(ArgumentError, "invalid id") unless value&.upcase&.match? ID_RE
         @id = value.upcase
       end
@@ -229,7 +230,7 @@ module AIXM
       def to_uid(as: :AhpUid)
         builder = Builder::XmlMarkup.new(indent: 2)
         insert_mid(
-          builder.tag!(as) do |tag|
+          builder.tag!(as, ({ region: (region if AIXM.ofmx?) }.compact)) do |tag|
             tag.codeId(id)
           end
         )
@@ -326,7 +327,7 @@ module AIXM
       #   end
       #
       # @see AIXM::Feature::Airport#add_usage_limitation
-      # @see https://github.com/openflightmaps/ofmx/wiki/Airport#ahu-airport-usage
+      # @see https://gitlab.com/openflightmaps/ofmx/wikis/Airport#ahu-airport-usage
       class UsageLimitation
         include AIXM::Association
 
@@ -396,7 +397,7 @@ module AIXM
         # limitation.
         #
         # @see AIXM::Feature::Airport#add_usage_limitation
-        # @see https://github.com/openflightmaps/ofmx/wiki/Airport#ahu-airport-usage
+        # @see https://gitlab.com/openflightmaps/ofmx/wikis/Airport#ahu-airport-usage
         class Condition
           include AIXM::Association
 

@@ -98,7 +98,7 @@ describe AIXM::Feature::ObstacleGroup do
         _(subject.to_xml).must_equal <<~END
           <!-- Obstacle group: MIRMANDE EOLIENNES -->
           <Ogr>
-            <OgrUid>
+            <OgrUid region="LF">
               <txtName>MIRMANDE EOLIENNES</txtName>
               <geoLat>44.67501389N</geoLat>
               <geoLong>004.87256667E</geoLong>
@@ -113,7 +113,7 @@ describe AIXM::Feature::ObstacleGroup do
           <!-- Obstacle: [wind_turbine] 44.67501389N 004.87256667E LA TEISSONIERE 1 -->
           <Obs>
             <ObsUid>
-              <OgrUid>
+              <OgrUid region="LF">
                 <txtName>MIRMANDE EOLIENNES</txtName>
                 <geoLat>44.67501389N</geoLat>
                 <geoLong>004.87256667E</geoLong>
@@ -137,7 +137,7 @@ describe AIXM::Feature::ObstacleGroup do
           <!-- Obstacle: [wind_turbine] 44.67946667N 004.87381111E LA TEISSONIERE 2 -->
           <Obs>
             <ObsUid>
-              <OgrUid>
+              <OgrUid region="LF">
                 <txtName>MIRMANDE EOLIENNES</txtName>
                 <geoLat>44.67501389N</geoLat>
                 <geoLong>004.87256667E</geoLong>
@@ -165,7 +165,7 @@ describe AIXM::Feature::ObstacleGroup do
         AIXM.ofmx!
         AIXM.config.mid = true
         AIXM.config.region = 'LF'
-        _(subject.to_xml).must_match /<OgrUid mid="c099ea7c-2056-3921-5c1c-b28090537332">/
+        _(subject.to_xml).must_match /<OgrUid [^>]*? mid="ee8cb2a8-f482-5bbe-421f-272de41e1eec"/x
       end
     end
   end
@@ -251,7 +251,7 @@ describe AIXM::Feature::ObstacleGroup do
         _(subject.to_xml).must_equal <<~END
           <!-- Obstacle group: DROITWICH LONGWAVE ANTENNA -->
           <Ogr>
-            <OgrUid>
+            <OgrUid region="EG">
               <txtName>DROITWICH LONGWAVE ANTENNA</txtName>
               <geoLat>52.29639722N</geoLat>
               <geoLong>002.10675278W</geoLong>
@@ -266,7 +266,7 @@ describe AIXM::Feature::ObstacleGroup do
           <!-- Obstacle: [mast] 52.29639722N 002.10675278W DROITWICH LW NORTH -->
           <Obs>
             <ObsUid>
-              <OgrUid>
+              <OgrUid region="EG">
                 <txtName>DROITWICH LONGWAVE ANTENNA</txtName>
                 <geoLat>52.29639722N</geoLat>
                 <geoLong>002.10675278W</geoLong>
@@ -290,7 +290,7 @@ describe AIXM::Feature::ObstacleGroup do
           <!-- Obstacle: [mast] 52.29457778N 002.10568611W DROITWICH LW NORTH -->
           <Obs>
             <ObsUid>
-              <OgrUid>
+              <OgrUid region="EG">
                 <txtName>DROITWICH LONGWAVE ANTENNA</txtName>
                 <geoLat>52.29639722N</geoLat>
                 <geoLong>002.10675278W</geoLong>
@@ -311,7 +311,7 @@ describe AIXM::Feature::ObstacleGroup do
             <valRadius>200</valRadius>
             <uomRadius>M</uomRadius>
             <ObsUidLink>
-              <OgrUid>
+              <OgrUid region="EG">
                 <txtName>DROITWICH LONGWAVE ANTENNA</txtName>
                 <geoLat>52.29639722N</geoLat>
                 <geoLong>002.10675278W</geoLong>

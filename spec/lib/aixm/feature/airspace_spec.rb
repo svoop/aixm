@@ -125,7 +125,7 @@ describe AIXM::Feature::Airspace do
         _(subject.to_xml).must_equal <<~"END"
           <!-- Airspace: [D] POLYGON AIRSPACE -->
           <Ase source="LF|GEN|0.0 FACTORY|0|0">
-            <AseUid>
+            <AseUid region="LF">
               <codeType>D</codeType>
               <codeId>PA</codeId>
             </AseUid>
@@ -154,7 +154,7 @@ describe AIXM::Feature::Airspace do
           </Ase>
           <Abd>
             <AbdUid>
-              <AseUid>
+              <AseUid region="LF">
                 <codeType>D</codeType>
                 <codeId>PA</codeId>
               </AseUid>
@@ -192,7 +192,7 @@ describe AIXM::Feature::Airspace do
         _(subject.to_xml).must_equal <<~"END"
           <!-- Airspace: [D] UNNAMED -->
           <Ase source="LF|GEN|0.0 FACTORY|0|0">
-            <AseUid>
+            <AseUid region="LF">
               <codeType>D</codeType>
               <codeId>PA</codeId>
             </AseUid>
@@ -219,7 +219,7 @@ describe AIXM::Feature::Airspace do
           </Ase>
           <Abd>
             <AbdUid>
-              <AseUid>
+              <AseUid region="LF">
                 <codeType>D</codeType>
                 <codeId>PA</codeId>
               </AseUid>
@@ -256,8 +256,9 @@ describe AIXM::Feature::Airspace do
       AIXM.ofmx!
       AIXM.config.mid = true
       AIXM.config.region = 'LF'
-      _(subject.to_xml).must_match /<AseUid mid="8894c821-b486-8128-48f2-a47c2e9f4c13">/
-#      _(subject.to_xml).must_match /<AbdUid mid="">/
+      _(subject.to_xml).must_match /<AseUid [^>]*? mid="4fadb72f-7ee4-1171-3281-ac59b82dad86"/x
+# TODO: mid missing here?
+#     _(subject.to_xml).must_match /<AbdUid mid="">/
     end
   end
 
@@ -276,7 +277,7 @@ describe AIXM::Feature::Airspace do
         _(subject.to_xml).must_equal <<~"END"
           <!-- Airspace: [D] POLYGON AIRSPACE -->
           <Ase source="LF|GEN|0.0 FACTORY|0|0">
-            <AseUid>
+            <AseUid region="LF">
               <codeType>D</codeType>
               <codeId>PA</codeId>
             </AseUid>
@@ -285,7 +286,7 @@ describe AIXM::Feature::Airspace do
           </Ase>
           <Abd>
             <AbdUid>
-              <AseUid>
+              <AseUid region="LF">
                 <codeType>D</codeType>
                 <codeId>PA</codeId>
               </AseUid>
@@ -315,7 +316,7 @@ describe AIXM::Feature::Airspace do
             </Avx>
           </Abd>
           <Ase>
-            <AseUid>
+            <AseUid region="LF">
               <codeType>CLASS</codeType>
               <codeId>B794588D</codeId>
             </AseUid>
@@ -343,18 +344,18 @@ describe AIXM::Feature::Airspace do
           </Ase>
           <Adg>
             <AdgUid>
-              <AseUid>
+              <AseUid region="LF">
                 <codeType>CLASS</codeType>
                 <codeId>B794588D</codeId>
               </AseUid>
             </AdgUid>
-            <AseUidSameExtent>
+            <AseUidSameExtent region="LF">
               <codeType>D</codeType>
               <codeId>PA</codeId>
             </AseUidSameExtent>
           </Adg>
           <Ase>
-            <AseUid>
+            <AseUid region="LF">
               <codeType>CLASS</codeType>
               <codeId>64589EAF</codeId>
             </AseUid>
@@ -382,12 +383,12 @@ describe AIXM::Feature::Airspace do
           </Ase>
           <Adg>
             <AdgUid>
-              <AseUid>
+              <AseUid region="LF">
                 <codeType>CLASS</codeType>
                 <codeId>64589EAF</codeId>
               </AseUid>
             </AdgUid>
-            <AseUidSameExtent>
+            <AseUidSameExtent region="LF">
               <codeType>D</codeType>
               <codeId>PA</codeId>
             </AseUidSameExtent>

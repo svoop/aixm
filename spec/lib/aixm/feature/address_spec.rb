@@ -47,7 +47,7 @@ describe AIXM::Feature::Address do
       AIXM.ofmx!
       AIXM.config.mid = true
       AIXM.config.region = 'LF'
-      _(subject.to_xml(as: :Xxx, sequence: 1)).must_match /<XxxUid mid="126bee70-4d4e-0032-ada9-81d3318fe6b7">/
+      _(subject.to_xml(as: :Xxx, sequence: 1)).must_match /<XxxUid [^>]*? mid="9dd7c614-54df-5a0e-2f3f-d053d084ea92"/x
     end
 
     it "builds correct AIXM" do

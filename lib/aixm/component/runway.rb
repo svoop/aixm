@@ -44,7 +44,7 @@ module AIXM
     #   runway.forth.geographic_orientation = 165
     #   runway.back = nil
     #
-    # @see https://github.com/openflightmaps/ofmx/wiki/Airport#rwy-runway
+    # @see https://gitlab.com/openflightmaps/ofmx/wikis/Airport#rwy-runway
     class Runway
       include AIXM::Association
       include AIXM::Mid
@@ -173,7 +173,7 @@ module AIXM
       # Runway directions further describe each direction {#forth} and {#back}
       # of a runway.
       #
-      # @see https://github.com/openflightmaps/ofmx/wiki/Airport#rdn-runway-direction
+      # @see https://gitlab.com/openflightmaps/ofmx/wikis/Airport#rdn-runway-direction
       class Direction
         include AIXM::Association
         include AIXM::Mid

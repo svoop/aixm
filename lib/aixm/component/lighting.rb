@@ -14,9 +14,9 @@ module AIXM
     #   lighting.color = COLORS or nil
     #   lighting.remarks = String or nil
     #
-    # @see https://github.com/openflightmaps/ofmx/wiki/Airport#rls-runway-direction-lighting
-    # @see https://github.com/openflightmaps/ofmx/wiki/Airport#fls-fato-direction-lighting
-    # @see https://github.com/openflightmaps/ofmx/wiki/Airport#tls-helipad-tlof-lighting
+    # @see https://gitlab.com/openflightmaps/ofmx/wikis/Airport#rls-runway-direction-lighting
+    # @see https://gitlab.com/openflightmaps/ofmx/wikis/Airport#fls-fato-direction-lighting
+    # @see https://gitlab.com/openflightmaps/ofmx/wikis/Airport#tls-helipad-tlof-lighting
     class Lighting
       include AIXM::Association
       include AIXM::Mid

@@ -9,13 +9,14 @@ module AIXM
     # ===Cheat Sheet in Pseudo Code:
     #   organisation = AIXM.organisation(
     #     source: String or nil
+    #     region: String or nil
     #     name: String
     #     type: TYPES
     #   )
     #   organisation.id = String or nil
     #   organisation.remarks = String or nil
     #
-    # @see https://github.com/openflightmaps/ofmx/wiki/Organisation#org-organisation
+    # @see https://gitlab.com/openflightmaps/ofmx/wikis/Organisation#org-organisation
     class Organisation < Feature
       include AIXM::Association
 
@@ -56,8 +57,8 @@ module AIXM
       # @return [String, nil] free text remarks
       attr_reader :remarks
 
-      def initialize(source: nil, name:, type:)
-        super(source: source)
+      def initialize(source: nil, region: nil, name:, type:)
+        super(source: source, region: region)
         self.name, self.type = name, type
       end
 
@@ -88,7 +89,7 @@ module AIXM
       def to_uid
         builder = Builder::XmlMarkup.new(indent: 2)
         insert_mid(
-          builder.OrgUid do |org_uid|
+          builder.OrgUid({ region: (region if AIXM.ofmx?) }.compact) do |org_uid|
             org_uid.txtName(name)
           end
         )

@@ -236,7 +236,7 @@ describe AIXM::Feature::Obstacle do
       _(subject.to_xml).must_equal <<~END
         <!-- Obstacle group: EIFFEL TOWER -->
         <Ogr>
-          <OgrUid>
+          <OgrUid region="LF">
             <txtName>EIFFEL TOWER</txtName>
             <geoLat>48.85825000N</geoLat>
             <geoLong>002.29458889E</geoLong>
@@ -250,7 +250,7 @@ describe AIXM::Feature::Obstacle do
         <!-- Obstacle: [tower] 48.85825000N 002.29458889E EIFFEL TOWER -->
         <Obs>
           <ObsUid>
-            <OgrUid>
+            <OgrUid region="LF">
               <txtName>EIFFEL TOWER</txtName>
               <geoLat>48.85825000N</geoLat>
               <geoLong>002.29458889E</geoLong>
@@ -281,7 +281,7 @@ describe AIXM::Feature::Obstacle do
       AIXM.ofmx!
       AIXM.config.mid = true
       AIXM.config.region = 'LF'
-      _(subject.to_xml).must_match /<ObsUid mid="864b252b-0b1d-66c4-22cd-14dbda287467">/
+      _(subject.to_xml).must_match /<ObsUid [^>]*? mid="8e0a7cfc-b82b-ebfc-3501-06dff5d64566"/x
     end
   end
 end

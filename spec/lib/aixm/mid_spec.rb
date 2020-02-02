@@ -11,22 +11,23 @@ describe AIXM::Mid do
   end
 
   describe :insert_mid do
+
     it "sets the @mid instance variable with implicit fallback region XX" do
       AIXM.config.region = nil
       subject.send(:insert_mid, subject.to_uid)
-      _(subject.mid).must_equal "c58ba84b-9bd0-8a07-5462-64de0db5d1d7"
+      _(subject.mid).must_equal "fb72c7db-4108-e49d-c4ea-5f46a3e7c2f3"
     end
 
     it "sets the @mid instance variable with explicit fallback region XX" do
       AIXM.config.region = 'XX'
       subject.send(:insert_mid, subject.to_uid)
-      _(subject.mid).must_equal "c58ba84b-9bd0-8a07-5462-64de0db5d1d7"
+      _(subject.mid).must_equal "fb72c7db-4108-e49d-c4ea-5f46a3e7c2f3"
     end
 
     it "sets the @mid instance variable with explicit region" do
       AIXM.config.region = 'LF'
       subject.send(:insert_mid, subject.to_uid)
-      _(subject.mid).must_equal "39afd97e-dc69-4a80-c52e-3c428eea0904"
+      _(subject.mid).must_equal "fb72c7db-4108-e49d-c4ea-5f46a3e7c2f3"
     end
 
     it "doesn't set the @mid instance variable when set_attribute is false" do
@@ -39,7 +40,7 @@ describe AIXM::Mid do
       AIXM.config.mid = true
       AIXM.config.region = nil
       _(subject.send(:insert_mid, subject.to_uid)).must_equal <<~"END"
-        <XxxUid mid="c58ba84b-9bd0-8a07-5462-64de0db5d1d7">
+        <XxxUid mid="fb72c7db-4108-e49d-c4ea-5f46a3e7c2f3">
         </XxxUid>
       END
     end

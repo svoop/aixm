@@ -12,7 +12,7 @@ module AIXM
       #     radius: AIXM.d
       #   )
       #
-      # @see https://github.com/openflightmaps/ofmx/wiki/Airspace#circle
+      # @see https://gitlab.com/openflightmaps/ofmx/wikis/Airspace#circle
       class Circle
         include AIXM::Association
 

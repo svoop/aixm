@@ -14,7 +14,7 @@ module AIXM
       #     clockwise: true or false
       #   )
       #
-      # @see https://github.com/openflightmaps/ofmx/wiki/Airspace#arc
+      # @see https://gitlab.com/openflightmaps/ofmx/wikis/Airspace#arc
       class Arc < Point
         # @return [AIXM::XY] center point
         attr_reader :center_xy

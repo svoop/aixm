@@ -11,6 +11,7 @@ module AIXM
       # ===Cheat Sheet in Pseudo Code:
       #   tacan = AIXM.tacan(
       #     source: String or nil
+      #     region: String or nil
       #     organisation: AIXM.organisation
       #     id: String
       #     name: String
@@ -21,7 +22,7 @@ module AIXM
       # tacan.timetable = AIXM.timetable or nil
       # tacan.remarks = String or nil
       #
-      # @see https://github.com/openflightmaps/ofmx/wiki/Navigational-aid#tcn-tacan
+      # @see https://gitlab.com/openflightmaps/ofmx/wikis/Navigational-aid#tcn-tacan
       class TACAN < DME
         public_class_method :new
 
@@ -29,7 +30,7 @@ module AIXM
         def to_uid
           builder = Builder::XmlMarkup.new(indent: 2)
           insert_mid(
-            builder.TcnUid do |tcn_uid|
+            builder.TcnUid({ region: (region if AIXM.ofmx?) }.compact) do |tcn_uid|
               tcn_uid.codeId(id)
               tcn_uid.geoLat(xy.lat(AIXM.schema))
               tcn_uid.geoLong(xy.long(AIXM.schema))

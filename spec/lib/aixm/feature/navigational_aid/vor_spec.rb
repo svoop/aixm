@@ -52,12 +52,12 @@ describe AIXM::Feature::NavigationalAid::VOR do
         _(subject.to_xml).must_equal <<~END
           <!-- NavigationalAid: [VOR:VOR] VVV / VOR NAVAID -->
           <Vor source="LF|GEN|0.0 FACTORY|0|0">
-            <VorUid>
+            <VorUid region="LF">
               <codeId>VVV</codeId>
               <geoLat>47.85916667N</geoLat>
               <geoLong>007.56000000E</geoLong>
             </VorUid>
-            <OrgUid>
+            <OrgUid region="LF">
               <txtName>FRANCE</txtName>
             </OrgUid>
             <txtName>VOR NAVAID</txtName>
@@ -82,12 +82,12 @@ describe AIXM::Feature::NavigationalAid::VOR do
         _(subject.to_xml).must_equal <<~END
           <!-- NavigationalAid: [VOR:VOR] VVV -->
           <Vor source="LF|GEN|0.0 FACTORY|0|0">
-            <VorUid>
+            <VorUid region="LF">
               <codeId>VVV</codeId>
               <geoLat>47.85916667N</geoLat>
               <geoLong>007.56000000E</geoLong>
             </VorUid>
-            <OrgUid>
+            <OrgUid region="LF">
               <txtName>FRANCE</txtName>
             </OrgUid>
             <codeType>VOR</codeType>
@@ -103,7 +103,7 @@ describe AIXM::Feature::NavigationalAid::VOR do
         AIXM.ofmx!
         AIXM.config.mid = true
         AIXM.config.region = 'LF'
-        _(subject.to_xml).must_match /<VorUid mid="627bea52-cca8-f407-88be-90a85a333741">/
+        _(subject.to_xml).must_match /<VorUid [^>]*? mid="0e8e1825-a33e-53eb-f305-528ff8b7ab92"/x
       end
     end
   end
@@ -131,12 +131,12 @@ describe AIXM::Feature::NavigationalAid::VOR do
         _(subject.to_xml).must_equal <<~END
           <!-- NavigationalAid: [VOR:VOR] VVV / VOR/DME NAVAID -->
           <Vor source="LF|GEN|0.0 FACTORY|0|0">
-            <VorUid>
+            <VorUid region="LF">
               <codeId>VVV</codeId>
               <geoLat>47.85916667N</geoLat>
               <geoLong>007.56000000E</geoLong>
             </VorUid>
-            <OrgUid>
+            <OrgUid region="LF">
               <txtName>FRANCE</txtName>
             </OrgUid>
             <txtName>VOR/DME NAVAID</txtName>
@@ -154,15 +154,15 @@ describe AIXM::Feature::NavigationalAid::VOR do
           </Vor>
           <!-- NavigationalAid: [DME] VVV / VOR/DME NAVAID -->
           <Dme>
-            <DmeUid>
+            <DmeUid region="LF">
               <codeId>VVV</codeId>
               <geoLat>47.85916667N</geoLat>
               <geoLong>007.56000000E</geoLong>
             </DmeUid>
-            <OrgUid>
+            <OrgUid region="LF">
               <txtName>FRANCE</txtName>
             </OrgUid>
-            <VorUid>
+            <VorUid region="LF">
               <codeId>VVV</codeId>
               <geoLat>47.85916667N</geoLat>
               <geoLong>007.56000000E</geoLong>
@@ -205,12 +205,12 @@ describe AIXM::Feature::NavigationalAid::VOR do
         _(subject.to_xml).must_equal <<~END
           <!-- NavigationalAid: [VOR:VOR] VVV / VORTAC NAVAID -->
           <Vor source="LF|GEN|0.0 FACTORY|0|0">
-            <VorUid>
+            <VorUid region="LF">
               <codeId>VVV</codeId>
               <geoLat>47.85916667N</geoLat>
               <geoLong>007.56000000E</geoLong>
             </VorUid>
-            <OrgUid>
+            <OrgUid region="LF">
               <txtName>FRANCE</txtName>
             </OrgUid>
             <txtName>VORTAC NAVAID</txtName>
@@ -228,15 +228,15 @@ describe AIXM::Feature::NavigationalAid::VOR do
           </Vor>
           <!-- NavigationalAid: [TACAN] VVV / VORTAC NAVAID -->
           <Tcn>
-            <TcnUid>
+            <TcnUid region="LF">
               <codeId>VVV</codeId>
               <geoLat>47.85916667N</geoLat>
               <geoLong>007.56000000E</geoLong>
             </TcnUid>
-            <OrgUid>
+            <OrgUid region="LF">
               <txtName>FRANCE</txtName>
             </OrgUid>
-            <VorUid>
+            <VorUid region="LF">
               <codeId>VVV</codeId>
               <geoLat>47.85916667N</geoLat>
               <geoLong>007.56000000E</geoLong>

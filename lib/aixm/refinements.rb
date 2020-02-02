@@ -261,7 +261,7 @@ module AIXM
       end
     end
 
-    # @!method payload_hash(region:, element:)
+    # @!method payload_hash(element:)
     #   Calculate the UUIDv3 hash of an AIXM/OFMX XML string.
     #
     #   A word of warning: This is a minimalistic implementation for the AIXM
@@ -270,19 +270,18 @@ module AIXM
     #   * the XML string must be valid
     #   * the XML string must be pretty-printed
     #
-    #   @example from https://github.com/openflightmaps/ofmx/wiki/Functions
-    #     xml.payload_hash(region: 'LF', element: 'Ser')
-    #     # => "269b1f18-cabe-3c9e-1d71-48a7414a4cb9"
+    #   @example from https://gitlab.com/openflightmaps/ofmx/wikis/Functions
+    #     xml.payload_hash(element: 'Ser')
+    #     # => "42512568-a5e8-26a9-a330-c1c242135af5"
     #
     #   @note This is a refinement for +String+
-    #   @param region [String] OFMX region (e.g. "LF")
     #   @param element [String] tag to calculate the payload hash for (default:
     #     first element in the string)
     #   @return [String] UUIDv3
     #   @raise [ArgumentError] if the given element is not found or no element
     #     at all
     refine String do
-      def payload_hash(region:, element: nil)
+      def payload_hash(element: nil)
         element = $1 if element.nil? && match(/<([^?].*?)[\s>]/)
         fail(ArgumentError, "no element found") unless element
         fail(ArgumentError, "element `#{element}' not found") unless match? /<#{element}[\s>]/
@@ -290,7 +289,7 @@ module AIXM
           sub(%r(\A.*?(?=<#{element}))m, '').   # remove everything before first <element>
           sub(%r(</#{element}>.*\z)m, '').   # remove everything after and including first </element>
           sub(%r(\A(<\w+Uid)\w+), '\1').   # remove Uid name extension
-          scan(%r(<([\w-]+)([^>]*)>([^<]*))).each_with_object([region.upcase]) do |(e, a, t), m|
+          scan(%r(<([\w-]+)([^>]*)>([^<]*))).each_with_object([]) do |(e, a, t), m|
             m << e << a.scan(%r(([\w-]+)="([^"]*)")).sort.flatten << t
           end.
           flatten.

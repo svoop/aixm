@@ -52,7 +52,7 @@ describe AIXM::Feature::Organisation do
       _(subject.to_xml).must_equal <<~END
         <!-- Organisation: FRANCE -->
         <Org source="LF|GEN|0.0 FACTORY|0|0">
-          <OrgUid>
+          <OrgUid region="LF">
             <txtName>FRANCE</txtName>
           </OrgUid>
           <codeId>LF</codeId>
@@ -68,7 +68,7 @@ describe AIXM::Feature::Organisation do
       _(subject.to_xml).must_equal <<~END
         <!-- Organisation: FRANCE -->
         <Org source="LF|GEN|0.0 FACTORY|0|0">
-          <OrgUid>
+          <OrgUid region="LF">
             <txtName>FRANCE</txtName>
           </OrgUid>
           <codeType>S</codeType>
@@ -80,7 +80,7 @@ describe AIXM::Feature::Organisation do
       AIXM.ofmx!
       AIXM.config.mid = true
       AIXM.config.region = 'LF'
-      _(subject.to_xml).must_match /<OrgUid mid="b5fef8e2-ea45-7326-6b2f-38cb45cd21a8">/
+      _(subject.to_xml).must_match /<OrgUid [^>]*? mid="971ba0a9-3714-12d5-d139-d26d5f1d6f25"/x
     end
   end
 end

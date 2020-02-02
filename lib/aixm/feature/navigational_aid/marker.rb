@@ -11,6 +11,7 @@ module AIXM
       # ===Cheat Sheet in Pseudo Code:
       #   marker = AIXM.marker(
       #     source: String or nil
+      #     region: String or nil
       #     organisation: AIXM.organisation
       #     id: String
       #     name: String
@@ -24,7 +25,7 @@ module AIXM
       # @note Marker are not fully implemented because they usually have to be
       #   associated with an ILS which are not implemented as of now.
       #
-      # @see https://github.com/openflightmaps/ofmx/wiki/Navigational-aid#mkr-marker-beacon
+      # @see https://gitlab.com/openflightmaps/ofmx/wikis/Navigational-aid#mkr-marker-beacon
       class Marker < NavigationalAid
         public_class_method :new
 
@@ -54,7 +55,7 @@ module AIXM
         def to_uid
           builder = Builder::XmlMarkup.new(indent: 2)
           insert_mid(
-            builder.MkrUid do |mkr_uid|
+            builder.MkrUid({ region: (region if AIXM.ofmx?) }.compact) do |mkr_uid|
               mkr_uid.codeId(id)
               mkr_uid.geoLat(xy.lat(AIXM.schema))
               mkr_uid.geoLong(xy.long(AIXM.schema))

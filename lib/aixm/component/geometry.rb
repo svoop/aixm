@@ -25,7 +25,7 @@ module AIXM
     #   geometry = AIXM.geometry
     #   geometry.add_segment(AIXM.point(...))
     #
-    # @see https://github.com/openflightmaps/ofmx/wiki/Airspace#avx-border-vertex
+    # @see https://gitlab.com/openflightmaps/ofmx/wikis/Airspace#avx-border-vertex
     class Geometry
       include AIXM::Association
 

@@ -19,7 +19,7 @@ module AIXM
   # * +AIXM::SEC+ - characters recognized as DMS second symbols
   # * +AIXM::DMS_RE+ - regular expression to match DMS coordinate notations
   #
-  # @see https://github.com/openflightmaps/ofmx/wiki/Coordinates
+  # @see https://gitlab.com/openflightmaps/ofmx/wikis/Coordinates
   class XY
     EARTH_RADIUS = 6_371_008.8
 

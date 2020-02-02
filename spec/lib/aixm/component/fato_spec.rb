@@ -77,7 +77,7 @@ describe AIXM::Component::FATO do
       _(subject.to_xml).must_equal <<~END
         <Fto>
           <FtoUid>
-            <AhpUid>
+            <AhpUid region="LF">
               <codeId>LFNT</codeId>
             </AhpUid>
             <txtDesig>H1</txtDesig>
@@ -108,7 +108,7 @@ describe AIXM::Component::FATO do
         <Fdn>
           <FdnUid>
             <FtoUid>
-              <AhpUid>
+              <AhpUid region="LF">
                 <codeId>LFNT</codeId>
               </AhpUid>
               <txtDesig>H1</txtDesig>
@@ -123,7 +123,7 @@ describe AIXM::Component::FATO do
           <FlsUid>
             <FdnUid>
               <FtoUid>
-                <AhpUid>
+                <AhpUid region="LF">
                   <codeId>LFNT</codeId>
                 </AhpUid>
                 <txtDesig>H1</txtDesig>
@@ -148,7 +148,7 @@ describe AIXM::Component::FATO do
       _(subject.to_xml).must_equal <<~END
         <Fto>
           <FtoUid>
-            <AhpUid>
+            <AhpUid region="LF">
               <codeId>LFNT</codeId>
             </AhpUid>
             <txtDesig>H1</txtDesig>
@@ -157,7 +157,7 @@ describe AIXM::Component::FATO do
         <Fdn>
           <FdnUid>
             <FtoUid>
-              <AhpUid>
+              <AhpUid region="LF">
                 <codeId>LFNT</codeId>
               </AhpUid>
               <txtDesig>H1</txtDesig>
@@ -175,8 +175,8 @@ describe AIXM::Component::FATO do
       AIXM.ofmx!
       AIXM.config.mid = true
       AIXM.config.region = 'LF'
-      _(subject.to_xml).must_match /<FtoUid mid="9753290e-774e-2600-9b16-f7f951e06e9d">/
-      _(subject.to_xml).must_match /<FdnUid mid="ac550e74-73e2-4feb-4934-d0b4aafccfe6">/
+      _(subject.to_xml).must_match /<FtoUid [^>]*? mid="c4521dbc-7576-b1bf-4dc2-925d03d37774"/x
+      _(subject.to_xml).must_match /<FdnUid [^>]*? mid="12f7708a-bc10-97fe-89b8-e78f4e7a8a4e"/x
     end
   end
 end
@@ -218,7 +218,7 @@ describe AIXM::Component::FATO::Direction do
         <Fdn>
           <FdnUid>
             <FtoUid>
-              <AhpUid>
+              <AhpUid region="LF">
                 <codeId>LFNT</codeId>
               </AhpUid>
               <txtDesig>H1</txtDesig>
@@ -233,7 +233,7 @@ describe AIXM::Component::FATO::Direction do
           <FlsUid>
             <FdnUid>
               <FtoUid>
-                <AhpUid>
+                <AhpUid region="LF">
                   <codeId>LFNT</codeId>
                 </AhpUid>
                 <txtDesig>H1</txtDesig>
@@ -258,7 +258,7 @@ describe AIXM::Component::FATO::Direction do
       <Fdn>
         <FdnUid>
           <FtoUid>
-            <AhpUid>
+            <AhpUid region="LF">
               <codeId>LFNT</codeId>
             </AhpUid>
             <txtDesig>H1</txtDesig>

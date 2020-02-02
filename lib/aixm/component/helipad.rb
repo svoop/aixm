@@ -21,7 +21,7 @@ module AIXM
     #   helipad.status = STATUSES or nil
     #   helipad.remarks = String or nil
     #
-    # @see https://github.com/openflightmaps/ofmx/wiki/Airport#tla-helipad-tlof
+    # @see https://gitlab.com/openflightmaps/ofmx/wikis/Airport#tla-helipad-tlof
     class Helipad
       include AIXM::Association
       include AIXM::Mid

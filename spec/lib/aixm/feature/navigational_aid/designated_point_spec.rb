@@ -30,12 +30,12 @@ describe AIXM::Feature::NavigationalAid::DesignatedPoint do
       _(subject.to_xml).must_equal <<~END
         <!-- NavigationalAid: [DesignatedPoint:VFR-RP] DDD / DESIGNATED POINT NAVAID -->
         <Dpn source="LF|GEN|0.0 FACTORY|0|0">
-          <DpnUid>
+          <DpnUid region="LF">
             <codeId>DDD</codeId>
             <geoLat>47.85916667N</geoLat>
             <geoLong>007.56000000E</geoLong>
           </DpnUid>
-          <AhpUidAssoc>
+          <AhpUidAssoc region="LF">
             <codeId>LFNT</codeId>
           </AhpUidAssoc>
           <codeDatum>WGE</codeDatum>
@@ -52,12 +52,12 @@ describe AIXM::Feature::NavigationalAid::DesignatedPoint do
       _(subject.to_xml).must_equal <<~END
         <!-- NavigationalAid: [DesignatedPoint:VFR-RP] DDD -->
         <Dpn source="LF|GEN|0.0 FACTORY|0|0">
-          <DpnUid>
+          <DpnUid region="LF">
             <codeId>DDD</codeId>
             <geoLat>47.85916667N</geoLat>
             <geoLong>007.56000000E</geoLong>
           </DpnUid>
-          <AhpUidAssoc>
+          <AhpUidAssoc region="LF">
             <codeId>LFNT</codeId>
           </AhpUidAssoc>
           <codeDatum>WGE</codeDatum>
@@ -70,7 +70,7 @@ describe AIXM::Feature::NavigationalAid::DesignatedPoint do
       AIXM.ofmx!
       AIXM.config.mid = true
       AIXM.config.region = 'LF'
-      _(subject.to_xml).must_match /<DpnUid mid="b2977fe4-c591-0e72-8a5f-2e30d80f92d6">/
+      _(subject.to_xml).must_match /<DpnUid [^>]*? mid="36110542-bbfb-13e2-c819-7a0404be370a"/x
     end
 
     it "builds correct complete AIXM" do

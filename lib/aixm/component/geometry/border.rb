@@ -13,7 +13,7 @@ module AIXM
       #     name: String
       #   )
       #
-      # @see https://github.com/openflightmaps/ofmx/wiki/Airspace#frontier
+      # @see https://gitlab.com/openflightmaps/ofmx/wikis/Airspace#frontier
       class Border < Point
         include AIXM::Mid
 

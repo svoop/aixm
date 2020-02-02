@@ -68,13 +68,14 @@ describe AIXM::Component::Lighting do
       _(subject.mid).wont_be :nil?
     end
 
-    it "builds correct complete AIXM/OFMX" do
+    it "builds correct complete OFMX" do
+      AIXM.ofmx!
       _(subject.to_xml(as: :Rls)).must_equal <<~END
         <Rls>
           <RlsUid>
             <RdnUid>
               <RwyUid>
-                <AhpUid>
+                <AhpUid region="LF">
                   <codeId>LFNT</codeId>
                 </AhpUid>
                 <txtDesig>16L/34R</txtDesig>
@@ -95,7 +96,7 @@ describe AIXM::Component::Lighting do
       AIXM.ofmx!
       AIXM.config.mid = true
       AIXM.config.region = 'LF'
-      _(subject.to_xml(as: :Rls)).must_match /<RlsUid mid="e96565dc-d6b4-35ca-6e42-7c465cfbec52">/
+      _(subject.to_xml(as: :Rls)).must_match /<RlsUid [^>]*? mid="29500769-112c-2480-6e88-5dbfc4976608"/x
     end
   end
 end

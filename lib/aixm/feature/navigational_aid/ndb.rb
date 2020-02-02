@@ -10,6 +10,7 @@ module AIXM
       # ===Cheat Sheet in Pseudo Code:
       #   ndb = AIXM.ndb(
       #     source: String or nil
+      #     region: String or nil
       #     organisation: AIXM.organisation
       #     id: String
       #     name: String
@@ -21,7 +22,7 @@ module AIXM
       #   ndb.timetable = AIXM.timetable or nil
       #   ndb.remarks = String or nil
       #
-      # @see https://github.com/openflightmaps/ofmx/wiki/Navigational-aid#ndb-ndb
+      # @see https://gitlab.com/openflightmaps/ofmx/wikis/Navigational-aid#ndb-ndb
       class NDB < NavigationalAid
         public_class_method :new
 
@@ -56,7 +57,7 @@ module AIXM
         def to_uid
           builder = Builder::XmlMarkup.new(indent: 2)
           insert_mid(
-            builder.NdbUid do |ndb_uid|
+            builder.NdbUid({ region: (region if AIXM.ofmx?) }.compact) do |ndb_uid|
               ndb_uid.codeId(id)
               ndb_uid.geoLat(xy.lat(AIXM.schema))
               ndb_uid.geoLong(xy.long(AIXM.schema))

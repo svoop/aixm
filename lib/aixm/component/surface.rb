@@ -21,7 +21,7 @@ module AIXM
     # * +AIXM::PCN_RE+ - regular expression to match PCN notations
     #
     #
-    # @see https://github.com/openflightmaps/ofmx/wiki/Airport#rwy-runway
+    # @see https://gitlab.com/openflightmaps/ofmx/wikis/Airport#rwy-runway
     class Surface
       COMPOSITIONS = {
         ASPH: :asphalt,

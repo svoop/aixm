@@ -14,7 +14,7 @@ module AIXM
     #   service.remarks = String or nil
     #   service.add_frequency(AIXM.frequency)
     #
-    # @see https://github.com/openflightmaps/ofmx/wiki/Organisation#ser-service
+    # @see https://gitlab.com/openflightmaps/ofmx/wikis/Organisation#ser-service
     class Service < Feature
       include AIXM::Association
 
@@ -148,8 +148,8 @@ module AIXM
       # @return [String, nil] free text remarks
       attr_reader :remarks
 
-      def initialize(source: nil, type:)
-        super(source: source)
+      def initialize(source: nil, region: nil, type:)
+        super(source: source, region: region)
         self.type = type
       end
 

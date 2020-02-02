@@ -11,6 +11,7 @@ module AIXM
       # ===Cheat Sheet in Pseudo Code:
       #   vor = AIXM.vor(
       #     source: String or nil
+      #     region: String or nil
       #     organisation: AIXM.organisation
       #     id: String
       #     name: String
@@ -25,7 +26,7 @@ module AIXM
       #   vor.associate_dme(channel: String)     # turns the VOR into a VOR/DME
       #   vor.associate_tacan(channel: String)   # turns the VOR into a VORTAC
       #
-      # @see https://github.com/openflightmaps/ofmx/wiki/Navigational-aid#vor-vor
+      # @see https://gitlab.com/openflightmaps/ofmx/wikis/Navigational-aid#vor-vor
       class VOR < NavigationalAid
         public_class_method :new
 
@@ -83,13 +84,13 @@ module AIXM
 
         # Associate a DME which turns the VOR into a VOR/DME
         def associate_dme(channel:)
-          self.dme = AIXM.dme(organisation: organisation, id: id, name: name, xy: xy, z: z, channel: channel)
+          self.dme = AIXM.dme(region: region, organisation: organisation, id: id, name: name, xy: xy, z: z, channel: channel)
           dme.timetable, @dme.remarks = timetable, remarks
         end
 
         # Associate a TACAN which turns the VOR into a VORTAC
         def associate_tacan(channel:)
-          self.tacan = AIXM.tacan(organisation: organisation, id: id, name: name, xy: xy, z: z, channel: channel)
+          self.tacan = AIXM.tacan(region: region, organisation: organisation, id: id, name: name, xy: xy, z: z, channel: channel)
           tacan.timetable, @tacan.remarks = timetable, remarks
         end
 
@@ -97,7 +98,7 @@ module AIXM
         def to_uid
           builder = Builder::XmlMarkup.new(indent: 2)
           insert_mid(
-            builder.VorUid do |vor_uid|
+            builder.VorUid({ region: (region if AIXM.ofmx?) }.compact) do |vor_uid|
               vor_uid.codeId(id)
               vor_uid.geoLat(xy.lat(AIXM.schema))
               vor_uid.geoLong(xy.long(AIXM.schema))

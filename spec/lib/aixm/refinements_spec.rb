@@ -277,16 +277,16 @@ describe AIXM::Refinements do
       subject do
         <<~END
           <?xml version="1.0" encoding="utf-8"?>
-          <OFMX-Snapshot region="LF">
-            <Ser active="true" type="essential">
+          <OFMX-Snapshot>
+            <Ser source="LF|AD|AD-2|2019-10-10|2047" type="essential" active="true">
               <SerUid>
-                <UniUid>
+                <UniUid region="LF">
                   <txtName>STRASBOURG APP</txtName>
                 </UniUid>
                 <codeType version="1" subversion="2">APP</codeType>
                 <noSeq>1</noSeq>
               </SerUid>
-              <Stt priority="1">
+              <Stt priority="1" mid="83126b8d-f9a0-bbc8-5248-17a10f68c2a4">
                 <codeWorkHr>H24</codeWorkHr>
               </Stt>
               <Stt priority="2">
@@ -299,36 +299,33 @@ describe AIXM::Refinements do
       end
 
       describe :payload_hash do
-        it "must calculate and return the hash" do
-          _(subject.payload_hash(region: 'LF', element: 'Ser')).must_equal "269b1f18-cabe-3c9e-1d71-48a7414a4cb9"
-        end
 
-        it "must upcase the region" do
-          _(subject.payload_hash(region: 'lf', element: 'Ser')).must_equal "269b1f18-cabe-3c9e-1d71-48a7414a4cb9"
+        it "must calculate and return the hash" do
+          _(subject.payload_hash(element: 'Ser')).must_equal "42512568-a5e8-26a9-a330-c1c242135af5"
         end
 
         it "must ignore name extensions of named associations" do
           named_subject = subject.gsub(/<(.?)SerUid/, '<\1SerUidWithName')
-          _(named_subject.payload_hash(region: 'LF', element: 'SerUidWithName')).must_equal subject.payload_hash(region: 'LF', element: 'SerUid')
+          _(named_subject.payload_hash(element: 'SerUidWithName')).must_equal subject.payload_hash(element: 'SerUid')
         end
 
         it "must ignore mid attributes" do
           subject_with_mid = subject.sub(/(active="true")/, 'mid="123" \1')
-          _(subject_with_mid.payload_hash(region: 'LF', element: 'Ser')).must_equal "269b1f18-cabe-3c9e-1d71-48a7414a4cb9"
+          _(subject_with_mid.payload_hash(element: 'Ser')).must_equal "42512568-a5e8-26a9-a330-c1c242135af5"
         end
 
         it "must ignore source attributes" do
           subject_with_source = subject.sub(/(active="true")/, 'source="123" \1')
-          _(subject_with_source.payload_hash(region: 'LF', element: 'Ser')).must_equal "269b1f18-cabe-3c9e-1d71-48a7414a4cb9"
+          _(subject_with_source.payload_hash(element: 'Ser')).must_equal "42512568-a5e8-26a9-a330-c1c242135af5"
         end
 
         it "must order the element arguments alphabetically" do
           subject_with_swap = subject.sub(/(active="true") (type="essential")/, '\2 \1')
-          _(subject_with_swap.payload_hash(region: 'LF', element: 'Ser')).must_equal "269b1f18-cabe-3c9e-1d71-48a7414a4cb9"
+          _(subject_with_swap.payload_hash(element: 'Ser')).must_equal "42512568-a5e8-26a9-a330-c1c242135af5"
         end
 
         it "must use the first non-declaration element in string by default" do
-          _(subject.payload_hash(region: 'LF')).must_equal "fddbfb76-4868-0cd7-2afe-9f43e91867fb"
+          _(subject.payload_hash).must_equal "f412a3e8-7511-3655-de50-34e6aed42b49"
         end
       end
     end

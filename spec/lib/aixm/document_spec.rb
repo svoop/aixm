@@ -19,21 +19,6 @@ describe AIXM::Document do
     end
   end
 
-  describe :region= do
-    it "fails on invalid values" do
-      _(['x', 'foobar', :foobar]).wont_be_written_to subject, :region
-    end
-
-    it "upcases valid values" do
-      _(subject.tap { |s| s.region = 'lf' }.region).must_equal 'LF'
-    end
-
-    it "sets the region config as well" do
-      subject.region = 'XY'
-      _(AIXM.config.region).must_equal 'XY'
-    end
-  end
-
   describe :created_at= do
     it "fails on invalid values" do
       _(['foobar', '2018-01-77']).wont_be_written_to subject, :created_at
@@ -962,10 +947,10 @@ describe AIXM::Document do
     it "builds correct OFMX" do
       _(subject.to_xml).must_equal <<~"END"
         <?xml version="1.0" encoding="UTF-8"?>
-        <OFMX-Snapshot xmlns:xsi="http://schema.openflightmaps.org/0/OFMX-Snapshot.xsd" version="0" origin="rubygem aixm-#{AIXM::VERSION}" region="LF" namespace="00000000-0000-0000-0000-000000000000" created="2018-01-01T12:00:00+01:00" effective="2018-01-01T12:00:00+01:00">
+        <OFMX-Snapshot xmlns:xsi="http://schema.openflightmaps.org/0/OFMX-Snapshot.xsd" version="0" origin="rubygem aixm-#{AIXM::VERSION}" namespace="00000000-0000-0000-0000-000000000000" created="2018-01-01T12:00:00+01:00" effective="2018-01-01T12:00:00+01:00">
           <!-- Organisation: FRANCE -->
           <Org source="LF|GEN|0.0 FACTORY|0|0">
-            <OrgUid>
+            <OrgUid region="LF">
               <txtName>FRANCE</txtName>
             </OrgUid>
             <codeId>LF</codeId>
@@ -974,14 +959,14 @@ describe AIXM::Document do
           </Org>
           <!-- Unit: PUJAUT TWR -->
           <Uni source="LF|GEN|0.0 FACTORY|0|0">
-            <UniUid>
+            <UniUid region="LF">
               <txtName>PUJAUT</txtName>
               <codeType>TWR</codeType>
             </UniUid>
-            <OrgUid>
+            <OrgUid region="LF">
               <txtName>FRANCE</txtName>
             </OrgUid>
-            <AhpUid>
+            <AhpUid region="LF">
               <codeId>LFNT</codeId>
             </AhpUid>
             <codeClass>ICAO</codeClass>
@@ -990,7 +975,7 @@ describe AIXM::Document do
           <!-- Service: APP by PUJAUT TWR -->
           <Ser source="LF|GEN|0.0 FACTORY|0|0">
             <SerUid>
-              <UniUid>
+              <UniUid region="LF">
                 <txtName>PUJAUT</txtName>
                 <codeType>TWR</codeType>
               </UniUid>
@@ -1005,7 +990,7 @@ describe AIXM::Document do
           <Fqy>
             <FqyUid>
               <SerUid>
-                <UniUid>
+                <UniUid region="LF">
                   <txtName>PUJAUT</txtName>
                   <codeType>TWR</codeType>
                 </UniUid>
@@ -1031,10 +1016,10 @@ describe AIXM::Document do
           </Fqy>
           <!-- Airport: LFNT AVIGNON-PUJAUT -->
           <Ahp source="LF|GEN|0.0 FACTORY|0|0">
-            <AhpUid>
+            <AhpUid region="LF">
               <codeId>LFNT</codeId>
             </AhpUid>
-            <OrgUid>
+            <OrgUid region="LF">
               <txtName>FRANCE</txtName>
             </OrgUid>
             <txtName>AVIGNON-PUJAUT</txtName>
@@ -1054,7 +1039,7 @@ describe AIXM::Document do
           </Ahp>
           <Rwy>
             <RwyUid>
-              <AhpUid>
+              <AhpUid region="LF">
                 <codeId>LFNT</codeId>
               </AhpUid>
               <txtDesig>16L/34R</txtDesig>
@@ -1083,7 +1068,7 @@ describe AIXM::Document do
           <Rdn>
             <RdnUid>
               <RwyUid>
-                <AhpUid>
+                <AhpUid region="LF">
                   <codeId>LFNT</codeId>
                 </AhpUid>
                 <txtDesig>16L/34R</txtDesig>
@@ -1103,7 +1088,7 @@ describe AIXM::Document do
             <RddUid>
               <RdnUid>
                 <RwyUid>
-                  <AhpUid>
+                  <AhpUid region="LF">
                     <codeId>LFNT</codeId>
                   </AhpUid>
                   <txtDesig>16L/34R</txtDesig>
@@ -1121,7 +1106,7 @@ describe AIXM::Document do
             <RlsUid>
               <RdnUid>
                 <RwyUid>
-                  <AhpUid>
+                  <AhpUid region="LF">
                     <codeId>LFNT</codeId>
                   </AhpUid>
                   <txtDesig>16L/34R</txtDesig>
@@ -1138,7 +1123,7 @@ describe AIXM::Document do
           <Rdn>
             <RdnUid>
               <RwyUid>
-                <AhpUid>
+                <AhpUid region="LF">
                   <codeId>LFNT</codeId>
                 </AhpUid>
                 <txtDesig>16L/34R</txtDesig>
@@ -1158,7 +1143,7 @@ describe AIXM::Document do
             <RddUid>
               <RdnUid>
                 <RwyUid>
-                  <AhpUid>
+                  <AhpUid region="LF">
                     <codeId>LFNT</codeId>
                   </AhpUid>
                   <txtDesig>16L/34R</txtDesig>
@@ -1176,7 +1161,7 @@ describe AIXM::Document do
             <RlsUid>
               <RdnUid>
                 <RwyUid>
-                  <AhpUid>
+                  <AhpUid region="LF">
                     <codeId>LFNT</codeId>
                   </AhpUid>
                   <txtDesig>16L/34R</txtDesig>
@@ -1192,7 +1177,7 @@ describe AIXM::Document do
           </Rls>
           <Fto>
             <FtoUid>
-              <AhpUid>
+              <AhpUid region="LF">
                 <codeId>LFNT</codeId>
               </AhpUid>
               <txtDesig>H1</txtDesig>
@@ -1223,7 +1208,7 @@ describe AIXM::Document do
           <Fdn>
             <FdnUid>
               <FtoUid>
-                <AhpUid>
+                <AhpUid region="LF">
                   <codeId>LFNT</codeId>
                 </AhpUid>
                 <txtDesig>H1</txtDesig>
@@ -1238,7 +1223,7 @@ describe AIXM::Document do
             <FlsUid>
               <FdnUid>
                 <FtoUid>
-                  <AhpUid>
+                  <AhpUid region="LF">
                     <codeId>LFNT</codeId>
                   </AhpUid>
                   <txtDesig>H1</txtDesig>
@@ -1254,13 +1239,13 @@ describe AIXM::Document do
           </Fls>
           <Tla>
             <TlaUid>
-              <AhpUid>
+              <AhpUid region="LF">
                 <codeId>LFNT</codeId>
               </AhpUid>
               <txtDesig>H1</txtDesig>
             </TlaUid>
             <FtoUid>
-              <AhpUid>
+              <AhpUid region="LF">
                 <codeId>LFNT</codeId>
               </AhpUid>
               <txtDesig>H1</txtDesig>
@@ -1296,7 +1281,7 @@ describe AIXM::Document do
           <Tls>
             <TlsUid>
               <TlaUid>
-                <AhpUid>
+                <AhpUid region="LF">
                   <codeId>LFNT</codeId>
                 </AhpUid>
                 <txtDesig>H1</txtDesig>
@@ -1310,7 +1295,7 @@ describe AIXM::Document do
           </Tls>
           <Ahu>
             <AhuUid>
-              <AhpUid>
+              <AhpUid region="LF">
                 <codeId>LFNT</codeId>
               </AhpUid>
             </AhuUid>
@@ -1338,7 +1323,7 @@ describe AIXM::Document do
           <!-- Address: RADIO for LFNT -->
           <Aha source="LF|GEN|0.0 FACTORY|0|0">
             <AhaUid>
-              <AhpUid>
+              <AhpUid region="LF">
                 <codeId>LFNT</codeId>
               </AhpUid>
               <codeType>RADIO</codeType>
@@ -1349,7 +1334,7 @@ describe AIXM::Document do
           </Aha>
           <!-- Airspace: [D] POLYGON AIRSPACE -->
           <Ase source="LF|GEN|0.0 FACTORY|0|0">
-            <AseUid>
+            <AseUid region="LF">
               <codeType>D</codeType>
               <codeId>PA</codeId>
             </AseUid>
@@ -1378,7 +1363,7 @@ describe AIXM::Document do
           </Ase>
           <Abd>
             <AbdUid>
-              <AseUid>
+              <AseUid region="LF">
                 <codeType>D</codeType>
                 <codeId>PA</codeId>
               </AseUid>
@@ -1409,7 +1394,7 @@ describe AIXM::Document do
           </Abd>
           <!-- Airspace: [D] CIRCLE AIRSPACE -->
           <Ase source="LF|GEN|0.0 FACTORY|0|0">
-            <AseUid>
+            <AseUid region="LF">
               <codeType>D</codeType>
               <codeId>CA</codeId>
             </AseUid>
@@ -1438,7 +1423,7 @@ describe AIXM::Document do
           </Ase>
           <Abd>
             <AbdUid>
-              <AseUid>
+              <AseUid region="LF">
                 <codeType>D</codeType>
                 <codeId>CA</codeId>
               </AseUid>
@@ -1454,12 +1439,12 @@ describe AIXM::Document do
           </Abd>
           <!-- NavigationalAid: [DesignatedPoint:VFR-RP] DDD / DESIGNATED POINT NAVAID -->
           <Dpn source="LF|GEN|0.0 FACTORY|0|0">
-            <DpnUid>
+            <DpnUid region="LF">
               <codeId>DDD</codeId>
               <geoLat>47.85916667N</geoLat>
               <geoLong>007.56000000E</geoLong>
             </DpnUid>
-            <AhpUidAssoc>
+            <AhpUidAssoc region="LF">
               <codeId>LFNT</codeId>
             </AhpUidAssoc>
             <codeDatum>WGE</codeDatum>
@@ -1469,12 +1454,12 @@ describe AIXM::Document do
           </Dpn>
           <!-- NavigationalAid: [DME] MMM / DME NAVAID -->
           <Dme source="LF|GEN|0.0 FACTORY|0|0">
-            <DmeUid>
+            <DmeUid region="LF">
               <codeId>MMM</codeId>
               <geoLat>47.85916667N</geoLat>
               <geoLong>007.56000000E</geoLong>
             </DmeUid>
-            <OrgUid>
+            <OrgUid region="LF">
               <txtName>FRANCE</txtName>
             </OrgUid>
             <txtName>DME NAVAID</txtName>
@@ -1491,12 +1476,12 @@ describe AIXM::Document do
           </Dme>
           <!-- NavigationalAid: [Marker:O] --- / MARKER NAVAID -->
           <Mkr source="LF|GEN|0.0 FACTORY|0|0">
-            <MkrUid>
+            <MkrUid region="LF">
               <codeId>---</codeId>
               <geoLat>47.85916667N</geoLat>
               <geoLong>007.56000000E</geoLong>
             </MkrUid>
-            <OrgUid>
+            <OrgUid region="LF">
               <txtName>FRANCE</txtName>
             </OrgUid>
             <codePsnIls>O</codePsnIls>
@@ -1513,12 +1498,12 @@ describe AIXM::Document do
           </Mkr>
           <!-- NavigationalAid: [NDB:B] NNN / NDB NAVAID -->
           <Ndb source="LF|GEN|0.0 FACTORY|0|0">
-            <NdbUid>
+            <NdbUid region="LF">
               <codeId>NNN</codeId>
               <geoLat>47.85916667N</geoLat>
               <geoLong>007.56000000E</geoLong>
             </NdbUid>
-            <OrgUid>
+            <OrgUid region="LF">
               <txtName>FRANCE</txtName>
             </OrgUid>
             <txtName>NDB NAVAID</txtName>
@@ -1535,12 +1520,12 @@ describe AIXM::Document do
           </Ndb>
           <!-- NavigationalAid: [TACAN] TTT / TACAN NAVAID -->
           <Tcn source="LF|GEN|0.0 FACTORY|0|0">
-            <TcnUid>
+            <TcnUid region="LF">
               <codeId>TTT</codeId>
               <geoLat>47.85916667N</geoLat>
               <geoLong>007.56000000E</geoLong>
             </TcnUid>
-            <OrgUid>
+            <OrgUid region="LF">
               <txtName>FRANCE</txtName>
             </OrgUid>
             <txtName>TACAN NAVAID</txtName>
@@ -1557,12 +1542,12 @@ describe AIXM::Document do
           </Tcn>
           <!-- NavigationalAid: [VOR:VOR] VVV / VOR NAVAID -->
           <Vor source="LF|GEN|0.0 FACTORY|0|0">
-            <VorUid>
+            <VorUid region="LF">
               <codeId>VVV</codeId>
               <geoLat>47.85916667N</geoLat>
               <geoLong>007.56000000E</geoLong>
             </VorUid>
-            <OrgUid>
+            <OrgUid region="LF">
               <txtName>FRANCE</txtName>
             </OrgUid>
             <txtName>VOR NAVAID</txtName>
@@ -1580,12 +1565,12 @@ describe AIXM::Document do
           </Vor>
           <!-- NavigationalAid: [VOR:VOR] VDD / VOR/DME NAVAID -->
           <Vor source="LF|GEN|0.0 FACTORY|0|0">
-            <VorUid>
+            <VorUid region="LF">
               <codeId>VDD</codeId>
               <geoLat>47.85916667N</geoLat>
               <geoLong>007.56000000E</geoLong>
             </VorUid>
-            <OrgUid>
+            <OrgUid region="LF">
               <txtName>FRANCE</txtName>
             </OrgUid>
             <txtName>VOR/DME NAVAID</txtName>
@@ -1603,15 +1588,15 @@ describe AIXM::Document do
           </Vor>
           <!-- NavigationalAid: [DME] VDD / VOR/DME NAVAID -->
           <Dme>
-            <DmeUid>
+            <DmeUid region="LF">
               <codeId>VDD</codeId>
               <geoLat>47.85916667N</geoLat>
               <geoLong>007.56000000E</geoLong>
             </DmeUid>
-            <OrgUid>
+            <OrgUid region="LF">
               <txtName>FRANCE</txtName>
             </OrgUid>
-            <VorUid>
+            <VorUid region="LF">
               <codeId>VDD</codeId>
               <geoLat>47.85916667N</geoLat>
               <geoLong>007.56000000E</geoLong>
@@ -1628,12 +1613,12 @@ describe AIXM::Document do
           </Dme>
           <!-- NavigationalAid: [VOR:VOR] VTT / VORTAC NAVAID -->
           <Vor source="LF|GEN|0.0 FACTORY|0|0">
-            <VorUid>
+            <VorUid region="LF">
               <codeId>VTT</codeId>
               <geoLat>47.85916667N</geoLat>
               <geoLong>007.56000000E</geoLong>
             </VorUid>
-            <OrgUid>
+            <OrgUid region="LF">
               <txtName>FRANCE</txtName>
             </OrgUid>
             <txtName>VORTAC NAVAID</txtName>
@@ -1651,15 +1636,15 @@ describe AIXM::Document do
           </Vor>
           <!-- NavigationalAid: [TACAN] VTT / VORTAC NAVAID -->
           <Tcn>
-            <TcnUid>
+            <TcnUid region="LF">
               <codeId>VTT</codeId>
               <geoLat>47.85916667N</geoLat>
               <geoLong>007.56000000E</geoLong>
             </TcnUid>
-            <OrgUid>
+            <OrgUid region="LF">
               <txtName>FRANCE</txtName>
             </OrgUid>
-            <VorUid>
+            <VorUid region="LF">
               <codeId>VTT</codeId>
               <geoLat>47.85916667N</geoLat>
               <geoLong>007.56000000E</geoLong>
@@ -1676,7 +1661,7 @@ describe AIXM::Document do
           </Tcn>
           <!-- Obstacle group: EIFFEL TOWER -->
           <Ogr>
-            <OgrUid>
+            <OgrUid region="LF">
               <txtName>EIFFEL TOWER</txtName>
               <geoLat>48.85825000N</geoLat>
               <geoLong>002.29458889E</geoLong>
@@ -1690,7 +1675,7 @@ describe AIXM::Document do
           <!-- Obstacle: [tower] 48.85825000N 002.29458889E EIFFEL TOWER -->
           <Obs>
             <ObsUid>
-              <OgrUid>
+              <OgrUid region="LF">
                 <txtName>EIFFEL TOWER</txtName>
                 <geoLat>48.85825000N</geoLat>
                 <geoLong>002.29458889E</geoLong>
@@ -1716,7 +1701,7 @@ describe AIXM::Document do
           </Obs>
           <!-- Obstacle group: MIRMANDE EOLIENNES -->
           <Ogr>
-            <OgrUid>
+            <OgrUid region="LF">
               <txtName>MIRMANDE EOLIENNES</txtName>
               <geoLat>44.67501389N</geoLat>
               <geoLong>004.87256667E</geoLong>
@@ -1731,7 +1716,7 @@ describe AIXM::Document do
           <!-- Obstacle: [wind_turbine] 44.67501389N 004.87256667E LA TEISSONIERE 1 -->
           <Obs>
             <ObsUid>
-              <OgrUid>
+              <OgrUid region="LF">
                 <txtName>MIRMANDE EOLIENNES</txtName>
                 <geoLat>44.67501389N</geoLat>
                 <geoLong>004.87256667E</geoLong>
@@ -1755,7 +1740,7 @@ describe AIXM::Document do
           <!-- Obstacle: [wind_turbine] 44.67946667N 004.87381111E LA TEISSONIERE 2 -->
           <Obs>
             <ObsUid>
-              <OgrUid>
+              <OgrUid region="LF">
                 <txtName>MIRMANDE EOLIENNES</txtName>
                 <geoLat>44.67501389N</geoLat>
                 <geoLong>004.87256667E</geoLong>
@@ -1778,7 +1763,7 @@ describe AIXM::Document do
           </Obs>
           <!-- Obstacle group: DROITWICH LONGWAVE ANTENNA -->
           <Ogr>
-            <OgrUid>
+            <OgrUid region="EG">
               <txtName>DROITWICH LONGWAVE ANTENNA</txtName>
               <geoLat>52.29639722N</geoLat>
               <geoLong>002.10675278W</geoLong>
@@ -1793,7 +1778,7 @@ describe AIXM::Document do
           <!-- Obstacle: [mast] 52.29639722N 002.10675278W DROITWICH LW NORTH -->
           <Obs>
             <ObsUid>
-              <OgrUid>
+              <OgrUid region="EG">
                 <txtName>DROITWICH LONGWAVE ANTENNA</txtName>
                 <geoLat>52.29639722N</geoLat>
                 <geoLong>002.10675278W</geoLong>
@@ -1817,7 +1802,7 @@ describe AIXM::Document do
           <!-- Obstacle: [mast] 52.29457778N 002.10568611W DROITWICH LW NORTH -->
           <Obs>
             <ObsUid>
-              <OgrUid>
+              <OgrUid region="EG">
                 <txtName>DROITWICH LONGWAVE ANTENNA</txtName>
                 <geoLat>52.29639722N</geoLat>
                 <geoLong>002.10675278W</geoLong>
@@ -1838,7 +1823,7 @@ describe AIXM::Document do
             <valRadius>200</valRadius>
             <uomRadius>M</uomRadius>
             <ObsUidLink>
-              <OgrUid>
+              <OgrUid region="EG">
                 <txtName>DROITWICH LONGWAVE ANTENNA</txtName>
                 <geoLat>52.29639722N</geoLat>
                 <geoLong>002.10675278W</geoLong>

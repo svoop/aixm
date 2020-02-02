@@ -11,7 +11,7 @@ module AIXM
       #     xy: AIXM.xy
       #   )
       #
-      # @see https://github.com/openflightmaps/ofmx/wiki/Airspace#point
+      # @see https://gitlab.com/openflightmaps/ofmx/wikis/Airspace#point
       class Point
         include AIXM::Association
 

@@ -7,6 +7,7 @@
 
 ### Breaking Changes
 * Require Ruby 2.7
+* Moved `region` attribute from `Document` back to features again
 * Use `Document#add_feature` instead of `Document@features#<<`
 * Use `Document@features#find` instead of `Document#select_features`
 * Use `Airspace#add_layer` instead of `Airspace@layers#<<`
@@ -114,7 +115,7 @@
 #### Breaking Changes
 * Renamed `Airport#code` to `Airport#id`
 * Renamed `Airspace#short_name` to `Airspace#local_type`
-* Moved `region` attribute from features to Document
+* Moved `region` attribute from features to `Document`
 
 #### Changes
 * Be more permissive on `Airport#id` in order to accomodate generated codes

@@ -24,7 +24,7 @@ module AIXM
     def insert_mid(uid, set_attribute: true)
       region = AIXM.config.region || 'XX'
       warn "incompliant mid due to undefined region" if AIXM.ofmx? && region == 'XX'
-      mid = uid.payload_hash(region: region)
+      mid = uid.payload_hash
       @mid = mid if set_attribute
       AIXM.ofmx? && AIXM.config.mid ? uid.sub(/>/, %Q( mid="#{mid}">)) : uid
     end

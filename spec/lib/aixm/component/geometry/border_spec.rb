@@ -35,7 +35,7 @@ describe AIXM::Component::Geometry::Border do
       AIXM.ofmx!
       AIXM.config.mid = true
       AIXM.config.region = 'LF'
-      _(subject.to_xml).must_match /<GbrUid mid="6be76b9b-567e-50f1-5c98-80a76163eebe">/
+      _(subject.to_xml).must_match /<GbrUid [^>]*? mid="a76b9f6c-785f-ea2e-5671-bbf219697043"/x
     end
   end
 end

@@ -12,6 +12,7 @@ module AIXM
       # ===Cheat Sheet in Pseudo Code:
       #   dme = AIXM.dme(
       #     source: String or nil
+      #     region: String or nil
       #     organisation: AIXM.organisation
       #     id: String
       #     name: String
@@ -22,7 +23,7 @@ module AIXM
       #   dme.timetable = AIXM.timetable or nil
       #   dme.remarks = String or nil
       #
-      # @see https://github.com/openflightmaps/ofmx/wiki/Navigational-aid#dme-dme
+      # @see https://gitlab.com/openflightmaps/ofmx/wikis/Navigational-aid#dme-dme
       class DME < NavigationalAid
         public_class_method :new
 
@@ -65,7 +66,7 @@ module AIXM
         def to_uid
           builder = Builder::XmlMarkup.new(indent: 2)
           insert_mid(
-            builder.DmeUid do |dme_uid|
+            builder.DmeUid({ region: (region if AIXM.ofmx?) }.compact) do |dme_uid|
               dme_uid.codeId(id)
               dme_uid.geoLat(xy.lat(AIXM.schema))
               dme_uid.geoLong(xy.long(AIXM.schema))

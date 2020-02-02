@@ -42,12 +42,12 @@ describe AIXM::Feature::NavigationalAid::DME do
       _(subject.to_xml).must_equal <<~END
         <!-- NavigationalAid: [DME] MMM / DME NAVAID -->
         <Dme source="LF|GEN|0.0 FACTORY|0|0">
-          <DmeUid>
+          <DmeUid region="LF">
             <codeId>MMM</codeId>
             <geoLat>47.85916667N</geoLat>
             <geoLong>007.56000000E</geoLong>
           </DmeUid>
-          <OrgUid>
+          <OrgUid region="LF">
             <txtName>FRANCE</txtName>
           </OrgUid>
           <txtName>DME NAVAID</txtName>
@@ -71,12 +71,12 @@ describe AIXM::Feature::NavigationalAid::DME do
       _(subject.to_xml).must_equal <<~END
         <!-- NavigationalAid: [DME] MMM -->
         <Dme source="LF|GEN|0.0 FACTORY|0|0">
-          <DmeUid>
+          <DmeUid region="LF">
             <codeId>MMM</codeId>
             <geoLat>47.85916667N</geoLat>
             <geoLong>007.56000000E</geoLong>
           </DmeUid>
-          <OrgUid>
+          <OrgUid region="LF">
             <txtName>FRANCE</txtName>
           </OrgUid>
           <codeChannel>95X</codeChannel>
@@ -91,7 +91,7 @@ describe AIXM::Feature::NavigationalAid::DME do
       AIXM.ofmx!
       AIXM.config.mid = true
       AIXM.config.region = 'LF'
-      _(subject.to_xml).must_match /<DmeUid mid="b3ecd57d-529d-4941-97b8-af5ffa089051">/
+      _(subject.to_xml).must_match /<DmeUid [^>]*? mid="cf8f4479-1b24-a9fb-59f5-95acd7de2012"/x
     end
   end
 end

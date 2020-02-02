@@ -9,6 +9,7 @@ module AIXM
     # ===Cheat Sheet in Pseudo Code:
     #   unit = AIXM.unit(
     #     source: String or nil
+    #     region: String or nil
     #     organisation: AIXM.organisation
     #     name: String
     #     type: TYPES
@@ -18,7 +19,7 @@ module AIXM
     #   unit.remarks = String or nil
     #   unit.add_service(AIXM.service)
     #
-    # @see https://github.com/openflightmaps/ofmx/wiki/Organisation#uni-unit
+    # @see https://gitlab.com/openflightmaps/ofmx/wikis/Organisation#uni-unit
     class Unit < Feature
       include AIXM::Association
 
@@ -101,8 +102,8 @@ module AIXM
       # @return [String, nil] free text remarks
       attr_reader :remarks
 
-      def initialize(source: nil, organisation:, name:, type:, class:)
-        super(source: source)
+      def initialize(source: nil, region: nil, organisation:, name:, type:, class:)
+        super(source: source, region: region)
         self.organisation, self.name, self.type = organisation, name, type
         self.class = binding.local_variable_get(:class)
       end
@@ -140,7 +141,7 @@ module AIXM
       def to_uid
         builder = Builder::XmlMarkup.new(indent: 2)
         insert_mid(
-          builder.UniUid do |uni_uid|
+          builder.UniUid({ region: (region if AIXM.ofmx?) }.compact) do |uni_uid|
             uni_uid.txtName(name)
             uni_uid.codeType(TYPES.key(type).to_s) if AIXM.ofmx?
           end

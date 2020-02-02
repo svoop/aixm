@@ -17,7 +17,7 @@ module AIXM
     #   layer.selective = true or false (default)
     #   layer.remarks = String or nil
     #
-    # @see https://github.com/openflightmaps/ofmx/wiki/Airspace
+    # @see https://gitlab.com/openflightmaps/ofmx/wikis/Airspace
     class Layer
       include AIXM::Association
 

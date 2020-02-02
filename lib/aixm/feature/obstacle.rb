@@ -9,6 +9,7 @@ module AIXM
     # ===Cheat Sheet in Pseudo Code:
     #   obstacle = AIXM.obstacle(
     #     source: String or nil
+    #     region: String or nil
     #     name: String or nil
     #     type: TYPES
     #     xy: AIXM.xy
@@ -36,7 +37,7 @@ module AIXM
     # +xy_accuracy+ and +z_accuracy+ of the obstacle group overwrite whatever
     # is set on the individual obstacles!
     #
-    # @see https://github.com/openflightmaps/ofmx/wiki/Obstacle
+    # @see https://gitlab.com/openflightmaps/ofmx/wikis/Obstacle
     class Obstacle < Feature
       include AIXM::Association
 
@@ -120,8 +121,8 @@ module AIXM
       # @return [Symbol, nil] type of physical link between this and another obstacle
       attr_reader :link_type
 
-      def initialize(source: nil, name: nil, type:, xy:, z:, radius:)
-        super(source: source)
+      def initialize(source: nil, region: nil, name: nil, type:, xy:, z:, radius:)
+        super(source: source, region: region)
         self.name, self.type, self.xy, self.z, self.radius = name, type, xy, z, radius
         @lighting = @marking = @height_accurate = false
       end
@@ -297,7 +298,7 @@ module AIXM
       # OFMX requires single, ungrouped obstacles to be the only member of a
       # singleton obstacle group.
       def singleton_obstacle_group
-        AIXM.obstacle_group.add_obstacle self
+        AIXM.obstacle_group(region: region).add_obstacle self
       end
 
     end

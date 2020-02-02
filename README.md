@@ -88,9 +88,20 @@ AIXM.schema             # => :ofmx
 AIXM.schema(:version)   # => 0
 ```
 
+### AIXM.config.region
+
+The `:ofmx` schema requires the [region to be set on all core features](https://gitlab.com/openflightmaps/ofmx/wikis/Features#core-features). You can do so on individual features, however, you might want to configure a default region to simplify your life:
+
+```ruby
+AIXM.ofmx!
+AIXM.region = 'LF'
+```
+
+:warning: This setting has no effect when using the `:aixm` schema.
+
 ### AIXM.config.mid
 
-In order to insert [OFMX-compliant `mid` attributes](https://gitlab.com/openflightmaps/ofmx/wikis/Features#mid) into all `*Uid` elements, you have to chose the OFMX schema and set the mid configuration option to `true`.
+In order to insert [OFMX-compliant `mid` attributes](https://gitlab.com/openflightmaps/ofmx/wikis/Features#mid) into all `*Uid` elements, you have set the mid configuration option to `true`.
 
 ```ruby
 AIXM.ofmx!
@@ -98,18 +109,7 @@ AIXM.config.mid          # => false - don't insert mid attributes by default
 AIXM.config.mid = true   # => true  - insert mid attributes
 ```
 
-:warning: The region is part of the algorithm to calculate `mid` values. It's therefore important to set it either on the document or (if you work with individual features) using region config. You'll get a lot of warnings if you forget to do so:
-
-```ruby
-# Set the region on the document
-document = AIXM.document(
-  region: 'LF',
-  ...
-)
-
-# Set the region using the region config
-AIXM.config.region = 'LF'
-```
+:warning: This setting has no effect when using the `:aixm` schema.
 
 ### AIXM.config.ignored_errors
 

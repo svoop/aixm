@@ -124,6 +124,7 @@ module AIXM
       def polygon_airspace
         AIXM.airspace(
           source: 'LF|GEN|0.0 FACTORY|0|0',
+          region: 'LF',
           id: 'PA',
           type: :danger_area,
           local_type: 'POLYGON',
@@ -137,6 +138,7 @@ module AIXM
       def circle_airspace
         AIXM.airspace(
           source: 'LF|GEN|0.0 FACTORY|0|0',
+          region: 'LF',
           id: 'CA',
           type: :danger_area,
           local_type: 'CIRCLE',
@@ -152,6 +154,7 @@ module AIXM
       def designated_point
         AIXM.designated_point(
           source: 'LF|GEN|0.0 FACTORY|0|0',
+          region: 'LF',
           id: 'DDD',
           name: 'DESIGNATED POINT NAVAID',
           xy: AIXM.xy(lat: %q(47°51'33"N), long: %q(007°33'36"E)),
@@ -167,6 +170,7 @@ module AIXM
       def dme
         AIXM.dme(
           source: 'LF|GEN|0.0 FACTORY|0|0',
+          region: 'LF',
           organisation: organisation,
           id: 'MMM',
           name: 'DME NAVAID',
@@ -182,6 +186,7 @@ module AIXM
       def marker
         AIXM.marker(
           source: 'LF|GEN|0.0 FACTORY|0|0',
+          region: 'LF',
           organisation: organisation,
           id: '---',
           name: 'MARKER NAVAID',
@@ -197,6 +202,7 @@ module AIXM
       def ndb
         AIXM.ndb(
           source: 'LF|GEN|0.0 FACTORY|0|0',
+          region: 'LF',
           organisation: organisation,
           id: 'NNN',
           name: 'NDB NAVAID',
@@ -213,6 +219,7 @@ module AIXM
       def tacan
         AIXM.tacan(
           source: 'LF|GEN|0.0 FACTORY|0|0',
+          region: 'LF',
           organisation: organisation,
           id: 'TTT',
           name: 'TACAN NAVAID',
@@ -228,6 +235,7 @@ module AIXM
       def vor
         AIXM.vor(
           source: 'LF|GEN|0.0 FACTORY|0|0',
+          region: 'LF',
           organisation: organisation,
           id: 'VVV',
           name: 'VOR NAVAID',
@@ -245,6 +253,7 @@ module AIXM
       def vordme
         AIXM.vor(
           source: 'LF|GEN|0.0 FACTORY|0|0',
+          region: 'LF',
           organisation: organisation,
           id: 'VDD',
           name: 'VOR/DME NAVAID',
@@ -263,6 +272,7 @@ module AIXM
       def vortac
         AIXM.vor(
           source: 'LF|GEN|0.0 FACTORY|0|0',
+          region: 'LF',
           organisation: organisation,
           id: 'VTT',
           name: 'VORTAC NAVAID',
@@ -283,6 +293,7 @@ module AIXM
       def organisation
         AIXM.organisation(
           source: 'LF|GEN|0.0 FACTORY|0|0',
+          region: 'LF',
           name: 'FRANCE',
           type: 'S'
         ).tap do |organisation|
@@ -296,6 +307,7 @@ module AIXM
       def unit
         AIXM.unit(
           source: 'LF|GEN|0.0 FACTORY|0|0',
+          region: 'LF',
           organisation: organisation,
           name: 'PUJAUT',
           type: :aerodrome_control_tower,
@@ -335,6 +347,7 @@ module AIXM
       def airport
         AIXM.airport(
           source: 'LF|GEN|0.0 FACTORY|0|0',
+          region: 'LF',
           organisation: organisation,
           id: 'LFNT',
           name: 'Avignon-Pujaut',
@@ -448,6 +461,7 @@ module AIXM
 
       def obstacle
         AIXM.obstacle(
+          region: 'LF',
           name: "Eiffel Tower",
           type: :tower,
           xy: AIXM.xy(lat: %q(48°51'29.7"N), long: %q(002°17'40.52"E)),
@@ -470,6 +484,7 @@ module AIXM
 
       def unlinked_obstacle_group
         AIXM.obstacle_group(
+          region: "LF",
           name: "Mirmande éoliennes"
         ).tap do |obstacle_group|
           obstacle_group.xy_accuracy = AIXM.d(50, :m)
@@ -504,6 +519,7 @@ module AIXM
 
       def linked_obstacle_group
         AIXM.obstacle_group(
+          region: "EG",
           name: "Droitwich longwave antenna"
         ).tap do |obstacle_group|
           obstacle_group.xy_accuracy = AIXM.d(0, :m)
@@ -542,7 +558,6 @@ module AIXM
 
       def document
         AIXM.document(
-          region: 'LF',
           namespace: '00000000-0000-0000-0000-000000000000',
           created_at: (time = Time.parse('2018-01-01 12:00:00 +0100')),
           effective_at: time

@@ -9,6 +9,7 @@ module AIXM
     # ===Cheat Sheet in Pseudo Code:
     #   obstacle_group = AIXM.obstacle_group(
     #     source: String or nil        # see remarks below
+    #     region: String or nil
     #     name: String or nil
     #   ).tap do |obstacle_group|
     #     obstacle_group.xy_accuracy = AIXM.d or nil
@@ -33,7 +34,7 @@ module AIXM
     # +xy_accuracy+ and +z_accuracy+ of the obstacle group overwrite whatever
     # is set on the individual obstacles!
     #
-    # @see https://github.com/openflightmaps/ofmx/wiki/Obstacle
+    # @see https://gitlab.com/openflightmaps/ofmx/wikis/Obstacle
     class ObstacleGroup < Feature
       include AIXM::Association
 
@@ -73,8 +74,8 @@ module AIXM
       # @return [String, nil] free text remarks
       attr_reader :remarks
 
-      def initialize(source: nil, name: nil)
-        super(source: source)
+      def initialize(source: nil, region: nil, name: nil)
+        super(source: source, region: region)
         self.name = name
       end
 
@@ -106,7 +107,7 @@ module AIXM
       def to_uid
         builder = Builder::XmlMarkup.new(indent: 2)
         insert_mid(
-          builder.OgrUid do |ogr_uid|
+          builder.OgrUid({ region: (region if AIXM.ofmx?) }.compact) do |ogr_uid|
             ogr_uid.txtName(name)
             ogr_uid.geoLat(obstacles.first.xy.lat(AIXM.schema))
             ogr_uid.geoLong(obstacles.first.xy.long(AIXM.schema))

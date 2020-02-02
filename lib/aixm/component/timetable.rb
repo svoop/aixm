@@ -17,7 +17,7 @@ module AIXM
     # * +AIXM::H24+ - continuous, all day and all night
     # * +AIXM::H_RE+ - pattern matching working hour codes
     #
-    # @see https://github.com/openflightmaps/ofmx/wiki/Timetable#predefined-timetable
+    # @see https://gitlab.com/openflightmaps/ofmx/wikis/Timetable#predefined-timetable
     class Timetable
       CODES = {
         H24: :continuous,           # all day and all night

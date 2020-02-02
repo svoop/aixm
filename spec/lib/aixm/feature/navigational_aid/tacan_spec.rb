@@ -42,12 +42,12 @@ describe AIXM::Feature::NavigationalAid::TACAN do
       _(subject.to_xml).must_equal <<~END
         <!-- NavigationalAid: [TACAN] TTT / TACAN NAVAID -->
         <Tcn source="LF|GEN|0.0 FACTORY|0|0">
-          <TcnUid>
+          <TcnUid region="LF">
             <codeId>TTT</codeId>
             <geoLat>47.85916667N</geoLat>
             <geoLong>007.56000000E</geoLong>
           </TcnUid>
-          <OrgUid>
+          <OrgUid region="LF">
             <txtName>FRANCE</txtName>
           </OrgUid>
           <txtName>TACAN NAVAID</txtName>
@@ -71,12 +71,12 @@ describe AIXM::Feature::NavigationalAid::TACAN do
       _(subject.to_xml).must_equal <<~END
         <!-- NavigationalAid: [TACAN] TTT -->
         <Tcn source="LF|GEN|0.0 FACTORY|0|0">
-          <TcnUid>
+          <TcnUid region="LF">
             <codeId>TTT</codeId>
             <geoLat>47.85916667N</geoLat>
             <geoLong>007.56000000E</geoLong>
           </TcnUid>
-          <OrgUid>
+          <OrgUid region="LF">
             <txtName>FRANCE</txtName>
           </OrgUid>
           <codeChannel>29X</codeChannel>
@@ -91,7 +91,7 @@ describe AIXM::Feature::NavigationalAid::TACAN do
       AIXM.ofmx!
       AIXM.config.mid = true
       AIXM.config.region = 'LF'
-      _(subject.to_xml).must_match /<TcnUid mid="8776071f-114a-4996-84ef-2d7848c503f5">/
+      _(subject.to_xml).must_match /<TcnUid [^>]*? mid="422eda8c-22b4-8a1c-98d4-e53a507d60e8"/x
     end
   end
 end

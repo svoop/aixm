@@ -20,7 +20,7 @@ module AIXM
     #   frequency.timetable = AIXM.timetable or nil
     #   frequency.remarks = String or nil
     #
-    # @see https://github.com/openflightmaps/ofmx/wiki/Organisation#fqy-frequency
+    # @see https://gitlab.com/openflightmaps/ofmx/wikis/Organisation#fqy-frequency
     class Frequency
       include AIXM::Association
       include AIXM::Mid

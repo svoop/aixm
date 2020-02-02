@@ -13,7 +13,7 @@ module AIXM
     #   )
     #   service.remarks = String or nil
     #
-    # @see https://github.com/openflightmaps/ofmx/wiki/Airport#aha-airport-address
+    # @see https://gitlab.com/openflightmaps/ofmx/wikis/Airport#aha-airport-address
     class Address < Feature
       include AIXM::Association
 
@@ -48,8 +48,8 @@ module AIXM
       # @return [String, nil] free text remarks
       attr_reader :remarks
 
-      def initialize(source: nil, type:, address:)
-        super(source: source)
+      def initialize(source: nil, region: nil, type:, address:)
+        super(source: source, region: region)
         self.type, self.address = type, address
       end
 

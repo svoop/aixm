@@ -4,19 +4,29 @@ module AIXM
   class Feature
     include AIXM::Mid
 
+    REGION_RE = /\A[A-Z]{2}\z/.freeze
+
     private_class_method :new
 
     # @return [String] reference to source of the feature data
     attr_reader :source
 
-    def initialize(source: nil)
+    # @return [String] OFMX region all features in this document belong to
+    attr_reader :region
+
+    def initialize(source: nil, region: nil)
       self.source = source
+      self.region = region || AIXM.config.region
     end
 
-    # @return [String] reference to source of the feature data
     def source=(value)
       fail(ArgumentError, "invalid source") unless value.nil? || value.is_a?(String)
       @source = value
+    end
+
+    def region=(value)
+      fail(ArgumentError, "invalid region") unless value.nil? || (value.is_a?(String) && value.upcase.match?(REGION_RE))
+      @region = value&.upcase
     end
 
     # @return [Boolean]

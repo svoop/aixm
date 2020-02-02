@@ -7,18 +7,15 @@ module AIXM
   #
   # ===Cheat Sheet in Pseudo Code:
   #   document = AIXM.document(
-  #     region: String
   #     namespace: String (UUID)
   #     created_at: Time or Date or String
   #     effective_at: Time or Date or String
   #   )
   #   document.add_feature(AIXM::Feature)
   #
-  # @see https://github.com/openflightmaps/ofmx/wiki/Snapshot
+  # @see https://gitlab.com/openflightmaps/ofmx/wikis/Snapshot
   class Document
     include AIXM::Association
-
-    REGION_RE = /\A[A-Z]{2}\z/.freeze
 
     NAMESPACE_RE = /\A[a-f\d]{8}-[a-f\d]{4}-[a-f\d]{4}-[a-f\d]{4}-[a-f\d]{12}\z/.freeze
 
@@ -30,9 +27,6 @@ module AIXM
     #   @return [self]
     has_many :features, accept: ['AIXM::Feature']
 
-    # @return [String] OFMX region all features in this document belong to
-    attr_reader :region
-
     # @return [String] UUID to namespace the data contained in this document
     attr_reader :namespace
 
@@ -42,18 +36,13 @@ module AIXM
     # @return [Time] effective after date and time (default: {#created_at} or now)
     attr_reader :effective_at
 
-    def initialize(region: nil, namespace: nil, created_at: nil, effective_at: nil)
-      self.region, self.namespace, self.created_at, self.effective_at = region, namespace, created_at, effective_at
+    def initialize(namespace: nil, created_at: nil, effective_at: nil)
+      self.namespace, self.created_at, self.effective_at = namespace, created_at, effective_at
     end
 
     # @return [String]
     def inspect
       %Q(#<#{self.class} created_at=#{created_at.inspect}>)
-    end
-
-    def region=(value)
-      fail(ArgumentError, "invalid region") unless value.nil? || value&.upcase&.match?(REGION_RE)
-      @region = AIXM.config.region = value&.upcase
     end
 
     def namespace=(value)
@@ -72,6 +61,10 @@ module AIXM
     # Compare all ungrouped obstacles and create new obstacle groups whose
     # members are located within +max_distance+ pairwise.
     #
+    # @note OFMX requires every obstacle, even single ones, to be part of an
+    #   obstacle group which has a region assigned. For this to work, you must
+    #   assure every obstacle has a region assigned when using this method.
+    #
     # @param max_distance [AIXM::D] max distance between obstacle group member
     #   pairs (default: 1 NM)
     # @return [Integer] number of obstacle groups added
@@ -85,7 +78,8 @@ module AIXM
         end
       end
       list.group_by(&:last).each do |_, grouped_list|
-        obstacle_group = AIXM.obstacle_group(source: grouped_list.first.first.source)
+        first_obstacle = grouped_list.first.first
+        obstacle_group = AIXM.obstacle_group(source: first_obstacle.source, region: first_obstacle.region)
         grouped_list.each { |o, _| obstacle_group.obstacles << features.delete(o) }
         features << obstacle_group
       end.count
@@ -115,7 +109,6 @@ module AIXM
         'xmlns:xsi': AIXM.schema(:namespace),
         version: AIXM.schema(:version),
         origin: "rubygem aixm-#{AIXM::VERSION}",
-        region: (region if AIXM.ofmx?),
         namespace: (namespace if AIXM.ofmx?),
         created: @created_at.xmlschema,
         effective: @effective_at.xmlschema

@@ -24,7 +24,7 @@ module AIXM
     # * +AIXM::GROUND+ - surface expressed as "0 ft QFE"
     # * +AIXM::UNLIMITED+ - no upper limit expressed as "FL 999"
     #
-    # @see https://github.com/openflightmaps/ofmx/wiki/Airspace#ase-airspace
+    # @see https://gitlab.com/openflightmaps/ofmx/wikis/Airspace#ase-airspace
     class VerticalLimit
       include AIXM::Association
 

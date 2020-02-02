@@ -79,7 +79,7 @@ describe AIXM::Component::Runway do
       _(subject.to_xml).must_equal <<~END
         <Rwy>
           <RwyUid>
-            <AhpUid>
+            <AhpUid region="LF">
               <codeId>LFNT</codeId>
             </AhpUid>
             <txtDesig>16L/34R</txtDesig>
@@ -108,7 +108,7 @@ describe AIXM::Component::Runway do
         <Rdn>
           <RdnUid>
             <RwyUid>
-              <AhpUid>
+              <AhpUid region="LF">
                 <codeId>LFNT</codeId>
               </AhpUid>
               <txtDesig>16L/34R</txtDesig>
@@ -128,7 +128,7 @@ describe AIXM::Component::Runway do
           <RddUid>
             <RdnUid>
               <RwyUid>
-                <AhpUid>
+                <AhpUid region="LF">
                   <codeId>LFNT</codeId>
                 </AhpUid>
                 <txtDesig>16L/34R</txtDesig>
@@ -146,7 +146,7 @@ describe AIXM::Component::Runway do
           <RlsUid>
             <RdnUid>
               <RwyUid>
-                <AhpUid>
+                <AhpUid region="LF">
                   <codeId>LFNT</codeId>
                 </AhpUid>
                 <txtDesig>16L/34R</txtDesig>
@@ -163,7 +163,7 @@ describe AIXM::Component::Runway do
         <Rdn>
           <RdnUid>
             <RwyUid>
-              <AhpUid>
+              <AhpUid region="LF">
                 <codeId>LFNT</codeId>
               </AhpUid>
               <txtDesig>16L/34R</txtDesig>
@@ -183,7 +183,7 @@ describe AIXM::Component::Runway do
           <RddUid>
             <RdnUid>
               <RwyUid>
-                <AhpUid>
+                <AhpUid region="LF">
                   <codeId>LFNT</codeId>
                 </AhpUid>
                 <txtDesig>16L/34R</txtDesig>
@@ -201,7 +201,7 @@ describe AIXM::Component::Runway do
           <RlsUid>
             <RdnUid>
               <RwyUid>
-                <AhpUid>
+                <AhpUid region="LF">
                   <codeId>LFNT</codeId>
                 </AhpUid>
                 <txtDesig>16L/34R</txtDesig>
@@ -226,7 +226,7 @@ describe AIXM::Component::Runway do
       _(subject.to_xml).must_equal <<~END
         <Rwy>
           <RwyUid>
-            <AhpUid>
+            <AhpUid region="LF">
               <codeId>LFNT</codeId>
             </AhpUid>
             <txtDesig>16L/34R</txtDesig>
@@ -235,7 +235,7 @@ describe AIXM::Component::Runway do
         <Rdn>
           <RdnUid>
             <RwyUid>
-              <AhpUid>
+              <AhpUid region="LF">
                 <codeId>LFNT</codeId>
               </AhpUid>
               <txtDesig>16L/34R</txtDesig>
@@ -255,7 +255,7 @@ describe AIXM::Component::Runway do
           <RddUid>
             <RdnUid>
               <RwyUid>
-                <AhpUid>
+                <AhpUid region="LF">
                   <codeId>LFNT</codeId>
                 </AhpUid>
                 <txtDesig>16L/34R</txtDesig>
@@ -272,7 +272,7 @@ describe AIXM::Component::Runway do
         <Rdn>
           <RdnUid>
             <RwyUid>
-              <AhpUid>
+              <AhpUid region="LF">
                 <codeId>LFNT</codeId>
               </AhpUid>
               <txtDesig>16L/34R</txtDesig>
@@ -292,7 +292,7 @@ describe AIXM::Component::Runway do
           <RddUid>
             <RdnUid>
               <RwyUid>
-                <AhpUid>
+                <AhpUid region="LF">
                   <codeId>LFNT</codeId>
                 </AhpUid>
                 <txtDesig>16L/34R</txtDesig>
@@ -313,8 +313,8 @@ describe AIXM::Component::Runway do
       AIXM.ofmx!
       AIXM.config.mid = true
       AIXM.config.region = 'LF'
-      _(subject.to_xml).must_match /<RwyUid mid="4d06b33a-91c8-ffec-ac25-b2b7efa103b2">/
-      _(subject.to_xml).must_match /<RdnUid mid="7e469f8c-b03a-9d1d-0e5a-2a2cec7c652d">/
+      _(subject.to_xml).must_match /<RwyUid [^>]*? mid="b6d88198-7a6a-6e9b-d8ba-eb0aa00623d4"/x
+      _(subject.to_xml).must_match /<RdnUid [^>]*? mid="2b0a1c24-c855-2ef9-ec1c-06dd9d321f2a"/x
     end
   end
 end
@@ -405,7 +405,7 @@ describe AIXM::Component::Runway::Direction do
         <Rdn>
           <RdnUid>
             <RwyUid>
-              <AhpUid>
+              <AhpUid region="LF">
                 <codeId>LFNT</codeId>
               </AhpUid>
               <txtDesig>16L/34R</txtDesig>
@@ -425,7 +425,7 @@ describe AIXM::Component::Runway::Direction do
           <RddUid>
             <RdnUid>
               <RwyUid>
-                <AhpUid>
+                <AhpUid region="LF">
                   <codeId>LFNT</codeId>
                 </AhpUid>
                 <txtDesig>16L/34R</txtDesig>
@@ -443,7 +443,7 @@ describe AIXM::Component::Runway::Direction do
           <RlsUid>
             <RdnUid>
               <RwyUid>
-                <AhpUid>
+                <AhpUid region="LF">
                   <codeId>LFNT</codeId>
                 </AhpUid>
                 <txtDesig>16L/34R</txtDesig>
@@ -468,7 +468,7 @@ describe AIXM::Component::Runway::Direction do
         <Rdn>
           <RdnUid>
             <RwyUid>
-              <AhpUid>
+              <AhpUid region="LF">
                 <codeId>LFNT</codeId>
               </AhpUid>
               <txtDesig>16L/34R</txtDesig>

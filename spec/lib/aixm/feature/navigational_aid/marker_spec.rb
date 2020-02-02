@@ -34,12 +34,12 @@ describe AIXM::Feature::NavigationalAid::Marker do
       _(subject.to_xml).must_equal <<~END
         <!-- NavigationalAid: [Marker:O] --- / MARKER NAVAID -->
         <Mkr source="LF|GEN|0.0 FACTORY|0|0">
-          <MkrUid>
+          <MkrUid region="LF">
             <codeId>---</codeId>
             <geoLat>47.85916667N</geoLat>
             <geoLong>007.56000000E</geoLong>
           </MkrUid>
-          <OrgUid>
+          <OrgUid region="LF">
             <txtName>FRANCE</txtName>
           </OrgUid>
           <codePsnIls>O</codePsnIls>
@@ -63,12 +63,12 @@ describe AIXM::Feature::NavigationalAid::Marker do
       _(subject.to_xml).must_equal <<~END
         <!-- NavigationalAid: [Marker] --- -->
         <Mkr source="LF|GEN|0.0 FACTORY|0|0">
-          <MkrUid>
+          <MkrUid region="LF">
             <codeId>---</codeId>
             <geoLat>47.85916667N</geoLat>
             <geoLong>007.56000000E</geoLong>
           </MkrUid>
-          <OrgUid>
+          <OrgUid region="LF">
             <txtName>FRANCE</txtName>
           </OrgUid>
           <valFreq>75</valFreq>
@@ -82,7 +82,7 @@ describe AIXM::Feature::NavigationalAid::Marker do
       AIXM.ofmx!
       AIXM.config.mid = true
       AIXM.config.region = 'LF'
-      _(subject.to_xml).must_match /<MkrUid mid="f3463c39-b380-d31f-b42a-5dfa0b4edb12">/
+      _(subject.to_xml).must_match /<MkrUid [^>]*? mid="e84cdbf4-b564-5d09-e876-8c5e9bea8feb"/x
     end
   end
 end

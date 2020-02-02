@@ -8,6 +8,7 @@ module AIXM
     # ===Cheat Sheet in Pseudo Code:
     #   airspace = AIXM.airspace(
     #     source: String or nil
+    #     region: String or nil
     #     id: String or nil   # nil is converted to an 8 character digest
     #     type: String or Symbol
     #     local_type: String or nil
@@ -27,7 +28,7 @@ module AIXM
     #
     #   airspace= AIXM.airspace(type: :regulated_airspace, local_type: "RMZ")
     #
-    # @see https://github.com/openflightmaps/ofmx/wiki/Airspace#ase-airspace
+    # @see https://gitlab.com/openflightmaps/ofmx/wikis/Airspace#ase-airspace
     class Airspace < Feature
       include AIXM::Association
 
@@ -104,8 +105,8 @@ module AIXM
       # @return [String, nil] full name (e.g. "LF P 81 CHERBOURG")
       attr_reader :name
 
-      def initialize(source: nil, id: nil, type:, local_type: nil, name: nil)
-        super(source: source)
+      def initialize(source: nil, region: nil, id: nil, type:, local_type: nil, name: nil)
+        super(source: source, region: region)
         self.type, self.local_type, self.name = type, local_type, name
         self.id = id
         self.geometry = AIXM.geometry
@@ -141,7 +142,7 @@ module AIXM
       def to_uid(as: :AseUid)
         builder = Builder::XmlMarkup.new(indent: 2)
         insert_mid(
-          builder.tag!(as) do |tag|
+          builder.tag!(as, ({ region: (region if AIXM.ofmx?) }.compact)) do |tag|
             tag.codeType(TYPES.key(type).to_s)
             tag.codeId(id)
           end
@@ -180,7 +181,7 @@ module AIXM
         end
         if layered?
           layers.each.with_index do |layer, index|
-            layer_airspace = AIXM.airspace(type: 'CLASS', name: "#{name} LAYER #{index + 1}")
+            layer_airspace = AIXM.airspace(region: region, type: 'CLASS', name: "#{name} LAYER #{index + 1}")
             builder.Ase do |ase|
               ase << layer_airspace.to_uid.indent(2)
               ase.txtName(layer_airspace.name)

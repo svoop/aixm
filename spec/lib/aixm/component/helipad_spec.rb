@@ -93,13 +93,13 @@ describe AIXM::Component::Helipad do
       _(subject.to_xml).must_equal <<~END
         <Tla>
           <TlaUid>
-            <AhpUid>
+            <AhpUid region="LF">
               <codeId>LFNT</codeId>
             </AhpUid>
             <txtDesig>H1</txtDesig>
           </TlaUid>
           <FtoUid>
-            <AhpUid>
+            <AhpUid region="LF">
               <codeId>LFNT</codeId>
             </AhpUid>
             <txtDesig>H1</txtDesig>
@@ -135,7 +135,7 @@ describe AIXM::Component::Helipad do
         <Tls>
           <TlsUid>
             <TlaUid>
-              <AhpUid>
+              <AhpUid region="LF">
                 <codeId>LFNT</codeId>
               </AhpUid>
               <txtDesig>H1</txtDesig>
@@ -158,13 +158,13 @@ describe AIXM::Component::Helipad do
       _(subject.to_xml).must_equal <<~END
         <Tla>
           <TlaUid>
-            <AhpUid>
+            <AhpUid region="LF">
               <codeId>LFNT</codeId>
             </AhpUid>
             <txtDesig>H1</txtDesig>
           </TlaUid>
           <FtoUid>
-            <AhpUid>
+            <AhpUid region="LF">
               <codeId>LFNT</codeId>
             </AhpUid>
             <txtDesig>H1</txtDesig>
@@ -180,7 +180,7 @@ describe AIXM::Component::Helipad do
       AIXM.ofmx!
       AIXM.config.mid = true
       AIXM.config.region = 'LF'
-      _(subject.to_xml).must_match /<TlaUid mid="c1f675f9-ed0f-e52e-b117-f9fe6a00fe7c">/
+      _(subject.to_xml).must_match /<TlaUid [^>]*? mid="1a71faf5-ef1f-ebc9-bfc3-ac7dd50b172a"/x
     end
   end
 end

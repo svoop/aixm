@@ -10,6 +10,7 @@ module AIXM
       # ===Cheat Sheet in Pseudo Code:
       #   designated_point = AIXM.designated_point(
       #     source: String or nil
+      #     region: String or nil
       #     id: String
       #     name: String or nil
       #     xy: AIXM.xy
@@ -18,7 +19,7 @@ module AIXM
       #   designated_point.airport = AIXM.airport or nil
       #   designated_point.remarks = String or nil
       #
-      # @see https://github.com/openflightmaps/ofmx/wiki/Navigational-aid#dpn-designated-point
+      # @see https://gitlab.com/openflightmaps/ofmx/wikis/Navigational-aid#dpn-designated-point
       class DesignatedPoint < NavigationalAid
         include AIXM::Association
 
@@ -55,7 +56,7 @@ module AIXM
         def to_uid
           builder = Builder::XmlMarkup.new(indent: 2)
           insert_mid(
-            builder.DpnUid do |dpn_uid|
+            builder.DpnUid({ region: (region if AIXM.ofmx?) }.compact) do |dpn_uid|
               dpn_uid.codeId(id)
               dpn_uid.geoLat(xy.lat(AIXM.schema))
               dpn_uid.geoLong(xy.long(AIXM.schema))

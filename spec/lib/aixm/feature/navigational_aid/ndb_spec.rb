@@ -44,12 +44,12 @@ describe AIXM::Feature::NavigationalAid::NDB do
       _(subject.to_xml).must_equal <<~END
         <!-- NavigationalAid: [NDB:B] NNN / NDB NAVAID -->
         <Ndb source="LF|GEN|0.0 FACTORY|0|0">
-          <NdbUid>
+          <NdbUid region="LF">
             <codeId>NNN</codeId>
             <geoLat>47.85916667N</geoLat>
             <geoLong>007.56000000E</geoLong>
           </NdbUid>
-          <OrgUid>
+          <OrgUid region="LF">
             <txtName>FRANCE</txtName>
           </OrgUid>
           <txtName>NDB NAVAID</txtName>
@@ -73,12 +73,12 @@ describe AIXM::Feature::NavigationalAid::NDB do
       _(subject.to_xml).must_equal <<~END
         <!-- NavigationalAid: [NDB] NNN -->
         <Ndb source="LF|GEN|0.0 FACTORY|0|0">
-          <NdbUid>
+          <NdbUid region="LF">
             <codeId>NNN</codeId>
             <geoLat>47.85916667N</geoLat>
             <geoLong>007.56000000E</geoLong>
           </NdbUid>
-          <OrgUid>
+          <OrgUid region="LF">
             <txtName>FRANCE</txtName>
           </OrgUid>
           <valFreq>555</valFreq>
@@ -92,7 +92,7 @@ describe AIXM::Feature::NavigationalAid::NDB do
       AIXM.ofmx!
       AIXM.config.mid = true
       AIXM.config.region = 'LF'
-      _(subject.to_xml).must_match /<NdbUid mid="be82074f-4044-8044-5f64-d6080ce3d0e4">/
+      _(subject.to_xml).must_match /<NdbUid [^>]*? mid="5514089c-e6a6-278e-4b1a-ace70db05769"/x
     end
   end
 end
