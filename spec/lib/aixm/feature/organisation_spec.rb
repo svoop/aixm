@@ -45,8 +45,6 @@ describe AIXM::Feature::Organisation do
   end
 
   describe :to_xml do
-    macro :mid
-
     it "builds correct complete OFMX" do
       AIXM.ofmx!
       _(subject.to_xml).must_equal <<~END
@@ -74,13 +72,6 @@ describe AIXM::Feature::Organisation do
           <codeType>S</codeType>
         </Org>
       END
-    end
-
-    it "builds OFMX with mid" do
-      AIXM.ofmx!
-      AIXM.config.mid = true
-      AIXM.config.region = 'LF'
-      _(subject.to_xml).must_match /<OrgUid [^>]*? mid="971ba0a9-3714-12d5-d139-d26d5f1d6f25"/x
     end
   end
 end

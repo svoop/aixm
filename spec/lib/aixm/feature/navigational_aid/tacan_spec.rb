@@ -35,8 +35,6 @@ describe AIXM::Feature::NavigationalAid::TACAN do
   end
 
   describe :to_xml do
-    macro :mid
-
     it "builds correct complete OFMX" do
       AIXM.ofmx!
       _(subject.to_xml).must_equal <<~END
@@ -85,13 +83,6 @@ describe AIXM::Feature::NavigationalAid::TACAN do
           <codeDatum>WGE</codeDatum>
         </Tcn>
       END
-    end
-
-    it "builds OFMX with mid" do
-      AIXM.ofmx!
-      AIXM.config.mid = true
-      AIXM.config.region = 'LF'
-      _(subject.to_xml).must_match /<TcnUid [^>]*? mid="422eda8c-22b4-8a1c-98d4-e53a507d60e8"/x
     end
   end
 end

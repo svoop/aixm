@@ -22,12 +22,6 @@ describe AIXM::Feature::Address do
   end
 
   describe :to_xml do
-    it "populates the mid attribute" do
-      _(subject.mid).must_be :nil?
-      subject.to_xml(as: :Xxx, sequence: 1)
-      _(subject.mid).wont_be :nil?
-    end
-
     it "builds correct OFMX" do
       AIXM.ofmx!
       _(subject.to_xml(as: :Xxx, sequence: 1)).must_equal <<~END
@@ -41,13 +35,6 @@ describe AIXM::Feature::Address do
           <txtRmk>A/A (callsign PUJAUT)</txtRmk>
         </Xxx>
       END
-    end
-
-    it "builds OFMX with mid" do
-      AIXM.ofmx!
-      AIXM.config.mid = true
-      AIXM.config.region = 'LF'
-      _(subject.to_xml(as: :Xxx, sequence: 1)).must_match /<XxxUid [^>]*? mid="9dd7c614-54df-5a0e-2f3f-d053d084ea92"/x
     end
 
     it "builds correct AIXM" do

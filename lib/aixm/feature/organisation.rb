@@ -88,11 +88,9 @@ module AIXM
       # @return [String] UID markup
       def to_uid
         builder = Builder::XmlMarkup.new(indent: 2)
-        insert_mid(
-          builder.OrgUid({ region: (region if AIXM.ofmx?) }.compact) do |org_uid|
-            org_uid.txtName(name)
-          end
-        )
+        builder.OrgUid({ region: (region if AIXM.ofmx?) }.compact) do |org_uid|
+          org_uid.txtName(name)
+        end
       end
 
       # @return [String] AIXM or OFMX markup

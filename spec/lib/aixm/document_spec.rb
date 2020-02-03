@@ -1837,14 +1837,898 @@ describe AIXM::Document do
       END
     end
 
-    it "builds OFMX with one mid for every *Uid" do
-      AIXM.ofmx!
+    it "builds correct OFMX with mid" do
       AIXM.config.mid = true
-      AIXM.config.region = 'LF'
-      xml = subject.to_xml
-      count_mid = xml.scan(/mid=/).count
-      count_uid = xml.scan(/<\w+Uid[\s>]/).count
-      _(count_mid).must_equal count_uid
+      _(subject.to_xml).must_equal <<~"END"
+        <?xml version="1.0" encoding="UTF-8"?>
+        <OFMX-Snapshot xmlns:xsi="http://schema.openflightmaps.org/0/OFMX-Snapshot.xsd" version="0" origin="rubygem aixm-0.3.9" namespace="00000000-0000-0000-0000-000000000000" created="2018-01-01T12:00:00+01:00" effective="2018-01-01T12:00:00+01:00">
+          <!-- Organisation: FRANCE -->
+          <Org source="LF|GEN|0.0 FACTORY|0|0">
+            <OrgUid region="LF" mid="971ba0a9-3714-12d5-d139-d26d5f1d6f25">
+              <txtName>FRANCE</txtName>
+            </OrgUid>
+            <codeId>LF</codeId>
+            <codeType>S</codeType>
+            <txtRmk>Oversea departments not included</txtRmk>
+          </Org>
+          <!-- Unit: PUJAUT TWR -->
+          <Uni source="LF|GEN|0.0 FACTORY|0|0">
+            <UniUid region="LF" mid="43032450-13e4-6f1a-728b-8ba8b5d31c92">
+              <txtName>PUJAUT</txtName>
+              <codeType>TWR</codeType>
+            </UniUid>
+            <OrgUid region="LF" mid="971ba0a9-3714-12d5-d139-d26d5f1d6f25">
+              <txtName>FRANCE</txtName>
+            </OrgUid>
+            <AhpUid region="LF" mid="af89d7b7-2ec0-902f-02ba-9e470e42d530">
+              <codeId>LFNT</codeId>
+            </AhpUid>
+            <codeClass>ICAO</codeClass>
+            <txtRmk>FR only</txtRmk>
+          </Uni>
+          <!-- Service: APP by PUJAUT TWR -->
+          <Ser source="LF|GEN|0.0 FACTORY|0|0">
+            <SerUid mid="6fcb48c9-10a7-db3a-68c2-405a9dfbcd30">
+              <UniUid region="LF" mid="43032450-13e4-6f1a-728b-8ba8b5d31c92">
+                <txtName>PUJAUT</txtName>
+                <codeType>TWR</codeType>
+              </UniUid>
+              <codeType>APP</codeType>
+              <noSeq>1</noSeq>
+            </SerUid>
+            <Stt>
+              <codeWorkHr>H24</codeWorkHr>
+            </Stt>
+            <txtRmk>service remarks</txtRmk>
+          </Ser>
+          <Fqy>
+            <FqyUid mid="30a9231c-9307-e4c4-5ddd-01315a3c0d42">
+              <SerUid mid="6fcb48c9-10a7-db3a-68c2-405a9dfbcd30">
+                <UniUid region="LF" mid="43032450-13e4-6f1a-728b-8ba8b5d31c92">
+                  <txtName>PUJAUT</txtName>
+                  <codeType>TWR</codeType>
+                </UniUid>
+                <codeType>APP</codeType>
+                <noSeq>1</noSeq>
+              </SerUid>
+              <valFreqTrans>123.35</valFreqTrans>
+            </FqyUid>
+            <valFreqRec>124.1</valFreqRec>
+            <uomFreq>MHZ</uomFreq>
+            <Ftt>
+              <codeWorkHr>H24</codeWorkHr>
+            </Ftt>
+            <txtRmk>frequency remarks</txtRmk>
+            <Cdl>
+              <txtCallSign>PUJAUT CONTROL</txtCallSign>
+              <codeLang>EN</codeLang>
+            </Cdl>
+            <Cdl>
+              <txtCallSign>PUJAUT CONTROLE</txtCallSign>
+              <codeLang>FR</codeLang>
+            </Cdl>
+          </Fqy>
+          <!-- Airport: LFNT AVIGNON-PUJAUT -->
+          <Ahp source="LF|GEN|0.0 FACTORY|0|0">
+            <AhpUid region="LF" mid="af89d7b7-2ec0-902f-02ba-9e470e42d530">
+              <codeId>LFNT</codeId>
+            </AhpUid>
+            <OrgUid region="LF" mid="971ba0a9-3714-12d5-d139-d26d5f1d6f25">
+              <txtName>FRANCE</txtName>
+            </OrgUid>
+            <txtName>AVIGNON-PUJAUT</txtName>
+            <codeIcao>LFNT</codeIcao>
+            <codeGps>LFPUJAUT</codeGps>
+            <codeType>AH</codeType>
+            <geoLat>43.99611111N</geoLat>
+            <geoLong>004.75444444E</geoLong>
+            <codeDatum>WGE</codeDatum>
+            <valElev>146</valElev>
+            <uomDistVer>FT</uomDistVer>
+            <valMagVar>1.08</valMagVar>
+            <txtNameAdmin>MUNICIPALITY OF PUJAUT</txtNameAdmin>
+            <valTransitionAlt>10000</valTransitionAlt>
+            <uomTransitionAlt>FT</uomTransitionAlt>
+            <txtRmk>Restricted access</txtRmk>
+          </Ahp>
+          <Rwy>
+            <RwyUid mid="b6d88198-7a6a-6e9b-d8ba-eb0aa00623d4">
+              <AhpUid region="LF" mid="af89d7b7-2ec0-902f-02ba-9e470e42d530">
+                <codeId>LFNT</codeId>
+              </AhpUid>
+              <txtDesig>16L/34R</txtDesig>
+            </RwyUid>
+            <valLen>650</valLen>
+            <valWid>80</valWid>
+            <uomDimRwy>M</uomDimRwy>
+            <codeComposition>ASPH</codeComposition>
+            <codePreparation>PAVED</codePreparation>
+            <codeCondSfc>GOOD</codeCondSfc>
+            <valPcnClass>59</valPcnClass>
+            <codePcnPavementType>F</codePcnPavementType>
+            <codePcnPavementSubgrade>A</codePcnPavementSubgrade>
+            <codePcnMaxTirePressure>W</codePcnMaxTirePressure>
+            <codePcnEvalMethod>T</codePcnEvalMethod>
+            <txtPcnNote>Paved shoulder on 2.5m on each side of the RWY.</txtPcnNote>
+            <valSiwlWeight>1500</valSiwlWeight>
+            <uomSiwlWeight>KG</uomSiwlWeight>
+            <valSiwlTirePressure>0.5</valSiwlTirePressure>
+            <uomSiwlTirePressure>MPA</uomSiwlTirePressure>
+            <valAuwWeight>30</valAuwWeight>
+            <uomAuwWeight>T</uomAuwWeight>
+            <codeSts>CLSD</codeSts>
+            <txtRmk>Markings eroded</txtRmk>
+          </Rwy>
+          <Rdn>
+            <RdnUid mid="2b0a1c24-c855-2ef9-ec1c-06dd9d321f2a">
+              <RwyUid mid="b6d88198-7a6a-6e9b-d8ba-eb0aa00623d4">
+                <AhpUid region="LF" mid="af89d7b7-2ec0-902f-02ba-9e470e42d530">
+                  <codeId>LFNT</codeId>
+                </AhpUid>
+                <txtDesig>16L/34R</txtDesig>
+              </RwyUid>
+              <txtDesig>16L</txtDesig>
+            </RdnUid>
+            <geoLat>44.00211944N</geoLat>
+            <geoLong>004.75216944E</geoLong>
+            <valTrueBrg>165</valTrueBrg>
+            <valMagBrg>164</valMagBrg>
+            <valElevTdz>145</valElevTdz>
+            <uomElevTdz>FT</uomElevTdz>
+            <codeVfrPattern>E</codeVfrPattern>
+            <txtRmk>forth remarks</txtRmk>
+          </Rdn>
+          <Rdd>
+            <RddUid mid="9628cdb7-f4bd-dff5-025c-d5f29521663b">
+              <RdnUid mid="2b0a1c24-c855-2ef9-ec1c-06dd9d321f2a">
+                <RwyUid mid="b6d88198-7a6a-6e9b-d8ba-eb0aa00623d4">
+                  <AhpUid region="LF" mid="af89d7b7-2ec0-902f-02ba-9e470e42d530">
+                    <codeId>LFNT</codeId>
+                  </AhpUid>
+                  <txtDesig>16L/34R</txtDesig>
+                </RwyUid>
+                <txtDesig>16L</txtDesig>
+              </RdnUid>
+              <codeType>DPLM</codeType>
+              <codeDayPeriod>A</codeDayPeriod>
+            </RddUid>
+            <valDist>131</valDist>
+            <uomDist>M</uomDist>
+            <txtRmk>forth remarks</txtRmk>
+          </Rdd>
+          <Rls>
+            <RlsUid mid="29500769-112c-2480-6e88-5dbfc4976608">
+              <RdnUid mid="2b0a1c24-c855-2ef9-ec1c-06dd9d321f2a">
+                <RwyUid mid="b6d88198-7a6a-6e9b-d8ba-eb0aa00623d4">
+                  <AhpUid region="LF" mid="af89d7b7-2ec0-902f-02ba-9e470e42d530">
+                    <codeId>LFNT</codeId>
+                  </AhpUid>
+                  <txtDesig>16L/34R</txtDesig>
+                </RwyUid>
+                <txtDesig>16L</txtDesig>
+              </RdnUid>
+              <codePsn>AIM</codePsn>
+            </RlsUid>
+            <txtDescr>omnidirectional</txtDescr>
+            <codeIntst>LIM</codeIntst>
+            <codeColour>GRN</codeColour>
+            <txtRmk>lighting remarks</txtRmk>
+          </Rls>
+          <Rdn>
+            <RdnUid mid="9a03514f-27fe-c2f6-dfd8-13eaa30b0d79">
+              <RwyUid mid="b6d88198-7a6a-6e9b-d8ba-eb0aa00623d4">
+                <AhpUid region="LF" mid="af89d7b7-2ec0-902f-02ba-9e470e42d530">
+                  <codeId>LFNT</codeId>
+                </AhpUid>
+                <txtDesig>16L/34R</txtDesig>
+              </RwyUid>
+              <txtDesig>34R</txtDesig>
+            </RdnUid>
+            <geoLat>43.99036389N</geoLat>
+            <geoLong>004.75645556E</geoLong>
+            <valTrueBrg>345</valTrueBrg>
+            <valMagBrg>344</valMagBrg>
+            <valElevTdz>147</valElevTdz>
+            <uomElevTdz>FT</uomElevTdz>
+            <codeVfrPattern>L</codeVfrPattern>
+            <txtRmk>back remarks</txtRmk>
+          </Rdn>
+          <Rdd>
+            <RddUid mid="00d3bbbe-b6b1-772b-d5ee-61c0ac3caecd">
+              <RdnUid mid="9a03514f-27fe-c2f6-dfd8-13eaa30b0d79">
+                <RwyUid mid="b6d88198-7a6a-6e9b-d8ba-eb0aa00623d4">
+                  <AhpUid region="LF" mid="af89d7b7-2ec0-902f-02ba-9e470e42d530">
+                    <codeId>LFNT</codeId>
+                  </AhpUid>
+                  <txtDesig>16L/34R</txtDesig>
+                </RwyUid>
+                <txtDesig>34R</txtDesig>
+              </RdnUid>
+              <codeType>DPLM</codeType>
+              <codeDayPeriod>A</codeDayPeriod>
+            </RddUid>
+            <valDist>209</valDist>
+            <uomDist>M</uomDist>
+            <txtRmk>back remarks</txtRmk>
+          </Rdd>
+          <Rls>
+            <RlsUid mid="f64858b1-5ca1-2e28-f401-1198fbecaacc">
+              <RdnUid mid="9a03514f-27fe-c2f6-dfd8-13eaa30b0d79">
+                <RwyUid mid="b6d88198-7a6a-6e9b-d8ba-eb0aa00623d4">
+                  <AhpUid region="LF" mid="af89d7b7-2ec0-902f-02ba-9e470e42d530">
+                    <codeId>LFNT</codeId>
+                  </AhpUid>
+                  <txtDesig>16L/34R</txtDesig>
+                </RwyUid>
+                <txtDesig>34R</txtDesig>
+              </RdnUid>
+              <codePsn>AIM</codePsn>
+            </RlsUid>
+            <txtDescr>omnidirectional</txtDescr>
+            <codeIntst>LIM</codeIntst>
+            <codeColour>GRN</codeColour>
+            <txtRmk>lighting remarks</txtRmk>
+          </Rls>
+          <Fto>
+            <FtoUid mid="c4521dbc-7576-b1bf-4dc2-925d03d37774">
+              <AhpUid region="LF" mid="af89d7b7-2ec0-902f-02ba-9e470e42d530">
+                <codeId>LFNT</codeId>
+              </AhpUid>
+              <txtDesig>H1</txtDesig>
+            </FtoUid>
+            <valLen>35</valLen>
+            <valWid>35</valWid>
+            <uomDim>M</uomDim>
+            <codeComposition>CONC</codeComposition>
+            <codePreparation>PAVED</codePreparation>
+            <codeCondSfc>FAIR</codeCondSfc>
+            <valPcnClass>30</valPcnClass>
+            <codePcnPavementType>F</codePcnPavementType>
+            <codePcnPavementSubgrade>A</codePcnPavementSubgrade>
+            <codePcnMaxTirePressure>W</codePcnMaxTirePressure>
+            <codePcnEvalMethod>U</codePcnEvalMethod>
+            <txtPcnNote>Cracks near the center</txtPcnNote>
+            <valSiwlWeight>1500</valSiwlWeight>
+            <uomSiwlWeight>KG</uomSiwlWeight>
+            <valSiwlTirePressure>0.5</valSiwlTirePressure>
+            <uomSiwlTirePressure>MPA</uomSiwlTirePressure>
+            <valAuwWeight>8</valAuwWeight>
+            <uomAuwWeight>T</uomAuwWeight>
+            <txtProfile>Northwest from RWY 12/30</txtProfile>
+            <txtMarking>Dashed white lines</txtMarking>
+            <codeSts>OTHER</codeSts>
+            <txtRmk>Authorizaton by AD operator required</txtRmk>
+          </Fto>
+          <Fdn>
+            <FdnUid mid="12f7708a-bc10-97fe-89b8-e78f4e7a8a4e">
+              <FtoUid mid="c4521dbc-7576-b1bf-4dc2-925d03d37774">
+                <AhpUid region="LF" mid="af89d7b7-2ec0-902f-02ba-9e470e42d530">
+                  <codeId>LFNT</codeId>
+                </AhpUid>
+                <txtDesig>H1</txtDesig>
+              </FtoUid>
+              <txtDesig>35</txtDesig>
+            </FdnUid>
+            <valTrueBrg>355</valTrueBrg>
+            <valMagBrg>354</valMagBrg>
+            <txtRmk>Avoid flight over residental area</txtRmk>
+          </Fdn>
+          <Fls>
+            <FlsUid mid="ad207959-b96a-d958-432e-1f18483cfb64">
+              <FdnUid mid="12f7708a-bc10-97fe-89b8-e78f4e7a8a4e">
+                <FtoUid mid="c4521dbc-7576-b1bf-4dc2-925d03d37774">
+                  <AhpUid region="LF" mid="af89d7b7-2ec0-902f-02ba-9e470e42d530">
+                    <codeId>LFNT</codeId>
+                  </AhpUid>
+                  <txtDesig>H1</txtDesig>
+                </FtoUid>
+                <txtDesig>35</txtDesig>
+              </FdnUid>
+              <codePsn>AIM</codePsn>
+            </FlsUid>
+            <txtDescr>omnidirectional</txtDescr>
+            <codeIntst>LIM</codeIntst>
+            <codeColour>GRN</codeColour>
+            <txtRmk>lighting remarks</txtRmk>
+          </Fls>
+          <Tla>
+            <TlaUid mid="1a71faf5-ef1f-ebc9-bfc3-ac7dd50b172a">
+              <AhpUid region="LF" mid="af89d7b7-2ec0-902f-02ba-9e470e42d530">
+                <codeId>LFNT</codeId>
+              </AhpUid>
+              <txtDesig>H1</txtDesig>
+            </TlaUid>
+            <FtoUid mid="c4521dbc-7576-b1bf-4dc2-925d03d37774">
+              <AhpUid region="LF" mid="af89d7b7-2ec0-902f-02ba-9e470e42d530">
+                <codeId>LFNT</codeId>
+              </AhpUid>
+              <txtDesig>H1</txtDesig>
+            </FtoUid>
+            <geoLat>43.99915000N</geoLat>
+            <geoLong>004.75154444E</geoLong>
+            <codeDatum>WGE</codeDatum>
+            <valElev>141</valElev>
+            <uomDistVer>FT</uomDistVer>
+            <valLen>20</valLen>
+            <valWid>20</valWid>
+            <uomDim>M</uomDim>
+            <codeComposition>CONC</codeComposition>
+            <codePreparation>PAVED</codePreparation>
+            <codeCondSfc>FAIR</codeCondSfc>
+            <valPcnClass>30</valPcnClass>
+            <codePcnPavementType>F</codePcnPavementType>
+            <codePcnPavementSubgrade>A</codePcnPavementSubgrade>
+            <codePcnMaxTirePressure>W</codePcnMaxTirePressure>
+            <codePcnEvalMethod>U</codePcnEvalMethod>
+            <txtPcnNote>Cracks near the center</txtPcnNote>
+            <valSiwlWeight>1500</valSiwlWeight>
+            <uomSiwlWeight>KG</uomSiwlWeight>
+            <valSiwlTirePressure>0.5</valSiwlTirePressure>
+            <uomSiwlTirePressure>MPA</uomSiwlTirePressure>
+            <valAuwWeight>8</valAuwWeight>
+            <uomAuwWeight>T</uomAuwWeight>
+            <codeClassHel>1</codeClassHel>
+            <txtMarking>Continuous white lines</txtMarking>
+            <codeSts>OTHER</codeSts>
+            <txtRmk>Authorizaton by AD operator required</txtRmk>
+          </Tla>
+          <Tls>
+            <TlsUid mid="e0c705ef-275c-536a-55fc-5586b96752e4">
+              <TlaUid mid="1a71faf5-ef1f-ebc9-bfc3-ac7dd50b172a">
+                <AhpUid region="LF" mid="af89d7b7-2ec0-902f-02ba-9e470e42d530">
+                  <codeId>LFNT</codeId>
+                </AhpUid>
+                <txtDesig>H1</txtDesig>
+              </TlaUid>
+              <codePsn>AIM</codePsn>
+            </TlsUid>
+            <txtDescr>omnidirectional</txtDescr>
+            <codeIntst>LIM</codeIntst>
+            <codeColour>GRN</codeColour>
+            <txtRmk>lighting remarks</txtRmk>
+          </Tls>
+          <Ahu>
+            <AhuUid mid="131fb296-15d0-8f0f-1606-7a9e5645bbef">
+              <AhpUid region="LF" mid="af89d7b7-2ec0-902f-02ba-9e470e42d530">
+                <codeId>LFNT</codeId>
+              </AhpUid>
+            </AhuUid>
+            <UsageLimitation>
+              <codeUsageLimitation>PERMIT</codeUsageLimitation>
+            </UsageLimitation>
+            <UsageLimitation>
+              <codeUsageLimitation>RESERV</codeUsageLimitation>
+              <UsageCondition>
+                <AircraftClass>
+                  <codeType>E</codeType>
+                </AircraftClass>
+              </UsageCondition>
+              <UsageCondition>
+                <FlightClass>
+                  <codeOrigin>INTL</codeOrigin>
+                </FlightClass>
+              </UsageCondition>
+              <Timetable>
+                <codeWorkHr>H24</codeWorkHr>
+              </Timetable>
+              <txtRmk>reservation remarks</txtRmk>
+            </UsageLimitation>
+          </Ahu>
+          <!-- Address: RADIO for LFNT -->
+          <Aha source="LF|GEN|0.0 FACTORY|0|0">
+            <AhaUid mid="ee455495-634c-dac4-dd9e-caf38f64f0ac">
+              <AhpUid region="LF" mid="af89d7b7-2ec0-902f-02ba-9e470e42d530">
+                <codeId>LFNT</codeId>
+              </AhpUid>
+              <codeType>RADIO</codeType>
+              <noSeq>1</noSeq>
+            </AhaUid>
+            <txtAddress>123.35</txtAddress>
+            <txtRmk>A/A (callsign PUJAUT)</txtRmk>
+          </Aha>
+          <!-- Airspace: [D] POLYGON AIRSPACE -->
+          <Ase source="LF|GEN|0.0 FACTORY|0|0">
+            <AseUid region="LF" mid="4fadb72f-7ee4-1171-3281-ac59b82dad86">
+              <codeType>D</codeType>
+              <codeId>PA</codeId>
+            </AseUid>
+            <txtLocalType>POLYGON</txtLocalType>
+            <txtName>POLYGON AIRSPACE</txtName>
+            <codeClass>C</codeClass>
+            <codeLocInd>XXXX</codeLocInd>
+            <codeActivity>TFC-AD</codeActivity>
+            <codeDistVerUpper>STD</codeDistVerUpper>
+            <valDistVerUpper>65</valDistVerUpper>
+            <uomDistVerUpper>FL</uomDistVerUpper>
+            <codeDistVerLower>STD</codeDistVerLower>
+            <valDistVerLower>45</valDistVerLower>
+            <uomDistVerLower>FL</uomDistVerLower>
+            <codeDistVerMax>ALT</codeDistVerMax>
+            <valDistVerMax>6000</valDistVerMax>
+            <uomDistVerMax>FT</uomDistVerMax>
+            <codeDistVerMnm>HEI</codeDistVerMnm>
+            <valDistVerMnm>3000</valDistVerMnm>
+            <uomDistVerMnm>FT</uomDistVerMnm>
+            <Att>
+              <codeWorkHr>H24</codeWorkHr>
+            </Att>
+            <codeSelAvbl>Y</codeSelAvbl>
+            <txtRmk>airspace layer</txtRmk>
+          </Ase>
+          <Abd>
+            <AbdUid mid="56b399d5-59e8-64d7-d234-ea4856624b44">
+              <AseUid region="LF" mid="4fadb72f-7ee4-1171-3281-ac59b82dad86">
+                <codeType>D</codeType>
+                <codeId>PA</codeId>
+              </AseUid>
+            </AbdUid>
+            <Avx>
+              <codeType>CWA</codeType>
+              <geoLat>47.85916667N</geoLat>
+              <geoLong>007.56000000E</geoLong>
+              <codeDatum>WGE</codeDatum>
+              <geoLatArc>47.90416667N</geoLatArc>
+              <geoLongArc>007.56333333E</geoLongArc>
+            </Avx>
+            <Avx>
+              <GbrUid mid="7dc62c3c-87b9-05af-5386-5c3d39a2b324">
+                <txtName>FRANCE_GERMANY</txtName>
+              </GbrUid>
+              <codeType>FNT</codeType>
+              <geoLat>47.94361111N</geoLat>
+              <geoLong>007.59583333E</geoLong>
+              <codeDatum>WGE</codeDatum>
+            </Avx>
+            <Avx>
+              <codeType>GRC</codeType>
+              <geoLat>47.85916667N</geoLat>
+              <geoLong>007.56000000E</geoLong>
+              <codeDatum>WGE</codeDatum>
+            </Avx>
+          </Abd>
+          <!-- Airspace: [D] CIRCLE AIRSPACE -->
+          <Ase source="LF|GEN|0.0 FACTORY|0|0">
+            <AseUid region="LF" mid="69b199b2-931f-47ff-1e78-9fa796ec23b3">
+              <codeType>D</codeType>
+              <codeId>CA</codeId>
+            </AseUid>
+            <txtLocalType>CIRCLE</txtLocalType>
+            <txtName>CIRCLE AIRSPACE</txtName>
+            <codeClass>C</codeClass>
+            <codeLocInd>XXXX</codeLocInd>
+            <codeActivity>TFC-AD</codeActivity>
+            <codeDistVerUpper>STD</codeDistVerUpper>
+            <valDistVerUpper>65</valDistVerUpper>
+            <uomDistVerUpper>FL</uomDistVerUpper>
+            <codeDistVerLower>STD</codeDistVerLower>
+            <valDistVerLower>45</valDistVerLower>
+            <uomDistVerLower>FL</uomDistVerLower>
+            <codeDistVerMax>ALT</codeDistVerMax>
+            <valDistVerMax>6000</valDistVerMax>
+            <uomDistVerMax>FT</uomDistVerMax>
+            <codeDistVerMnm>HEI</codeDistVerMnm>
+            <valDistVerMnm>3000</valDistVerMnm>
+            <uomDistVerMnm>FT</uomDistVerMnm>
+            <Att>
+              <codeWorkHr>H24</codeWorkHr>
+            </Att>
+            <codeSelAvbl>Y</codeSelAvbl>
+            <txtRmk>airspace layer</txtRmk>
+          </Ase>
+          <Abd>
+            <AbdUid mid="7082ac94-36bc-6d29-06d5-0b1f2a8bda50">
+              <AseUid region="LF" mid="69b199b2-931f-47ff-1e78-9fa796ec23b3">
+                <codeType>D</codeType>
+                <codeId>CA</codeId>
+              </AseUid>
+            </AbdUid>
+            <Avx>
+              <codeType>CWA</codeType>
+              <geoLat>47.67326537N</geoLat>
+              <geoLong>004.88333333E</geoLong>
+              <codeDatum>WGE</codeDatum>
+              <geoLatArc>47.58333333N</geoLatArc>
+              <geoLongArc>004.88333333E</geoLongArc>
+            </Avx>
+          </Abd>
+          <!-- NavigationalAid: [DesignatedPoint:VFR-RP] DDD / DESIGNATED POINT NAVAID -->
+          <Dpn source="LF|GEN|0.0 FACTORY|0|0">
+            <DpnUid region="LF" mid="36110542-bbfb-13e2-c819-7a0404be370a">
+              <codeId>DDD</codeId>
+              <geoLat>47.85916667N</geoLat>
+              <geoLong>007.56000000E</geoLong>
+            </DpnUid>
+            <AhpUidAssoc region="LF" mid="af89d7b7-2ec0-902f-02ba-9e470e42d530">
+              <codeId>LFNT</codeId>
+            </AhpUidAssoc>
+            <codeDatum>WGE</codeDatum>
+            <codeType>VFR-RP</codeType>
+            <txtName>DESIGNATED POINT NAVAID</txtName>
+            <txtRmk>designated point navaid</txtRmk>
+          </Dpn>
+          <!-- NavigationalAid: [DME] MMM / DME NAVAID -->
+          <Dme source="LF|GEN|0.0 FACTORY|0|0">
+            <DmeUid region="LF" mid="cf8f4479-1b24-a9fb-59f5-95acd7de2012">
+              <codeId>MMM</codeId>
+              <geoLat>47.85916667N</geoLat>
+              <geoLong>007.56000000E</geoLong>
+            </DmeUid>
+            <OrgUid region="LF" mid="971ba0a9-3714-12d5-d139-d26d5f1d6f25">
+              <txtName>FRANCE</txtName>
+            </OrgUid>
+            <txtName>DME NAVAID</txtName>
+            <codeChannel>95X</codeChannel>
+            <valGhostFreq>114.8</valGhostFreq>
+            <uomGhostFreq>MHZ</uomGhostFreq>
+            <codeDatum>WGE</codeDatum>
+            <valElev>500</valElev>
+            <uomDistVer>FT</uomDistVer>
+            <Dtt>
+              <codeWorkHr>H24</codeWorkHr>
+            </Dtt>
+            <txtRmk>dme navaid</txtRmk>
+          </Dme>
+          <!-- NavigationalAid: [Marker:O] --- / MARKER NAVAID -->
+          <Mkr source="LF|GEN|0.0 FACTORY|0|0">
+            <MkrUid region="LF" mid="e84cdbf4-b564-5d09-e876-8c5e9bea8feb">
+              <codeId>---</codeId>
+              <geoLat>47.85916667N</geoLat>
+              <geoLong>007.56000000E</geoLong>
+            </MkrUid>
+            <OrgUid region="LF" mid="971ba0a9-3714-12d5-d139-d26d5f1d6f25">
+              <txtName>FRANCE</txtName>
+            </OrgUid>
+            <codePsnIls>O</codePsnIls>
+            <valFreq>75</valFreq>
+            <uomFreq>MHZ</uomFreq>
+            <txtName>MARKER NAVAID</txtName>
+            <codeDatum>WGE</codeDatum>
+            <valElev>500</valElev>
+            <uomDistVer>FT</uomDistVer>
+            <Mtt>
+              <codeWorkHr>H24</codeWorkHr>
+            </Mtt>
+            <txtRmk>marker navaid</txtRmk>
+          </Mkr>
+          <!-- NavigationalAid: [NDB:B] NNN / NDB NAVAID -->
+          <Ndb source="LF|GEN|0.0 FACTORY|0|0">
+            <NdbUid region="LF" mid="5514089c-e6a6-278e-4b1a-ace70db05769">
+              <codeId>NNN</codeId>
+              <geoLat>47.85916667N</geoLat>
+              <geoLong>007.56000000E</geoLong>
+            </NdbUid>
+            <OrgUid region="LF" mid="971ba0a9-3714-12d5-d139-d26d5f1d6f25">
+              <txtName>FRANCE</txtName>
+            </OrgUid>
+            <txtName>NDB NAVAID</txtName>
+            <valFreq>555</valFreq>
+            <uomFreq>KHZ</uomFreq>
+            <codeClass>B</codeClass>
+            <codeDatum>WGE</codeDatum>
+            <valElev>500</valElev>
+            <uomDistVer>FT</uomDistVer>
+            <Ntt>
+              <codeWorkHr>H24</codeWorkHr>
+            </Ntt>
+            <txtRmk>ndb navaid</txtRmk>
+          </Ndb>
+          <!-- NavigationalAid: [TACAN] TTT / TACAN NAVAID -->
+          <Tcn source="LF|GEN|0.0 FACTORY|0|0">
+            <TcnUid region="LF" mid="422eda8c-22b4-8a1c-98d4-e53a507d60e8">
+              <codeId>TTT</codeId>
+              <geoLat>47.85916667N</geoLat>
+              <geoLong>007.56000000E</geoLong>
+            </TcnUid>
+            <OrgUid region="LF" mid="971ba0a9-3714-12d5-d139-d26d5f1d6f25">
+              <txtName>FRANCE</txtName>
+            </OrgUid>
+            <txtName>TACAN NAVAID</txtName>
+            <codeChannel>29X</codeChannel>
+            <valGhostFreq>109.2</valGhostFreq>
+            <uomGhostFreq>MHZ</uomGhostFreq>
+            <codeDatum>WGE</codeDatum>
+            <valElev>500</valElev>
+            <uomDistVer>FT</uomDistVer>
+            <Ttt>
+              <codeWorkHr>H24</codeWorkHr>
+            </Ttt>
+            <txtRmk>tacan navaid</txtRmk>
+          </Tcn>
+          <!-- NavigationalAid: [VOR:VOR] VVV / VOR NAVAID -->
+          <Vor source="LF|GEN|0.0 FACTORY|0|0">
+            <VorUid region="LF" mid="0e8e1825-a33e-53eb-f305-528ff8b7ab92">
+              <codeId>VVV</codeId>
+              <geoLat>47.85916667N</geoLat>
+              <geoLong>007.56000000E</geoLong>
+            </VorUid>
+            <OrgUid region="LF" mid="971ba0a9-3714-12d5-d139-d26d5f1d6f25">
+              <txtName>FRANCE</txtName>
+            </OrgUid>
+            <txtName>VOR NAVAID</txtName>
+            <codeType>VOR</codeType>
+            <valFreq>111</valFreq>
+            <uomFreq>MHZ</uomFreq>
+            <codeTypeNorth>TRUE</codeTypeNorth>
+            <codeDatum>WGE</codeDatum>
+            <valElev>500</valElev>
+            <uomDistVer>FT</uomDistVer>
+            <Vtt>
+              <codeWorkHr>H24</codeWorkHr>
+            </Vtt>
+            <txtRmk>vor navaid</txtRmk>
+          </Vor>
+          <!-- NavigationalAid: [VOR:VOR] VDD / VOR/DME NAVAID -->
+          <Vor source="LF|GEN|0.0 FACTORY|0|0">
+            <VorUid region="LF" mid="b62daf75-adfb-529a-2a40-8d488aa58bb4">
+              <codeId>VDD</codeId>
+              <geoLat>47.85916667N</geoLat>
+              <geoLong>007.56000000E</geoLong>
+            </VorUid>
+            <OrgUid region="LF" mid="971ba0a9-3714-12d5-d139-d26d5f1d6f25">
+              <txtName>FRANCE</txtName>
+            </OrgUid>
+            <txtName>VOR/DME NAVAID</txtName>
+            <codeType>VOR</codeType>
+            <valFreq>111</valFreq>
+            <uomFreq>MHZ</uomFreq>
+            <codeTypeNorth>TRUE</codeTypeNorth>
+            <codeDatum>WGE</codeDatum>
+            <valElev>500</valElev>
+            <uomDistVer>FT</uomDistVer>
+            <Vtt>
+              <codeWorkHr>H24</codeWorkHr>
+            </Vtt>
+            <txtRmk>vor/dme navaid</txtRmk>
+          </Vor>
+          <!-- NavigationalAid: [DME] VDD / VOR/DME NAVAID -->
+          <Dme>
+            <DmeUid region="LF" mid="b7472e9b-ffb7-8248-c481-def8ff81fe1f">
+              <codeId>VDD</codeId>
+              <geoLat>47.85916667N</geoLat>
+              <geoLong>007.56000000E</geoLong>
+            </DmeUid>
+            <OrgUid region="LF" mid="971ba0a9-3714-12d5-d139-d26d5f1d6f25">
+              <txtName>FRANCE</txtName>
+            </OrgUid>
+            <VorUid region="LF" mid="b62daf75-adfb-529a-2a40-8d488aa58bb4">
+              <codeId>VDD</codeId>
+              <geoLat>47.85916667N</geoLat>
+              <geoLong>007.56000000E</geoLong>
+            </VorUid>
+            <txtName>VOR/DME NAVAID</txtName>
+            <codeChannel>95X</codeChannel>
+            <codeDatum>WGE</codeDatum>
+            <valElev>500</valElev>
+            <uomDistVer>FT</uomDistVer>
+            <Dtt>
+              <codeWorkHr>H24</codeWorkHr>
+            </Dtt>
+            <txtRmk>vor/dme navaid</txtRmk>
+          </Dme>
+          <!-- NavigationalAid: [VOR:VOR] VTT / VORTAC NAVAID -->
+          <Vor source="LF|GEN|0.0 FACTORY|0|0">
+            <VorUid region="LF" mid="d594841e-9cc2-ac2f-cd47-2ff402d9f8c5">
+              <codeId>VTT</codeId>
+              <geoLat>47.85916667N</geoLat>
+              <geoLong>007.56000000E</geoLong>
+            </VorUid>
+            <OrgUid region="LF" mid="971ba0a9-3714-12d5-d139-d26d5f1d6f25">
+              <txtName>FRANCE</txtName>
+            </OrgUid>
+            <txtName>VORTAC NAVAID</txtName>
+            <codeType>VOR</codeType>
+            <valFreq>111</valFreq>
+            <uomFreq>MHZ</uomFreq>
+            <codeTypeNorth>TRUE</codeTypeNorth>
+            <codeDatum>WGE</codeDatum>
+            <valElev>500</valElev>
+            <uomDistVer>FT</uomDistVer>
+            <Vtt>
+              <codeWorkHr>H24</codeWorkHr>
+            </Vtt>
+            <txtRmk>vortac navaid</txtRmk>
+          </Vor>
+          <!-- NavigationalAid: [TACAN] VTT / VORTAC NAVAID -->
+          <Tcn>
+            <TcnUid region="LF" mid="d352502a-e804-601b-5528-d081e3b5161c">
+              <codeId>VTT</codeId>
+              <geoLat>47.85916667N</geoLat>
+              <geoLong>007.56000000E</geoLong>
+            </TcnUid>
+            <OrgUid region="LF" mid="971ba0a9-3714-12d5-d139-d26d5f1d6f25">
+              <txtName>FRANCE</txtName>
+            </OrgUid>
+            <VorUid region="LF" mid="d594841e-9cc2-ac2f-cd47-2ff402d9f8c5">
+              <codeId>VTT</codeId>
+              <geoLat>47.85916667N</geoLat>
+              <geoLong>007.56000000E</geoLong>
+            </VorUid>
+            <txtName>VORTAC NAVAID</txtName>
+            <codeChannel>29X</codeChannel>
+            <codeDatum>WGE</codeDatum>
+            <valElev>500</valElev>
+            <uomDistVer>FT</uomDistVer>
+            <Ttt>
+              <codeWorkHr>H24</codeWorkHr>
+            </Ttt>
+            <txtRmk>vortac navaid</txtRmk>
+          </Tcn>
+          <!-- Obstacle group: EIFFEL TOWER -->
+          <Ogr>
+            <OgrUid region="LF" mid="134023cf-6ba3-ee36-1384-ffc221f6fab8">
+              <txtName>EIFFEL TOWER</txtName>
+              <geoLat>48.85825000N</geoLat>
+              <geoLong>002.29458889E</geoLong>
+            </OgrUid>
+            <codeDatum>WGE</codeDatum>
+            <valGeoAccuracy>2</valGeoAccuracy>
+            <uomGeoAccuracy>M</uomGeoAccuracy>
+            <valElevAccuracy>3</valElevAccuracy>
+            <uomElevAccuracy>FT</uomElevAccuracy>
+          </Ogr>
+          <!-- Obstacle: [tower] 48.85825000N 002.29458889E EIFFEL TOWER -->
+          <Obs>
+            <ObsUid mid="8e0a7cfc-b82b-ebfc-3501-06dff5d64566">
+              <OgrUid region="LF" mid="134023cf-6ba3-ee36-1384-ffc221f6fab8">
+                <txtName>EIFFEL TOWER</txtName>
+                <geoLat>48.85825000N</geoLat>
+                <geoLong>002.29458889E</geoLong>
+              </OgrUid>
+              <geoLat>48.85825000N</geoLat>
+              <geoLong>002.29458889E</geoLong>
+            </ObsUid>
+            <txtName>EIFFEL TOWER</txtName>
+            <codeType>TOWER</codeType>
+            <codeGroup>N</codeGroup>
+            <codeLgt>Y</codeLgt>
+            <txtDescrLgt>red strobes</txtDescrLgt>
+            <codeDatum>WGE</codeDatum>
+            <valElev>1187</valElev>
+            <valHgt>1063</valHgt>
+            <uomDistVer>FT</uomDistVer>
+            <codeHgtAccuracy>Y</codeHgtAccuracy>
+            <valRadius>88</valRadius>
+            <uomRadius>M</uomRadius>
+            <datetimeValidWef>2018-01-01T12:00:00+01:00</datetimeValidWef>
+            <datetimeValidTil>2019-01-01T12:00:00+01:00</datetimeValidTil>
+            <txtRmk>Temporary light installations (white strobes, gyro light etc)</txtRmk>
+          </Obs>
+          <!-- Obstacle group: MIRMANDE EOLIENNES -->
+          <Ogr>
+            <OgrUid region="LF" mid="ee8cb2a8-f482-5bbe-421f-272de41e1eec">
+              <txtName>MIRMANDE EOLIENNES</txtName>
+              <geoLat>44.67501389N</geoLat>
+              <geoLong>004.87256667E</geoLong>
+            </OgrUid>
+            <codeDatum>WGE</codeDatum>
+            <valGeoAccuracy>50</valGeoAccuracy>
+            <uomGeoAccuracy>M</uomGeoAccuracy>
+            <valElevAccuracy>33</valElevAccuracy>
+            <uomElevAccuracy>FT</uomElevAccuracy>
+            <txtRmk>Extension planned</txtRmk>
+          </Ogr>
+          <!-- Obstacle: [wind_turbine] 44.67501389N 004.87256667E LA TEISSONIERE 1 -->
+          <Obs>
+            <ObsUid mid="36f93624-010f-2b4c-e17a-71fdf6c7cc97">
+              <OgrUid region="LF" mid="ee8cb2a8-f482-5bbe-421f-272de41e1eec">
+                <txtName>MIRMANDE EOLIENNES</txtName>
+                <geoLat>44.67501389N</geoLat>
+                <geoLong>004.87256667E</geoLong>
+              </OgrUid>
+              <geoLat>44.67501389N</geoLat>
+              <geoLong>004.87256667E</geoLong>
+            </ObsUid>
+            <txtName>LA TEISSONIERE 1</txtName>
+            <codeType>WINDTURBINE</codeType>
+            <codeGroup>Y</codeGroup>
+            <codeLgt>N</codeLgt>
+            <codeMarking>N</codeMarking>
+            <codeDatum>WGE</codeDatum>
+            <valElev>1764</valElev>
+            <valHgt>262</valHgt>
+            <uomDistVer>FT</uomDistVer>
+            <codeHgtAccuracy>N</codeHgtAccuracy>
+            <valRadius>80</valRadius>
+            <uomRadius>M</uomRadius>
+          </Obs>
+          <!-- Obstacle: [wind_turbine] 44.67946667N 004.87381111E LA TEISSONIERE 2 -->
+          <Obs>
+            <ObsUid mid="8c3cb548-ddd7-402c-c771-47b929b0fd9d">
+              <OgrUid region="LF" mid="ee8cb2a8-f482-5bbe-421f-272de41e1eec">
+                <txtName>MIRMANDE EOLIENNES</txtName>
+                <geoLat>44.67501389N</geoLat>
+                <geoLong>004.87256667E</geoLong>
+              </OgrUid>
+              <geoLat>44.67946667N</geoLat>
+              <geoLong>004.87381111E</geoLong>
+            </ObsUid>
+            <txtName>LA TEISSONIERE 2</txtName>
+            <codeType>WINDTURBINE</codeType>
+            <codeGroup>Y</codeGroup>
+            <codeLgt>N</codeLgt>
+            <codeMarking>N</codeMarking>
+            <codeDatum>WGE</codeDatum>
+            <valElev>1738</valElev>
+            <valHgt>262</valHgt>
+            <uomDistVer>FT</uomDistVer>
+            <codeHgtAccuracy>N</codeHgtAccuracy>
+            <valRadius>80</valRadius>
+            <uomRadius>M</uomRadius>
+          </Obs>
+          <!-- Obstacle group: DROITWICH LONGWAVE ANTENNA -->
+          <Ogr>
+            <OgrUid region="EG" mid="f90b14a7-3234-56d1-b17f-335e2d57de34">
+              <txtName>DROITWICH LONGWAVE ANTENNA</txtName>
+              <geoLat>52.29639722N</geoLat>
+              <geoLong>002.10675278W</geoLong>
+            </OgrUid>
+            <codeDatum>WGE</codeDatum>
+            <valGeoAccuracy>0</valGeoAccuracy>
+            <uomGeoAccuracy>M</uomGeoAccuracy>
+            <valElevAccuracy>0</valElevAccuracy>
+            <uomElevAccuracy>FT</uomElevAccuracy>
+            <txtRmk>Destruction planned</txtRmk>
+          </Ogr>
+          <!-- Obstacle: [mast] 52.29639722N 002.10675278W DROITWICH LW NORTH -->
+          <Obs>
+            <ObsUid mid="8dbff874-2702-28bb-2c67-912eee5a3da0">
+              <OgrUid region="EG" mid="f90b14a7-3234-56d1-b17f-335e2d57de34">
+                <txtName>DROITWICH LONGWAVE ANTENNA</txtName>
+                <geoLat>52.29639722N</geoLat>
+                <geoLong>002.10675278W</geoLong>
+              </OgrUid>
+              <geoLat>52.29639722N</geoLat>
+              <geoLong>002.10675278W</geoLong>
+            </ObsUid>
+            <txtName>DROITWICH LW NORTH</txtName>
+            <codeType>MAST</codeType>
+            <codeGroup>Y</codeGroup>
+            <codeLgt>N</codeLgt>
+            <codeMarking>N</codeMarking>
+            <codeDatum>WGE</codeDatum>
+            <valElev>848</valElev>
+            <valHgt>700</valHgt>
+            <uomDistVer>FT</uomDistVer>
+            <codeHgtAccuracy>Y</codeHgtAccuracy>
+            <valRadius>200</valRadius>
+            <uomRadius>M</uomRadius>
+          </Obs>
+          <!-- Obstacle: [mast] 52.29457778N 002.10568611W DROITWICH LW NORTH -->
+          <Obs>
+            <ObsUid mid="11587f33-5115-b832-c9fd-143657d58925">
+              <OgrUid region="EG" mid="f90b14a7-3234-56d1-b17f-335e2d57de34">
+                <txtName>DROITWICH LONGWAVE ANTENNA</txtName>
+                <geoLat>52.29639722N</geoLat>
+                <geoLong>002.10675278W</geoLong>
+              </OgrUid>
+              <geoLat>52.29457778N</geoLat>
+              <geoLong>002.10568611W</geoLong>
+            </ObsUid>
+            <txtName>DROITWICH LW NORTH</txtName>
+            <codeType>MAST</codeType>
+            <codeGroup>Y</codeGroup>
+            <codeLgt>N</codeLgt>
+            <codeMarking>N</codeMarking>
+            <codeDatum>WGE</codeDatum>
+            <valElev>848</valElev>
+            <valHgt>700</valHgt>
+            <uomDistVer>FT</uomDistVer>
+            <codeHgtAccuracy>Y</codeHgtAccuracy>
+            <valRadius>200</valRadius>
+            <uomRadius>M</uomRadius>
+            <ObsUidLink mid="8dbff874-2702-28bb-2c67-912eee5a3da0">
+              <OgrUid region="EG" mid="f90b14a7-3234-56d1-b17f-335e2d57de34">
+                <txtName>DROITWICH LONGWAVE ANTENNA</txtName>
+                <geoLat>52.29639722N</geoLat>
+                <geoLong>002.10675278W</geoLong>
+              </OgrUid>
+              <geoLat>52.29639722N</geoLat>
+              <geoLong>002.10675278W</geoLong>
+            </ObsUidLink>
+            <codeLinkType>CABLE</codeLinkType>
+          </Obs>
+        </OFMX-Snapshot>
+      END
     end
   end
 end

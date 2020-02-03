@@ -62,12 +62,6 @@ describe AIXM::Component::Lighting do
   end
 
   describe :to_xml do
-    it "populates the mid attribute" do
-      _(subject.mid).must_be :nil?
-      subject.to_xml(as: :Rls)
-      _(subject.mid).wont_be :nil?
-    end
-
     it "builds correct complete OFMX" do
       AIXM.ofmx!
       _(subject.to_xml(as: :Rls)).must_equal <<~END
@@ -90,13 +84,6 @@ describe AIXM::Component::Lighting do
           <txtRmk>lighting remarks</txtRmk>
         </Rls>
       END
-    end
-
-    it "builds OFMX with mid" do
-      AIXM.ofmx!
-      AIXM.config.mid = true
-      AIXM.config.region = 'LF'
-      _(subject.to_xml(as: :Rls)).must_match /<RlsUid [^>]*? mid="29500769-112c-2480-6e88-5dbfc4976608"/x
     end
   end
 end

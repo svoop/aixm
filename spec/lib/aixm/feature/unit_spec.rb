@@ -54,16 +54,6 @@ describe AIXM::Feature::Unit do
       end
     end
 
-    it "populates the mid attribute" do
-      _(subject.mid).must_be :nil?
-      _(subject.services.first.mid).must_be :nil?
-      _(subject.services.first.frequencies.first.mid).must_be :nil?
-      subject.to_xml
-      _(subject.mid).wont_be :nil?
-      _(subject.services.first.mid).wont_be :nil?
-      _(subject.services.first.frequencies.first.mid).wont_be :nil?
-    end
-
     it "builds correct complete AIXM" do
       2.times { subject.add_service(service) }
       AIXM.aixm!
@@ -372,14 +362,6 @@ describe AIXM::Feature::Unit do
           <codeClass>ICAO</codeClass>
         </Uni>
       END
-    end
-
-    it "builds OFMX with mid" do
-      AIXM.ofmx!
-      AIXM.config.mid = true
-      _(subject.to_xml).must_match /<UniUid [^>]*? mid="43032450-13e4-6f1a-728b-8ba8b5d31c92"/x
-      _(subject.to_xml).must_match /<SerUid [^>]*? mid="6fcb48c9-10a7-db3a-68c2-405a9dfbcd30"/x
-      _(subject.to_xml).must_match /<FqyUid [^>]*? mid="30a9231c-9307-e4c4-5ddd-01315a3c0d42"/x
     end
   end
 end

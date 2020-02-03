@@ -106,13 +106,11 @@ module AIXM
       # @return [String] UID markup
       def to_uid
         builder = Builder::XmlMarkup.new(indent: 2)
-        insert_mid(
-          builder.OgrUid({ region: (region if AIXM.ofmx?) }.compact) do |ogr_uid|
-            ogr_uid.txtName(name)
-            ogr_uid.geoLat(obstacles.first.xy.lat(AIXM.schema))
-            ogr_uid.geoLong(obstacles.first.xy.long(AIXM.schema))
-          end
-        )
+        builder.OgrUid({ region: (region if AIXM.ofmx?) }.compact) do |ogr_uid|
+          ogr_uid.txtName(name)
+          ogr_uid.geoLat(obstacles.first.xy.lat(AIXM.schema))
+          ogr_uid.geoLong(obstacles.first.xy.long(AIXM.schema))
+        end
       end
 
       # @return [String] AIXM or OFMX markup

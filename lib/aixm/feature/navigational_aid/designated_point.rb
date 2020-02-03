@@ -55,13 +55,11 @@ module AIXM
         # @return [String] UID markup
         def to_uid
           builder = Builder::XmlMarkup.new(indent: 2)
-          insert_mid(
-            builder.DpnUid({ region: (region if AIXM.ofmx?) }.compact) do |dpn_uid|
-              dpn_uid.codeId(id)
-              dpn_uid.geoLat(xy.lat(AIXM.schema))
-              dpn_uid.geoLong(xy.long(AIXM.schema))
-            end
-          )
+          builder.DpnUid({ region: (region if AIXM.ofmx?) }.compact) do |dpn_uid|
+            dpn_uid.codeId(id)
+            dpn_uid.geoLat(xy.lat(AIXM.schema))
+            dpn_uid.geoLong(xy.long(AIXM.schema))
+          end
         end
 
         # @return [String] AIXM or OFMX markup

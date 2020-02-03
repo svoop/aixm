@@ -27,7 +27,6 @@ module AIXM
     # @see https://gitlab.com/openflightmaps/ofmx/wikis/Airport#fto-fato
     class FATO
       include AIXM::Association
-      include AIXM::Mid
 
       STATUSES = {
         CLSD: :closed,
@@ -130,12 +129,10 @@ module AIXM
       # @return [String] UID markup
       def to_uid
         builder = Builder::XmlMarkup.new(indent: 2)
-        insert_mid(
-          builder.FtoUid do |fto_uid|
-            fto_uid << airport.to_uid.indent(2)
-            fto_uid.txtDesig(name)
-          end
-        )
+        builder.FtoUid do |fto_uid|
+          fto_uid << airport.to_uid.indent(2)
+          fto_uid.txtDesig(name)
+        end
       end
 
       # @return [String] AIXM or OFMX markup
@@ -166,7 +163,6 @@ module AIXM
       # @see https://gitlab.com/openflightmaps/ofmx/wikis/Airport#fdn-fato-direction
       class Direction
         include AIXM::Association
-        include AIXM::Mid
 
         # @!method lightings
         #   @return [Array<AIXM::Component::Lighting>] installed lighting systems
@@ -221,12 +217,10 @@ module AIXM
         # @return [String] UID markup
         def to_uid
           builder = Builder::XmlMarkup.new(indent: 2)
-          insert_mid(
-            builder.FdnUid do |fdn_uid|
-              fdn_uid << fato.to_uid.indent(2)
-              fdn_uid.txtDesig(name)
-            end
-          )
+          builder.FdnUid do |fdn_uid|
+            fdn_uid << fato.to_uid.indent(2)
+            fdn_uid.txtDesig(name)
+          end
         end
 
         # @return [String] AIXM or OFMX markup

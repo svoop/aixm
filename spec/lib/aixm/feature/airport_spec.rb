@@ -154,8 +154,6 @@ describe AIXM::Feature::Airport do
   end
 
   describe :to_xml do
-    macro :mid
-
     it "builds correct complete OFMX" do
       AIXM.ofmx!
       subject.add_address(AIXM.address(source: "LF|GEN|0.0 FACTORY|0|0", type: :url, address: 'https://lfnt.tower.zone'))
@@ -530,13 +528,6 @@ describe AIXM::Feature::Airport do
         </Ahp>
       END
     end
-  end
-
-  it "builds OFMX with mid" do
-    AIXM.ofmx!
-    AIXM.config.mid = true
-    AIXM.config.region = 'LF'
-    _(subject.to_xml).must_match /<AhpUid [^>]*? mid="af89d7b7-2ec0-902f-02ba-9e470e42d530"/x
   end
 end
 

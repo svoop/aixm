@@ -23,8 +23,6 @@ describe AIXM::Feature::NavigationalAid::DesignatedPoint do
   end
 
   describe :to_xml do
-    macro :mid
-
     it "builds correct complete OFMX" do
       AIXM.ofmx!
       _(subject.to_xml).must_equal <<~END
@@ -64,13 +62,6 @@ describe AIXM::Feature::NavigationalAid::DesignatedPoint do
           <codeType>VFR-RP</codeType>
         </Dpn>
       END
-    end
-
-    it "builds OFMX with mid" do
-      AIXM.ofmx!
-      AIXM.config.mid = true
-      AIXM.config.region = 'LF'
-      _(subject.to_xml).must_match /<DpnUid [^>]*? mid="36110542-bbfb-13e2-c819-7a0404be370a"/x
     end
 
     it "builds correct complete AIXM" do

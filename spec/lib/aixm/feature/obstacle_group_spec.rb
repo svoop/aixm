@@ -45,13 +45,6 @@ describe AIXM::Feature::ObstacleGroup do
         AIXM::Factory.unlinked_obstacle_group
       end
 
-      it "populates the mid attribute" do
-        AIXM.ofmx!
-        _(subject.mid).must_be :nil?
-        subject.to_xml
-        _(subject.mid).wont_be :nil?
-      end
-
       it "builds correct AIXM" do
         _(subject.to_xml).must_equal <<~END
           <!-- Obstacle: [wind_turbine] 44.67501389N 004.87256667E LA TEISSONIERE 1 -->
@@ -160,13 +153,6 @@ describe AIXM::Feature::ObstacleGroup do
           </Obs>
         END
       end
-
-      it "builds OFMX with mid" do
-        AIXM.ofmx!
-        AIXM.config.mid = true
-        AIXM.config.region = 'LF'
-        _(subject.to_xml).must_match /<OgrUid [^>]*? mid="ee8cb2a8-f482-5bbe-421f-272de41e1eec"/x
-      end
     end
   end
 
@@ -196,13 +182,6 @@ describe AIXM::Feature::ObstacleGroup do
     describe :to_xml do
       subject do
         AIXM::Factory.linked_obstacle_group
-      end
-
-      it "populates the mid attribute" do
-        AIXM.ofmx!
-        _(subject.mid).must_be :nil?
-        subject.to_xml
-        _(subject.mid).wont_be :nil?
       end
 
       it "builds correct AIXM" do

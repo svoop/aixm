@@ -118,6 +118,11 @@ module AIXM
       builder.tag!(AIXM.schema(:root), meta) do |root|
         root << features.map { |f| f.to_xml }.join.indent(2)
       end
+      if AIXM.ofmx? && AIXM.config.mid
+        AIXM::Mid.new(xml: builder.target!).xml_with_mid
+      else
+        builder.target!
+      end
     end
 
   end

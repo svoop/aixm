@@ -47,26 +47,6 @@ AIXM.designated_point(...)
 
 See `AIXM::CLASSES` for the complete list of shorthand names.
 
-Once you have called `to_xml`, [OFMX-compliant `mid` values](https://gitlab.com/openflightmaps/ofmx/wikis/Features#mid) can be read from the features:
-
-```ruby
-document = AIXM.document(
-  region: 'LF'
-)
-document.features << AIXM.designated_point(
-  id: "ABIXI",
-  xy: AIXM.xy(lat: %q(46°31'54.3"N), long: %q(002°19'55.2"W)),
-  type: :icao
-)
-AIXM.ofmx!
-designated_point = document.features.first
-designated_point.mid   # => nil
-document.to_xml
-designated_point.mid   # => "47a0641d-6595-7c2f-9e6f-c782632525b3"
-```
-
-:warning: The `mid` values are only calculated and re-calculated when `to_uid` is called on a feature which happens implicitly when calling `to_xml`. Subsequent changes on the payload of a feature won't automatically update the `mid` value. Make sure you have read the [AIXM.config.mid](#aixmconfigmid) section below.
-
 ## Configuration
 
 ### AIXM.config.schema
@@ -167,6 +147,14 @@ AIXM.config.ignored_errors = /invalid date/i
 ## Refinements
 
 By `using AIXM::Refinements` you get a few handy [extensions to Ruby core classes](http://www.rubydoc.info/gems/aixm/AIXM/Refinements.html).
+
+## Executables
+
+The gem features the `mkmid` executable which reads an OFMX file, validates it and adds [OFMX-compliant `mid` values](https://gitlab.com/openflightmaps/ofmx/wikis/Features#mid) into all `*Uid` elements.
+
+```
+mkmid --help
+```
 
 ## References
 

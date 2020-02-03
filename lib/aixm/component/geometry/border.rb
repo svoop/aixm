@@ -15,7 +15,6 @@ module AIXM
       #
       # @see https://gitlab.com/openflightmaps/ofmx/wikis/Airspace#frontier
       class Border < Point
-        include AIXM::Mid
 
         # @return [String] name of the border
         attr_reader :name
@@ -38,11 +37,9 @@ module AIXM
         # @return [String] UID markup
         def to_uid(as: :GbrUid)
           builder = Builder::XmlMarkup.new(indent: 2)
-          insert_mid(
-            builder.tag!(as) do |tag|
-              tag.txtName(name.to_s)
-            end
-          )
+          builder.tag!(as) do |tag|
+            tag.txtName(name.to_s)
+          end
         end
 
         # @return [String] AIXM or OFMX markup

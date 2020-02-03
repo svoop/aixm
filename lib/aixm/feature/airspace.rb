@@ -141,23 +141,18 @@ module AIXM
       # @return [String] UID markup
       def to_uid(as: :AseUid)
         builder = Builder::XmlMarkup.new(indent: 2)
-        insert_mid(
-          builder.tag!(as, ({ region: (region if AIXM.ofmx?) }.compact)) do |tag|
-            tag.codeType(TYPES.key(type).to_s)
-            tag.codeId(id)
-          end
-        )
+        builder.tag!(as, ({ region: (region if AIXM.ofmx?) }.compact)) do |tag|
+          tag.codeType(TYPES.key(type).to_s)
+          tag.codeId(id)
+        end
       end
 
       # @return [String] UID markup
       def to_wrapped_uid(as: :AseUid, with:)
         builder = Builder::XmlMarkup.new(indent: 2)
-        insert_mid(
-          builder.tag!(with) do |tag|
-            tag << to_uid(as: as).indent(2)
-          end,
-          set_attribute: false
-        )
+        builder.tag!(with) do |tag|
+          tag << to_uid(as: as).indent(2)
+        end
       end
 
       # @raise [AIXM::GeometryError] if the geometry is not closed

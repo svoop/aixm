@@ -7,6 +7,7 @@ require 'digest'
 require 'time'
 require 'pathname'
 require 'dry/inflector'
+require 'optparse'
 
 require_relative 'aixm/object'
 
@@ -63,3 +64,5 @@ require_relative 'aixm/feature/obstacle'
 require_relative 'aixm/feature/obstacle_group'
 
 require_relative 'aixm/shortcuts'
+
+require_relative 'aixm/mkmid'

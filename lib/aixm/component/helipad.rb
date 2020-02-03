@@ -24,7 +24,6 @@ module AIXM
     # @see https://gitlab.com/openflightmaps/ofmx/wikis/Airport#tla-helipad-tlof
     class Helipad
       include AIXM::Association
-      include AIXM::Mid
 
       HELICOPTER_CLASSES = {
         '1': :'1',
@@ -152,12 +151,10 @@ module AIXM
       # @return [String] UID markup
       def to_uid
         builder = Builder::XmlMarkup.new(indent: 2)
-        insert_mid(
-          builder.TlaUid do |tla_uid|
-            tla_uid << airport.to_uid.indent(2)
-            tla_uid.txtDesig(name)
-          end
-        )
+        builder.TlaUid do |tla_uid|
+          tla_uid << airport.to_uid.indent(2)
+          tla_uid.txtDesig(name)
+        end
       end
 
       # @return [String] AIXM or OFMX markup

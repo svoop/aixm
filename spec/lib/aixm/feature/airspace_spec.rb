@@ -96,8 +96,6 @@ describe AIXM::Feature::Airspace do
     end
 
     describe :to_xml do
-      macro :mid
-
       it "builds correct AIXM without id" do
         _(subject.to_xml).must_match(%r{<codeId>C55466EC</codeId>})
       end
@@ -118,8 +116,6 @@ describe AIXM::Feature::Airspace do
     end
 
     describe :to_xml do
-      macro :mid
-
       it "builds correct complete OFMX" do
         AIXM.ofmx!
         _(subject.to_xml).must_equal <<~"END"
@@ -251,15 +247,6 @@ describe AIXM::Feature::Airspace do
         END
       end
     end
-
-    it "builds OFMX with mid" do
-      AIXM.ofmx!
-      AIXM.config.mid = true
-      AIXM.config.region = 'LF'
-      _(subject.to_xml).must_match /<AseUid [^>]*? mid="4fadb72f-7ee4-1171-3281-ac59b82dad86"/x
-# TODO: mid missing here?
-#     _(subject.to_xml).must_match /<AbdUid mid="">/
-    end
   end
 
   context "with two layers" do
@@ -270,8 +257,6 @@ describe AIXM::Feature::Airspace do
     end
 
     describe :to_xml do
-      macro :mid
-
       it "builds correct OFMX" do
         AIXM.ofmx!
         _(subject.to_xml).must_equal <<~"END"

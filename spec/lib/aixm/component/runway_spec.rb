@@ -72,8 +72,6 @@ describe AIXM::Component::Runway do
   end
 
   describe :to_xml do
-    macro :mid
-
     it "builds correct complete OFMX" do
       AIXM.ofmx!
       _(subject.to_xml).must_equal <<~END
@@ -308,14 +306,6 @@ describe AIXM::Component::Runway do
         </Rdd>
       END
     end
-
-    it "builds OFMX with mid" do
-      AIXM.ofmx!
-      AIXM.config.mid = true
-      AIXM.config.region = 'LF'
-      _(subject.to_xml).must_match /<RwyUid [^>]*? mid="b6d88198-7a6a-6e9b-d8ba-eb0aa00623d4"/x
-      _(subject.to_xml).must_match /<RdnUid [^>]*? mid="2b0a1c24-c855-2ef9-ec1c-06dd9d321f2a"/x
-    end
   end
 end
 
@@ -397,8 +387,6 @@ describe AIXM::Component::Runway::Direction do
   end
 
   describe :to_xml do
-    macro :mid
-
     it "builds correct complete OFMX" do
       AIXM.ofmx!
       _(subject.to_xml).must_equal <<~END

@@ -74,13 +74,11 @@ module AIXM
       # @return [String] UID markup
       def to_uid(as:, sequence:)
         builder = Builder::XmlMarkup.new(indent: 2)
-        insert_mid(
-          builder.tag!(as) do |tag|
-            tag << addressable.to_uid.indent(2) if addressable
-            tag.codeType(TYPES.key(type).to_s.then_if(AIXM.aixm?) { |t| t.sub(/-\w+$/, '') })
-            tag.noSeq(sequence)
-          end
-        )
+        builder.tag!(as) do |tag|
+          tag << addressable.to_uid.indent(2) if addressable
+          tag.codeType(TYPES.key(type).to_s.then_if(AIXM.aixm?) { |t| t.sub(/-\w+$/, '') })
+          tag.noSeq(sequence)
+        end
       end
 
       # @return [String] AIXM or OFMX markup

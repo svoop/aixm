@@ -2,8 +2,6 @@ module AIXM
 
   # @abstract
   class Feature
-    include AIXM::Mid
-
     REGION_RE = /\A[A-Z]{2}\z/.freeze
 
     private_class_method :new

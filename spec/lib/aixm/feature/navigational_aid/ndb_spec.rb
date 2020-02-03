@@ -37,8 +37,6 @@ describe AIXM::Feature::NavigationalAid::NDB do
   end
 
   describe :to_xml do
-    macro :mid
-
     it "builds correct complete OFMX" do
       AIXM.ofmx!
       _(subject.to_xml).must_equal <<~END
@@ -86,13 +84,6 @@ describe AIXM::Feature::NavigationalAid::NDB do
           <codeDatum>WGE</codeDatum>
         </Ndb>
       END
-    end
-
-    it "builds OFMX with mid" do
-      AIXM.ofmx!
-      AIXM.config.mid = true
-      AIXM.config.region = 'LF'
-      _(subject.to_xml).must_match /<NdbUid [^>]*? mid="5514089c-e6a6-278e-4b1a-ace70db05769"/x
     end
   end
 end

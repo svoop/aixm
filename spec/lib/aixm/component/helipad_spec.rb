@@ -86,8 +86,6 @@ describe AIXM::Component::Helipad do
   end
 
   describe :to_xml do
-    macro :mid
-
     it "builds correct complete OFMX" do
       AIXM.ofmx!
       _(subject.to_xml).must_equal <<~END
@@ -174,13 +172,6 @@ describe AIXM::Component::Helipad do
           <codeDatum>WGE</codeDatum>
         </Tla>
       END
-    end
-
-    it "builds OFMX with mid" do
-      AIXM.ofmx!
-      AIXM.config.mid = true
-      AIXM.config.region = 'LF'
-      _(subject.to_xml).must_match /<TlaUid [^>]*? mid="1a71faf5-ef1f-ebc9-bfc3-ac7dd50b172a"/x
     end
   end
 end

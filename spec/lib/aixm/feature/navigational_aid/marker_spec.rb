@@ -27,8 +27,6 @@ describe AIXM::Feature::NavigationalAid::Marker do
   end
 
   describe :to_xml do
-    macro :mid
-
     it "builds correct complete OFMX" do
       AIXM.ofmx!
       _(subject.to_xml).must_equal <<~END
@@ -76,13 +74,6 @@ describe AIXM::Feature::NavigationalAid::Marker do
           <codeDatum>WGE</codeDatum>
         </Mkr>
       END
-    end
-
-    it "builds OFMX with mid" do
-      AIXM.ofmx!
-      AIXM.config.mid = true
-      AIXM.config.region = 'LF'
-      _(subject.to_xml).must_match /<MkrUid [^>]*? mid="e84cdbf4-b564-5d09-e876-8c5e9bea8feb"/x
     end
   end
 end

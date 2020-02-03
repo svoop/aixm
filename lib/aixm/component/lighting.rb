@@ -19,7 +19,6 @@ module AIXM
     # @see https://gitlab.com/openflightmaps/ofmx/wikis/Airport#tls-helipad-tlof-lighting
     class Lighting
       include AIXM::Association
-      include AIXM::Mid
 
       POSITIONS = {
         TDZ: :touch_down_zone,
@@ -108,12 +107,10 @@ module AIXM
       # @return [String] UID markup
       def to_uid(as:)
         builder = Builder::XmlMarkup.new(indent: 2)
-        insert_mid(
-          builder.tag!(as) do |tag|
-            tag << lightable.to_uid.indent(2)
-            tag.codePsn(POSITIONS.key(position).to_s)
-          end
-        )
+        builder.tag!(as) do |tag|
+          tag << lightable.to_uid.indent(2)
+          tag.codePsn(POSITIONS.key(position).to_s)
+        end
       end
 
       # @return [String] AIXM or OFMX markup

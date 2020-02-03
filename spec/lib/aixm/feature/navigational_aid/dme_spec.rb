@@ -35,8 +35,6 @@ describe AIXM::Feature::NavigationalAid::DME do
   end
 
   describe :to_xml do
-    macro :mid
-
     it "builds correct complete OFMX" do
       AIXM.ofmx!
       _(subject.to_xml).must_equal <<~END
@@ -85,13 +83,6 @@ describe AIXM::Feature::NavigationalAid::DME do
           <codeDatum>WGE</codeDatum>
         </Dme>
       END
-    end
-
-    it "builds OFMX with mid" do
-      AIXM.ofmx!
-      AIXM.config.mid = true
-      AIXM.config.region = 'LF'
-      _(subject.to_xml).must_match /<DmeUid [^>]*? mid="cf8f4479-1b24-a9fb-59f5-95acd7de2012"/x
     end
   end
 end

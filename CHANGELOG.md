@@ -1,9 +1,9 @@
 ## 0.3.9 (unreleased)
 
 ### Additions
-* `mid` reader on all features and components with a `to_uid` method
 * `AIXM.config.mid` now defines whether `mid` attributes are inserted or not
   provided the selected schema is OFMX
+* `mkmid` executable to insert `mid` attributes into valid OFMX file
 
 ### Breaking Changes
 * Require Ruby 2.7

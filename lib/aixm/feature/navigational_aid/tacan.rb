@@ -29,13 +29,11 @@ module AIXM
         # @return [String] UID markup
         def to_uid
           builder = Builder::XmlMarkup.new(indent: 2)
-          insert_mid(
-            builder.TcnUid({ region: (region if AIXM.ofmx?) }.compact) do |tcn_uid|
-              tcn_uid.codeId(id)
-              tcn_uid.geoLat(xy.lat(AIXM.schema))
-              tcn_uid.geoLong(xy.long(AIXM.schema))
-            end
-          )
+          builder.TcnUid({ region: (region if AIXM.ofmx?) }.compact) do |tcn_uid|
+            tcn_uid.codeId(id)
+            tcn_uid.geoLat(xy.lat(AIXM.schema))
+            tcn_uid.geoLong(xy.long(AIXM.schema))
+          end
         end
 
         # @return [String] AIXM or OFMX markup
