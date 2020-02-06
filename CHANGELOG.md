@@ -3,6 +3,7 @@
 ### Additions
 * `AIXM.config.mid` now defines whether `mid` attributes are inserted or not
   provided the selected schema is OFMX
+* `AIXM::PayloadHash` class
 * `mkmid` executable to insert `mid` attributes into valid OFMX file
 
 ### Breaking Changes
@@ -13,11 +14,12 @@
 * Use `Airspace#add_layer` instead of `Airspace@layers#<<`
 * Use `Geometry#add_segment` instead of `Geometry#<<`
 * Renamed `VerticalLimits` to `VerticalLimit`
+* Refinements `String#insert_payload_hash` and `Array#to_uuid` removed again
+* Refinement `String#payload_hash` removed in favor of `AIXM::PayloadHash` class
 
 ### Changes
 * Renamed `AIXM.config.mid_region` to `AIXM.config.region` which is implicitly
   set via `Document#region` as well
-* Refinedment `String#insert_payload_hash`removed again
 
 ## 0.3.8
 
@@ -69,7 +71,7 @@
 * Surface for `Runway|Helipad#surface`
 * Extracted `AIXM::MIN`, `AIXM::SEC` and `AIXM::DMS_RE` to scan for coordinates
   in texts
-* Refinement `String#payload_hash`
+* Refinements `Array#to_uuid` and `String#payload_hash`
 
 #### Breaking Changes
 * Require Ruby 2.6

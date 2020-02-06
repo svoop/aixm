@@ -35,36 +35,6 @@ describe AIXM::Refinements do
       end
     end
 
-    describe :to_uuid do
-      it "must digest single string" do
-        _(%w(a).to_uuid).must_equal "0cc175b9-c0f1-b6a8-31c3-99e269772661"
-      end
-
-      it "must digest double string" do
-        _(%w(a b).to_uuid).must_equal "d0726241-0206-76b1-4aa6-298ce6a18b21"
-      end
-
-      it "must digest integer" do
-        _([5].to_uuid).must_equal "e4da3b7f-bbce-2345-d777-2b0674a318d5"
-      end
-
-      it "must digest nested array" do
-        _([1, [2, 3]].to_uuid).must_equal "02b12e93-0c8b-cc7e-92e7-4ff5d96ce118"
-      end
-
-      it "must digest float" do
-        _([5.0].to_uuid).must_equal "336669db-e720-233e-d557-7ddf81b653d3"
-      end
-
-      it "must digest boolean" do
-        _([true, false].to_uuid).must_equal "215c2d45-b491-f5c8-15ac-e782ce450fdf"
-      end
-
-      it "must digest nil" do
-        _([nil].to_uuid).must_equal "d41d8cd9-8f00-b204-e980-0998ecf8427e"
-      end
-    end
-
     describe :find do
       subject do
         [AIXM::Factory.dme, AIXM::Factory.ndb, AIXM::Factory.vor]
@@ -296,37 +266,6 @@ describe AIXM::Refinements do
             </Ser>
           </OFMX-Snapshot>
         END
-      end
-
-      describe :payload_hash do
-
-        it "must calculate and return the hash" do
-          _(subject.payload_hash(element: 'Ser')).must_equal "42512568-a5e8-26a9-a330-c1c242135af5"
-        end
-
-        it "must ignore name extensions of named associations" do
-          named_subject = subject.gsub(/<(.?)SerUid/, '<\1SerUidWithName')
-          _(named_subject.payload_hash(element: 'SerUidWithName')).must_equal subject.payload_hash(element: 'SerUid')
-        end
-
-        it "must ignore mid attributes" do
-          subject_with_mid = subject.sub(/(active="true")/, 'mid="123" \1')
-          _(subject_with_mid.payload_hash(element: 'Ser')).must_equal "42512568-a5e8-26a9-a330-c1c242135af5"
-        end
-
-        it "must ignore source attributes" do
-          subject_with_source = subject.sub(/(active="true")/, 'source="123" \1')
-          _(subject_with_source.payload_hash(element: 'Ser')).must_equal "42512568-a5e8-26a9-a330-c1c242135af5"
-        end
-
-        it "must order the element arguments alphabetically" do
-          subject_with_swap = subject.sub(/(active="true") (type="essential")/, '\2 \1')
-          _(subject_with_swap.payload_hash(element: 'Ser')).must_equal "42512568-a5e8-26a9-a330-c1c242135af5"
-        end
-
-        it "must use the first non-declaration element in string by default" do
-          _(subject.payload_hash).must_equal "f412a3e8-7511-3655-de50-34e6aed42b49"
-        end
       end
     end
 

@@ -30,21 +30,6 @@ module AIXM
       end
     end
 
-    # @!method to_uuid
-    #   Builds a UUID version 3 digest from the Array payload.
-    #
-    #   @example
-    #     ['foo', :bar, nil, [123]].to_uuid
-    #     # => "a68e9aae-81ef-c6f1-d954-2eefe2820c50"
-    #
-    #   @note This is a refinement for +Array+
-    #   @return [String] UUID version 3
-    refine Array do
-      def to_uuid
-        ::Digest::MD5.hexdigest(flatten.map(&:to_s).join('|')).unpack("a8a4a4a4a12").join("-")
-      end
-    end
-
     # @!method find
     #   Find elements by class and/or attribute values.
     #
@@ -258,44 +243,6 @@ module AIXM
       def indent(number)
         whitespace = ' ' * number
         gsub(/^/, whitespace)
-      end
-    end
-
-    # @!method payload_hash(element:)
-    #   Calculate the UUIDv3 hash of an AIXM/OFMX XML string.
-    #
-    #   A word of warning: This is a minimalistic implementation for the AIXM
-    #   gem and won't work unless the following conditions are met:
-    #   * the XML string must be AIXM/OFMX
-    #   * the XML string must be valid
-    #   * the XML string must be pretty-printed
-    #
-    #   @example from https://gitlab.com/openflightmaps/ofmx/wikis/Functions
-    #     xml.payload_hash(element: 'Ser')
-    #     # => "42512568-a5e8-26a9-a330-c1c242135af5"
-    #
-    #   @note This is a refinement for +String+
-    #   @param element [String] tag to calculate the payload hash for (default:
-    #     first element in the string)
-    #   @return [String] UUIDv3
-    #   @raise [ArgumentError] if the given element is not found or no element
-    #     at all
-    refine String do
-      def payload_hash(element: nil)
-        element = $1 if element.nil? && match(/<([^?].*?)[\s>]/)
-        fail(ArgumentError, "no element found") unless element
-        fail(ArgumentError, "element `#{element}' not found") unless match? /<#{element}[\s>]/
-        gsub(%r((?:mid|source)="[^"]*"), '').   # remove existing mid and source attributes
-          sub(%r(\A.*?(?=<#{element}))m, '').   # remove everything before first <element>
-          sub(%r(</#{element}>.*\z)m, '').   # remove everything after and including first </element>
-          sub(%r(\A(<\w+Uid)\w+), '\1').   # remove Uid name extension
-          scan(%r(<([\w-]+)([^>]*)>([^<]*))).each_with_object([]) do |(e, a, t), m|
-            m << e << a.scan(%r(([\w-]+)="([^"]*)")).sort.flatten << t
-          end.
-          flatten.
-          keep_if { |s| s.match?(/[^[:space:]]/m) }.
-          compact.
-          to_uuid
       end
     end
 

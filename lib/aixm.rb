@@ -18,8 +18,8 @@ require_relative 'aixm/errors'
 
 require_relative 'aixm/classes'
 require_relative 'aixm/constants'
-require_relative 'aixm/mid'
 require_relative 'aixm/association'
+require_relative 'aixm/payload_hash'
 
 require_relative 'aixm/document'
 require_relative 'aixm/xy'

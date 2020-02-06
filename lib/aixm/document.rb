@@ -119,7 +119,7 @@ module AIXM
         root << features.map { |f| f.to_xml }.join.indent(2)
       end
       if AIXM.ofmx? && AIXM.config.mid
-        AIXM::Mid.new(xml: builder.target!).xml_with_mid
+        AIXM::PayloadHash::Mid.new(builder.target!).insert_mid.to_xml
       else
         builder.target!
       end

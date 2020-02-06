@@ -99,6 +99,20 @@ In case you want to ignore certain XML schema validation errors, set this config
 AIXM.config.ignored_errors = /invalid date/i
 ```
 
+## Payload Hash
+
+OFMX defines a [payload hash function](https://gitlab.com/openflightmaps/ofmx/wikis/Functions) used to facilitate association and modification tracking. It is used internally, but you can also use it in your own code:
+
+```ruby
+# Payload hash of XML fragment string
+xml = '<xml><a></a></xml>'
+AIXM::PayloadHash.new(xml).to_uuid   # => String
+
+# Payload hash of Nokogiri XML fragment
+document = File.open("file.xml") { Nokogiri::XML(_1) }
+AIXM::PayloadHash.new(document).to_uuid   # => String
+```
+
 ## Validation
 
 `AIXM::Document#valid?` validates the resulting AIXM or OFMX against its XML schema. If any, you find the errors in `AIXM::Document#errors`.
