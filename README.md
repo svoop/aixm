@@ -106,11 +106,11 @@ OFMX defines a [payload hash function](https://gitlab.com/openflightmaps/ofmx/wi
 ```ruby
 # Payload hash of XML fragment string
 xml = '<xml><a></a></xml>'
-AIXM::PayloadHash.new(xml).to_uuid   # => String
+AIXM::PayloadHash.new(xml).to_uuid
 
 # Payload hash of Nokogiri XML fragment
 document = File.open("file.xml") { Nokogiri::XML(_1) }
-AIXM::PayloadHash.new(document).to_uuid   # => String
+AIXM::PayloadHash.new(document).to_uuid
 ```
 
 ## Validation

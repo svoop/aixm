@@ -17,22 +17,23 @@ module AIXM
           o.on('-V', '--version', 'show version and exit') { version }
         end.parse!
         @infile = ARGV.shift
-        fail OptionParser::InvalidOption.new('cannot read file') unless File.readable?(@infile)
-        fail OptionParser::InvalidOption.new('file ist not OFMX') unless @infile.match?(/\.ofmx$/)
       end
 
       def run
+        fail 'cannot read file' unless @infile && File.readable?(@infile)
+        fail 'file ist not OFMX' unless @infile.match?(/\.ofmx$/)
         AIXM.ofmx!
-        xml = AIXM::Mid.new(xml: File.open(@infile)).xml_with_mid
-        errors = Nokogiri::XML::Schema(File.open(AIXM.schema(:xsd))).validate(Nokogiri::XML(xml))
+        document = File.open(@infile) { Nokogiri::XML(_1) }
+        AIXM::PayloadHash::Mid.new(document).insert_mid
+        errors = Nokogiri::XML::Schema(File.open(AIXM.schema(:xsd))).validate(document)
         case
         when errors.any? && !@options[:force]
           puts errors
           fail "OFMX file is not schema valid"
         when @options[:in_place]
-          File.write(@infile, xml)
+          File.write(@infile, document.to_xml)
         else
-          puts xml
+          puts document.to_xml
         end
       rescue => error
         puts "ERROR: #{error.message}"
