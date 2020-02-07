@@ -15,10 +15,16 @@ For now, only the parts needed to automize the AIP import of [open flightmaps](h
 
 ## Install
 
-Add this to your <tt>Gemfile</tt> or <tt>gems.rb</tt>:
+Add the following to the <tt>Gemfile</tt> or <tt>gems.rb</tt> of your [Bundler](https://bundler.io) powered Ruby project:
 
 ```ruby
 gem aixm
+```
+
+If you're only going to use [the executables](#executables), make sure to have the [latest version of Ruby](https://www.ruby-lang.org/en/documentation/installation/) and then install this gem:
+
+```
+gem install aixm
 ```
 
 ## Usage
