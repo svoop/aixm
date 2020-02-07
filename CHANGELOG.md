@@ -5,6 +5,7 @@
   provided the selected schema is OFMX
 * `AIXM::PayloadHash` class
 * `mkmid` executable to insert `mid` attributes into valid OFMX file
+* `ckmid` executable to check `mid` attributes in an OFMX file
 
 ### Breaking Changes
 * Require Ruby 2.7

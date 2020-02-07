@@ -87,6 +87,17 @@ module AIXM
         self
       end
 
+      # Check mid attributes on all *Uid elements
+      #
+      # @return [Array<String>] array of errors found
+      def check_mid
+        uid_elements.each_with_object([]) do |element, errors|
+          unless element['mid'] == (uuid = AIXM::PayloadHash.new(element).to_uuid)
+            errors << "#{element.line}: ERROR: Element '#{element.name}': mid should be #{uuid}"
+          end
+        end
+      end
+
       # @return [String] XML document as XML string
       def to_xml
         @document.to_xml
