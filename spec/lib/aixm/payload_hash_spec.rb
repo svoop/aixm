@@ -8,56 +8,80 @@ describe AIXM::PayloadHash do
         <UniUid region="LF">
           <txtName>STRASBOURG APP</txtName>
         </UniUid>
-        <codeType version="1" subversion="2">APP</codeType>
+        <codeType subversion="1.2" version="1">APP</codeType>
         <noSeq>1</noSeq>
       </SerUid>
     END
   end
 
-  let(:payload_hash) { "e24bf066-7ccf-28ab-971b-9c001f1ceff2" }
+  let(:payload_array) { ["SerUid", "UniUid", "region", "LF", "txtName", "STRASBOURG APP", "codeType", "subversion", "1.2", "version", "1", "APP", "noSeq", "1"] }
+  let(:payload_hash) { "6201128f-cdc1-59f4-1858-f30bdfc7f0d3" }
 
   describe :initialize do
-    it "accepts and converts XML strings" do
-      _(AIXM::PayloadHash.new(subject).fragment).must_be_instance_of Nokogiri::XML::DocumentFragment
+    it "accepts XML strings and XML fragments" do
+      _(AIXM::PayloadHash.new(subject))
+      _(AIXM::PayloadHash.new(Nokogiri::XML.fragment(subject)))
     end
 
-    it "accepts and clones XML fragment" do
-      fragment = Nokogiri::XML.fragment(subject)
-      hasher = AIXM::PayloadHash.new(fragment)
-      _(hasher.fragment).must_be_instance_of Nokogiri::XML::DocumentFragment
-      _(hasher.fragment).wont_equal fragment
+    it "fails on invalid values" do
+      _{ AIXM::PayloadHash.new(nil) }.must_raise ArgumentError
+      _{ AIXM::PayloadHash.new(123) }.must_raise ArgumentError
     end
   end
 
   describe :payload_array do
-    it "builds array of payload attributes and elements" do
-      _(AIXM::PayloadHash.new(subject).send(:payload_array)).must_equal ["SerUid", "UniUid", "region", "LF", "txtName", "STRASBOURG APP", "codeType", "subversion", "2", "version", "1", "APP", "noSeq", "1"]
+    it "builds correct array of payload attributes and elements" do
+      _(AIXM::PayloadHash.new(subject).send(:payload_array)).must_equal payload_array
+    end
+
+    it "must ignore mid attributes" do
+      alt_subject = subject.sub(/<SerUid>/, '<SerUid mid="123">')
+      _(AIXM::PayloadHash.new(alt_subject).send(:payload_array)).must_equal payload_array
+    end
+
+    it "must ignore source attributes" do
+      alt_subject = subject.sub(/<SerUid>/, '<SerUid source="123">')
+      _(AIXM::PayloadHash.new(alt_subject).send(:payload_array)).must_equal payload_array
+    end
+
+    it "must order the element arguments alphabetically" do
+      alt_subject = subject.sub(/(subversion="1.2") (version="1")/, '\2 \1')
+      _(AIXM::PayloadHash.new(alt_subject).send(:payload_array)).must_equal payload_array
+    end
+
+    it "must ignore name extensions of named associations" do
+      alt_subject = subject.sub(/UniUid/, 'UniUidAssoc')
+      _(AIXM::PayloadHash.new(alt_subject).send(:payload_array)).must_equal payload_array
+    end
+
+    it "must leave whitespace in elements as is" do
+      alt_subject = subject.sub(/<noSeq>1/, '<noSeq> 1')
+      _(AIXM::PayloadHash.new(alt_subject).send(:payload_array)).wont_equal payload_array
+      _(AIXM::PayloadHash.new(alt_subject).send(:payload_array)).must_equal ["SerUid", "UniUid", "region", "LF", "txtName", "STRASBOURG APP", "codeType", "subversion", "1.2", "version", "1", "APP", "noSeq", " 1"]
+    end
+
+    it "must leave whitespace in attributes as is" do
+      alt_subject = subject.sub(/subversion="1.2"/, 'subversion=" 1.2"')
+      _(AIXM::PayloadHash.new(alt_subject).send(:payload_array)).wont_equal payload_array
+      _(AIXM::PayloadHash.new(alt_subject).send(:payload_array)).must_equal ["SerUid", "UniUid", "region", "LF", "txtName", "STRASBOURG APP", "codeType", "subversion", " 1.2", "version", "1", "APP", "noSeq", "1"]
+    end
+
+    it "must include empty elements" do
+      alt_subject = subject.sub(/<noSeq>1</, '<noSeq><')
+      _(AIXM::PayloadHash.new(alt_subject).send(:payload_array)).wont_equal payload_array
+      _(AIXM::PayloadHash.new(alt_subject).send(:payload_array)).must_equal ["SerUid", "UniUid", "region", "LF", "txtName", "STRASBOURG APP", "codeType", "subversion", "1.2", "version", "1", "APP", "noSeq", ""]
+    end
+
+    it "must include empty attributes" do
+      alt_subject = subject.sub(/subversion="1.2"/, 'subversion=""')
+      _(AIXM::PayloadHash.new(alt_subject).send(:payload_array)).wont_equal payload_array
+      _(AIXM::PayloadHash.new(alt_subject).send(:payload_array)).must_equal ["SerUid", "UniUid", "region", "LF", "txtName", "STRASBOURG APP", "codeType", "subversion", "", "version", "1", "APP", "noSeq", "1"]
     end
   end
 
   describe :to_uuid do
-    it "calculates the correct UUIDv3 payload hash" do
+    it "calculates correct UUIDv3 payload hash" do
       _(AIXM::PayloadHash.new(subject).to_uuid).must_equal payload_hash
-    end
-
-    it "must ignore name extensions of named associations" do
-      named_subject = subject.gsub(/<(.?)SerUid/, '<\1SerUidWithName')
-      _(AIXM::PayloadHash.new(named_subject).to_uuid).must_equal payload_hash
-    end
-
-    it "must ignore mid attributes" do
-      subject_with_mid = subject.sub(/(active="true")/, 'mid="123" \1')
-      _(AIXM::PayloadHash.new(subject_with_mid).to_uuid).must_equal payload_hash
-    end
-
-    it "must ignore source attributes" do
-      subject_with_source = subject.sub(/(active="true")/, 'source="123" \1')
-      _(AIXM::PayloadHash.new(subject_with_source).to_uuid).must_equal payload_hash
-    end
-
-    it "must order the element arguments alphabetically" do
-      subject_with_swap = subject.sub(/(active="true") (type="essential")/, '\2 \1')
-      _(AIXM::PayloadHash.new(subject_with_swap).to_uuid).must_equal payload_hash
     end
   end
 
@@ -90,33 +114,39 @@ describe AIXM::PayloadHash do
       _(subject.send(:uuid_for, [true, false])).must_equal "215c2d45-b491-f5c8-15ac-e782ce450fdf"
     end
 
-    it "must digest nil" do
-      _(subject.send(:uuid_for, [nil])).must_equal "d41d8cd9-8f00-b204-e980-0998ecf8427e"
+    it "must digest empty string" do
+      _(subject.send(:uuid_for, ['', ''])).must_equal "b99834bc-19bb-ad24-580b-3adfa04fb947"
+    end
+
+    it "must digest nil identically to empty string" do
+      _(subject.send(:uuid_for, [nil, nil])).must_equal subject.send(:uuid_for, ['', ''])
     end
   end
 end
-
 
 describe AIXM::PayloadHash::Mid do
   subject do
     <<~END
       <?xml version="1.0" encoding="utf-8"?>
       <OFMX-Snapshot>
-        <Ser source="LF|AD|AD-2|2019-10-10|2047" type="essential" active="true">
+        <Ser source="LF|AD|AD-2|2019-10-10|2047" active="true" type="essential">
           <SerUid>
             <UniUid region="LF">
               <txtName>STRASBOURG APP</txtName>
             </UniUid>
-            <codeType version="1" subversion="2">APP</codeType>
+            <codeType subversion="1.2" version="1">APP</codeType>
             <noSeq>1</noSeq>
           </SerUid>
-          <Stt priority="1" mid="83126b8d-f9a0-bbc8-5248-17a10f68c2a4">
+          <OrgUidAssoc mid="fd2b4e07-5a80-d3f6-63f2-660d07265922">
+            <txtName></txtName>
+          </OrgUidAssoc>
+          <Stt priority="1">
             <codeWorkHr>H24</codeWorkHr>
           </Stt>
-          <Stt priority="2">
-            <codeWorkHr>HX</codeWorkHr>
+          <Stt priority="2" authority="false">
+            <codeWorkHr author="">HX</codeWorkHr>
           </Stt>
-          <txtRmk>aka STRASBOURG approche</txtRmk>
+          <txtRmk> aka STRASBOURG approche</txtRmk>
         </Ser>
       </OFMX-Snapshot>
     END
@@ -127,21 +157,24 @@ describe AIXM::PayloadHash::Mid do
       _(AIXM::PayloadHash::Mid.new(subject).insert_mid.to_xml).must_equal <<~END
         <?xml version="1.0" encoding="utf-8"?>
         <OFMX-Snapshot>
-          <Ser source="LF|AD|AD-2|2019-10-10|2047" type="essential" active="true">
-            <SerUid mid="e24bf066-7ccf-28ab-971b-9c001f1ceff2">
+          <Ser source="LF|AD|AD-2|2019-10-10|2047" active="true" type="essential">
+            <SerUid mid="6201128f-cdc1-59f4-1858-f30bdfc7f0d3">
               <UniUid region="LF" mid="1e86ce9b-04c3-a3fe-a0c2-9bd60895f62f">
                 <txtName>STRASBOURG APP</txtName>
               </UniUid>
-              <codeType version="1" subversion="2">APP</codeType>
+              <codeType subversion="1.2" version="1">APP</codeType>
               <noSeq>1</noSeq>
             </SerUid>
-            <Stt priority="1" mid="83126b8d-f9a0-bbc8-5248-17a10f68c2a4">
+            <OrgUidAssoc mid="fd2b4e07-5a80-d3f6-63f2-660d07265922">
+              <txtName/>
+            </OrgUidAssoc>
+            <Stt priority="1">
               <codeWorkHr>H24</codeWorkHr>
             </Stt>
-            <Stt priority="2">
-              <codeWorkHr>HX</codeWorkHr>
+            <Stt priority="2" authority="false">
+              <codeWorkHr author="">HX</codeWorkHr>
             </Stt>
-            <txtRmk>aka STRASBOURG approche</txtRmk>
+            <txtRmk> aka STRASBOURG approche</txtRmk>
           </Ser>
         </OFMX-Snapshot>
       END

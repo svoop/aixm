@@ -4,9 +4,6 @@ module AIXM
 
   # Calculate OFMX-compliant payload hashes.
   #
-  # If you pass a Nokogiri::XML::DocumentFragment, it is implicitly cloned and
-  # therefore the original document won't be altered.
-  #
   # @example with XML fragment string
   #   xml = '<xml><a></a></xml>'
   #   AIXM::PayloadHash.new(xml).to_uuid
@@ -17,12 +14,15 @@ module AIXM
   #
   # @see https://gitlab.com/openflightmaps/ofmx/wikis/Features#mid
   class PayloadHash
-    # @return [Nokogiri::XML::DocumentFragment] parsed/cloned XML fragment
-    attr_reader :fragment
+    IGNORED_ATTRIBUTES = %w(mid source).freeze
 
-    # @param fragment [Nokogiri::XML::DocumentFragment, String] XML fragment
+    # @param fragment [Nokogiri::XML::DocumentFragment, Nokogiri::XML::Element, String] XML fragment
     def initialize(fragment)
-      @fragment = fragment.is_a?(Nokogiri::XML::DocumentFragment) ? fragment.dup : Nokogiri::XML.fragment(fragment)
+      @fragment = case fragment
+        when Nokogiri::XML::DocumentFragment then fragment
+        when Nokogiri::XML::Element, String then Nokogiri::XML.fragment(fragment)
+        else fail ArgumentError
+      end
     end
 
     # @return [String] UUIDv3
@@ -33,16 +33,14 @@ module AIXM
     private
 
     def payload_array
-      @fragment.
-        to_s.
-        gsub(%r((?:mid|source)="[^"]*"), '').   # remove existing mid and source attributes
-        sub(%r(\A(<\w+Uid)\w+), '\1').   # remove Uid name extension
-        scan(%r(<([\w-]+)([^>]*)>([^<]*))).each_with_object([]) do |(e, a, t), m|
-          m << e << a.scan(%r(([\w-]+)="([^"]*)")).sort.flatten << t
-        end.
-        flatten.
-        keep_if { |s| s.match?(/[^[:space:]]/m) }.
-        compact
+      @fragment.css('*').each_with_object([]) do |element, array|
+        array << element.name.sub(/\A(\w+Uid)\w+/, '\1')   # remove name extension
+        element.attributes.sort.each do |name, attribute|
+          array.push(name, attribute.value) unless IGNORED_ATTRIBUTES.include? name
+        end
+        array << element.child.text if element.children.one? && element.child.text?
+        array << '' if element.children.none?
+      end
     end
 
     def uuid_for(array)
@@ -52,26 +50,31 @@ module AIXM
     # Insert OFMX-compliant payload hashes as mid attributes into an XML
     # document.
     #
+    # Keep in mind: If you pass a Nokogiri::XML::Document, the mid attributes
+    # are added into this document. In order to leave the original document
+    # untouched, you have to `dup` it.
+    #
     # @example with XML string
     #   string = '<OFMX-Snapshot><Ahp><AhpUid></AhpUid></Ahp></OFMX-Snapshot>'
     #   converter = AIXM::PayloadHash::Mid.new(string)
+    #   converter.insert_mid.to_xml   # returns XML as String
     #
     # @example with Nokogiri document
     #   document = File.open("file.ofmx") { Nokogiri::XML(_1) }
     #   converter = AIXM::PayloadHash::Mid.new(document)
-    #
-    # @example insert mid and return XML document or XML string
-    #   converter.insert_mid.document   # returns Nokogiri::XML::Document
-    #   converter.insert_mid.to_xml     # returns XML as String
+    #   converter.insert_mid.to_xml   # returns XML as String
+    #   document.to_xml               # returns XML as String as well
     #
     # @see https://gitlab.com/openflightmaps/ofmx/wikis/Features#mid
     class Mid
-      # @return [Nokogiri::XML::Document] parsed/cloned XML document
-      attr_reader :document
 
       # @param document [Nokogiri::XML::Document, String] XML document
       def initialize(document)
-        @document = document.is_a?(Nokogiri::XML::Document) ? document : Nokogiri::XML(document)
+        @document = case document
+          when Nokogiri::XML::Document then document
+          when String then Nokogiri::XML(document)
+          else fail ArgumentError
+        end
       end
 
       # Insert or update mid attributes on all *Uid elements
@@ -84,7 +87,7 @@ module AIXM
         self
       end
 
-      # @return [Nokogiri::XML::Document] parsed/cloned XML document as string
+      # @return [String] XML document as XML string
       def to_xml
         @document.to_xml
       end
