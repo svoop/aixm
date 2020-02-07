@@ -64,5 +64,4 @@ require_relative 'aixm/feature/obstacle'
 require_relative 'aixm/feature/obstacle_group'
 
 require_relative 'aixm/shortcuts'
-
-require_relative 'aixm/mkmid'
+require_relative 'aixm/executables'

@@ -8,4 +8,4 @@ gemfile do
   gem 'aixm', '~> 0'
 end
 
-AIXM::Mkmid.new.run
+AIXM::Executables::Mkmid.new.run
