@@ -35,10 +35,12 @@ Here's how to build a document object, populate it with a simple feature and the
 document = AIXM.document(
   region: 'LF'
 )
-document.features << AIXM.designated_point(
-  id: "ABIXI",
-  xy: AIXM.xy(lat: %q(46°31'54.3"N), long: %q(002°19'55.2"W)),
-  type: :icao
+document.add_feature(
+  AIXM.designated_point(
+    id: "ABIXI",
+    xy: AIXM.xy(lat: %q(46°31'54.3"N), long: %q(002°19'55.2"W)),
+    type: :icao
+  )
 )
 AIXM.ofmx!
 document.to_xml

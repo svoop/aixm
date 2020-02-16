@@ -80,8 +80,8 @@ module AIXM
       list.group_by(&:last).each do |_, grouped_list|
         first_obstacle = grouped_list.first.first
         obstacle_group = AIXM.obstacle_group(source: first_obstacle.source, region: first_obstacle.region)
-        grouped_list.each { |o, _| obstacle_group.obstacles << features.delete(o) }
-        features << obstacle_group
+        grouped_list.each { |o, _| obstacle_group.add_obstacle features.send(:delete, o) }
+        add_feature obstacle_group
       end.count
     end
 
