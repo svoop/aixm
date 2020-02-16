@@ -107,25 +107,7 @@ In case you want to ignore certain XML schema validation errors, set this config
 AIXM.config.ignored_errors = /invalid date/i
 ```
 
-## Payload Hash
-
-OFMX defines a [payload hash function](https://gitlab.com/openflightmaps/ofmx/wikis/Functions) used to facilitate association and modification tracking. It is used internally, but you can also use it in your own code:
-
-```ruby
-# Payload hash of XML fragment string
-xml = '<xml><a></a></xml>'
-AIXM::PayloadHash.new(xml).to_uuid
-
-# Payload hash of Nokogiri XML fragment
-document = File.open("file.xml") { Nokogiri::XML(_1) }
-AIXM::PayloadHash.new(document).to_uuid
-```
-
-## Validation
-
-`AIXM::Document#valid?` validates the resulting AIXM or OFMX against its XML schema. If any, you find the errors in `AIXM::Document#errors`.
-
-## Model
+## Models
 
 ### Fundamentals
 * [Document](http://www.rubydoc.info/gems/aixm/AIXM/Document.html)
@@ -165,6 +147,51 @@ AIXM::PayloadHash.new(document).to_uuid
 * [Layer](http://www.rubydoc.info/gems/aixm/AIXM/Component/Layer.html)
 * [Vertical limit](http://www.rubydoc.info/gems/aixm/AIXM/Component/VerticalLimit.html)
 * [Timetable](http://www.rubydoc.info/gems/aixm/AIXM/Component/Timetable.html)
+
+## Associations
+
+The different models are interwoven with [`has_many` and `has_one` associations](http://www.rubydoc.info/gems/aixm/AIXM/Association).
+
+Please note that `has_many` associations are instances `AIXM::Association::Array` which mostly behave like normal arrays. However, you must not add or remove elements on the array directly but use the corresponding method on the associating model instead:
+
+```ruby
+document.features << airport   # => NoMethodError
+document.add_feature airport   # okay
+```
+
+### find
+
+Use `find` on `has_many` to filter associations by class or attribute values:
+
+```ruby
+document.features.find(:airport)   # => [#<AIXM::Feature::Airport>, #<AIXM::Feature::Airport>, ...]
+```
+
+### duplicates
+
+Equally on `has_many` associations, use `duplicates` to find identical or equal associations:
+
+```ruby
+document.features.duplicates   # => [#<AIXM::Feature::Unit>, #<AIXM::Feature::Service>, ...]
+```
+
+## Payload Hash
+
+OFMX defines a [payload hash function](https://gitlab.com/openflightmaps/ofmx/wikis/Functions) used to facilitate association and modification tracking. It is used internally, but you can also use it in your own code:
+
+```ruby
+# Payload hash of XML fragment string
+xml = '<xml><a></a></xml>'
+AIXM::PayloadHash.new(xml).to_uuid
+
+# Payload hash of Nokogiri XML fragment
+document = File.open("file.xml") { Nokogiri::XML(_1) }
+AIXM::PayloadHash.new(document).to_uuid
+```
+
+## Validation
+
+`AIXM::Document#valid?` validates the resulting AIXM or OFMX against its XML schema. If any, you find the errors in `AIXM::Document#errors`.
 
 ## Refinements
 

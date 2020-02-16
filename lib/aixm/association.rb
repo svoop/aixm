@@ -188,7 +188,7 @@ module AIXM
           end
           instance_exec(object, **options, &association_block) if association_block
           fail(ArgumentError, "#{object.__class__} not allowed") unless class_names.reduce(false){ |m, c| m || object.is_a?(c.to_class) }
-          send(attribute) << object
+          send(attribute).send(:push, object)
           object.instance_variable_set(:"@#{inversion}", self)
           self
         end
@@ -199,7 +199,7 @@ module AIXM
         end
         # remove_feature
         define_method(:"remove_#{association}") do |object|
-          send(attribute).delete(object)
+          send(attribute).send(:delete, object)
           object.instance_variable_set(:"@#{inversion}", nil)
           self
         end
@@ -254,7 +254,10 @@ module AIXM
     end
 
     class Array < ::Array
-      # Find has_many associations by class and/or attribute values.
+      private :<<, :push, :append, :unshift, :prepend
+      private :delete, :pop, :shift
+
+      # Find by class and/or attribute values on a hay_many association.
       #
       # @example
       #   class Blog
@@ -295,6 +298,30 @@ module AIXM
                 memo && element.send(attribute) == value
               end
             end
+          end
+        )
+      end
+
+      # Find equal or identical duplicates on a has_many association.
+      #
+      # @example
+      #   class Blog
+      #     include AIXM::Association
+      #     has_many :posts
+      #   end
+      #   class Post
+      #     include AIXM::Association
+      #     belongs_to :blog
+      #   end
+      #   blog, post = Blog.new, Post.new
+      #   blog.add_posts([post, post])
+      #   blog.posts.duplicates   # => [post]
+      #
+      # @return [AIXM::Association::Array]
+      def duplicates
+        self.class.new(
+          select.with_index do |element, index|
+            index != self.index(element)
           end
         )
       end

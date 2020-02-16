@@ -42,6 +42,10 @@ describe AIXM::Association do
           _(Post.belongs_to_attributes).must_equal %i(blog)
         end
 
+        it "fails to add post to posts array of blog" do
+          _{ blog.posts << post }.must_raise NoMethodError
+        end
+
         it "adds post to blog" do
           _(blog.add_post(post)).must_equal blog
           _(blog.posts).must_equal [post]
@@ -589,37 +593,68 @@ describe AIXM::Association do
   end
 
   describe AIXM::Association::Array do
-    describe :find do
-      subject do
-        AIXM::Factory.document
-      end
+    subject do
+      AIXM::Factory.document
+    end
 
+    describe :find do
       it "returns array of elements by class shortcut" do
-        result = subject.features.find(:airport)
-        _(result).must_be_instance_of AIXM::Association::Array
-        _(result.map(&:id)).must_equal %w(LFNT)
+        subject.features.find(:airport).then do |result|
+          _(result).must_be_instance_of AIXM::Association::Array
+          _(result.map(&:id)).must_equal %w(LFNT)
+        end
       end
 
       it "returns array of elements by class" do
-        result = subject.features.find(AIXM::Feature::Airport)
-        _(result).must_be_instance_of AIXM::Association::Array
-        _(result.map(&:id)).must_equal %w(LFNT)
+        subject.features.find(AIXM::Feature::Airport).then do |result|
+          _(result).must_be_instance_of AIXM::Association::Array
+          _(result.map(&:id)).must_equal %w(LFNT)
+        end
       end
 
       it "returns array of elements by class and attributes" do
-        result = subject.features.find(:airport, id: "LFNT")
-        _(result).must_be_instance_of AIXM::Association::Array
-        _(result.map(&:id)).must_equal %w(LFNT)
+        subject.features.find(:airport, id: "LFNT").then do |result|
+          _(result).must_be_instance_of AIXM::Association::Array
+          _(result.map(&:id)).must_equal %w(LFNT)
+        end
       end
 
       it "returns empty array if nothing matches" do
-        result = subject.features.find(:airport, id: "FAKE")
-        _(result).must_be_instance_of AIXM::Association::Array
-        _(result).must_be :empty?
+        subject.features.find(:airport, id: "FAKE").then do |result|
+          _(result).must_be_instance_of AIXM::Association::Array
+          _(result).must_be :empty?
+        end
       end
 
       it "fails on invalid shortcut" do
         _{ subject.features.find(:fake) }.must_raise ArgumentError
+      end
+    end
+
+    describe :duplicates do
+      it "returns empty array if no duplicates exist" do
+        subject.features.duplicates.then do |result|
+          _(result).must_be_instance_of AIXM::Association::Array
+          _(result).must_be :empty?
+        end
+      end
+
+      it "returns identical duplicates" do
+        feature = subject.features.last
+        subject.add_feature feature
+        subject.features.duplicates.then do |result|
+          _(result).must_be_instance_of AIXM::Association::Array
+          _(result).must_equal [feature]
+        end
+      end
+
+      it "returns equal duplicates" do
+        dup_feature = subject.features.last.dup
+        subject.add_feature dup_feature
+        subject.features.duplicates.then do |result|
+          _(result).must_be_instance_of AIXM::Association::Array
+          _(result).must_equal [dup_feature]
+        end
       end
     end
   end

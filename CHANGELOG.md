@@ -1,6 +1,9 @@
 ## 0.3.9 (unreleased)
 
 ### Additions
+* Proper `has_many` and `has_one` associations
+* `AIXM::Association:Array#find` and `AIXM::Association:Array#duplicate` on
+  `has_many` associations.
 * `AIXM.config.mid` now defines whether `mid` attributes are inserted or not
   provided the selected schema is OFMX
 * `AIXM::PayloadHash` class

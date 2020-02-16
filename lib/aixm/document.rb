@@ -70,7 +70,7 @@ module AIXM
     # @return [Integer] number of obstacle groups added
     def group_obstacles!(max_distance: AIXM.d(1, :nm))
       obstacles, list = features.find(:obstacle), {}
-      while subject = obstacles.shift
+      while subject = obstacles.send(:shift)
         obstacles.each do |obstacle|
           if subject.xy.distance(obstacle.xy) <= max_distance
             [subject, obstacle].each { |o| list[o] = list[subject] || SecureRandom.uuid }
