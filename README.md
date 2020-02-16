@@ -10,7 +10,7 @@ Partial implementation of the [Aeronautical Information Exchange Model (AIXM 4.5
 For now, only the parts needed to automize the AIP import of [open flightmaps](https://openflightmaps.org) are part of this gem. Most notably, the gem is only a builder for snapshot files and does not parse them.
 
 * [Homepage](https://github.com/svoop/aixm)
-* [API](http://www.rubydoc.info/gems/aixm)
+* [API](https://www.rubydoc.info/gems/aixm)
 * Author: [Sven Schwyn - Bitcetera](http://www.bitcetera.com)
 
 ## Install
@@ -110,47 +110,47 @@ AIXM.config.ignored_errors = /invalid date/i
 ## Models
 
 ### Fundamentals
-* [Document](http://www.rubydoc.info/gems/aixm/AIXM/Document.html)
-* [XY (longitude and latitude)](http://www.rubydoc.info/gems/aixm/AIXM/XY.html)
-* [Z (height, elevation or altitude)](http://www.rubydoc.info/gems/aixm/AIXM/Z.html)
-* [D (distance or length)](http://www.rubydoc.info/gems/aixm/AIXM/D.html)
-* [F (frequency)](http://www.rubydoc.info/gems/aixm/AIXM/F.html)
-* [A (angle)](http://www.rubydoc.info/gems/aixm/AIXM/A.html)
+* [Document](https://www.rubydoc.info/gems/aixm/AIXM/Document.html)
+* [XY (longitude and latitude)](https://www.rubydoc.info/gems/aixm/AIXM/XY.html)
+* [Z (height, elevation or altitude)](https://www.rubydoc.info/gems/aixm/AIXM/Z.html)
+* [D (distance or length)](https://www.rubydoc.info/gems/aixm/AIXM/D.html)
+* [F (frequency)](https://www.rubydoc.info/gems/aixm/AIXM/F.html)
+* [A (angle)](https://www.rubydoc.info/gems/aixm/AIXM/A.html)
 
 ### Features
-* [Address](http://www.rubydoc.info/gems/aixm/AIXM/Feature/Address.html)
-* [Organisation](http://www.rubydoc.info/gems/aixm/AIXM/Feature/Organisation.html)
-* [Unit](http://www.rubydoc.info/gems/aixm/AIXM/Feature/Unit.html)
-* [Service](http://www.rubydoc.info/gems/aixm/AIXM/Component/Service.html)
-* [Airport](http://www.rubydoc.info/gems/aixm/AIXM/Feature/Airport.html)
-* [Airspace](http://www.rubydoc.info/gems/aixm/AIXM/Feature/Airspace.html)
-* [Navigational aid](http://www.rubydoc.info/gems/aixm/AIXM/NavigationalAid.html)
-  * [Designated point](http://www.rubydoc.info/gems/aixm/AIXM/Feature/DesignatedPoint.html)
-  * [DME](http://www.rubydoc.info/gems/aixm/AIXM/Feature/DME.html)
-  * [Marker](http://www.rubydoc.info/gems/aixm/AIXM/Feature/Marker.html)
-  * [NDB](http://www.rubydoc.info/gems/aixm/AIXM/Feature/NDB.html)
-  * [TACAN](http://www.rubydoc.info/gems/aixm/AIXM/Feature/TACAN.html)
-  * [VOR](http://www.rubydoc.info/gems/aixm/AIXM/Feature/VOR.html)
-* [Obstacle and obstacle group](http://www.rubydoc.info/gems/aixm/AIXM/Feature/Obstacle.html)
+* [Address](https://www.rubydoc.info/gems/aixm/AIXM/Feature/Address.html)
+* [Organisation](https://www.rubydoc.info/gems/aixm/AIXM/Feature/Organisation.html)
+* [Unit](https://www.rubydoc.info/gems/aixm/AIXM/Feature/Unit.html)
+* [Service](https://www.rubydoc.info/gems/aixm/AIXM/Component/Service.html)
+* [Airport](https://www.rubydoc.info/gems/aixm/AIXM/Feature/Airport.html)
+* [Airspace](https://www.rubydoc.info/gems/aixm/AIXM/Feature/Airspace.html)
+* [Navigational aid](https://www.rubydoc.info/gems/aixm/AIXM/NavigationalAid.html)
+  * [Designated point](https://www.rubydoc.info/gems/aixm/AIXM/Feature/DesignatedPoint.html)
+  * [DME](https://www.rubydoc.info/gems/aixm/AIXM/Feature/DME.html)
+  * [Marker](https://www.rubydoc.info/gems/aixm/AIXM/Feature/Marker.html)
+  * [NDB](https://www.rubydoc.info/gems/aixm/AIXM/Feature/NDB.html)
+  * [TACAN](https://www.rubydoc.info/gems/aixm/AIXM/Feature/TACAN.html)
+  * [VOR](https://www.rubydoc.info/gems/aixm/AIXM/Feature/VOR.html)
+* [Obstacle and obstacle group](https://www.rubydoc.info/gems/aixm/AIXM/Feature/Obstacle.html)
 
 ### Components
-* [Frequency](http://www.rubydoc.info/gems/aixm/AIXM/Component/Frequency.html)
-* [Geometry](http://www.rubydoc.info/gems/aixm/AIXM/Component/Geometry.html)
-  * [Point](http://www.rubydoc.info/gems/aixm/AIXM/Component/Point.html)
-  * [Arc](http://www.rubydoc.info/gems/aixm/AIXM/Component/Arc.html)
-  * [Border](http://www.rubydoc.info/gems/aixm/AIXM/Component/Border.html)
-  * [Circle](http://www.rubydoc.info/gems/aixm/AIXM/Component/Circle.html)
-* [Runway](http://www.rubydoc.info/gems/aixm/AIXM/Component/Runway.html)
-* [Helipad](http://www.rubydoc.info/gems/aixm/AIXM/Component/Helipad.html)
-* [FATO](http://www.rubydoc.info/gems/aixm/AIXM/Component/FATO.html)
-* [Surface](http://www.rubydoc.info/gems/aixm/AIXM/Component/Surface.html)
-* [Layer](http://www.rubydoc.info/gems/aixm/AIXM/Component/Layer.html)
-* [Vertical limit](http://www.rubydoc.info/gems/aixm/AIXM/Component/VerticalLimit.html)
-* [Timetable](http://www.rubydoc.info/gems/aixm/AIXM/Component/Timetable.html)
+* [Frequency](https://www.rubydoc.info/gems/aixm/AIXM/Component/Frequency.html)
+* [Geometry](https://www.rubydoc.info/gems/aixm/AIXM/Component/Geometry.html)
+  * [Point](https://www.rubydoc.info/gems/aixm/AIXM/Component/Point.html)
+  * [Arc](https://www.rubydoc.info/gems/aixm/AIXM/Component/Arc.html)
+  * [Border](https://www.rubydoc.info/gems/aixm/AIXM/Component/Border.html)
+  * [Circle](https://www.rubydoc.info/gems/aixm/AIXM/Component/Circle.html)
+* [Runway](https://www.rubydoc.info/gems/aixm/AIXM/Component/Runway.html)
+* [Helipad](https://www.rubydoc.info/gems/aixm/AIXM/Component/Helipad.html)
+* [FATO](https://www.rubydoc.info/gems/aixm/AIXM/Component/FATO.html)
+* [Surface](https://www.rubydoc.info/gems/aixm/AIXM/Component/Surface.html)
+* [Layer](https://www.rubydoc.info/gems/aixm/AIXM/Component/Layer.html)
+* [Vertical limit](https://www.rubydoc.info/gems/aixm/AIXM/Component/VerticalLimit.html)
+* [Timetable](https://www.rubydoc.info/gems/aixm/AIXM/Component/Timetable.html)
 
 ## Associations
 
-The different models are interwoven with [`has_many` and `has_one` associations](http://www.rubydoc.info/gems/aixm/AIXM/Association).
+The different models are interwoven with [`has_many` and `has_one` associations](https://www.rubydoc.info/gems/aixm/AIXM/Association).
 
 Please note that `has_many` associations are instances `AIXM::Association::Array` which mostly behave like normal arrays. However, you must not add or remove elements on the array directly but use the corresponding method on the associating model instead:
 
@@ -195,7 +195,7 @@ AIXM::PayloadHash.new(document).to_uuid
 
 ## Refinements
 
-By `using AIXM::Refinements` you get a few handy [extensions to Ruby core classes](http://www.rubydoc.info/gems/aixm/AIXM/Refinements.html).
+By `using AIXM::Refinements` you get a few handy [extensions to Ruby core classes](https://www.rubydoc.info/gems/aixm/AIXM/Refinements.html).
 
 ## Executables
 
