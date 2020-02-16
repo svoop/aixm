@@ -11,7 +11,7 @@ describe AIXM::Component::Helipad do
     end
 
     it "upcases and transcodes valid values" do
-      _(subject.tap { |s| s.name = 'h1' }.name).must_equal 'H1'
+      _(subject.tap { _1.name = 'h1' }.name).must_equal 'H1'
     end
   end
 
@@ -61,8 +61,8 @@ describe AIXM::Component::Helipad do
     end
 
     it "looks up valid values" do
-      _(subject.tap { |s| s.helicopter_class = 1 }.helicopter_class).must_equal :'1'
-      _(subject.tap { |s| s.helicopter_class = :OTHER }.helicopter_class).must_equal :other
+      _(subject.tap { _1.helicopter_class = 1 }.helicopter_class).must_equal :'1'
+      _(subject.tap { _1.helicopter_class = :OTHER }.helicopter_class).must_equal :other
     end
   end
 
@@ -76,8 +76,8 @@ describe AIXM::Component::Helipad do
     end
 
     it "looks up valid values" do
-      _(subject.tap { |s| s.status = :closed }.status).must_equal :closed
-      _(subject.tap { |s| s.status = :SPOWER }.status).must_equal :secondary_power
+      _(subject.tap { _1.status = :closed }.status).must_equal :closed
+      _(subject.tap { _1.status = :SPOWER }.status).must_equal :secondary_power
     end
   end
 
@@ -150,8 +150,8 @@ describe AIXM::Component::Helipad do
 
     it "builds correct minimal OFMX" do
       AIXM.ofmx!
-      %i(z length width helicopter_class marking status remarks).each { |a| subject.send(:"#{a}=", nil) }
-      %i(composition preparation condition pcn siwl_weight siwl_tire_pressure auw_weight remarks).each { |a| subject.surface.send(:"#{a}=", nil) }
+      %i(z length width helicopter_class marking status remarks).each { subject.send(:"#{_1}=", nil) }
+      %i(composition preparation condition pcn siwl_weight siwl_tire_pressure auw_weight remarks).each { subject.surface.send(:"#{_1}=", nil) }
       subject.instance_eval { @lightings.clear }
       _(subject.to_xml).must_equal <<~END
         <Tla>

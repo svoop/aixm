@@ -173,7 +173,7 @@ module AIXM
       def has_many(attribute, as: nil, accept: nil, &association_block)
         association = attribute.to_s.inflect(:singularize)
         inversion = as || self.to_s.inflect(:demodulize, :tableize, :singularize)
-        class_names = [accept || association].flatten.map { |n| AIXM::CLASSES[n.to_sym] || n }
+        class_names = [accept || association].flatten.map { AIXM::CLASSES[_1.to_sym] || _1 }
         (@has_many_attributes ||= []) << attribute
         # features
         define_method(attribute) do
@@ -194,7 +194,7 @@ module AIXM
         end
         # add_features
         define_method(:"add_#{attribute}") do |objects=[], **options, &add_block|
-          objects.each { |o| send(:"add_#{association}", o, **options, &add_block) }
+          objects.each { send(:"add_#{association}", _1, **options, &add_block) }
           self
         end
         # remove_feature
@@ -205,7 +205,7 @@ module AIXM
         end
         # remove_features
         define_method(:"remove_#{attribute}") do |objects=[]|
-          objects.each { |o| send(:"remove_#{association}", o) }
+          objects.each { send(:"remove_#{association}", _1) }
           self
         end
       end
@@ -213,7 +213,7 @@ module AIXM
       def has_one(attribute, as: nil, accept: nil, allow_nil: false)
         association = attribute.to_s
         inversion = (as || self.to_s.inflect(:demodulize, :tableize, :singularize)).to_s
-        class_names = [accept || association].flatten.map { |n| AIXM::CLASSES[n.to_sym] || n }
+        class_names = [accept || association].flatten.map { AIXM::CLASSES[_1.to_sym] || _1 }
         class_names << 'NilClass' if allow_nil
         (@has_one_attributes ||= []) << attribute
         # feature

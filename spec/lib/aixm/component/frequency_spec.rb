@@ -31,11 +31,11 @@ describe AIXM::Component::Frequency do
     end
 
     it "downcases language codes" do
-      _(subject.tap { |s| s.callsigns = { EN: "FOOBAR" } }.callsigns).must_equal(en: "FOOBAR")
+      _(subject.tap { _1.callsigns = { EN: "FOOBAR" } }.callsigns).must_equal(en: "FOOBAR")
     end
 
     it "upcases and transcodes callsigns" do
-      _(subject.tap { |s| s.callsigns = { fr: "Nîmes-Alès" } }.callsigns).must_equal(fr: "NIMES-ALES")
+      _(subject.tap { _1.callsigns = { fr: "Nîmes-Alès" } }.callsigns).must_equal(fr: "NIMES-ALES")
     end
   end
 
@@ -59,8 +59,8 @@ describe AIXM::Component::Frequency do
     end
 
     it "looks up valid values" do
-      _(subject.tap { |s| s.type = :standard }.type).must_equal :standard
-      _(subject.tap { |s| s.type = :ALT }.type).must_equal :alternative
+      _(subject.tap { _1.type = :standard }.type).must_equal :standard
+      _(subject.tap { _1.type = :ALT }.type).must_equal :alternative
     end
   end
 

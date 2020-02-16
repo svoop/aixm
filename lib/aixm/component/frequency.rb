@@ -78,7 +78,7 @@ module AIXM
 
       def callsigns=(value)
         fail(ArgumentError, "invalid callsigns") unless value.is_a?(Hash)
-        @callsigns = value.transform_keys { |k| k.to_sym.downcase }.transform_values { |v| v.to_s.uptrans }
+        @callsigns = value.transform_keys { _1.to_sym.downcase }.transform_values { _1.to_s.uptrans }
       end
 
       def reception_f=(value)

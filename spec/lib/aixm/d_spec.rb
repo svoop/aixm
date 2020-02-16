@@ -11,7 +11,7 @@ describe AIXM::D do
     end
 
     it "converts Numeric to Float" do
-      _(subject.tap { |s| s.dist = 5 }.dist).must_equal 5.0
+      _(subject.tap { _1.dist = 5 }.dist).must_equal 5.0
     end
   end
 
@@ -21,7 +21,7 @@ describe AIXM::D do
     end
 
     it "symbolizes and downcases values" do
-      _(subject.tap { |s| s.unit = "NM" }.unit).must_equal :nm
+      _(subject.tap { _1.unit = "NM" }.unit).must_equal :nm
     end
   end
 
@@ -140,11 +140,11 @@ describe AIXM::D do
 
   describe :zero? do
     it "returns true for zero distance" do
-      _(subject.tap { |s| s.dist = 0 }).must_be :zero?
+      _(subject.tap { _1.dist = 0 }).must_be :zero?
     end
 
     it "returns false for non-zero distance" do
-      _(subject.tap { |s| s.dist = 1 }).wont_be :zero?
+      _(subject.tap { _1.dist = 1 }).wont_be :zero?
     end
   end
 end

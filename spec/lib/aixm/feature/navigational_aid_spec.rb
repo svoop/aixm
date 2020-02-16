@@ -15,7 +15,7 @@ describe AIXM::Feature::NavigationalAid do
     end
 
     it "upcases value" do
-      _(subject.tap { |s| s.id = 'lol' }.id).must_equal 'LOL'
+      _(subject.tap { _1.id = 'lol' }.id).must_equal 'LOL'
     end
   end
 
@@ -29,7 +29,7 @@ describe AIXM::Feature::NavigationalAid do
     end
 
     it "upcases and transcodes value" do
-      _(subject.tap { |s| s.name = 'löl' }.name).must_equal 'LOEL'
+      _(subject.tap { _1.name = 'löl' }.name).must_equal 'LOEL'
     end
   end
 

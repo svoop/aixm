@@ -12,8 +12,8 @@ describe AIXM::Feature::NavigationalAid::VOR do
       end
 
       it "looks up valid values" do
-        _(subject.tap { |s| s.type = :conventional }.type).must_equal :conventional
-        _(subject.tap { |s| s.type = :DVOR }.type).must_equal :doppler
+        _(subject.tap { _1.type = :conventional }.type).must_equal :conventional
+        _(subject.tap { _1.type = :DVOR }.type).must_equal :doppler
       end
     end
 
@@ -33,8 +33,8 @@ describe AIXM::Feature::NavigationalAid::VOR do
       end
 
       it "looks up valid values" do
-        _(subject.tap { |s| s.north = :magnetic }.north).must_equal :magnetic
-        _(subject.tap { |s| s.north = :TRUE }.north).must_equal :geographic
+        _(subject.tap { _1.north = :magnetic }.north).must_equal :magnetic
+        _(subject.tap { _1.north = :TRUE }.north).must_equal :geographic
       end
     end
 

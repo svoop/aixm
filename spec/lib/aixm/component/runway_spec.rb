@@ -28,7 +28,7 @@ describe AIXM::Component::Runway do
     end
 
     it "upcases and transcodes valid values" do
-      _(subject.tap { |s| s.name = '10r/28l' }.name).must_equal '10R/28L'
+      _(subject.tap { _1.name = '10r/28l' }.name).must_equal '10R/28L'
     end
   end
 
@@ -62,8 +62,8 @@ describe AIXM::Component::Runway do
     end
 
     it "looks up valid values" do
-      _(subject.tap { |s| s.status = :closed }.status).must_equal :closed
-      _(subject.tap { |s| s.status = :SPOWER }.status).must_equal :secondary_power
+      _(subject.tap { _1.status = :closed }.status).must_equal :closed
+      _(subject.tap { _1.status = :SPOWER }.status).must_equal :secondary_power
     end
   end
 
@@ -218,9 +218,9 @@ describe AIXM::Component::Runway do
 
     it "builds correct minimal OFMX" do
       AIXM.ofmx!
-      %i(length width status remarks).each { |a| subject.send(:"#{a}=", nil) }
-      %i(composition preparation condition pcn siwl_weight siwl_tire_pressure auw_weight remarks).each { |a| subject.surface.send(:"#{a}=", nil) }
-      %i(forth back).each { |d| subject.send(d).instance_eval { @lightings.clear } }
+      %i(length width status remarks).each { subject.send(:"#{_1}=", nil) }
+      %i(composition preparation condition pcn siwl_weight siwl_tire_pressure auw_weight remarks).each { subject.surface.send(:"#{_1}=", nil) }
+      %i(forth back).each { subject.send(_1).instance_eval { @lightings.clear } }
       _(subject.to_xml).must_equal <<~END
         <Rwy>
           <RwyUid>
@@ -370,8 +370,8 @@ describe AIXM::Component::Runway::Direction do
     end
 
     it "looks up valid values" do
-      _(subject.tap { |s| s.vfr_pattern = :left }.vfr_pattern).must_equal :left
-      _(subject.tap { |s| s.vfr_pattern = :E }.vfr_pattern).must_equal :left_or_right
+      _(subject.tap { _1.vfr_pattern = :left }.vfr_pattern).must_equal :left
+      _(subject.tap { _1.vfr_pattern = :E }.vfr_pattern).must_equal :left_or_right
     end
   end
 
@@ -450,7 +450,7 @@ describe AIXM::Component::Runway::Direction do
 
     it "builds correct minimal OFMX" do
       AIXM.ofmx!
-      %i(geographic_orientation z displaced_threshold vfr_pattern remarks).each { |a| subject.send(:"#{a}=", nil) }
+      %i(geographic_orientation z displaced_threshold vfr_pattern remarks).each { subject.send(:"#{_1}=", nil) }
       subject.instance_eval { @lightings.clear }
       _(subject.to_xml).must_equal <<~END
         <Rdn>

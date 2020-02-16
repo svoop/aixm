@@ -20,11 +20,11 @@ describe AIXM::Feature::Airspace do
       end
 
       it "falls back to id derived from digest of type, local_type and name" do
-        _(subject.tap { |s| s.id = nil }.id).must_equal 'C55466EC'
+        _(subject.tap { _1.id = nil }.id).must_equal 'C55466EC'
       end
 
       it "upcases value" do
-        _(subject.tap { |s| s.id = 'löl' }.id).must_equal 'LOEL'
+        _(subject.tap { _1.id = 'löl' }.id).must_equal 'LOEL'
       end
     end
 
@@ -34,8 +34,8 @@ describe AIXM::Feature::Airspace do
       end
 
       it "looks up valid values" do
-        _(subject.tap { |s| s.type = :danger_area }.type).must_equal :danger_area
-        _(subject.tap { |s| s.type = :P }.type).must_equal :prohibited_area
+        _(subject.tap { _1.type = :danger_area }.type).must_equal :danger_area
+        _(subject.tap { _1.type = :P }.type).must_equal :prohibited_area
       end
     end
 
@@ -49,7 +49,7 @@ describe AIXM::Feature::Airspace do
       end
 
       it "upcases value" do
-        _(subject.tap { |s| s.local_type = 'löl' }.local_type).must_equal 'LOEL'
+        _(subject.tap { _1.local_type = 'löl' }.local_type).must_equal 'LOEL'
       end
     end
 
@@ -63,7 +63,7 @@ describe AIXM::Feature::Airspace do
       end
 
       it "upcases value" do
-        _(subject.tap { |s| s.name = 'löl' }.name).must_equal 'LOEL'
+        _(subject.tap { _1.name = 'löl' }.name).must_equal 'LOEL'
       end
     end
 

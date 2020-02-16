@@ -11,8 +11,8 @@ describe AIXM::Component::Timetable do
     end
 
     it "looks up valid values" do
-      _(subject.tap { |s| s.code = :notam }.code).must_equal :notam
-      _(subject.tap { |s| s.code = :H24 }.code).must_equal :continuous
+      _(subject.tap { _1.code = :notam }.code).must_equal :notam
+      _(subject.tap { _1.code = :H24 }.code).must_equal :continuous
     end
   end
 

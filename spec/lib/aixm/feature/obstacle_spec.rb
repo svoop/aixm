@@ -25,7 +25,7 @@ describe AIXM::Feature::Obstacle do
     end
 
     it "upcases and transcodes valid values" do
-      _(subject.tap { |s| s.name = 'Teufelsbrücke' }.name).must_equal 'TEUFELSBRUECKE'
+      _(subject.tap { _1.name = 'Teufelsbrücke' }.name).must_equal 'TEUFELSBRUECKE'
     end
   end
 
@@ -35,8 +35,8 @@ describe AIXM::Feature::Obstacle do
     end
 
     it "looks up valid values" do
-      _(subject.tap { |s| s.type = :WINDTURBINE }.type).must_equal :wind_turbine
-      _(subject.tap { |s| s.type = :TOWER }.type).must_equal :tower
+      _(subject.tap { _1.type = :WINDTURBINE }.type).must_equal :wind_turbine
+      _(subject.tap { _1.type = :TOWER }.type).must_equal :tower
     end
   end
 
@@ -82,8 +82,8 @@ describe AIXM::Feature::Obstacle do
     end
 
     it "stringifies valid values" do
-      _(subject.tap { |s| s.lighting_remarks = 'foobar' }.lighting_remarks).must_equal 'foobar'
-      _(subject.tap { |s| s.lighting_remarks = 123 }.lighting_remarks).must_equal '123'
+      _(subject.tap { _1.lighting_remarks = 'foobar' }.lighting_remarks).must_equal 'foobar'
+      _(subject.tap { _1.lighting_remarks = 123 }.lighting_remarks).must_equal '123'
     end
   end
 
@@ -103,8 +103,8 @@ describe AIXM::Feature::Obstacle do
     end
 
     it "stringifies valid values" do
-      _(subject.tap { |s| s.marking_remarks = 'foobar' }.marking_remarks).must_equal 'foobar'
-      _(subject.tap { |s| s.marking_remarks = 123 }.marking_remarks).must_equal '123'
+      _(subject.tap { _1.marking_remarks = 'foobar' }.marking_remarks).must_equal 'foobar'
+      _(subject.tap { _1.marking_remarks = 123 }.marking_remarks).must_equal '123'
     end
   end
 
@@ -159,7 +159,7 @@ describe AIXM::Feature::Obstacle do
 
     it "parses dates and times" do
       string = '2018-01-01 12:00:00 +0100'
-      _(subject.tap { |s| s.valid_from = string }.valid_from).must_equal Time.parse(string)
+      _(subject.tap { _1.valid_from = string }.valid_from).must_equal Time.parse(string)
     end
   end
 
@@ -174,7 +174,7 @@ describe AIXM::Feature::Obstacle do
 
     it "parses dates and times" do
       string = '2018-01-01 12:00:00 +0100'
-      _(subject.tap { |s| s.valid_until = string }.valid_until).must_equal Time.parse(string)
+      _(subject.tap { _1.valid_until = string }.valid_until).must_equal Time.parse(string)
     end
   end
 

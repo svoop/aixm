@@ -11,7 +11,7 @@ describe AIXM::Z do
     end
 
     it "converts Numeric to Integer" do
-      _(subject.tap { |s| s.alt = 5.5 }.alt).must_equal 5
+      _(subject.tap { _1.alt = 5.5 }.alt).must_equal 5
     end
   end
 
@@ -21,7 +21,7 @@ describe AIXM::Z do
     end
 
     it "symbolizes and downcases values" do
-      _(subject.tap { |s| s.code = "QFE" }.code).must_equal :qfe
+      _(subject.tap { _1.code = "QFE" }.code).must_equal :qfe
     end
   end
 
@@ -84,11 +84,11 @@ describe AIXM::Z do
 
   describe :zero? do
     it "returns true for zero height, elevation or altitude" do
-      _(subject.tap { |s| s.alt = 0 }).must_be :zero?
+      _(subject.tap { _1.alt = 0 }).must_be :zero?
     end
 
     it "returns false for non-zero height, elevation or altitude" do
-      _(subject.tap { |s| s.alt = 1 }).wont_be :zero?
+      _(subject.tap { _1.alt = 1 }).wont_be :zero?
     end
   end
 end

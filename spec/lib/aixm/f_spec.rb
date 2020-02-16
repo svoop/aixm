@@ -11,7 +11,7 @@ describe AIXM::F do
     end
 
     it "converts Numeric to Float" do
-      _(subject.tap { |s| s.freq = 5 }.freq).must_equal 5.0
+      _(subject.tap { _1.freq = 5 }.freq).must_equal 5.0
     end
   end
 
@@ -21,7 +21,7 @@ describe AIXM::F do
     end
 
     it "symbolizes and downcases values" do
-      _(subject.tap { |s| s.unit = "MHz" }.unit).must_equal :mhz
+      _(subject.tap { _1.unit = "MHz" }.unit).must_equal :mhz
     end
   end
 
@@ -75,11 +75,11 @@ describe AIXM::F do
 
   describe :zero? do
     it "returns true for zero frequency" do
-      _(subject.tap { |s| s.freq = 0 }).must_be :zero?
+      _(subject.tap { _1.freq = 0 }).must_be :zero?
     end
 
     it "returns false for non-zero frequency" do
-      _(subject.tap { |s| s.freq = 1 }).wont_be :zero?
+      _(subject.tap { _1.freq = 1 }).wont_be :zero?
     end
   end
 end

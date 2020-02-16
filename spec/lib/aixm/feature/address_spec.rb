@@ -12,8 +12,8 @@ describe AIXM::Feature::Address do
     end
 
     it "looks up valid values" do
-      _(subject.tap { |s| s.type = :phone }.type).must_equal :phone
-      _(subject.tap { |s| s.type = :RADIO }.type).must_equal :radio_frequency
+      _(subject.tap { _1.type = :phone }.type).must_equal :phone
+      _(subject.tap { _1.type = :RADIO }.type).must_equal :radio_frequency
     end
   end
 

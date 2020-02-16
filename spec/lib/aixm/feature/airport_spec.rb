@@ -11,12 +11,12 @@ describe AIXM::Feature::Airport do
     end
 
     it "combines 2 character region with an 8 characters digest from name" do
-      _(subject.tap { |s| s.id = 'lf' }.id).must_equal 'LFD18754F5'
-      _(subject.tap { |s| s.name = 'OTHER'; s.id = 'lf' }.id).must_equal 'LFD646E0F9'
+      _(subject.tap { _1.id = 'lf' }.id).must_equal 'LFD18754F5'
+      _(subject.tap { _1.name = 'OTHER'; _1.id = 'lf' }.id).must_equal 'LFD646E0F9'
     end
 
     it "upcases valid values" do
-      _(subject.tap { |s| s.id = 'lfnt' }.id).must_equal 'LFNT'
+      _(subject.tap { _1.id = 'lfnt' }.id).must_equal 'LFNT'
     end
   end
 
@@ -26,7 +26,7 @@ describe AIXM::Feature::Airport do
     end
 
     it "upcases and transcodes valid values" do
-      _(subject.tap { |s| s.name = 'Nîmes-Alès' }.name).must_equal 'NIMES-ALES'
+      _(subject.tap { _1.name = 'Nîmes-Alès' }.name).must_equal 'NIMES-ALES'
     end
   end
 
@@ -40,7 +40,7 @@ describe AIXM::Feature::Airport do
     end
 
     it "upcases valid values" do
-      _(subject.tap { |s| s.gps = 'Ebdeurne' }.gps).must_equal 'EBDEURNE'
+      _(subject.tap { _1.gps = 'Ebdeurne' }.gps).must_equal 'EBDEURNE'
     end
   end
 
@@ -54,8 +54,8 @@ describe AIXM::Feature::Airport do
     end
 
     it "looks up valid values" do
-      _(subject.tap { |s| s.type = :landing_site }.type).must_equal :landing_site
-      _(subject.tap { |s| s.type = :LS }.type).must_equal :landing_site
+      _(subject.tap { _1.type = :landing_site }.type).must_equal :landing_site
+      _(subject.tap { _1.type = :LS }.type).must_equal :landing_site
     end
 
     it "derives values from runways and helipads" do
@@ -89,8 +89,8 @@ describe AIXM::Feature::Airport do
     end
 
     it "converts valid values to Float" do
-      _(subject.tap { |s| s.declination = 10 }.declination).must_equal 10.0
-      _(subject.tap { |s| s.declination = 20.0 }.declination).must_equal 20.0
+      _(subject.tap { _1.declination = 10 }.declination).must_equal 10.0
+      _(subject.tap { _1.declination = 20.0 }.declination).must_equal 20.0
     end
   end
 
@@ -118,7 +118,7 @@ describe AIXM::Feature::Airport do
     end
 
     it "upcases and transcodes valid values" do
-      _(subject.tap { |s| s.operator = 'Municipality of Nîmes-Alès' }.operator).must_equal 'MUNICIPALITY OF NIMES-ALES'
+      _(subject.tap { _1.operator = 'Municipality of Nîmes-Alès' }.operator).must_equal 'MUNICIPALITY OF NIMES-ALES'
     end
   end
 
@@ -144,8 +144,8 @@ describe AIXM::Feature::Airport do
       it "accepts complex limitation" do
         count = subject.usage_limitations.count
         subject.add_usage_limitation(type: :permitted) do |permitted|
-          permitted.add_condition { |c| c.aircraft = :glider }
-          permitted.add_condition { |c| c.rule = :ifr }
+          permitted.add_condition { _1.aircraft = :glider }
+          permitted.add_condition { _1.rule = :ifr }
         end
         _(subject.usage_limitations.count).must_equal count + 1
         _(subject.usage_limitations.last.conditions.count).must_equal 2
@@ -504,7 +504,7 @@ describe AIXM::Feature::Airport do
 
     it "builds correct minimal OFMX" do
       AIXM.ofmx!
-      %i(z declination transition_z operator remarks).each { |a| subject.send(:"#{a}=", nil) }
+      %i(z declination transition_z operator remarks).each { subject.send(:"#{_1}=", nil) }
       subject.instance_eval { @addresses.clear }
       subject.instance_eval { @runways.clear }
       subject.instance_eval { @fatos.clear }
@@ -542,8 +542,8 @@ describe AIXM::Feature::Airport::UsageLimitation do
     end
 
     it "looks up valid values" do
-      _(subject.tap { |s| s.type = :permitted }.type).must_equal :permitted
-      _(subject.tap { |s| s.type = :RESERV }.type).must_equal :reservation_required
+      _(subject.tap { _1.type = :permitted }.type).must_equal :permitted
+      _(subject.tap { _1.type = :RESERV }.type).must_equal :reservation_required
     end
   end
 
@@ -606,8 +606,8 @@ describe AIXM::Feature::Airport::UsageLimitation::Condition do
     end
 
     it "looks up valid values" do
-      _(subject.tap { |s| s.aircraft = :glider }.aircraft).must_equal :glider
-      _(subject.tap { |s| s.aircraft = :H }.aircraft).must_equal :helicopter
+      _(subject.tap { _1.aircraft = :glider }.aircraft).must_equal :glider
+      _(subject.tap { _1.aircraft = :H }.aircraft).must_equal :helicopter
     end
   end
 
@@ -621,8 +621,8 @@ describe AIXM::Feature::Airport::UsageLimitation::Condition do
     end
 
     it "looks up valid values" do
-      _(subject.tap { |s| s.rule = :ifr }.rule).must_equal :ifr
-      _(subject.tap { |s| s.rule = :IV }.rule).must_equal :ifr_and_vfr
+      _(subject.tap { _1.rule = :ifr }.rule).must_equal :ifr
+      _(subject.tap { _1.rule = :IV }.rule).must_equal :ifr_and_vfr
     end
   end
 
@@ -636,8 +636,8 @@ describe AIXM::Feature::Airport::UsageLimitation::Condition do
     end
 
     it "looks up valid values" do
-      _(subject.tap { |s| s.realm = :civilian }.realm).must_equal :civilian
-      _(subject.tap { |s| s.realm = :MIL }.realm).must_equal :military
+      _(subject.tap { _1.realm = :civilian }.realm).must_equal :civilian
+      _(subject.tap { _1.realm = :MIL }.realm).must_equal :military
     end
   end
 
@@ -651,8 +651,8 @@ describe AIXM::Feature::Airport::UsageLimitation::Condition do
     end
 
     it "looks up valid values" do
-      _(subject.tap { |s| s.origin = :international }.origin).must_equal :international
-      _(subject.tap { |s| s.origin = :NTL }.origin).must_equal :national
+      _(subject.tap { _1.origin = :international }.origin).must_equal :international
+      _(subject.tap { _1.origin = :NTL }.origin).must_equal :national
     end
   end
 
@@ -666,8 +666,8 @@ describe AIXM::Feature::Airport::UsageLimitation::Condition do
     end
 
     it "looks up valid values" do
-      _(subject.tap { |s| s.purpose = :private }.purpose).must_equal :private
-      _(subject.tap { |s| s.purpose = :TRG }.purpose).must_equal :school_or_training
+      _(subject.tap { _1.purpose = :private }.purpose).must_equal :private
+      _(subject.tap { _1.purpose = :TRG }.purpose).must_equal :school_or_training
     end
   end
 

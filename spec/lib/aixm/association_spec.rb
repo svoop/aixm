@@ -7,7 +7,7 @@ describe AIXM::Association do
     end
 
     after do
-      AIXM::CLASSES.each_key { |c| Object.send(:remove_const, c.capitalize) }
+      AIXM::CLASSES.each_key { Object.send(:remove_const, _1.capitalize) }
       AIXM::CLASSES = @@aixm_classes
     end
 
@@ -336,7 +336,7 @@ describe AIXM::Association do
         let(:post) { Post.new }
 
         it "creates and adds post to blog" do
-          _(blog.add_post(title: 'title') { |p| p.text = 'text' }).must_equal blog
+          _(blog.add_post(title: 'title') { _1.text = 'text' }).must_equal blog
           _(blog.posts.count).must_equal 1
           _(blog.posts.first.title).must_equal 'title'
           _(blog.posts.first.text).must_equal 'text'

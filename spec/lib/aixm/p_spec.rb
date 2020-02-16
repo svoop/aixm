@@ -11,7 +11,7 @@ describe AIXM::P do
     end
 
     it "converts Numeric to Float" do
-      _(subject.tap { |s| s.pres = 5 }.pres).must_equal 5.0
+      _(subject.tap { _1.pres = 5 }.pres).must_equal 5.0
     end
   end
 
@@ -21,7 +21,7 @@ describe AIXM::P do
     end
 
     it "symbolizes and downcases values" do
-      _(subject.tap { |s| s.unit = "P" }.unit).must_equal :p
+      _(subject.tap { _1.unit = "P" }.unit).must_equal :p
     end
   end
 
@@ -179,11 +179,11 @@ describe AIXM::P do
 
   describe :zero? do
     it "returns true for zero pressure" do
-      _(subject.tap { |s| s.pres = 0 }).must_be :zero?
+      _(subject.tap { _1.pres = 0 }).must_be :zero?
     end
 
     it "returns false for non-zero pressure" do
-      _(subject.tap { |s| s.pres = 1 }).wont_be :zero?
+      _(subject.tap { _1.pres = 1 }).wont_be :zero?
     end
   end
 end

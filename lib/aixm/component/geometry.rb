@@ -47,7 +47,7 @@ module AIXM
       belongs_to :airspace
 
       def initialize(*segments)
-        segments.each { |s| add_segment(s) }
+        segments.each { add_segment(_1) }
       end
 
       # @return [String]
@@ -63,7 +63,7 @@ module AIXM
       # @return [String] AIXM or OFMX markup
       def to_xml
         fail(GeometryError.new("geometry is not closed", self)) unless closed?
-        segments.map { |h| h.to_xml }.join
+        segments.map { _1.to_xml }.join
       end
 
       private
@@ -80,7 +80,7 @@ module AIXM
 
       def polygon?
         segments.size >= 3 &&
-          !segments.any? { |h| h.is_a?(AIXM::Component::Geometry::Circle) } &&
+          !segments.any? { _1.is_a?(AIXM::Component::Geometry::Circle) } &&
           segments.last.is_a?(AIXM::Component::Geometry::Point) &&
           segments.first.xy == segments.last.xy
       end

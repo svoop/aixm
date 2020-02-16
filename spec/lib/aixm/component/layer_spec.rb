@@ -19,7 +19,7 @@ describe AIXM::Component::Layer do
       end
 
       it "symbolizes and upcases valid values" do
-        _(subject.tap { |s| s.class = 'c' }.class).must_equal :C
+        _(subject.tap { _1.class = 'c' }.class).must_equal :C
       end
     end
 
@@ -33,7 +33,7 @@ describe AIXM::Component::Layer do
       end
 
       it "upcases value" do
-        _(subject.tap { |s| s.location_indicator = 'lfbb' }.location_indicator).must_equal 'LFBB'
+        _(subject.tap { _1.location_indicator = 'lfbb' }.location_indicator).must_equal 'LFBB'
       end
     end
 
@@ -43,8 +43,8 @@ describe AIXM::Component::Layer do
       end
 
       it "looks up valid values" do
-        _(subject.tap { |s| s.activity = :aerodrome_traffic }.activity).must_equal :aerodrome_traffic
-        _(subject.tap { |s| s.activity = :GLIDER }.activity).must_equal :gliding
+        _(subject.tap { _1.activity = :aerodrome_traffic }.activity).must_equal :aerodrome_traffic
+        _(subject.tap { _1.activity = :GLIDER }.activity).must_equal :gliding
       end
     end
 

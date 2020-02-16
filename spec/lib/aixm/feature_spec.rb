@@ -32,7 +32,7 @@ describe AIXM::Feature do
     end
 
     it "upcases valid values" do
-      _(subject.tap { |s| s.region = 'lf' }.region).must_equal 'LF'
+      _(subject.tap { _1.region = 'lf' }.region).must_equal 'LF'
     end
   end
 

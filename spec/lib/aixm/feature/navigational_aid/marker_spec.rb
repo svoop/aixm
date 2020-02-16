@@ -15,8 +15,8 @@ describe AIXM::Feature::NavigationalAid::Marker do
     end
 
     it "looks up valid values" do
-      _(subject.tap { |s| s.type = :middle }.type).must_equal :middle
-      _(subject.tap { |s| s.type = :O }.type).must_equal :outer
+      _(subject.tap { _1.type = :middle }.type).must_equal :middle
+      _(subject.tap { _1.type = :O }.type).must_equal :outer
     end
   end
 

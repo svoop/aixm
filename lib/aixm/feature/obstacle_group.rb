@@ -134,7 +134,7 @@ module AIXM
         else
           to_uid   # populate mid attribute
         end
-        obstacles.each { |o| builder << o.to_xml(delegate: false) }
+        obstacles.each { builder << _1.to_xml(delegate: false) }
         builder.target!
       end
     end

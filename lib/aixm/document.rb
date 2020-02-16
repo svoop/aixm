@@ -73,7 +73,7 @@ module AIXM
       while subject = obstacles.send(:shift)
         obstacles.each do |obstacle|
           if subject.xy.distance(obstacle.xy) <= max_distance
-            [subject, obstacle].each { |o| list[o] = list[subject] || SecureRandom.uuid }
+            [subject, obstacle].each { list[_1] = list[subject] || SecureRandom.uuid }
           end
         end
       end
@@ -116,7 +116,7 @@ module AIXM
       builder = Builder::XmlMarkup.new(indent: 2)
       builder.instruct!
       builder.tag!(AIXM.schema(:root), meta) do |root|
-        root << features.map { |f| f.to_xml }.join.indent(2)
+        root << features.map { _1.to_xml }.join.indent(2)
       end
       if AIXM.ofmx? && AIXM.config.mid
         AIXM::PayloadHash::Mid.new(builder.target!).insert_mid.to_xml

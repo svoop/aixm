@@ -166,7 +166,7 @@ module AIXM
         builder.codeClass(self.class.to_s) if self.class
         builder.codeLocInd(location_indicator) if location_indicator
         if activity
-          builder.codeActivity(ACTIVITIES.key(activity).to_s.then_if(AIXM.aixm?) { |a| { 'AIRMODEL' => 'UAV', 'WINCH' => 'GLIDER' }[a] || a })
+          builder.codeActivity(ACTIVITIES.key(activity).to_s.then_if(AIXM.aixm?) { { 'AIRMODEL' => 'UAV', 'WINCH' => 'GLIDER' }[_1] || _1 })
         end
         builder << vertical_limit.to_xml
         builder << timetable.to_xml(as: :Att) if timetable

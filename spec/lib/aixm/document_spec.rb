@@ -11,7 +11,7 @@ describe AIXM::Document do
     end
 
     it "sets random UUID for nil value" do
-      _(subject.tap { |s| s.namespace = nil }.namespace).must_match AIXM::Document::NAMESPACE_RE
+      _(subject.tap { _1.namespace = nil }.namespace).must_match AIXM::Document::NAMESPACE_RE
     end
 
     it "accepts UUID value" do
@@ -26,7 +26,7 @@ describe AIXM::Document do
 
     it "parses dates and times" do
       string = '2018-01-01 12:00:00 +0100'
-      _(subject.tap { |s| s.created_at = string }.created_at).must_equal Time.parse(string)
+      _(subject.tap { _1.created_at = string }.created_at).must_equal Time.parse(string)
     end
 
     it "falls back to effective_at first" do
@@ -48,7 +48,7 @@ describe AIXM::Document do
 
     it "parses dates and times" do
       string = '2018-01-01 12:00:00 +0100'
-      _(subject.tap { |s| s.effective_at = string }.effective_at).must_equal Time.parse(string)
+      _(subject.tap { _1.effective_at = string }.effective_at).must_equal Time.parse(string)
     end
 
     it "falls back to created_at first" do
@@ -97,7 +97,7 @@ describe AIXM::Document do
 
     it "adds 2 groups of obstacles with max distance 400m" do
       _(subject.group_obstacles!(max_distance: AIXM.d(400, :m))).must_equal 2
-      obstacle_groups = subject.features.select { |f| f.is_a? AIXM::Feature::ObstacleGroup }
+      obstacle_groups = subject.features.select { _1.is_a? AIXM::Feature::ObstacleGroup }
       obstacle_groups.each do |obstacle_group|
         names = obstacle_group.obstacles.map(&:name).sort
         _(names).must_equal names.include?('1') ? %w(1 2 3 4) : %w(5 6 7 8)

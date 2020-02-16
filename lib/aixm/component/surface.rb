@@ -109,7 +109,7 @@ module AIXM
       def pcn=(value)
         return @pcn = {} if value.nil?
         fail(ArgumentError, "invalid PCN") unless match = value.to_s.upcase.match(PCN_RE)
-        @pcn = match.named_captures.reject{ |k| k == 'pcn' }
+        @pcn = match.named_captures.reject{ _1 == 'pcn' }
       end
 
       def siwl_weight=(value)

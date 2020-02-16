@@ -11,8 +11,8 @@ describe AIXM::Feature::NavigationalAid::DesignatedPoint do
     end
 
     it "looks up valid values" do
-      _(subject.tap { |s| s.type = :icao }.type).must_equal :icao
-      _(subject.tap { |s| s.type = :'VFR-RP' }.type).must_equal :vfr_reporting_point
+      _(subject.tap { _1.type = :icao }.type).must_equal :icao
+      _(subject.tap { _1.type = :'VFR-RP' }.type).must_equal :vfr_reporting_point
     end
   end
 

@@ -11,7 +11,7 @@ describe AIXM::Feature::Organisation do
     end
 
     it "upcases and transcodes valid values" do
-      _(subject.tap { |s| s.name = 'Nîmes-Alès' }.name).must_equal 'NIMES-ALES'
+      _(subject.tap { _1.name = 'Nîmes-Alès' }.name).must_equal 'NIMES-ALES'
     end
   end
 
@@ -21,8 +21,8 @@ describe AIXM::Feature::Organisation do
     end
 
     it "looks up valid values" do
-      _(subject.tap { |s| s.type = :state }.type).must_equal :state
-      _(subject.tap { |s| s.type = :IO }.type).must_equal :international_organisation
+      _(subject.tap { _1.type = :state }.type).must_equal :state
+      _(subject.tap { _1.type = :IO }.type).must_equal :international_organisation
     end
   end
 
@@ -36,7 +36,7 @@ describe AIXM::Feature::Organisation do
     end
 
     it "upcases valid values" do
-      _(subject.tap { |s| s.id = 'lf' }.id).must_equal 'LF'
+      _(subject.tap { _1.id = 'lf' }.id).must_equal 'LF'
     end
   end
 

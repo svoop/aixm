@@ -15,8 +15,8 @@ describe AIXM::Feature::NavigationalAid::NDB do
     end
 
     it "looks up valid values" do
-      _(subject.tap { |s| s.type = :en_route }.type).must_equal :en_route
-      _(subject.tap { |s| s.type = :L }.type).must_equal :locator
+      _(subject.tap { _1.type = :en_route }.type).must_equal :en_route
+      _(subject.tap { _1.type = :L }.type).must_equal :locator
     end
   end
 

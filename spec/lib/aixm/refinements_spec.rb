@@ -168,11 +168,11 @@ describe AIXM::Refinements do
       end
 
       it "must return self if the condition is false" do
-        _(subject.then_if(false) { |s| s.gsub(/o/, 'i') }).must_equal subject
+        _(subject.then_if(false) { _1.gsub(/o/, 'i') }).must_equal subject
       end
 
       it "must return apply the block if the condition is true" do
-        _(subject.then_if(true) { |s| s.gsub(/o/, 'i') }).must_equal 'fiibar'
+        _(subject.then_if(true) { _1.gsub(/o/, 'i') }).must_equal 'fiibar'
       end
     end
   end

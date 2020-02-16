@@ -11,12 +11,12 @@ describe AIXM::XY do
     end
 
     it "parses valid DD values" do
-      _(subject.tap { |s| s.lat = 11.2233 }.lat).must_equal 11.2233
+      _(subject.tap { _1.lat = 11.2233 }.lat).must_equal 11.2233
     end
 
     it "parses valid DMS values"  do
-      _(subject.tap { |s| s.lat = %q(11°22'33"N) }.lat).must_equal(11.37583333)
-      _(subject.tap { |s| s.lat = %q(11°22'33"S) }.lat).must_equal(-11.37583333)
+      _(subject.tap { _1.lat = %q(11°22'33"N) }.lat).must_equal(11.37583333)
+      _(subject.tap { _1.lat = %q(11°22'33"S) }.lat).must_equal(-11.37583333)
     end
   end
 
@@ -64,12 +64,12 @@ describe AIXM::XY do
     end
 
     it "parses valid DD values" do
-      _(subject.tap { |s| s.long = 22.3344 }.long).must_equal 22.3344
+      _(subject.tap { _1.long = 22.3344 }.long).must_equal 22.3344
     end
 
     it "parses valid DMS values"  do
-      _(subject.tap { |s| s.long = %q(22°33'44"E) }.long).must_equal(22.56222222)
-      _(subject.tap { |s| s.long = %q(22°33'44"W) }.long).must_equal(-22.56222222)
+      _(subject.tap { _1.long = %q(22°33'44"E) }.long).must_equal(22.56222222)
+      _(subject.tap { _1.long = %q(22°33'44"W) }.long).must_equal(-22.56222222)
     end
   end
 

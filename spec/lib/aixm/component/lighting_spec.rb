@@ -11,8 +11,8 @@ describe AIXM::Component::Lighting do
     end
 
     it "looks up valid values" do
-      _(subject.tap { |s| s.position = :edge }.position).must_equal :edge
-      _(subject.tap { |s| s.position = :SWYEND }.position).must_equal :stopway_end
+      _(subject.tap { _1.position = :edge }.position).must_equal :edge
+      _(subject.tap { _1.position = :SWYEND }.position).must_equal :stopway_end
     end
   end
 
@@ -22,8 +22,8 @@ describe AIXM::Component::Lighting do
     end
 
     it "stringifies valid values" do
-      _(subject.tap { |s| s.description = 'foobar' }.description).must_equal 'foobar'
-      _(subject.tap { |s| s.description = 123 }.description).must_equal '123'
+      _(subject.tap { _1.description = 'foobar' }.description).must_equal 'foobar'
+      _(subject.tap { _1.description = 123 }.description).must_equal '123'
     end
   end
 
@@ -37,8 +37,8 @@ describe AIXM::Component::Lighting do
     end
 
     it "looks up valid values" do
-      _(subject.tap { |s| s.intensity = :low }.intensity).must_equal :low
-      _(subject.tap { |s| s.intensity = 'LIM' }.intensity).must_equal :medium
+      _(subject.tap { _1.intensity = :low }.intensity).must_equal :low
+      _(subject.tap { _1.intensity = 'LIM' }.intensity).must_equal :medium
     end
   end
 
@@ -52,8 +52,8 @@ describe AIXM::Component::Lighting do
     end
 
     it "looks up valid values" do
-      _(subject.tap { |s| s.color = :blue }.color).must_equal :blue
-      _(subject.tap { |s| s.color = 'GRN' }.color).must_equal :green
+      _(subject.tap { _1.color = :blue }.color).must_equal :blue
+      _(subject.tap { _1.color = 'GRN' }.color).must_equal :green
     end
   end
 

@@ -5,8 +5,8 @@ describe nil do
   end
 
   it "stringifies valid values" do
-    _(subject.tap { |s| s.remarks = 'foobar' }.remarks).must_equal 'foobar'
-    _(subject.tap { |s| s.remarks = 123 }.remarks).must_equal '123'
+    _(subject.tap { _1.remarks = 'foobar' }.remarks).must_equal 'foobar'
+    _(subject.tap { _1.remarks = 123 }.remarks).must_equal '123'
   end
 
 end

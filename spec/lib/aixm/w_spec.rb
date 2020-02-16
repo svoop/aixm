@@ -11,7 +11,7 @@ describe AIXM::W do
     end
 
     it "converts Numeric to Float" do
-      _(subject.tap { |s| s.wgt = 5 }.wgt).must_equal 5.0
+      _(subject.tap { _1.wgt = 5 }.wgt).must_equal 5.0
     end
   end
 
@@ -21,7 +21,7 @@ describe AIXM::W do
     end
 
     it "symbolizes and downcases values" do
-      _(subject.tap { |s| s.unit = "KG" }.unit).must_equal :kg
+      _(subject.tap { _1.unit = "KG" }.unit).must_equal :kg
     end
   end
 
@@ -140,11 +140,11 @@ describe AIXM::W do
 
   describe :zero? do
     it "returns true for zero weight" do
-      _(subject.tap { |s| s.wgt = 0 }).must_be :zero?
+      _(subject.tap { _1.wgt = 0 }).must_be :zero?
     end
 
     it "returns false for non-zero weight" do
-      _(subject.tap { |s| s.wgt = 1 }).wont_be :zero?
+      _(subject.tap { _1.wgt = 1 }).wont_be :zero?
     end
   end
 end

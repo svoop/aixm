@@ -35,15 +35,15 @@ describe AIXM::A do
     context "precision=2" do
       it "rounds and zero-pad deg to length 2 and concats suffix" do
         _(AIXM.a('05').to_s).must_equal '05'
-        _(AIXM.a('05').tap { |a| a.suffix = :L }.to_s).must_equal '05L'
-        _(AIXM.a('05').tap { |a| a.deg = 0 }.to_s).must_equal '36'
+        _(AIXM.a('05').tap { _1.suffix = :L }.to_s).must_equal '05L'
+        _(AIXM.a('05').tap { _1.deg = 0 }.to_s).must_equal '36'
       end
     end
 
     context "precition=3" do
       it "rounds and zero-pad deg to length 3" do
         _(AIXM.a(5).to_s).must_equal '005'
-        _(AIXM.a(5).tap { |a| a.deg = 0 }.to_s).must_equal '000'
+        _(AIXM.a(5).tap { _1.deg = 0 }.to_s).must_equal '000'
       end
     end
   end
@@ -56,21 +56,21 @@ describe AIXM::A do
 
     context "precision=2" do
       it "rounds to 10 degree steps" do
-        _(subject_2.tap { |s| s.deg = 0 }.deg).must_equal 0
-        _(subject_2.tap { |s| s.deg = 5 }.deg).must_equal 10
-        _(subject_2.tap { |s| s.deg = 154 }.deg).must_equal 150
-        _(subject_2.tap { |s| s.deg = 359 }.deg).must_equal 0
-        _(subject_2.tap { |s| s.deg = 360 }.deg).must_equal 0
+        _(subject_2.tap { _1.deg = 0 }.deg).must_equal 0
+        _(subject_2.tap { _1.deg = 5 }.deg).must_equal 10
+        _(subject_2.tap { _1.deg = 154 }.deg).must_equal 150
+        _(subject_2.tap { _1.deg = 359 }.deg).must_equal 0
+        _(subject_2.tap { _1.deg = 360 }.deg).must_equal 0
       end
     end
 
     context "precision=3" do
       it "accepts 1 degree steps" do
-        _(subject_3.tap { |s| s.deg = 0 }.deg).must_equal 0
-        _(subject_3.tap { |s| s.deg = 5 }.deg).must_equal 5
-        _(subject_3.tap { |s| s.deg = 154 }.deg).must_equal 154
-        _(subject_3.tap { |s| s.deg = 359 }.deg).must_equal 359
-        _(subject_3.tap { |s| s.deg = 360 }.deg).must_equal 0
+        _(subject_3.tap { _1.deg = 0 }.deg).must_equal 0
+        _(subject_3.tap { _1.deg = 5 }.deg).must_equal 5
+        _(subject_3.tap { _1.deg = 154 }.deg).must_equal 154
+        _(subject_3.tap { _1.deg = 359 }.deg).must_equal 359
+        _(subject_3.tap { _1.deg = 360 }.deg).must_equal 0
       end
     end
   end
@@ -86,13 +86,13 @@ describe AIXM::A do
       end
 
       it "symbolizes valid values" do
-        _(subject_2.tap { |s| s.suffix = 'Z' }.suffix).must_equal :Z
+        _(subject_2.tap { _1.suffix = 'Z' }.suffix).must_equal :Z
       end
     end
 
     context "precision=3" do
       it "always fails" do
-        _{ subject_3.tap { |s| s.suffix = 'Z' } }.must_raise RuntimeError
+        _{ subject_3.tap { _1.suffix = 'Z' } }.must_raise RuntimeError
       end
     end
   end

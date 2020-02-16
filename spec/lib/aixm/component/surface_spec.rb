@@ -15,8 +15,8 @@ describe AIXM::Component::Surface do
     end
 
     it "looks up valid values" do
-      _(subject.tap { |s| s.composition = :macadam }.composition).must_equal :macadam
-      _(subject.tap { |s| s.composition = :GRADE }.composition).must_equal :graded_earth
+      _(subject.tap { _1.composition = :macadam }.composition).must_equal :macadam
+      _(subject.tap { _1.composition = :GRADE }.composition).must_equal :graded_earth
     end
   end
 
@@ -30,8 +30,8 @@ describe AIXM::Component::Surface do
     end
 
     it "looks up valid values" do
-      _(subject.tap { |s| s.preparation = :rolled }.preparation).must_equal :rolled
-      _(subject.tap { |s| s.preparation = 'PFC' }.preparation).must_equal :porous_friction_course
+      _(subject.tap { _1.preparation = :rolled }.preparation).must_equal :rolled
+      _(subject.tap { _1.preparation = 'PFC' }.preparation).must_equal :porous_friction_course
     end
   end
 
@@ -45,8 +45,8 @@ describe AIXM::Component::Surface do
     end
 
     it "looks up valid values" do
-      _(subject.tap { |s| s.condition = :fair }.condition).must_equal :fair
-      _(subject.tap { |s| s.condition = :GOOD }.condition).must_equal :good
+      _(subject.tap { _1.condition = :fair }.condition).must_equal :fair
+      _(subject.tap { _1.condition = :GOOD }.condition).must_equal :good
     end
   end
 
@@ -59,10 +59,10 @@ describe AIXM::Component::Surface do
     end
 
     it "accepts valid values" do
-      _(subject.tap { |s| s.pcn = nil }.pcn).must_be :nil?
-      _(subject.tap { |s| s.pcn = '25/F/B/W/U' }.pcn).must_equal '25/F/B/W/U'
-      _(subject.tap { |s| s.pcn = '10 R C X T' }.pcn).must_equal '10/R/C/X/T'
-      _(subject.tap { |s| s.pcn = "5\nF-b-y U" }.pcn).must_equal '5/F/B/Y/U'
+      _(subject.tap { _1.pcn = nil }.pcn).must_be :nil?
+      _(subject.tap { _1.pcn = '25/F/B/W/U' }.pcn).must_equal '25/F/B/W/U'
+      _(subject.tap { _1.pcn = '10 R C X T' }.pcn).must_equal '10/R/C/X/T'
+      _(subject.tap { _1.pcn = "5\nF-b-y U" }.pcn).must_equal '5/F/B/Y/U'
     end
   end
 

@@ -11,7 +11,7 @@ describe AIXM::Component::FATO do
     end
 
     it "upcases and transcodes valid values" do
-      _(subject.tap { |s| s.name = 'h1' }.name).must_equal 'H1'
+      _(subject.tap { _1.name = 'h1' }.name).must_equal 'H1'
     end
   end
 
@@ -45,8 +45,8 @@ describe AIXM::Component::FATO do
     end
 
     it "stringifies valid values" do
-      _(subject.tap { |s| s.profile = 'foobar' }.profile).must_equal 'foobar'
-      _(subject.tap { |s| s.profile = 123 }.profile).must_equal '123'
+      _(subject.tap { _1.profile = 'foobar' }.profile).must_equal 'foobar'
+      _(subject.tap { _1.profile = 123 }.profile).must_equal '123'
     end
   end
 
@@ -60,8 +60,8 @@ describe AIXM::Component::FATO do
     end
 
     it "looks up valid values" do
-      _(subject.tap { |s| s.status = :closed }.status).must_equal :closed
-      _(subject.tap { |s| s.status = :SPOWER }.status).must_equal :secondary_power
+      _(subject.tap { _1.status = :closed }.status).must_equal :closed
+      _(subject.tap { _1.status = :SPOWER }.status).must_equal :secondary_power
     end
   end
 
@@ -140,8 +140,8 @@ describe AIXM::Component::FATO do
 
     it "builds correct minimal OFMX" do
       AIXM.ofmx!
-      %i(length width profile marking status remarks).each { |a| subject.send(:"#{a}=", nil) }
-      %i(composition preparation condition pcn siwl_weight siwl_tire_pressure auw_weight remarks).each { |a| subject.surface.send(:"#{a}=", nil) }
+      %i(length width profile marking status remarks).each { subject.send(:"#{_1}=", nil) }
+      %i(composition preparation condition pcn siwl_weight siwl_tire_pressure auw_weight remarks).each { subject.surface.send(:"#{_1}=", nil) }
       subject.directions.first.instance_eval { @lightings.clear }
       _(subject.to_xml).must_equal <<~END
         <Fto>
@@ -240,7 +240,7 @@ describe AIXM::Component::FATO::Direction do
 
     it "builds correct minimal OFMX" do
       AIXM.ofmx!
-      %i(geographic_orientation remarks).each { |a| subject.send(:"#{a}=", nil) }
+      %i(geographic_orientation remarks).each { subject.send(:"#{_1}=", nil) }
       subject.instance_eval { @lightings.clear }
       _(subject.to_xml).must_equal <<~END
       <Fdn>

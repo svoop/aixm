@@ -13,18 +13,18 @@ describe AIXM::Feature::NavigationalAid::DME do
 
   describe :ghost_f do
     it "must be derived from the channel" do
-      _(subject.tap { |s| s.channel = '1X' }.ghost_f.freq).must_equal 134.4
-      _(subject.tap { |s| s.channel = '12Y' }.ghost_f.freq).must_equal 135.55
-      _(subject.tap { |s| s.channel = '16Y' }.ghost_f.freq).must_equal 135.95
-      _(subject.tap { |s| s.channel = '17X' }.ghost_f.freq).must_equal 108
-      _(subject.tap { |s| s.channel = '30X' }.ghost_f.freq).must_equal 109.3
-      _(subject.tap { |s| s.channel = '59Y' }.ghost_f.freq).must_equal 112.25
-      _(subject.tap { |s| s.channel = '60X' }.ghost_f.freq).must_equal 133.3
-      _(subject.tap { |s| s.channel = '64Y' }.ghost_f.freq).must_equal 133.75
-      _(subject.tap { |s| s.channel = '69Y' }.ghost_f.freq).must_equal 134.25
-      _(subject.tap { |s| s.channel = '70X' }.ghost_f.freq).must_equal 112.30
-      _(subject.tap { |s| s.channel = '100X' }.ghost_f.freq).must_equal 115.3
-      _(subject.tap { |s| s.channel = '126Y' }.ghost_f.freq).must_equal 117.95
+      _(subject.tap { _1.channel = '1X' }.ghost_f.freq).must_equal 134.4
+      _(subject.tap { _1.channel = '12Y' }.ghost_f.freq).must_equal 135.55
+      _(subject.tap { _1.channel = '16Y' }.ghost_f.freq).must_equal 135.95
+      _(subject.tap { _1.channel = '17X' }.ghost_f.freq).must_equal 108
+      _(subject.tap { _1.channel = '30X' }.ghost_f.freq).must_equal 109.3
+      _(subject.tap { _1.channel = '59Y' }.ghost_f.freq).must_equal 112.25
+      _(subject.tap { _1.channel = '60X' }.ghost_f.freq).must_equal 133.3
+      _(subject.tap { _1.channel = '64Y' }.ghost_f.freq).must_equal 133.75
+      _(subject.tap { _1.channel = '69Y' }.ghost_f.freq).must_equal 134.25
+      _(subject.tap { _1.channel = '70X' }.ghost_f.freq).must_equal 112.30
+      _(subject.tap { _1.channel = '100X' }.ghost_f.freq).must_equal 115.3
+      _(subject.tap { _1.channel = '126Y' }.ghost_f.freq).must_equal 117.95
     end
   end
 

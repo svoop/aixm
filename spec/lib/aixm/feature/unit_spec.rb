@@ -11,7 +11,7 @@ describe AIXM::Feature::Unit do
     end
 
     it "upcases and transcodes valid values" do
-      _(subject.tap { |s| s.name = 'Nîmes-Alès APP' }.name).must_equal 'NIMES-ALES APP'
+      _(subject.tap { _1.name = 'Nîmes-Alès APP' }.name).must_equal 'NIMES-ALES APP'
     end
   end
 
@@ -21,8 +21,8 @@ describe AIXM::Feature::Unit do
     end
 
     it "looks up valid values" do
-      _(subject.tap { |s| s.type = :flight_information_centre }.type).must_equal :flight_information_centre
-      _(subject.tap { |s| s.type = :MET }.type).must_equal :meteorological_office
+      _(subject.tap { _1.type = :flight_information_centre }.type).must_equal :flight_information_centre
+      _(subject.tap { _1.type = :MET }.type).must_equal :meteorological_office
     end
   end
 
@@ -32,8 +32,8 @@ describe AIXM::Feature::Unit do
     end
 
     it "looks up valid values" do
-      _(subject.tap { |s| s.class = :icao }.class).must_equal :icao
-      _(subject.tap { |s| s.class = :OTHER }.class).must_equal :other
+      _(subject.tap { _1.class = :icao }.class).must_equal :icao
+      _(subject.tap { _1.class = :OTHER }.class).must_equal :other
     end
   end
 

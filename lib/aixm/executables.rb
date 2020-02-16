@@ -11,8 +11,8 @@ module AIXM
             Add mid attributes to a schema valid OFMX file.
             Usage: #{File.basename($0)} infile.ofmx
           END
-          o.on('-i', '--[no-]in-place', 'overwrite file instead of dumping to STDOUT (default: false)') { |v| @options[:in_place] = v }
-          o.on('-f', '--[no-]force', 'ignore XML schema validation errors (default: false)') { |v| @options[:force] = v }
+          o.on('-i', '--[no-]in-place', 'overwrite file instead of dumping to STDOUT (default: false)') { @options[:in_place] = _1 }
+          o.on('-f', '--[no-]force', 'ignore XML schema validation errors (default: false)') { @options[:force] = _1 }
           o.on('-A', '--about', 'show author/license information and exit') { AIXM::Executables.about }
           o.on('-V', '--version', 'show version and exit') { AIXM::Executables.version }
         end.parse!
