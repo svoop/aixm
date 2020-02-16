@@ -45,14 +45,14 @@ module AIXM
 
         # @!method dme
         #   @return [AIXM::Feature::NavigationalAid::DME, nil] associated DME
-        # @!method dme=
-        #   @param [AIXM::Feature::NavigationalAid::DME, nil]
+        # @!method dme=(dme)
+        #   @param dme [AIXM::Feature::NavigationalAid::DME, nil]
         has_one :dme, allow_nil: true
 
         # @!method tacan
         #   @return [AIXM::Feature::NavigationalAid::TACAN, nil] associated TACAN
-        # @!method tacan=
-        #   @param [AIXM::Feature::NavigationalAid::TACAN, nil]
+        # @!method tacan=(tacan)
+        #   @param tacan [AIXM::Feature::NavigationalAid::TACAN, nil]
         has_one :tacan, allow_nil: true
 
         # @return [Symbol] type of VOR (see {TYPES})

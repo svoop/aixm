@@ -34,8 +34,8 @@ module AIXM
       #     AIXM::Component::Geometry::Arc,
       #     AIXM::Component::Geometry::Border,
       #     AIXM::Component::Geometry::Circle>] points, arcs, borders or circle
-      # @!method add_segment
-      #   @param [AIXM::Component::Geometry::Point,
+      # @!method add_segment(segment)
+      #   @param segment [AIXM::Component::Geometry::Point,
       #     AIXM::Component::Geometry::Arc,
       #     AIXM::Component::Geometry::Border,
       #     AIXM::Component::Geometry::Circle]

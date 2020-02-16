@@ -89,8 +89,8 @@ module AIXM
 
       # @!method vertical_limit
       #   @return [AIXM::Component::VerticalLimit] vertical limit of this layer
-      # @!method vertical_limit=
-      #   @param [AIXM::Component::VerticalLimit]
+      # @!method vertical_limit=(vertical_limit)
+      #   @param vertical_limit [AIXM::Component::VerticalLimit]
       has_one :vertical_limit
 
       # @!method airspace

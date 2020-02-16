@@ -59,14 +59,14 @@ module AIXM
 
       # @!method forth
       #   @return [AIXM::Component::Runway::Direction] main direction
-      # @!method forth=
-      #   @param [AIXM::Component::Runway::Direction]
+      # @!method forth=(forth)
+      #   @param forth [AIXM::Component::Runway::Direction]
       has_one :forth, accept: 'AIXM::Component::Runway::Direction'
 
       # @!method back
       #   @return [AIXM::Component::Runway::Direction, nil] reverse direction
-      # @!method back=
-      #   @param [AIXM::Component::Runway::Direction, nil]
+      # @!method back=(back)
+      #   @param back [AIXM::Component::Runway::Direction, nil]
       has_one :back, accept: 'AIXM::Component::Runway::Direction', allow_nil: true
 
       # @!method airport
@@ -182,8 +182,8 @@ module AIXM
 
         # @!method lightings
         #   @return [Array<AIXM::Component::Lighting>] installed lighting systems
-        # @!method add_lighting
-        #   @param [AIXM::Component::Lighting]
+        # @!method add_lighting(lighting)
+        #   @param lighting [AIXM::Component::Lighting]
         #   @return [self]
         has_many :lightings, as: :lightable
 
