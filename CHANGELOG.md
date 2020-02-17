@@ -22,8 +22,7 @@
 * Refinement `String#payload_hash` removed in favor of `AIXM::PayloadHash` class
 
 ### Changes
-* Renamed `AIXM.config.mid_region` to `AIXM.config.region` which is implicitly
-  set via `Document#region` as well
+* Renamed `AIXM.config.mid_region` to `AIXM.config.region`
 
 ## 0.3.8
 
