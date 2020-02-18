@@ -319,11 +319,13 @@ module AIXM
       #
       # @return [AIXM::Association::Array]
       def duplicates
-        self.class.new(
-          select.with_index do |element, index|
-            index != self.index(element)
-          end
-        )
+        AIXM::Memoize.method :to_uid do
+          self.class.new(
+            select.with_index do |element, index|
+              index != self.index(element)
+            end
+          )
+        end
       end
     end
   end

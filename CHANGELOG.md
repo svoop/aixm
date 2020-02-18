@@ -6,6 +6,7 @@
   `has_many` associations.
 * `AIXM.config.mid` now defines whether `mid` attributes are inserted or not
   provided the selected schema is OFMX
+* `AIXM::Memoize` module
 * `AIXM::PayloadHash` class
 * `mkmid` executable to insert `mid` attributes into valid OFMX file
 * `ckmid` executable to check `mid` attributes in an OFMX file

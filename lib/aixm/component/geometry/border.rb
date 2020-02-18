@@ -15,6 +15,7 @@ module AIXM
       #
       # @see https://gitlab.com/openflightmaps/ofmx/wikis/Airspace#frontier
       class Border < Point
+        include AIXM::Memoize
 
         # @return [String] name of the border
         attr_reader :name
@@ -41,6 +42,7 @@ module AIXM
             tag.txtName(name.to_s)
           end
         end
+        memoize :to_uid
 
         # @return [String] AIXM or OFMX markup
         def to_xml

@@ -17,6 +17,7 @@ module AIXM
     # @see https://gitlab.com/openflightmaps/ofmx/wikis/Organisation#ser-service
     class Service < Feature
       include AIXM::Association
+      include AIXM::Memoize
 
       public_class_method :new
 
@@ -187,6 +188,7 @@ module AIXM
           ser_uid.noSeq(@sequence)
         end
       end
+      memoize :to_uid
 
       # @return [String] AIXM or OFMX markup
       def to_xml(sequence:)

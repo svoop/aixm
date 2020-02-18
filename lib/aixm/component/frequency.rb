@@ -23,6 +23,7 @@ module AIXM
     # @see https://gitlab.com/openflightmaps/ofmx/wikis/Organisation#fqy-frequency
     class Frequency
       include AIXM::Association
+      include AIXM::Memoize
 
       TYPES = {
         STD: :standard,
@@ -107,6 +108,7 @@ module AIXM
           fqy_uid.valFreqTrans(transmission_f.freq)
         end
       end
+      memoize :to_uid
 
       # @return [String] AIXM or OFMX markup
       def to_xml

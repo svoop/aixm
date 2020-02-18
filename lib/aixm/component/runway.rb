@@ -47,6 +47,7 @@ module AIXM
     # @see https://gitlab.com/openflightmaps/ofmx/wikis/Airport#rwy-runway
     class Runway
       include AIXM::Association
+      include AIXM::Memoize
 
       STATUSES = {
         CLSD: :closed,
@@ -143,6 +144,7 @@ module AIXM
           rwy_uid.txtDesig(name)
         end
       end
+      memoize :to_uid
 
       # @return [String] AIXM or OFMX markup
       def to_xml
@@ -173,6 +175,7 @@ module AIXM
       # @see https://gitlab.com/openflightmaps/ofmx/wikis/Airport#rdn-runway-direction
       class Direction
         include AIXM::Association
+        include AIXM::Memoize
 
         VFR_PATTERNS = {
           L: :left,
@@ -281,6 +284,7 @@ module AIXM
             rdn_uid.txtDesig(name)
           end
         end
+        memoize :to_uid
 
         # @return [String] AIXM or OFMX markup
         def to_xml

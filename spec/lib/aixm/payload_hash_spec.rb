@@ -1,6 +1,5 @@
 require_relative '../../spec_helper'
 
-
 describe AIXM::PayloadHash do
   subject do
     <<~END

@@ -116,7 +116,9 @@ module AIXM
       builder = Builder::XmlMarkup.new(indent: 2)
       builder.instruct!
       builder.tag!(AIXM.schema(:root), meta) do |root|
-        root << features.map { _1.to_xml }.join.indent(2)
+        AIXM::Memoize.method :to_uid do
+          root << features.map { _1.to_xml }.join.indent(2)
+        end
       end
       if AIXM.ofmx? && AIXM.config.mid
         AIXM::PayloadHash::Mid.new(builder.target!).insert_mid.to_xml

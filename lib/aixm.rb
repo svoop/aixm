@@ -1,13 +1,14 @@
-require 'builder'
 require 'ostruct'
 require 'securerandom'
-require 'nokogiri'
 require 'forwardable'
 require 'digest'
 require 'time'
 require 'pathname'
-require 'dry/inflector'
 require 'optparse'
+
+require 'builder'
+require 'nokogiri'
+require 'dry/inflector'
 
 require_relative 'aixm/object'
 
@@ -18,6 +19,7 @@ require_relative 'aixm/errors'
 
 require_relative 'aixm/classes'
 require_relative 'aixm/constants'
+require_relative 'aixm/memoize'
 require_relative 'aixm/association'
 require_relative 'aixm/payload_hash'
 

@@ -24,6 +24,8 @@ module AIXM
       #
       # @see https://gitlab.com/openflightmaps/ofmx/wikis/Navigational-aid#ndb-ndb
       class NDB < NavigationalAid
+        include AIXM::Memoize
+        
         public_class_method :new
 
         TYPES = {
@@ -62,6 +64,7 @@ module AIXM
             ndb_uid.geoLong(xy.long(AIXM.schema))
           end
         end
+        memoize :to_uid
 
         # @return [String] AIXM or OFMX markup
         def to_xml

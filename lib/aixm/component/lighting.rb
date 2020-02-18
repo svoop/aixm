@@ -19,6 +19,7 @@ module AIXM
     # @see https://gitlab.com/openflightmaps/ofmx/wikis/Airport#tls-helipad-tlof-lighting
     class Lighting
       include AIXM::Association
+      include AIXM::Memoize
 
       POSITIONS = {
         TDZ: :touch_down_zone,
@@ -112,6 +113,7 @@ module AIXM
           tag.codePsn(POSITIONS.key(position).to_s)
         end
       end
+      memoize :to_uid
 
       # @return [String] AIXM or OFMX markup
       def to_xml(as:)

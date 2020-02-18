@@ -24,6 +24,7 @@ module AIXM
     # @see https://gitlab.com/openflightmaps/ofmx/wikis/Airport#tla-helipad-tlof
     class Helipad
       include AIXM::Association
+      include AIXM::Memoize
 
       HELICOPTER_CLASSES = {
         '1': :'1',
@@ -156,6 +157,7 @@ module AIXM
           tla_uid.txtDesig(name)
         end
       end
+      memoize :to_uid
 
       # @return [String] AIXM or OFMX markup
       def to_xml

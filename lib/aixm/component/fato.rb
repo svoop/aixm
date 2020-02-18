@@ -27,6 +27,7 @@ module AIXM
     # @see https://gitlab.com/openflightmaps/ofmx/wikis/Airport#fto-fato
     class FATO
       include AIXM::Association
+      include AIXM::Memoize
 
       STATUSES = {
         CLSD: :closed,
@@ -134,6 +135,7 @@ module AIXM
           fto_uid.txtDesig(name)
         end
       end
+      memoize :to_uid
 
       # @return [String] AIXM or OFMX markup
       def to_xml
@@ -163,6 +165,7 @@ module AIXM
       # @see https://gitlab.com/openflightmaps/ofmx/wikis/Airport#fdn-fato-direction
       class Direction
         include AIXM::Association
+        include AIXM::Memoize
 
         # @!method lightings
         #   @return [Array<AIXM::Component::Lighting>] installed lighting systems
@@ -222,6 +225,7 @@ module AIXM
             fdn_uid.txtDesig(name)
           end
         end
+        memoize :to_uid
 
         # @return [String] AIXM or OFMX markup
         def to_xml

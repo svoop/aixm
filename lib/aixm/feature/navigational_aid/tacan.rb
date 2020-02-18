@@ -24,6 +24,8 @@ module AIXM
       #
       # @see https://gitlab.com/openflightmaps/ofmx/wikis/Navigational-aid#tcn-tacan
       class TACAN < DME
+        include AIXM::Memoize
+        
         public_class_method :new
 
         # @return [String] UID markup
@@ -35,6 +37,7 @@ module AIXM
             tcn_uid.geoLong(xy.long(AIXM.schema))
           end
         end
+        memoize :to_uid
 
         # @return [String] AIXM or OFMX markup
         def to_xml

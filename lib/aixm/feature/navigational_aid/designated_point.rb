@@ -22,6 +22,7 @@ module AIXM
       # @see https://gitlab.com/openflightmaps/ofmx/wikis/Navigational-aid#dpn-designated-point
       class DesignatedPoint < NavigationalAid
         include AIXM::Association
+        include AIXM::Memoize
 
         public_class_method :new
 
@@ -61,6 +62,7 @@ module AIXM
             dpn_uid.geoLong(xy.long(AIXM.schema))
           end
         end
+        memoize :to_uid
 
         # @return [String] AIXM or OFMX markup
         def to_xml

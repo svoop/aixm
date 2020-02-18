@@ -22,6 +22,7 @@ module AIXM
     # @see https://gitlab.com/openflightmaps/ofmx/wikis/Organisation#uni-unit
     class Unit < Feature
       include AIXM::Association
+      include AIXM::Memoize
 
       public_class_method :new
 
@@ -145,6 +146,7 @@ module AIXM
           uni_uid.codeType(TYPES.key(type).to_s) if AIXM.ofmx?
         end
       end
+      memoize :to_uid
 
       # @return [String] AIXM or OFMX markup
       def to_xml

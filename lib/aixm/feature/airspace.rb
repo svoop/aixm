@@ -31,6 +31,7 @@ module AIXM
     # @see https://gitlab.com/openflightmaps/ofmx/wikis/Airspace#ase-airspace
     class Airspace < Feature
       include AIXM::Association
+      include AIXM::Memoize
 
       public_class_method :new
 
@@ -146,6 +147,7 @@ module AIXM
           tag.codeId(id)
         end
       end
+      memoize :to_uid
 
       # @return [String] UID markup
       def to_wrapped_uid(as: :AseUid, with:)

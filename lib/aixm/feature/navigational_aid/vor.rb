@@ -28,6 +28,8 @@ module AIXM
       #
       # @see https://gitlab.com/openflightmaps/ofmx/wikis/Navigational-aid#vor-vor
       class VOR < NavigationalAid
+        include AIXM::Memoize
+        
         public_class_method :new
 
         TYPES = {
@@ -103,6 +105,7 @@ module AIXM
             vor_uid.geoLong(xy.long(AIXM.schema))
           end
         end
+        memoize :to_uid
 
         # @return [String] AIXM or OFMX markup
         def to_xml

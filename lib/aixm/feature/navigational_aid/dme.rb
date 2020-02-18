@@ -25,6 +25,8 @@ module AIXM
       #
       # @see https://gitlab.com/openflightmaps/ofmx/wikis/Navigational-aid#dme-dme
       class DME < NavigationalAid
+        include AIXM::Memoize
+
         public_class_method :new
 
         CHANNEL_RE = /\A([1-9]|[1-9]\d|1[0-1]\d|12[0-6])[XY]\z/.freeze
@@ -71,6 +73,7 @@ module AIXM
             dme_uid.geoLong(xy.long(AIXM.schema))
           end
         end
+        memoize :to_uid
 
         # @return [String] AIXM or OFMX markup
         def to_xml
