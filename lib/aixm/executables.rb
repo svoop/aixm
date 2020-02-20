@@ -39,18 +39,6 @@ module AIXM
         puts "ERROR: #{error.message}"
         exit 1
       end
-
-      private
-
-      def about
-        puts 'Written by Sven Schwyn (bitcetera.com) and distributed under MIT license.'
-        exit
-      end
-
-      def version
-        puts AIXM::VERSION
-        exit
-      end
     end
 
     class Ckmid
