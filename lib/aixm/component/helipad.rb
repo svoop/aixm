@@ -1,7 +1,7 @@
 using AIXM::Refinements
 
 module AIXM
-  class Component
+  module Component
 
     # Helipads are TLOF (touch-down and lift-off areas) for vertical take-off
     # aircraft such as helicopters.

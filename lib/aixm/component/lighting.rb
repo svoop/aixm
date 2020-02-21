@@ -1,7 +1,7 @@
 using AIXM::Refinements
 
 module AIXM
-  class Component
+  module Component
 
     # Lighting of a runway, helipad etc
     #

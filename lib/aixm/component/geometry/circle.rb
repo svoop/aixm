@@ -1,7 +1,7 @@
 using AIXM::Refinements
 
 module AIXM
-  class Component
+  module Component
     class Geometry
 
       # Circles are defined by a {#center_xy} and a {#radius}.

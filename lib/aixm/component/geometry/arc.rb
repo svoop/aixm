@@ -1,7 +1,7 @@
 using AIXM::Refinements
 
 module AIXM
-  class Component
+  module Component
     class Geometry
 
       # Arcs are clockwise or counter clockwise circle segments around a
