@@ -277,10 +277,10 @@ module AIXM
       #   post.title = "title"
       #   blog.add_item(post)
       #   blog.add_item(picture)
-      #   blog.items.find(:post) == [post]             # => true
-      #   blog.items.find(Post) == [post]              # => true
-      #   blog.items.find(title: "title") == [post]    # => true
-      #   blog.items.find(Object) == [post, picture]   # => true
+      #   blog.items.find(:post) == [post]                    # => true
+      #   blog.items.find(Post) == [post]                     # => true
+      #   blog.items.find(:post, title: "title") == [post]    # => true
+      #   blog.items.find(Object) == [post, picture]          # => true
       #
       # @param klass [Class, Symbol] class (e.g. AIXM::Feature::Airport,
       #   AIXM::Feature::NavigationalAid::VOR) or class shortcut (e.g.
