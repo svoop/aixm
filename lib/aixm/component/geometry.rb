@@ -66,18 +66,19 @@ module AIXM
         segments.map { _1.to_xml }.join
       end
 
-      private
-
+      # @return [Boolean] Single point geometry?
       def point?
         segments.size == 1 &&
           segments.first.is_a?(AIXM::Component::Geometry::Point)
       end
 
+      # @return [Boolean] Circle shaped geometry?
       def circle?
         segments.size == 1 &&
           segments.first.is_a?(AIXM::Component::Geometry::Circle)
       end
 
+      # @return [Boolean] Polygon shaped geometry?
       def polygon?
         segments.size >= 3 &&
           !segments.any? { _1.is_a?(AIXM::Component::Geometry::Circle) } &&
