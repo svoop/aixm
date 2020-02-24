@@ -11,6 +11,7 @@
 * `mkmid` executable to insert `mid` attributes into valid OFMX file
 * `ckmid` executable to check `mid` attributes in an OFMX file
 * `AIXM::Component::Geometry#point?|circle?|polygon?`
+* `AIXM::Component::Layer#services`
 
 ### Breaking Changes
 * Require Ruby 2.7

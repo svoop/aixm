@@ -16,6 +16,7 @@ module AIXM
     #   layer.timetable = AIXM.timetable or nil
     #   layer.selective = true or false (default)
     #   layer.remarks = String or nil
+    #   airspace.add_service(AIXM.service)
     #
     # @see https://gitlab.com/openflightmaps/ofmx/wikis/Airspace
     class Layer
@@ -92,6 +93,12 @@ module AIXM
       # @!method vertical_limit=(vertical_limit)
       #   @param vertical_limit [AIXM::Component::VerticalLimit]
       has_one :vertical_limit
+
+      # @!method services
+      #   @return [Array<AIXM::Feature::Service>] services
+      # @!method add_service(service)
+      #   @param service [AIXM::Feature::Service]
+      has_many :services
 
       # @!method airspace
       #   @return [AIXM::Feature::Airspace] airspace the layer defines

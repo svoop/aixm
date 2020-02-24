@@ -188,6 +188,23 @@ module AIXM
               adg << layer_airspace.to_wrapped_uid(with: :AdgUid).indent(2)
               adg << to_uid(as: :AseUidSameExtent).indent(2)
             end
+            layer.services.each do |service|
+              builder.Sae do |sae|
+                sae.SaeUid do |sae_uid|
+                  sae_uid << service.to_uid.indent(4)
+                  sae_uid << layer_airspace.to_uid.indent(4)
+                end
+              end
+            end
+          end
+        else
+          layers.first.services.each do |service|
+            builder.Sae do |sae|
+              sae.SaeUid do |sae_uid|
+                sae_uid << service.to_uid.indent(4)
+                sae_uid << to_uid.indent(4)
+              end
+            end
           end
         end
         builder.target!

@@ -110,9 +110,14 @@ describe AIXM::Feature::Airspace do
     end
   end
 
-  context "with one layer" do
+  context "with one layer and one service" do
     subject do
       AIXM::Factory.polygon_airspace
+    end
+
+    before do
+      unit = AIXM::Factory.unit
+      subject.layers.first.add_service(unit.services.first)
     end
 
     describe :to_xml do
@@ -179,6 +184,22 @@ describe AIXM::Feature::Airspace do
               <codeDatum>WGE</codeDatum>
             </Avx>
           </Abd>
+          <Sae>
+            <SaeUid>
+              <SerUid>
+                <UniUid region="LF">
+                  <txtName>PUJAUT</txtName>
+                  <codeType>TWR</codeType>
+                </UniUid>
+                <codeType>APP</codeType>
+                <noSeq>1</noSeq>
+              </SerUid>
+              <AseUid region="LF">
+                <codeType>D</codeType>
+                <codeId>PA</codeId>
+              </AseUid>
+            </SaeUid>
+          </Sae>
         END
       end
 
@@ -244,16 +265,42 @@ describe AIXM::Feature::Airspace do
               <codeDatum>WGE</codeDatum>
             </Avx>
           </Abd>
+          <Sae>
+            <SaeUid>
+              <SerUid>
+                <UniUid region="LF">
+                  <txtName>PUJAUT</txtName>
+                  <codeType>TWR</codeType>
+                </UniUid>
+                <codeType>APP</codeType>
+                <noSeq>1</noSeq>
+              </SerUid>
+              <AseUid region="LF">
+                <codeType>D</codeType>
+                <codeId>PA</codeId>
+              </AseUid>
+            </SaeUid>
+          </Sae>
         END
       end
     end
   end
 
-  context "with two layers" do
+  context "with two layers and three services" do
     subject do
       AIXM::Factory.polygon_airspace.tap do |airspace|
         airspace.add_layer(AIXM::Factory.layer)
       end
+    end
+
+    before do
+      unit = AIXM::Factory.unit.tap do |unit|
+        unit.add_service(AIXM::Factory.service)
+        unit.add_service(AIXM::Factory.service)
+      end
+      subject.layers.first.add_service(unit.services[0])
+      subject.layers.first.add_service(unit.services[1])
+      subject.layers.last.add_service(unit.services[2])
     end
 
     describe :to_xml do
@@ -339,6 +386,38 @@ describe AIXM::Feature::Airspace do
               <codeId>PA</codeId>
             </AseUidSameExtent>
           </Adg>
+          <Sae>
+            <SaeUid>
+              <SerUid>
+                <UniUid region="LF">
+                  <txtName>PUJAUT</txtName>
+                  <codeType>TWR</codeType>
+                </UniUid>
+                <codeType>APP</codeType>
+                <noSeq>1</noSeq>
+              </SerUid>
+              <AseUid region="LF">
+                <codeType>CLASS</codeType>
+                <codeId>B794588D</codeId>
+              </AseUid>
+            </SaeUid>
+          </Sae>
+          <Sae>
+            <SaeUid>
+              <SerUid>
+                <UniUid region="LF">
+                  <txtName>PUJAUT</txtName>
+                  <codeType>TWR</codeType>
+                </UniUid>
+                <codeType>APP</codeType>
+                <noSeq>2</noSeq>
+              </SerUid>
+              <AseUid region="LF">
+                <codeType>CLASS</codeType>
+                <codeId>B794588D</codeId>
+              </AseUid>
+            </SaeUid>
+          </Sae>
           <Ase>
             <AseUid region="LF">
               <codeType>CLASS</codeType>
@@ -378,6 +457,22 @@ describe AIXM::Feature::Airspace do
               <codeId>PA</codeId>
             </AseUidSameExtent>
           </Adg>
+          <Sae>
+            <SaeUid>
+              <SerUid>
+                <UniUid region="LF">
+                  <txtName>PUJAUT</txtName>
+                  <codeType>TWR</codeType>
+                </UniUid>
+                <codeType>APP</codeType>
+                <noSeq>3</noSeq>
+              </SerUid>
+              <AseUid region="LF">
+                <codeType>CLASS</codeType>
+                <codeId>64589EAF</codeId>
+              </AseUid>
+            </SaeUid>
+          </Sae>
         END
       end
     end

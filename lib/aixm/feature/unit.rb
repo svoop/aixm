@@ -160,9 +160,8 @@ module AIXM
           uni.codeClass(CLASSES.key(self.class).to_s)
           uni.txtRmk(remarks) if remarks
         end
-        services.sort { |a, b| a.type <=> b.type }.each.with_object({}) do |service, sequences|
-          sequences[service.type] = (sequences[service.type] || 0) + 1
-          builder << service.to_xml(sequence: sequences[service.type])
+        services.sort { |a, b| a.type <=> b.type }.each do |service|
+          builder << service.to_xml
         end
         builder.target!
       end

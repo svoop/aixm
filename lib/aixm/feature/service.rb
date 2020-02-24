@@ -140,6 +140,10 @@ module AIXM
       #   @return [AIXM::Feature::Unit] unit providing this service
       belongs_to :unit
 
+      # @!method layer
+      #   @return [AIXM::Component::Layer] airspace layer this service is provided within
+      belongs_to :layer
+
       # @return [Symbol] type of service (see {TYPES})
       attr_reader :type
 
@@ -152,6 +156,7 @@ module AIXM
       def initialize(source: nil, region: nil, type:)
         super(source: source, region: region)
         self.type = type
+        @sequence = 1
       end
 
       # @return [String]
@@ -181,6 +186,7 @@ module AIXM
 
       # @return [String] UID markup
       def to_uid
+        resequence!
         builder = Builder::XmlMarkup.new(indent: 2)
         builder.SerUid do |ser_uid|
           ser_uid << unit.to_uid.indent(2)
@@ -191,8 +197,7 @@ module AIXM
       memoize :to_uid
 
       # @return [String] AIXM or OFMX markup
-      def to_xml(sequence:)
-        @sequence = sequence
+      def to_xml
         builder = Builder::XmlMarkup.new(indent: 2)
         builder.comment! ["Service: #{TYPES.key(type)}", unit&.send(:name_with_type)].compact.join(' by ')
         builder.Ser({ source: (source if AIXM.ofmx?) }.compact) do |ser|
@@ -205,6 +210,16 @@ module AIXM
         end
         builder.target!
       end
+
+      private
+
+      def resequence!
+        unit.services.sort { |a, b| a.type <=> b.type }.each.with_object({}) do |service, sequences|
+          sequences[service.type] = (sequences[service.type] || 0) + 1
+          service.instance_variable_set(:@sequence, sequences[service.type])
+        end
+      end
+
     end
 
   end

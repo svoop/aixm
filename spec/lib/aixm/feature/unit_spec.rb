@@ -48,14 +48,16 @@ describe AIXM::Feature::Unit do
   end
 
   describe :to_xml do
-    let :service do
-      AIXM::Factory.service.tap do |service|
-        service.type = :AFIS
+    let :service_proc do
+      -> do
+        AIXM::Factory.service.tap do |service|
+          service.type = :AFIS
+        end
       end
     end
 
     it "builds correct complete AIXM" do
-      2.times { subject.add_service(service) }
+      2.times { subject.add_service(service_proc.call) }
       AIXM.aixm!
       _(subject.to_xml).must_equal <<~END
         <!-- Unit: PUJAUT TWR -->
@@ -197,7 +199,7 @@ describe AIXM::Feature::Unit do
     end
 
     it "builds correct complete OFMX" do
-      2.times { subject.add_service(service) }
+      2.times { subject.add_service(service_proc.call) }
       AIXM.ofmx!
       _(subject.to_xml).must_equal <<~END
         <!-- Unit: PUJAUT TWR -->
