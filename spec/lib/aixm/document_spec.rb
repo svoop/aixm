@@ -973,7 +973,7 @@ describe AIXM::Document do
             <txtRmk>FR only</txtRmk>
           </Uni>
           <!-- Service: APP by PUJAUT TWR -->
-          <Ser source="LF|GEN|0.0 FACTORY|0|0">
+          <Ser>
             <SerUid>
               <UniUid region="LF">
                 <txtName>PUJAUT</txtName>
@@ -1867,7 +1867,7 @@ describe AIXM::Document do
             <txtRmk>FR only</txtRmk>
           </Uni>
           <!-- Service: APP by PUJAUT TWR -->
-          <Ser source="LF|GEN|0.0 FACTORY|0|0">
+          <Ser>
             <SerUid mid="6fcb48c9-10a7-db3a-68c2-405a9dfbcd30">
               <UniUid region="LF" mid="43032450-13e4-6f1a-728b-8ba8b5d31c92">
                 <txtName>PUJAUT</txtName>

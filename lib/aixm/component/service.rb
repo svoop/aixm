@@ -1,13 +1,12 @@
 using AIXM::Refinements
 
 module AIXM
-  class Feature
+  module Component
 
     # Service provided by a unit.
     #
     # ===Cheat Sheet in Pseudo Code:
     #   service = AIXM.service(
-    #     source: String or nil
     #     type: TYPES
     #   )
     #   service.timetable = AIXM.timetable or nil
@@ -15,11 +14,9 @@ module AIXM
     #   service.add_frequency(AIXM.frequency)
     #
     # @see https://gitlab.com/openflightmaps/ofmx/wikis/Organisation#ser-service
-    class Service < Feature
+    class Service
       include AIXM::Association
       include AIXM::Memoize
-
-      public_class_method :new
 
       TYPES = {
         ACS: :area_control_service,
@@ -153,8 +150,7 @@ module AIXM
       # @return [String, nil] free text remarks
       attr_reader :remarks
 
-      def initialize(source: nil, region: nil, type:)
-        super(source: source, region: region)
+      def initialize(type:)
         self.type = type
         @sequence = 1
       end
@@ -200,7 +196,7 @@ module AIXM
       def to_xml
         builder = Builder::XmlMarkup.new(indent: 2)
         builder.comment! ["Service: #{TYPES.key(type)}", unit&.send(:name_with_type)].compact.join(' by ')
-        builder.Ser({ source: (source if AIXM.ofmx?) }.compact) do |ser|
+        builder.Ser do |ser|
           ser << to_uid.indent(2)
           ser << timetable.to_xml(as: :Stt).indent(2) if timetable
           ser.txtRmk(remarks) if remarks

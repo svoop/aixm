@@ -218,7 +218,7 @@ describe AIXM::Feature::Unit do
           <txtRmk>FR only</txtRmk>
         </Uni>
         <!-- Service: AFIS by PUJAUT TWR -->
-        <Ser source="LF|GEN|0.0 FACTORY|0|0">
+        <Ser>
           <SerUid>
             <UniUid region="LF">
               <txtName>PUJAUT</txtName>
@@ -260,7 +260,7 @@ describe AIXM::Feature::Unit do
           </Cdl>
         </Fqy>
         <!-- Service: AFIS by PUJAUT TWR -->
-        <Ser source="LF|GEN|0.0 FACTORY|0|0">
+        <Ser>
           <SerUid>
             <UniUid region="LF">
               <txtName>PUJAUT</txtName>
@@ -302,7 +302,7 @@ describe AIXM::Feature::Unit do
           </Cdl>
         </Fqy>
         <!-- Service: APP by PUJAUT TWR -->
-        <Ser source="LF|GEN|0.0 FACTORY|0|0">
+        <Ser>
           <SerUid>
             <UniUid region="LF">
               <txtName>PUJAUT</txtName>

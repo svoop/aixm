@@ -36,7 +36,7 @@ module AIXM
       }.freeze
 
       # @!method service
-      #   @return [AIXM::Feature::Service] service the frequency belongs to
+      #   @return [AIXM::Component::Service] service the frequency belongs to
       belongs_to :service
 
       # @return [AIXM::F] frequency for transmission (outgoing)

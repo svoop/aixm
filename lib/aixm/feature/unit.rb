@@ -81,9 +81,9 @@ module AIXM
       }.freeze
 
       # @!method services
-      #   @return [Array<AIXM::Feature::Service>] services provided by this unit
+      #   @return [Array<AIXM::Component::Service>] services provided by this unit
       # @!method add_service(service)
-      #   @param service [AIXM::Feature::Service]
+      #   @param service [AIXM::Component::Service]
       has_many :services
 
       # @!method organisation

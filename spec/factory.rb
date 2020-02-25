@@ -321,7 +321,6 @@ module AIXM
 
       def service
         AIXM.service(
-          source: 'LF|GEN|0.0 FACTORY|0|0',
           type: :approach_control_service
         ).tap do |service|
           service.timetable = AIXM::H24

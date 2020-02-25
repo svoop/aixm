@@ -21,6 +21,7 @@
 * Use `Airspace#add_layer` instead of `Airspace@layers#<<`
 * Use `Geometry#add_segment` instead of `Geometry#<<`
 * Renamed `VerticalLimits` to `VerticalLimit`
+* Moved `AIXM::Feature::Service` to `AIXM::Component::Service`
 * Refinements `String#insert_payload_hash` and `Array#to_uuid` removed again
 * Refinement `String#payload_hash` removed in favor of `AIXM::PayloadHash` class
 

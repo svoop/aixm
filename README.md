@@ -172,7 +172,7 @@ document.features.find(:airport)   # => [#<AIXM::Feature::Airport>, #<AIXM::Feat
 Equally on `has_many` associations, use `duplicates` to find identical or equal associations:
 
 ```ruby
-document.features.duplicates   # => [#<AIXM::Feature::Unit>, #<AIXM::Feature::Service>, ...]
+document.features.duplicates   # => [#<AIXM::Feature::Unit>, #<AIXM::Component::Service>, ...]
 ```
 
 ## Payload Hash

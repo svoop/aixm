@@ -1,6 +1,6 @@
 require_relative '../../../spec_helper'
 
-describe AIXM::Feature::Service do
+describe AIXM::Component::Service do
   subject do
     AIXM::Factory.service
   end

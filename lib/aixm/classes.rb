@@ -13,7 +13,7 @@ module AIXM
     address: 'AIXM::Feature::Address',
     organisation: 'AIXM::Feature::Organisation',
     unit: 'AIXM::Feature::Unit',
-    service: 'AIXM::Feature::Service',
+    service: 'AIXM::Component::Service',
     frequency: 'AIXM::Component::Frequency',
     airport: 'AIXM::Feature::Airport',
     runway: 'AIXM::Component::Runway',
