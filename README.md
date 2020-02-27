@@ -159,13 +159,22 @@ document.features << airport   # => NoMethodError
 document.add_feature airport   # okay
 ```
 
-### find
+### find_by and find
 
-Use `find` on `has_many` to filter associations by class or attribute values:
+Use `find_by` on `has_many` to filter associations by class and optional attribute values:
 
 ```ruby
-document.features.find(:airport)   # => [#<AIXM::Feature::Airport>, #<AIXM::Feature::Airport>, ...]
+document.features.find_by(:airport)               # => [#<AIXM::Feature::Airport>, #<AIXM::Feature::Airport>]
+document.features.find_by(:airport, id: 'LFNT')   # => [#<AIXM::Feature::Airport>]
 ```
+
+To search a `has_many` association for equal objects, use `find`:
+
+```ruby
+document.features.find(airport)   # => [#<AIXM::Feature::Airport>]
+```
+
+This may seem redundant at first, but keep in mind that two instances of +AIXM::CLASSES+ which implement `#to_uid` are considered equal if they are instances of the same class and both their UIDs as calculated by `#to_uid` are equal. Attributes which are not part of the `#to_uid` calculation are irrelevant!
 
 ### duplicates
 

@@ -257,7 +257,11 @@ module AIXM
       private :<<, :push, :append, :unshift, :prepend
       private :delete, :pop, :shift
 
-      # Find by class and/or attribute values on a hay_many association.
+      # Find objects of the given class and optionally with the given
+      # attribute values on a has_many association.
+      #
+      # The class can either be declared by passing the class itself or by
+      # passing a shortcut symbol as listed in +AIXM::CLASSES+.
       #
       # @example
       #   class Blog
@@ -277,17 +281,17 @@ module AIXM
       #   post.title = "title"
       #   blog.add_item(post)
       #   blog.add_item(picture)
-      #   blog.items.find(:post) == [post]                    # => true
-      #   blog.items.find(Post) == [post]                     # => true
-      #   blog.items.find(:post, title: "title") == [post]    # => true
-      #   blog.items.find(Object) == [post, picture]          # => true
+      #   blog.items.find_by(:post) == [post]                    # => true
+      #   blog.items.find_by(Post) == [post]                     # => true
+      #   blog.items.find_by(:post, title: "title") == [post]    # => true
+      #   blog.items.find_by(Object) == [post, picture]          # => true
       #
       # @param klass [Class, Symbol] class (e.g. AIXM::Feature::Airport,
-      #   AIXM::Feature::NavigationalAid::VOR) or class shortcut (e.g.
+      #   AIXM::Feature::NavigationalAid::VOR) or shortcut symbol (e.g.
       #   :airport or :vor) as listed in AIXM::CLASSES
       # @param attributes [Hash] search attributes by their values
       # @return [AIXM::Association::Array]
-      def find(klass, attributes={})
+      def find_by(klass, attributes={})
         if klass.is_a? Symbol
           klass = AIXM::CLASSES[klass]&.to_class || fail(ArgumentError, "unknown class shortcut `#{klass}'")
         end
@@ -298,6 +302,39 @@ module AIXM
                 memo && element.send(attribute) == value
               end
             end
+          end
+        )
+      end
+
+      # Find equal objects on a has_many association.
+      #
+      # This may seem redundant at first, but keep in mind that two instances
+      # of +AIXM::CLASSES+ which implement `#to_uid` are considered equal if
+      # they are instances of the same class and both their UIDs as calculated
+      # by `#to_uid` are equal. Attributes which are not part of the `#to_uid`
+      # calculation are irrelevant!
+      #
+      # @example
+      #   class Blog
+      #     include AIXM::Association
+      #     has_many :items, accept: %i(post picture)
+      #   end
+      #   class Post
+      #     include AIXM::Association
+      #     belongs_to :blog, as: :item
+      #     attr_accessor :title
+      #   end
+      #   blog, post = Blog.new, Post.new
+      #   blog.add_item(post)
+      #   blog.items.find(post) == [post]   # => true
+      #
+      # @param object [Object] instance of class listed in AIXM::CLASSES
+      # @return [AIXM::Association::Array]
+      def find(object)
+        klass = object.__class__
+        self.class.new(
+          select do |element|
+            element.kind_of?(klass) && element == object
           end
         )
       end

@@ -91,7 +91,7 @@ describe AIXM::Document do
 
     it "adds 1 group of obstacles with default max distance" do
       _(subject.group_obstacles!).must_equal 1
-      obstacle_group = subject.features.find(:obstacle_group).first
+      obstacle_group = subject.features.find_by(:obstacle_group).first
       _(obstacle_group.obstacles.count).must_equal 8
     end
 
@@ -106,12 +106,12 @@ describe AIXM::Document do
 
     it "leaves ungrouped obstacles untouched" do
       subject.group_obstacles!
-      _(subject.features.find(:obstacle).count).must_equal 1
+      _(subject.features.find_by(:obstacle).count).must_equal 1
     end
 
     it "copies source of first obstacle to obstacle group" do
       subject.group_obstacles!
-      obstacle_group = subject.features.find(:obstacle_group).first
+      obstacle_group = subject.features.find_by(:obstacle_group).first
       _(obstacle_group.source).must_equal obstacle_group.obstacles.first.source
     end
 

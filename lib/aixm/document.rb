@@ -69,7 +69,7 @@ module AIXM
     #   pairs (default: 1 NM)
     # @return [Integer] number of obstacle groups added
     def group_obstacles!(max_distance: AIXM.d(1, :nm))
-      obstacles, list = features.find(:obstacle), {}
+      obstacles, list = features.find_by(:obstacle), {}
       while subject = obstacles.send(:shift)
         obstacles.each do |obstacle|
           if subject.xy.distance(obstacle.xy) <= max_distance

@@ -597,37 +597,48 @@ describe AIXM::Association do
       AIXM::Factory.document
     end
 
-    describe :find do
+    describe :find_by do
       it "returns array of elements by class shortcut" do
-        subject.features.find(:airport).then do |result|
+        subject.features.find_by(:airport).then do |result|
           _(result).must_be_instance_of AIXM::Association::Array
           _(result.map(&:id)).must_equal %w(LFNT)
         end
       end
 
       it "returns array of elements by class" do
-        subject.features.find(AIXM::Feature::Airport).then do |result|
+        subject.features.find_by(AIXM::Feature::Airport).then do |result|
           _(result).must_be_instance_of AIXM::Association::Array
           _(result.map(&:id)).must_equal %w(LFNT)
         end
       end
 
       it "returns array of elements by class and attributes" do
-        subject.features.find(:airport, id: "LFNT").then do |result|
+        subject.features.find_by(:airport, id: "LFNT").then do |result|
           _(result).must_be_instance_of AIXM::Association::Array
           _(result.map(&:id)).must_equal %w(LFNT)
         end
       end
 
       it "returns empty array if nothing matches" do
-        subject.features.find(:airport, id: "FAKE").then do |result|
+        subject.features.find_by(:airport, id: "FAKE").then do |result|
           _(result).must_be_instance_of AIXM::Association::Array
           _(result).must_be :empty?
         end
       end
 
       it "fails on invalid shortcut" do
-        _{ subject.features.find(:fake) }.must_raise ArgumentError
+        _{ subject.features.find_by(:fake) }.must_raise ArgumentError
+      end
+    end
+
+    describe :find do
+      it "returns equal objects" do
+        object = AIXM::Factory.unit
+        _(subject.features.find(object)).must_equal [object]
+      end
+
+      it "returns empty array if nothing is equal" do
+        _(subject.features.find(Object.new)).must_equal []
       end
     end
 
