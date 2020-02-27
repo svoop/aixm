@@ -14,7 +14,7 @@ module AIXM
     #     type: TYPES
     #     xy: AIXM.xy
     #     z: AIXM.z
-    #     radius: AIXM.d
+    #     radius: AIXM.d or nil
     #   )
     #   obstacle.lighting = true or false (default for AIXM) or nil (means: unknown, default for OFMX)
     #   obstacle.lighting_remarks = String or nil
@@ -122,7 +122,7 @@ module AIXM
       # @return [Symbol, nil] type of physical link between this and another obstacle
       attr_reader :link_type
 
-      def initialize(source: nil, region: nil, name: nil, type:, xy:, z:, radius:)
+      def initialize(source: nil, region: nil, name: nil, type:, xy:, z:, radius: nil)
         super(source: source, region: region)
         self.name, self.type, self.xy, self.z, self.radius = name, type, xy, z, radius
         @lighting = @marking = @height_accurate = false
