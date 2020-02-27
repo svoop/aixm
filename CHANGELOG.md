@@ -23,6 +23,7 @@
 * Moved `AIXM::Feature::Service` to `AIXM::Component::Service`
 * Refinements `String#insert_payload_hash` and `Array#to_uuid` removed again
 * Refinement `String#payload_hash` removed in favor of `AIXM::PayloadHash` class
+* Refinements `Array#find|duplicates` removed
 
 ### Changes
 * Renamed `AIXM.config.mid_region` to `AIXM.config.region`

@@ -30,57 +30,6 @@ module AIXM
       end
     end
 
-    # @!method find
-    #   Find elements by class and/or attribute values.
-    #
-    #   The search criteria keys are either:
-    #   * +instance_of+ – element is +instance_of?+ given class
-    #   * +is_a+ – element +is_a?+ child of given class
-    #   * +kind_of+ – instance +is_kind?+ of given class or module
-    #   * any other key will match the corresponding attribute reader
-    #
-    #   @example
-    #     array = [
-    #       OpenStruct(foo: :bar),
-    #       OpenStruct(foo: :bir)
-    #     ]
-    #     array.find(instance_of: OpenStruct).count   # => 2
-    #     array.find(is_a: Object).count              # => 2
-    #     array.find(foo: :bar).count                 # => 1
-    #     array.find(is_a: Object, foo: :bar).count   # => 1
-    #     array.find(is_a: Array).count               # => 0
-    #
-    #   @note This is a refinement for +Array+
-    #   @return [Array<Object>] elements found
-    refine Array do
-      def find(criteria={})
-        select do |element|
-          criteria.reduce(true) do |memo, (criterion, value)|
-            memo && case criterion
-              when :instance_of then element.instance_of? value
-              when :is_a then element.is_a? value
-              when :kind_of then element.kind_of? value
-              else element.send(criterion) == value
-            end
-          end
-        end
-      end
-    end
-
-    # @!method duplicates
-    #   Returns a new array with all elements which appear more than once.
-    #
-    #   @example
-    #     %w(a b c b d e d f b).duplicates   # => ["b", "d"]
-    #
-    #   @note This is a refinement for +Array+
-    #   @return [Array] duplicate elements
-    refine Array do
-      def duplicates
-        group_by(&:itself).select { |_, v| v.size > 1 }.keys
-      end
-    end
-
     # @!method to_dms(padding=3)
     #   Convert DD angle to DMS with the degrees zero padded to +padding+
     #   length.
