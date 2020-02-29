@@ -133,8 +133,6 @@ module AIXM
             end
             ogr.txtRmk(remarks) if remarks
           end
-        else
-          to_uid   # populate mid attribute
         end
         obstacles.each { builder << _1.to_xml(delegate: false) }
         builder.target!
