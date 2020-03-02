@@ -61,10 +61,6 @@ module AIXM
     # Compare all ungrouped obstacles and create new obstacle groups whose
     # members are located within +max_distance+ pairwise.
     #
-    # @note OFMX requires every obstacle, even single ones, to be part of an
-    #   obstacle group which has a region assigned. For this to work, you must
-    #   assure every obstacle has a region assigned when using this method.
-    #
     # @param max_distance [AIXM::D] max distance between obstacle group member
     #   pairs (default: 1 NM)
     # @return [Integer] number of obstacle groups added

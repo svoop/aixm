@@ -6,6 +6,11 @@ module AIXM
     # Groups of obstacles which consist of either linked (e.g. power line
     # towers) or unlinked (e.g. wind turbines) members.
     #
+    # Obstacle group should contain at least two obstacles. However, if the
+    # details of each obstacle of the group are unknown, you may add only one
+    # virtual obstacle to the group and mention the number of real obstacles
+    # in it's remarks.
+    #
     # ===Cheat Sheet in Pseudo Code:
     #   obstacle_group = AIXM.obstacle_group(
     #     source: String or nil        # see remarks below
@@ -30,9 +35,9 @@ module AIXM
     #     link_type: LINK_TYPES
     #   )
     #
-    # Please note: As soon as an obstacle is added to an obstacle group, the
-    # +xy_accuracy+ and +z_accuracy+ of the obstacle group overwrite whatever
-    # is set on the individual obstacles!
+    # Please note: Accuracies (+xy_accuracy+ and +z_accuracy+) set on an
+    # obstacle group are implicitly applied to all obstacles of the group
+    # unless they have their own, different accuracies set.
     #
     # @see https://gitlab.com/openflightmaps/ofmx/wikis/Obstacle
     class ObstacleGroup < Feature
@@ -108,7 +113,6 @@ module AIXM
       def to_uid
         builder = Builder::XmlMarkup.new(indent: 2)
         builder.OgrUid({ region: (region if AIXM.ofmx?) }.compact) do |ogr_uid|
-          ogr_uid.txtName(name)
           ogr_uid.geoLat(obstacles.first.xy.lat(AIXM.schema))
           ogr_uid.geoLong(obstacles.first.xy.long(AIXM.schema))
         end
@@ -122,6 +126,7 @@ module AIXM
           builder.comment! "Obstacle group: #{name}".strip
           builder.Ogr({ source: (source if AIXM.ofmx?) }.compact) do |ogr|
             ogr << to_uid.indent(2)
+            ogr.txtName(name)
             ogr.codeDatum('WGE')
             if xy_accuracy
               ogr.valGeoAccuracy(xy_accuracy.dist.trim)

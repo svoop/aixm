@@ -93,6 +93,7 @@ describe AIXM::Document do
       _(subject.group_obstacles!).must_equal 1
       obstacle_group = subject.features.find_by(:obstacle_group).first
       _(obstacle_group.obstacles.count).must_equal 8
+      _(subject.features.find_by(:obstacle).count).must_equal 1
     end
 
     it "adds 2 groups of obstacles with max distance 400m" do
@@ -102,6 +103,7 @@ describe AIXM::Document do
         names = obstacle_group.obstacles.map(&:name).sort
         _(names).must_equal names.include?('1') ? %w(1 2 3 4) : %w(5 6 7 8)
       end
+      _(subject.features.find_by(:obstacle).count).must_equal 1
     end
 
     it "leaves ungrouped obstacles untouched" do
@@ -1659,37 +1661,22 @@ describe AIXM::Document do
             </Ttt>
             <txtRmk>vortac navaid</txtRmk>
           </Tcn>
-          <!-- Obstacle group: EIFFEL TOWER -->
-          <Ogr>
-            <OgrUid region="LF">
-              <txtName>EIFFEL TOWER</txtName>
-              <geoLat>48.85825000N</geoLat>
-              <geoLong>002.29458889E</geoLong>
-            </OgrUid>
-            <codeDatum>WGE</codeDatum>
-            <valGeoAccuracy>2</valGeoAccuracy>
-            <uomGeoAccuracy>M</uomGeoAccuracy>
-            <valElevAccuracy>3</valElevAccuracy>
-            <uomElevAccuracy>FT</uomElevAccuracy>
-          </Ogr>
           <!-- Obstacle: [tower] 48.85825000N 002.29458889E EIFFEL TOWER -->
           <Obs>
-            <ObsUid>
-              <OgrUid region="LF">
-                <txtName>EIFFEL TOWER</txtName>
-                <geoLat>48.85825000N</geoLat>
-                <geoLong>002.29458889E</geoLong>
-              </OgrUid>
+            <ObsUid region="LF">
               <geoLat>48.85825000N</geoLat>
               <geoLong>002.29458889E</geoLong>
             </ObsUid>
             <txtName>EIFFEL TOWER</txtName>
             <codeType>TOWER</codeType>
-            <codeGroup>N</codeGroup>
             <codeLgt>Y</codeLgt>
             <txtDescrLgt>red strobes</txtDescrLgt>
             <codeDatum>WGE</codeDatum>
+            <valGeoAccuracy>2</valGeoAccuracy>
+            <uomGeoAccuracy>M</uomGeoAccuracy>
             <valElev>1187</valElev>
+            <valElevAccuracy>3</valElevAccuracy>
+            <uomElevAccuracy>FT</uomElevAccuracy>
             <valHgt>1063</valHgt>
             <uomDistVer>FT</uomDistVer>
             <codeHgtAccuracy>Y</codeHgtAccuracy>
@@ -1702,10 +1689,10 @@ describe AIXM::Document do
           <!-- Obstacle group: MIRMANDE EOLIENNES -->
           <Ogr>
             <OgrUid region="LF">
-              <txtName>MIRMANDE EOLIENNES</txtName>
               <geoLat>44.67501389N</geoLat>
               <geoLong>004.87256667E</geoLong>
             </OgrUid>
+            <txtName>MIRMANDE EOLIENNES</txtName>
             <codeDatum>WGE</codeDatum>
             <valGeoAccuracy>50</valGeoAccuracy>
             <uomGeoAccuracy>M</uomGeoAccuracy>
@@ -1715,18 +1702,16 @@ describe AIXM::Document do
           </Ogr>
           <!-- Obstacle: [wind_turbine] 44.67501389N 004.87256667E LA TEISSONIERE 1 -->
           <Obs>
-            <ObsUid>
-              <OgrUid region="LF">
-                <txtName>MIRMANDE EOLIENNES</txtName>
-                <geoLat>44.67501389N</geoLat>
-                <geoLong>004.87256667E</geoLong>
-              </OgrUid>
+            <ObsUid region="LF">
               <geoLat>44.67501389N</geoLat>
               <geoLong>004.87256667E</geoLong>
             </ObsUid>
+            <OgrUid region="LF">
+              <geoLat>44.67501389N</geoLat>
+              <geoLong>004.87256667E</geoLong>
+            </OgrUid>
             <txtName>LA TEISSONIERE 1</txtName>
             <codeType>WINDTURBINE</codeType>
-            <codeGroup>Y</codeGroup>
             <codeLgt>N</codeLgt>
             <codeMarking>N</codeMarking>
             <codeDatum>WGE</codeDatum>
@@ -1739,18 +1724,16 @@ describe AIXM::Document do
           </Obs>
           <!-- Obstacle: [wind_turbine] 44.67946667N 004.87381111E LA TEISSONIERE 2 -->
           <Obs>
-            <ObsUid>
-              <OgrUid region="LF">
-                <txtName>MIRMANDE EOLIENNES</txtName>
-                <geoLat>44.67501389N</geoLat>
-                <geoLong>004.87256667E</geoLong>
-              </OgrUid>
+            <ObsUid region="LF">
               <geoLat>44.67946667N</geoLat>
               <geoLong>004.87381111E</geoLong>
             </ObsUid>
+            <OgrUid region="LF">
+              <geoLat>44.67501389N</geoLat>
+              <geoLong>004.87256667E</geoLong>
+            </OgrUid>
             <txtName>LA TEISSONIERE 2</txtName>
             <codeType>WINDTURBINE</codeType>
-            <codeGroup>Y</codeGroup>
             <codeLgt>N</codeLgt>
             <codeMarking>N</codeMarking>
             <codeDatum>WGE</codeDatum>
@@ -1764,10 +1747,10 @@ describe AIXM::Document do
           <!-- Obstacle group: DROITWICH LONGWAVE ANTENNA -->
           <Ogr>
             <OgrUid region="EG">
-              <txtName>DROITWICH LONGWAVE ANTENNA</txtName>
               <geoLat>52.29639722N</geoLat>
               <geoLong>002.10675278W</geoLong>
             </OgrUid>
+            <txtName>DROITWICH LONGWAVE ANTENNA</txtName>
             <codeDatum>WGE</codeDatum>
             <valGeoAccuracy>0</valGeoAccuracy>
             <uomGeoAccuracy>M</uomGeoAccuracy>
@@ -1777,18 +1760,16 @@ describe AIXM::Document do
           </Ogr>
           <!-- Obstacle: [mast] 52.29639722N 002.10675278W DROITWICH LW NORTH -->
           <Obs>
-            <ObsUid>
-              <OgrUid region="EG">
-                <txtName>DROITWICH LONGWAVE ANTENNA</txtName>
-                <geoLat>52.29639722N</geoLat>
-                <geoLong>002.10675278W</geoLong>
-              </OgrUid>
+            <ObsUid region="EG">
               <geoLat>52.29639722N</geoLat>
               <geoLong>002.10675278W</geoLong>
             </ObsUid>
+            <OgrUid region="EG">
+              <geoLat>52.29639722N</geoLat>
+              <geoLong>002.10675278W</geoLong>
+            </OgrUid>
             <txtName>DROITWICH LW NORTH</txtName>
             <codeType>MAST</codeType>
-            <codeGroup>Y</codeGroup>
             <codeLgt>N</codeLgt>
             <codeMarking>N</codeMarking>
             <codeDatum>WGE</codeDatum>
@@ -1801,18 +1782,16 @@ describe AIXM::Document do
           </Obs>
           <!-- Obstacle: [mast] 52.29457778N 002.10568611W DROITWICH LW NORTH -->
           <Obs>
-            <ObsUid>
-              <OgrUid region="EG">
-                <txtName>DROITWICH LONGWAVE ANTENNA</txtName>
-                <geoLat>52.29639722N</geoLat>
-                <geoLong>002.10675278W</geoLong>
-              </OgrUid>
+            <ObsUid region="EG">
               <geoLat>52.29457778N</geoLat>
               <geoLong>002.10568611W</geoLong>
             </ObsUid>
+            <OgrUid region="EG">
+              <geoLat>52.29639722N</geoLat>
+              <geoLong>002.10675278W</geoLong>
+            </OgrUid>
             <txtName>DROITWICH LW NORTH</txtName>
             <codeType>MAST</codeType>
-            <codeGroup>Y</codeGroup>
             <codeLgt>N</codeLgt>
             <codeMarking>N</codeMarking>
             <codeDatum>WGE</codeDatum>
@@ -1822,12 +1801,7 @@ describe AIXM::Document do
             <codeHgtAccuracy>Y</codeHgtAccuracy>
             <valRadius>200</valRadius>
             <uomRadius>M</uomRadius>
-            <ObsUidLink>
-              <OgrUid region="EG">
-                <txtName>DROITWICH LONGWAVE ANTENNA</txtName>
-                <geoLat>52.29639722N</geoLat>
-                <geoLong>002.10675278W</geoLong>
-              </OgrUid>
+            <ObsUidLink region="EG">
               <geoLat>52.29639722N</geoLat>
               <geoLong>002.10675278W</geoLong>
             </ObsUidLink>
@@ -2553,37 +2527,22 @@ describe AIXM::Document do
             </Ttt>
             <txtRmk>vortac navaid</txtRmk>
           </Tcn>
-          <!-- Obstacle group: EIFFEL TOWER -->
-          <Ogr>
-            <OgrUid region="LF" mid="134023cf-6ba3-ee36-1384-ffc221f6fab8">
-              <txtName>EIFFEL TOWER</txtName>
-              <geoLat>48.85825000N</geoLat>
-              <geoLong>002.29458889E</geoLong>
-            </OgrUid>
-            <codeDatum>WGE</codeDatum>
-            <valGeoAccuracy>2</valGeoAccuracy>
-            <uomGeoAccuracy>M</uomGeoAccuracy>
-            <valElevAccuracy>3</valElevAccuracy>
-            <uomElevAccuracy>FT</uomElevAccuracy>
-          </Ogr>
           <!-- Obstacle: [tower] 48.85825000N 002.29458889E EIFFEL TOWER -->
           <Obs>
-            <ObsUid mid="8e0a7cfc-b82b-ebfc-3501-06dff5d64566">
-              <OgrUid region="LF" mid="134023cf-6ba3-ee36-1384-ffc221f6fab8">
-                <txtName>EIFFEL TOWER</txtName>
-                <geoLat>48.85825000N</geoLat>
-                <geoLong>002.29458889E</geoLong>
-              </OgrUid>
+            <ObsUid region="LF" mid="04f75ef2-ffa3-2c72-8cf0-572b07b24541">
               <geoLat>48.85825000N</geoLat>
               <geoLong>002.29458889E</geoLong>
             </ObsUid>
             <txtName>EIFFEL TOWER</txtName>
             <codeType>TOWER</codeType>
-            <codeGroup>N</codeGroup>
             <codeLgt>Y</codeLgt>
             <txtDescrLgt>red strobes</txtDescrLgt>
             <codeDatum>WGE</codeDatum>
+            <valGeoAccuracy>2</valGeoAccuracy>
+            <uomGeoAccuracy>M</uomGeoAccuracy>
             <valElev>1187</valElev>
+            <valElevAccuracy>3</valElevAccuracy>
+            <uomElevAccuracy>FT</uomElevAccuracy>
             <valHgt>1063</valHgt>
             <uomDistVer>FT</uomDistVer>
             <codeHgtAccuracy>Y</codeHgtAccuracy>
@@ -2595,11 +2554,11 @@ describe AIXM::Document do
           </Obs>
           <!-- Obstacle group: MIRMANDE EOLIENNES -->
           <Ogr>
-            <OgrUid region="LF" mid="ee8cb2a8-f482-5bbe-421f-272de41e1eec">
-              <txtName>MIRMANDE EOLIENNES</txtName>
+            <OgrUid region="LF" mid="2aede4b0-b8ad-e840-257e-743ee5c1325d">
               <geoLat>44.67501389N</geoLat>
               <geoLong>004.87256667E</geoLong>
             </OgrUid>
+            <txtName>MIRMANDE EOLIENNES</txtName>
             <codeDatum>WGE</codeDatum>
             <valGeoAccuracy>50</valGeoAccuracy>
             <uomGeoAccuracy>M</uomGeoAccuracy>
@@ -2609,18 +2568,16 @@ describe AIXM::Document do
           </Ogr>
           <!-- Obstacle: [wind_turbine] 44.67501389N 004.87256667E LA TEISSONIERE 1 -->
           <Obs>
-            <ObsUid mid="36f93624-010f-2b4c-e17a-71fdf6c7cc97">
-              <OgrUid region="LF" mid="ee8cb2a8-f482-5bbe-421f-272de41e1eec">
-                <txtName>MIRMANDE EOLIENNES</txtName>
-                <geoLat>44.67501389N</geoLat>
-                <geoLong>004.87256667E</geoLong>
-              </OgrUid>
+            <ObsUid region="LF" mid="79fcc46a-f585-18b0-501f-044b728f64f0">
               <geoLat>44.67501389N</geoLat>
               <geoLong>004.87256667E</geoLong>
             </ObsUid>
+            <OgrUid region="LF" mid="2aede4b0-b8ad-e840-257e-743ee5c1325d">
+              <geoLat>44.67501389N</geoLat>
+              <geoLong>004.87256667E</geoLong>
+            </OgrUid>
             <txtName>LA TEISSONIERE 1</txtName>
             <codeType>WINDTURBINE</codeType>
-            <codeGroup>Y</codeGroup>
             <codeLgt>N</codeLgt>
             <codeMarking>N</codeMarking>
             <codeDatum>WGE</codeDatum>
@@ -2633,18 +2590,16 @@ describe AIXM::Document do
           </Obs>
           <!-- Obstacle: [wind_turbine] 44.67946667N 004.87381111E LA TEISSONIERE 2 -->
           <Obs>
-            <ObsUid mid="8c3cb548-ddd7-402c-c771-47b929b0fd9d">
-              <OgrUid region="LF" mid="ee8cb2a8-f482-5bbe-421f-272de41e1eec">
-                <txtName>MIRMANDE EOLIENNES</txtName>
-                <geoLat>44.67501389N</geoLat>
-                <geoLong>004.87256667E</geoLong>
-              </OgrUid>
+            <ObsUid region="LF" mid="5268c531-41db-df17-4ea6-ed469e7e3630">
               <geoLat>44.67946667N</geoLat>
               <geoLong>004.87381111E</geoLong>
             </ObsUid>
+            <OgrUid region="LF" mid="2aede4b0-b8ad-e840-257e-743ee5c1325d">
+              <geoLat>44.67501389N</geoLat>
+              <geoLong>004.87256667E</geoLong>
+            </OgrUid>
             <txtName>LA TEISSONIERE 2</txtName>
             <codeType>WINDTURBINE</codeType>
-            <codeGroup>Y</codeGroup>
             <codeLgt>N</codeLgt>
             <codeMarking>N</codeMarking>
             <codeDatum>WGE</codeDatum>
@@ -2657,11 +2612,11 @@ describe AIXM::Document do
           </Obs>
           <!-- Obstacle group: DROITWICH LONGWAVE ANTENNA -->
           <Ogr>
-            <OgrUid region="EG" mid="f90b14a7-3234-56d1-b17f-335e2d57de34">
-              <txtName>DROITWICH LONGWAVE ANTENNA</txtName>
+            <OgrUid region="EG" mid="f8121392-e8b4-692b-e38e-fa5db2c0d702">
               <geoLat>52.29639722N</geoLat>
               <geoLong>002.10675278W</geoLong>
             </OgrUid>
+            <txtName>DROITWICH LONGWAVE ANTENNA</txtName>
             <codeDatum>WGE</codeDatum>
             <valGeoAccuracy>0</valGeoAccuracy>
             <uomGeoAccuracy>M</uomGeoAccuracy>
@@ -2671,18 +2626,16 @@ describe AIXM::Document do
           </Ogr>
           <!-- Obstacle: [mast] 52.29639722N 002.10675278W DROITWICH LW NORTH -->
           <Obs>
-            <ObsUid mid="8dbff874-2702-28bb-2c67-912eee5a3da0">
-              <OgrUid region="EG" mid="f90b14a7-3234-56d1-b17f-335e2d57de34">
-                <txtName>DROITWICH LONGWAVE ANTENNA</txtName>
-                <geoLat>52.29639722N</geoLat>
-                <geoLong>002.10675278W</geoLong>
-              </OgrUid>
+            <ObsUid region="EG" mid="2207a079-80e6-676f-6aa4-f39425e4c658">
               <geoLat>52.29639722N</geoLat>
               <geoLong>002.10675278W</geoLong>
             </ObsUid>
+            <OgrUid region="EG" mid="f8121392-e8b4-692b-e38e-fa5db2c0d702">
+              <geoLat>52.29639722N</geoLat>
+              <geoLong>002.10675278W</geoLong>
+            </OgrUid>
             <txtName>DROITWICH LW NORTH</txtName>
             <codeType>MAST</codeType>
-            <codeGroup>Y</codeGroup>
             <codeLgt>N</codeLgt>
             <codeMarking>N</codeMarking>
             <codeDatum>WGE</codeDatum>
@@ -2695,18 +2648,16 @@ describe AIXM::Document do
           </Obs>
           <!-- Obstacle: [mast] 52.29457778N 002.10568611W DROITWICH LW NORTH -->
           <Obs>
-            <ObsUid mid="11587f33-5115-b832-c9fd-143657d58925">
-              <OgrUid region="EG" mid="f90b14a7-3234-56d1-b17f-335e2d57de34">
-                <txtName>DROITWICH LONGWAVE ANTENNA</txtName>
-                <geoLat>52.29639722N</geoLat>
-                <geoLong>002.10675278W</geoLong>
-              </OgrUid>
+            <ObsUid region="EG" mid="d502a479-dfe5-8305-3546-ac73b42e555a">
               <geoLat>52.29457778N</geoLat>
               <geoLong>002.10568611W</geoLong>
             </ObsUid>
+            <OgrUid region="EG" mid="f8121392-e8b4-692b-e38e-fa5db2c0d702">
+              <geoLat>52.29639722N</geoLat>
+              <geoLong>002.10675278W</geoLong>
+            </OgrUid>
             <txtName>DROITWICH LW NORTH</txtName>
             <codeType>MAST</codeType>
-            <codeGroup>Y</codeGroup>
             <codeLgt>N</codeLgt>
             <codeMarking>N</codeMarking>
             <codeDatum>WGE</codeDatum>
@@ -2716,12 +2667,7 @@ describe AIXM::Document do
             <codeHgtAccuracy>Y</codeHgtAccuracy>
             <valRadius>200</valRadius>
             <uomRadius>M</uomRadius>
-            <ObsUidLink mid="8dbff874-2702-28bb-2c67-912eee5a3da0">
-              <OgrUid region="EG" mid="f90b14a7-3234-56d1-b17f-335e2d57de34">
-                <txtName>DROITWICH LONGWAVE ANTENNA</txtName>
-                <geoLat>52.29639722N</geoLat>
-                <geoLong>002.10675278W</geoLong>
-              </OgrUid>
+            <ObsUidLink region="EG" mid="2207a079-80e6-676f-6aa4-f39425e4c658">
               <geoLat>52.29639722N</geoLat>
               <geoLong>002.10675278W</geoLong>
             </ObsUidLink>

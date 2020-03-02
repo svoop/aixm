@@ -5450,6 +5450,11 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
           <xsd:documentation>a version of Obstacle group</xsd:documentation>
         </xsd:annotation>
       </xsd:element>
+      <xsd:element name="txtName" type="txtName">
+        <xsd:annotation>
+          <xsd:documentation>Name</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
       <xsd:element name="codeDatum" type="codeDatum">
         <xsd:annotation>
           <xsd:documentation>Datum</xsd:documentation>
@@ -5488,11 +5493,6 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
       <xsd:documentation>Obstacle group - UID</xsd:documentation>
     </xsd:annotation>
     <xsd:sequence>
-      <xsd:element name="txtName" type="txtName">
-        <xsd:annotation>
-          <xsd:documentation>Name</xsd:documentation>
-        </xsd:annotation>
-      </xsd:element>
       <xsd:element name="geoLat" type="geoLat">
         <xsd:annotation>
           <xsd:documentation>Group reference point latitude</xsd:documentation>
@@ -5517,6 +5517,11 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
           <xsd:documentation>a version of Obstacle</xsd:documentation>
         </xsd:annotation>
       </xsd:element>
+      <xsd:element name="OgrUid" type="ObstacleGroupUidType" minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation>a version of Obstacle group</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
       <xsd:element name="txtName" type="txtName" minOccurs="0">
         <xsd:annotation>
           <xsd:documentation>Name</xsd:documentation>
@@ -5530,11 +5535,6 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
       <xsd:element name="txtDescrType" type="txtDescr" minOccurs="0">
         <xsd:annotation>
           <xsd:documentation>Type details</xsd:documentation>
-        </xsd:annotation>
-      </xsd:element>
-      <xsd:element name="codeGroup" type="codeYesNo" minOccurs="0">
-        <xsd:annotation>
-          <xsd:documentation>Group of obstacles</xsd:documentation>
         </xsd:annotation>
       </xsd:element>
       <xsd:element name="codeLgt" type="codeYesNo" minOccurs="0">
@@ -5562,9 +5562,29 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
           <xsd:documentation>Datum</xsd:documentation>
         </xsd:annotation>
       </xsd:element>
+      <xsd:element name="valGeoAccuracy" type="valDistHorz" minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation>Geographical accuracy</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="uomGeoAccuracy" type="uomDistHorz" minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation>Unit of measurement [geographical accuracy]</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
       <xsd:element name="valElev" type="valDistVer">
         <xsd:annotation>
           <xsd:documentation>Elevation</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="valElevAccuracy" type="valDistVer" minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation>Elevation accuracy</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="uomElevAccuracy" type="uomElev" minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation>Unit of measurement [elevation accuracy]</xsd:documentation>
         </xsd:annotation>
       </xsd:element>
       <xsd:element name="valHgt" type="valDistVer" minOccurs="0">
@@ -5640,11 +5660,6 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
       <xsd:documentation>Obstacle - UID</xsd:documentation>
     </xsd:annotation>
     <xsd:sequence>
-      <xsd:element name="OgrUid" type="ObstacleGroupUidType">
-        <xsd:annotation>
-          <xsd:documentation>a version of Obstacle group</xsd:documentation>
-        </xsd:annotation>
-      </xsd:element>
       <xsd:element name="geoLat" type="geoLat">
         <xsd:annotation>
           <xsd:documentation>Latitude</xsd:documentation>
@@ -5657,6 +5672,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
       </xsd:element>
     </xsd:sequence>
     <xsd:attribute ref="mid"/>
+    <xsd:attribute ref="region" use="required"/>
   </xsd:complexType>
   <xsd:complexType name="OilType">
     <xsd:annotation>

@@ -491,6 +491,7 @@ module AIXM
           obstacle_group.remarks = "Extension planned"
           obstacle_group.add_obstacle(
             AIXM.obstacle(
+              region: "LF",
               name: "La Teissonière 1",
               type: :wind_turbine,
               xy: AIXM.xy(lat: %q(44°40'30.05"N), long: %q(004°52'21.24"E)),
@@ -503,6 +504,7 @@ module AIXM
           )
           obstacle_group.add_obstacle(
             AIXM.obstacle(
+              region: "LF",
               name: "La Teissonière 2",
               type: :wind_turbine,
               xy: AIXM.xy(lat: %q(44°40'46.08"N), long: %q(004°52'25.72"E)),
@@ -526,6 +528,7 @@ module AIXM
           obstacle_group.remarks = "Destruction planned"
           obstacle_group.add_obstacle(
             AIXM.obstacle(
+              region: "EG",
               name: "Droitwich LW north",
               type: :mast,
               xy: AIXM.xy(lat: %q(52°17'47.03"N), long: %q(002°06'24.31"W)),
@@ -538,6 +541,7 @@ module AIXM
           )
           obstacle_group.add_obstacle(
             AIXM.obstacle(
+              region: "EG",
               name: "Droitwich LW north",
               type: :mast,
               xy: AIXM.xy(lat: %q(52°17'40.48"N), long: %q(002°06'20.47"W)),
