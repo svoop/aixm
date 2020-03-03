@@ -125,7 +125,7 @@ module AIXM
       def initialize(source: nil, region: nil, name: nil, type:, xy:, z:, radius: nil)
         super(source: source, region: region)
         self.name, self.type, self.xy, self.z, self.radius = name, type, xy, z, radius
-        @lighting = @marking = @height_accurate = false
+        @lighting = @marking = false
       end
 
       # @return [String]
