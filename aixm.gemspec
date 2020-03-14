@@ -1,25 +1,47 @@
 # coding: utf-8
-lib = File.expand_path('../lib', __FILE__)
-$LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require 'aixm/version'
+require_relative 'lib/aixm/version'
 
 Gem::Specification.new do |spec|
-  spec.name          = 'aixm'
-  spec.version       = AIXM::VERSION
-  spec.authors       = ['Sven Schwyn']
-  spec.email         = ['ruby@bitcetera.com']
-  spec.description   = %q(Aeronautical Information Exchange Model (AIXM 4.5).)
-  spec.summary       = %q(Aeronautical Information Exchange Model (AIXM 4.5).)
-  spec.homepage      = 'https://github.com/svoop/aixm'
-  spec.license       = 'MIT'
+  spec.name        = 'aixm'
+  spec.version     = AIXM::VERSION
+  spec.summary     = 'Builder for AIXM/OFMX aeronautical information'
+  spec.description = <<~END
+    Build XML descriptions of aeronautical infrastructure either as AIXM 4.5
+    (Aeronautical Information Exchange Model) or OFMX 1 (Open FlightMaps
+    eXchange).
+  END
+  spec.authors     = ['Sven Schwyn']
+  spec.email       = ['ruby@bitcetera.com']
+  spec.homepage    = 'https://github.com/svoop/aixm'
+  spec.license     = 'MIT'
 
-  spec.files         = `git ls-files`.split($/)
+  spec.metadata = {
+    'homepage_uri'      => spec.homepage,
+    'changelog_uri'     => 'https://github.com/svoop/aixm/blob/master/CHANGELOG.md',
+    'source_code_uri'   => 'https://github.com/svoop/aixm',
+    'documentation_uri' => 'https://www.rubydoc.info/gems/aixm',
+    'bug_tracker_uri'   => 'https://github.com/svoop/aixm/issues'
+  }
+
+  spec.files         = Dir['lib/**/*', 'schemas/**/*']
+  spec.require_paths = %w(lib)
   spec.bindir        = 'exe'
-  spec.executables   = spec.files.grep(%r{^exe/}) { File.basename(_1) }
-  spec.test_files    = spec.files.grep(%r{^(test|spec|features)/})
-  spec.require_paths = ['lib']
+  spec.executables   = %w(ckmid mkmid)
 
-  spec.required_ruby_version = '>= 2.7'
+  spec.extra_rdoc_files = Dir['README.md', 'CHANGELOG.md', 'LICENSE.txt']
+  spec.rdoc_options    += [
+    '--title', 'AIXM/OFMX Builder',
+    '--main', 'README.md',
+    '--line-numbers',
+    '--inline-source',
+    '--quiet'
+  ]
+
+  spec.required_ruby_version = '>= 2.7.0'
+
+  spec.add_runtime_dependency 'builder', '~> 3'
+  spec.add_runtime_dependency 'nokogiri', '~> 1'
+  spec.add_runtime_dependency 'dry-inflector', '~> 0'
 
   spec.add_development_dependency 'rake'
   spec.add_development_dependency 'minitest'
@@ -30,8 +52,4 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'guard'
   spec.add_development_dependency 'guard-minitest'
   spec.add_development_dependency 'yard'
-
-  spec.add_runtime_dependency 'builder', '~> 3'
-  spec.add_runtime_dependency 'nokogiri', '~> 1'
-  spec.add_runtime_dependency 'dry-inflector', '~> 0'
 end
