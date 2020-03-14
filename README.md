@@ -15,16 +15,34 @@ For now, only the parts needed to automize the AIP import of [open flightmaps](h
 
 ## Install
 
+### Security
+
+This gem is [cryptographically signed](https://guides.rubygems.org/security/#using-gems) in order to assure it hasn't been tampered with. Unless already done, please add the author's public key as a trusted certificate now:
+
+```
+gem cert --add <(curl -Ls https://raw.github.com/svoop/aixm/master/certs/svoop.pem)
+```
+
+### Bundler
+
 Add the following to the <tt>Gemfile</tt> or <tt>gems.rb</tt> of your [Bundler](https://bundler.io) powered Ruby project:
 
 ```ruby
 gem aixm
 ```
 
+And then install the bundle:
+
+```
+bundle install --trust-policy MediumSecurity
+```
+
+### Standalone
+
 If you're only going to use [the executables](#executables), make sure to have the [latest version of Ruby](https://www.ruby-lang.org/en/documentation/installation/) and then install this gem:
 
 ```
-gem install aixm
+gem install aixm --trust-policy MediumSecurity
 ```
 
 ## Usage
