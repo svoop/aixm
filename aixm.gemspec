@@ -28,10 +28,8 @@ Gem::Specification.new do |spec|
   spec.bindir        = 'exe'
   spec.executables   = %w(ckmid mkmid)
 
-  spec.cert_chain = ["certs/svoop.pem"]
-  if $PROGRAM_NAME.end_with?('gem') && ARGV == ['build', __FILE__]
-    spec.signing_key = File.expand_path('~/.ssh/gem-private_key.pem')
-  end
+  spec.cert_chain  = ["certs/svoop.pem"]
+  spec.signing_key = File.expand_path(ENV['GEM_SIGNING_KEY']) if ENV['GEM_SIGNING_KEY']
 
   spec.extra_rdoc_files = Dir['README.md', 'CHANGELOG.md', 'LICENSE.txt']
   spec.rdoc_options    += [
