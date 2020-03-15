@@ -1,4 +1,4 @@
-## 0.3.9 (unreleased)
+## 0.3.9
 
 ### Additions
 * Proper `has_many` and `has_one` associations
