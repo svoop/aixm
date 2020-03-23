@@ -36,7 +36,7 @@ module AIXM
 
       def address
         AIXM.address(
-          source: 'LF|GEN|0.0 FACTORY|0|0',
+          source: "LF|GEN|0.0 FACTORY|0|0",
           type: :radio_frequency,
           address: "123.35"
         ).tap do |address|
@@ -123,7 +123,7 @@ module AIXM
 
       def polygon_airspace
         AIXM.airspace(
-          source: 'LF|GEN|0.0 FACTORY|0|0',
+          source: "LF|GEN|0.0 FACTORY|0|0",
           region: 'LF',
           id: 'PA',
           type: :danger_area,
@@ -137,7 +137,7 @@ module AIXM
 
       def circle_airspace
         AIXM.airspace(
-          source: 'LF|GEN|0.0 FACTORY|0|0',
+          source: "LF|GEN|0.0 FACTORY|0|0",
           region: 'LF',
           id: 'CA',
           type: :danger_area,
@@ -153,7 +153,7 @@ module AIXM
 
       def designated_point
         AIXM.designated_point(
-          source: 'LF|GEN|0.0 FACTORY|0|0',
+          source: "LF|GEN|0.0 FACTORY|0|0",
           region: 'LF',
           id: 'DDD',
           name: 'DESIGNATED POINT NAVAID',
@@ -169,7 +169,7 @@ module AIXM
 
       def dme
         AIXM.dme(
-          source: 'LF|GEN|0.0 FACTORY|0|0',
+          source: "LF|GEN|0.0 FACTORY|0|0",
           region: 'LF',
           organisation: organisation,
           id: 'MMM',
@@ -185,7 +185,7 @@ module AIXM
 
       def marker
         AIXM.marker(
-          source: 'LF|GEN|0.0 FACTORY|0|0',
+          source: "LF|GEN|0.0 FACTORY|0|0",
           region: 'LF',
           organisation: organisation,
           id: '---',
@@ -201,7 +201,7 @@ module AIXM
 
       def ndb
         AIXM.ndb(
-          source: 'LF|GEN|0.0 FACTORY|0|0',
+          source: "LF|GEN|0.0 FACTORY|0|0",
           region: 'LF',
           organisation: organisation,
           id: 'NNN',
@@ -218,7 +218,7 @@ module AIXM
 
       def tacan
         AIXM.tacan(
-          source: 'LF|GEN|0.0 FACTORY|0|0',
+          source: "LF|GEN|0.0 FACTORY|0|0",
           region: 'LF',
           organisation: organisation,
           id: 'TTT',
@@ -234,7 +234,7 @@ module AIXM
 
       def vor
         AIXM.vor(
-          source: 'LF|GEN|0.0 FACTORY|0|0',
+          source: "LF|GEN|0.0 FACTORY|0|0",
           region: 'LF',
           organisation: organisation,
           id: 'VVV',
@@ -252,7 +252,7 @@ module AIXM
 
       def vordme
         AIXM.vor(
-          source: 'LF|GEN|0.0 FACTORY|0|0',
+          source: "LF|GEN|0.0 FACTORY|0|0",
           region: 'LF',
           organisation: organisation,
           id: 'VDD',
@@ -271,7 +271,7 @@ module AIXM
 
       def vortac
         AIXM.vor(
-          source: 'LF|GEN|0.0 FACTORY|0|0',
+          source: "LF|GEN|0.0 FACTORY|0|0",
           region: 'LF',
           organisation: organisation,
           id: 'VTT',
@@ -292,7 +292,7 @@ module AIXM
 
       def organisation
         AIXM.organisation(
-          source: 'LF|GEN|0.0 FACTORY|0|0',
+          source: "LF|GEN|0.0 FACTORY|0|0",
           region: 'LF',
           name: 'FRANCE',
           type: 'S'
@@ -306,7 +306,7 @@ module AIXM
 
       def unit
         AIXM.unit(
-          source: 'LF|GEN|0.0 FACTORY|0|0',
+          source: "LF|GEN|0.0 FACTORY|0|0",
           region: 'LF',
           organisation: organisation,
           name: 'PUJAUT',
@@ -345,7 +345,7 @@ module AIXM
 
       def airport
         AIXM.airport(
-          source: 'LF|GEN|0.0 FACTORY|0|0',
+          source: "LF|GEN|0.0 FACTORY|0|0",
           region: 'LF',
           organisation: organisation,
           id: 'LFNT',
@@ -460,6 +460,7 @@ module AIXM
 
       def obstacle
         AIXM.obstacle(
+          source: "LF|GEN|0.0 FACTORY|0|0",
           region: 'LF',
           name: "Eiffel Tower",
           type: :tower,
@@ -483,6 +484,7 @@ module AIXM
 
       def unlinked_obstacle_group
         AIXM.obstacle_group(
+          source: "LF|GEN|0.0 FACTORY|0|0",
           region: "LF",
           name: "Mirmande éoliennes"
         ).tap do |obstacle_group|
@@ -491,6 +493,7 @@ module AIXM
           obstacle_group.remarks = "Extension planned"
           obstacle_group.add_obstacle(
             AIXM.obstacle(
+              source: "LF|GEN|0.0 FACTORY|0|0",
               region: "LF",
               name: "La Teissonière 1",
               type: :wind_turbine,
@@ -504,6 +507,7 @@ module AIXM
           )
           obstacle_group.add_obstacle(
             AIXM.obstacle(
+              source: "LF|GEN|0.0 FACTORY|0|0",
               region: "LF",
               name: "La Teissonière 2",
               type: :wind_turbine,
@@ -520,6 +524,7 @@ module AIXM
 
       def linked_obstacle_group
         AIXM.obstacle_group(
+          source: "EG|GEN|0.0 FACTORY|0|0",
           region: "EG",
           name: "Droitwich longwave antenna"
         ).tap do |obstacle_group|
@@ -528,6 +533,7 @@ module AIXM
           obstacle_group.remarks = "Destruction planned"
           obstacle_group.add_obstacle(
             AIXM.obstacle(
+              source: "EG|GEN|0.0 FACTORY|0|0",
               region: "EG",
               name: "Droitwich LW north",
               type: :mast,
@@ -541,6 +547,7 @@ module AIXM
           )
           obstacle_group.add_obstacle(
             AIXM.obstacle(
+              source: "EG|GEN|0.0 FACTORY|0|0",
               region: "EG",
               name: "Droitwich LW north",
               type: :mast,

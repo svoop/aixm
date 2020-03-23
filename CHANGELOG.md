@@ -1,6 +1,7 @@
 ## 0.3.11 (unreleased)
 
-Nothing so far
+### Changes
+* Fix `Obstacle#source` for OFMX
 
 ## 0.3.10
 

@@ -238,7 +238,7 @@ module AIXM
         return obstacle_group.to_xml if delegate && obstacle_group && AIXM.ofmx?
         builder = Builder::XmlMarkup.new(indent: 2)
         builder.comment! "Obstacle: [#{type}] #{xy.to_s} #{name}".strip
-        builder.Obs do |obs|
+        builder.Obs({ source: (source if AIXM.ofmx?) }.compact) do |obs|
           obs << to_uid.indent(2)
           obs << obstacle_group.to_uid.indent(2) if obstacle_group && AIXM.ofmx?
           obs.txtName(name) if name

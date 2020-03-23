@@ -1662,7 +1662,7 @@ describe AIXM::Document do
             <txtRmk>vortac navaid</txtRmk>
           </Tcn>
           <!-- Obstacle: [tower] 48.85825000N 002.29458889E EIFFEL TOWER -->
-          <Obs>
+          <Obs source="LF|GEN|0.0 FACTORY|0|0">
             <ObsUid region="LF">
               <geoLat>48.85825000N</geoLat>
               <geoLong>002.29458889E</geoLong>
@@ -1687,7 +1687,7 @@ describe AIXM::Document do
             <txtRmk>Temporary light installations (white strobes, gyro light etc)</txtRmk>
           </Obs>
           <!-- Obstacle group: MIRMANDE EOLIENNES -->
-          <Ogr>
+          <Ogr source="LF|GEN|0.0 FACTORY|0|0">
             <OgrUid region="LF">
               <geoLat>44.67501389N</geoLat>
               <geoLong>004.87256667E</geoLong>
@@ -1701,7 +1701,7 @@ describe AIXM::Document do
             <txtRmk>Extension planned</txtRmk>
           </Ogr>
           <!-- Obstacle: [wind_turbine] 44.67501389N 004.87256667E LA TEISSONIERE 1 -->
-          <Obs>
+          <Obs source="LF|GEN|0.0 FACTORY|0|0">
             <ObsUid region="LF">
               <geoLat>44.67501389N</geoLat>
               <geoLong>004.87256667E</geoLong>
@@ -1723,7 +1723,7 @@ describe AIXM::Document do
             <uomRadius>M</uomRadius>
           </Obs>
           <!-- Obstacle: [wind_turbine] 44.67946667N 004.87381111E LA TEISSONIERE 2 -->
-          <Obs>
+          <Obs source="LF|GEN|0.0 FACTORY|0|0">
             <ObsUid region="LF">
               <geoLat>44.67946667N</geoLat>
               <geoLong>004.87381111E</geoLong>
@@ -1745,7 +1745,7 @@ describe AIXM::Document do
             <uomRadius>M</uomRadius>
           </Obs>
           <!-- Obstacle group: DROITWICH LONGWAVE ANTENNA -->
-          <Ogr>
+          <Ogr source="EG|GEN|0.0 FACTORY|0|0">
             <OgrUid region="EG">
               <geoLat>52.29639722N</geoLat>
               <geoLong>002.10675278W</geoLong>
@@ -1759,7 +1759,7 @@ describe AIXM::Document do
             <txtRmk>Destruction planned</txtRmk>
           </Ogr>
           <!-- Obstacle: [mast] 52.29639722N 002.10675278W DROITWICH LW NORTH -->
-          <Obs>
+          <Obs source="EG|GEN|0.0 FACTORY|0|0">
             <ObsUid region="EG">
               <geoLat>52.29639722N</geoLat>
               <geoLong>002.10675278W</geoLong>
@@ -1781,7 +1781,7 @@ describe AIXM::Document do
             <uomRadius>M</uomRadius>
           </Obs>
           <!-- Obstacle: [mast] 52.29457778N 002.10568611W DROITWICH LW NORTH -->
-          <Obs>
+          <Obs source="EG|GEN|0.0 FACTORY|0|0">
             <ObsUid region="EG">
               <geoLat>52.29457778N</geoLat>
               <geoLong>002.10568611W</geoLong>
@@ -2528,7 +2528,7 @@ describe AIXM::Document do
             <txtRmk>vortac navaid</txtRmk>
           </Tcn>
           <!-- Obstacle: [tower] 48.85825000N 002.29458889E EIFFEL TOWER -->
-          <Obs>
+          <Obs source="LF|GEN|0.0 FACTORY|0|0">
             <ObsUid region="LF" mid="04f75ef2-ffa3-2c72-8cf0-572b07b24541">
               <geoLat>48.85825000N</geoLat>
               <geoLong>002.29458889E</geoLong>
@@ -2553,7 +2553,7 @@ describe AIXM::Document do
             <txtRmk>Temporary light installations (white strobes, gyro light etc)</txtRmk>
           </Obs>
           <!-- Obstacle group: MIRMANDE EOLIENNES -->
-          <Ogr>
+          <Ogr source="LF|GEN|0.0 FACTORY|0|0">
             <OgrUid region="LF" mid="2aede4b0-b8ad-e840-257e-743ee5c1325d">
               <geoLat>44.67501389N</geoLat>
               <geoLong>004.87256667E</geoLong>
@@ -2567,7 +2567,7 @@ describe AIXM::Document do
             <txtRmk>Extension planned</txtRmk>
           </Ogr>
           <!-- Obstacle: [wind_turbine] 44.67501389N 004.87256667E LA TEISSONIERE 1 -->
-          <Obs>
+          <Obs source="LF|GEN|0.0 FACTORY|0|0">
             <ObsUid region="LF" mid="79fcc46a-f585-18b0-501f-044b728f64f0">
               <geoLat>44.67501389N</geoLat>
               <geoLong>004.87256667E</geoLong>
@@ -2589,7 +2589,7 @@ describe AIXM::Document do
             <uomRadius>M</uomRadius>
           </Obs>
           <!-- Obstacle: [wind_turbine] 44.67946667N 004.87381111E LA TEISSONIERE 2 -->
-          <Obs>
+          <Obs source="LF|GEN|0.0 FACTORY|0|0">
             <ObsUid region="LF" mid="5268c531-41db-df17-4ea6-ed469e7e3630">
               <geoLat>44.67946667N</geoLat>
               <geoLong>004.87381111E</geoLong>
@@ -2611,7 +2611,7 @@ describe AIXM::Document do
             <uomRadius>M</uomRadius>
           </Obs>
           <!-- Obstacle group: DROITWICH LONGWAVE ANTENNA -->
-          <Ogr>
+          <Ogr source="EG|GEN|0.0 FACTORY|0|0">
             <OgrUid region="EG" mid="f8121392-e8b4-692b-e38e-fa5db2c0d702">
               <geoLat>52.29639722N</geoLat>
               <geoLong>002.10675278W</geoLong>
@@ -2625,7 +2625,7 @@ describe AIXM::Document do
             <txtRmk>Destruction planned</txtRmk>
           </Ogr>
           <!-- Obstacle: [mast] 52.29639722N 002.10675278W DROITWICH LW NORTH -->
-          <Obs>
+          <Obs source="EG|GEN|0.0 FACTORY|0|0">
             <ObsUid region="EG" mid="2207a079-80e6-676f-6aa4-f39425e4c658">
               <geoLat>52.29639722N</geoLat>
               <geoLong>002.10675278W</geoLong>
@@ -2647,7 +2647,7 @@ describe AIXM::Document do
             <uomRadius>M</uomRadius>
           </Obs>
           <!-- Obstacle: [mast] 52.29457778N 002.10568611W DROITWICH LW NORTH -->
-          <Obs>
+          <Obs source="EG|GEN|0.0 FACTORY|0|0">
             <ObsUid region="EG" mid="d502a479-dfe5-8305-3546-ac73b42e555a">
               <geoLat>52.29457778N</geoLat>
               <geoLong>002.10568611W</geoLong>

@@ -90,7 +90,7 @@ describe AIXM::Feature::ObstacleGroup do
         AIXM.ofmx!
         _(subject.to_xml).must_equal <<~END
           <!-- Obstacle group: MIRMANDE EOLIENNES -->
-          <Ogr>
+          <Ogr source="LF|GEN|0.0 FACTORY|0|0">
             <OgrUid region="LF">
               <geoLat>44.67501389N</geoLat>
               <geoLong>004.87256667E</geoLong>
@@ -104,7 +104,7 @@ describe AIXM::Feature::ObstacleGroup do
             <txtRmk>Extension planned</txtRmk>
           </Ogr>
           <!-- Obstacle: [wind_turbine] 44.67501389N 004.87256667E LA TEISSONIERE 1 -->
-          <Obs>
+          <Obs source="LF|GEN|0.0 FACTORY|0|0">
             <ObsUid region="LF">
               <geoLat>44.67501389N</geoLat>
               <geoLong>004.87256667E</geoLong>
@@ -126,7 +126,7 @@ describe AIXM::Feature::ObstacleGroup do
             <uomRadius>M</uomRadius>
           </Obs>
           <!-- Obstacle: [wind_turbine] 44.67946667N 004.87381111E LA TEISSONIERE 2 -->
-          <Obs>
+          <Obs source="LF|GEN|0.0 FACTORY|0|0">
             <ObsUid region="LF">
               <geoLat>44.67946667N</geoLat>
               <geoLong>004.87381111E</geoLong>
@@ -225,7 +225,7 @@ describe AIXM::Feature::ObstacleGroup do
         AIXM.ofmx!
         _(subject.to_xml).must_equal <<~END
           <!-- Obstacle group: DROITWICH LONGWAVE ANTENNA -->
-          <Ogr>
+          <Ogr source="EG|GEN|0.0 FACTORY|0|0">
             <OgrUid region="EG">
               <geoLat>52.29639722N</geoLat>
               <geoLong>002.10675278W</geoLong>
@@ -239,7 +239,7 @@ describe AIXM::Feature::ObstacleGroup do
             <txtRmk>Destruction planned</txtRmk>
           </Ogr>
           <!-- Obstacle: [mast] 52.29639722N 002.10675278W DROITWICH LW NORTH -->
-          <Obs>
+          <Obs source="EG|GEN|0.0 FACTORY|0|0">
             <ObsUid region="EG">
               <geoLat>52.29639722N</geoLat>
               <geoLong>002.10675278W</geoLong>
@@ -261,7 +261,7 @@ describe AIXM::Feature::ObstacleGroup do
             <uomRadius>M</uomRadius>
           </Obs>
           <!-- Obstacle: [mast] 52.29457778N 002.10568611W DROITWICH LW NORTH -->
-          <Obs>
+          <Obs source="EG|GEN|0.0 FACTORY|0|0">
             <ObsUid region="EG">
               <geoLat>52.29457778N</geoLat>
               <geoLong>002.10568611W</geoLong>

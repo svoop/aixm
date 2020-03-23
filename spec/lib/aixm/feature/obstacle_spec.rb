@@ -227,7 +227,7 @@ describe AIXM::Feature::Obstacle do
       AIXM.ofmx!
       _(subject.to_xml).must_equal <<~END
         <!-- Obstacle: [tower] 48.85825000N 002.29458889E EIFFEL TOWER -->
-        <Obs>
+        <Obs source="LF|GEN|0.0 FACTORY|0|0">
           <ObsUid region="LF">
             <geoLat>48.85825000N</geoLat>
             <geoLong>002.29458889E</geoLong>
