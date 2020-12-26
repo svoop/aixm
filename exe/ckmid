@@ -4,7 +4,7 @@ require 'bundler/inline'
 
 gemfile do
   source 'https://rubygems.org'
-  ruby '>= 2.7'
+  ruby '>= 3.0'
   gem 'aixm', '~> 0'
 end
 

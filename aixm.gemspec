@@ -40,7 +40,7 @@ Gem::Specification.new do |spec|
     '--quiet'
   ]
 
-  spec.required_ruby_version = '>= 2.7.0'
+  spec.required_ruby_version = '>= 3.0.0'
 
   spec.add_runtime_dependency 'builder', '~> 3'
   spec.add_runtime_dependency 'nokogiri', '~> 1'

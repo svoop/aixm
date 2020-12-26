@@ -3,12 +3,12 @@ require_relative '../../spec_helper'
 describe AIXM::Association do
   describe AIXM::Association::ClassMethods do
     before do
-      @@aixm_classes = AIXM::CLASSES
+      @aixm_classes = AIXM::CLASSES
     end
 
     after do
       AIXM::CLASSES.each_key { Object.send(:remove_const, _1.capitalize) }
-      AIXM::CLASSES = @@aixm_classes
+      AIXM::CLASSES = @aixm_classes
     end
 
     describe "has_many and belongs_to" do

@@ -2,6 +2,7 @@
 
 ### Breaking Changes
 * Renamed default git branch to `main`
+* Require Ruby 3.0
 
 ### Changes
 * Fix `Obstacle#source` for OFMX

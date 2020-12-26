@@ -4,8 +4,8 @@ module AIXM
 
   # Shortcut initializers
   CLASSES.each do |element, class_name|
-    define_singleton_method(element) do |*arguments|
-      class_name.to_class.new(*arguments)
+    define_singleton_method(element) do |*args, **kwargs|
+      class_name.to_class.new(*args, **kwargs)
     end
   end
 
