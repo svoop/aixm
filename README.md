@@ -20,7 +20,7 @@ For now, only the parts needed to automize the AIP import of [open flightmaps](h
 This gem is [cryptographically signed](https://guides.rubygems.org/security/#using-gems) in order to assure it hasn't been tampered with. Unless already done, please add the author's public key as a trusted certificate now:
 
 ```
-gem cert --add <(curl -Ls https://raw.github.com/svoop/aixm/master/certs/svoop.pem)
+gem cert --add <(curl -Ls https://raw.github.com/svoop/aixm/main/certs/svoop.pem)
 ```
 
 ### Bundler

@@ -1,5 +1,8 @@
 ## 0.3.11 (unreleased)
 
+### Breaking Changes
+* Renamed default git branch to `main`
+
 ### Changes
 * Fix `Obstacle#source` for OFMX
 
