@@ -6,7 +6,7 @@ Rake::TestTask.new do |t|
   t.libs << 'lib'
   t.test_files = FileList['spec/lib/**/*_spec.rb']
   t.verbose = false
-  t.warning = true
+  t.warning = !!ENV['TEST_WARNINGS']
 end
 
 namespace :build do
@@ -42,6 +42,12 @@ namespace :yard do
       `open http://localhost:8808`
     end
     `yard server -r`
+  end
+end
+
+Rake::Task[:test].enhance do
+  unless ENV['TEST_WARNINGS']
+    puts "Ruby warnings disabled, set TEST_WARNINGS environment variable to enable."
   end
 end
 
