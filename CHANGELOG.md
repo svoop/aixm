@@ -1,15 +1,15 @@
 ## 0.3.11 (unreleased)
 
-### Breaking Changes
+#### Breaking Changes
 * Renamed default git branch to `main`
 * Require Ruby 3.0
 
-### Changes
+#### Changes
 * Fix `Obstacle#source` for OFMX
 
 ## 0.3.10
 
-### Additions
+#### Additions
 * Proper `has_many` and `has_one` associations
 * `AIXM::Association:Array#find_by|find|duplicate` on `has_many` associations
 * `AIXM.config.mid` now defines whether `mid` attributes are inserted or not
@@ -21,7 +21,7 @@
 * `AIXM::Component::Geometry#point?|circle?|polygon?`
 * `AIXM::Component::Layer#services`
 
-### Breaking Changes
+#### Breaking Changes
 * Require Ruby 2.7
 * Moved `region` attribute from `Document` back to features again
 * Use `Document#add_feature` instead of `Document@features#<<`
@@ -34,7 +34,7 @@
 * Refinement `String#payload_hash` removed in favor of `AIXM::PayloadHash` class
 * Refinements `Array#find|duplicates` removed
 
-### Changes
+#### Changes
 * Renamed `AIXM.config.mid_region` to `AIXM.config.region`
 
 ## 0.3.8
