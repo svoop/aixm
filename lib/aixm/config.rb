@@ -78,6 +78,7 @@ module AIXM
     def initialize_config
       @@config = OpenStruct.new(
         schema: :aixm,
+        voice_channel_separation: :any,
         mid: false,
         inflector: Dry::Inflector.new
       )

@@ -100,10 +100,20 @@ The `:ofmx` schema requires the [region to be set on all core features](https://
 
 ```ruby
 AIXM.ofmx!
-AIXM.region = 'LF'
+AIXM.config.region = 'LF'
 ```
 
 :warning: This setting has no effect when using the `:aixm` schema.
+
+### AIXM.voice_channel_separation
+
+Define which voice channel separation should be used to validate voice communication frequencies.
+
+```ruby
+AIXM.voice_channel_separation = :any   # both 25 and 8.33 kHz (default)
+AIXM.voice_channel_separation = 25     # 25 kHz only
+AIXM.voice_channel_separation = 833    # 8.33 kHz only
+```
 
 ### AIXM.config.mid
 
@@ -111,8 +121,8 @@ In order to insert [OFMX-compliant `mid` attributes](https://gitlab.com/openflig
 
 ```ruby
 AIXM.ofmx!
-AIXM.config.mid          # => false - don't insert mid attributes by default
-AIXM.config.mid = true   # => true  - insert mid attributes
+AIXM.config.mid = false   # don't insert mid attributes (default)
+AIXM.config.mid = true    # insert mid attributes
 ```
 
 :warning: This setting has no effect when using the `:aixm` schema.

@@ -7,6 +7,11 @@
 #### Changes
 * Fix `Obstacle#source` for OFMX
 
+#### Additions
+* Add `f#voice?` and `AIXM.config.voice_channel_separation` to check whether a
+  frequency belongs to the voice communication airband and use it to validate
+  `AIXM::Frequency`
+
 ## 0.3.10
 
 #### Additions

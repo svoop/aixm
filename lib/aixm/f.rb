@@ -64,6 +64,36 @@ module AIXM
       to_s.hash
     end
 
+    # @return [Boolean] whether this frequency is part of the voice airband
+    #   for civil aviation using `AIXM.config.voice_channel_separation`
+    def voice?
+      return false unless unit == :mhz
+      case AIXM.config.voice_channel_separation
+        when 25 then voice_25?
+        when 833 then voice_833?
+        when :any then voice_25? || voice_833?
+        else fail(ArgumentError, "unknown voice channel separation")
+      end
+    end
+
+    private
+
+    # @return [Boolean] whether this frequency is part of the voice airband
+    #   for civil aviation using 25 kHz channel separation
+    def voice_25?
+      return false unless unit == :mhz && freq == freq.round(3) && freq.between?(118, 136.975)
+      ((freq * 1000).round % 25).zero?
+    end
+
+    # @return [Boolean] whether this frequency is part of the voice airband
+    #   for civil aviation using 8.33 kHz channel separation
+    def voice_833?
+      return false unless unit == :mhz && freq == freq.round(3) && freq.between?(118, 136.99)
+      [0.005, 0.01, 0.015].reduce(false) do |memo, delta|
+        memo || (((freq - delta) * 1000).round % 25).zero?
+      end
+    end
+
   end
 
 end

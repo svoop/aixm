@@ -17,7 +17,7 @@ describe AIXM::Component::Frequency do
 
   describe :transmission_f= do
     it "fails on invalid values" do
-      _([nil, :foobar, 123]).wont_be_written_to subject, :transmission_f
+      _([nil, :foobar, 123, AIXM.f(100, :mhz)]).wont_be_written_to subject, :transmission_f
     end
 
     it "accepts valid values" do
@@ -41,7 +41,7 @@ describe AIXM::Component::Frequency do
 
   describe :reception_f= do
     it "fails on invalid values" do
-      _([:foobar, 123]).wont_be_written_to subject, :reception_f
+      _([:foobar, 123, AIXM.f(100, :mhz)]).wont_be_written_to subject, :reception_f
     end
 
     it "accepts valid values" do

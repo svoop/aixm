@@ -3,7 +3,7 @@ using AIXM::Refinements
 module AIXM
   module Component
 
-    # Frequencies used by a service.
+    # Voice frequencies used by a service.
     #
     # By default, {#reception_f} is set to the same value as {#transmission_f}
     # since most services rely on simplex (aka: non-duplex) two-way
@@ -73,7 +73,7 @@ module AIXM
       end
 
       def transmission_f=(value)
-        fail(ArgumentError, "invalid transmission_f") unless value.is_a? AIXM::F
+        fail(ArgumentError, "invalid transmission_f") unless value.is_a?(AIXM::F) && value.voice?
         @transmission_f = value
       end
 
@@ -83,7 +83,7 @@ module AIXM
       end
 
       def reception_f=(value)
-        fail(ArgumentError, "invalid reception_f") unless value.nil? || value.is_a?(AIXM::F)
+        fail(ArgumentError, "invalid reception_f") unless value.nil? || value.is_a?(AIXM::F) && value.voice?
         @reception_f = value
       end
 

@@ -82,4 +82,114 @@ describe AIXM::F do
       _(subject.tap { _1.freq = 1 }).wont_be :zero?
     end
   end
+
+  describe :voice? do
+    let :frequencies_25 do
+      118.0.step(by: 0.025, to: 136.975).to_a
+    end
+
+    let :frequencies_833 do
+      frequencies_25.map { |f| [(f+0.005).round(3), (f+0.01).round(3), (f+0.015).round(3)] }.flatten
+    end
+
+    context "25 kHz voice channel separation" do
+      before do
+        AIXM.config.voice_channel_separation = 25
+      end
+
+      it "returns true for all valid frequencies with 25 kHz spacing" do
+        frequencies_25.each do |frequency|
+          _(AIXM.f(frequency, :mhz)).must_be :voice_25?
+        end
+      end
+
+      it "returns false for valid frequencies with 8.33 kHz spacing" do
+        frequencies_833.each do |frequency|
+          _(AIXM.f(frequency, :mhz)).wont_be :voice_25?
+        end
+      end
+
+      it "returns false for out of airband and out of raster frequencies" do
+        [117, 137, 118.001, 136.989, 118.0000000000001].each do |frequency|
+          _(AIXM.f(frequency, :mhz)).wont_be :voice_25?
+        end
+      end
+
+      it "returns false for non-MHz frequencies" do
+        %i(khz ghz).each do |band|
+          _(AIXM.f(118, band)).wont_be :voice_25?
+        end
+      end
+    end
+
+    context "8.33 kHz voice channel separation" do
+      before do
+        AIXM.config.voice_channel_separation = 833
+      end
+
+      it "returns true for all valid frequencies with 8.33 kHz spacing" do
+        frequencies_833.each do |frequency|
+          _(AIXM.f(frequency, :mhz)).must_be :voice_833?
+        end
+      end
+
+      it "returns false for valid frequencies with 25 kHz spacing" do
+        frequencies_25.each do |frequency|
+          _(AIXM.f(frequency, :mhz)).wont_be :voice_833?
+        end
+      end
+
+      it "returns false for out of airband and out of raster frequencies" do
+        [117, 137, 118.001, 136.989, 118.0000000000001].each do |frequency|
+          _(AIXM.f(frequency, :mhz)).wont_be :voice_833?
+        end
+      end
+
+      it "returns false for non-MHz frequencies" do
+        %i(khz ghz).each do |band|
+          _(AIXM.f(118, band)).wont_be :voice_833?
+        end
+      end
+    end
+
+    context "any voice channel separation" do
+      before do
+        AIXM.config.voice_channel_separation = :any
+      end
+
+      it "returns true for all valid frequencies with 25 or 8.33 kHz spacing" do
+        (frequencies_25 + frequencies_833).each do |frequency|
+          _(AIXM.f(frequency, :mhz)).must_be :voice?
+        end
+      end
+
+      it "returns false for out of airband and out of raster frequencies" do
+        [117, 137, 118.001, 136.989, 118.0000000000001].each do |frequency|
+          _(AIXM.f(frequency, :mhz)).wont_be :voice?
+        end
+      end
+
+      it "returns false for non-MHz frequencies" do
+        %i(khz ghz).each do |band|
+          _(AIXM.f(118, band)).wont_be :voice?
+        end
+      end
+    end
+
+    context "unknown voice channel separation" do
+      before do
+        AIXM.config.voice_channel_separation = 123
+      end
+
+      it "fails to examine any non-MHz frequency" do
+        _{ AIXM.f(118, :mhz).voice? }.must_raise ArgumentError
+      end
+
+      it "returns fals for non-MHz frequencies" do
+        %i(khz ghz).each do |band|
+          _(AIXM.f(118, band)).wont_be :voice?
+        end
+      end
+    end
+  end
 end

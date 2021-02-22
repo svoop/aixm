@@ -57,6 +57,7 @@ Array.infect_an_assertion :refute_write, :wont_be_written_to, :reverse
 class Minitest::Spec
   before :each do
     AIXM.config.schema = :aixm
+    AIXM.config.voice_channel_separation = :any
     AIXM.config.mid = false
   end
 end
