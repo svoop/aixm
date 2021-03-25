@@ -38,7 +38,7 @@ module AIXM
         AIXM.address(
           source: "LF|GEN|0.0 FACTORY|0|0",
           type: :radio_frequency,
-          address: "123.35"
+          address: AIXM.f(123.35, :mhz)
         ).tap do |address|
           address.remarks = "A/A (callsign PUJAUT)"
         end

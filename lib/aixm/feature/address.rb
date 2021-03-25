@@ -9,7 +9,7 @@ module AIXM
     #   address = AIXM.address(
     #     source: String or nil
     #     type: TYPES
-    #     address: String
+    #     address: AIXM.f (type :radio_frequency) or String (other types)
     #   )
     #   service.remarks = String or nil
     #
@@ -64,8 +64,14 @@ module AIXM
       end
 
       def address=(value)
-        fail(ArgumentError, "invalid address") unless value.is_a? String
-        @address = value&.to_s
+        case type
+        when :radio_frequency
+          fail(ArgumentError, "invalid address frequency") unless value.is_a?(AIXM::F)
+          @address = value
+        else
+          fail(ArgumentError, "invalid address") unless value
+          @address = value.to_s
+        end
       end
 
       def remarks=(value)

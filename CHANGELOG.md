@@ -3,6 +3,7 @@
 #### Breaking Changes
 * Renamed default git branch to `main`
 * Require Ruby 3.0
+* `Address#address` requires and returns `AIXM::F` for type `:radio_frequency`
 
 #### Changes
 * Fix `Obstacle#source` for OFMX
