@@ -89,9 +89,7 @@ module AIXM
     #   for civil aviation using 8.33 kHz channel separation
     def voice_833?
       return false unless unit == :mhz && freq == freq.round(3) && freq.between?(118, 136.99)
-      [0.005, 0.01, 0.015].reduce(false) do |memo, delta|
-        memo || (((freq - delta) * 1000).round % 25).zero?
-      end
+      [0.005, 0.01, 0.015].any? { |d| (((freq - d) * 1000).round % 25).zero? }
     end
 
   end

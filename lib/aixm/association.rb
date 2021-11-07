@@ -187,7 +187,7 @@ module AIXM
             add_block.call(object) if add_block
           end
           instance_exec(object, **options, &association_block) if association_block
-          fail(ArgumentError, "#{object.__class__} not allowed") unless class_names.reduce(false){ |m, c| m || object.is_a?(c.to_class) }
+          fail(ArgumentError, "#{object.__class__} not allowed") unless class_names.any? { |c| object.is_a?(c.to_class) }
           send(attribute).send(:push, object)
           object.instance_variable_set(:"@#{inversion}", self)
           self
@@ -220,7 +220,7 @@ module AIXM
         attr_reader attribute
         # feature= / add_feature
         define_method(:"#{association}=") do |object|
-          fail(ArgumentError, "#{object.__class__} not allowed") unless class_names.reduce(false){ |m, c| m || object.is_a?(c.to_class) }
+          fail(ArgumentError, "#{object.__class__} not allowed") unless class_names.any? { |c| object.is_a?(c.to_class) }
           instance_variable_get(:"@#{attribute}")&.instance_variable_set(:"@#{inversion}", nil)
           instance_variable_set(:"@#{attribute}", object)
           object&.instance_variable_set(:"@#{inversion}", self)
@@ -298,9 +298,7 @@ module AIXM
         self.class.new(
           select do |element|
             if element.kind_of? klass
-              attributes.reduce(true) do |memo, (attribute, value)|
-                memo && element.send(attribute) == value
-              end
+              attributes.all? { |a, v| element.send(a) == v }
             end
           end
         )
