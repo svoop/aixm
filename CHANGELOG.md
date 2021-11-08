@@ -1,4 +1,4 @@
-## 0.3.11 (unreleased)
+## 0.3.11
 
 #### Breaking Changes
 * Renamed default git branch to `main`
