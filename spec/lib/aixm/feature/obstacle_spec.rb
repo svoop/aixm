@@ -182,6 +182,12 @@ describe AIXM::Feature::Obstacle do
     macro :remarks
   end
 
+  describe :grouped? do
+    it "returns false since single obstacles are not grouped" do
+      _(subject).wont_be :grouped?
+    end
+  end
+
   describe :linked? do
     subject do
       AIXM::Factory.unlinked_obstacle_group.obstacles.first
@@ -226,22 +232,37 @@ describe AIXM::Feature::Obstacle do
     it "builds correct OFMX" do
       AIXM.ofmx!
       _(subject.to_xml).must_equal <<~END
+        <!-- Obstacle group: EIFFEL TOWER -->
+        <Ogr source="LF|GEN|0.0 FACTORY|0|0">
+          <OgrUid region="LF">
+            <txtName>EIFFEL TOWER</txtName>
+            <geoLat>48.85825000N</geoLat>
+            <geoLong>002.29458889E</geoLong>
+          </OgrUid>
+          <codeDatum>WGE</codeDatum>
+          <valGeoAccuracy>2</valGeoAccuracy>
+          <uomGeoAccuracy>M</uomGeoAccuracy>
+          <valElevAccuracy>3</valElevAccuracy>
+          <uomElevAccuracy>FT</uomElevAccuracy>
+        </Ogr>
         <!-- Obstacle: [tower] 48.85825000N 002.29458889E EIFFEL TOWER -->
         <Obs source="LF|GEN|0.0 FACTORY|0|0">
-          <ObsUid region="LF">
+          <ObsUid>
+            <OgrUid region="LF">
+              <txtName>EIFFEL TOWER</txtName>
+              <geoLat>48.85825000N</geoLat>
+              <geoLong>002.29458889E</geoLong>
+            </OgrUid>
             <geoLat>48.85825000N</geoLat>
             <geoLong>002.29458889E</geoLong>
           </ObsUid>
           <txtName>EIFFEL TOWER</txtName>
           <codeType>TOWER</codeType>
+          <codeGroup>N</codeGroup>
           <codeLgt>Y</codeLgt>
           <txtDescrLgt>red strobes</txtDescrLgt>
           <codeDatum>WGE</codeDatum>
-          <valGeoAccuracy>2</valGeoAccuracy>
-          <uomGeoAccuracy>M</uomGeoAccuracy>
           <valElev>1187</valElev>
-          <valElevAccuracy>3</valElevAccuracy>
-          <uomElevAccuracy>FT</uomElevAccuracy>
           <valHgt>1063</valHgt>
           <uomDistVer>FT</uomDistVer>
           <codeHgtAccuracy>Y</codeHgtAccuracy>

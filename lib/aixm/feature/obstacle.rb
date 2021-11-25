@@ -33,9 +33,11 @@ module AIXM
     # See {AIXM::Feature::ObstacleGroup} for how to define physical links
     # between two obstacles (e.g. cables between powerline towers).
     #
-    # Please note: Accuracies (+xy_accuracy+ and +z_accuracy+) set on an
-    # obstacle group are implicitly applied to all obstacles of the group
-    # unless they have their own, different accuracies set.
+    # Please note: As soon as an obstacle is added to an obstacle group, the
+    # +xy_accuracy+ and +z_accuracy+ of the obstacle group overwrite whatever
+    # is set on the individual obstacles. On the other hand, if the obstacle
+    # group has no +source+ set, it will inherit this value from the first
+    # obstacle in the group.
     #
     # @see https://gitlab.com/openflightmaps/ofmx/wikis/Obstacle
     class Obstacle < Feature
@@ -218,6 +220,11 @@ module AIXM
       end
       private :link_type=
 
+      # @return [Boolean] whether part of an obstacle group
+      def grouped?
+        obstacle_group && obstacle_group.obstacles.count > 1
+      end
+
       # @return [Boolean] whether obstacle is linked to another one
       def linked?
         !!linked_to
@@ -225,8 +232,10 @@ module AIXM
 
       # @return [String] UID markup
       def to_uid(as: :ObsUid)
+        obstacle_group = self.obstacle_group || singleton_obstacle_group
         builder = Builder::XmlMarkup.new(indent: 2)
-        builder.tag!(as, { region: (region if AIXM.ofmx?) }.compact) do |tag|
+        builder.tag!(as) do |tag|
+          tag << obstacle_group.to_uid.indent(2) if AIXM.ofmx?
           tag.geoLat((xy.lat(AIXM.schema)))
           tag.geoLong((xy.long(AIXM.schema)))
         end
@@ -235,19 +244,19 @@ module AIXM
 
       # @return [String] AIXM or OFMX markup
       def to_xml(delegate: true)
-        return obstacle_group.to_xml if delegate && obstacle_group && AIXM.ofmx?
+        obstacle_group = self.obstacle_group || singleton_obstacle_group
+        return obstacle_group.to_xml if delegate && AIXM.ofmx?
         builder = Builder::XmlMarkup.new(indent: 2)
         builder.comment! "Obstacle: [#{type}] #{xy.to_s} #{name}".strip
         builder.Obs({ source: (source if AIXM.ofmx?) }.compact) do |obs|
           obs << to_uid.indent(2)
-          obs << obstacle_group.to_uid.indent(2) if obstacle_group && AIXM.ofmx?
           obs.txtName(name) if name
           if AIXM.ofmx?
             obs.codeType(TYPES.key(type).to_s)
           else
             obs.txtDescrType(TYPES.key(type).to_s)
           end
-          obs.codeGroup(obstacle_group ? 'Y' : 'N') if AIXM.aixm?
+          obs.codeGroup(grouped? ? 'Y' : 'N')
           if AIXM.ofmx?
             obs.codeLgt(lighting ? 'Y' : 'N') unless lighting.nil?
             obs.codeMarking(marking ? 'Y' : 'N') unless marking.nil?
@@ -257,14 +266,13 @@ module AIXM
           obs.txtDescrLgt(lighting_remarks) if lighting_remarks
           obs.txtDescrMarking(marking_remarks) if marking_remarks
           obs.codeDatum('WGE')
-          if accuracy = (xy_accuracy || (obstacle_group&.xy_accuracy if AIXM.aixm?))
-            obs.valGeoAccuracy(accuracy.dist.trim)
-            obs.uomGeoAccuracy(accuracy.unit.upcase.to_s)
+          if AIXM.aixm? && obstacle_group.xy_accuracy
+            obs.valGeoAccuracy(obstacle_group.xy_accuracy.dist.trim)
+            obs.uomGeoAccuracy(obstacle_group.xy_accuracy.unit.upcase.to_s)
           end
           obs.valElev(z.alt)
-          if accuracy = (z_accuracy || (obstacle_group&.z_accuracy if AIXM.aixm?))
-            obs.valElevAccuracy(accuracy.to_ft.dist.round)
-            obs.uomElevAccuracy('FT') if AIXM.ofmx?
+          if AIXM.aixm? && obstacle_group.z_accuracy
+            obs.valElevAccuracy(obstacle_group.z_accuracy.to_ft.dist.round)
           end
           obs.valHgt(height.to_ft.dist.round) if height
           obs.uomDistVer('FT')
@@ -276,7 +284,7 @@ module AIXM
               obs.valRadius(radius.dist.trim)
               obs.uomRadius(radius.unit.upcase.to_s)
             end
-            if linked?
+            if grouped? && linked?
               obs << linked_to.to_uid(as: :ObsUidLink).indent(2)
               obs.codeLinkType(LINK_TYPES.key(link_type).to_s)
             end
@@ -285,6 +293,14 @@ module AIXM
           end
           obs.txtRmk(remarks) if remarks
         end
+      end
+
+      private
+
+      # OFMX requires single, ungrouped obstacles to be the only member of a
+      # singleton obstacle group.
+      def singleton_obstacle_group
+        AIXM.obstacle_group(region: region).add_obstacle self
       end
 
     end
