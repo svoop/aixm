@@ -1295,11 +1295,6 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
           <xsd:documentation>Airspace is requiring for FPL-MSG the use of Unit contact address</xsd:documentation>
         </xsd:annotation>
       </xsd:element>
-      <xsd:element name="txtLocalType" type="txtName" minOccurs="0">
-        <xsd:annotation>
-          <xsd:documentation>Local type designator</xsd:documentation>
-        </xsd:annotation>
-      </xsd:element>
       <xsd:element name="txtName" type="txtName" minOccurs="0">
         <xsd:annotation>
           <xsd:documentation>Name</xsd:documentation>
@@ -1421,6 +1416,11 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
       <xsd:element name="codeId" type="codeIdAs">
         <xsd:annotation>
           <xsd:documentation>Coded identifier</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="txtLocalType" type="txtName" minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation>Local type designator</xsd:documentation>
         </xsd:annotation>
       </xsd:element>
     </xsd:sequence>
@@ -1875,6 +1875,26 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
       <xsd:element name="txtName" type="txtName" minOccurs="0">
         <xsd:annotation>
           <xsd:documentation>Name</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="valElev" type="valDistVer" minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation>Elevation</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="uomElev" type="uomElev" minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation>Unit of measurement [elevation]</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="valTrueBrg" type="valAngleBrg" minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation>True bearing</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="valMagBrg" type="valAngleBrg" minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation>Magnetic bearing</xsd:documentation>
         </xsd:annotation>
       </xsd:element>
       <xsd:element name="txtRmk" type="txtRmk" minOccurs="0">
@@ -2648,6 +2668,56 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
           <xsd:documentation>Unit of measurement [minimum eye height over threshold]</xsd:documentation>
         </xsd:annotation>
       </xsd:element>
+      <xsd:element name="codeRearTakeOffSectorAvbl" type="codeYesNo" minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation>Rear take-off sector available?</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="valRearTakeOffSectorTrueBrg" type="valAngleBrg" minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation>True bearing of rear take-off sector</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="valRearTakeOffSectorSlopeAngle" type="valAngle" minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation>Rear take-off sector slope angle</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="codeCodingMode" type="codeCodingMode" minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation>Coding mode</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="geoLatIap" type="geoLat" minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation>Initial approach point latitude</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="geoLongIap" type="geoLong" minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation>Initial approach point longitude</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="valAltIap" type="valDistVer" minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation>Initial approach point altitude</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="uomAltIap" type="uomDistVer" minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation>Unit of measurement [initial approach point altitude]</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="bezierSectorExtent" type="bezierCurve" minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation>Longitude</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="bezierSectorCentreLine" type="bezierCurve" minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation>Longitude</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
       <xsd:element name="txtRmk" type="txtRmk" minOccurs="0">
         <xsd:annotation>
           <xsd:documentation>Remark</xsd:documentation>
@@ -3014,6 +3084,11 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
       <xsd:element name="valWid" type="valDistHorz" minOccurs="0">
         <xsd:annotation>
           <xsd:documentation>Width</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="valMaxDim" type="valDistHorz" minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation>Largest overall dimension as defined in ICAO annex 14</xsd:documentation>
         </xsd:annotation>
       </xsd:element>
       <xsd:element name="uomDim" type="uomDistHorz" minOccurs="0">
@@ -5450,11 +5525,6 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
           <xsd:documentation>a version of Obstacle group</xsd:documentation>
         </xsd:annotation>
       </xsd:element>
-      <xsd:element name="txtName" type="txtName">
-        <xsd:annotation>
-          <xsd:documentation>Name</xsd:documentation>
-        </xsd:annotation>
-      </xsd:element>
       <xsd:element name="codeDatum" type="codeDatum">
         <xsd:annotation>
           <xsd:documentation>Datum</xsd:documentation>
@@ -5493,6 +5563,11 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
       <xsd:documentation>Obstacle group - UID</xsd:documentation>
     </xsd:annotation>
     <xsd:sequence>
+      <xsd:element name="txtName" type="txtName">
+        <xsd:annotation>
+          <xsd:documentation>Name</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
       <xsd:element name="geoLat" type="geoLat">
         <xsd:annotation>
           <xsd:documentation>Group reference point latitude</xsd:documentation>
@@ -5517,11 +5592,6 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
           <xsd:documentation>a version of Obstacle</xsd:documentation>
         </xsd:annotation>
       </xsd:element>
-      <xsd:element name="OgrUid" type="ObstacleGroupUidType" minOccurs="0">
-        <xsd:annotation>
-          <xsd:documentation>a version of Obstacle group</xsd:documentation>
-        </xsd:annotation>
-      </xsd:element>
       <xsd:element name="txtName" type="txtName" minOccurs="0">
         <xsd:annotation>
           <xsd:documentation>Name</xsd:documentation>
@@ -5535,6 +5605,11 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
       <xsd:element name="txtDescrType" type="txtDescr" minOccurs="0">
         <xsd:annotation>
           <xsd:documentation>Type details</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="codeGroup" type="codeYesNo" minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation>Group of obstacles</xsd:documentation>
         </xsd:annotation>
       </xsd:element>
       <xsd:element name="codeLgt" type="codeYesNo" minOccurs="0">
@@ -5562,29 +5637,9 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
           <xsd:documentation>Datum</xsd:documentation>
         </xsd:annotation>
       </xsd:element>
-      <xsd:element name="valGeoAccuracy" type="valDistHorz" minOccurs="0">
-        <xsd:annotation>
-          <xsd:documentation>Geographical accuracy</xsd:documentation>
-        </xsd:annotation>
-      </xsd:element>
-      <xsd:element name="uomGeoAccuracy" type="uomDistHorz" minOccurs="0">
-        <xsd:annotation>
-          <xsd:documentation>Unit of measurement [geographical accuracy]</xsd:documentation>
-        </xsd:annotation>
-      </xsd:element>
       <xsd:element name="valElev" type="valDistVer">
         <xsd:annotation>
           <xsd:documentation>Elevation</xsd:documentation>
-        </xsd:annotation>
-      </xsd:element>
-      <xsd:element name="valElevAccuracy" type="valDistVer" minOccurs="0">
-        <xsd:annotation>
-          <xsd:documentation>Elevation accuracy</xsd:documentation>
-        </xsd:annotation>
-      </xsd:element>
-      <xsd:element name="uomElevAccuracy" type="uomElev" minOccurs="0">
-        <xsd:annotation>
-          <xsd:documentation>Unit of measurement [elevation accuracy]</xsd:documentation>
         </xsd:annotation>
       </xsd:element>
       <xsd:element name="valHgt" type="valDistVer" minOccurs="0">
@@ -5660,6 +5715,11 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
       <xsd:documentation>Obstacle - UID</xsd:documentation>
     </xsd:annotation>
     <xsd:sequence>
+      <xsd:element name="OgrUid" type="ObstacleGroupUidType">
+        <xsd:annotation>
+          <xsd:documentation>a version of Obstacle group</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
       <xsd:element name="geoLat" type="geoLat">
         <xsd:annotation>
           <xsd:documentation>Latitude</xsd:documentation>
@@ -5672,7 +5732,6 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
       </xsd:element>
     </xsd:sequence>
     <xsd:attribute ref="mid"/>
-    <xsd:attribute ref="region" use="required"/>
   </xsd:complexType>
   <xsd:complexType name="OilType">
     <xsd:annotation>
@@ -8601,12 +8660,22 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
             </xsd:element>
             <xsd:element name="dateValidWef" type="dateMonthDay">
               <xsd:annotation>
-                <xsd:documentation>Yearly start date</xsd:documentation>
+                <xsd:documentation>(Yearly) start date</xsd:documentation>
+              </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="dateYearValidWef" type="dateYear" minOccurs="0">
+              <xsd:annotation>
+                <xsd:documentation>Year of start date</xsd:documentation>
               </xsd:annotation>
             </xsd:element>
             <xsd:element name="dateValidTil" type="dateMonthDay">
               <xsd:annotation>
-                <xsd:documentation>Yearly end date</xsd:documentation>
+                <xsd:documentation>(Yearly) end date</xsd:documentation>
+              </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="dateYearValidTil" type="dateYear" minOccurs="0">
+              <xsd:annotation>
+                <xsd:documentation>Year of end date</xsd:documentation>
               </xsd:annotation>
             </xsd:element>
             <xsd:element name="codeDay" type="codeDay">
@@ -8693,12 +8762,22 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
             </xsd:element>
             <xsd:element name="dateValidWef" type="dateMonthDay">
               <xsd:annotation>
-                <xsd:documentation>Yearly start date</xsd:documentation>
+                <xsd:documentation>(Yearly) start date</xsd:documentation>
+              </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="dateYearValidWef" type="dateYear" minOccurs="0">
+              <xsd:annotation>
+                <xsd:documentation>Year of start date</xsd:documentation>
               </xsd:annotation>
             </xsd:element>
             <xsd:element name="dateValidTil" type="dateMonthDay">
               <xsd:annotation>
-                <xsd:documentation>Yearly end date</xsd:documentation>
+                <xsd:documentation>(Yearly) end date</xsd:documentation>
+              </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="dateYearValidTil" type="dateYear" minOccurs="0">
+              <xsd:annotation>
+                <xsd:documentation>Year of end date</xsd:documentation>
               </xsd:annotation>
             </xsd:element>
             <xsd:element name="codeDay" type="codeDay">

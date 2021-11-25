@@ -24,12 +24,13 @@ end
 namespace :schema do
   desc "Update OFMX schema"
   task :update do
-    `rm -rf schemas/ofmx/0/*`
-    `wget http://schema.openflightmaps.org/0/OFMX-CSV-Obstacle.json -P schemas/ofmx/0/ -q --show-progress`
- 	  `wget http://schema.openflightmaps.org/0/OFMX-CSV.json -P schemas/ofmx/0/ -q --show-progress`
- 	  `wget http://schema.openflightmaps.org/0/OFMX-DataTypes.xsd -P schemas/ofmx/0/ -q --show-progress`
- 	  `wget http://schema.openflightmaps.org/0/OFMX-Features.xsd -P schemas/ofmx/0/ -q --show-progress`
- 	  `wget http://schema.openflightmaps.org/0/OFMX-Snapshot.xsd -P schemas/ofmx/0/ -q --show-progress`
+    version = '0.1'
+    `rm -rf schemas/ofmx/#{version}/*`
+    `wget http://schema.openflightmaps.org/#{version}/OFMX-CSV-Obstacle.json -P schemas/ofmx/#{version}/ -q --show-progress`
+ 	  `wget http://schema.openflightmaps.org/#{version}/OFMX-CSV.json -P schemas/ofmx/#{version}/ -q --show-progress`
+ 	  `wget http://schema.openflightmaps.org/#{version}/OFMX-DataTypes.xsd -P schemas/ofmx/#{version}/ -q --show-progress`
+ 	  `wget http://schema.openflightmaps.org/#{version}/OFMX-Features.xsd -P schemas/ofmx/#{version}/ -q --show-progress`
+ 	  `wget http://schema.openflightmaps.org/#{version}/OFMX-Snapshot.xsd -P schemas/ofmx/#{version}/ -q --show-progress`
   end
 end
 
