@@ -1,6 +1,10 @@
 ## 0.3.12 (unreleased)
 
-Nothing so far
+#### Breaking Changes
+* Move `Ase->txtLocalType` up into `AseUid` for OFMX
+
+#### Additions
+* Add `AIXM::Component::Geometry::RhumbLine`
 
 ## 0.3.11
 

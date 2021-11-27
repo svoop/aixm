@@ -116,7 +116,7 @@ module AIXM
         @length = if value
           fail(ArgumentError, "invalid length") unless value.is_a?(AIXM::D) && value.dist > 0
           fail(ArgumentError, "invalid length unit") if width && width.unit != value.unit
-          @length = value
+          value
         end
       end
 
@@ -124,7 +124,7 @@ module AIXM
         @width = if value
           fail(ArgumentError, "invalid width") unless value.is_a?(AIXM::D)  && value.dist > 0
           fail(ArgumentError, "invalid width unit") if length && length.unit != value.unit
-          @width = value
+          value
         end
       end
 

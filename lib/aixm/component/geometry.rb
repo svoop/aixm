@@ -31,16 +31,18 @@ module AIXM
 
       # @!method segments
       #   @return [Array<AIXM::Component::Geometry::Point,
+      #     AIXM::Component::Geometry::RhumbLine
       #     AIXM::Component::Geometry::Arc,
-      #     AIXM::Component::Geometry::Border,
-      #     AIXM::Component::Geometry::Circle>] points, arcs, borders or circle
+      #     AIXM::Component::Geometry::Circle,
+      #     AIXM::Component::Geometry::Border>] points, rhumb lines, arcs, borders or circle
       # @!method add_segment(segment)
       #   @param segment [AIXM::Component::Geometry::Point,
+      #     AIXM::Component::Geometry::RhumbLine,
       #     AIXM::Component::Geometry::Arc,
-      #     AIXM::Component::Geometry::Border,
-      #     AIXM::Component::Geometry::Circle]
+      #     AIXM::Component::Geometry::Circle,
+      #     AIXM::Component::Geometry::Border]
       #   @return [self]
-      has_many :segments, accept: %i(point arc border circle)
+      has_many :segments, accept: %i(point rhumb_line arc circle border)
 
       # @!method airspace
       #   @return [AIXM::Feature::Airspace] airspace the geometry defines

@@ -45,7 +45,9 @@ module AIXM
       end
 
       def code=(value)
-        @code = CODES.lookup(value&.to_s&.to_sym, nil) || fail(ArgumentError, "invalid code")
+        @code = if value
+          CODES.lookup(value&.to_s&.to_sym, nil) || fail(ArgumentError, "invalid code")
+        end
       end
 
       def remarks=(value)

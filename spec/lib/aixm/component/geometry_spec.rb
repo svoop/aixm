@@ -48,7 +48,7 @@ describe AIXM::Component::Geometry do
     end
   end
 
-  context "line" do
+  context "great circle line" do
     subject do
       AIXM.geometry(
         AIXM.point(xy: AIXM.xy(lat: 11, long: 22)),

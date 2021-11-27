@@ -4,6 +4,14 @@ module AIXM
 
   # Geographical coordinates
   #
+  # ===Warning!
+  # Coordinate tuples can be noted in mathematical order (XY = longitude first,
+  # latitude second) or in (more common) geographical order (YX = latitude
+  # first, longitude second). However you sort the attributes, make sure not
+  # to flip them by accident.
+  #
+  # See https://en.wikipedia.org/wiki/Geographic_coordinate_system
+  #
   # ===Recognized notations:
   # * DD - examples: 12.12345678 (north or east), -12.12345678 (south or west)
   # * DMS - examples: 11°22'33.44"N, 1112233.44W,

@@ -4,16 +4,16 @@ module AIXM
   module Component
     class Geometry
 
-      # Either an individual point or the starting point of a great circle
-      # line. Defined by {#xy} coordinates.
+      # Starting point of a rhumb line which describes a spiral on a sphere
+      # crossing all meridians at the same angle. Defined by {#xy} coordinates.
       #
       # ===Cheat Sheet in Pseudo Code:
-      #   point = AIXM.point(
+      #   point = AIXM.rhumb_line(
       #     xy: AIXM.xy
       #   )
       #
-      # @see https://gitlab.com/openflightmaps/ofmx/wikis/Airspace#point
-      class Point
+      # @see https://gitlab.com/openflightmaps/ofmx/wikis/Airspace#rhumb-line
+      class RhumbLine
         include AIXM::Association
 
         # @!method geometry
@@ -41,7 +41,7 @@ module AIXM
         def to_xml
           builder = Builder::XmlMarkup.new(indent: 2)
           builder.Avx do |avx|
-            avx.codeType('GRC')
+            avx.codeType('RHL')
             avx.geoLat(xy.lat(AIXM.schema))
             avx.geoLong(xy.long(AIXM.schema))
             avx.codeDatum('WGE')

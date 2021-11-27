@@ -7,7 +7,11 @@ describe AIXM::Component::Timetable do
 
   describe :code= do
     it "fails on invalid values" do
-      _([nil, :foobar, 123]).wont_be_written_to subject, :code
+      _([:foobar, 123]).wont_be_written_to subject, :code
+    end
+
+    it "accepts nil value" do
+      _([nil]).must_be_written_to subject, :code
     end
 
     it "looks up valid values" do

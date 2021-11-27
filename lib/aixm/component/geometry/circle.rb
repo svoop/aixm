@@ -17,7 +17,7 @@ module AIXM
         include AIXM::Association
 
         # @!method geometry
-        #   @return [AIXM::Component::Geometry] geometry the arc belongs to
+        #   @return [AIXM::Component::Geometry] geometry this segment belongs to
         belongs_to :geometry, as: :segment
 
         # @return [AIXM::XY] center point
