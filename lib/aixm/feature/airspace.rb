@@ -145,6 +145,7 @@ module AIXM
         builder.tag!(as, ({ region: (region if AIXM.ofmx?) }.compact)) do |tag|
           tag.codeType(TYPES.key(type).to_s)
           tag.codeId(id)
+          tag.txtLocalType(local_type) if AIXM.ofmx? && local_type && local_type != name
         end
       end
       memoize :to_uid
@@ -166,7 +167,7 @@ module AIXM
         builder.comment! "Airspace: [#{TYPES.key(type)}] #{name || :UNNAMED}"
         builder.Ase({ source: (source if AIXM.ofmx?) }.compact) do |ase|
           ase << to_uid.indent(2)
-          ase.txtLocalType(local_type) if local_type && local_type != name
+          ase.txtLocalType(local_type) if AIXM.aixm? && local_type && local_type != name
           ase.txtName(name) if name
           unless layered?
             ase << layers.first.to_xml.indent(2)

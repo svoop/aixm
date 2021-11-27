@@ -129,8 +129,8 @@ describe AIXM::Feature::Airspace do
             <AseUid region="LF">
               <codeType>D</codeType>
               <codeId>PA</codeId>
+              <txtLocalType>POLYGON</txtLocalType>
             </AseUid>
-            <txtLocalType>POLYGON</txtLocalType>
             <txtName>POLYGON AIRSPACE</txtName>
             <codeClass>C</codeClass>
             <codeLocInd>XXXX</codeLocInd>
@@ -158,6 +158,7 @@ describe AIXM::Feature::Airspace do
               <AseUid region="LF">
                 <codeType>D</codeType>
                 <codeId>PA</codeId>
+                <txtLocalType>POLYGON</txtLocalType>
               </AseUid>
             </AbdUid>
             <Avx>
@@ -197,6 +198,7 @@ describe AIXM::Feature::Airspace do
               <AseUid region="LF">
                 <codeType>D</codeType>
                 <codeId>PA</codeId>
+                <txtLocalType>POLYGON</txtLocalType>
               </AseUid>
             </SaeUid>
           </Sae>
@@ -312,8 +314,8 @@ describe AIXM::Feature::Airspace do
             <AseUid region="LF">
               <codeType>D</codeType>
               <codeId>PA</codeId>
+              <txtLocalType>POLYGON</txtLocalType>
             </AseUid>
-            <txtLocalType>POLYGON</txtLocalType>
             <txtName>POLYGON AIRSPACE</txtName>
           </Ase>
           <Abd>
@@ -321,6 +323,7 @@ describe AIXM::Feature::Airspace do
               <AseUid region="LF">
                 <codeType>D</codeType>
                 <codeId>PA</codeId>
+                <txtLocalType>POLYGON</txtLocalType>
               </AseUid>
             </AbdUid>
             <Avx>
@@ -384,6 +387,7 @@ describe AIXM::Feature::Airspace do
             <AseUidSameExtent region="LF">
               <codeType>D</codeType>
               <codeId>PA</codeId>
+              <txtLocalType>POLYGON</txtLocalType>
             </AseUidSameExtent>
           </Adg>
           <Sae>
@@ -455,6 +459,7 @@ describe AIXM::Feature::Airspace do
             <AseUidSameExtent region="LF">
               <codeType>D</codeType>
               <codeId>PA</codeId>
+              <txtLocalType>POLYGON</txtLocalType>
             </AseUidSameExtent>
           </Adg>
           <Sae>

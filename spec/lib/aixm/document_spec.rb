@@ -1337,8 +1337,8 @@ describe AIXM::Document do
             <AseUid region="LF">
               <codeType>D</codeType>
               <codeId>PA</codeId>
+              <txtLocalType>POLYGON</txtLocalType>
             </AseUid>
-            <txtLocalType>POLYGON</txtLocalType>
             <txtName>POLYGON AIRSPACE</txtName>
             <codeClass>C</codeClass>
             <codeLocInd>XXXX</codeLocInd>
@@ -1366,6 +1366,7 @@ describe AIXM::Document do
               <AseUid region="LF">
                 <codeType>D</codeType>
                 <codeId>PA</codeId>
+                <txtLocalType>POLYGON</txtLocalType>
               </AseUid>
             </AbdUid>
             <Avx>
@@ -1397,8 +1398,8 @@ describe AIXM::Document do
             <AseUid region="LF">
               <codeType>D</codeType>
               <codeId>CA</codeId>
+              <txtLocalType>CIRCLE</txtLocalType>
             </AseUid>
-            <txtLocalType>CIRCLE</txtLocalType>
             <txtName>CIRCLE AIRSPACE</txtName>
             <codeClass>C</codeClass>
             <codeLocInd>XXXX</codeLocInd>
@@ -1426,6 +1427,7 @@ describe AIXM::Document do
               <AseUid region="LF">
                 <codeType>D</codeType>
                 <codeId>CA</codeId>
+                <txtLocalType>CIRCLE</txtLocalType>
               </AseUid>
             </AbdUid>
             <Avx>
@@ -2228,11 +2230,11 @@ describe AIXM::Document do
           </Aha>
           <!-- Airspace: [D] POLYGON AIRSPACE -->
           <Ase source="LF|GEN|0.0 FACTORY|0|0">
-            <AseUid region="LF" mid="4fadb72f-7ee4-1171-3281-ac59b82dad86">
+            <AseUid region="LF" mid="34dad37e-9138-e1cd-0e32-6238ca223e1b">
               <codeType>D</codeType>
               <codeId>PA</codeId>
+              <txtLocalType>POLYGON</txtLocalType>
             </AseUid>
-            <txtLocalType>POLYGON</txtLocalType>
             <txtName>POLYGON AIRSPACE</txtName>
             <codeClass>C</codeClass>
             <codeLocInd>XXXX</codeLocInd>
@@ -2256,10 +2258,11 @@ describe AIXM::Document do
             <txtRmk>airspace layer</txtRmk>
           </Ase>
           <Abd>
-            <AbdUid mid="56b399d5-59e8-64d7-d234-ea4856624b44">
-              <AseUid region="LF" mid="4fadb72f-7ee4-1171-3281-ac59b82dad86">
+            <AbdUid mid="a2b51c1d-0c6a-1d3f-7c2e-f89ad11de205">
+              <AseUid region="LF" mid="34dad37e-9138-e1cd-0e32-6238ca223e1b">
                 <codeType>D</codeType>
                 <codeId>PA</codeId>
+                <txtLocalType>POLYGON</txtLocalType>
               </AseUid>
             </AbdUid>
             <Avx>
@@ -2288,11 +2291,11 @@ describe AIXM::Document do
           </Abd>
           <!-- Airspace: [D] CIRCLE AIRSPACE -->
           <Ase source="LF|GEN|0.0 FACTORY|0|0">
-            <AseUid region="LF" mid="69b199b2-931f-47ff-1e78-9fa796ec23b3">
+            <AseUid region="LF" mid="a5377509-1175-3835-a27b-5f7494b5161a">
               <codeType>D</codeType>
               <codeId>CA</codeId>
+              <txtLocalType>CIRCLE</txtLocalType>
             </AseUid>
-            <txtLocalType>CIRCLE</txtLocalType>
             <txtName>CIRCLE AIRSPACE</txtName>
             <codeClass>C</codeClass>
             <codeLocInd>XXXX</codeLocInd>
@@ -2316,10 +2319,11 @@ describe AIXM::Document do
             <txtRmk>airspace layer</txtRmk>
           </Ase>
           <Abd>
-            <AbdUid mid="7082ac94-36bc-6d29-06d5-0b1f2a8bda50">
-              <AseUid region="LF" mid="69b199b2-931f-47ff-1e78-9fa796ec23b3">
+            <AbdUid mid="c21a1184-ddb1-4505-23e2-61732a2cf29c">
+              <AseUid region="LF" mid="a5377509-1175-3835-a27b-5f7494b5161a">
                 <codeType>D</codeType>
                 <codeId>CA</codeId>
+                <txtLocalType>CIRCLE</txtLocalType>
               </AseUid>
             </AbdUid>
             <Avx>
