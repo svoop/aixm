@@ -1,3 +1,7 @@
+## 1.0.1 (unreleased)
+
+Nothing so far
+
 ## 1.0.0
 
 #### Breaking Changes
