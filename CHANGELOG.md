@@ -1,4 +1,4 @@
-## 0.3.12 (unreleased)
+## 1.0.0
 
 #### Breaking Changes
 * Move `Ase->txtLocalType` up into `AseUid` for OFMX

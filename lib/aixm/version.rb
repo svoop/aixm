@@ -1,3 +1,3 @@
 module AIXM
-  VERSION = "0.3.12".freeze
+  VERSION = "1.0.0".freeze
 end
