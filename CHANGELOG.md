@@ -2,7 +2,7 @@
 
 #### Breaking Changes
 * `AIXM::Association:Array#duplicates` now returns an array of arrays which
-  group all duplicates together
+  group all duplicates together.
 
 ## 1.0.0
 

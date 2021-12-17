@@ -16,7 +16,7 @@ module AIXM
     #   layer.timetable = AIXM.timetable or nil
     #   layer.selective = true or false (default)
     #   layer.remarks = String or nil
-    #   airspace.add_service(AIXM.service)
+    #   layer.add_service(AIXM.service)
     #
     # @see https://gitlab.com/openflightmaps/ofmx/wikis/Airspace
     class Layer
