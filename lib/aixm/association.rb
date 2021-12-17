@@ -349,17 +349,14 @@ module AIXM
       #     belongs_to :blog
       #   end
       #   blog, post = Blog.new, Post.new
-      #   blog.add_posts([post, post])
-      #   blog.posts.duplicates   # => [post]
+      #   duplicate_post = post.dup
+      #   blog.add_posts([post, duplicate_post])
+      #   blog.posts.duplicates   # => [[post, duplicate_post]]
       #
-      # @return [AIXM::Association::Array]
+      # @return [Array<Array<AIXM::Feature>>]
       def duplicates
         AIXM::Memoize.method :to_uid do
-          self.class.new(
-            select.with_index do |element, index|
-              index != self.index(element)
-            end
-          )
+          group_by(&:to_uid).select { |_, a| a.count > 1 }.map(&:last)
         end
       end
     end

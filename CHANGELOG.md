@@ -1,6 +1,8 @@
 ## 1.0.1 (unreleased)
 
-Nothing so far
+#### Breaking Changes
+* `AIXM::Association:Array#duplicates` now returns an array of arrays which
+  group all duplicates together
 
 ## 1.0.0
 
@@ -29,7 +31,7 @@ Nothing so far
 
 #### Additions
 * Proper `has_many` and `has_one` associations
-* `AIXM::Association:Array#find_by|find|duplicate` on `has_many` associations
+* `AIXM::Association:Array#find_by|find|duplicates` on `has_many` associations
 * `AIXM.config.mid` now defines whether `mid` attributes are inserted or not
   provided the selected schema is OFMX
 * `AIXM::Memoize` module

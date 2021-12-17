@@ -645,7 +645,7 @@ describe AIXM::Association do
     describe :duplicates do
       it "returns empty array if no duplicates exist" do
         subject.features.duplicates.then do |result|
-          _(result).must_be_instance_of AIXM::Association::Array
+          _(result).must_be_instance_of Array
           _(result).must_be :empty?
         end
       end
@@ -654,17 +654,18 @@ describe AIXM::Association do
         feature = subject.features.last
         subject.add_feature feature
         subject.features.duplicates.then do |result|
-          _(result).must_be_instance_of AIXM::Association::Array
-          _(result).must_equal [feature]
+          _(result).must_be_instance_of Array
+          _(result).must_equal [[feature, feature]]
         end
       end
 
       it "returns equal duplicates" do
-        dup_feature = subject.features.last.dup
+        feature = subject.features.last
+        dup_feature = feature.dup
         subject.add_feature dup_feature
         subject.features.duplicates.then do |result|
-          _(result).must_be_instance_of AIXM::Association::Array
-          _(result).must_equal [dup_feature]
+          _(result).must_be_instance_of Array
+          _(result).must_equal [[feature, dup_feature]]
         end
       end
     end
