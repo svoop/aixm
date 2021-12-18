@@ -4,6 +4,10 @@
 * `AIXM::Association:Array#duplicates` now returns an array of arrays which
   group all duplicates together.
 
+#### Changes
+* Nested memoization of the same method is now allowed and won't reset the
+  memoization cache anymore.
+
 ## 1.0.0
 
 #### Breaking Changes

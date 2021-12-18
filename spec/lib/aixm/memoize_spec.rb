@@ -14,20 +14,35 @@ describe AIXM::Memoize do
   before { $entropy = nil }
 
   describe :method do
-    it "memoizes for the duration of the block only" do
+    it "memoizes for the duration of the block" do
       _(subject.either(1)).must_equal 1
       AIXM::Memoize.method :either do
         _(subject.either(2)).must_equal 2
         $entropy = :not_nil
         _(subject.either(2)).must_equal 2
       end
-      _(subject.either(3)).must_equal :not_nil
+      _(subject.either(2)).must_equal :not_nil
       $entropy = nil
-      _(subject.either(3)).must_equal 3
+      _(subject.either(2)).must_equal 2
+    end
+
+    it "memoizes for the duration of the block with nested memoization" do
+      _(subject.either(1)).must_equal 1
+      AIXM::Memoize.method :either do
+        AIXM::Memoize.method :either do
+          _(subject.either(2)).must_equal 2
+          $entropy = :not_nil
+          _(subject.either(2)).must_equal 2
+        end
+        _(subject.either(2)).must_equal 2
+      end
+      _(subject.either(2)).must_equal :not_nil
+      $entropy = nil
+      _(subject.either(2)).must_equal 2
     end
 
     it "memoizes nil return values" do
-      AIXM::Memoize.method :add do
+      AIXM::Memoize.method :either do
         _(subject.either).must_be :nil?
         $entropy = :not_nil
         _(subject.either).must_be :nil?

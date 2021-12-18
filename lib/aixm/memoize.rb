@@ -8,6 +8,9 @@ module AIXM
   # independently. On the other hand, when calling the method with a block,
   # no memoization is performed at all.
   #
+  # Nested memoization of the same method is allowed and won't reset the
+  # memoization cache.
+  #
   # @example
   #   class Either
   #     include AIXM::Memoize
@@ -53,14 +56,15 @@ module AIXM
         unmemoized_method = :"unmemoized_#{method}"
         alias_method unmemoized_method, method
         define_method method do |*args, **kargs, &block|
-          if block || !AIXM::Memoize.cache
+          if block || !AIXM::Memoize.cache.has_key?(method)
             send(unmemoized_method, *args, **kargs, &block)
           else
+            cache = AIXM::Memoize.cache[method]
             id = object_id.hash ^ args.hash ^ kargs.hash
-            if AIXM::Memoize.cache.has_key?(id)
-              AIXM::Memoize.cache[id]
+            if cache.has_key?(id)
+              cache[id]
             else
-              AIXM::Memoize.cache[id] = send(unmemoized_method, *args, **kargs, &block)
+              cache[id] = send(unmemoized_method, *args, **kargs)
             end
           end
         end
@@ -68,22 +72,34 @@ module AIXM
     end
 
     class << self
+      attr_reader :cache
+
       def included(base)
         base.extend(ClassMethods)
         @cache = {}
       end
 
-      def method(method)
-        @method = method
-        @cache[@method] = {}
-        yield
-      ensure
-        @method = nil
+      def method(method, &block)
+        send(:"call_with#{:out if cached?(method)}_cache", method, &block)
       end
 
-      def cache
-        (@cache[@method] ||= {}) if @method
+      private
+
+      def cached?(method)
+        cache.has_key?(method)
       end
+
+      def call_without_cache(method, &block)
+        block.call
+      end
+
+      def call_with_cache(method, &block)
+        cache[method] = {}
+        block.call
+      ensure
+        cache.delete(method)
+      end
+
     end
   end
 end
