@@ -780,7 +780,7 @@ describe AIXM::Document do
               <geoLong>0073336.00E</geoLong>
             </VorUid>
             <txtName>VOR/DME NAVAID</txtName>
-            <codeChannel>95X</codeChannel>
+            <codeChannel>47X</codeChannel>
             <codeDatum>WGE</codeDatum>
             <valElev>500</valElev>
             <uomDistVer>FT</uomDistVer>
@@ -828,7 +828,7 @@ describe AIXM::Document do
               <geoLong>0073336.00E</geoLong>
             </VorUid>
             <txtName>VORTAC NAVAID</txtName>
-            <codeChannel>29X</codeChannel>
+            <codeChannel>47X</codeChannel>
             <codeDatum>WGE</codeDatum>
             <valElev>500</valElev>
             <uomDistVer>FT</uomDistVer>
@@ -1604,7 +1604,7 @@ describe AIXM::Document do
               <geoLong>007.56000000E</geoLong>
             </VorUid>
             <txtName>VOR/DME NAVAID</txtName>
-            <codeChannel>95X</codeChannel>
+            <codeChannel>47X</codeChannel>
             <codeDatum>WGE</codeDatum>
             <valElev>500</valElev>
             <uomDistVer>FT</uomDistVer>
@@ -1652,7 +1652,7 @@ describe AIXM::Document do
               <geoLong>007.56000000E</geoLong>
             </VorUid>
             <txtName>VORTAC NAVAID</txtName>
-            <codeChannel>29X</codeChannel>
+            <codeChannel>47X</codeChannel>
             <codeDatum>WGE</codeDatum>
             <valElev>500</valElev>
             <uomDistVer>FT</uomDistVer>
@@ -2500,7 +2500,7 @@ describe AIXM::Document do
               <geoLong>007.56000000E</geoLong>
             </VorUid>
             <txtName>VOR/DME NAVAID</txtName>
-            <codeChannel>95X</codeChannel>
+            <codeChannel>47X</codeChannel>
             <codeDatum>WGE</codeDatum>
             <valElev>500</valElev>
             <uomDistVer>FT</uomDistVer>
@@ -2548,7 +2548,7 @@ describe AIXM::Document do
               <geoLong>007.56000000E</geoLong>
             </VorUid>
             <txtName>VORTAC NAVAID</txtName>
-            <codeChannel>29X</codeChannel>
+            <codeChannel>47X</codeChannel>
             <codeDatum>WGE</codeDatum>
             <valElev>500</valElev>
             <uomDistVer>FT</uomDistVer>

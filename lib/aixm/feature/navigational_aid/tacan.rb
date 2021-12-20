@@ -17,7 +17,8 @@ module AIXM
       #     name: String
       #     xy: AIXM.xy
       #     z: AIXM.z or nil
-      #     channel: String
+      #     channel: String   # either set channel directly
+      #     ghost_f: AIXM.f   # or set channel via VOR ghost frequency
       #   )
       # tacan.timetable = AIXM.timetable or nil
       # tacan.remarks = String or nil
@@ -25,7 +26,7 @@ module AIXM
       # @see https://gitlab.com/openflightmaps/ofmx/wikis/Navigational-aid#tcn-tacan
       class TACAN < DME
         include AIXM::Memoize
-        
+
         public_class_method :new
 
         # @return [String] UID markup

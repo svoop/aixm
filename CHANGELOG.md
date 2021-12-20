@@ -3,6 +3,8 @@
 #### Breaking Changes
 * `AIXM::Association:Array#duplicates` now returns an array of arrays which
   group all duplicates together.
+* `VOR#associate_dme` and `VOR#associate_tacan` no longer take the channel
+  as argument but calculate it from the (ghost) frequency of the VOR.
 
 #### Changes
 * Nested memoization of the same method is now allowed and won't reset the

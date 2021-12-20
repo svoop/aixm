@@ -265,7 +265,7 @@ module AIXM
         ).tap do |vordme|
           vordme.timetable = AIXM::H24
           vordme.remarks = 'vor/dme navaid'
-          vordme.associate_dme(channel: '95X')
+          vordme.associate_dme
         end
       end
 
@@ -284,7 +284,7 @@ module AIXM
         ).tap do |vortac|
           vortac.timetable = AIXM::H24
           vortac.remarks = 'vortac navaid'
-          vortac.associate_tacan(channel: '29X')
+          vortac.associate_tacan
         end
       end
 

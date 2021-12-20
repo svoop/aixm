@@ -18,7 +18,8 @@ module AIXM
       #     name: String
       #     xy: AIXM.xy
       #     z: AIXM.z or nil
-      #     channel: String
+      #     channel: String   # either set channel directly
+      #     ghost_f: AIXM.f   # or set channel via VOR ghost frequency
       #   )
       #   dme.timetable = AIXM.timetable or nil
       #   dme.remarks = String or nil
@@ -31,6 +32,13 @@ module AIXM
 
         CHANNEL_RE = /\A([1-9]|[1-9]\d|1[0-1]\d|12[0-6])[XY]\z/.freeze
 
+        GHOST_MAP = {
+          108_00 => (17..59),
+          112_30 => (70..126),
+          133_30 => (60..69),
+          134_40 => (1..16)
+        }.freeze
+
         # @!method vor
         #   @return [AIXM::Feature::NavigationalAid::VOR, nil] associated VOR
         belongs_to :vor, readonly: true
@@ -38,9 +46,13 @@ module AIXM
         # @return [String] radio channel
         attr_reader :channel
 
-        def initialize(channel:, **arguments)
+        def initialize(channel: nil, ghost_f: nil, **arguments)
           super(**arguments)
-          self.channel = channel
+          case
+            when channel then self.channel = channel
+            when ghost_f then self.ghost_f = ghost_f
+            else fail(ArgumentError, "either channel or ghost_f must be set")
+          end
         end
 
         def channel=(value)
@@ -48,17 +60,24 @@ module AIXM
           @channel = value
         end
 
+        def ghost_f=(value)
+          fail(ArgumentError, "invalid ghost_f") unless value.is_a?(AIXM::F) && value.unit == :mhz
+          integer, letter = (value.freq * 100).round, 'X'
+          unless (integer % 10).zero?
+            integer -= 5
+            letter = 'Y'
+          end
+          base = GHOST_MAP.keys.reverse.bsearch { _1 <= integer }
+          number = ((integer - base) / 10) + GHOST_MAP[base].min
+          self.channel = "#{number}#{letter}"
+        end
+
         # @return [AIXM::F] ghost frequency matching the channel
         def ghost_f
           if channel
             number, letter = channel.split(/(?=[XY])/)
-            integer = case number.to_i
-              when (1..16) then 13430
-              when (17..59) then 10630
-              when (60..69) then 12730
-              when (70..126) then 10530
-            end
-            integer += number.to_i * 10
+            integer = GHOST_MAP.find { _2.include?(number.to_i) }.first
+            integer += (number.to_i - GHOST_MAP[integer].min) * 10
             integer += 5 if letter == 'Y'
             AIXM.f(integer.to_f / 100, :mhz)
           end

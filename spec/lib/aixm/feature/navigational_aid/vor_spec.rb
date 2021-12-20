@@ -104,13 +104,20 @@ describe AIXM::Feature::NavigationalAid::VOR do
       AIXM::Factory.vor.tap do |vor|
         vor.name = "VOR/DME NAVAID"
         vor.remarks = "vor/dme navaid"
-        vor.associate_dme(channel: '84X')
+        vor.associate_dme
       end
     end
 
     describe :kind do
       it "must return class/type combo" do
         _(subject.kind).must_equal "VOR:VOR"
+      end
+    end
+
+    describe :associate_dme do
+      it "must set the correct channel" do
+        _(subject.f).must_equal AIXM.f(111, :mhz)
+        _(subject.dme.channel).must_equal '47X'
       end
     end
 
@@ -157,7 +164,7 @@ describe AIXM::Feature::NavigationalAid::VOR do
               <geoLong>007.56000000E</geoLong>
             </VorUid>
             <txtName>VOR/DME NAVAID</txtName>
-            <codeChannel>84X</codeChannel>
+            <codeChannel>47X</codeChannel>
             <codeDatum>WGE</codeDatum>
             <valElev>500</valElev>
             <uomDistVer>FT</uomDistVer>
@@ -176,13 +183,20 @@ describe AIXM::Feature::NavigationalAid::VOR do
       AIXM::Factory.vor.tap do |vor|
         vor.name = "VORTAC NAVAID"
         vor.remarks = "vortac navaid"
-        vor.associate_tacan(channel: '54X')
+        vor.associate_tacan
       end
     end
 
     describe :kind do
       it "must return class/type combo" do
         _(subject.kind).must_equal "VOR:VOR"
+      end
+    end
+
+    describe :associate_tacan do
+      it "must set the correct channel" do
+        _(subject.f).must_equal AIXM.f(111, :mhz)
+        _(subject.tacan.channel).must_equal '47X'
       end
     end
 
@@ -229,7 +243,7 @@ describe AIXM::Feature::NavigationalAid::VOR do
               <geoLong>007.56000000E</geoLong>
             </VorUid>
             <txtName>VORTAC NAVAID</txtName>
-            <codeChannel>54X</codeChannel>
+            <codeChannel>47X</codeChannel>
             <codeDatum>WGE</codeDatum>
             <valElev>500</valElev>
             <uomDistVer>FT</uomDistVer>

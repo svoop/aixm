@@ -23,13 +23,13 @@ module AIXM
       #   )
       #   vor.timetable = AIXM.timetable or nil
       #   vor.remarks = String or nil
-      #   vor.associate_dme(channel: String)     # turns the VOR into a VOR/DME
-      #   vor.associate_tacan(channel: String)   # turns the VOR into a VORTAC
+      #   vor.associate_dme     # turns the VOR into a VOR/DME
+      #   vor.associate_tacan   # turns the VOR into a VORTAC
       #
       # @see https://gitlab.com/openflightmaps/ofmx/wikis/Navigational-aid#vor-vor
       class VOR < NavigationalAid
         include AIXM::Memoize
-        
+
         public_class_method :new
 
         TYPES = {
@@ -85,14 +85,14 @@ module AIXM
         end
 
         # Associate a DME which turns the VOR into a VOR/DME
-        def associate_dme(channel:)
-          self.dme = AIXM.dme(region: region, organisation: organisation, id: id, name: name, xy: xy, z: z, channel: channel)
+        def associate_dme
+          self.dme = AIXM.dme(region: region, organisation: organisation, id: id, name: name, xy: xy, z: z, ghost_f: f)
           dme.timetable, @dme.remarks = timetable, remarks
         end
 
         # Associate a TACAN which turns the VOR into a VORTAC
-        def associate_tacan(channel:)
-          self.tacan = AIXM.tacan(region: region, organisation: organisation, id: id, name: name, xy: xy, z: z, channel: channel)
+        def associate_tacan
+          self.tacan = AIXM.tacan(region: region, organisation: organisation, id: id, name: name, xy: xy, z: z, ghost_f: f)
           tacan.timetable, @tacan.remarks = timetable, remarks
         end
 
