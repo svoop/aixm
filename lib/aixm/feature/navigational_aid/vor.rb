@@ -86,16 +86,32 @@ module AIXM
           @north = NORTHS.lookup(value&.to_s&.to_sym, nil) || fail(ArgumentError, "invalid north")
         end
 
-        # Associate a DME which turns the VOR into a VOR/DME
-        def associate_dme
-          self.dme = AIXM.dme(region: region, organisation: organisation, id: id, name: name, xy: xy, z: z, ghost_f: f)
-          dme.timetable, @dme.remarks = timetable, remarks
-        end
-
-        # Associate a TACAN which turns the VOR into a VORTAC
-        def associate_tacan
-          self.tacan = AIXM.tacan(region: region, organisation: organisation, id: id, name: name, xy: xy, z: z, ghost_f: f)
-          tacan.timetable, @tacan.remarks = timetable, remarks
+        # @!method associate_dme
+        #   Build a DME associated to this VOR (which turns it into a VOR/DME)
+        #
+        #   @return [AIXM::Feature::NavigationalAid::DME] associated DME
+        #
+        # @!method dassociate_tacan
+        #   Build a TACAN associated to this VOR (which turns it into a VORTAC)
+        #
+        #   @return [AIXM::Feature::NavigationalAid::TACAN] associated TACAN
+        %i(dme tacan).each do |secondary|
+          define_method("associate_#{secondary}") do
+            send("#{secondary}=",
+              AIXM.send(secondary,
+                region: region,
+                organisation: organisation,
+                id: id,
+                name: name,
+                xy: xy,
+                z: z,
+                ghost_f: f
+              ).tap do |navigational_aid|
+                navigational_aid.timetable = timetable
+                navigational_aid.remarks = remarks
+              end
+            )
+          end
         end
 
         # @return [String] UID markup

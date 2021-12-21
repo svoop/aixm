@@ -23,18 +23,18 @@ module AIXM
   #   end
   #   blog, post = Blog.new, Post.new
   #   # --either--
-  #   blog.add_post(post)
+  #   blog.add_post(post)        # => Blog
   #   blog.posts.count           # => 1
   #   blog.posts.first == post   # => true
   #   post.blog == blog          # => true
-  #   blog.remove_post(post)
+  #   blog.remove_post(post)     # => Blog
   #   blog.posts.count           # => 0
   #   # --or--
-  #   post.blog = blog
+  #   post.blog = blog           # => Blog
   #   blog.posts.count           # => 1
   #   blog.posts.first == post   # => true
   #   post.blog == blog          # => true
-  #   post.blog = nil
+  #   post.blog = nil            # => nil
   #   blog.posts.count           # => 0
   #   # --or--
   #   post_2 = Post.new
@@ -53,19 +53,21 @@ module AIXM
   #   end
   #   blog, post = Blog.new, Post.new
   #   # --either--
-  #   blog.post = post
-  #   blog.post == post   # => true
-  #   post.blog == blog   # => true
-  #   blog.post = nil
-  #   blog.post           # => nil
-  #   post.blog           # => nil
+  #   blog.post = post      # => Post (standard assignment)
+  #   blog.add_post(post)   # => Blog (alternative for chaining)
+  #   blog.post == post     # => true
+  #   post.blog == blog     # => true
+  #   blog.post = nil       # => nil
+  #   blog.post             # => nil
+  #   post.blog             # => nil
   #   # --or--
-  #   post.blog = blog
-  #   post.blog == blog   # => true
-  #   blog.post == post   # => true
-  #   post.blog = nil
-  #   post.blog           # => nil
-  #   blog.post           # => nil
+  #   post.blog = blog      # => Blog (standard assignment)
+  #   post.add_blog(blog)   # => Post (alternative for chaining)
+  #   post.blog == blog     # => true
+  #   blog.post == post     # => true
+  #   post.blog = nil       # => nil
+  #   post.blog             # => nil
+  #   blog.post             # => nil
   #
   # @example Association with readonly +belongs_to+ (idem for +has_one+)
   #   class Blog
@@ -218,14 +220,19 @@ module AIXM
         (@has_one_attributes ||= []) << attribute
         # feature
         attr_reader attribute
-        # feature= / add_feature
+        # feature=
         define_method(:"#{association}=") do |object|
           fail(ArgumentError, "#{object.__class__} not allowed") unless class_names.any? { |c| object.is_a?(c.to_class) }
           instance_variable_get(:"@#{attribute}")&.instance_variable_set(:"@#{inversion}", nil)
           instance_variable_set(:"@#{attribute}", object)
           object&.instance_variable_set(:"@#{inversion}", self)
+          object
         end
-        alias_method(:"add_#{association}", :"#{association}=")
+        # add_feature
+        define_method(:"add_#{association}") do |object|
+          send("#{association}=", object)
+          self
+        end
         # remove_feature
         define_method(:"remove_#{association}") do |_|
           send(:"#{association}=", nil)
@@ -239,11 +246,17 @@ module AIXM
         (@belongs_to_attributes ||= []) << attribute
         # feature
         attr_reader attribute
-        # feature=
         unless readonly
+          # feature=
           define_method(:"#{attribute}=") do |object|
             instance_variable_get(:"@#{attribute}")&.send(:"remove_#{inversion}", self)
             object&.send(:"add_#{inversion}", self)
+            object
+          end
+          # add_feature
+          define_method(:"add_#{attribute}") do |object|
+            send("#{attribute}=", object)
+            self
           end
         end
       end

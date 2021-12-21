@@ -115,6 +115,10 @@ describe AIXM::Feature::NavigationalAid::VOR do
     end
 
     describe :associate_dme do
+      it "returns the DME" do
+        _(subject.associate_dme).must_be_instance_of AIXM::Feature::NavigationalAid::DME
+      end
+
       it "must set the correct channel" do
         _(subject.f).must_equal AIXM.f(111, :mhz)
         _(subject.dme.channel).must_equal '47X'
@@ -194,6 +198,10 @@ describe AIXM::Feature::NavigationalAid::VOR do
     end
 
     describe :associate_tacan do
+      it "returns the TACAN" do
+        _(subject.associate_tacan).must_be_instance_of AIXM::Feature::NavigationalAid::TACAN
+      end
+
       it "must set the correct channel" do
         _(subject.f).must_equal AIXM.f(111, :mhz)
         _(subject.tacan.channel).must_equal '47X'

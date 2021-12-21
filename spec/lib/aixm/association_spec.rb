@@ -46,27 +46,27 @@ describe AIXM::Association do
           _{ blog.posts << post }.must_raise NoMethodError
         end
 
-        it "adds post to blog" do
+        it "adds post to blog and returns blog" do
           _(blog.add_post(post)).must_equal blog
           _(blog.posts).must_equal [post]
           _(post.blog).must_equal blog
         end
 
-        it "adds posts to blog" do
+        it "adds posts to blog and returns blog" do
           _(blog.add_posts([post, post_2])).must_equal blog
           _(blog.posts).must_equal [post, post_2]
           _(post.blog).must_equal blog
           _(post_2.blog).must_equal blog
         end
 
-        it "removes post from blog" do
+        it "removes post from blog and returns blog" do
           _(blog.add_post(post)).must_equal blog
           _(blog.remove_post(post)).must_equal blog
           _(blog.posts).must_equal []
           _(post.blog).must_be :nil?
         end
 
-        it "removes posts from blog" do
+        it "removes posts from blog and returns blog" do
           _(blog.add_posts([post, post_2])).must_equal blog
           _(blog.remove_posts([post_2, post])).must_equal blog
           _(blog.posts).must_equal []
@@ -78,7 +78,7 @@ describe AIXM::Association do
           _{ blog.add_post(Object.new) }.must_raise ArgumentError
         end
 
-        it "assigns blog to post" do
+        it "assigns blog to post and returns blog" do
           _(post.blog = blog).must_equal blog
           _(blog.posts).must_equal [post]
           _(post.blog).must_equal blog
@@ -382,10 +382,32 @@ describe AIXM::Association do
           _(Post.belongs_to_attributes).must_equal %i(blog)
         end
 
-        it "assigns post to blog" do
-          _(blog.post = post).must_equal post
-          _(blog.post).must_equal post
-          _(post.blog).must_equal blog
+        describe '=' do
+          it "assigns post to blog and returns post" do
+            _(blog.post = post).must_equal post
+            _(blog.post).must_equal post
+            _(post.blog).must_equal blog
+          end
+
+          it "assigns blog to post and returns blog" do
+            _(post.blog = blog).must_equal blog
+            _(blog.post).must_equal post
+            _(post.blog).must_equal blog
+          end
+        end
+
+        describe 'add' do
+          it "assigns post to blog and returns blog" do
+            _(blog.add_post(post)).must_equal blog
+            _(blog.post).must_equal post
+            _(post.blog).must_equal blog
+          end
+
+          it "assigns post to blog and returns post" do
+            _(post.add_blog(blog)).must_equal post
+            _(blog.post).must_equal post
+            _(post.blog).must_equal blog
+          end
         end
 
         it "fails to assign nil to blog" do
@@ -394,12 +416,6 @@ describe AIXM::Association do
 
         it "fails to assign non-post to blog" do
           _{ blog.post = Object.new }.must_raise ArgumentError
-        end
-
-        it "assigns blog to post" do
-          _(post.blog = blog).must_equal blog
-          _(blog.post).must_equal post
-          _(post.blog).must_equal blog
         end
 
         it "fails to assign nil to post" do
