@@ -39,6 +39,7 @@ module AIXM
       #   @return [Array<AIXM::Feature::Airport,
       #     AIXM::Feature::Unit,
       #     AIXM::Feature::NavigationalAid>] aiports, units or navigational aids
+      #
       # @!method add_member(member)
       #   @param member [AIXM::Feature::Airport,
       #     AIXM::Feature::Unit,

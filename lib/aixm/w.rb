@@ -56,6 +56,7 @@ module AIXM
     # @!method to_t
     # @!method to_lb
     # @!method to_ton
+    #
     # @return [AIXM::W] convert weight
     UNITS.each_key do |target_unit|
       define_method "to_#{target_unit}" do

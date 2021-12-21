@@ -48,6 +48,7 @@ module AIXM
     #
     # @!method aixm!
     # @!method ofmx!
+    #
     # @return [Symbol] schema key
     SCHEMAS.each_key do |schema|
       define_method("#{schema}!") { @@config.schema = schema }
@@ -63,6 +64,7 @@ module AIXM
     #
     # @!method aixm?
     # @!method ofmx?
+    #
     # @return [Boolean]
     SCHEMAS.each_key do |schema|
       define_method("#{schema}?") { @@config.schema == schema }

@@ -129,6 +129,7 @@ module AIXM
 
       # @!method frequencies
       #   @return [Array<AIXM::Component::Frequency>] frequencies used by this service
+      #
       # @!method add_frequency(frequency)
       #   @param frequency [AIXM::Component::Frequency]
       has_many :frequencies

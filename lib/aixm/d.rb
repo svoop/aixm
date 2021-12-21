@@ -56,6 +56,7 @@ module AIXM
     # @!method to_km
     # @!method to_m
     # @!method to_nm
+    #
     # @return [AIXM::D] convert distance
     UNITS.each_key do |target_unit|
       define_method "to_#{target_unit}" do

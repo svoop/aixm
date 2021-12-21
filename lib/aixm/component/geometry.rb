@@ -35,6 +35,7 @@ module AIXM
       #     AIXM::Component::Geometry::Arc,
       #     AIXM::Component::Geometry::Circle,
       #     AIXM::Component::Geometry::Border>] points, rhumb lines, arcs, borders or circle
+      #
       # @!method add_segment(segment)
       #   @param segment [AIXM::Component::Geometry::Point,
       #     AIXM::Component::Geometry::RhumbLine,

@@ -82,6 +82,7 @@ module AIXM
 
       # @!method services
       #   @return [Array<AIXM::Component::Service>] services provided by this unit
+      #
       # @!method add_service(service)
       #   @param service [AIXM::Component::Service]
       has_many :services

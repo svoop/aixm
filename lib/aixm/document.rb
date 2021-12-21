@@ -22,6 +22,7 @@ module AIXM
     # @!method features
     #   @return [Array<AIXM::Feature>] features (e.g. airport or airspace) present
     #     in this document
+    #
     # @!method add_feature(feature)
     #   @param feature [AIXM::Feature]
     #   @return [self]

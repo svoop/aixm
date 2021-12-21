@@ -90,12 +90,14 @@ module AIXM
 
       # @!method vertical_limit
       #   @return [AIXM::Component::VerticalLimit] vertical limit of this layer
+      #
       # @!method vertical_limit=(vertical_limit)
       #   @param vertical_limit [AIXM::Component::VerticalLimit]
       has_one :vertical_limit
 
       # @!method services
       #   @return [Array<AIXM::Component::Service>] services
+      #
       # @!method add_service(service)
       #   @param service [AIXM::Component::Service]
       has_many :services

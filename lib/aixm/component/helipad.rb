@@ -44,18 +44,21 @@ module AIXM
 
       # @!method fato
       #   @return [AIXM::Component::FATO, nil] FATO the helipad is situated on
+      #
       # @!method fato=(fato)
       #   @param fato [AIXM::Component::FATO, nil]
       has_one :fato, allow_nil: true
 
       # @!method surface
       #   @return [AIXM::Component::Surface] surface of the helipad
+      #
       # @!method surface=(surface)
       #   @param surface [AIXM::Component::Surface]
       has_one :surface
 
       # @!method lightings
       #   @return [Array<AIXM::Component::Lighting>] installed lighting systems
+      #
       # @!method add_lighting(lighting)
       #   @param lighting [AIXM::Component::Lighting]
       #   @return [self]

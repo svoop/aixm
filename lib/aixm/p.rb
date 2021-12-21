@@ -58,6 +58,7 @@ module AIXM
     # @!method to_psi
     # @!method to_bar
     # @!method to_torr
+    #
     # @return [AIXM::P] convert pressure
     UNITS.each_key do |target_unit|
       define_method "to_#{target_unit}" do

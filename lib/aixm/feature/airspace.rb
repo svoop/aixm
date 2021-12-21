@@ -80,18 +80,21 @@ module AIXM
 
       # @!method geometry
       #   @return [AIXM::Component::Geometry] horizontal geometry shape
+      #
       # @!method geometry=(geometry)
       #   @param geometry [AIXM::Component::Geometry]
       has_one :geometry
 
       # @!method layers
       #   @return [Array<AIXM::Compoment::Layer>] vertical layers
+      #
       # @!method add_layer(layer)
       #   @param layer [AIXM::Compoment::Layer]
       has_many :layers
 
       # @note When assigning +nil+, a 4 byte hex derived from {#type}, {#name}
       #   and {#local_type} is written instead.
+      #
       # @return [String] published identifier (e.g. "LFP81")
       attr_reader :id
 

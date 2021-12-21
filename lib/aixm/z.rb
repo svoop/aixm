@@ -52,14 +52,15 @@ module AIXM
       fail(ArgumentError, "invalid code") unless CODES.include? @code
     end
 
+    # @!method qfe?
+    # @!method qnh?
+    # @!method qne?
+    #
     # @example
     #   z = AIXM.z(123, :qnh)
     #   z.qnh?   # => true
     #   z.qfe?   # => false
     #
-    # @!method qfe?
-    # @!method qnh?
-    # @!method qne?
     # @return [Boolean]
     CODES.each do |code|
       define_method(:"#{code}?") { @code == code }

@@ -40,12 +40,14 @@ module AIXM
 
       # @!method surface
       #   @return [AIXM::Component::Surface] surface of the FATO
+      #
       # @!method surface=(surface)
       #   @param surface [AIXM::Component::Surface]
       has_one :surface
 
       # @!method directions
       #   @return [Array<AIXM::Component::FATO::Direction>] maps added direction names to full FATO directions
+      #
       # @!method add_direction(direction)
       #   @param direction [AIXM::A] name of the FATO direction (e.g. "12" or "16L")
       #   @return [self]
@@ -169,6 +171,7 @@ module AIXM
 
         # @!method lightings
         #   @return [Array<AIXM::Component::Lighting>] installed lighting systems
+        #
         # @!method add_lighting(lighting)
         #   @param lighting [AIXM::Component::Lighting]
         has_many :lightings, as: :lightable

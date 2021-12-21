@@ -50,6 +50,7 @@ module AIXM
 
       # @!method addresses
       #   @return [Array<AIXM::Feature::Address>] postal address, url, A/A or A/G frequency etc
+      #
       # @!method add_address(address)
       #   @param address [AIXM::Feature::Address]
       #   @return [self]
@@ -57,24 +58,28 @@ module AIXM
 
       # @!method fatos
       #   @return [Array<AIXM::Component::FATO>] FATOs present at this airport
+      #
       # @!method add_fato(fato)
       #   @param fato [AIXM::Component::FATO]
       has_many :fatos
 
       # @!method helipads
       #   @return [Array<AIXM::Component::Helipad>] helipads present at this airport
+      #
       # @!method add_helipad(helipad)
       #   @param helipad [AIXM::Component::Helipad]
       has_many :helipads
 
       # @!method runways
       #   @return [Array<AIXM::Component::Runway>] runways present at this airport
+      #
       # @!method add_runway(runway)
       #   @param runway [AIXM::Component::Runway]
       has_many :runways
 
       # @!method usage_limitations
       #   @return [Array<AIXM::Feature::Airport::UsageLimitation>] usage limitations
+      #
       # @!method add_usage_limitation
       #   @yield [AIXM::Feature::Airport::UsageLimitation]
       #   @return [self]
@@ -82,12 +87,14 @@ module AIXM
 
       # @!method designated_points
       #   @return [Array<AIXM::Feature::NavigationalAid::DesignatedPoint>] designated points
+      #
       # @!method add_designated_point(designated_point)
       #   @param designated_point [AIXM::Feature::NavigationalAid::DesignatedPoint]
       has_many :designated_points
 
       # @!method units
       #   @return [Array<AIXM::Feature::Unit>] units
+      #
       # @!method add_unit(unit)
       #   @param unit [AIXM::Feature::Unit]
       has_many :units
@@ -337,6 +344,7 @@ module AIXM
 
         # @!method conditions
         #   @return [Array<AIXM::Feature::Airport::UsageLimitation::Condition>] conditions for this limitation to apply
+        #
         # @!method add_condition
         #   @yield [AIXM::Feature::Airport::UsageLimitation::Condition]
         #   @return [self]

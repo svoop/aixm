@@ -45,6 +45,7 @@ module AIXM
 
       # @!method obstacles
       #   @return [Array<AIXM::Feature::Obstacle>] obstacles in this obstacle group
+      #
       # @!method add_obstacle(obstacle, linked_to: nil, link_type: nil)
       #   @param obstacle [AIXM::Feature::Obstacle] obstacle instance
       #   @param linked_to [Symbol, AIXM::Feature::Obstacle, nil] Either:
@@ -62,10 +63,13 @@ module AIXM
 
       # @!method source
       #   @return [String] reference to source of the feature data
+      #
       # @!method name
       #   @return [String] obstacle group name
+      #
       # @!method xy_accuracy
       #   @return [AIXM::D, nil] margin of error for circular base center point
+      #
       # @!method z_accuracy
       #   @return [AIXM::D, nil] margin of error for top point
       %i(source name xy_accuracy z_accuracy).each do |method|
