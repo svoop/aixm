@@ -16,7 +16,7 @@ module AIXM
     #     xy: AIXM.xy
     #   )
     #   airport.gps = String or nil
-    #   airport.type = TYPES
+    #   airport.type = TYPES (other than AD, HP and AH only)
     #   airport.z = AIXM.z or nil
     #   airport.declination = Float or nil
     #   airport.transition_z = AIXM.z or nil
@@ -151,8 +151,7 @@ module AIXM
 
       def initialize(source: nil, region: nil, organisation:, id: nil, name:, xy:)
         super(source: source, region: region)
-        self.organisation, self.name, self.xy = organisation, name, xy
-        self.id = id   # name must already be set
+        self.organisation, self.name, self.id, self.xy = organisation, name, id, xy   # name must be set before id
       end
 
       # @return [String]

@@ -24,7 +24,7 @@ module AIXM
     #   runway.forth.name = AIXM.a[precision=2]   # preset based on the runway name
     #   runway.forth.geographic_orientation = AIXM.a[precision=3] or nil
     #   runway.forth.xy = AIXM.xy
-    #   runway.forth.z = AIXM.z or nil
+    #   runway.forth.z = AIXM.z or nil   # highest point of the TDZ
     #   runway.forth.displaced_threshold = AIXM.xy or AIXM.d or nil
     #   runway.forth.vfr_pattern = VFR_PATTERNS or nil
     #   runway.forth.remarks = String or nil
