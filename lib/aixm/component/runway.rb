@@ -72,6 +72,13 @@ module AIXM
       #   @param back [AIXM::Component::Runway::Direction, nil]
       has_one :back, accept: 'AIXM::Component::Runway::Direction', allow_nil: true
 
+      # @!method surface
+      #   @return [AIXM::Component::Surface] surface of the runway
+      #
+      # @!method surface=(surface)
+      #   @param surface [AIXM::Component::Surface]
+      has_one :surface, accept: 'AIXM::Component::Surface'
+
       # @!method airport
       #   @return [AIXM::Feature::Airport] airport the runway belongs to
       belongs_to :airport
@@ -84,9 +91,6 @@ module AIXM
 
       # @return [AIXM::D, nil] width
       attr_reader :width
-
-      # @return [AIXM::Component::Surface] surface of the runway
-      attr_reader :surface
 
       # @return [Symbol, nil] status of the runway (see {STATUSES}) or +nil+ for normal operation
       attr_reader :status
@@ -101,7 +105,7 @@ module AIXM
           self.back = Direction.new(name: AIXM.a(back_name)) if back_name
           fail(ArgumentError, "invalid name") unless !back || back.name.inverse_of?(@forth.name)
         end
-        @surface = AIXM.surface
+        self.surface = AIXM.surface
       end
 
       # @return [String]
