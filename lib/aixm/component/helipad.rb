@@ -54,7 +54,7 @@ module AIXM
       #
       # @!method surface=(surface)
       #   @param surface [AIXM::Component::Surface]
-      has_one :surface
+      has_one :surface, accept: 'AIXM::Component::Surface'
 
       # @!method lightings
       #   @return [Array<AIXM::Component::Lighting>] installed lighting systems
