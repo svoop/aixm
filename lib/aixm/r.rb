@@ -37,6 +37,13 @@ module AIXM
       end
     end
 
+    # Calculate the surface in square meters
+    #
+    # @return [Float]
+    def surface
+      length.to_m.dim * width.to_m.dim
+    end
+
     # @see Object#==
     # @return [Boolean]
     def ==(other)

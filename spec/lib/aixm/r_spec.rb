@@ -39,6 +39,12 @@ describe AIXM::R do
     end
   end
 
+  describe :surface do
+    it "calculates the surface in square meters" do
+      _(subject.surface).must_equal 500
+    end
+  end
+
   describe :== do
     it "recognizes objects with identical dimensions as equal" do
       a = AIXM.r(AIXM.d(1000, :m))
