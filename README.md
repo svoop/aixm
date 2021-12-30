@@ -139,18 +139,16 @@ AIXM.config.ignored_errors = /invalid date/i
 
 ### Fundamentals
 * [Document](https://www.rubydoc.info/gems/aixm/AIXM/Document.html)
+* [A (angle)](https://www.rubydoc.info/gems/aixm/AIXM/A.html)
+* [D (dimension, distance or length)](https://www.rubydoc.info/gems/aixm/AIXM/D.html)
+* [F (frequency)](https://www.rubydoc.info/gems/aixm/AIXM/F.html)
+* [P (pressure)](https://www.rubydoc.info/gems/aixm/AIXM/P.html)
 * [R (rectangle)](https://www.rubydoc.info/gems/aixm/AIXM/R.html)
 * [XY (longitude and latitude)](https://www.rubydoc.info/gems/aixm/AIXM/XY.html)
 * [Z (height, elevation or altitude)](https://www.rubydoc.info/gems/aixm/AIXM/Z.html)
-* [D (distance or length)](https://www.rubydoc.info/gems/aixm/AIXM/D.html)
-* [F (frequency)](https://www.rubydoc.info/gems/aixm/AIXM/F.html)
-* [A (angle)](https://www.rubydoc.info/gems/aixm/AIXM/A.html)
 
 ### Features
 * [Address](https://www.rubydoc.info/gems/aixm/AIXM/Feature/Address.html)
-* [Organisation](https://www.rubydoc.info/gems/aixm/AIXM/Feature/Organisation.html)
-* [Unit](https://www.rubydoc.info/gems/aixm/AIXM/Feature/Unit.html)
-* [Service](https://www.rubydoc.info/gems/aixm/AIXM/Component/Service.html)
 * [Airport](https://www.rubydoc.info/gems/aixm/AIXM/Feature/Airport.html)
 * [Airspace](https://www.rubydoc.info/gems/aixm/AIXM/Feature/Airspace.html)
 * [Navigational aid](https://www.rubydoc.info/gems/aixm/AIXM/NavigationalAid.html)
@@ -160,22 +158,30 @@ AIXM.config.ignored_errors = /invalid date/i
   * [NDB](https://www.rubydoc.info/gems/aixm/AIXM/Feature/NDB.html)
   * [TACAN](https://www.rubydoc.info/gems/aixm/AIXM/Feature/TACAN.html)
   * [VOR](https://www.rubydoc.info/gems/aixm/AIXM/Feature/VOR.html)
-* [Obstacle and obstacle group](https://www.rubydoc.info/gems/aixm/AIXM/Feature/Obstacle.html)
+* [Obstacle](https://www.rubydoc.info/gems/aixm/AIXM/Feature/Obstacle.html)
+* [Obstacle group](https://www.rubydoc.info/gems/aixm/AIXM/Feature/ObstacleGroup.html)
+* [Organisation](https://www.rubydoc.info/gems/aixm/AIXM/Feature/Organisation.html)
+* [Service](https://www.rubydoc.info/gems/aixm/AIXM/Component/Service.html)
+* [Unit](https://www.rubydoc.info/gems/aixm/AIXM/Feature/Unit.html)
 
 ### Components
+
+* [FATO](https://www.rubydoc.info/gems/aixm/AIXM/Component/FATO.html)
 * [Frequency](https://www.rubydoc.info/gems/aixm/AIXM/Component/Frequency.html)
 * [Geometry](https://www.rubydoc.info/gems/aixm/AIXM/Component/Geometry.html)
-  * [Point](https://www.rubydoc.info/gems/aixm/AIXM/Component/Point.html)
   * [Arc](https://www.rubydoc.info/gems/aixm/AIXM/Component/Arc.html)
   * [Border](https://www.rubydoc.info/gems/aixm/AIXM/Component/Border.html)
   * [Circle](https://www.rubydoc.info/gems/aixm/AIXM/Component/Circle.html)
-* [Runway](https://www.rubydoc.info/gems/aixm/AIXM/Component/Runway.html)
+  * [Point](https://www.rubydoc.info/gems/aixm/AIXM/Component/Point.html)
+  * [RhumbLine](https://www.rubydoc.info/gems/aixm/AIXM/Component/RhumbLine.html)
 * [Helipad](https://www.rubydoc.info/gems/aixm/AIXM/Component/Helipad.html)
-* [FATO](https://www.rubydoc.info/gems/aixm/AIXM/Component/FATO.html)
-* [Surface](https://www.rubydoc.info/gems/aixm/AIXM/Component/Surface.html)
 * [Layer](https://www.rubydoc.info/gems/aixm/AIXM/Component/Layer.html)
-* [Vertical limit](https://www.rubydoc.info/gems/aixm/AIXM/Component/VerticalLimit.html)
+* [Lighting](https://www.rubydoc.info/gems/aixm/AIXM/Component/Lighting.html)
+* [Runway](https://www.rubydoc.info/gems/aixm/AIXM/Component/Runway.html)
+* [Service](https://www.rubydoc.info/gems/aixm/AIXM/Component/Service.html)
+* [Surface](https://www.rubydoc.info/gems/aixm/AIXM/Component/Surface.html)
 * [Timetable](https://www.rubydoc.info/gems/aixm/AIXM/Component/Timetable.html)
+* [Vertical limit](https://www.rubydoc.info/gems/aixm/AIXM/Component/VerticalLimit.html)
 
 ## Associations
 
@@ -283,13 +289,7 @@ bundle exec rake    # run tests once
 bundle exec guard   # run tests whenever files are modified
 ```
 
-Please submit issues on:
-
-https://github.com/svoop/aixm/issues
-
-To contribute code, fork the project on Github, add your code and submit a pull request:
-
-https://help.github.com/articles/fork-a-repo
+You're welcome to [submit issues](https://github.com/svoop/aixm/issues) and contribute code by [forking the project and submitting pull requests](https://docs.github.com/en/get-started/quickstart/fork-a-repo).
 
 ## License
 
