@@ -155,7 +155,7 @@ module AIXM
       end
 
       def radius=(value)
-        fail(ArgumentError, "invalid radius") unless value.nil? || (value.is_a?(AIXM::D) && value.dist > 0)
+        fail(ArgumentError, "invalid radius") unless value.nil? || (value.is_a?(AIXM::D) && value.dim > 0)
         @radius = value
       end
 
@@ -178,7 +178,7 @@ module AIXM
       end
 
       def height=(value)
-        fail(ArgumentError, "invalid height") unless value.nil? || (value.is_a?(AIXM::D) && value.dist > 0)
+        fail(ArgumentError, "invalid height") unless value.nil? || (value.is_a?(AIXM::D) && value.dim > 0)
         @height = value
       end
 
@@ -267,21 +267,21 @@ module AIXM
           obs.txtDescrMarking(marking_remarks) if marking_remarks
           obs.codeDatum('WGE')
           if AIXM.aixm? && obstacle_group.xy_accuracy
-            obs.valGeoAccuracy(obstacle_group.xy_accuracy.dist.trim)
+            obs.valGeoAccuracy(obstacle_group.xy_accuracy.dim.trim)
             obs.uomGeoAccuracy(obstacle_group.xy_accuracy.unit.upcase.to_s)
           end
           obs.valElev(z.alt)
           if AIXM.aixm? && obstacle_group.z_accuracy
-            obs.valElevAccuracy(obstacle_group.z_accuracy.to_ft.dist.round)
+            obs.valElevAccuracy(obstacle_group.z_accuracy.to_ft.dim.round)
           end
-          obs.valHgt(height.to_ft.dist.round) if height
+          obs.valHgt(height.to_ft.dim.round) if height
           obs.uomDistVer('FT')
           if AIXM.ofmx? && !height_accurate.nil?
             obs.codeHgtAccuracy(height_accurate ? 'Y' : 'N')
           end
           if AIXM.ofmx?
             if radius
-              obs.valRadius(radius.dist.trim)
+              obs.valRadius(radius.dim.trim)
               obs.uomRadius(radius.unit.upcase.to_s)
             end
             if grouped? && linked?

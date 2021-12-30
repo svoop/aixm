@@ -2,7 +2,7 @@ using AIXM::Refinements
 
 module AIXM
 
-  # pressure
+  # Pressure
   #
   # @example
   #   AIXM.d(14, :bar)

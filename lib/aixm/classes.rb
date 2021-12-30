@@ -6,6 +6,7 @@ module AIXM
     xy: 'AIXM::XY',
     z: 'AIXM::Z',
     d: 'AIXM::D',
+    r: 'AIXM::R',
     f: 'AIXM::F',
     a: 'AIXM::A',
     w: 'AIXM::W',

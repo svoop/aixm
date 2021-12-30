@@ -2,7 +2,7 @@ using AIXM::Refinements
 
 module AIXM
 
-  # Distance or length
+  # Dimension, distance or length
   #
   # @example
   #   AIXM.d(123, :m)
@@ -18,17 +18,17 @@ module AIXM
     }.freeze
 
     # @!method zero?
-    #   @return [Boolean] whether distance is zero
-    def_delegator :@dist, :zero?
+    #   @return [Boolean] whether dimension is zero
+    def_delegator :@dim, :zero?
 
-    # @return [Float] distance
-    attr_reader :dist
+    # @return [Float] dimension
+    attr_reader :dim
 
     # @return [Symbol] unit (see {UNITS})
     attr_reader :unit
 
-    def initialize(dist, unit)
-      self.dist, self.unit = dist, unit
+    def initialize(dim, unit)
+      self.dim, self.unit = dim, unit
     end
 
     # @return [String]
@@ -36,14 +36,14 @@ module AIXM
       %Q(#<#{self.class} #{to_s}>)
     end
 
-    # @return [String] human readable representation (e.g. "123 m")
+    # @return [String] human readable representation (e.g. "123.0 m")
     def to_s
-      [dist, unit].join(' ')
+      [dim, unit].join(' ')
     end
 
-    def dist=(value)
-      fail(ArgumentError, "invalid dist") unless value.is_a?(Numeric) && value >= 0
-      @dist = value.to_f
+    def dim=(value)
+      fail(ArgumentError, "invalid dim") unless value.is_a?(Numeric) && value >= 0
+      @dim = value.to_f
     end
 
     def unit=(value)
@@ -57,18 +57,18 @@ module AIXM
     # @!method to_m
     # @!method to_nm
     #
-    # @return [AIXM::D] convert distance
+    # @return [AIXM::D] convert dimension
     UNITS.each_key do |target_unit|
       define_method "to_#{target_unit}" do
         return self if unit == target_unit
-        self.class.new((dist * UNITS[unit][target_unit]).round(8), target_unit)
+        self.class.new((dim * UNITS[unit][target_unit]).round(8), target_unit)
       end
     end
 
     # @see Object#<=>
     # @return [Integer]
     def <=>(other)
-      dist <=> other.send(:"to_#{unit}").dist
+      dim <=> other.send(:"to_#{unit}").dim
     end
 
     # @see Object#==

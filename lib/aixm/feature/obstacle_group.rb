@@ -130,11 +130,11 @@ module AIXM
             ogr << to_uid.indent(2)
             ogr.codeDatum('WGE')
             if xy_accuracy
-              ogr.valGeoAccuracy(xy_accuracy.dist.trim)
+              ogr.valGeoAccuracy(xy_accuracy.dim.trim)
               ogr.uomGeoAccuracy(xy_accuracy.unit.upcase.to_s)
             end
             if z_accuracy
-              ogr.valElevAccuracy(z_accuracy.to_ft.dist.round)
+              ogr.valElevAccuracy(z_accuracy.to_ft.dim.round)
               ogr.uomElevAccuracy('FT')
             end
             ogr.txtRmk(remarks) if remarks

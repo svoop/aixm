@@ -16,6 +16,10 @@ module AIXM
         AIXM.d(123, :m)
       end
 
+      def r
+        AIXM.r(AIXM.d(25, :m), AIXM.d(20, :m))
+      end
+
       def f
         AIXM.f(123.35, :mhz)
       end
@@ -379,8 +383,7 @@ module AIXM
 
       def runway
         AIXM.runway(name: '16L/34R').tap do |runway|
-          runway.length = AIXM.d(650, :m)
-          runway.width = AIXM.d(80, :m)
+          runway.dimensions = AIXM.r(AIXM.d(650, :m), AIXM.d(80, :m))
           runway.surface.composition = :asphalt
           runway.surface.preparation = :paved
           runway.surface.condition = :good
@@ -410,8 +413,7 @@ module AIXM
 
       def fato
         AIXM.fato(name: 'H1').tap do |fato|
-          fato.length = AIXM.d(35, :m)
-          fato.width = AIXM.d(35, :m)
+          fato.dimensions = AIXM.r(AIXM.d(35, :m))
           fato.surface.composition = :concrete
           fato.surface.preparation = :paved
           fato.surface.condition = :fair
@@ -438,8 +440,7 @@ module AIXM
           xy: AIXM.xy(lat: %q(43°59'56.94"N), long: %q(004°45'05.56"E))
         ).tap do |helipad|
           helipad.z = AIXM.z(141, :qnh)
-          helipad.length = AIXM.d(20, :m)
-          helipad.width = AIXM.d(20, :m)
+          helipad.dimensions = AIXM.r(AIXM.d(20, :m))
           helipad.surface.composition = :concrete
           helipad.surface.preparation = :paved
           helipad.surface.condition = :fair

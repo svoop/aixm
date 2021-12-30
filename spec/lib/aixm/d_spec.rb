@@ -5,13 +5,13 @@ describe AIXM::D do
     AIXM::Factory.d
   end
 
-  describe :dist= do
+  describe :dim= do
     it "fails on invalid values" do
-      _([:foobar, -1]).wont_be_written_to subject, :dist
+      _([:foobar, -1]).wont_be_written_to subject, :dim
     end
 
     it "converts Numeric to Float" do
-      _(subject.tap { _1.dist = 5 }.dist).must_equal 5.0
+      _(subject.tap { _1.dim = 5 }.dim).must_equal 5.0
     end
   end
 
@@ -140,11 +140,11 @@ describe AIXM::D do
 
   describe :zero? do
     it "returns true for zero distance" do
-      _(subject.tap { _1.dist = 0 }).must_be :zero?
+      _(subject.tap { _1.dim = 0 }).must_be :zero?
     end
 
     it "returns false for non-zero distance" do
-      _(subject.tap { _1.dist = 1 }).wont_be :zero?
+      _(subject.tap { _1.dim = 1 }).wont_be :zero?
     end
   end
 end

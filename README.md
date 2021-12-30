@@ -139,6 +139,7 @@ AIXM.config.ignored_errors = /invalid date/i
 
 ### Fundamentals
 * [Document](https://www.rubydoc.info/gems/aixm/AIXM/Document.html)
+* [R (rectangle)](https://www.rubydoc.info/gems/aixm/AIXM/R.html)
 * [XY (longitude and latitude)](https://www.rubydoc.info/gems/aixm/AIXM/XY.html)
 * [Z (height, elevation or altitude)](https://www.rubydoc.info/gems/aixm/AIXM/Z.html)
 * [D (distance or length)](https://www.rubydoc.info/gems/aixm/AIXM/D.html)

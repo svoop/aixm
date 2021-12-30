@@ -41,7 +41,7 @@ module AIXM
         end
 
         def radius=(value)
-          fail(ArgumentError, "invalid radius") unless value.is_a?(AIXM::D) && value.dist > 0
+          fail(ArgumentError, "invalid radius") unless value.is_a?(AIXM::D) && value.dim > 0
           @radius = value
         end
 
@@ -64,7 +64,7 @@ module AIXM
         # and on the circumference of the circle.
         def north_xy
           AIXM.xy(
-            lat: center_xy.lat + radius.to_km.dist / (AIXM::XY::EARTH_RADIUS / 1000) * 180 / Math::PI,
+            lat: center_xy.lat + radius.to_km.dim / (AIXM::XY::EARTH_RADIUS / 1000) * 180 / Math::PI,
             long: center_xy.long
           )
         end

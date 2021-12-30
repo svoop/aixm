@@ -1,10 +1,15 @@
-## 1.0.1 (unreleased)
+## 1.1.0 (unreleased)
 
 #### Breaking Changes
 * `AIXM::Association:Array#duplicates` now returns an array of arrays which
   group all duplicates together.
 * `VOR#associate_dme` and `VOR#associate_tacan` no longer take the channel
   as argument but calculate it from the (ghost) frequency of the VOR.
+* Replaced `#length`/`#width` with `#dimensions` on `Runway`, `Helipad` and `FATO`
+* Renamed `AIXM::D#dist` to `AIXM::D#dim`
+
+#### Additions
+* `AIXM::R` (rectangle)
 
 #### Changes
 * Nested memoization of the same method is now allowed and won't reset the
@@ -31,7 +36,7 @@
 #### Additions
 * Add `f#voice?` and `AIXM.config.voice_channel_separation` to check whether a
   frequency belongs to the voice communication airband and use it to validate
-  `AIXM::Frequency`
+  `AIXM::Component::Frequency`
 
 ## 0.3.10
 

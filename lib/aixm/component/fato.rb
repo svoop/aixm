@@ -10,8 +10,7 @@ module AIXM
     #   fato = AIXM.fato(
     #     name: String
     #   )
-    #   fato.length = AIXM.d or nil   # must use same unit as width
-    #   fato.width = AIXM.d or nil    # must use same unit as length
+    #   fato.dimensions = AIXM.r or nil
     #   fato.surface = AIXM.surface
     #   fato.marking = String or nil
     #   fato.profile = String or nil
@@ -64,11 +63,8 @@ module AIXM
       # @return [String] full name (e.g. "H1")
       attr_reader :name
 
-      # @return [AIXM::D, nil] length
-      attr_reader :length
-
-      # @return [AIXM::D, nil] width
-      attr_reader :width
+      # @return [AIXM::R, nil] dimensions
+      attr_reader :dimensions
 
       # @return [String, nil] markings
       attr_reader :marking
@@ -97,20 +93,9 @@ module AIXM
         @name = value.uptrans
       end
 
-      def length=(value)
-        @length = if value
-          fail(ArgumentError, "invalid length") unless value.is_a?(AIXM::D) && value.dist > 0
-          fail(ArgumentError, "invalid length unit") if width && width.unit != value.unit
-          @length = value
-        end
-      end
-
-      def width=(value)
-        @width = if value
-          fail(ArgumentError, "invalid width") unless value.is_a?(AIXM::D)  && value.dist > 0
-          fail(ArgumentError, "invalid width unit") if length && length.unit != value.unit
-          @width = value
-        end
+      def dimensions=(value)
+        fail(ArgumentError, "invalid dimensions") unless value.nil? || value.is_a?(AIXM::R)
+        @dimensions = value
       end
 
       def marking=(value)
@@ -144,10 +129,11 @@ module AIXM
         builder = Builder::XmlMarkup.new(indent: 2)
         builder.Fto do |fto|
           fto << to_uid.indent(2)
-          fto.valLen(length.dist.trim) if length
-          fto.valWid(width.dist.trim) if width
-          fto.uomDim(length.unit.to_s.upcase) if length
-          fto.uomDim(width.unit.to_s.upcase) if width && !length
+          if dimensions
+            fto.valLen(dimensions.length.to_m.dim.trim)
+            fto.valWid(dimensions.width.to_m.dim.trim)
+            fto.uomDim('M')
+          end
           unless  (xml = surface.to_xml).empty?
             fto << xml.indent(2)
           end

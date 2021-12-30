@@ -16,8 +16,7 @@ module AIXM
     #   runway = AIXM.runway(
     #     name: String
     #   )
-    #   runway.length = AIXM.d or nil   # must use same unit as width
-    #   runway.width = AIXM.d or nil    # must use same unit as length
+    #   runway.dimensions = AIXM.r or nil
     #   runway.surface = AIXM.surface
     #   runway.status = STATUSES or nil
     #   runway.remarks = String or nil
@@ -86,11 +85,8 @@ module AIXM
       # @return [String] full name of runway (e.g. "12/30" or "16L/34R")
       attr_reader :name
 
-      # @return [AIXM::D, nil] length
-      attr_reader :length
-
-      # @return [AIXM::D, nil] width
-      attr_reader :width
+      # @return [AIXM::R, nil] dimensions
+      attr_reader :dimensions
 
       # @return [Symbol, nil] status of the runway (see {STATUSES}) or +nil+ for normal operation
       attr_reader :status
@@ -118,20 +114,9 @@ module AIXM
         @name = value.uptrans
       end
 
-      def length=(value)
-        @length = if value
-          fail(ArgumentError, "invalid length") unless value.is_a?(AIXM::D) && value.dist > 0
-          fail(ArgumentError, "invalid length unit") if width && width.unit != value.unit
-          value
-        end
-      end
-
-      def width=(value)
-        @width = if value
-          fail(ArgumentError, "invalid width") unless value.is_a?(AIXM::D)  && value.dist > 0
-          fail(ArgumentError, "invalid width unit") if length && length.unit != value.unit
-          value
-        end
+      def dimensions=(value)
+        fail(ArgumentError, "invalid dimensions") unless value.nil? || value.is_a?(AIXM::R)
+        @dimensions = value
       end
 
       def status=(value)
@@ -157,10 +142,11 @@ module AIXM
         builder = Builder::XmlMarkup.new(indent: 2)
         builder.Rwy do |rwy|
           rwy << to_uid.indent(2)
-          rwy.valLen(length.dist.trim) if length
-          rwy.valWid(width.dist.trim) if width
-          rwy.uomDimRwy(length.unit.to_s.upcase) if length
-          rwy.uomDimRwy(width.unit.to_s.upcase) if width && !length
+          if dimensions
+            rwy.valLen(dimensions.length.to_m.dim.trim)
+            rwy.valWid(dimensions.width.to_m.dim.trim)
+            rwy.uomDimRwy('M')
+          end
           unless  (xml = surface.to_xml).empty?
             rwy << xml.indent(2)
           end
@@ -259,7 +245,7 @@ module AIXM
           when AIXM::XY
             @displaced_threshold = @xy.distance(value)
           when AIXM::D
-            fail(ArgumentError, "invalid displaced threshold") unless value.dist > 0
+            fail(ArgumentError, "invalid displaced threshold") unless value.dim > 0
             @displaced_threshold = value
           when NilClass
             @displaced_threshold = nil
@@ -316,7 +302,7 @@ module AIXM
                 rdd_uid.codeType('DPLM')
                 rdd_uid.codeDayPeriod('A')
               end
-              rdd.valDist(displaced_threshold.dist.trim)
+              rdd.valDist(displaced_threshold.dim.trim)
               rdd.uomDist(displaced_threshold.unit.to_s.upcase)
               rdd.txtRmk(remarks) if remarks
             end

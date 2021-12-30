@@ -27,23 +27,13 @@ describe AIXM::Component::Helipad do
     macro :z_qnh
   end
 
-  describe :length= do
+  describe :dimensions= do
     it "fails on invalid values" do
-      _([:foobar, 0, 1, AIXM.d(0, :m)]).wont_be_written_to subject, :length
+      _([:foobar, 0, 1, AIXM.d(0, :m)]).wont_be_written_to subject, :dimensions
     end
 
     it "accepts nil value" do
-      _([nil]).must_be_written_to subject, :length
-    end
-  end
-
-  describe :width= do
-    it "fails on invalid values" do
-      _([:foobar, 0, 1, AIXM.d(0, :m)]).wont_be_written_to subject, :width
-    end
-
-    it "accepts nil value" do
-      _([nil]).must_be_written_to subject, :width
+      _([nil]).must_be_written_to subject, :dimensions
     end
   end
 
@@ -150,7 +140,7 @@ describe AIXM::Component::Helipad do
 
     it "builds correct minimal OFMX" do
       AIXM.ofmx!
-      %i(z length width helicopter_class marking status remarks).each { subject.send(:"#{_1}=", nil) }
+      %i(z dimensions helicopter_class marking status remarks).each { subject.send(:"#{_1}=", nil) }
       %i(composition preparation condition pcn siwl_weight siwl_tire_pressure auw_weight remarks).each { subject.surface.send(:"#{_1}=", nil) }
       subject.instance_eval { @lightings.clear }
       _(subject.to_xml).must_equal <<~END
