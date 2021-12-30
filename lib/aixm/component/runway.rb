@@ -26,6 +26,7 @@ module AIXM
     #   runway.forth.xy = AIXM.xy
     #   runway.forth.z = AIXM.z or nil   # highest point of the TDZ
     #   runway.forth.displaced_threshold = AIXM.xy or AIXM.d or nil
+    #   runway.forth.add_lighting = AIXM.lighting
     #   runway.forth.vfr_pattern = VFR_PATTERNS or nil
     #   runway.forth.remarks = String or nil
     #

@@ -15,6 +15,7 @@ module AIXM
     #   helipad.dimensions = AIXM.r or nil
     #   helipad.surface = AIXM.surface
     #   helipad.marking = String or nil
+    #   helipad.add_lighting = AIXM.lighting
     #   helipad.fato = AIXM.fato or nil
     #   helipad.helicopter_class = HELICOPTER_CLASSES or nil
     #   helipad.status = STATUSES or nil

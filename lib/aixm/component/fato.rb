@@ -13,6 +13,7 @@ module AIXM
     #   fato.dimensions = AIXM.r or nil
     #   fato.surface = AIXM.surface
     #   fato.marking = String or nil
+    #   fato.add_lighting = AIXM.lighting
     #   fato.profile = String or nil
     #   fato.status = STATUSES or nil
     #   fato.remarks = String or nil
