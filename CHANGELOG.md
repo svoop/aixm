@@ -21,7 +21,7 @@
 * Move `Ase->txtLocalType` up into `AseUid` for OFMX
 
 #### Additions
-* Add `AIXM::Component::Geometry::RhumbLine`
+* Add rhumb line geometry
 
 ## 0.3.11
 
@@ -36,7 +36,7 @@
 #### Additions
 * Add `f#voice?` and `AIXM.config.voice_channel_separation` to check whether a
   frequency belongs to the voice communication airband and use it to validate
-  `AIXM::Component::Frequency`
+  `Frequency`
 
 ## 0.3.10
 
@@ -49,8 +49,8 @@
 * `AIXM::PayloadHash` class
 * `mkmid` executable to insert `mid` attributes into valid OFMX file
 * `ckmid` executable to check `mid` attributes in an OFMX file
-* `AIXM::Component::Geometry#point?|circle?|polygon?`
-* `AIXM::Component::Layer#services`
+* Geometries respond to `#point?`, `#circle?` and `#polygon?`
+* `Layer#services`
 
 #### Breaking Changes
 * Require Ruby 2.7
@@ -80,20 +80,20 @@
 ## 0.3.7
 
 #### Additions
-* `AIXM::Document#select_features`
-* `AIXM::Document#group_obstacles!`
+* `Document#select_features`
+* `Document#group_obstacles!`
 
 ## 0.3.6
 
 #### Additions
-* `AIXM::Component::FATO`
-* `AIXM::Component::Helipad#helicopter_class` and `AIXM::Component::Helipad#marking`
+* `FATO`
+* `Helipad#helicopter_class` and `Helipad#marking`
 * `AIXM::XY#seconds?` to detect possibly rounded or estimated coordinates
-* `AIXM::Features::Airport#operator`
+* `Airport#operator`
 * `AIXM::W` (weight)
 * `AIXM::P` (pressure)
-* `AIXM::Component::Lighting` for use with runways, helipads and FATOs
-* Surface details `siwl_weight`, `siwl_tire_pressure` and `auw_weight`
+* `Lighting` for use with runways, helipads and FATOs
+* Surface details `#siwl_weight`, `#siwl_tire_pressure` and `#auw_weight`
 
 #### Changes
 * Generate `Airport#id` from region and `Airport#name`
@@ -259,7 +259,7 @@
 
 #### Changes
 * `Document#created_at` and `#effective_at` accept Time, Date, String or *nil*
-* Separate `AIXM::Document#valid?` from `#complete?`
+* Separate `Document#valid?` from `#complete?`
 * Write coordinates in DD if extension `:OFM` is set
 * `Array#to_digest` returns Integer which fits in signed 32bit
 
