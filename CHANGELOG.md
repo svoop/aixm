@@ -10,6 +10,7 @@
 
 #### Additions
 * `AIXM::R` (rectangle)
+* `Runway#marking`
 
 #### Changes
 * Nested memoization of the same method is now allowed and won't reset the

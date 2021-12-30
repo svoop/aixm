@@ -392,6 +392,7 @@ module AIXM
           runway.surface.siwl_tire_pressure = AIXM.p(0.5, :mpa)
           runway.surface.auw_weight = AIXM.w(30, :t)
           runway.surface.remarks = "Paved shoulder on 2.5m on each side of the RWY."
+          runway.marking = "Standard marking"
           runway.status = :closed
           runway.remarks = "Markings eroded"
           runway.forth.xy = AIXM.xy(lat: %q(44°00'07.63"N), long: %q(004°45'07.81"E))

@@ -42,6 +42,10 @@ describe AIXM::Component::Runway do
     end
   end
 
+  describe :marking= do
+    macro :marking
+  end
+
   describe :status= do
     it "fails on invalid values" do
       _([:foobar, 123]).wont_be_written_to subject, :status
@@ -91,6 +95,7 @@ describe AIXM::Component::Runway do
           <valAuwWeight>30</valAuwWeight>
           <uomAuwWeight>T</uomAuwWeight>
           <codeSts>CLSD</codeSts>
+          <txtMarking>Standard marking</txtMarking>
           <txtRmk>Markings eroded</txtRmk>
         </Rwy>
         <Rdn>
@@ -208,7 +213,7 @@ describe AIXM::Component::Runway do
 
     it "builds correct minimal OFMX" do
       AIXM.ofmx!
-      %i(dimensions status remarks).each { subject.send(:"#{_1}=", nil) }
+      %i(dimensions marking status remarks).each { subject.send(:"#{_1}=", nil) }
       %i(composition preparation condition pcn siwl_weight siwl_tire_pressure auw_weight remarks).each { subject.surface.send(:"#{_1}=", nil) }
       %i(forth back).each { subject.send(_1).instance_eval { @lightings.clear } }
       _(subject.to_xml).must_equal <<~END

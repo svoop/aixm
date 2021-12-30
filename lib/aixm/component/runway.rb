@@ -18,6 +18,7 @@ module AIXM
     #   )
     #   runway.dimensions = AIXM.r or nil
     #   runway.surface = AIXM.surface
+    #   runway.marking = String or nil
     #   runway.status = STATUSES or nil
     #   runway.remarks = String or nil
     #   runway.forth.name = AIXM.a[precision=2]   # preset based on the runway name
@@ -88,6 +89,9 @@ module AIXM
       # @return [AIXM::R, nil] dimensions
       attr_reader :dimensions
 
+      # @return [String, nil] markings
+      attr_reader :marking
+
       # @return [Symbol, nil] status of the runway (see {STATUSES}) or +nil+ for normal operation
       attr_reader :status
 
@@ -117,6 +121,10 @@ module AIXM
       def dimensions=(value)
         fail(ArgumentError, "invalid dimensions") unless value.nil? || value.is_a?(AIXM::R)
         @dimensions = value
+      end
+
+      def marking=(value)
+        @marking = value&.to_s
       end
 
       def status=(value)
@@ -151,6 +159,7 @@ module AIXM
             rwy << xml.indent(2)
           end
           rwy.codeSts(STATUSES.key(status).to_s) if status
+          rwy.txtMarking(marking) if marking
           rwy.txtRmk(remarks) if remarks
         end
         %i(@forth @back).each do |direction|

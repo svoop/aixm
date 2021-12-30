@@ -208,6 +208,7 @@ describe AIXM::Feature::Airport do
           <valAuwWeight>30</valAuwWeight>
           <uomAuwWeight>T</uomAuwWeight>
           <codeSts>CLSD</codeSts>
+          <txtMarking>Standard marking</txtMarking>
           <txtRmk>Markings eroded</txtRmk>
         </Rwy>
         <Rdn>
