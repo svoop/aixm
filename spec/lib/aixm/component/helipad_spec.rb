@@ -41,18 +41,18 @@ describe AIXM::Component::Helipad do
     macro :marking
   end
 
-  describe :helicopter_class= do
+  describe :performance_class= do
     it "fails on invalid values" do
-      _([:foobar, 123]).wont_be_written_to subject, :helicopter_class
+      _([:foobar, 123]).wont_be_written_to subject, :performance_class
     end
 
     it "accepts nil value" do
-      _([nil]).must_be_written_to subject, :helicopter_class
+      _([nil]).must_be_written_to subject, :performance_class
     end
 
     it "looks up valid values" do
-      _(subject.tap { _1.helicopter_class = 1 }.helicopter_class).must_equal :'1'
-      _(subject.tap { _1.helicopter_class = :OTHER }.helicopter_class).must_equal :other
+      _(subject.tap { _1.performance_class = 1 }.performance_class).must_equal :'1'
+      _(subject.tap { _1.performance_class = :OTHER }.performance_class).must_equal :other
     end
   end
 
@@ -140,7 +140,7 @@ describe AIXM::Component::Helipad do
 
     it "builds correct minimal OFMX" do
       AIXM.ofmx!
-      %i(z dimensions helicopter_class marking status remarks).each { subject.send(:"#{_1}=", nil) }
+      %i(z dimensions performance_class marking status remarks).each { subject.send(:"#{_1}=", nil) }
       %i(composition preparation condition pcn siwl_weight siwl_tire_pressure auw_weight remarks).each { subject.surface.send(:"#{_1}=", nil) }
       subject.instance_eval { @lightings.clear }
       _(subject.to_xml).must_equal <<~END

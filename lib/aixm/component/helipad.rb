@@ -17,7 +17,7 @@ module AIXM
     #   helipad.marking = String or nil
     #   helipad.add_lighting = AIXM.lighting
     #   helipad.fato = AIXM.fato or nil
-    #   helipad.helicopter_class = HELICOPTER_CLASSES or nil
+    #   helipad.performance_class = PERFORMANCE_CLASSES or nil
     #   helipad.status = STATUSES or nil
     #   helipad.remarks = String or nil
     #
@@ -26,7 +26,7 @@ module AIXM
       include AIXM::Association
       include AIXM::Memoize
 
-      HELICOPTER_CLASSES = {
+      PERFORMANCE_CLASSES = {
         '1': :'1',
         '2': :'2',
         '3': :'3',
@@ -83,8 +83,8 @@ module AIXM
       # @return [String, nil] markings
       attr_reader :marking
 
-      # @return [Integer, Symbol, nil] suitable helicopter class
-      attr_reader :helicopter_class
+      # @return [Integer, Symbol, nil] suitable performance class
+      attr_reader :performance_class
 
       # @return [Symbol, nil] status of the helipad (see {STATUSES}) or +nil+ for normal operation
       attr_reader :status
@@ -126,8 +126,8 @@ module AIXM
         @marking = value&.to_s
       end
 
-      def helicopter_class=(value)
-        @helicopter_class = value.nil? ? nil : (HELICOPTER_CLASSES.lookup(value.to_s.to_sym, nil) || fail(ArgumentError, "invalid helicopter class"))
+      def performance_class=(value)
+        @performance_class = value.nil? ? nil : (PERFORMANCE_CLASSES.lookup(value.to_s.to_sym, nil) || fail(ArgumentError, "invalid performance class"))
       end
 
       def status=(value)
@@ -169,7 +169,7 @@ module AIXM
           unless  (xml = surface.to_xml).empty?
             tla << xml.indent(2)
           end
-          tla.codeClassHel(HELICOPTER_CLASSES.key(helicopter_class).to_s) if helicopter_class
+          tla.codeClassHel(PERFORMANCE_CLASSES.key(performance_class).to_s) if performance_class
           tla.txtMarking(marking) if marking
           tla.codeSts(STATUSES.key(status).to_s) if status
           tla.txtRmk(remarks) if remarks

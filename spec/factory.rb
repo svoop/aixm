@@ -451,7 +451,7 @@ module AIXM
           helipad.surface.auw_weight = AIXM.w(8, :t)
           helipad.surface.remarks = "Cracks near the center"
           helipad.marking = "Continuous white lines"
-          helipad.helicopter_class = 1
+          helipad.performance_class = 1
           helipad.status = :other
           helipad.remarks = "Authorizaton by AD operator required"
           helipad.add_lighting(lighting)

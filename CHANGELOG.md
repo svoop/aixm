@@ -7,6 +7,7 @@
   as argument but calculate it from the (ghost) frequency of the VOR.
 * Replaced `#length`/`#width` with `#dimensions` on `Runway`, `Helipad` and `FATO`
 * Renamed `AIXM::D#dist` to `AIXM::D#dim`
+* Renamed `TLOF#helicopter_class` to `TLOF#performance_class`
 
 #### Additions
 * `AIXM::R` (rectangle)
