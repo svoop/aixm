@@ -303,6 +303,26 @@ describe AIXM::Document do
             <codeColour>GRN</codeColour>
             <txtRmk>lighting remarks</txtRmk>
           </Rls>
+          <Rda>
+            <RdaUid>
+              <RdnUid>
+                <RwyUid>
+                  <AhpUid>
+                    <codeId>LFNT</codeId>
+                  </AhpUid>
+                  <txtDesig>16L/34R</txtDesig>
+                </RwyUid>
+                <txtDesig>16L</txtDesig>
+              </RdnUid>
+              <codeType>A</codeType>
+            </RdaUid>
+            <valLen>1000</valLen>
+            <uomLen>M</uomLen>
+            <codeIntst>LIH</codeIntst>
+            <codeSequencedFlash>N</codeSequencedFlash>
+            <txtDescrFlash>three grouped bursts</txtDescrFlash>
+            <txtRmk>on demand</txtRmk>
+          </Rda>
           <Rdn>
             <RdnUid>
               <RwyUid>
@@ -358,6 +378,26 @@ describe AIXM::Document do
             <codeColour>GRN</codeColour>
             <txtRmk>lighting remarks</txtRmk>
           </Rls>
+          <Rda>
+            <RdaUid>
+              <RdnUid>
+                <RwyUid>
+                  <AhpUid>
+                    <codeId>LFNT</codeId>
+                  </AhpUid>
+                  <txtDesig>16L/34R</txtDesig>
+                </RwyUid>
+                <txtDesig>34R</txtDesig>
+              </RdnUid>
+              <codeType>A</codeType>
+            </RdaUid>
+            <valLen>1000</valLen>
+            <uomLen>M</uomLen>
+            <codeIntst>LIH</codeIntst>
+            <codeSequencedFlash>N</codeSequencedFlash>
+            <txtDescrFlash>three grouped bursts</txtDescrFlash>
+            <txtRmk>on demand</txtRmk>
+          </Rda>
           <Fto>
             <FtoUid>
               <AhpUid>
@@ -420,6 +460,26 @@ describe AIXM::Document do
             <codeColour>GRN</codeColour>
             <txtRmk>lighting remarks</txtRmk>
           </Fls>
+          <Fda>
+            <FdaUid>
+              <FdnUid>
+                <FtoUid>
+                  <AhpUid>
+                    <codeId>LFNT</codeId>
+                  </AhpUid>
+                  <txtDesig>H1</txtDesig>
+                </FtoUid>
+                <txtDesig>35</txtDesig>
+              </FdnUid>
+              <codeType>A</codeType>
+            </FdaUid>
+            <valLen>1000</valLen>
+            <uomLen>M</uomLen>
+            <codeIntst>LIH</codeIntst>
+            <codeSequencedFlash>N</codeSequencedFlash>
+            <txtDescrFlash>three grouped bursts</txtDescrFlash>
+            <txtRmk>on demand</txtRmk>
+          </Fda>
           <Tla>
             <TlaUid>
               <AhpUid>
@@ -1122,6 +1182,26 @@ describe AIXM::Document do
             <codeColour>GRN</codeColour>
             <txtRmk>lighting remarks</txtRmk>
           </Rls>
+          <Rda>
+            <RdaUid>
+              <RdnUid>
+                <RwyUid>
+                  <AhpUid region="LF">
+                    <codeId>LFNT</codeId>
+                  </AhpUid>
+                  <txtDesig>16L/34R</txtDesig>
+                </RwyUid>
+                <txtDesig>16L</txtDesig>
+              </RdnUid>
+              <codeType>A</codeType>
+            </RdaUid>
+            <valLen>1000</valLen>
+            <uomLen>M</uomLen>
+            <codeIntst>LIH</codeIntst>
+            <codeSequencedFlash>N</codeSequencedFlash>
+            <txtDescrFlash>three grouped bursts</txtDescrFlash>
+            <txtRmk>on demand</txtRmk>
+          </Rda>
           <Rdn>
             <RdnUid>
               <RwyUid>
@@ -1177,6 +1257,26 @@ describe AIXM::Document do
             <codeColour>GRN</codeColour>
             <txtRmk>lighting remarks</txtRmk>
           </Rls>
+          <Rda>
+            <RdaUid>
+              <RdnUid>
+                <RwyUid>
+                  <AhpUid region="LF">
+                    <codeId>LFNT</codeId>
+                  </AhpUid>
+                  <txtDesig>16L/34R</txtDesig>
+                </RwyUid>
+                <txtDesig>34R</txtDesig>
+              </RdnUid>
+              <codeType>A</codeType>
+            </RdaUid>
+            <valLen>1000</valLen>
+            <uomLen>M</uomLen>
+            <codeIntst>LIH</codeIntst>
+            <codeSequencedFlash>N</codeSequencedFlash>
+            <txtDescrFlash>three grouped bursts</txtDescrFlash>
+            <txtRmk>on demand</txtRmk>
+          </Rda>
           <Fto>
             <FtoUid>
               <AhpUid region="LF">
@@ -1239,6 +1339,26 @@ describe AIXM::Document do
             <codeColour>GRN</codeColour>
             <txtRmk>lighting remarks</txtRmk>
           </Fls>
+          <Fda>
+            <FdaUid>
+              <FdnUid>
+                <FtoUid>
+                  <AhpUid region="LF">
+                    <codeId>LFNT</codeId>
+                  </AhpUid>
+                  <txtDesig>H1</txtDesig>
+                </FtoUid>
+                <txtDesig>35</txtDesig>
+              </FdnUid>
+              <codeType>A</codeType>
+            </FdaUid>
+            <valLen>1000</valLen>
+            <uomLen>M</uomLen>
+            <codeIntst>LIH</codeIntst>
+            <codeSequencedFlash>N</codeSequencedFlash>
+            <txtDescrFlash>three grouped bursts</txtDescrFlash>
+            <txtRmk>on demand</txtRmk>
+          </Fda>
           <Tla>
             <TlaUid>
               <AhpUid region="LF">
@@ -2019,6 +2139,26 @@ describe AIXM::Document do
             <codeColour>GRN</codeColour>
             <txtRmk>lighting remarks</txtRmk>
           </Rls>
+          <Rda>
+            <RdaUid mid="68b2acdd-6e3c-0626-4a98-bbabfd4d3a7f">
+              <RdnUid mid="2b0a1c24-c855-2ef9-ec1c-06dd9d321f2a">
+                <RwyUid mid="b6d88198-7a6a-6e9b-d8ba-eb0aa00623d4">
+                  <AhpUid region="LF" mid="af89d7b7-2ec0-902f-02ba-9e470e42d530">
+                    <codeId>LFNT</codeId>
+                  </AhpUid>
+                  <txtDesig>16L/34R</txtDesig>
+                </RwyUid>
+                <txtDesig>16L</txtDesig>
+              </RdnUid>
+              <codeType>A</codeType>
+            </RdaUid>
+            <valLen>1000</valLen>
+            <uomLen>M</uomLen>
+            <codeIntst>LIH</codeIntst>
+            <codeSequencedFlash>N</codeSequencedFlash>
+            <txtDescrFlash>three grouped bursts</txtDescrFlash>
+            <txtRmk>on demand</txtRmk>
+          </Rda>
           <Rdn>
             <RdnUid mid="9a03514f-27fe-c2f6-dfd8-13eaa30b0d79">
               <RwyUid mid="b6d88198-7a6a-6e9b-d8ba-eb0aa00623d4">
@@ -2074,6 +2214,26 @@ describe AIXM::Document do
             <codeColour>GRN</codeColour>
             <txtRmk>lighting remarks</txtRmk>
           </Rls>
+          <Rda>
+            <RdaUid mid="eb660ebd-7760-8c67-fe10-433503914f1c">
+              <RdnUid mid="9a03514f-27fe-c2f6-dfd8-13eaa30b0d79">
+                <RwyUid mid="b6d88198-7a6a-6e9b-d8ba-eb0aa00623d4">
+                  <AhpUid region="LF" mid="af89d7b7-2ec0-902f-02ba-9e470e42d530">
+                    <codeId>LFNT</codeId>
+                  </AhpUid>
+                  <txtDesig>16L/34R</txtDesig>
+                </RwyUid>
+                <txtDesig>34R</txtDesig>
+              </RdnUid>
+              <codeType>A</codeType>
+            </RdaUid>
+            <valLen>1000</valLen>
+            <uomLen>M</uomLen>
+            <codeIntst>LIH</codeIntst>
+            <codeSequencedFlash>N</codeSequencedFlash>
+            <txtDescrFlash>three grouped bursts</txtDescrFlash>
+            <txtRmk>on demand</txtRmk>
+          </Rda>
           <Fto>
             <FtoUid mid="c4521dbc-7576-b1bf-4dc2-925d03d37774">
               <AhpUid region="LF" mid="af89d7b7-2ec0-902f-02ba-9e470e42d530">
@@ -2136,6 +2296,26 @@ describe AIXM::Document do
             <codeColour>GRN</codeColour>
             <txtRmk>lighting remarks</txtRmk>
           </Fls>
+          <Fda>
+            <FdaUid mid="c76b3f3d-f4eb-555e-d3a5-b7b7f23363ab">
+              <FdnUid mid="12f7708a-bc10-97fe-89b8-e78f4e7a8a4e">
+                <FtoUid mid="c4521dbc-7576-b1bf-4dc2-925d03d37774">
+                  <AhpUid region="LF" mid="af89d7b7-2ec0-902f-02ba-9e470e42d530">
+                    <codeId>LFNT</codeId>
+                  </AhpUid>
+                  <txtDesig>H1</txtDesig>
+                </FtoUid>
+                <txtDesig>35</txtDesig>
+              </FdnUid>
+              <codeType>A</codeType>
+            </FdaUid>
+            <valLen>1000</valLen>
+            <uomLen>M</uomLen>
+            <codeIntst>LIH</codeIntst>
+            <codeSequencedFlash>N</codeSequencedFlash>
+            <txtDescrFlash>three grouped bursts</txtDescrFlash>
+            <txtRmk>on demand</txtRmk>
+          </Fda>
           <Tla>
             <TlaUid mid="1a71faf5-ef1f-ebc9-bfc3-ac7dd50b172a">
               <AhpUid region="LF" mid="af89d7b7-2ec0-902f-02ba-9e470e42d530">

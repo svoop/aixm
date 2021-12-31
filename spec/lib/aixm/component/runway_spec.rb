@@ -153,6 +153,26 @@ describe AIXM::Component::Runway do
           <codeColour>GRN</codeColour>
           <txtRmk>lighting remarks</txtRmk>
         </Rls>
+        <Rda>
+          <RdaUid>
+            <RdnUid>
+              <RwyUid>
+                <AhpUid region="LF">
+                  <codeId>LFNT</codeId>
+                </AhpUid>
+                <txtDesig>16L/34R</txtDesig>
+              </RwyUid>
+              <txtDesig>16L</txtDesig>
+            </RdnUid>
+            <codeType>A</codeType>
+          </RdaUid>
+          <valLen>1000</valLen>
+          <uomLen>M</uomLen>
+          <codeIntst>LIH</codeIntst>
+          <codeSequencedFlash>N</codeSequencedFlash>
+          <txtDescrFlash>three grouped bursts</txtDescrFlash>
+          <txtRmk>on demand</txtRmk>
+        </Rda>
         <Rdn>
           <RdnUid>
             <RwyUid>
@@ -208,6 +228,26 @@ describe AIXM::Component::Runway do
           <codeColour>GRN</codeColour>
           <txtRmk>lighting remarks</txtRmk>
         </Rls>
+        <Rda>
+          <RdaUid>
+            <RdnUid>
+              <RwyUid>
+                <AhpUid region="LF">
+                  <codeId>LFNT</codeId>
+                </AhpUid>
+                <txtDesig>16L/34R</txtDesig>
+              </RwyUid>
+              <txtDesig>34R</txtDesig>
+            </RdnUid>
+            <codeType>A</codeType>
+          </RdaUid>
+          <valLen>1000</valLen>
+          <uomLen>M</uomLen>
+          <codeIntst>LIH</codeIntst>
+          <codeSequencedFlash>N</codeSequencedFlash>
+          <txtDescrFlash>three grouped bursts</txtDescrFlash>
+          <txtRmk>on demand</txtRmk>
+        </Rda>
       END
     end
 
@@ -215,7 +255,12 @@ describe AIXM::Component::Runway do
       AIXM.ofmx!
       %i(dimensions marking status remarks).each { subject.send(:"#{_1}=", nil) }
       %i(composition preparation condition pcn siwl_weight siwl_tire_pressure auw_weight remarks).each { subject.surface.send(:"#{_1}=", nil) }
-      %i(forth back).each { subject.send(_1).instance_eval { @lightings.clear } }
+      %i(forth back).each do
+        subject.send(_1).instance_eval do
+          @lightings.clear
+          @approach_lightings.clear
+        end
+      end
       _(subject.to_xml).must_equal <<~END
         <Rwy>
           <RwyUid>
@@ -440,13 +485,36 @@ describe AIXM::Component::Runway::Direction do
           <codeColour>GRN</codeColour>
           <txtRmk>lighting remarks</txtRmk>
         </Rls>
+        <Rda>
+          <RdaUid>
+            <RdnUid>
+              <RwyUid>
+                <AhpUid region="LF">
+                  <codeId>LFNT</codeId>
+                </AhpUid>
+                <txtDesig>16L/34R</txtDesig>
+              </RwyUid>
+              <txtDesig>16L</txtDesig>
+            </RdnUid>
+            <codeType>A</codeType>
+          </RdaUid>
+          <valLen>1000</valLen>
+          <uomLen>M</uomLen>
+          <codeIntst>LIH</codeIntst>
+          <codeSequencedFlash>N</codeSequencedFlash>
+          <txtDescrFlash>three grouped bursts</txtDescrFlash>
+          <txtRmk>on demand</txtRmk>
+        </Rda>
       END
     end
 
     it "builds correct minimal OFMX" do
       AIXM.ofmx!
       %i(geographic_orientation z displaced_threshold vfr_pattern remarks).each { subject.send(:"#{_1}=", nil) }
-      subject.instance_eval { @lightings.clear }
+      subject.instance_eval do
+        @lightings.clear
+        @approach_lightings.clear
+      end
       _(subject.to_xml).must_equal <<~END
         <Rdn>
           <RdnUid>

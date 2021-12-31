@@ -12,6 +12,7 @@
 #### Additions
 * `AIXM::R` (rectangle)
 * `Runway#marking`
+* `ApproachLighting` on `Runway::Direction` and `FATO::Direction`
 
 #### Changes
 * Nested memoization of the same method is now allowed and won't reset the

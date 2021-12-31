@@ -59,6 +59,18 @@ module AIXM
         end
       end
 
+      def approach_lighting
+        AIXM.approach_lighting(
+          type: :cat_1
+        ).tap do |approach_lighting|
+          approach_lighting.length = AIXM.d(1000, :m)
+          approach_lighting.intensity = :high
+          approach_lighting.sequenced_flash = false
+          approach_lighting.flash_description = "three grouped bursts"
+          approach_lighting.remarks = "on demand"
+        end
+      end
+
       def timetable
         AIXM.timetable(
           code: :sunrise_to_sunset
@@ -402,6 +414,7 @@ module AIXM
           runway.forth.vfr_pattern = :left_or_right
           runway.forth.remarks = "forth remarks"
           runway.forth.add_lighting(lighting)
+          runway.forth.add_approach_lighting(approach_lighting)
           runway.back.xy = AIXM.xy(lat: %q(43°59'25.31"N), long: %q(004°45'23.24"E))
           runway.back.z = AIXM.z(147, :qnh)
           runway.back.displaced_threshold = AIXM.xy(lat: %q(43°59'31.84"N), long: %q(004°45'20.85"E))
@@ -409,6 +422,7 @@ module AIXM
           runway.back.vfr_pattern = :left
           runway.back.remarks = "back remarks"
           runway.back.add_lighting(lighting)
+          runway.back.add_approach_lighting(approach_lighting)
         end
       end
 
@@ -431,6 +445,7 @@ module AIXM
             direction.geographic_orientation = AIXM.a(355)
             direction.remarks = "Avoid flight over residental area"
             direction.add_lighting(lighting)
+            direction.add_approach_lighting(approach_lighting)
           end
         end
       end

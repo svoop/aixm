@@ -125,6 +125,26 @@ describe AIXM::Component::FATO do
           <codeColour>GRN</codeColour>
           <txtRmk>lighting remarks</txtRmk>
         </Fls>
+        <Fda>
+          <FdaUid>
+            <FdnUid>
+              <FtoUid>
+                <AhpUid region="LF">
+                  <codeId>LFNT</codeId>
+                </AhpUid>
+                <txtDesig>H1</txtDesig>
+              </FtoUid>
+              <txtDesig>35</txtDesig>
+            </FdnUid>
+            <codeType>A</codeType>
+          </FdaUid>
+          <valLen>1000</valLen>
+          <uomLen>M</uomLen>
+          <codeIntst>LIH</codeIntst>
+          <codeSequencedFlash>N</codeSequencedFlash>
+          <txtDescrFlash>three grouped bursts</txtDescrFlash>
+          <txtRmk>on demand</txtRmk>
+        </Fda>
       END
     end
 
@@ -132,7 +152,10 @@ describe AIXM::Component::FATO do
       AIXM.ofmx!
       %i(dimensions profile marking status remarks).each { subject.send(:"#{_1}=", nil) }
       %i(composition preparation condition pcn siwl_weight siwl_tire_pressure auw_weight remarks).each { subject.surface.send(:"#{_1}=", nil) }
-      subject.directions.first.instance_eval { @lightings.clear }
+      subject.directions.first.instance_eval do
+        @lightings.clear
+        @approach_lightings.clear
+      end
       _(subject.to_xml).must_equal <<~END
         <Fto>
           <FtoUid>
@@ -225,13 +248,36 @@ describe AIXM::Component::FATO::Direction do
           <codeColour>GRN</codeColour>
           <txtRmk>lighting remarks</txtRmk>
         </Fls>
+        <Fda>
+          <FdaUid>
+            <FdnUid>
+              <FtoUid>
+                <AhpUid region="LF">
+                  <codeId>LFNT</codeId>
+                </AhpUid>
+                <txtDesig>H1</txtDesig>
+              </FtoUid>
+              <txtDesig>35</txtDesig>
+            </FdnUid>
+            <codeType>A</codeType>
+          </FdaUid>
+          <valLen>1000</valLen>
+          <uomLen>M</uomLen>
+          <codeIntst>LIH</codeIntst>
+          <codeSequencedFlash>N</codeSequencedFlash>
+          <txtDescrFlash>three grouped bursts</txtDescrFlash>
+          <txtRmk>on demand</txtRmk>
+        </Fda>
       END
     end
 
     it "builds correct minimal OFMX" do
       AIXM.ofmx!
       %i(geographic_orientation remarks).each { subject.send(:"#{_1}=", nil) }
-      subject.instance_eval { @lightings.clear }
+      subject.instance_eval do
+        @lightings.clear
+        @approach_lightings.clear
+      end
       _(subject.to_xml).must_equal <<~END
       <Fdn>
         <FdnUid>

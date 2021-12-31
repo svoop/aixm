@@ -142,7 +142,9 @@ describe AIXM::Component::Helipad do
       AIXM.ofmx!
       %i(z dimensions performance_class marking status remarks).each { subject.send(:"#{_1}=", nil) }
       %i(composition preparation condition pcn siwl_weight siwl_tire_pressure auw_weight remarks).each { subject.surface.send(:"#{_1}=", nil) }
-      subject.instance_eval { @lightings.clear }
+      subject.instance_eval do
+        @lightings.clear
+      end
       _(subject.to_xml).must_equal <<~END
         <Tla>
           <TlaUid>

@@ -27,6 +27,7 @@ module AIXM
     #   runway.forth.z = AIXM.z or nil   # highest point of the TDZ
     #   runway.forth.displaced_threshold = AIXM.xy or AIXM.d or nil
     #   runway.forth.add_lighting = AIXM.lighting
+    #   runway.forth.add_approach_lighting = AIXM.approach_lighting
     #   runway.forth.vfr_pattern = VFR_PATTERNS or nil
     #   runway.forth.remarks = String or nil
     #
@@ -193,6 +194,14 @@ module AIXM
         #   @return [self]
         has_many :lightings, as: :lightable
 
+        # @!method approach_lightings
+        #   @return [Array<AIXM::Component::ApproachLighting>] installed approach lighting systems
+        #
+        # @!method add_approach_lighting(approach_lighting)
+        #   @param approach_lighting [AIXM::Component::ApproachLighting]
+        #   @return [self]
+        has_many :approach_lightings, as: :approach_lightable
+
         # @!method runway
         #   @return [AIXM::Component::Runway] runway the runway direction is further describing
         belongs_to :runway, readonly: true
@@ -319,6 +328,9 @@ module AIXM
           end
           lightings.each do |lighting|
             builder << lighting.to_xml(as: :Rls)
+          end
+          approach_lightings.each do |approach_lighting|
+            builder << approach_lighting.to_xml(as: :Rda)
           end
           builder.target!
         end

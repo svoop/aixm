@@ -166,6 +166,7 @@ AIXM.config.ignored_errors = /invalid date/i
 
 ### Components
 
+* [ApproachLighting](https://www.rubydoc.info/gems/aixm/AIXM/Component/ApproachLighting.html)
 * [FATO](https://www.rubydoc.info/gems/aixm/AIXM/Component/FATO.html)
 * [Frequency](https://www.rubydoc.info/gems/aixm/AIXM/Component/Frequency.html)
 * [Geometry](https://www.rubydoc.info/gems/aixm/AIXM/Component/Geometry.html)

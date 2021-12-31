@@ -13,7 +13,6 @@ module AIXM
     #   fato.dimensions = AIXM.r or nil
     #   fato.surface = AIXM.surface
     #   fato.marking = String or nil
-    #   fato.add_lighting = AIXM.lighting
     #   fato.profile = String or nil
     #   fato.status = STATUSES or nil
     #   fato.remarks = String or nil
@@ -21,6 +20,8 @@ module AIXM
     #     name: String
     #   ) do |direction|
     #     direction.geographic_orientation = AIXM.a[precision=3] or nil
+    #     fato.add_lighting = AIXM.lighting
+    #     fato.add_approach_lighting = AIXM.approach_lighting
     #     direction.remarks = String or nil
     #   end
     #
@@ -163,6 +164,14 @@ module AIXM
         #   @param lighting [AIXM::Component::Lighting]
         has_many :lightings, as: :lightable
 
+        # @!method approach_lightings
+        #   @return [Array<AIXM::Component::ApproachLighting>] installed approach lighting systems
+        #
+        # @!method add_approach_lighting(approach_lighting)
+        #   @param approach_lighting [AIXM::Component::ApproachLighting]
+        #   @return [self]
+        has_many :approach_lightings, as: :approach_lightable
+
         # @!method fato
         #   @return [AIXM::Component::FATO] FATO the FATO direction is further describing
         belongs_to :fato
@@ -228,6 +237,9 @@ module AIXM
           end
           lightings.each do |lighting|
             builder << lighting.to_xml(as: :Fls)
+          end
+          approach_lightings.each do |approach_lighting|
+            builder << approach_lighting.to_xml(as: :Fda)
           end
           builder.target!
         end

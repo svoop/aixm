@@ -12,6 +12,7 @@ module AIXM
     w: 'AIXM::W',
     p: 'AIXM::P',
     address: 'AIXM::Feature::Address',
+    approach_lighting: 'AIXM::Component::ApproachLighting',
     organisation: 'AIXM::Feature::Organisation',
     unit: 'AIXM::Feature::Unit',
     service: 'AIXM::Component::Service',

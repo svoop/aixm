@@ -9,7 +9,7 @@ module AIXM
     # ===Cheat Sheet in Pseudo Code:
     #   helipad = AIXM.helipad(
     #     name: String
-    #     xy = AIXM.xy
+    #     xy: AIXM.xy
     #   )
     #   helipad.z = AIXM.z or nil
     #   helipad.dimensions = AIXM.r or nil

@@ -266,6 +266,26 @@ describe AIXM::Feature::Airport do
           <codeColour>GRN</codeColour>
           <txtRmk>lighting remarks</txtRmk>
         </Rls>
+        <Rda>
+          <RdaUid>
+            <RdnUid>
+              <RwyUid>
+                <AhpUid region="LF">
+                  <codeId>LFNT</codeId>
+                </AhpUid>
+                <txtDesig>16L/34R</txtDesig>
+              </RwyUid>
+              <txtDesig>16L</txtDesig>
+            </RdnUid>
+            <codeType>A</codeType>
+          </RdaUid>
+          <valLen>1000</valLen>
+          <uomLen>M</uomLen>
+          <codeIntst>LIH</codeIntst>
+          <codeSequencedFlash>N</codeSequencedFlash>
+          <txtDescrFlash>three grouped bursts</txtDescrFlash>
+          <txtRmk>on demand</txtRmk>
+        </Rda>
         <Rdn>
           <RdnUid>
             <RwyUid>
@@ -321,6 +341,26 @@ describe AIXM::Feature::Airport do
           <codeColour>GRN</codeColour>
           <txtRmk>lighting remarks</txtRmk>
         </Rls>
+        <Rda>
+          <RdaUid>
+            <RdnUid>
+              <RwyUid>
+                <AhpUid region="LF">
+                  <codeId>LFNT</codeId>
+                </AhpUid>
+                <txtDesig>16L/34R</txtDesig>
+              </RwyUid>
+              <txtDesig>34R</txtDesig>
+            </RdnUid>
+            <codeType>A</codeType>
+          </RdaUid>
+          <valLen>1000</valLen>
+          <uomLen>M</uomLen>
+          <codeIntst>LIH</codeIntst>
+          <codeSequencedFlash>N</codeSequencedFlash>
+          <txtDescrFlash>three grouped bursts</txtDescrFlash>
+          <txtRmk>on demand</txtRmk>
+        </Rda>
         <Fto>
           <FtoUid>
             <AhpUid region="LF">
@@ -383,6 +423,26 @@ describe AIXM::Feature::Airport do
           <codeColour>GRN</codeColour>
           <txtRmk>lighting remarks</txtRmk>
         </Fls>
+        <Fda>
+          <FdaUid>
+            <FdnUid>
+              <FtoUid>
+                <AhpUid region="LF">
+                  <codeId>LFNT</codeId>
+                </AhpUid>
+                <txtDesig>H1</txtDesig>
+              </FtoUid>
+              <txtDesig>35</txtDesig>
+            </FdnUid>
+            <codeType>A</codeType>
+          </FdaUid>
+          <valLen>1000</valLen>
+          <uomLen>M</uomLen>
+          <codeIntst>LIH</codeIntst>
+          <codeSequencedFlash>N</codeSequencedFlash>
+          <txtDescrFlash>three grouped bursts</txtDescrFlash>
+          <txtRmk>on demand</txtRmk>
+        </Fda>
         <Tla>
           <TlaUid>
             <AhpUid region="LF">
@@ -506,11 +566,13 @@ describe AIXM::Feature::Airport do
     it "builds correct minimal OFMX" do
       AIXM.ofmx!
       %i(z declination transition_z operator remarks).each { subject.send(:"#{_1}=", nil) }
-      subject.instance_eval { @addresses.clear }
-      subject.instance_eval { @runways.clear }
-      subject.instance_eval { @fatos.clear }
-      subject.instance_eval { @helipads.clear }
-      subject.instance_eval { @usage_limitations.clear }
+      subject.instance_eval do
+        @addresses.clear
+        @runways.clear
+        @fatos.clear
+        @helipads.clear
+        @usage_limitations.clear
+      end
       _(subject.to_xml).must_equal <<~END
         <!-- Airport: LFNT AVIGNON-PUJAUT -->
         <Ahp source="LF|GEN|0.0 FACTORY|0|0">
