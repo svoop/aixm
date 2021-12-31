@@ -6,11 +6,10 @@ module AIXM
     # Surface of a runway, helipad etc
     #
     # ===Cheat Sheet in Pseudo Code:
-    #   surface = AIXM.surface(
-    #     composition: COMPOSITIONS or nil
-    #     preparation: PREPARATIONS or nil
-    #     condition: CONDITIONS or nil
-    #   )
+    #   surface = AIXM.surface
+    #   surface.composition: COMPOSITIONS or nil
+    #   surface.preparation: PREPARATIONS or nil
+    #   surface.condition: CONDITIONS or nil
     #   surface.pcn = String or nil
     #   surface.siwl_weight = AIXM.w
     #   surface.siwl_tire_pressure = AIXM.p
@@ -20,8 +19,9 @@ module AIXM
     # ===Constants:
     # * +AIXM::PCN_RE+ - regular expression to match PCN notations
     #
-    #
     # @see https://gitlab.com/openflightmaps/ofmx/wikis/Airport#rwy-runway
+    # @see https://gitlab.com/openflightmaps/ofmx/wikis/Airport#tla-helipad-tlof
+    # @see https://gitlab.com/openflightmaps/ofmx/wikis/Airport#fto-fato
     class Surface
       COMPOSITIONS = {
         ASPH: :asphalt,
