@@ -114,6 +114,13 @@ describe AIXM::Component::Runway do
           <valMagBrg>164</valMagBrg>
           <valElevTdz>145</valElevTdz>
           <uomElevTdz>FT</uomElevTdz>
+          <codeTypeVasis>PAPI</codeTypeVasis>
+          <codePsnVasis>BOTH</codePsnVasis>
+          <noBoxVasis>2</noBoxVasis>
+          <codePortableVasis>N</codePortableVasis>
+          <valSlopeAngleGpVasis>6</valSlopeAngleGpVasis>
+          <valMeht>100</valMeht>
+          <uomMeht>FT</uomMeht>
           <codeVfrPattern>E</codeVfrPattern>
           <txtRmk>forth remarks</txtRmk>
         </Rdn>
@@ -189,6 +196,13 @@ describe AIXM::Component::Runway do
           <valMagBrg>344</valMagBrg>
           <valElevTdz>147</valElevTdz>
           <uomElevTdz>FT</uomElevTdz>
+          <codeTypeVasis>PAPI</codeTypeVasis>
+          <codePsnVasis>BOTH</codePsnVasis>
+          <noBoxVasis>2</noBoxVasis>
+          <codePortableVasis>N</codePortableVasis>
+          <valSlopeAngleGpVasis>6</valSlopeAngleGpVasis>
+          <valMeht>100</valMeht>
+          <uomMeht>FT</uomMeht>
           <codeVfrPattern>L</codeVfrPattern>
           <txtRmk>back remarks</txtRmk>
         </Rdn>
@@ -286,6 +300,13 @@ describe AIXM::Component::Runway do
           <valMagBrg>164</valMagBrg>
           <valElevTdz>145</valElevTdz>
           <uomElevTdz>FT</uomElevTdz>
+          <codeTypeVasis>PAPI</codeTypeVasis>
+          <codePsnVasis>BOTH</codePsnVasis>
+          <noBoxVasis>2</noBoxVasis>
+          <codePortableVasis>N</codePortableVasis>
+          <valSlopeAngleGpVasis>6</valSlopeAngleGpVasis>
+          <valMeht>100</valMeht>
+          <uomMeht>FT</uomMeht>
           <codeVfrPattern>E</codeVfrPattern>
           <txtRmk>forth remarks</txtRmk>
         </Rdn>
@@ -323,6 +344,13 @@ describe AIXM::Component::Runway do
           <valMagBrg>344</valMagBrg>
           <valElevTdz>147</valElevTdz>
           <uomElevTdz>FT</uomElevTdz>
+          <codeTypeVasis>PAPI</codeTypeVasis>
+          <codePsnVasis>BOTH</codePsnVasis>
+          <noBoxVasis>2</noBoxVasis>
+          <codePortableVasis>N</codePortableVasis>
+          <valSlopeAngleGpVasis>6</valSlopeAngleGpVasis>
+          <valMeht>100</valMeht>
+          <uomMeht>FT</uomMeht>
           <codeVfrPattern>L</codeVfrPattern>
           <txtRmk>back remarks</txtRmk>
         </Rdn>
@@ -400,6 +428,12 @@ describe AIXM::Component::Runway::Direction do
     end
   end
 
+  describe :vasis= do
+    it "fails on invalid vlues" do
+      _([:foobar, 5]).wont_be_written_to subject, :vasis
+    end
+  end
+
   describe :vfr_pattern= do
     it "fails on invalid values" do
       _([:foobar, 123]).wont_be_written_to subject, :vfr_pattern
@@ -446,6 +480,13 @@ describe AIXM::Component::Runway::Direction do
           <valMagBrg>164</valMagBrg>
           <valElevTdz>145</valElevTdz>
           <uomElevTdz>FT</uomElevTdz>
+          <codeTypeVasis>PAPI</codeTypeVasis>
+          <codePsnVasis>BOTH</codePsnVasis>
+          <noBoxVasis>2</noBoxVasis>
+          <codePortableVasis>N</codePortableVasis>
+          <valSlopeAngleGpVasis>6</valSlopeAngleGpVasis>
+          <valMeht>100</valMeht>
+          <uomMeht>FT</uomMeht>
           <codeVfrPattern>E</codeVfrPattern>
           <txtRmk>forth remarks</txtRmk>
         </Rdn>
@@ -510,7 +551,7 @@ describe AIXM::Component::Runway::Direction do
 
     it "builds correct minimal OFMX" do
       AIXM.ofmx!
-      %i(geographic_orientation z displaced_threshold vfr_pattern remarks).each { subject.send(:"#{_1}=", nil) }
+      %i(geographic_orientation z displaced_threshold vasis vfr_pattern remarks).each { subject.send(:"#{_1}=", nil) }
       subject.instance_eval do
         @lightings.clear
         @approach_lightings.clear

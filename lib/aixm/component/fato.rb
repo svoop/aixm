@@ -20,6 +20,7 @@ module AIXM
     #     name: String
     #   ) do |direction|
     #     direction.geographic_orientation = AIXM.a[precision=3] or nil
+    #     direction.vasis = AIXM.vasis or nil (default: unspecified VASIS)
     #     fato.add_lighting = AIXM.lighting
     #     fato.add_approach_lighting = AIXM.approach_lighting
     #     direction.remarks = String or nil
@@ -182,11 +183,16 @@ module AIXM
         # @return [AIXM::A, nil] geographic orientation (true bearing) in degrees
         attr_reader :geographic_orientation
 
+        # @return [AIXM::Component::VASIS, nil] visual approach slope indicator
+        #   system
+        attr_reader :vasis
+
         # @return [String, nil] free text remarks
         attr_reader :remarks
 
         def initialize(name:)
           self.name = name
+          self.vasis = AIXM.vasis
         end
 
         # @return [String]
@@ -216,6 +222,11 @@ module AIXM
           end
         end
 
+        def vasis=(value)
+          fail(ArgumentError, "invalid vasis") unless value.nil? || value.is_a?(AIXM::Component::VASIS)
+          @vasis = value
+        end
+
         # @return [String] UID markup
         def to_uid
           builder = Builder::XmlMarkup.new(indent: 2)
@@ -233,6 +244,9 @@ module AIXM
             fdn << to_uid.indent(2)
             fdn.valTrueBrg(geographic_orientation) if geographic_orientation
             fdn.valMagBrg(magnetic_orientation) if magnetic_orientation
+            if vasis
+              fdn << vasis.to_xml.indent(2)
+            end
             fdn.txtRmk(remarks) if remarks
           end
           lightings.each do |lighting|

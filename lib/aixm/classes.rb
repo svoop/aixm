@@ -40,7 +40,8 @@ module AIXM
     vor: 'AIXM::Feature::NavigationalAid::VOR',
     obstacle: 'AIXM::Feature::Obstacle',
     obstacle_group: 'AIXM::Feature::ObstacleGroup',
-    timetable: 'AIXM::Component::Timetable'
+    timetable: 'AIXM::Component::Timetable',
+    vasis: 'AIXM::Component::VASIS'
   }.freeze
 
 end

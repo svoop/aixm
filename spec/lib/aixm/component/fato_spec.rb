@@ -105,6 +105,13 @@ describe AIXM::Component::FATO do
           </FdnUid>
           <valTrueBrg>355</valTrueBrg>
           <valMagBrg>354</valMagBrg>
+          <codeTypeVasis>PAPI</codeTypeVasis>
+          <codePsnVasis>BOTH</codePsnVasis>
+          <noBoxVasis>2</noBoxVasis>
+          <codePortableVasis>N</codePortableVasis>
+          <valSlopeAngleGpVasis>6</valSlopeAngleGpVasis>
+          <valMeht>100</valMeht>
+          <uomMeht>FT</uomMeht>
           <txtRmk>Avoid flight over residental area</txtRmk>
         </Fdn>
         <Fls>
@@ -177,6 +184,13 @@ describe AIXM::Component::FATO do
           </FdnUid>
           <valTrueBrg>355</valTrueBrg>
           <valMagBrg>354</valMagBrg>
+          <codeTypeVasis>PAPI</codeTypeVasis>
+          <codePsnVasis>BOTH</codePsnVasis>
+          <noBoxVasis>2</noBoxVasis>
+          <codePortableVasis>N</codePortableVasis>
+          <valSlopeAngleGpVasis>6</valSlopeAngleGpVasis>
+          <valMeht>100</valMeht>
+          <uomMeht>FT</uomMeht>
           <txtRmk>Avoid flight over residental area</txtRmk>
         </Fdn>
       END
@@ -198,6 +212,12 @@ describe AIXM::Component::FATO::Direction do
   describe :geographic_orientation= do
     it "fails on invalid values" do
       _([:foobar, -1, 10]).wont_be_written_to subject, :geographic_orientation
+    end
+  end
+
+  describe :vasis= do
+    it "fails on invalid vlues" do
+      _([:foobar, 5]).wont_be_written_to subject, :vasis
     end
   end
 
@@ -228,6 +248,13 @@ describe AIXM::Component::FATO::Direction do
           </FdnUid>
           <valTrueBrg>355</valTrueBrg>
           <valMagBrg>354</valMagBrg>
+          <codeTypeVasis>PAPI</codeTypeVasis>
+          <codePsnVasis>BOTH</codePsnVasis>
+          <noBoxVasis>2</noBoxVasis>
+          <codePortableVasis>N</codePortableVasis>
+          <valSlopeAngleGpVasis>6</valSlopeAngleGpVasis>
+          <valMeht>100</valMeht>
+          <uomMeht>FT</uomMeht>
           <txtRmk>Avoid flight over residental area</txtRmk>
         </Fdn>
         <Fls>
@@ -273,7 +300,7 @@ describe AIXM::Component::FATO::Direction do
 
     it "builds correct minimal OFMX" do
       AIXM.ofmx!
-      %i(geographic_orientation remarks).each { subject.send(:"#{_1}=", nil) }
+      %i(geographic_orientation vasis remarks).each { subject.send(:"#{_1}=", nil) }
       subject.instance_eval do
         @lightings.clear
         @approach_lightings.clear

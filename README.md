@@ -182,6 +182,7 @@ AIXM.config.ignored_errors = /invalid date/i
 * [Service](https://www.rubydoc.info/gems/aixm/AIXM/Component/Service.html)
 * [Surface](https://www.rubydoc.info/gems/aixm/AIXM/Component/Surface.html)
 * [Timetable](https://www.rubydoc.info/gems/aixm/AIXM/Component/Timetable.html)
+* [VASIS](https://www.rubydoc.info/gems/aixm/AIXM/Component/VASIS.html)
 * [Vertical limit](https://www.rubydoc.info/gems/aixm/AIXM/Component/VerticalLimit.html)
 
 ## Associations

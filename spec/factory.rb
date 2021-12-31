@@ -71,6 +71,17 @@ module AIXM
         end
       end
 
+      def vasis
+        AIXM.vasis.tap do |vasis|
+          vasis.type = :precision_api
+          vasis.position = :left_and_right
+          vasis.boxes_count = 2
+          vasis.portable = false
+          vasis.slope_angle = AIXM.a(6)
+          vasis.meht = AIXM.z(100, :qfe)
+        end
+      end
+
       def timetable
         AIXM.timetable(
           code: :sunrise_to_sunset
@@ -410,6 +421,7 @@ module AIXM
           runway.forth.xy = AIXM.xy(lat: %q(44°00'07.63"N), long: %q(004°45'07.81"E))
           runway.forth.z = AIXM.z(145, :qnh)
           runway.forth.displaced_threshold = AIXM.xy(lat: %q(44°00'03.54"N), long: %q(004°45'09.30"E))
+          runway.forth.vasis = vasis
           runway.forth.geographic_orientation = AIXM.a(165)
           runway.forth.vfr_pattern = :left_or_right
           runway.forth.remarks = "forth remarks"
@@ -418,6 +430,7 @@ module AIXM
           runway.back.xy = AIXM.xy(lat: %q(43°59'25.31"N), long: %q(004°45'23.24"E))
           runway.back.z = AIXM.z(147, :qnh)
           runway.back.displaced_threshold = AIXM.xy(lat: %q(43°59'31.84"N), long: %q(004°45'20.85"E))
+          runway.back.vasis = vasis
           runway.back.geographic_orientation = AIXM.a(345)
           runway.back.vfr_pattern = :left
           runway.back.remarks = "back remarks"
@@ -443,6 +456,7 @@ module AIXM
           fato.remarks = "Authorizaton by AD operator required"
           fato.add_direction(name: '35') do |direction|
             direction.geographic_orientation = AIXM.a(355)
+            direction.vasis = vasis
             direction.remarks = "Avoid flight over residental area"
             direction.add_lighting(lighting)
             direction.add_approach_lighting(approach_lighting)

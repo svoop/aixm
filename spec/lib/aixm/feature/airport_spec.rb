@@ -227,6 +227,13 @@ describe AIXM::Feature::Airport do
           <valMagBrg>164</valMagBrg>
           <valElevTdz>145</valElevTdz>
           <uomElevTdz>FT</uomElevTdz>
+          <codeTypeVasis>PAPI</codeTypeVasis>
+          <codePsnVasis>BOTH</codePsnVasis>
+          <noBoxVasis>2</noBoxVasis>
+          <codePortableVasis>N</codePortableVasis>
+          <valSlopeAngleGpVasis>6</valSlopeAngleGpVasis>
+          <valMeht>100</valMeht>
+          <uomMeht>FT</uomMeht>
           <codeVfrPattern>E</codeVfrPattern>
           <txtRmk>forth remarks</txtRmk>
         </Rdn>
@@ -302,6 +309,13 @@ describe AIXM::Feature::Airport do
           <valMagBrg>344</valMagBrg>
           <valElevTdz>147</valElevTdz>
           <uomElevTdz>FT</uomElevTdz>
+          <codeTypeVasis>PAPI</codeTypeVasis>
+          <codePsnVasis>BOTH</codePsnVasis>
+          <noBoxVasis>2</noBoxVasis>
+          <codePortableVasis>N</codePortableVasis>
+          <valSlopeAngleGpVasis>6</valSlopeAngleGpVasis>
+          <valMeht>100</valMeht>
+          <uomMeht>FT</uomMeht>
           <codeVfrPattern>L</codeVfrPattern>
           <txtRmk>back remarks</txtRmk>
         </Rdn>
@@ -403,6 +417,13 @@ describe AIXM::Feature::Airport do
           </FdnUid>
           <valTrueBrg>355</valTrueBrg>
           <valMagBrg>354</valMagBrg>
+          <codeTypeVasis>PAPI</codeTypeVasis>
+          <codePsnVasis>BOTH</codePsnVasis>
+          <noBoxVasis>2</noBoxVasis>
+          <codePortableVasis>N</codePortableVasis>
+          <valSlopeAngleGpVasis>6</valSlopeAngleGpVasis>
+          <valMeht>100</valMeht>
+          <uomMeht>FT</uomMeht>
           <txtRmk>Avoid flight over residental area</txtRmk>
         </Fdn>
         <Fls>

@@ -26,6 +26,7 @@ module AIXM
     #   runway.forth.xy = AIXM.xy
     #   runway.forth.z = AIXM.z or nil   # highest point of the TDZ
     #   runway.forth.displaced_threshold = AIXM.xy or AIXM.d or nil
+    #   runway.forth.vasis = AIXM.vasis or nil (default: unspecified VASIS)
     #   runway.forth.add_lighting = AIXM.lighting
     #   runway.forth.add_approach_lighting = AIXM.approach_lighting
     #   runway.forth.vfr_pattern = VFR_PATTERNS or nil
@@ -223,6 +224,10 @@ module AIXM
         #   point
         attr_reader :displaced_threshold
 
+        # @return [AIXM::Component::VASIS, nil] visual approach slope indicator
+        #   system
+        attr_reader :vasis
+
         # @return [Symbol, nil] direction of the VFR flight pattern (see {VFR_PATTERNS})
         attr_reader :vfr_pattern
 
@@ -231,6 +236,7 @@ module AIXM
 
         def initialize(name:)
           self.name = name
+          self.vasis = AIXM.vasis
         end
 
         # @return [String]
@@ -273,6 +279,11 @@ module AIXM
           end
         end
 
+        def vasis=(value)
+          fail(ArgumentError, "invalid vasis") unless value.nil? || value.is_a?(AIXM::Component::VASIS)
+          @vasis = value
+        end
+
         def vfr_pattern=(value)
           @vfr_pattern = value.nil? ? nil : (VFR_PATTERNS.lookup(value.to_s.to_sym, nil) || fail(ArgumentError, "invalid VFR pattern"))
         end
@@ -310,6 +321,9 @@ module AIXM
             if z
               rdn.valElevTdz(z.alt)
               rdn.uomElevTdz(z.unit.upcase.to_s)
+            end
+            if vasis
+              rdn << vasis.to_xml.indent(2)
             end
             rdn.codeVfrPattern(VFR_PATTERNS.key(vfr_pattern).to_s) if vfr_pattern
             rdn.txtRmk(remarks) if remarks
