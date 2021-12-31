@@ -59,7 +59,7 @@ module AIXM
         FAILAID: :visual_aids_failure,   # failure or irregular operation of visual aids
         SPOWER: :secondary_power,        # secondary power supply in operation
         OTHER: :other                    # specify in remarks
-      }
+      }.freeze
 
       # @!method forth
       #   @return [AIXM::Component::Runway::Direction] main direction
@@ -185,7 +185,7 @@ module AIXM
           L: :left,
           R: :right,
           E: :left_or_right
-        }
+        }.freeze
 
         # @!method lightings
         #   @return [Array<AIXM::Component::Lighting>] installed lighting systems

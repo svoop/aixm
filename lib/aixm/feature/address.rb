@@ -34,7 +34,7 @@ module AIXM
         'URL-MET': :weather_url,
         RADIO: :radio_frequency,
         OTHER: :other   # specify in remarks
-      }
+      }.freeze
 
       # @!method addressable
       #   @return [AIXM::Feature] addressable feature

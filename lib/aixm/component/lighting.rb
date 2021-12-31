@@ -38,14 +38,14 @@ module AIXM
         HOLDBAY: :taxyway_hold_bay,
         RTWYINT: :rapid_taxiway_intersection,
         OTHER: :other   # specify in remarks
-      }
+      }.freeze
 
       INTENSITIES = {
         LIL: :low,
         LIM: :medium,
         LIH: :high,
         OTHER: :other   # specify in remarks
-      }
+      }.freeze
 
       COLORS = {
         YEL: :yellow,
@@ -55,7 +55,7 @@ module AIXM
         GRN: :green,
         PRP: :purple,
         OTHER: :other   # specify in remarks
-      }
+      }.freeze
 
       # @!method lightable
       #   @return [AIXM::Component::Runway::Direction, AIXM::Component::FATO::Direction, AIXM::Component::Helipad] lighted entity

@@ -38,7 +38,7 @@ module AIXM
         SNOW: :snow,
         WATER: :water,
         OTHER: :other           # specify in remarks
-      }
+      }.freeze
 
       PREPARATIONS = {
         AFSC: :aggregate_friction_seal_coat,
@@ -50,14 +50,14 @@ module AIXM
         RFSC: :rubberized_friction_seal_coat,
         ROLLED: :rolled,
         OTHER: :other
-      }
+      }.freeze
 
       CONDITIONS = {
         GOOD: :good,
         FAIR: :fair,
         POOR: :poor,
         OTHER: :other
-      }
+      }.freeze
 
       # @return [Symbol, nil] composition of the surface (see {COMPOSITIONS})
       attr_reader :composition
