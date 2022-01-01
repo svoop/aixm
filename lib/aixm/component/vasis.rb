@@ -9,7 +9,7 @@ module AIXM
     #   vasis = AIXM.vasis
     #   vasis.type = TYPES or nil
     #   vasis.position = POSITIONS or nil
-    #   vasis.boxes_count = Integer or nil
+    #   vasis.boxes = Integer or nil
     #   vasis.portable = true or false or nil (means: unknown, default)
     #   vasis.slope_angle = AIXM.a or nil
     #   vasis.meht = AIXM.d or nil
@@ -42,7 +42,7 @@ module AIXM
       attr_reader :position
 
       # @return [Integer, nil] number of boxes
-      attr_reader :boxes_count
+      attr_reader :boxes
 
       # @return [Boolean, nil] whether the VASIS is portable
       attr_reader :portable
@@ -66,9 +66,9 @@ module AIXM
         @position = value.nil? ? nil : POSITIONS.lookup(value.to_s.to_sym, nil) || fail(ArgumentError, "invalid position")
       end
 
-      def boxes_count=(value)
+      def boxes=(value)
         fail(ArgumentError, "invalid boxes count") unless value.nil? || (value.is_a?(Integer) && value > 0)
-        @boxes_count = value
+        @boxes = value
       end
 
       def portable=(value)
@@ -91,7 +91,7 @@ module AIXM
         builder = Builder::XmlMarkup.new(indent: true)
         builder.codeTypeVasis(TYPES.key(type).to_s) if type
         builder.codePsnVasis(POSITIONS.key(position).to_s) if position
-        builder.noBoxVasis(boxes_count.to_s) if boxes_count
+        builder.noBoxVasis(boxes.to_s) if boxes
         builder.codePortableVasis(portable ? 'Y' : 'N') unless portable.nil?
         builder.valSlopeAngleGpVasis(slope_angle.deg.to_s) if slope_angle
         if meht

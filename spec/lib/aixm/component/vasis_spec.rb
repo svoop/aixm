@@ -35,13 +35,13 @@ describe AIXM::Component::VASIS do
     end
   end
 
-  describe :boxes_count= do
+  describe :boxes= do
     it "fails on invalid values" do
-      _([:foobar, -5, 0]).wont_be_written_to subject, :boxes_count
+      _([:foobar, -5, 0]).wont_be_written_to subject, :boxes
     end
 
     it "accepts valid values" do
-      _([nil, 1, 5]).must_be_written_to subject, :boxes_count
+      _([nil, 1, 5]).must_be_written_to subject, :boxes
     end
   end
 

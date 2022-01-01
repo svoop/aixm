@@ -75,7 +75,7 @@ module AIXM
         AIXM.vasis.tap do |vasis|
           vasis.type = :precision_api
           vasis.position = :left_and_right
-          vasis.boxes_count = 2
+          vasis.boxes = 2
           vasis.portable = false
           vasis.slope_angle = AIXM.a(6)
           vasis.meht = AIXM.z(100, :qfe)
