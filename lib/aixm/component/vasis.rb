@@ -77,7 +77,7 @@ module AIXM
       end
 
       def slope_angle=(value)
-        fail(ArgumentError, "invalid slope angle") unless value.nil? || (value.is_a?(AIXM::A) && value.precision == 3 && value.deg <= 90)
+        fail(ArgumentError, "invalid slope angle") unless value.nil? || (value.is_a?(AIXM::A) && value.deg <= 90)
         @slope_angle = value
       end
 
@@ -93,7 +93,7 @@ module AIXM
         builder.codePsnVasis(POSITIONS.key(position).to_s) if position
         builder.noBoxVasis(boxes.to_s) if boxes
         builder.codePortableVasis(portable ? 'Y' : 'N') unless portable.nil?
-        builder.valSlopeAngleGpVasis(slope_angle.deg.to_s) if slope_angle
+        builder.valSlopeAngleGpVasis(slope_angle.to_bearing) if slope_angle
         if meht
           builder.valMeht(meht.alt.to_s)
           builder.uomMeht('FT')

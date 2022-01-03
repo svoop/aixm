@@ -82,7 +82,7 @@ describe AIXM::Component::VASIS do
         <codePsnVasis>BOTH</codePsnVasis>
         <noBoxVasis>2</noBoxVasis>
         <codePortableVasis>N</codePortableVasis>
-        <valSlopeAngleGpVasis>6</valSlopeAngleGpVasis>
+        <valSlopeAngleGpVasis>5.7</valSlopeAngleGpVasis>
         <valMeht>100</valMeht>
         <uomMeht>FT</uomMeht>
       END

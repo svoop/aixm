@@ -19,7 +19,7 @@ module AIXM
     #   fato.add_direction(
     #     name: String
     #   ) do |direction|
-    #     direction.geographic_orientation = AIXM.a[precision=3] or nil
+    #     direction.geographic_orientation = AIXM.a or nil
     #     direction.vasis = AIXM.vasis or nil (default: unspecified VASIS)
     #     fato.add_lighting = AIXM.lighting
     #     fato.add_approach_lighting = AIXM.approach_lighting
@@ -232,7 +232,7 @@ module AIXM
           builder = Builder::XmlMarkup.new(indent: 2)
           builder.FdnUid do |fdn_uid|
             fdn_uid << fato.to_uid.indent(2)
-            fdn_uid.txtDesig(name)
+            fdn_uid.txtDesig(name.to_runway)
           end
         end
         memoize :to_uid
@@ -242,8 +242,8 @@ module AIXM
           builder = Builder::XmlMarkup.new(indent: 2)
           builder.Fdn do |fdn|
             fdn << to_uid.indent(2)
-            fdn.valTrueBrg(geographic_orientation) if geographic_orientation
-            fdn.valMagBrg(magnetic_orientation) if magnetic_orientation
+            fdn.valTrueBrg(geographic_orientation.to_bearing) if geographic_orientation
+            fdn.valMagBrg(magnetic_orientation.to_bearing) if magnetic_orientation
             if vasis
               fdn << vasis.to_xml.indent(2)
             end

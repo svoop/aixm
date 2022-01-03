@@ -21,8 +21,8 @@ module AIXM
     #   runway.marking = String or nil
     #   runway.status = STATUSES or nil
     #   runway.remarks = String or nil
-    #   runway.forth.name = AIXM.a[precision=2]   # preset based on the runway name
-    #   runway.forth.geographic_orientation = AIXM.a[precision=3] or nil
+    #   runway.forth.name = AIXM.a   # preset based on the runway name
+    #   runway.forth.geographic_orientation = AIXM.a or nil
     #   runway.forth.xy = AIXM.xy
     #   runway.forth.z = AIXM.z or nil   # highest point of the TDZ
     #   runway.forth.displaced_threshold = AIXM.xy or AIXM.d or nil
@@ -304,7 +304,7 @@ module AIXM
           builder = Builder::XmlMarkup.new(indent: 2)
           builder.RdnUid do |rdn_uid|
             rdn_uid << runway.to_uid.indent(2)
-            rdn_uid.txtDesig(name)
+            rdn_uid.txtDesig(name.to_runway)
           end
         end
         memoize :to_uid
@@ -316,8 +316,8 @@ module AIXM
             rdn << to_uid.indent(2)
             rdn.geoLat(xy.lat(AIXM.schema))
             rdn.geoLong(xy.long(AIXM.schema))
-            rdn.valTrueBrg(geographic_orientation) if geographic_orientation
-            rdn.valMagBrg(magnetic_orientation) if magnetic_orientation
+            rdn.valTrueBrg(geographic_orientation.to_bearing) if geographic_orientation
+            rdn.valMagBrg(magnetic_orientation.to_bearing) if magnetic_orientation
             if z
               rdn.valElevTdz(z.alt)
               rdn.uomElevTdz(z.unit.upcase.to_s)

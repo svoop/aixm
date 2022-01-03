@@ -1,9 +1,10 @@
+require 'bigdecimal'
 require 'ostruct'
+require 'time'
+require 'pathname'
 require 'securerandom'
 require 'forwardable'
 require 'digest'
-require 'time'
-require 'pathname'
 require 'optparse'
 
 require 'builder'

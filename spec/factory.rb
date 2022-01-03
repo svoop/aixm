@@ -77,7 +77,7 @@ module AIXM
           vasis.position = :left_and_right
           vasis.boxes = 2
           vasis.portable = false
-          vasis.slope_angle = AIXM.a(6)
+          vasis.slope_angle = AIXM.a(5.7)
           vasis.meht = AIXM.z(100, :qfe)
         end
       end

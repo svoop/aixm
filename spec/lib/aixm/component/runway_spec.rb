@@ -110,15 +110,15 @@ describe AIXM::Component::Runway do
           </RdnUid>
           <geoLat>44.00211944N</geoLat>
           <geoLong>004.75216944E</geoLong>
-          <valTrueBrg>165</valTrueBrg>
-          <valMagBrg>164</valMagBrg>
+          <valTrueBrg>165.0</valTrueBrg>
+          <valMagBrg>163.92</valMagBrg>
           <valElevTdz>145</valElevTdz>
           <uomElevTdz>FT</uomElevTdz>
           <codeTypeVasis>PAPI</codeTypeVasis>
           <codePsnVasis>BOTH</codePsnVasis>
           <noBoxVasis>2</noBoxVasis>
           <codePortableVasis>N</codePortableVasis>
-          <valSlopeAngleGpVasis>6</valSlopeAngleGpVasis>
+          <valSlopeAngleGpVasis>5.7</valSlopeAngleGpVasis>
           <valMeht>100</valMeht>
           <uomMeht>FT</uomMeht>
           <codeVfrPattern>E</codeVfrPattern>
@@ -192,15 +192,15 @@ describe AIXM::Component::Runway do
           </RdnUid>
           <geoLat>43.99036389N</geoLat>
           <geoLong>004.75645556E</geoLong>
-          <valTrueBrg>345</valTrueBrg>
-          <valMagBrg>344</valMagBrg>
+          <valTrueBrg>345.0</valTrueBrg>
+          <valMagBrg>343.92</valMagBrg>
           <valElevTdz>147</valElevTdz>
           <uomElevTdz>FT</uomElevTdz>
           <codeTypeVasis>PAPI</codeTypeVasis>
           <codePsnVasis>BOTH</codePsnVasis>
           <noBoxVasis>2</noBoxVasis>
           <codePortableVasis>N</codePortableVasis>
-          <valSlopeAngleGpVasis>6</valSlopeAngleGpVasis>
+          <valSlopeAngleGpVasis>5.7</valSlopeAngleGpVasis>
           <valMeht>100</valMeht>
           <uomMeht>FT</uomMeht>
           <codeVfrPattern>L</codeVfrPattern>
@@ -296,15 +296,15 @@ describe AIXM::Component::Runway do
           </RdnUid>
           <geoLat>44.00211944N</geoLat>
           <geoLong>004.75216944E</geoLong>
-          <valTrueBrg>165</valTrueBrg>
-          <valMagBrg>164</valMagBrg>
+          <valTrueBrg>165.0</valTrueBrg>
+          <valMagBrg>163.92</valMagBrg>
           <valElevTdz>145</valElevTdz>
           <uomElevTdz>FT</uomElevTdz>
           <codeTypeVasis>PAPI</codeTypeVasis>
           <codePsnVasis>BOTH</codePsnVasis>
           <noBoxVasis>2</noBoxVasis>
           <codePortableVasis>N</codePortableVasis>
-          <valSlopeAngleGpVasis>6</valSlopeAngleGpVasis>
+          <valSlopeAngleGpVasis>5.7</valSlopeAngleGpVasis>
           <valMeht>100</valMeht>
           <uomMeht>FT</uomMeht>
           <codeVfrPattern>E</codeVfrPattern>
@@ -340,15 +340,15 @@ describe AIXM::Component::Runway do
           </RdnUid>
           <geoLat>43.99036389N</geoLat>
           <geoLong>004.75645556E</geoLong>
-          <valTrueBrg>345</valTrueBrg>
-          <valMagBrg>344</valMagBrg>
+          <valTrueBrg>345.0</valTrueBrg>
+          <valMagBrg>343.92</valMagBrg>
           <valElevTdz>147</valElevTdz>
           <uomElevTdz>FT</uomElevTdz>
           <codeTypeVasis>PAPI</codeTypeVasis>
           <codePsnVasis>BOTH</codePsnVasis>
           <noBoxVasis>2</noBoxVasis>
           <codePortableVasis>N</codePortableVasis>
-          <valSlopeAngleGpVasis>6</valSlopeAngleGpVasis>
+          <valSlopeAngleGpVasis>5.7</valSlopeAngleGpVasis>
           <valMeht>100</valMeht>
           <uomMeht>FT</uomMeht>
           <codeVfrPattern>L</codeVfrPattern>
@@ -388,9 +388,9 @@ describe AIXM::Component::Runway::Direction do
     end
 
     it "overwrites preset name" do
-      _(subject.name.to_s).must_equal '16L'
+      _(subject.name.to_runway).must_equal '16L'
       subject.name = AIXM.a('34L')
-      _(subject.name.to_s).must_equal '34L'
+      _(subject.name.to_runway).must_equal '34L'
     end
   end
 
@@ -456,7 +456,7 @@ describe AIXM::Component::Runway::Direction do
   describe :magnetic_orientation do
     it "is calculated correctly" do
       subject.geographic_orientation = AIXM.a(16)
-      _(subject.magnetic_orientation).must_equal AIXM.a(15)
+      _(subject.magnetic_orientation.to_bearing).must_equal 14.92
     end
   end
 
@@ -476,15 +476,15 @@ describe AIXM::Component::Runway::Direction do
           </RdnUid>
           <geoLat>44.00211944N</geoLat>
           <geoLong>004.75216944E</geoLong>
-          <valTrueBrg>165</valTrueBrg>
-          <valMagBrg>164</valMagBrg>
+          <valTrueBrg>165.0</valTrueBrg>
+          <valMagBrg>163.92</valMagBrg>
           <valElevTdz>145</valElevTdz>
           <uomElevTdz>FT</uomElevTdz>
           <codeTypeVasis>PAPI</codeTypeVasis>
           <codePsnVasis>BOTH</codePsnVasis>
           <noBoxVasis>2</noBoxVasis>
           <codePortableVasis>N</codePortableVasis>
-          <valSlopeAngleGpVasis>6</valSlopeAngleGpVasis>
+          <valSlopeAngleGpVasis>5.7</valSlopeAngleGpVasis>
           <valMeht>100</valMeht>
           <uomMeht>FT</uomMeht>
           <codeVfrPattern>E</codeVfrPattern>

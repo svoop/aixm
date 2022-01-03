@@ -260,15 +260,15 @@ describe AIXM::Document do
             </RdnUid>
             <geoLat>440007.63N</geoLat>
             <geoLong>0044507.81E</geoLong>
-            <valTrueBrg>165</valTrueBrg>
-            <valMagBrg>164</valMagBrg>
+            <valTrueBrg>165.0</valTrueBrg>
+            <valMagBrg>163.92</valMagBrg>
             <valElevTdz>145</valElevTdz>
             <uomElevTdz>FT</uomElevTdz>
             <codeTypeVasis>PAPI</codeTypeVasis>
             <codePsnVasis>BOTH</codePsnVasis>
             <noBoxVasis>2</noBoxVasis>
             <codePortableVasis>N</codePortableVasis>
-            <valSlopeAngleGpVasis>6</valSlopeAngleGpVasis>
+            <valSlopeAngleGpVasis>5.7</valSlopeAngleGpVasis>
             <valMeht>100</valMeht>
             <uomMeht>FT</uomMeht>
             <codeVfrPattern>E</codeVfrPattern>
@@ -342,15 +342,15 @@ describe AIXM::Document do
             </RdnUid>
             <geoLat>435925.31N</geoLat>
             <geoLong>0044523.24E</geoLong>
-            <valTrueBrg>345</valTrueBrg>
-            <valMagBrg>344</valMagBrg>
+            <valTrueBrg>345.0</valTrueBrg>
+            <valMagBrg>343.92</valMagBrg>
             <valElevTdz>147</valElevTdz>
             <uomElevTdz>FT</uomElevTdz>
             <codeTypeVasis>PAPI</codeTypeVasis>
             <codePsnVasis>BOTH</codePsnVasis>
             <noBoxVasis>2</noBoxVasis>
             <codePortableVasis>N</codePortableVasis>
-            <valSlopeAngleGpVasis>6</valSlopeAngleGpVasis>
+            <valSlopeAngleGpVasis>5.7</valSlopeAngleGpVasis>
             <valMeht>100</valMeht>
             <uomMeht>FT</uomMeht>
             <codeVfrPattern>L</codeVfrPattern>
@@ -452,13 +452,13 @@ describe AIXM::Document do
               </FtoUid>
               <txtDesig>35</txtDesig>
             </FdnUid>
-            <valTrueBrg>355</valTrueBrg>
-            <valMagBrg>354</valMagBrg>
+            <valTrueBrg>355.0</valTrueBrg>
+            <valMagBrg>353.92</valMagBrg>
             <codeTypeVasis>PAPI</codeTypeVasis>
             <codePsnVasis>BOTH</codePsnVasis>
             <noBoxVasis>2</noBoxVasis>
             <codePortableVasis>N</codePortableVasis>
-            <valSlopeAngleGpVasis>6</valSlopeAngleGpVasis>
+            <valSlopeAngleGpVasis>5.7</valSlopeAngleGpVasis>
             <valMeht>100</valMeht>
             <uomMeht>FT</uomMeht>
             <txtRmk>Avoid flight over residental area</txtRmk>
@@ -1160,15 +1160,15 @@ describe AIXM::Document do
             </RdnUid>
             <geoLat>44.00211944N</geoLat>
             <geoLong>004.75216944E</geoLong>
-            <valTrueBrg>165</valTrueBrg>
-            <valMagBrg>164</valMagBrg>
+            <valTrueBrg>165.0</valTrueBrg>
+            <valMagBrg>163.92</valMagBrg>
             <valElevTdz>145</valElevTdz>
             <uomElevTdz>FT</uomElevTdz>
             <codeTypeVasis>PAPI</codeTypeVasis>
             <codePsnVasis>BOTH</codePsnVasis>
             <noBoxVasis>2</noBoxVasis>
             <codePortableVasis>N</codePortableVasis>
-            <valSlopeAngleGpVasis>6</valSlopeAngleGpVasis>
+            <valSlopeAngleGpVasis>5.7</valSlopeAngleGpVasis>
             <valMeht>100</valMeht>
             <uomMeht>FT</uomMeht>
             <codeVfrPattern>E</codeVfrPattern>
@@ -1242,15 +1242,15 @@ describe AIXM::Document do
             </RdnUid>
             <geoLat>43.99036389N</geoLat>
             <geoLong>004.75645556E</geoLong>
-            <valTrueBrg>345</valTrueBrg>
-            <valMagBrg>344</valMagBrg>
+            <valTrueBrg>345.0</valTrueBrg>
+            <valMagBrg>343.92</valMagBrg>
             <valElevTdz>147</valElevTdz>
             <uomElevTdz>FT</uomElevTdz>
             <codeTypeVasis>PAPI</codeTypeVasis>
             <codePsnVasis>BOTH</codePsnVasis>
             <noBoxVasis>2</noBoxVasis>
             <codePortableVasis>N</codePortableVasis>
-            <valSlopeAngleGpVasis>6</valSlopeAngleGpVasis>
+            <valSlopeAngleGpVasis>5.7</valSlopeAngleGpVasis>
             <valMeht>100</valMeht>
             <uomMeht>FT</uomMeht>
             <codeVfrPattern>L</codeVfrPattern>
@@ -1352,13 +1352,13 @@ describe AIXM::Document do
               </FtoUid>
               <txtDesig>35</txtDesig>
             </FdnUid>
-            <valTrueBrg>355</valTrueBrg>
-            <valMagBrg>354</valMagBrg>
+            <valTrueBrg>355.0</valTrueBrg>
+            <valMagBrg>353.92</valMagBrg>
             <codeTypeVasis>PAPI</codeTypeVasis>
             <codePsnVasis>BOTH</codePsnVasis>
             <noBoxVasis>2</noBoxVasis>
             <codePortableVasis>N</codePortableVasis>
-            <valSlopeAngleGpVasis>6</valSlopeAngleGpVasis>
+            <valSlopeAngleGpVasis>5.7</valSlopeAngleGpVasis>
             <valMeht>100</valMeht>
             <uomMeht>FT</uomMeht>
             <txtRmk>Avoid flight over residental area</txtRmk>
@@ -2138,15 +2138,15 @@ describe AIXM::Document do
             </RdnUid>
             <geoLat>44.00211944N</geoLat>
             <geoLong>004.75216944E</geoLong>
-            <valTrueBrg>165</valTrueBrg>
-            <valMagBrg>164</valMagBrg>
+            <valTrueBrg>165.0</valTrueBrg>
+            <valMagBrg>163.92</valMagBrg>
             <valElevTdz>145</valElevTdz>
             <uomElevTdz>FT</uomElevTdz>
             <codeTypeVasis>PAPI</codeTypeVasis>
             <codePsnVasis>BOTH</codePsnVasis>
             <noBoxVasis>2</noBoxVasis>
             <codePortableVasis>N</codePortableVasis>
-            <valSlopeAngleGpVasis>6</valSlopeAngleGpVasis>
+            <valSlopeAngleGpVasis>5.7</valSlopeAngleGpVasis>
             <valMeht>100</valMeht>
             <uomMeht>FT</uomMeht>
             <codeVfrPattern>E</codeVfrPattern>
@@ -2220,15 +2220,15 @@ describe AIXM::Document do
             </RdnUid>
             <geoLat>43.99036389N</geoLat>
             <geoLong>004.75645556E</geoLong>
-            <valTrueBrg>345</valTrueBrg>
-            <valMagBrg>344</valMagBrg>
+            <valTrueBrg>345.0</valTrueBrg>
+            <valMagBrg>343.92</valMagBrg>
             <valElevTdz>147</valElevTdz>
             <uomElevTdz>FT</uomElevTdz>
             <codeTypeVasis>PAPI</codeTypeVasis>
             <codePsnVasis>BOTH</codePsnVasis>
             <noBoxVasis>2</noBoxVasis>
             <codePortableVasis>N</codePortableVasis>
-            <valSlopeAngleGpVasis>6</valSlopeAngleGpVasis>
+            <valSlopeAngleGpVasis>5.7</valSlopeAngleGpVasis>
             <valMeht>100</valMeht>
             <uomMeht>FT</uomMeht>
             <codeVfrPattern>L</codeVfrPattern>
@@ -2330,13 +2330,13 @@ describe AIXM::Document do
               </FtoUid>
               <txtDesig>35</txtDesig>
             </FdnUid>
-            <valTrueBrg>355</valTrueBrg>
-            <valMagBrg>354</valMagBrg>
+            <valTrueBrg>355.0</valTrueBrg>
+            <valMagBrg>353.92</valMagBrg>
             <codeTypeVasis>PAPI</codeTypeVasis>
             <codePsnVasis>BOTH</codePsnVasis>
             <noBoxVasis>2</noBoxVasis>
             <codePortableVasis>N</codePortableVasis>
-            <valSlopeAngleGpVasis>6</valSlopeAngleGpVasis>
+            <valSlopeAngleGpVasis>5.7</valSlopeAngleGpVasis>
             <valMeht>100</valMeht>
             <uomMeht>FT</uomMeht>
             <txtRmk>Avoid flight over residental area</txtRmk>

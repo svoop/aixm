@@ -103,13 +103,13 @@ describe AIXM::Component::FATO do
             </FtoUid>
             <txtDesig>35</txtDesig>
           </FdnUid>
-          <valTrueBrg>355</valTrueBrg>
-          <valMagBrg>354</valMagBrg>
+          <valTrueBrg>355.0</valTrueBrg>
+          <valMagBrg>353.92</valMagBrg>
           <codeTypeVasis>PAPI</codeTypeVasis>
           <codePsnVasis>BOTH</codePsnVasis>
           <noBoxVasis>2</noBoxVasis>
           <codePortableVasis>N</codePortableVasis>
-          <valSlopeAngleGpVasis>6</valSlopeAngleGpVasis>
+          <valSlopeAngleGpVasis>5.7</valSlopeAngleGpVasis>
           <valMeht>100</valMeht>
           <uomMeht>FT</uomMeht>
           <txtRmk>Avoid flight over residental area</txtRmk>
@@ -182,13 +182,13 @@ describe AIXM::Component::FATO do
             </FtoUid>
             <txtDesig>35</txtDesig>
           </FdnUid>
-          <valTrueBrg>355</valTrueBrg>
-          <valMagBrg>354</valMagBrg>
+          <valTrueBrg>355.0</valTrueBrg>
+          <valMagBrg>353.92</valMagBrg>
           <codeTypeVasis>PAPI</codeTypeVasis>
           <codePsnVasis>BOTH</codePsnVasis>
           <noBoxVasis>2</noBoxVasis>
           <codePortableVasis>N</codePortableVasis>
-          <valSlopeAngleGpVasis>6</valSlopeAngleGpVasis>
+          <valSlopeAngleGpVasis>5.7</valSlopeAngleGpVasis>
           <valMeht>100</valMeht>
           <uomMeht>FT</uomMeht>
           <txtRmk>Avoid flight over residental area</txtRmk>
@@ -228,7 +228,7 @@ describe AIXM::Component::FATO::Direction do
   describe :magnetic_orientation do
     it "is calculated correctly" do
       subject.geographic_orientation = AIXM.a(16)
-      _(subject.magnetic_orientation).must_equal AIXM.a(15)
+      _(subject.magnetic_orientation.to_bearing).must_equal 14.92
     end
   end
 
@@ -246,13 +246,13 @@ describe AIXM::Component::FATO::Direction do
             </FtoUid>
             <txtDesig>35</txtDesig>
           </FdnUid>
-          <valTrueBrg>355</valTrueBrg>
-          <valMagBrg>354</valMagBrg>
+          <valTrueBrg>355.0</valTrueBrg>
+          <valMagBrg>353.92</valMagBrg>
           <codeTypeVasis>PAPI</codeTypeVasis>
           <codePsnVasis>BOTH</codePsnVasis>
           <noBoxVasis>2</noBoxVasis>
           <codePortableVasis>N</codePortableVasis>
-          <valSlopeAngleGpVasis>6</valSlopeAngleGpVasis>
+          <valSlopeAngleGpVasis>5.7</valSlopeAngleGpVasis>
           <valMeht>100</valMeht>
           <uomMeht>FT</uomMeht>
           <txtRmk>Avoid flight over residental area</txtRmk>

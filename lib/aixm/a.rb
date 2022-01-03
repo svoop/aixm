@@ -2,53 +2,47 @@ using AIXM::Refinements
 
 module AIXM
 
-  # Angle from 0 to 359 degrees with an optional suffix used for azimuths,
-  # bearings, headings, courses etc.
+  # Angle in the range of -360 < angle < 360 degrees (used for azimuths or
+  # courses) and with an optional one-letter suffix (used for runways).
   #
-  # @example Initialized with Numeric
-  #   a = AIXM.a(12)   # 12 degrees, 1 degree precision, no suffix
-  #   a.precision      # => 3 (three digits = steps of 1 degree)
-  #   a.to_s           # => "012"
-  #   a.suffix         # => nil
-  #   a.deg            # => 12
-  #   a.deg += 7       # => 19
-  #   a.deg += 341     # => 0     - deg is always within (0..359)
-  #   a.to_s           # => "000" - to_s is always within ("000".."359")
+  # @example Initialization
+  #   AIXM.a(-36.9)   # (-36.9°)
+  #   AIXM.a(12)      # (12°)
+  #   AIXM.a("12L")   # (120° suffix "L")
+  #   AIXM.a(360)     # (0°)
+  #   AIXM.a(-400)    # (-40°)
   #
-  # @example Initialized with String
-  #   a = AIXM.a('06L')   # 60 degrees, 10 degree precision, suffix :L
-  #   a.precision         # => 2 (two digits = steps of 10 degrees)
-  #   a.to_s              # => "06L"
-  #   a.suffix            # => :L
-  #   a.deg               # => 60
-  #   a.deg += 7          # => 70
-  #   a.deg += 190        # => 0     - deg is always within (0..359)
-  #   a.to_s              # => "36L" - to_s converts to ("01".."36")
+  # @example Calculations
+  #   a = AIXM.a("12L")
+  #   a += 20              # (140° suffix "L")
+  #   a -= AIXM.a(162.8)   # (-22.8° suffix "L")
+  #   a.to_s               # => "-22.8°"
+  #   a.to_bearing         # => 337.2
+  #   a.to_course          # => 337
+  #   a.to_runway          # => "34L"
+  #   a.invert             # (157.2° suffix "R")
+  #   a.invert.to_runway   # => "16R"
   class A
     SUFFIX_INVERSIONS = {
       R: :L,
       L: :R
     }.freeze
 
-    # @return [Integer] angle
+    RUNWAY_RE = /\A(0[1-9]|[12]\d|3[0-6])([A-Z])?\z/
+
+    # @return [Integer] angle in the range of -360 < angle < 360
     attr_reader :deg
 
-    # @return [Integer] precision: +2+ (10 degree steps) or +3+ (1 degree steps)
-    attr_reader :precision
-
-    # @return [Symbol, nil] suffix
+    # @return [Symbol, nil] one-letter suffix
     attr_reader :suffix
 
-    def initialize(deg_and_suffix)
-      case deg_and_suffix
-      when Numeric
-        self.deg, @precision = deg_and_suffix, 3
+    def initialize(value)
+      case value
       when String
-        fail(ArgumentError, "invalid angle") unless deg_and_suffix.to_s =~ /\A(\d+)([A-Z]+)?\z/
-        self.deg, @precision, self.suffix = $1.to_i * 10, 2, $2
-      when Symbol   # used only by private build method
-        fail(ArgumentError, "invalid precision") unless %i(2 3).include? deg_and_suffix
-        @deg, @precision = 0, deg_and_suffix.to_s.to_i
+        fail(ArgumentError, "invalid angle") unless value =~ RUNWAY_RE
+        self.deg, self.suffix = $1.to_i * 10, $2
+      when Numeric
+        self.deg = value
       else
         fail(ArgumentError, "invalid angle")
       end
@@ -56,39 +50,62 @@ module AIXM
 
     # @return [String]
     def inspect
-      %Q(#<#{self.class}[precision=#{precision}] #{to_s}>)
+      %Q(#<#{self.class} #{to_s} #{to_runway.inspect}>)
     end
 
-    # @return [String] human readable representation according to precision
-    def to_s
-      if precision == 2
-        [('%02d' % ((deg / 10 + 35) % 36 + 1)), suffix].map(&:to_s).join
-      else
-        ('%03d' % deg)
-      end
+    # Degrees as formatted string
+    #
+    # @param round [Integer] number of decimals to round
+    # @param unit [String] unit to postfix
+    # @return [String]
+    def to_s(round: 4, unit: '°')
+      deg ? [deg.round(round).to_s('F').sub(/\.0$/, ''), unit].join  : ''
+    end
+
+    # Degrees as bearing
+    #
+    # @return [Float] within 0.0000..359.9999
+    def to_bearing
+      ((deg.round(4) + 360) % 360).to_f
+    end
+
+    # Degrees as course (positive Integer)
+    #
+    # @return [Integer] within 0..359
+    def to_course(round: 0)
+      (deg.round + 360) % 360
+    end
+
+    # Degrees and suffix as runway
+    #
+    # @return [String] within "01".."36" plus optional suffix
+    def to_runway
+      deg ? [('%02d' % (((deg / 10).round + 35) % 36 + 1)), suffix].join : ''
     end
 
     def deg=(value)
-      fail(ArgumentError, "invalid deg `#{value}'") unless value.is_a?(Numeric) && value.round.between?(0, 360)
-      @deg = (precision == 2 ? (value.to_f / 10).round * 10 : value.round) % 360
+      fail(ArgumentError, "invalid deg `#{value}'") unless value.is_a? Numeric
+      normalized_value = value.abs % 360
+      sign = '-' if value.negative? && normalized_value.nonzero?
+      @deg = BigDecimal("#{sign}#{normalized_value}")
     end
 
     def suffix=(value)
-      fail(RuntimeError, "suffix only allowed when precision is 2") unless value.nil? || precision == 2
-      fail(ArgumentError, "invalid suffix") unless value.nil? || value.to_s =~ /\A[A-Z]+\z/
+      fail(ArgumentError, "invalid suffix") unless value.nil? || value.to_s =~ /\A[A-Z]\z/
       @suffix = value&.to_s&.to_sym
     end
 
     # Invert an angle by 180 degrees
     #
     # @example
-    #   AIXM.a(120).invert     # => AIXM.a(300)
-    #   AIXM.a("34L").invert   # => AIXM.a("16R")
-    #   AIXM.a("33X").invert   # => AIXM.a("33X")
+    #   AIXM.a(120).invert     # (300°)
+    #   AIXM.a("34L").invert   # (160° suffix "R")
     #
     # @return [AIXM::A] inverted angle
     def invert
-      build(precision: precision, deg: (deg + 180) % 360, suffix: SUFFIX_INVERSIONS.fetch(suffix, suffix))
+      self.class.new(deg.negative? ? deg - 180 : deg + 180).tap do |angle|
+        angle.suffix = SUFFIX_INVERSIONS.fetch(suffix, suffix)
+      end
     end
 
     # Check whether +other+ angle is the inverse
@@ -104,47 +121,47 @@ module AIXM
       invert == other
     end
 
-    # Add degrees
+    # Negate degrees
     #
     # @return [AIXM::A]
-    def +(numeric_or_angle)
-      fail ArgumentError unless numeric_or_angle.respond_to? :round
-      build(precision: precision, deg: (deg + numeric_or_angle.round) % 360, suffix: suffix)
+    def -@
+      deg.zero? ? self : self.class.new(-deg).tap { _1.suffix = suffix }
+    end
+
+    # Add degrees
+    #
+    # @param value [Numeric, AIXM::A]
+    # @return [AIXM::A]
+    def +(value)
+      case value
+      when Numeric
+        value.zero? ? self : self.class.new(deg + value).tap { _1.suffix = suffix }
+      when AIXM::A
+        value.deg.zero? ? self : self.class.new(deg + value.deg).tap { _1.suffix = suffix }
+      else
+        fail ArgumentError
+      end
     end
 
     # Subtract degrees
     #
+    # @param value [Numeric, AIXM::A]
     # @return [AIXM::A]
-    def -(numeric_or_angle)
-      fail ArgumentError unless numeric_or_angle.respond_to? :round
-      build(precision: precision, deg: (deg - numeric_or_angle.round + 360) % 360, suffix: suffix)
-    end
-
-    # @private
-    def round
-      deg
+    def -(value)
+      self + -value
     end
 
     # @see Object#==
     # @return [Boolean]
     def ==(other)
-      self.class === other  && deg == other.deg && precision == other.precision && suffix == other.suffix
+      self.class === other  && deg == other.deg && suffix == other.suffix
     end
     alias_method :eql?, :==
 
     # @see Object#hash
     # @return [Integer]
     def hash
-      to_s.hash
-    end
-
-    private
-
-    def build(precision:, deg:, suffix: nil)
-      self.class.new(precision.to_s.to_sym).tap do |a|
-        a.deg = deg
-        a.suffix = suffix
-      end
+      [deg, suffix].join.hash
     end
   end
 

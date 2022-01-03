@@ -1,11 +1,7 @@
 require_relative '../../spec_helper'
 
 describe AIXM::A do
-  let :subject_2 do
-    AIXM.a('0')
-  end
-
-  let :subject_3 do
+  subject do
     AIXM.a(0)
   end
 
@@ -14,92 +10,149 @@ describe AIXM::A do
       _{ AIXM.a('foobar') }.must_raise ArgumentError
     end
 
-    it "parses String as angle with precision=2" do
-      AIXM.a('34L').tap do |h|
-        _(h.deg).must_equal 340
-        _(h.precision).must_equal 2
-        _(h.suffix).must_equal :L
+    context String do
+      it "accepts angle with suffix" do
+        AIXM.a('34L').tap do |angle|
+          _(angle.deg).must_equal 340
+          _(angle.suffix).must_equal :L
+        end
+      end
+
+      it "accepts angle without suffix" do
+        AIXM.a('16').tap do |angle|
+          _(angle.deg).must_equal 160
+          _(angle.suffix).must_be :nil?
+        end
+      end
+
+      it "fails on invalid values" do
+        ['00', '37', '123R', '12r'].each do |value|
+          _{ AIXM.a(value) }.must_raise ArgumentError
+        end
       end
     end
 
-    it "parses Numeric as angle with precision=3" do
-      AIXM.a(12).tap do |h|
-        _(h.deg).must_equal 12
-        _(h.precision).must_equal 3
-        _(h.suffix).must_be :nil?
+    context Numeric do
+      it "accepts positive angle" do
+        AIXM.a(12).tap do |angle|
+          _(angle.deg).must_equal 12
+          _(angle.suffix).must_be :nil?
+        end
+      end
+
+      it "accepts negative angle" do
+        AIXM.a(-12.7).tap do |angle|
+          _(angle.deg).must_equal -12.7
+          _(angle.suffix).must_be :nil?
+        end
+      end
+
+      it "truncates angles beyond -360 and 360 degrees" do
+        _(AIXM.a(-361).deg).must_equal -1
+        _(AIXM.a(-360).deg).must_equal 0
+        _(AIXM.a(360).deg).must_equal 0
+        _(AIXM.a(361).deg).must_equal 1
       end
     end
   end
 
   describe :to_s do
-    context "precision=2" do
-      it "rounds and zero-pad deg to length 2 and concats suffix" do
-        _(AIXM.a('05').to_s).must_equal '05'
-        _(AIXM.a('05').tap { _1.suffix = :L }.to_s).must_equal '05L'
-        _(AIXM.a('05').tap { _1.deg = 0 }.to_s).must_equal '36'
-      end
+    it "returns degrees in human readable format by default" do
+      _(AIXM.a(151.725555).to_s).must_equal "151.7256°"
     end
 
-    context "precition=3" do
-      it "rounds and zero-pad deg to length 3" do
-        _(AIXM.a(5).to_s).must_equal '005'
-        _(AIXM.a(5).tap { _1.deg = 0 }.to_s).must_equal '000'
+    it "returns degrees with custom rounding" do
+      _(AIXM.a(151.725555).to_s(round: 2)).must_equal "151.73°"
+    end
+
+    it "returns degrees with custom unit postfix" do
+      _(AIXM.a(151).to_s(unit: ' degrees')).must_equal "151 degrees"
+    end
+
+    it "returns values in the range of -360 < value < 360" do
+      { -360 => '0°', -359.9 => '-359.9°', -359 => '-359°', 359 => '359°', 359.9 => '359.9°', 360 => '0°' }.each do |from, to|
+        _(AIXM.a(from).to_s).must_equal to
+      end
+    end
+  end
+
+  describe :to_bearing do
+    it "returns positive Float" do
+      _(AIXM.a(151.7).to_bearing).must_equal 151.7
+      _(AIXM.a(-151.7).to_bearing).must_equal 208.3
+    end
+
+    it "returns values in the range of 0.0000..359.9999" do
+      { -360 => 0.0, -359.9 => 0.1, -359 => 1.0, 359 => 359.0, 359.9 => 359.9, 360 => 0.0 }.each do |from, to|
+        _(AIXM.a(from).to_bearing).must_be_same_as to
+      end
+    end
+  end
+
+  describe :to_course do
+    it "returns positive Integer" do
+      _(AIXM.a(151.7).to_course).must_equal 152
+      _(AIXM.a(-151.7).to_course).must_equal 208
+    end
+
+    it "returns values in the range of 0..359" do
+      { -360 => 0, -359.9 => 0, -359 => 1, 359 => 359, 359.9 => 0, 360 => 0 }.each do |from, to|
+        _(AIXM.a(from).to_course).must_equal to
+      end
+    end
+  end
+
+  describe :to_runway do
+    it "returns String of 10 degrees steps with suffix" do
+      _(AIXM.a('15L').to_runway).must_equal '15L'
+    end
+
+    it "returns String of 10 degrees steps without suffix" do
+      _(AIXM.a(161.7).to_runway).must_equal '16'
+    end
+
+    it 'returns values in the range of "01".."36"' do
+      { 0 => '36', 1 => '36', 10 => '01', 352 => '35', 359 => '36', 360 => '36' }.each do |from, to|
+        _(AIXM.a(from).to_runway).must_equal to
       end
     end
   end
 
   describe :deg= do
     it "fails on invalid values" do
-      _([:foobar, '1', -1, 361]).wont_be_written_to subject_2, :deg
-      _([:foobar, '1', -1, 361]).wont_be_written_to subject_3, :deg
+      _([:foobar, '1', nil]).wont_be_written_to subject, :deg
     end
 
-    context "precision=2" do
-      it "rounds to 10 degree steps" do
-        _(subject_2.tap { _1.deg = 0 }.deg).must_equal 0
-        _(subject_2.tap { _1.deg = 5 }.deg).must_equal 10
-        _(subject_2.tap { _1.deg = 154 }.deg).must_equal 150
-        _(subject_2.tap { _1.deg = 359 }.deg).must_equal 0
-        _(subject_2.tap { _1.deg = 360 }.deg).must_equal 0
-      end
-    end
-
-    context "precision=3" do
-      it "accepts 1 degree steps" do
-        _(subject_3.tap { _1.deg = 0 }.deg).must_equal 0
-        _(subject_3.tap { _1.deg = 5 }.deg).must_equal 5
-        _(subject_3.tap { _1.deg = 154 }.deg).must_equal 154
-        _(subject_3.tap { _1.deg = 359 }.deg).must_equal 359
-        _(subject_3.tap { _1.deg = 360 }.deg).must_equal 0
+    it "truncates values to the range -360 < value < 360" do
+      { -400 => -40.0, -360 => 0.0, -359.9 => -359.9, 359.9 => 359.9, 360 => 0.0, 400 => 40.0 }.each do |from, to|
+        _(AIXM.a(from).deg.to_f).must_be_same_as to
       end
     end
   end
 
   describe :suffix= do
-    context "precision=2" do
-      it "fails on invalid values" do
-        _([123, 'r']).wont_be_written_to subject_2, :suffix
-      end
-
-      it "accepts nil value" do
-        _([nil]).must_be_written_to subject_2, :suffix
-      end
-
-      it "symbolizes valid values" do
-        _(subject_2.tap { _1.suffix = 'Z' }.suffix).must_equal :Z
-      end
+    it "fails on invalid values" do
+      _([123, 'r', 'RR']).wont_be_written_to subject, :suffix
     end
 
-    context "precision=3" do
-      it "always fails" do
-        _{ subject_3.tap { _1.suffix = 'Z' } }.must_raise RuntimeError
-      end
+    it "accepts nil value" do
+      _([nil]).must_be_written_to subject, :suffix
+    end
+
+    it "symbolizes valid values" do
+      _(subject.tap { _1.suffix = 'R' }.suffix).must_equal :R
     end
   end
 
   describe :invert do
-    it "must calculate inverse deg correctly" do
-      { 0 => 180, 90 => 270, 179 => 359, 180 => 0, 270 => 90, 359 => 179, 360 => 180 }.each do |from, to|
+    it "must calculate inverse of positive deg correctly" do
+      { 0 => 180, 10.7 => 190.7, 90 => 270, 179 => 359, 180 => 0 }.each do |from, to|
+        _(AIXM.a(from).invert.deg).must_equal to
+      end
+    end
+
+    it "must calculate inverse of negative deg correctly" do
+      { -359 => -179, -180 => 0, -10.7 => -190.7 }.each do |from, to|
         _(AIXM.a(from).invert.deg).must_equal to
       end
     end
@@ -109,7 +162,7 @@ describe AIXM::A do
     end
 
     it "must leave other suffixes untouched" do
-      _(AIXM.a('35X').invert.suffix).must_equal :X
+      _(AIXM.a('35C').invert.suffix).must_equal :C
     end
   end
 
@@ -123,47 +176,33 @@ describe AIXM::A do
     end
   end
 
-  describe :+ do
-    context "precision=2" do
-      it "adds degrees as Integer" do
-        _((subject_2 + 14)).must_equal AIXM.a('01')
-        _((subject_2 + 16)).must_equal AIXM.a('02')
-        _((subject_2 + 370)).must_equal AIXM.a('01')
-        _((AIXM.a('05L') + 20)).must_equal AIXM.a('07L')
-      end
+  describe :-@ do
+    it "negates the degrees" do
+      _(-AIXM.a(5)).must_equal AIXM.a(-5)
+    end
+  end
 
-      it "adds another angle" do
-        _((AIXM.a('10') + AIXM.a('08'))).must_equal AIXM.a('18')
-      end
+  describe :+ do
+    it "adds Numeric as degrees" do
+      _(subject + 5).must_equal AIXM.a(5)
+      _(subject + 370).must_equal AIXM.a(10)
+      _(AIXM.a(-15) + 30).must_equal AIXM.a(15)
     end
 
-    context "precision=3" do
-      it "adds degrees as Integer" do
-        _((subject_3 + 15)).must_equal AIXM.a(15)
-        _((subject_3 + 370)).must_equal AIXM.a(10)
-      end
+    it "adds another angle" do
+      _(subject + AIXM.a(11)).must_equal AIXM.a(11)
     end
   end
 
   describe :- do
-    context "precision=2" do
-      it "subtracts degrees as Integer" do
-        _((subject_2 - 14)).must_equal AIXM.a('35')
-        _((subject_2 - 16)).must_equal AIXM.a('34')
-        _((AIXM.a('05') - 20)).must_equal AIXM.a('03')
-        _((AIXM.a('05L') - 20)).must_equal AIXM.a('03L')
-      end
-
-      it "subtracts another angle" do
-        _((AIXM.a('10') - AIXM.a('08'))).must_equal AIXM.a('02')
-      end
+    it "subtracts Numeric as degrees" do
+      _(subject - 5).must_equal AIXM.a(-5)
+      _(subject - 370).must_equal AIXM.a(-10)
+      _(AIXM.a(15) - 30).must_equal AIXM.a(-15)
     end
 
-    context "precision=3" do
-      it "subtracts degrees as Integer" do
-        _((subject_3 - 15)).must_equal AIXM.a(345)
-        _((AIXM.a(55) - 20)).must_equal AIXM.a(35)
-      end
+    it "subtracts another angle" do
+      _(subject - AIXM.a(11)).must_equal AIXM.a(-11)
     end
   end
 
@@ -177,27 +216,30 @@ describe AIXM::A do
       _(AIXM.a('34L')).wont_equal AIXM.a('34R')
     end
 
-    it "recognizes angles with different precision as unequal" do
-      _(AIXM.a('34')).wont_equal AIXM.a(340)
-    end
-
     it "recognizes objects of different class as unequal" do
-      _(subject_2).wont_equal :oggy
+      _(subject).wont_equal :oggy
     end
   end
 
   describe :hash do
     it "returns an integer" do
-      _(subject_2.hash).must_be_instance_of Integer
+      _(subject.hash).must_be_instance_of Integer
     end
 
-    it "returns different hashes for different precisions" do
-      _(subject_2.hash).wont_equal subject_3.hash
+    it "returns unique hash based on deg" do
+      _(AIXM.a(10).hash).must_equal AIXM.a(10).hash
+      _(AIXM.a(10).hash).wont_equal AIXM.a(11).hash
+    end
+
+    it "returns unique hash based on suffix" do
+      _(AIXM.a('01L').hash).must_equal AIXM.a('01L').hash
+      _(AIXM.a('01L').hash).wont_equal AIXM.a('01R').hash
+      _(AIXM.a('01L').hash).wont_equal AIXM.a(10).hash
     end
 
     it "allows for the use of instances as hash keys" do
-      dupe = subject_2.dup
-      _({ subject_2 => true }[dupe]).must_equal true
+      dupe = subject.dup
+      _({ subject => true }[dupe]).must_equal true
     end
   end
 end
