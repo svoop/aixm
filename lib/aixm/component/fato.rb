@@ -19,7 +19,7 @@ module AIXM
     #   fato.add_direction(
     #     name: String
     #   ) do |direction|
-    #     direction.geographic_orientation = AIXM.a or nil
+    #     direction.geographic_bearing = AIXM.a or nil
     #     direction.vasis = AIXM.vasis or nil (default: unspecified VASIS)
     #     fato.add_lighting = AIXM.lighting
     #     fato.add_approach_lighting = AIXM.approach_lighting
@@ -180,8 +180,8 @@ module AIXM
         # @return [AIXM::A] name of the FATO direction (e.g. "12" or "16L")
         attr_reader :name
 
-        # @return [AIXM::A, nil] geographic orientation (true bearing) in degrees
-        attr_reader :geographic_orientation
+        # @return [AIXM::A, nil] (true) geographic bearing in degrees
+        attr_reader :geographic_bearing
 
         # @return [AIXM::Component::VASIS, nil] visual approach slope indicator
         #   system
@@ -205,20 +205,20 @@ module AIXM
           @name = AIXM.a(value)
         end
 
-        def geographic_orientation=(value)
-          return @geographic_orientation = nil if value.nil?
-          fail(ArgumentError, "invalid geographic orientation") unless value.is_a? AIXM::A
-          @geographic_orientation = value
+        def geographic_bearing=(value)
+          return @geographic_bearing = nil if value.nil?
+          fail(ArgumentError, "invalid geographic bearing") unless value.is_a? AIXM::A
+          @geographic_bearing = value
         end
 
         def remarks=(value)
           @remarks = value&.to_s
         end
 
-        # @return [AIXM::A] magnetic orientation (magnetic bearing) in degrees
-        def magnetic_orientation
-          if geographic_orientation && fato.airport.declination
-            geographic_orientation - fato.airport.declination
+        # @return [AIXM::A] magnetic bearing in degrees
+        def magnetic_bearing
+          if geographic_bearing && fato.airport.declination
+            geographic_bearing - fato.airport.declination
           end
         end
 
@@ -242,8 +242,8 @@ module AIXM
           builder = Builder::XmlMarkup.new(indent: 2)
           builder.Fdn do |fdn|
             fdn << to_uid.indent(2)
-            fdn.valTrueBrg(geographic_orientation.to_bearing) if geographic_orientation
-            fdn.valMagBrg(magnetic_orientation.to_bearing) if magnetic_orientation
+            fdn.valTrueBrg(geographic_bearing.to_bearing) if geographic_bearing
+            fdn.valMagBrg(magnetic_bearing.to_bearing) if magnetic_bearing
             if vasis
               fdn << vasis.to_xml.indent(2)
             end

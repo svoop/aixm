@@ -8,6 +8,8 @@
 * Replaced `#length`/`#width` with `#dimensions` on `Runway`, `Helipad` and `FATO`
 * Renamed `AIXM::D#dist` to `AIXM::D#dim`
 * Renamed `TLOF#helicopter_class` to `TLOF#performance_class`
+* Renamed `#geographic_orientation` and `#magnetic_orientation` to more familiar
+  `#geographic_bearing` and `#magnetic_bearing` on `Runway` and `FATO`
 * Re-implementation of `AIXM::A` without precision
 
 #### Additions

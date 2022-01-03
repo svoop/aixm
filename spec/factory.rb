@@ -422,7 +422,7 @@ module AIXM
           runway.forth.z = AIXM.z(145, :qnh)
           runway.forth.displaced_threshold = AIXM.xy(lat: %q(44°00'03.54"N), long: %q(004°45'09.30"E))
           runway.forth.vasis = vasis
-          runway.forth.geographic_orientation = AIXM.a(165)
+          runway.forth.geographic_bearing = AIXM.a(165)
           runway.forth.vfr_pattern = :left_or_right
           runway.forth.remarks = "forth remarks"
           runway.forth.add_lighting(lighting)
@@ -431,7 +431,7 @@ module AIXM
           runway.back.z = AIXM.z(147, :qnh)
           runway.back.displaced_threshold = AIXM.xy(lat: %q(43°59'31.84"N), long: %q(004°45'20.85"E))
           runway.back.vasis = vasis
-          runway.back.geographic_orientation = AIXM.a(345)
+          runway.back.geographic_bearing = AIXM.a(345)
           runway.back.vfr_pattern = :left
           runway.back.remarks = "back remarks"
           runway.back.add_lighting(lighting)
@@ -455,7 +455,7 @@ module AIXM
           fato.status = :other
           fato.remarks = "Authorizaton by AD operator required"
           fato.add_direction(name: '35') do |direction|
-            direction.geographic_orientation = AIXM.a(355)
+            direction.geographic_bearing = AIXM.a(355)
             direction.vasis = vasis
             direction.remarks = "Avoid flight over residental area"
             direction.add_lighting(lighting)

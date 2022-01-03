@@ -209,9 +209,9 @@ describe AIXM::Component::FATO::Direction do
     end
   end
 
-  describe :geographic_orientation= do
+  describe :geographic_bearing= do
     it "fails on invalid values" do
-      _([:foobar, -1, 10]).wont_be_written_to subject, :geographic_orientation
+      _([:foobar, -1, 10]).wont_be_written_to subject, :geographic_bearing
     end
   end
 
@@ -225,10 +225,10 @@ describe AIXM::Component::FATO::Direction do
     macro :remarks
   end
 
-  describe :magnetic_orientation do
+  describe :magnetic_bearing do
     it "is calculated correctly" do
-      subject.geographic_orientation = AIXM.a(16)
-      _(subject.magnetic_orientation.to_bearing).must_equal 14.92
+      subject.geographic_bearing = AIXM.a(16)
+      _(subject.magnetic_bearing.to_bearing).must_equal 14.92
     end
   end
 
@@ -300,7 +300,7 @@ describe AIXM::Component::FATO::Direction do
 
     it "builds correct minimal OFMX" do
       AIXM.ofmx!
-      %i(geographic_orientation vasis remarks).each { subject.send(:"#{_1}=", nil) }
+      %i(geographic_bearing vasis remarks).each { subject.send(:"#{_1}=", nil) }
       subject.instance_eval do
         @lightings.clear
         @approach_lightings.clear
