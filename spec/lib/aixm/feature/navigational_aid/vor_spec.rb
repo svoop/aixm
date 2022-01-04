@@ -153,7 +153,7 @@ describe AIXM::Feature::NavigationalAid::VOR do
             <txtRmk>vor/dme navaid</txtRmk>
           </Vor>
           <!-- NavigationalAid: [DME] VVV / VOR/DME NAVAID -->
-          <Dme>
+          <Dme source="LF|GEN|0.0 FACTORY|0|0">
             <DmeUid region="LF">
               <codeId>VVV</codeId>
               <geoLat>47.85916667N</geoLat>
@@ -236,7 +236,7 @@ describe AIXM::Feature::NavigationalAid::VOR do
             <txtRmk>vortac navaid</txtRmk>
           </Vor>
           <!-- NavigationalAid: [TACAN] VVV / VORTAC NAVAID -->
-          <Tcn>
+          <Tcn source="LF|GEN|0.0 FACTORY|0|0">
             <TcnUid region="LF">
               <codeId>VVV</codeId>
               <geoLat>47.85916667N</geoLat>

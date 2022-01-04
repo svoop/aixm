@@ -1753,7 +1753,7 @@ describe AIXM::Document do
             <txtRmk>vor/dme navaid</txtRmk>
           </Vor>
           <!-- NavigationalAid: [DME] VDD / VOR/DME NAVAID -->
-          <Dme>
+          <Dme source="LF|GEN|0.0 FACTORY|0|0">
             <DmeUid region="LF">
               <codeId>VDD</codeId>
               <geoLat>47.85916667N</geoLat>
@@ -1801,7 +1801,7 @@ describe AIXM::Document do
             <txtRmk>vortac navaid</txtRmk>
           </Vor>
           <!-- NavigationalAid: [TACAN] VTT / VORTAC NAVAID -->
-          <Tcn>
+          <Tcn source="LF|GEN|0.0 FACTORY|0|0">
             <TcnUid region="LF">
               <codeId>VTT</codeId>
               <geoLat>47.85916667N</geoLat>
@@ -2731,7 +2731,7 @@ describe AIXM::Document do
             <txtRmk>vor/dme navaid</txtRmk>
           </Vor>
           <!-- NavigationalAid: [DME] VDD / VOR/DME NAVAID -->
-          <Dme>
+          <Dme source="LF|GEN|0.0 FACTORY|0|0">
             <DmeUid region="LF" mid="b7472e9b-ffb7-8248-c481-def8ff81fe1f">
               <codeId>VDD</codeId>
               <geoLat>47.85916667N</geoLat>
@@ -2779,7 +2779,7 @@ describe AIXM::Document do
             <txtRmk>vortac navaid</txtRmk>
           </Vor>
           <!-- NavigationalAid: [TACAN] VTT / VORTAC NAVAID -->
-          <Tcn>
+          <Tcn source="LF|GEN|0.0 FACTORY|0|0">
             <TcnUid region="LF" mid="d352502a-e804-601b-5528-d081e3b5161c">
               <codeId>VTT</codeId>
               <geoLat>47.85916667N</geoLat>

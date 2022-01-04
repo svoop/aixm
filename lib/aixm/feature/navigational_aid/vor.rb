@@ -100,6 +100,7 @@ module AIXM
             send("#{secondary}=",
               AIXM.send(secondary,
                 region: region,
+                source: source,
                 organisation: organisation,
                 id: id,
                 name: name,
