@@ -241,7 +241,7 @@ module AIXM
 
         # @return [String]
         def inspect
-          %Q(#<#{self.class} airport=#{runway&.airport&.id.inspect} name=#{name.inspect}>)
+          %Q(#<#{self.class} airport=#{runway&.airport&.id.inspect} name=#{name.to_s(:runway).inspect}>)
         end
 
         def name=(value)
@@ -304,7 +304,7 @@ module AIXM
           builder = Builder::XmlMarkup.new(indent: 2)
           builder.RdnUid do |rdn_uid|
             rdn_uid << runway.to_uid.indent(2)
-            rdn_uid.txtDesig(name.to_runway)
+            rdn_uid.txtDesig(name.to_s(:runway))
           end
         end
         memoize :to_uid
@@ -316,8 +316,8 @@ module AIXM
             rdn << to_uid.indent(2)
             rdn.geoLat(xy.lat(AIXM.schema))
             rdn.geoLong(xy.long(AIXM.schema))
-            rdn.valTrueBrg(geographic_bearing.to_bearing) if geographic_bearing
-            rdn.valMagBrg(magnetic_bearing.to_bearing) if magnetic_bearing
+            rdn.valTrueBrg(geographic_bearing.to_s(:bearing)) if geographic_bearing
+            rdn.valMagBrg(magnetic_bearing.to_s(:bearing)) if magnetic_bearing
             if z
               rdn.valElevTdz(z.alt)
               rdn.uomElevTdz(z.unit.upcase.to_s)

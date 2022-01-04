@@ -56,64 +56,70 @@ describe AIXM::A do
     end
   end
 
-  describe :to_s do
-    it "returns degrees in human readable format by default" do
-      _(AIXM.a(151.725555).to_s).must_equal "151.7256°"
-    end
-
-    it "returns degrees with custom rounding" do
-      _(AIXM.a(151.725555).to_s(round: 2)).must_equal "151.73°"
-    end
-
-    it "returns degrees with custom unit postfix" do
-      _(AIXM.a(151).to_s(unit: ' degrees')).must_equal "151 degrees"
-    end
-
-    it "returns values in the range of -360 < value < 360" do
-      { -360 => '0°', -359.9 => '-359.9°', -359 => '-359°', 359 => '359°', 359.9 => '359.9°', 360 => '0°' }.each do |from, to|
-        _(AIXM.a(from).to_s).must_equal to
-      end
-    end
-  end
-
-  describe :to_bearing do
-    it "returns positive Float" do
-      _(AIXM.a(151.7).to_bearing).must_equal 151.7
-      _(AIXM.a(-151.7).to_bearing).must_equal 208.3
-    end
-
-    it "returns values in the range of 0.0000..359.9999" do
-      { -360 => 0.0, -359.9 => 0.1, -359 => 1.0, 359 => 359.0, 359.9 => 359.9, 360 => 0.0 }.each do |from, to|
-        _(AIXM.a(from).to_bearing).must_be_same_as to
-      end
-    end
-  end
-
-  describe :to_course do
+  describe :to_i do
     it "returns positive Integer" do
-      _(AIXM.a(151.7).to_course).must_equal 152
-      _(AIXM.a(-151.7).to_course).must_equal 208
+      _(AIXM.a(151.7).to_i).must_equal 152
+      _(AIXM.a(-151.7).to_i).must_equal 208
     end
 
     it "returns values in the range of 0..359" do
       { -360 => 0, -359.9 => 0, -359 => 1, 359 => 359, 359.9 => 0, 360 => 0 }.each do |from, to|
-        _(AIXM.a(from).to_course).must_equal to
+        _(AIXM.a(from).to_i).must_equal to
       end
     end
   end
 
-  describe :to_runway do
-    it "returns String of 10 degrees steps with suffix" do
-      _(AIXM.a('15L').to_runway).must_equal '15L'
+  describe :to_f do
+    it "returns positive Float" do
+      _(AIXM.a(151.7).to_f).must_equal 151.7
+      _(AIXM.a(-151.7).to_f).must_equal 208.3
     end
 
-    it "returns String of 10 degrees steps without suffix" do
-      _(AIXM.a(161.7).to_runway).must_equal '16'
+    it "returns values in the range of 0.0..359.9~" do
+      { -360 => 0.0, -359.9 => 0.1, -359 => 1.0, 359 => 359.0, 359.9 => 359.9, 360 => 0.0 }.each do |from, to|
+        _(AIXM.a(from).to_f).must_be_same_as to
+      end
+    end
+  end
+
+  describe :to_s do
+    context "type :human" do
+      it "returns String of degrees in human readable form" do
+        _(AIXM.a(151.72).to_s).must_equal "151.72°"
+      end
+
+      it "returns values within -359.9~°..359.9~°" do
+        { -360 => '0°', -359.9 => '-359.9°', -359 => '-359°', 359 => '359°', 359.9 => '359.9°', 360 => '0°' }.each do |from, to|
+          _(AIXM.a(from).to_s).must_equal to
+        end
+      end
     end
 
-    it 'returns values in the range of "01".."36"' do
-      { 0 => '36', 1 => '36', 10 => '01', 352 => '35', 359 => '36', 360 => '36' }.each do |from, to|
-        _(AIXM.a(from).to_runway).must_equal to
+    context "type :runway" do
+      it "returns String of 10 degrees steps with suffix" do
+        _(AIXM.a('15L').to_s(:runway)).must_equal '15L'
+      end
+
+      it "returns String of 10 degrees steps without suffix" do
+        _(AIXM.a(161.7).to_s(:runway)).must_equal '16'
+      end
+
+      it 'returns values within "01".."36"' do
+        { 0 => '36', 1 => '36', 10 => '01', 352 => '35', 359 => '36', 360 => '36' }.each do |from, to|
+          _(AIXM.a(from).to_s(:runway)).must_equal to
+        end
+      end
+    end
+
+    context "type :bearing" do
+      it "returns String of zero-padded degrees" do
+        _(AIXM.a(51.72).to_s(:bearing)).must_equal '051.7200'
+      end
+
+      it 'returns values within "000.0000".."359.9999"' do
+        { 0 => '000.0000', 1 => '001.0000', 10 => '010.0000', 352.3 => '352.3000', 352.55555 => '352.5556', 359.9999 => '359.9999', 360 => '000.0000' }.each do |from, to|
+          _(AIXM.a(from).to_s(:bearing)).must_equal to
+        end
       end
     end
   end

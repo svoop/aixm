@@ -260,8 +260,8 @@ describe AIXM::Document do
             </RdnUid>
             <geoLat>440007.63N</geoLat>
             <geoLong>0044507.81E</geoLong>
-            <valTrueBrg>165.0</valTrueBrg>
-            <valMagBrg>163.92</valMagBrg>
+            <valTrueBrg>165.0000</valTrueBrg>
+            <valMagBrg>163.9200</valMagBrg>
             <valElevTdz>145</valElevTdz>
             <uomElevTdz>FT</uomElevTdz>
             <codeTypeVasis>PAPI</codeTypeVasis>
@@ -342,8 +342,8 @@ describe AIXM::Document do
             </RdnUid>
             <geoLat>435925.31N</geoLat>
             <geoLong>0044523.24E</geoLong>
-            <valTrueBrg>345.0</valTrueBrg>
-            <valMagBrg>343.92</valMagBrg>
+            <valTrueBrg>345.0000</valTrueBrg>
+            <valMagBrg>343.9200</valMagBrg>
             <valElevTdz>147</valElevTdz>
             <uomElevTdz>FT</uomElevTdz>
             <codeTypeVasis>PAPI</codeTypeVasis>
@@ -452,8 +452,8 @@ describe AIXM::Document do
               </FtoUid>
               <txtDesig>35</txtDesig>
             </FdnUid>
-            <valTrueBrg>355.0</valTrueBrg>
-            <valMagBrg>353.92</valMagBrg>
+            <valTrueBrg>355.0000</valTrueBrg>
+            <valMagBrg>353.9200</valMagBrg>
             <codeTypeVasis>PAPI</codeTypeVasis>
             <codePsnVasis>BOTH</codePsnVasis>
             <noBoxVasis>2</noBoxVasis>
@@ -1160,8 +1160,8 @@ describe AIXM::Document do
             </RdnUid>
             <geoLat>44.00211944N</geoLat>
             <geoLong>004.75216944E</geoLong>
-            <valTrueBrg>165.0</valTrueBrg>
-            <valMagBrg>163.92</valMagBrg>
+            <valTrueBrg>165.0000</valTrueBrg>
+            <valMagBrg>163.9200</valMagBrg>
             <valElevTdz>145</valElevTdz>
             <uomElevTdz>FT</uomElevTdz>
             <codeTypeVasis>PAPI</codeTypeVasis>
@@ -1242,8 +1242,8 @@ describe AIXM::Document do
             </RdnUid>
             <geoLat>43.99036389N</geoLat>
             <geoLong>004.75645556E</geoLong>
-            <valTrueBrg>345.0</valTrueBrg>
-            <valMagBrg>343.92</valMagBrg>
+            <valTrueBrg>345.0000</valTrueBrg>
+            <valMagBrg>343.9200</valMagBrg>
             <valElevTdz>147</valElevTdz>
             <uomElevTdz>FT</uomElevTdz>
             <codeTypeVasis>PAPI</codeTypeVasis>
@@ -1352,8 +1352,8 @@ describe AIXM::Document do
               </FtoUid>
               <txtDesig>35</txtDesig>
             </FdnUid>
-            <valTrueBrg>355.0</valTrueBrg>
-            <valMagBrg>353.92</valMagBrg>
+            <valTrueBrg>355.0000</valTrueBrg>
+            <valMagBrg>353.9200</valMagBrg>
             <codeTypeVasis>PAPI</codeTypeVasis>
             <codePsnVasis>BOTH</codePsnVasis>
             <noBoxVasis>2</noBoxVasis>
@@ -2138,8 +2138,8 @@ describe AIXM::Document do
             </RdnUid>
             <geoLat>44.00211944N</geoLat>
             <geoLong>004.75216944E</geoLong>
-            <valTrueBrg>165.0</valTrueBrg>
-            <valMagBrg>163.92</valMagBrg>
+            <valTrueBrg>165.0000</valTrueBrg>
+            <valMagBrg>163.9200</valMagBrg>
             <valElevTdz>145</valElevTdz>
             <uomElevTdz>FT</uomElevTdz>
             <codeTypeVasis>PAPI</codeTypeVasis>
@@ -2220,8 +2220,8 @@ describe AIXM::Document do
             </RdnUid>
             <geoLat>43.99036389N</geoLat>
             <geoLong>004.75645556E</geoLong>
-            <valTrueBrg>345.0</valTrueBrg>
-            <valMagBrg>343.92</valMagBrg>
+            <valTrueBrg>345.0000</valTrueBrg>
+            <valMagBrg>343.9200</valMagBrg>
             <valElevTdz>147</valElevTdz>
             <uomElevTdz>FT</uomElevTdz>
             <codeTypeVasis>PAPI</codeTypeVasis>
@@ -2330,8 +2330,8 @@ describe AIXM::Document do
               </FtoUid>
               <txtDesig>35</txtDesig>
             </FdnUid>
-            <valTrueBrg>355.0</valTrueBrg>
-            <valMagBrg>353.92</valMagBrg>
+            <valTrueBrg>355.0000</valTrueBrg>
+            <valMagBrg>353.9200</valMagBrg>
             <codeTypeVasis>PAPI</codeTypeVasis>
             <codePsnVasis>BOTH</codePsnVasis>
             <noBoxVasis>2</noBoxVasis>

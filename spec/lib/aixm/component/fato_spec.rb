@@ -103,8 +103,8 @@ describe AIXM::Component::FATO do
             </FtoUid>
             <txtDesig>35</txtDesig>
           </FdnUid>
-          <valTrueBrg>355.0</valTrueBrg>
-          <valMagBrg>353.92</valMagBrg>
+          <valTrueBrg>355.0000</valTrueBrg>
+          <valMagBrg>353.9200</valMagBrg>
           <codeTypeVasis>PAPI</codeTypeVasis>
           <codePsnVasis>BOTH</codePsnVasis>
           <noBoxVasis>2</noBoxVasis>
@@ -182,8 +182,8 @@ describe AIXM::Component::FATO do
             </FtoUid>
             <txtDesig>35</txtDesig>
           </FdnUid>
-          <valTrueBrg>355.0</valTrueBrg>
-          <valMagBrg>353.92</valMagBrg>
+          <valTrueBrg>355.0000</valTrueBrg>
+          <valMagBrg>353.9200</valMagBrg>
           <codeTypeVasis>PAPI</codeTypeVasis>
           <codePsnVasis>BOTH</codePsnVasis>
           <noBoxVasis>2</noBoxVasis>
@@ -228,7 +228,12 @@ describe AIXM::Component::FATO::Direction do
   describe :magnetic_bearing do
     it "is calculated correctly" do
       subject.geographic_bearing = AIXM.a(16)
-      _(subject.magnetic_bearing.to_bearing).must_equal 14.92
+      _(subject.magnetic_bearing.to_s(:bearing)).must_equal "014.9200"
+    end
+
+    it "is formatted correctly" do
+      subject.geographic_bearing = AIXM.a(16)
+      _(subject.to_xml).must_match %r(<valMagBrg>014.9200</valMagBrg>)
     end
   end
 
@@ -246,8 +251,8 @@ describe AIXM::Component::FATO::Direction do
             </FtoUid>
             <txtDesig>35</txtDesig>
           </FdnUid>
-          <valTrueBrg>355.0</valTrueBrg>
-          <valMagBrg>353.92</valMagBrg>
+          <valTrueBrg>355.0000</valTrueBrg>
+          <valMagBrg>353.9200</valMagBrg>
           <codeTypeVasis>PAPI</codeTypeVasis>
           <codePsnVasis>BOTH</codePsnVasis>
           <noBoxVasis>2</noBoxVasis>

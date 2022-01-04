@@ -197,7 +197,7 @@ module AIXM
 
         # @return [String]
         def inspect
-          %Q(#<#{self.class} airport=#{fato&.airport&.id.inspect} name=#{name.inspect}>)
+          %Q(#<#{self.class} airport=#{fato&.airport&.id.inspect} name=#{name.to_s(:runway).inspect}>)
         end
 
         def name=(value)
@@ -232,7 +232,7 @@ module AIXM
           builder = Builder::XmlMarkup.new(indent: 2)
           builder.FdnUid do |fdn_uid|
             fdn_uid << fato.to_uid.indent(2)
-            fdn_uid.txtDesig(name.to_runway)
+            fdn_uid.txtDesig(name.to_s(:runway))
           end
         end
         memoize :to_uid
@@ -242,8 +242,8 @@ module AIXM
           builder = Builder::XmlMarkup.new(indent: 2)
           builder.Fdn do |fdn|
             fdn << to_uid.indent(2)
-            fdn.valTrueBrg(geographic_bearing.to_bearing) if geographic_bearing
-            fdn.valMagBrg(magnetic_bearing.to_bearing) if magnetic_bearing
+            fdn.valTrueBrg(geographic_bearing.to_s(:bearing)) if geographic_bearing
+            fdn.valMagBrg(magnetic_bearing.to_s(:bearing)) if magnetic_bearing
             if vasis
               fdn << vasis.to_xml.indent(2)
             end

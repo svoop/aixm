@@ -93,7 +93,7 @@ module AIXM
         builder.codePsnVasis(POSITIONS.key(position).to_s) if position
         builder.noBoxVasis(boxes.to_s) if boxes
         builder.codePortableVasis(portable ? 'Y' : 'N') unless portable.nil?
-        builder.valSlopeAngleGpVasis(slope_angle.to_bearing) if slope_angle
+        builder.valSlopeAngleGpVasis(slope_angle.to_f) if slope_angle
         if meht
           builder.valMeht(meht.alt.to_s)
           builder.uomMeht('FT')

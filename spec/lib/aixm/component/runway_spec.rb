@@ -110,8 +110,8 @@ describe AIXM::Component::Runway do
           </RdnUid>
           <geoLat>44.00211944N</geoLat>
           <geoLong>004.75216944E</geoLong>
-          <valTrueBrg>165.0</valTrueBrg>
-          <valMagBrg>163.92</valMagBrg>
+          <valTrueBrg>165.0000</valTrueBrg>
+          <valMagBrg>163.9200</valMagBrg>
           <valElevTdz>145</valElevTdz>
           <uomElevTdz>FT</uomElevTdz>
           <codeTypeVasis>PAPI</codeTypeVasis>
@@ -192,8 +192,8 @@ describe AIXM::Component::Runway do
           </RdnUid>
           <geoLat>43.99036389N</geoLat>
           <geoLong>004.75645556E</geoLong>
-          <valTrueBrg>345.0</valTrueBrg>
-          <valMagBrg>343.92</valMagBrg>
+          <valTrueBrg>345.0000</valTrueBrg>
+          <valMagBrg>343.9200</valMagBrg>
           <valElevTdz>147</valElevTdz>
           <uomElevTdz>FT</uomElevTdz>
           <codeTypeVasis>PAPI</codeTypeVasis>
@@ -296,8 +296,8 @@ describe AIXM::Component::Runway do
           </RdnUid>
           <geoLat>44.00211944N</geoLat>
           <geoLong>004.75216944E</geoLong>
-          <valTrueBrg>165.0</valTrueBrg>
-          <valMagBrg>163.92</valMagBrg>
+          <valTrueBrg>165.0000</valTrueBrg>
+          <valMagBrg>163.9200</valMagBrg>
           <valElevTdz>145</valElevTdz>
           <uomElevTdz>FT</uomElevTdz>
           <codeTypeVasis>PAPI</codeTypeVasis>
@@ -340,8 +340,8 @@ describe AIXM::Component::Runway do
           </RdnUid>
           <geoLat>43.99036389N</geoLat>
           <geoLong>004.75645556E</geoLong>
-          <valTrueBrg>345.0</valTrueBrg>
-          <valMagBrg>343.92</valMagBrg>
+          <valTrueBrg>345.0000</valTrueBrg>
+          <valMagBrg>343.9200</valMagBrg>
           <valElevTdz>147</valElevTdz>
           <uomElevTdz>FT</uomElevTdz>
           <codeTypeVasis>PAPI</codeTypeVasis>
@@ -388,9 +388,9 @@ describe AIXM::Component::Runway::Direction do
     end
 
     it "overwrites preset name" do
-      _(subject.name.to_runway).must_equal '16L'
+      _(subject.name.to_s(:runway)).must_equal '16L'
       subject.name = AIXM.a('34L')
-      _(subject.name.to_runway).must_equal '34L'
+      _(subject.name.to_s(:runway)).must_equal '34L'
     end
   end
 
@@ -456,7 +456,12 @@ describe AIXM::Component::Runway::Direction do
   describe :magnetic_bearing do
     it "is calculated correctly" do
       subject.geographic_bearing = AIXM.a(16)
-      _(subject.magnetic_bearing.to_bearing).must_equal 14.92
+      _(subject.magnetic_bearing.to_s(:bearing)).must_equal '014.9200'
+    end
+
+    it "is formatted correctly" do
+      subject.geographic_bearing = AIXM.a(16)
+      _(subject.to_xml).must_match %r(<valMagBrg>014.9200</valMagBrg>)
     end
   end
 
@@ -476,8 +481,8 @@ describe AIXM::Component::Runway::Direction do
           </RdnUid>
           <geoLat>44.00211944N</geoLat>
           <geoLong>004.75216944E</geoLong>
-          <valTrueBrg>165.0</valTrueBrg>
-          <valMagBrg>163.92</valMagBrg>
+          <valTrueBrg>165.0000</valTrueBrg>
+          <valMagBrg>163.9200</valMagBrg>
           <valElevTdz>145</valElevTdz>
           <uomElevTdz>FT</uomElevTdz>
           <codeTypeVasis>PAPI</codeTypeVasis>
