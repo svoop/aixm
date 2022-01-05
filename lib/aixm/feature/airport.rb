@@ -27,6 +27,7 @@ module AIXM
     #   airport.add_fato(AIXM.fato)
     #   airport.add_helipad(AIXM.helipad)
     #   airport.add_usage_limitation(UsageLimitation::TYPES)
+    #   airport.add_unit(AIXM.unit)
     #   airport.add_address(AIXM.address)
     #
     # For airports without an +id+, you may assign the two character region
