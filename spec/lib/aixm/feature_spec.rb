@@ -12,6 +12,12 @@ describe AIXM::Feature do
     end
   end
 
+  describe :meta do
+    it "accepts any value" do
+      _([:foobar, 123, Object.new]).must_be_written_to subject, :meta
+    end
+  end
+
   describe :source= do
     it "fails on invalid values" do
       _([:foobar, 123]).wont_be_written_to subject, :source

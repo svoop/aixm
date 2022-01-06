@@ -1,7 +1,7 @@
 using AIXM::Refinements
 
 module AIXM
-  module Component
+  class Component
 
     # Each airspace has one or more layers with optional airspace class and
     # mandatory vertical limit.
@@ -19,7 +19,7 @@ module AIXM
     #   layer.add_service(AIXM.service)
     #
     # @see https://gitlab.com/openflightmaps/ofmx/wikis/Airspace
-    class Layer
+    class Layer < Component
       include AIXM::Association
 
       CLASSES = (:A..:G).freeze

@@ -1,7 +1,7 @@
 using AIXM::Refinements
 
 module AIXM
-  module Component
+  class Component
 
     # Geometries define a 3D airspace horizontally.
     #
@@ -26,7 +26,7 @@ module AIXM
     #   geometry.add_segment(AIXM.point(...))
     #
     # @see https://gitlab.com/openflightmaps/ofmx/wikis/Airspace#avx-border-vertex
-    class Geometry
+    class Geometry < Component
       include AIXM::Association
 
       # @!method segments

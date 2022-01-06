@@ -1,7 +1,7 @@
 using AIXM::Refinements
 
 module AIXM
-  module Component
+  class Component
 
     # Address or similar means to contact an entity.
     #
@@ -13,7 +13,7 @@ module AIXM
     #   address.remarks = String or nil
     #
     # @see https://gitlab.com/openflightmaps/ofmx/wikis/Airport#aha-airport-address
-    class Address
+    class Address < Component
       include AIXM::Association
       include AIXM::Memoize
 

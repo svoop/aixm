@@ -1,7 +1,7 @@
 using AIXM::Refinements
 
 module AIXM
-  module Component
+  class Component
 
     # Vertical limit defines a 3D airspace vertically. It is often noted in
     # AIP as follows:
@@ -25,7 +25,7 @@ module AIXM
     # * +AIXM::UNLIMITED+ - no upper limit expressed as "FL 999"
     #
     # @see https://gitlab.com/openflightmaps/ofmx/wikis/Airspace#ase-airspace
-    class VerticalLimit
+    class VerticalLimit < Component
       include AIXM::Association
 
       # @api private

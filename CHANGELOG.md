@@ -18,6 +18,7 @@
 * `Runway#marking`
 * `ApproachLighting` on `Runway::Direction` and `FATO::Direction`
 * `VASIS` on `Runway::Direction` and `FATO::Direction`
+* `#meta` on every feature and component
 
 #### Changes
 * Nested memoization of the same method is now allowed and won't reset the

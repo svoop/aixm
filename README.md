@@ -47,7 +47,7 @@ gem install aixm --trust-policy MediumSecurity
 
 ## Usage
 
-Here's how to build a document object, populate it with a simple feature and then render it as AIXM:
+Here's how to build a document object, populate it with a simple feature and then render it as AIXM or OFMX:
 
 ```ruby
 document = AIXM.document(
@@ -212,6 +212,14 @@ document.features.find(airport)   # => [#<AIXM::Feature::Airport>]
 ```
 
 This may seem redundant at first, but keep in mind that two instances of +AIXM::CLASSES+ which implement `#to_uid` are considered equal if they are instances of the same class and both their UIDs as calculated by `#to_uid` are equal. Attributes which are not part of the `#to_uid` calculation are irrelevant!
+
+### meta
+
+You can write arbitrary meta information to any feature or component. It won't be used when building the AIXM or OFMX document, in fact, it is not used by this gem at all. But you can store e.g. foreign keys and then later use them to find a feature or component like so:
+
+```ruby
+document.features.find_by(:airport, meta: 1234)   # 1234 is the foreign key
+```
 
 ### duplicates
 

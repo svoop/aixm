@@ -1,7 +1,7 @@
 using AIXM::Refinements
 
 module AIXM
-  module Component
+  class Component
 
     # Surface of a runway, helipad etc
     #
@@ -22,7 +22,7 @@ module AIXM
     # @see https://gitlab.com/openflightmaps/ofmx/wikis/Airport#rwy-runway
     # @see https://gitlab.com/openflightmaps/ofmx/wikis/Airport#tla-helipad-tlof
     # @see https://gitlab.com/openflightmaps/ofmx/wikis/Airport#fto-fato
-    class Surface
+    class Surface < Component
       COMPOSITIONS = {
         ASPH: :asphalt,
         BITUM: :bitumen,        # dug up, bound and rolled ground

@@ -1,7 +1,7 @@
 using AIXM::Refinements
 
 module AIXM
-  module Component
+  class Component
 
     # Approach lighting system (ALS)
     #
@@ -16,7 +16,7 @@ module AIXM
     #   approach_lighting.remarks = String or nil
     #
     # @see https://gitlab.com/openflightmaps/ofmx/wikis/Airport#rda-runway-direction-approach-lighting
-    class ApproachLighting
+    class ApproachLighting < Component
       include AIXM::Association
       include AIXM::Memoize
 

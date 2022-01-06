@@ -1,7 +1,7 @@
 using AIXM::Refinements
 
 module AIXM
-  module Component
+  class Component
 
     # Visual approach slope indicator system
     #
@@ -16,7 +16,7 @@ module AIXM
     #
     # @see https://gitlab.com/openflightmaps/ofmx/wikis/Airport#rdn-runway-direction
     # @see https://gitlab.com/openflightmaps/ofmx/wikis/Airport#fdn-fato-direction
-    class VASIS
+    class VASIS < Component
       TYPES = {
         PAPI: :precision_api,
         APAPI: :abbreviated_precision_api,

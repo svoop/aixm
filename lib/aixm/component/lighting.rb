@@ -1,7 +1,7 @@
 using AIXM::Refinements
 
 module AIXM
-  module Component
+  class Component
 
     # Lighting of a runway, helipad etc
     #
@@ -17,7 +17,7 @@ module AIXM
     # @see https://gitlab.com/openflightmaps/ofmx/wikis/Airport#rls-runway-direction-lighting
     # @see https://gitlab.com/openflightmaps/ofmx/wikis/Airport#fls-fato-direction-lighting
     # @see https://gitlab.com/openflightmaps/ofmx/wikis/Airport#tls-helipad-tlof-lighting
-    class Lighting
+    class Lighting < Component
       include AIXM::Association
       include AIXM::Memoize
 

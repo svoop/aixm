@@ -1,7 +1,7 @@
 using AIXM::Refinements
 
 module AIXM
-  module Component
+  class Component
 
     # Timetables define activity time windows.
     #
@@ -18,7 +18,7 @@ module AIXM
     # * +AIXM::H_RE+ - pattern matching working hour codes
     #
     # @see https://gitlab.com/openflightmaps/ofmx/wikis/Timetable#predefined-timetable
-    class Timetable
+    class Timetable < Component
       CODES = {
         H24: :continuous,           # all day and all night
         HJ: :sunrise_to_sunset,     # all day

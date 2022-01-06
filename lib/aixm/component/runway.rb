@@ -1,7 +1,7 @@
 using AIXM::Refinements
 
 module AIXM
-  module Component
+  class Component
 
     # Runways are landing and takeoff strips for forward propelled aircraft.
     #
@@ -48,7 +48,7 @@ module AIXM
     #   runway.back = nil
     #
     # @see https://gitlab.com/openflightmaps/ofmx/wikis/Airport#rwy-runway
-    class Runway
+    class Runway < Component
       include AIXM::Association
       include AIXM::Memoize
 

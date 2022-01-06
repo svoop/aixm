@@ -1,7 +1,7 @@
 using AIXM::Refinements
 
 module AIXM
-  module Component
+  class Component
 
     # Voice frequencies used by a service.
     #
@@ -21,7 +21,7 @@ module AIXM
     #   frequency.remarks = String or nil
     #
     # @see https://gitlab.com/openflightmaps/ofmx/wikis/Organisation#fqy-frequency
-    class Frequency
+    class Frequency < Component
       include AIXM::Association
       include AIXM::Memoize
 

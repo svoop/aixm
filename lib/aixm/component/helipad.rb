@@ -1,7 +1,7 @@
 using AIXM::Refinements
 
 module AIXM
-  module Component
+  class Component
 
     # Helipads are TLOF (touch-down and lift-off areas) for vertical take-off
     # aircraft such as helicopters.
@@ -22,7 +22,7 @@ module AIXM
     #   helipad.remarks = String or nil
     #
     # @see https://gitlab.com/openflightmaps/ofmx/wikis/Airport#tla-helipad-tlof
-    class Helipad
+    class Helipad < Component
       include AIXM::Association
       include AIXM::Memoize
 

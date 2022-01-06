@@ -1,7 +1,7 @@
 using AIXM::Refinements
 
 module AIXM
-  module Component
+  class Component
     class Geometry
 
       # Either an individual point or the starting point of a great circle

@@ -1,7 +1,7 @@
 using AIXM::Refinements
 
 module AIXM
-  module Component
+  class Component
     class Geometry
 
       # Starting point of a rhumb line which describes a spiral on a sphere

@@ -1,7 +1,7 @@
 using AIXM::Refinements
 
 module AIXM
-  module Component
+  class Component
 
     # Service provided by a unit.
     #
@@ -14,7 +14,7 @@ module AIXM
     #   service.add_frequency(AIXM.frequency)
     #
     # @see https://gitlab.com/openflightmaps/ofmx/wikis/Organisation#ser-service
-    class Service
+    class Service < Component
       include AIXM::Association
       include AIXM::Memoize
 

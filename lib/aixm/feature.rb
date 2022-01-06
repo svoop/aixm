@@ -6,6 +6,9 @@ module AIXM
 
     private_class_method :new
 
+    # @return [Object] freely usable e.g. to find_by foreign keys
+    attr_accessor :meta
+
     # @return [String] reference to source of the feature data
     attr_reader :source
 

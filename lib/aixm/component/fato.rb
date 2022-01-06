@@ -1,7 +1,7 @@
 using AIXM::Refinements
 
 module AIXM
-  module Component
+  class Component
 
     # FATO (final approach and take-off area) for vertical take-off aircraft
     # such as helicopters.
@@ -27,7 +27,7 @@ module AIXM
     #   end
     #
     # @see https://gitlab.com/openflightmaps/ofmx/wikis/Airport#fto-fato
-    class FATO
+    class FATO < Component
       include AIXM::Association
       include AIXM::Memoize
 
