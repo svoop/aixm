@@ -79,8 +79,8 @@ module AIXM
         @cache = {}
       end
 
-      def method(method, &block)
-        send(:"call_with#{:out if cached?(method)}_cache", method, &block)
+      def method(method, &)
+        send(:"call_with#{:out if cached?(method)}_cache", method, &)
       end
 
       private
@@ -89,13 +89,13 @@ module AIXM
         cache.has_key?(method)
       end
 
-      def call_without_cache(method, &block)
-        block.call
+      def call_without_cache(method)
+        yield
       end
 
-      def call_with_cache(method, &block)
+      def call_with_cache(method)
         cache[method] = {}
-        block.call
+        yield
       ensure
         cache.delete(method)
       end

@@ -128,8 +128,8 @@ module AIXM
     #   @note This is a refinement for +Object+
     #   @return [Object]
     refine Object do
-      def then_if(condition, &block)
-        condition ? self.then(&block) : self
+      def then_if(condition, &)
+        condition ? self.then(&) : self
       end
     end
 
