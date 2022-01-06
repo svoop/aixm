@@ -174,7 +174,7 @@ describe AIXM::Refinements do
       end
 
       it "must resolve namespaced class name to class" do
-        _("AIXM::Feature::Address".to_class).must_equal AIXM::Feature::Address
+        _("AIXM::Feature::Airport".to_class).must_equal AIXM::Feature::Airport
       end
     end
 

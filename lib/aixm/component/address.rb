@@ -1,20 +1,19 @@
 using AIXM::Refinements
 
 module AIXM
-  class Feature
+  module Component
 
     # Address or similar means to contact an entity.
     #
     # ===Cheat Sheet in Pseudo Code:
     #   address = AIXM.address(
-    #     source: String or nil
     #     type: TYPES
     #     address: AIXM.f (type :radio_frequency) or String (other types)
     #   )
-    #   service.remarks = String or nil
+    #   address.remarks = String or nil
     #
     # @see https://gitlab.com/openflightmaps/ofmx/wikis/Airport#aha-airport-address
-    class Address < Feature
+    class Address
       include AIXM::Association
       include AIXM::Memoize
 
@@ -49,8 +48,7 @@ module AIXM
       # @return [String, nil] free text remarks
       attr_reader :remarks
 
-      def initialize(source: nil, region: nil, type:, address:)
-        super(source: source, region: region)
+      def initialize(type:, address:)
         self.type, self.address = type, address
       end
 
@@ -93,7 +91,7 @@ module AIXM
       def to_xml(as:, sequence:)
         builder = Builder::XmlMarkup.new(indent: 2)
         builder.comment! ["Address: #{TYPES.key(type)}", addressable&.id].compact.join(' for ')
-        builder.tag!(as, { source: (source if AIXM.ofmx?) }.compact) do |tag|
+        builder.tag!(as) do |tag|
           tag << to_uid(as: :"#{as}Uid", sequence: sequence).indent(2)
           tag.txtAddress(address)
           tag.txtRmk(remarks) if remarks

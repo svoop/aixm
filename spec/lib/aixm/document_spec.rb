@@ -1485,7 +1485,7 @@ describe AIXM::Document do
             </UsageLimitation>
           </Ahu>
           <!-- Address: RADIO for LFNT -->
-          <Aha source="LF|GEN|0.0 FACTORY|0|0">
+          <Aha>
             <AhaUid>
               <AhpUid region="LF">
                 <codeId>LFNT</codeId>
@@ -2463,7 +2463,7 @@ describe AIXM::Document do
             </UsageLimitation>
           </Ahu>
           <!-- Address: RADIO for LFNT -->
-          <Aha source="LF|GEN|0.0 FACTORY|0|0">
+          <Aha>
             <AhaUid mid="ee455495-634c-dac4-dd9e-caf38f64f0ac">
               <AhpUid region="LF" mid="af89d7b7-2ec0-902f-02ba-9e470e42d530">
                 <codeId>LFNT</codeId>

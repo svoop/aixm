@@ -40,7 +40,6 @@ module AIXM
 
       def address
         AIXM.address(
-          source: "LF|GEN|0.0 FACTORY|0|0",
           type: :radio_frequency,
           address: AIXM.f(123.35, :mhz)
         ).tap do |address|

@@ -156,8 +156,8 @@ describe AIXM::Feature::Airport do
   describe :to_xml do
     it "builds correct complete OFMX" do
       AIXM.ofmx!
-      subject.add_address(AIXM.address(source: "LF|GEN|0.0 FACTORY|0|0", type: :url, address: 'https://lfnt.tower.zone'))
-      subject.add_address(AIXM.address(source: "LF|GEN|0.0 FACTORY|0|0", type: :url, address: 'https://planeur-avignon-pujaut.fr'))
+      subject.add_address(AIXM.address(type: :url, address: 'https://lfnt.tower.zone'))
+      subject.add_address(AIXM.address(type: :url, address: 'https://planeur-avignon-pujaut.fr'))
       _(subject.to_xml).must_equal <<~END
         <!-- Airport: LFNT AVIGNON-PUJAUT -->
         <Ahp source="LF|GEN|0.0 FACTORY|0|0">
@@ -548,7 +548,7 @@ describe AIXM::Feature::Airport do
           </UsageLimitation>
         </Ahu>
         <!-- Address: RADIO for LFNT -->
-        <Aha source="LF|GEN|0.0 FACTORY|0|0">
+        <Aha>
           <AhaUid>
             <AhpUid region="LF">
               <codeId>LFNT</codeId>
@@ -560,7 +560,7 @@ describe AIXM::Feature::Airport do
           <txtRmk>A/A (callsign PUJAUT)</txtRmk>
         </Aha>
         <!-- Address: URL for LFNT -->
-        <Aha source="LF|GEN|0.0 FACTORY|0|0">
+        <Aha>
           <AhaUid>
             <AhpUid region="LF">
               <codeId>LFNT</codeId>
@@ -571,7 +571,7 @@ describe AIXM::Feature::Airport do
           <txtAddress>https://lfnt.tower.zone</txtAddress>
         </Aha>
         <!-- Address: URL for LFNT -->
-        <Aha source="LF|GEN|0.0 FACTORY|0|0">
+        <Aha>
           <AhaUid>
             <AhpUid region="LF">
               <codeId>LFNT</codeId>

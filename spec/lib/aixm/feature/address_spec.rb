@@ -1,6 +1,6 @@
 require_relative '../../../spec_helper'
 
-describe AIXM::Feature::Address do
+describe AIXM::Component::Address do
   subject do
     AIXM::Factory.address
   end
@@ -52,7 +52,7 @@ describe AIXM::Feature::Address do
       AIXM.ofmx!
       _(subject.to_xml(as: :Xxx, sequence: 1)).must_equal <<~END
         <!-- Address: RADIO -->
-        <Xxx source="LF|GEN|0.0 FACTORY|0|0">
+        <Xxx>
           <XxxUid>
             <codeType>RADIO</codeType>
             <noSeq>1</noSeq>

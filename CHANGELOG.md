@@ -11,6 +11,7 @@
 * Renamed `#geographic_orientation` and `#magnetic_orientation` to more familiar
   `#geographic_bearing` and `#magnetic_bearing` on `Runway` and `FATO`
 * Re-implementation of `AIXM::A` without precision
+* Demoted `Address` to component
 
 #### Additions
 * `AIXM::R` (rectangle)
