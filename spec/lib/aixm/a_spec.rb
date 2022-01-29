@@ -42,13 +42,13 @@ describe AIXM::A do
 
       it "accepts negative angle" do
         AIXM.a(-12.7).tap do |angle|
-          _(angle.deg).must_equal -12.7
+          _(angle.deg).must_equal(-12.7)
           _(angle.suffix).must_be :nil?
         end
       end
 
       it "truncates angles beyond -360 and 360 degrees" do
-        _(AIXM.a(-361).deg).must_equal -1
+        _(AIXM.a(-361).deg).must_equal(-1)
         _(AIXM.a(-360).deg).must_equal 0
         _(AIXM.a(360).deg).must_equal 0
         _(AIXM.a(361).deg).must_equal 1
