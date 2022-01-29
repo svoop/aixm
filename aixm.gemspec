@@ -1,4 +1,5 @@
-# coding: utf-8
+# frozen_string_literal: true
+
 require_relative 'lib/aixm/version'
 
 Gem::Specification.new do |spec|
