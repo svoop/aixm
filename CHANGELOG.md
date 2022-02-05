@@ -14,6 +14,7 @@
 * Demoted `Address` to component
 
 #### Additions
+* Associations from `Service` to `Airport` and `Airspace`
 * `AIXM::R` (rectangle)
 * `Runway#marking`
 * `ApproachLighting` on `Runway::Direction` and `FATO::Direction`

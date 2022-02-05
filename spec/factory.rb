@@ -108,6 +108,7 @@ module AIXM
           layer.timetable = AIXM::H24
           layer.selective = true
           layer.remarks = 'airspace layer'
+          layer.add_service(unit.services.first)
         end
       end
 
@@ -339,7 +340,6 @@ module AIXM
           type: :aerodrome_control_tower,
           class: :icao
         ).tap do |unit|
-          unit.airport = airport
           unit.remarks = 'FR only'
           unit.add_service(service)
         end
@@ -399,6 +399,8 @@ module AIXM
             reservation_required.timetable = AIXM::H24
             reservation_required.remarks = "reservation remarks"
           end
+          airport.add_unit(unit)
+          airport.add_service(unit.services.first)
           airport.add_address(address)
         end
       end

@@ -202,6 +202,23 @@ describe AIXM::Feature::Airspace do
               </AseUid>
             </SaeUid>
           </Sae>
+          <Sae>
+            <SaeUid>
+              <SerUid>
+                <UniUid region="LF">
+                  <txtName>PUJAUT</txtName>
+                  <codeType>TWR</codeType>
+                </UniUid>
+                <codeType>APP</codeType>
+                <noSeq>1</noSeq>
+              </SerUid>
+              <AseUid region="LF">
+                <codeType>D</codeType>
+                <codeId>PA</codeId>
+                <txtLocalType>POLYGON</txtLocalType>
+              </AseUid>
+            </SaeUid>
+          </Sae>
         END
       end
 
@@ -267,6 +284,22 @@ describe AIXM::Feature::Airspace do
               <codeDatum>WGE</codeDatum>
             </Avx>
           </Abd>
+          <Sae>
+            <SaeUid>
+              <SerUid>
+                <UniUid region="LF">
+                  <txtName>PUJAUT</txtName>
+                  <codeType>TWR</codeType>
+                </UniUid>
+                <codeType>APP</codeType>
+                <noSeq>1</noSeq>
+              </SerUid>
+              <AseUid region="LF">
+                <codeType>D</codeType>
+                <codeId>PA</codeId>
+              </AseUid>
+            </SaeUid>
+          </Sae>
           <Sae>
             <SaeUid>
               <SerUid>
@@ -414,6 +447,22 @@ describe AIXM::Feature::Airspace do
                   <codeType>TWR</codeType>
                 </UniUid>
                 <codeType>APP</codeType>
+                <noSeq>1</noSeq>
+              </SerUid>
+              <AseUid region="LF">
+                <codeType>CLASS</codeType>
+                <codeId>B794588D</codeId>
+              </AseUid>
+            </SaeUid>
+          </Sae>
+          <Sae>
+            <SaeUid>
+              <SerUid>
+                <UniUid region="LF">
+                  <txtName>PUJAUT</txtName>
+                  <codeType>TWR</codeType>
+                </UniUid>
+                <codeType>APP</codeType>
                 <noSeq>2</noSeq>
               </SerUid>
               <AseUid region="LF">
@@ -462,6 +511,22 @@ describe AIXM::Feature::Airspace do
               <txtLocalType>POLYGON</txtLocalType>
             </AseUidSameExtent>
           </Adg>
+          <Sae>
+            <SaeUid>
+              <SerUid>
+                <UniUid region="LF">
+                  <txtName>PUJAUT</txtName>
+                  <codeType>TWR</codeType>
+                </UniUid>
+                <codeType>APP</codeType>
+                <noSeq>1</noSeq>
+              </SerUid>
+              <AseUid region="LF">
+                <codeType>CLASS</codeType>
+                <codeId>64589EAF</codeId>
+              </AseUid>
+            </SaeUid>
+          </Sae>
           <Sae>
             <SaeUid>
               <SerUid>

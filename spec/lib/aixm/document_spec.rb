@@ -150,9 +150,6 @@ describe AIXM::Document do
             <OrgUid>
               <txtName>FRANCE</txtName>
             </OrgUid>
-            <AhpUid>
-              <codeId>LFNT</codeId>
-            </AhpUid>
             <codeType>TWR</codeType>
             <codeClass>ICAO</codeClass>
             <txtRmk>FR only</txtRmk>
@@ -596,6 +593,20 @@ describe AIXM::Document do
             <txtAddress>123.35 mhz</txtAddress>
             <txtRmk>A/A (callsign PUJAUT)</txtRmk>
           </Aha>
+          <Sah>
+            <SahUid>
+              <AhpUid>
+                <codeId>LFNT</codeId>
+              </AhpUid>
+              <SerUid>
+                <UniUid>
+                  <txtName>PUJAUT</txtName>
+                </UniUid>
+                <codeType>APP</codeType>
+                <noSeq>1</noSeq>
+              </SerUid>
+            </SahUid>
+          </Sah>
           <!-- Airspace: [D] POLYGON AIRSPACE -->
           <Ase>
             <AseUid>
@@ -655,6 +666,21 @@ describe AIXM::Document do
               <codeDatum>WGE</codeDatum>
             </Avx>
           </Abd>
+          <Sae>
+            <SaeUid>
+              <SerUid>
+                <UniUid>
+                  <txtName>PUJAUT</txtName>
+                </UniUid>
+                <codeType>APP</codeType>
+                <noSeq>1</noSeq>
+              </SerUid>
+              <AseUid>
+                <codeType>D</codeType>
+                <codeId>PA</codeId>
+              </AseUid>
+            </SaeUid>
+          </Sae>
           <!-- Airspace: [D] CIRCLE AIRSPACE -->
           <Ase>
             <AseUid>
@@ -699,6 +725,21 @@ describe AIXM::Document do
               <geoLongArc>0045300.00E</geoLongArc>
             </Avx>
           </Abd>
+          <Sae>
+            <SaeUid>
+              <SerUid>
+                <UniUid>
+                  <txtName>PUJAUT</txtName>
+                </UniUid>
+                <codeType>APP</codeType>
+                <noSeq>1</noSeq>
+              </SerUid>
+              <AseUid>
+                <codeType>D</codeType>
+                <codeId>CA</codeId>
+              </AseUid>
+            </SaeUid>
+          </Sae>
           <!-- NavigationalAid: [DesignatedPoint:VFR-RP] DDD / DESIGNATED POINT NAVAID -->
           <Dpn>
             <DpnUid>
@@ -1048,9 +1089,6 @@ describe AIXM::Document do
             <OrgUid region="LF">
               <txtName>FRANCE</txtName>
             </OrgUid>
-            <AhpUid region="LF">
-              <codeId>LFNT</codeId>
-            </AhpUid>
             <codeClass>ICAO</codeClass>
             <txtRmk>FR only</txtRmk>
           </Uni>
@@ -1496,6 +1534,21 @@ describe AIXM::Document do
             <txtAddress>123.35 mhz</txtAddress>
             <txtRmk>A/A (callsign PUJAUT)</txtRmk>
           </Aha>
+          <Sah>
+            <SahUid>
+              <AhpUid region="LF">
+                <codeId>LFNT</codeId>
+              </AhpUid>
+              <SerUid>
+                <UniUid region="LF">
+                  <txtName>PUJAUT</txtName>
+                  <codeType>TWR</codeType>
+                </UniUid>
+                <codeType>APP</codeType>
+                <noSeq>1</noSeq>
+              </SerUid>
+            </SahUid>
+          </Sah>
           <!-- Airspace: [D] POLYGON AIRSPACE -->
           <Ase source="LF|GEN|0.0 FACTORY|0|0">
             <AseUid region="LF">
@@ -1557,6 +1610,23 @@ describe AIXM::Document do
               <codeDatum>WGE</codeDatum>
             </Avx>
           </Abd>
+          <Sae>
+            <SaeUid>
+              <SerUid>
+                <UniUid region="LF">
+                  <txtName>PUJAUT</txtName>
+                  <codeType>TWR</codeType>
+                </UniUid>
+                <codeType>APP</codeType>
+                <noSeq>1</noSeq>
+              </SerUid>
+              <AseUid region="LF">
+                <codeType>D</codeType>
+                <codeId>PA</codeId>
+                <txtLocalType>POLYGON</txtLocalType>
+              </AseUid>
+            </SaeUid>
+          </Sae>
           <!-- Airspace: [D] CIRCLE AIRSPACE -->
           <Ase source="LF|GEN|0.0 FACTORY|0|0">
             <AseUid region="LF">
@@ -1603,6 +1673,23 @@ describe AIXM::Document do
               <geoLongArc>004.88333333E</geoLongArc>
             </Avx>
           </Abd>
+          <Sae>
+            <SaeUid>
+              <SerUid>
+                <UniUid region="LF">
+                  <txtName>PUJAUT</txtName>
+                  <codeType>TWR</codeType>
+                </UniUid>
+                <codeType>APP</codeType>
+                <noSeq>1</noSeq>
+              </SerUid>
+              <AseUid region="LF">
+                <codeType>D</codeType>
+                <codeId>CA</codeId>
+                <txtLocalType>CIRCLE</txtLocalType>
+              </AseUid>
+            </SaeUid>
+          </Sae>
           <!-- NavigationalAid: [DesignatedPoint:VFR-RP] DDD / DESIGNATED POINT NAVAID -->
           <Dpn source="LF|GEN|0.0 FACTORY|0|0">
             <DpnUid region="LF">
@@ -2026,9 +2113,6 @@ describe AIXM::Document do
             <OrgUid region="LF" mid="971ba0a9-3714-12d5-d139-d26d5f1d6f25">
               <txtName>FRANCE</txtName>
             </OrgUid>
-            <AhpUid region="LF" mid="af89d7b7-2ec0-902f-02ba-9e470e42d530">
-              <codeId>LFNT</codeId>
-            </AhpUid>
             <codeClass>ICAO</codeClass>
             <txtRmk>FR only</txtRmk>
           </Uni>
@@ -2474,6 +2558,21 @@ describe AIXM::Document do
             <txtAddress>123.35 mhz</txtAddress>
             <txtRmk>A/A (callsign PUJAUT)</txtRmk>
           </Aha>
+          <Sah>
+            <SahUid mid="092e697d-071f-3620-e65b-43ba18803a87">
+              <AhpUid region="LF" mid="af89d7b7-2ec0-902f-02ba-9e470e42d530">
+                <codeId>LFNT</codeId>
+              </AhpUid>
+              <SerUid mid="6fcb48c9-10a7-db3a-68c2-405a9dfbcd30">
+                <UniUid region="LF" mid="43032450-13e4-6f1a-728b-8ba8b5d31c92">
+                  <txtName>PUJAUT</txtName>
+                  <codeType>TWR</codeType>
+                </UniUid>
+                <codeType>APP</codeType>
+                <noSeq>1</noSeq>
+              </SerUid>
+            </SahUid>
+          </Sah>
           <!-- Airspace: [D] POLYGON AIRSPACE -->
           <Ase source="LF|GEN|0.0 FACTORY|0|0">
             <AseUid region="LF" mid="34dad37e-9138-e1cd-0e32-6238ca223e1b">
@@ -2535,6 +2634,23 @@ describe AIXM::Document do
               <codeDatum>WGE</codeDatum>
             </Avx>
           </Abd>
+          <Sae>
+            <SaeUid mid="d1f8c0da-0e53-3352-8f98-4c216eb30c3a">
+              <SerUid mid="6fcb48c9-10a7-db3a-68c2-405a9dfbcd30">
+                <UniUid region="LF" mid="43032450-13e4-6f1a-728b-8ba8b5d31c92">
+                  <txtName>PUJAUT</txtName>
+                  <codeType>TWR</codeType>
+                </UniUid>
+                <codeType>APP</codeType>
+                <noSeq>1</noSeq>
+              </SerUid>
+              <AseUid region="LF" mid="34dad37e-9138-e1cd-0e32-6238ca223e1b">
+                <codeType>D</codeType>
+                <codeId>PA</codeId>
+                <txtLocalType>POLYGON</txtLocalType>
+              </AseUid>
+            </SaeUid>
+          </Sae>
           <!-- Airspace: [D] CIRCLE AIRSPACE -->
           <Ase source="LF|GEN|0.0 FACTORY|0|0">
             <AseUid region="LF" mid="a5377509-1175-3835-a27b-5f7494b5161a">
@@ -2581,6 +2697,23 @@ describe AIXM::Document do
               <geoLongArc>004.88333333E</geoLongArc>
             </Avx>
           </Abd>
+          <Sae>
+            <SaeUid mid="555eca78-6b06-7922-1476-179f8a4501f7">
+              <SerUid mid="6fcb48c9-10a7-db3a-68c2-405a9dfbcd30">
+                <UniUid region="LF" mid="43032450-13e4-6f1a-728b-8ba8b5d31c92">
+                  <txtName>PUJAUT</txtName>
+                  <codeType>TWR</codeType>
+                </UniUid>
+                <codeType>APP</codeType>
+                <noSeq>1</noSeq>
+              </SerUid>
+              <AseUid region="LF" mid="a5377509-1175-3835-a27b-5f7494b5161a">
+                <codeType>D</codeType>
+                <codeId>CA</codeId>
+                <txtLocalType>CIRCLE</txtLocalType>
+              </AseUid>
+            </SaeUid>
+          </Sae>
           <!-- NavigationalAid: [DesignatedPoint:VFR-RP] DDD / DESIGNATED POINT NAVAID -->
           <Dpn source="LF|GEN|0.0 FACTORY|0|0">
             <DpnUid region="LF" mid="36110542-bbfb-13e2-c819-7a0404be370a">

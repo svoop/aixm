@@ -581,6 +581,21 @@ describe AIXM::Feature::Airport do
           </AhaUid>
           <txtAddress>https://planeur-avignon-pujaut.fr</txtAddress>
         </Aha>
+        <Sah>
+          <SahUid>
+            <AhpUid region="LF">
+              <codeId>LFNT</codeId>
+            </AhpUid>
+            <SerUid>
+              <UniUid region="LF">
+                <txtName>PUJAUT</txtName>
+                <codeType>TWR</codeType>
+              </UniUid>
+              <codeType>APP</codeType>
+              <noSeq>1</noSeq>
+            </SerUid>
+          </SahUid>
+        </Sah>
       END
     end
 
@@ -610,6 +625,21 @@ describe AIXM::Feature::Airport do
           <geoLong>004.75444444E</geoLong>
           <codeDatum>WGE</codeDatum>
         </Ahp>
+        <Sah>
+          <SahUid>
+            <AhpUid region="LF">
+              <codeId>LFNT</codeId>
+            </AhpUid>
+            <SerUid>
+              <UniUid region="LF">
+                <txtName>PUJAUT</txtName>
+                <codeType>TWR</codeType>
+              </UniUid>
+              <codeType>APP</codeType>
+              <noSeq>1</noSeq>
+            </SerUid>
+          </SahUid>
+        </Sah>
       END
     end
   end

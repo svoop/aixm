@@ -138,6 +138,14 @@ module AIXM
       #   @return [AIXM::Feature::Unit] unit providing this service
       belongs_to :unit
 
+      # @!method airport
+      #   @return [AIXM::Feature::Airport] airport this service is provided at
+      belongs_to :airport
+
+      # @!method airspace
+      #   @return [AIXM::Feature::Airspace] airspace this service is provided in
+      belongs_to :airspace
+
       # @!method layer
       #   @return [AIXM::Component::Layer] airspace layer this service is provided within
       belongs_to :layer

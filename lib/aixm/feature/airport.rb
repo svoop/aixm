@@ -28,6 +28,7 @@ module AIXM
     #   airport.add_helipad(AIXM.helipad)
     #   airport.add_usage_limitation(UsageLimitation::TYPES)
     #   airport.add_unit(AIXM.unit)
+    #   airport.add_service(AIXM.service)
     #   airport.add_address(AIXM.address)
     #
     # For airports without an +id+, you may assign the two character region
@@ -48,14 +49,6 @@ module AIXM
         AH: :aerodrome_and_heliport,
         LS: :landing_site
       }.freeze
-
-      # @!method addresses
-      #   @return [Array<AIXM::Feature::Address>] postal address, url, A/A or A/G frequency etc
-      #
-      # @!method add_address(address)
-      #   @param address [AIXM::Feature::Address]
-      #   @return [self]
-      has_many :addresses, as: :addressable
 
       # @!method fatos
       #   @return [Array<AIXM::Component::FATO>] FATOs present at this airport
@@ -99,6 +92,21 @@ module AIXM
       # @!method add_unit(unit)
       #   @param unit [AIXM::Feature::Unit]
       has_many :units
+
+      # @!method services
+      #   @return [Array<AIXM::Component::Service>] services
+      #
+      # @!method add_service(service)
+      #   @param service [AIXM::Component::Service]
+      has_many :services
+
+      # @!method addresses
+      #   @return [Array<AIXM::Feature::Address>] postal address, url, A/A or A/G frequency etc
+      #
+      # @!method add_address(address)
+      #   @param address [AIXM::Feature::Address]
+      #   @return [self]
+      has_many :addresses, as: :addressable
 
       # @!method organisation
       #   @return [AIXM::Feature::Organisation] superior organisation
@@ -299,6 +307,14 @@ module AIXM
         addresses.each.with_object({}) do |address, sequences|
           sequences[address.type] = (sequences[address.type] || 0) + 1
           builder << address.to_xml(as: :Aha, sequence: sequences[address.type])
+        end
+        services.each do |service|
+          builder.Sah do |sah|
+            sah.SahUid do |sah_uid|
+              sah_uid << to_uid.indent(4)
+              sah_uid << service.to_uid.indent(4)
+            end
+          end
         end
         builder.target!
       end

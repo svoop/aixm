@@ -2,7 +2,7 @@ require_relative '../../../spec_helper'
 
 describe AIXM::Feature::Unit do
   subject do
-    AIXM::Factory.unit
+    AIXM::Factory.airport.units.first
   end
 
   describe :name= do
@@ -48,16 +48,7 @@ describe AIXM::Feature::Unit do
   end
 
   describe :to_xml do
-    let :service_proc do
-      -> do
-        AIXM::Factory.service.tap do |service|
-          service.type = :AFIS
-        end
-      end
-    end
-
     it "builds correct complete AIXM" do
-      2.times { subject.add_service(service_proc.call) }
       AIXM.aixm!
       _(subject.to_xml).must_equal <<~END
         <!-- Unit: PUJAUT TWR -->
@@ -75,86 +66,6 @@ describe AIXM::Feature::Unit do
           <codeClass>ICAO</codeClass>
           <txtRmk>FR only</txtRmk>
         </Uni>
-        <!-- Service: AFIS by PUJAUT TWR -->
-        <Ser>
-          <SerUid>
-            <UniUid>
-              <txtName>PUJAUT</txtName>
-            </UniUid>
-            <codeType>AFIS</codeType>
-            <noSeq>1</noSeq>
-          </SerUid>
-          <Stt>
-            <codeWorkHr>H24</codeWorkHr>
-          </Stt>
-          <txtRmk>service remarks</txtRmk>
-        </Ser>
-        <Fqy>
-          <FqyUid>
-            <SerUid>
-              <UniUid>
-                <txtName>PUJAUT</txtName>
-              </UniUid>
-              <codeType>AFIS</codeType>
-              <noSeq>1</noSeq>
-            </SerUid>
-            <valFreqTrans>123.35</valFreqTrans>
-          </FqyUid>
-          <valFreqRec>124.1</valFreqRec>
-          <uomFreq>MHZ</uomFreq>
-          <Ftt>
-            <codeWorkHr>H24</codeWorkHr>
-          </Ftt>
-          <txtRmk>frequency remarks</txtRmk>
-          <Cdl>
-            <txtCallSign>PUJAUT CONTROL</txtCallSign>
-            <codeLang>EN</codeLang>
-          </Cdl>
-          <Cdl>
-            <txtCallSign>PUJAUT CONTROLE</txtCallSign>
-            <codeLang>FR</codeLang>
-          </Cdl>
-        </Fqy>
-        <!-- Service: AFIS by PUJAUT TWR -->
-        <Ser>
-          <SerUid>
-            <UniUid>
-              <txtName>PUJAUT</txtName>
-            </UniUid>
-            <codeType>AFIS</codeType>
-            <noSeq>2</noSeq>
-          </SerUid>
-          <Stt>
-            <codeWorkHr>H24</codeWorkHr>
-          </Stt>
-          <txtRmk>service remarks</txtRmk>
-        </Ser>
-        <Fqy>
-          <FqyUid>
-            <SerUid>
-              <UniUid>
-                <txtName>PUJAUT</txtName>
-              </UniUid>
-              <codeType>AFIS</codeType>
-              <noSeq>2</noSeq>
-            </SerUid>
-            <valFreqTrans>123.35</valFreqTrans>
-          </FqyUid>
-          <valFreqRec>124.1</valFreqRec>
-          <uomFreq>MHZ</uomFreq>
-          <Ftt>
-            <codeWorkHr>H24</codeWorkHr>
-          </Ftt>
-          <txtRmk>frequency remarks</txtRmk>
-          <Cdl>
-            <txtCallSign>PUJAUT CONTROL</txtCallSign>
-            <codeLang>EN</codeLang>
-          </Cdl>
-          <Cdl>
-            <txtCallSign>PUJAUT CONTROLE</txtCallSign>
-            <codeLang>FR</codeLang>
-          </Cdl>
-        </Fqy>
         <!-- Service: APP by PUJAUT TWR -->
         <Ser>
           <SerUid>
@@ -199,7 +110,6 @@ describe AIXM::Feature::Unit do
     end
 
     it "builds correct complete OFMX" do
-      2.times { subject.add_service(service_proc.call) }
       AIXM.ofmx!
       _(subject.to_xml).must_equal <<~END
         <!-- Unit: PUJAUT TWR -->
@@ -217,90 +127,6 @@ describe AIXM::Feature::Unit do
           <codeClass>ICAO</codeClass>
           <txtRmk>FR only</txtRmk>
         </Uni>
-        <!-- Service: AFIS by PUJAUT TWR -->
-        <Ser>
-          <SerUid>
-            <UniUid region="LF">
-              <txtName>PUJAUT</txtName>
-              <codeType>TWR</codeType>
-            </UniUid>
-            <codeType>AFIS</codeType>
-            <noSeq>1</noSeq>
-          </SerUid>
-          <Stt>
-            <codeWorkHr>H24</codeWorkHr>
-          </Stt>
-          <txtRmk>service remarks</txtRmk>
-        </Ser>
-        <Fqy>
-          <FqyUid>
-            <SerUid>
-              <UniUid region="LF">
-                <txtName>PUJAUT</txtName>
-                <codeType>TWR</codeType>
-              </UniUid>
-              <codeType>AFIS</codeType>
-              <noSeq>1</noSeq>
-            </SerUid>
-            <valFreqTrans>123.35</valFreqTrans>
-          </FqyUid>
-          <valFreqRec>124.1</valFreqRec>
-          <uomFreq>MHZ</uomFreq>
-          <Ftt>
-            <codeWorkHr>H24</codeWorkHr>
-          </Ftt>
-          <txtRmk>frequency remarks</txtRmk>
-          <Cdl>
-            <txtCallSign>PUJAUT CONTROL</txtCallSign>
-            <codeLang>EN</codeLang>
-          </Cdl>
-          <Cdl>
-            <txtCallSign>PUJAUT CONTROLE</txtCallSign>
-            <codeLang>FR</codeLang>
-          </Cdl>
-        </Fqy>
-        <!-- Service: AFIS by PUJAUT TWR -->
-        <Ser>
-          <SerUid>
-            <UniUid region="LF">
-              <txtName>PUJAUT</txtName>
-              <codeType>TWR</codeType>
-            </UniUid>
-            <codeType>AFIS</codeType>
-            <noSeq>2</noSeq>
-          </SerUid>
-          <Stt>
-            <codeWorkHr>H24</codeWorkHr>
-          </Stt>
-          <txtRmk>service remarks</txtRmk>
-        </Ser>
-        <Fqy>
-          <FqyUid>
-            <SerUid>
-              <UniUid region="LF">
-                <txtName>PUJAUT</txtName>
-                <codeType>TWR</codeType>
-              </UniUid>
-              <codeType>AFIS</codeType>
-              <noSeq>2</noSeq>
-            </SerUid>
-            <valFreqTrans>123.35</valFreqTrans>
-          </FqyUid>
-          <valFreqRec>124.1</valFreqRec>
-          <uomFreq>MHZ</uomFreq>
-          <Ftt>
-            <codeWorkHr>H24</codeWorkHr>
-          </Ftt>
-          <txtRmk>frequency remarks</txtRmk>
-          <Cdl>
-            <txtCallSign>PUJAUT CONTROL</txtCallSign>
-            <codeLang>EN</codeLang>
-          </Cdl>
-          <Cdl>
-            <txtCallSign>PUJAUT CONTROLE</txtCallSign>
-            <codeLang>FR</codeLang>
-          </Cdl>
-        </Fqy>
         <!-- Service: APP by PUJAUT TWR -->
         <Ser>
           <SerUid>

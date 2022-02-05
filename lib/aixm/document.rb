@@ -118,7 +118,7 @@ module AIXM
       builder.instruct!
       builder.tag!(AIXM.schema(:root), meta) do |root|
         AIXM::Memoize.method :to_uid do
-          root << features.map { _1.to_xml }.join.indent(2)
+          root << features.map(&:to_xml).join.indent(2)
         end
       end
       if AIXM.ofmx? && AIXM.config.mid
