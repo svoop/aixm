@@ -57,7 +57,7 @@ describe AIXM::Component::Address do
             <codeType>RADIO</codeType>
             <noSeq>1</noSeq>
           </XxxUid>
-          <txtAddress>123.35 mhz</txtAddress>
+          <txtAddress>123.35</txtAddress>
           <txtRmk>A/A (callsign PUJAUT)</txtRmk>
         </Xxx>
       END

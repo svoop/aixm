@@ -93,7 +93,12 @@ module AIXM
         builder.comment! ["Address: #{TYPES.key(type)}", addressable&.id].compact.join(' for ')
         builder.tag!(as) do |tag|
           tag << to_uid(as: :"#{as}Uid", sequence: sequence).indent(2)
-          tag.txtAddress(address)
+          case type
+          when :radio_frequency
+            tag.txtAddress(address.freq.to_s)
+          else
+            tag.txtAddress(address)
+          end
           tag.txtRmk(remarks) if remarks
         end
       end

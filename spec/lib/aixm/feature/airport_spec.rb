@@ -556,7 +556,7 @@ describe AIXM::Feature::Airport do
             <codeType>RADIO</codeType>
             <noSeq>1</noSeq>
           </AhaUid>
-          <txtAddress>123.35 mhz</txtAddress>
+          <txtAddress>123.35</txtAddress>
           <txtRmk>A/A (callsign PUJAUT)</txtRmk>
         </Aha>
         <!-- Address: URL for LFNT -->

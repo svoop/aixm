@@ -24,6 +24,7 @@
 #### Changes
 * Nested memoization of the same method is now allowed and won't reset the
   memoization cache anymore.
+* Remove unit "mhz" from `Address` of type `:radio_frequency`.
 
 ## 1.0.0
 
