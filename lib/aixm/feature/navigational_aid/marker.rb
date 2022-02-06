@@ -28,7 +28,7 @@ module AIXM
       # @see https://gitlab.com/openflightmaps/ofmx/wikis/Navigational-aid#mkr-marker-beacon
       class Marker < NavigationalAid
         include AIXM::Memoize
-        
+
         public_class_method :new
 
         TYPES = {
@@ -46,7 +46,7 @@ module AIXM
         def initialize(type:, **arguments)
           super(**arguments)
           self.type = type
-          warn("WARNING: Maker is not fully implemented yet due to the lack of ILS")
+          warn("WARNING: Marker is not fully implemented yet due to the lack of ILS")
         end
 
         def type=(value)
