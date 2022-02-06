@@ -1,23 +1,25 @@
 require_relative '../../../../spec_helper'
 
 describe AIXM::Feature::NavigationalAid::DME do
-  CHANNELS = {
-    '1X' => AIXM.f(134.4, :mhz),
-    '12Y' => AIXM.f(135.55, :mhz),
-    '16Y' => AIXM.f(135.95, :mhz),
-    '17X' => AIXM.f(108, :mhz),
-    '30X' => AIXM.f(109.3, :mhz),
-    '59Y' => AIXM.f(112.25, :mhz),
-    '60X' => AIXM.f(133.3, :mhz),
-    '64Y' => AIXM.f(133.75, :mhz),
-    '69Y' => AIXM.f(134.25, :mhz),
-    '70X' => AIXM.f(112.30, :mhz),
-    '100X' => AIXM.f(115.3, :mhz),
-    '126Y' => AIXM.f(117.95, :mhz)
-  }
-
   subject do
     AIXM::Factory.dme
+  end
+
+  let :channels do
+    {
+      '1X' => AIXM.f(134.4, :mhz),
+      '12Y' => AIXM.f(135.55, :mhz),
+      '16Y' => AIXM.f(135.95, :mhz),
+      '17X' => AIXM.f(108, :mhz),
+      '30X' => AIXM.f(109.3, :mhz),
+      '59Y' => AIXM.f(112.25, :mhz),
+      '60X' => AIXM.f(133.3, :mhz),
+      '64Y' => AIXM.f(133.75, :mhz),
+      '69Y' => AIXM.f(134.25, :mhz),
+      '70X' => AIXM.f(112.30, :mhz),
+      '100X' => AIXM.f(115.3, :mhz),
+      '126Y' => AIXM.f(117.95, :mhz)
+    }
   end
 
   describe :channel= do
@@ -28,7 +30,7 @@ describe AIXM::Feature::NavigationalAid::DME do
 
   describe :ghost_f= do
     it "must set the corresponding channel" do
-      CHANNELS.each do |channel, f|
+      channels.each do |channel, f|
         _(subject.tap { _1.ghost_f = f }.channel).must_equal channel
         _(subject.tap { _1.ghost_f = f }.ghost_f).must_equal f
       end
@@ -47,7 +49,7 @@ describe AIXM::Feature::NavigationalAid::DME do
 
   describe :ghost_f do
     it "must be derived from the channel" do
-      CHANNELS.each do |channel, f|
+      channels.each do |channel, f|
         _(subject.tap { _1.channel = channel }.ghost_f).must_equal f
       end
     end
