@@ -144,25 +144,25 @@ describe AIXM::Refinements do
   context Regexp do
     describe :decapture do
       it "should replace capture groups with non-capture groups" do
-        _(/(foo) baz (bar)/.decapture).must_equal /(?-mix:(?:foo) baz (?:bar))/
-        _(/(foo) baz (bar)/i.decapture).must_equal /(?i-mx:(?:foo) baz (?:bar))/
+        _(/(foo) baz (bar)/.decapture).must_equal %r/(?-mix:(?:foo) baz (?:bar))/
+        _(/(foo) baz (bar)/i.decapture).must_equal %r/(?i-mx:(?:foo) baz (?:bar))/
       end
 
       it "should replace named capture groups with non-capture groups" do
-        _(/(?<a>foo) baz (?<b>bar)/.decapture).must_equal /(?-mix:(?:foo) baz (?:bar))/
-        _(/(?<a>foo) baz (?<b>bar)/i.decapture).must_equal /(?i-mx:(?:foo) baz (?:bar))/
+        _(/(?<a>foo) baz (?<b>bar)/.decapture).must_equal %r/(?-mix:(?:foo) baz (?:bar))/
+        _(/(?<a>foo) baz (?<b>bar)/i.decapture).must_equal %r/(?i-mx:(?:foo) baz (?:bar))/
       end
 
       it "should not replace special groups" do
-        _(/(?:foo) (?<=baz) bar/.decapture).must_equal /(?-mix:(?:foo) (?<=baz) bar)/
+        _(/(?:foo) (?<=baz) bar/.decapture).must_equal %r/(?-mix:(?:foo) (?<=baz) bar)/
       end
 
       it "should not replace literal round brackets" do
-        _(/\(foo\)/.decapture).must_equal /(?-mix:\(foo\))/
+        _(/\(foo\)/.decapture).must_equal %r/(?-mix:\(foo\))/
       end
 
       it "should replace literal backslash followed by literal round brackets" do
-        _(/\\(foo\\)/.decapture).must_equal /(?-mix:\\(?:foo\\))/
+        _(/\\(foo\\)/.decapture).must_equal %r/(?-mix:\\(?:foo\\))/
       end
     end
   end
@@ -322,8 +322,8 @@ describe AIXM::Refinements do
       it "must convert all cardinal directions to DD" do
         _(%q(111°22'33.44"N).to_dd).must_equal 111.37595555555555
         _(%q(111°22'33.44"E).to_dd).must_equal 111.37595555555555
-        _(%q(111°22'33.44"S).to_dd).must_equal -111.37595555555555
-        _(%q(111°22'33.44"W).to_dd).must_equal -111.37595555555555
+        _(%q(111°22'33.44"S).to_dd).must_equal(-111.37595555555555)
+        _(%q(111°22'33.44"W).to_dd).must_equal(-111.37595555555555)
       end
 
       it "must ignore minor typos when converting to DD" do
