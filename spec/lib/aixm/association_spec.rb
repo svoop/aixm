@@ -3,18 +3,24 @@ require_relative '../../spec_helper'
 describe AIXM::Association do
   describe AIXM::Association::ClassMethods do
     before do
-      @aixm_classes = AIXM::CLASSES
+      $aixm_classes ||= AIXM::CLASSES
     end
 
     after do
       AIXM::CLASSES.each_key { Object.send(:remove_const, _1.capitalize) }
-      AIXM::CLASSES = @aixm_classes
+      module AIXM
+        remove_const :CLASSES
+        CLASSES = $aixm_classes
+      end
     end
 
     describe "has_many and belongs_to" do
       context "simple association" do
         before do
-          AIXM::CLASSES = { blog: 'Blog', post: 'Post', picture: 'Picture' }
+          module AIXM
+            remove_const :CLASSES
+            CLASSES = { blog: 'Blog', post: 'Post', picture: 'Picture' }
+          end
           class Blog
             include AIXM::Association
             has_many :posts
@@ -102,7 +108,10 @@ describe AIXM::Association do
 
       context "association with readonly belongs_to" do
         before do
-          AIXM::CLASSES = { blog: 'Blog', post: 'Post' }
+          module AIXM
+            remove_const :CLASSES
+            CLASSES = { blog: 'Blog', post: 'Post' }
+          end
           class Blog
             include AIXM::Association
             has_many :posts
@@ -123,7 +132,10 @@ describe AIXM::Association do
 
       context "association with explicit class" do
         before do
-          AIXM::CLASSES = { blog: 'Blog', post: 'Post', picture: 'Picture' }
+          module AIXM
+            remove_const :CLASSES
+            CLASSES = { blog: 'Blog', post: 'Post', picture: 'Picture' }
+          end
           class Blog
             include AIXM::Association
             has_many :posts, accept: 'Picture'
@@ -159,7 +171,10 @@ describe AIXM::Association do
 
       context "polymorphic associator" do
         before do
-          AIXM::CLASSES = { blog: 'Blog', feed: 'Feed', post: 'Post' }
+          module AIXM
+            remove_const :CLASSES
+            CLASSES = { blog: 'Blog', feed: 'Feed', post: 'Post' }
+          end
           class Blog
             include AIXM::Association
             has_many :posts, as: :postable
@@ -220,7 +235,10 @@ describe AIXM::Association do
 
       context "polymorphic associated" do
         before do
-          AIXM::CLASSES = { blog: 'Blog', post: 'Post', picture: 'Picture' }
+          module AIXM
+            remove_const :CLASSES
+            CLASSES = { blog: 'Blog', post: 'Post', picture: 'Picture' }
+          end
           class Blog
             include AIXM::Association
             has_many :items, accept: ['Post', :picture]
@@ -286,7 +304,10 @@ describe AIXM::Association do
 
       context "add method which enriches associated object" do
         before do
-          AIXM::CLASSES = { blog: 'Blog', post: 'Post' }
+          module AIXM
+            remove_const :CLASSES
+            CLASSES = { blog: 'Blog', post: 'Post' }
+          end
           class Blog
             include AIXM::Association
             has_many :posts do |post, related_to: nil|
@@ -317,7 +338,10 @@ describe AIXM::Association do
 
       context "add method which builds associated object on the fly" do
         before do
-          AIXM::CLASSES = { blog: 'Blog', post: 'Post' }
+          module AIXM
+            remove_const :CLASSES
+            CLASSES = { blog: 'Blog', post: 'Post' }
+          end
           class Blog
             include AIXM::Association
             has_many :posts do |post, title:| end
@@ -355,7 +379,10 @@ describe AIXM::Association do
     describe "has_one and belongs_to" do
       context "simple association" do
         before do
-          AIXM::CLASSES = { blog: 'Blog', post: 'Post', picture: 'Picture' }
+          module AIXM
+            remove_const :CLASSES
+            CLASSES = { blog: 'Blog', post: 'Post', picture: 'Picture' }
+          end
           class Blog
             include AIXM::Association
             has_one :post
@@ -434,7 +461,10 @@ describe AIXM::Association do
 
       context "association allowing nil" do
         before do
-          AIXM::CLASSES = { blog: 'Blog', post: 'Post' }
+          module AIXM
+            remove_const :CLASSES
+            CLASSES = { blog: 'Blog', post: 'Post' }
+          end
           class Blog
             include AIXM::Association
             has_one :post, allow_nil: true
@@ -465,7 +495,10 @@ describe AIXM::Association do
 
       context "association with readonly belongs_to" do
         before do
-          AIXM::CLASSES = { blog: 'Blog', post: 'Post' }
+          module AIXM
+            remove_const :CLASSES
+            CLASSES = { blog: 'Blog', post: 'Post' }
+          end
           class Blog
             include AIXM::Association
             has_one :posts
@@ -486,7 +519,10 @@ describe AIXM::Association do
 
       context "association with explicit class" do
         before do
-          AIXM::CLASSES = { blog: 'Blog', post: 'Post', picture: 'Picture' }
+          module AIXM
+            remove_const :CLASSES
+            CLASSES = { blog: 'Blog', post: 'Post', picture: 'Picture' }
+          end
           class Blog
             include AIXM::Association
             has_one :post, accept: 'Picture'
@@ -522,7 +558,10 @@ describe AIXM::Association do
 
       context "polymorphic associator" do
         before do
-          AIXM::CLASSES = { blog: 'Blog', feed: 'Feed', post: 'Post' }
+          module AIXM
+            remove_const :CLASSES
+            CLASSES = { blog: 'Blog', feed: 'Feed', post: 'Post' }
+          end
           class Blog
             include AIXM::Association
             has_one :post, as: :postable
@@ -564,7 +603,10 @@ describe AIXM::Association do
 
       context "polymorphic associated" do
         before do
-          AIXM::CLASSES = { blog: 'Blog', post: 'Post', picture: 'Picture' }
+          module AIXM
+            remove_const :CLASSES
+            CLASSES = { blog: 'Blog', post: 'Post', picture: 'Picture' }
+          end
           class Blog
             include AIXM::Association
             has_one :item, accept: ['Post', :picture]
