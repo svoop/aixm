@@ -103,7 +103,7 @@ module AIXM
 
       # @return [String, nil] pavement classification number (e.g. "59/F/A/W/T")
       def pcn
-        @pcn.none? ? nil : @pcn.values.join("/")
+        @pcn.none? ? nil : @pcn.values.join("/".freeze)
       end
 
       def pcn=(value)

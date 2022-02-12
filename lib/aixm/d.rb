@@ -38,7 +38,7 @@ module AIXM
 
     # @return [String] human readable representation (e.g. "123.0 m")
     def to_s
-      [dim, unit].join(' ')
+      [dim, unit].join(' '.freeze)
     end
 
     def dim=(value)

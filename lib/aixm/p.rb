@@ -39,7 +39,7 @@ module AIXM
 
     # @return [String] human readable representation (e.g. "14 bar")
     def to_s
-      [pres, unit].join(' ')
+      [pres, unit].join(' '.freeze)
     end
 
     def pres=(value)

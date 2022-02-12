@@ -44,7 +44,7 @@ module AIXM
     end
 
     def uuid_for(array)
-      ::Digest::MD5.hexdigest(array.flatten.map(&:to_s).join('|')).unpack("a8a4a4a4a12").join("-")
+      ::Digest::MD5.hexdigest(array.flatten.map(&:to_s).join('|'.freeze)).unpack("a8a4a4a4a12").join('-'.freeze)
     end
 
     # Insert OFMX-compliant payload hashes as mid attributes into an XML

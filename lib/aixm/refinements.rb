@@ -26,7 +26,7 @@ module AIXM
     #   @return [String] 4 byte hex
     refine Array do
       def to_digest
-        ::Digest::SHA512.hexdigest(flatten.map(&:to_s).join('|'))[0, 8]
+        ::Digest::SHA512.hexdigest(flatten.map(&:to_s).join('|'.freeze))[0, 8]
       end
     end
 
@@ -263,7 +263,7 @@ module AIXM
       def uptrans
         self.dup.tap do |string|
           string.upcase!
-          string.gsub!(/(#{UPTRANS_MAP.keys.join('|')})/, UPTRANS_MAP)
+          string.gsub!(/(#{UPTRANS_MAP.keys.join('|'.freeze)})/, UPTRANS_MAP)
           string.unicode_normalize!(:nfd)
           string.gsub!(UPTRANS_FILTER, '')
         end

@@ -57,7 +57,7 @@ module AIXM
       # @return [String]
       def inspect
         payload = %i(upper_z max_z lower_z min_z).map { %Q(#{_1}="#{send(_1)}") if send(_1) }.compact
-        %Q(#<#{self.class} #{payload.join(' ')}>)
+        %Q(#<#{self.class} #{payload.join(' '.freeze)}>)
       end
 
       def upper_z=(value)

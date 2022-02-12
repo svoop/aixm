@@ -42,7 +42,7 @@ module AIXM
 
     # @return [String] human readable representation
     def to_s
-      [lat(:ofmx), long(:ofmx)].join(' ')
+      [lat(:ofmx), long(:ofmx)].join(' '.freeze)
     end
 
     # @!attribute lat

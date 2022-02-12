@@ -38,7 +38,7 @@ module AIXM
 
     # @return [String] human readable representation (e.g. "FL045" or "1350 ft QNH")
     def to_s
-      qne? ? "FL%03i" % alt : [alt, unit, code.upcase].join(' ')
+      qne? ? "FL%03i" % alt : [alt, unit, code.upcase].join(' '.freeze)
     end
 
     def alt=(value)

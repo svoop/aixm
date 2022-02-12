@@ -32,7 +32,7 @@ module AIXM
 
     # @return [String] human readable representation (e.g. "123.35 mhz")
     def to_s
-      [freq, unit].join(' ')
+      [freq, unit].join(' '.freeze)
     end
 
     def freq=(value)

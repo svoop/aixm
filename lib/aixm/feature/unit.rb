@@ -170,7 +170,7 @@ module AIXM
       private
 
       def name_with_type
-        [name, TYPES.key(type)].join(' ')
+        [name, TYPES.key(type)].join(' '.freeze)
       end
     end
 

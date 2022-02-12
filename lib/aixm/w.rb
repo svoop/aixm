@@ -38,7 +38,7 @@ module AIXM
 
     # @return [String] human readable representation (e.g. "123 t")
     def to_s
-      [wgt, unit].join(' ')
+      [wgt, unit].join(' '.freeze)
     end
 
     def wgt=(value)

@@ -72,7 +72,7 @@ module AIXM
 
       # @return [String] fully descriptive combination of {#class} and {#type} key
       def kind
-        [self.class.name.split('::').last, type_key].compact.join(':')
+        [self.class.name.split('::').last, type_key].compact.join(':'.freeze)
       end
 
       private
