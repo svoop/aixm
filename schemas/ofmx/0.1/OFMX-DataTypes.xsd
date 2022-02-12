@@ -82,6 +82,12 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
       <xsd:maxLength value="4"/>
     </xsd:restriction>
   </xsd:simpleType>
+  <xsd:simpleType name="listRegions">
+    <xsd:annotation>
+      <xsd:documentation>White space separated list of two to four letter coded regions.</xsd:documentation>
+    </xsd:annotation>
+    <xsd:list itemType='codeRegion'/>
+  </xsd:simpleType>
   <xsd:simpleType name="codeSource">
     <xsd:annotation>
       <xsd:documentation>Reference to the source AIP document.</xsd:documentation>

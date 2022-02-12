@@ -20,6 +20,7 @@
 * `ApproachLighting` on `Runway::Direction` and `FATO::Direction`
 * `VASIS` on `Runway::Direction` and `FATO::Direction`
 * `#meta` on every feature and component
+* `Document#regions` which is added to the root element for OFMX
 
 #### Changes
 * Nested memoization of the same method is now allowed and won't reset the

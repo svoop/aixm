@@ -59,6 +59,13 @@ module AIXM
       @effective_at = value&.to_time || created_at || Time.now
     end
 
+    # Regions used throughout this document.
+    #
+    # @return [Array<String>] white space separated list of region codes
+    def regions
+      features.map(&:region).uniq.sort
+    end
+
     # Compare all ungrouped obstacles and create new obstacle groups whose
     # members are located within +max_distance+ pairwise.
     #
@@ -111,6 +118,7 @@ module AIXM
         version: AIXM.schema(:version),
         origin: "rubygem aixm-#{AIXM::VERSION}",
         namespace: (namespace if AIXM.ofmx?),
+        regions: (regions.join(' '.freeze) if AIXM.ofmx?),
         created: @created_at.xmlschema,
         effective: @effective_at.xmlschema
       }.compact

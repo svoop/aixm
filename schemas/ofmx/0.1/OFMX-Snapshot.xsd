@@ -203,6 +203,11 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
           <xsd:documentation>The originator (source) namespace of the message</xsd:documentation>
         </xsd:annotation>
       </xsd:attribute>
+      <xsd:attribute name="regions" type="listRegions">
+        <xsd:annotation>
+          <xsd:documentation>Regions used throughout this document</xsd:documentation>
+        </xsd:annotation>
+      </xsd:attribute>
       <xsd:attribute name="created" type="xsd:dateTime" use="required">
         <xsd:annotation>
           <xsd:documentation>The date and time when the message was created</xsd:documentation>
