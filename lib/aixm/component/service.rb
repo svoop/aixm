@@ -73,7 +73,7 @@ module AIXM
         TWR: :aerodrome_control_tower_service,
         UAC: :upper_area_control_service,
         UDF: :uhf_direction_finding_service,
-        VDF: :vhf_direction_finding_service,
+        VDF: :vdf_direction_finding_service,
         VOLMET: :volmet_service,
         VOT: :vor_test_facility,
         OTHER: :other   # specify in remarks

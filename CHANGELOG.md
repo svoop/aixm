@@ -12,6 +12,7 @@
   `#geographic_bearing` and `#magnetic_bearing` on `Runway` and `FATO`
 * Re-implementation of `AIXM::A` without precision
 * Demoted `Address` to component
+* Fixed typo in `Service` type `:vdf_direction_finding_service`
 
 #### Additions
 * Associations from `Service` to `Airport` and `Airspace`
