@@ -1,4 +1,4 @@
-## 1.1.0 (unreleased)
+## 1.1.0
 
 #### Breaking Changes
 * `AIXM::Association:Array#duplicates` now returns an array of arrays which
