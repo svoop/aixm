@@ -122,7 +122,7 @@ module AIXM
         :transcribed_weather_broadcast_service => :meteorological_office,
         :uhf_direction_finding_service => :uhf_direction_finding_station,
         :upper_area_control_service => :upper_area_control_centre,
-        :vhf_direction_finding_service => :vdf_direction_finding_station,
+        :vdf_direction_finding_service => :vdf_direction_finding_station,
         :volmet_service => :meteorological_office,
         :other => :other
       }.freeze
