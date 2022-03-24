@@ -11,7 +11,7 @@ For now, only the parts needed to automize the AIP import of [open flightmaps](h
 
 * [Homepage](https://github.com/svoop/aixm)
 * [API](https://www.rubydoc.info/gems/aixm)
-* Author: [Sven Schwyn - Bitcetera](http://www.bitcetera.com)
+* Author: [Sven Schwyn - Bitcetera](https://bitcetera.com)
 
 ## Install
 
