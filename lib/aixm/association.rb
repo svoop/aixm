@@ -179,7 +179,7 @@ module AIXM
         (@has_many_attributes ||= []) << attribute
         # features
         define_method(attribute) do
-          instance_eval("@#{attribute} ||= AIXM::Association::Array.new")
+          instance_variable_get(:"@#{attribute}") || AIXM::Association::Array.new
         end
         # add_feature
         define_method(:"add_#{association}") do |object=nil, **options, &add_block|
@@ -190,6 +190,7 @@ module AIXM
           end
           instance_exec(object, **options, &association_block) if association_block
           fail(ArgumentError, "#{object.__class__} not allowed") unless class_names.any? { |c| object.is_a?(c.to_class) }
+          instance_eval("@#{attribute} ||= AIXM::Association::Array.new")
           send(attribute).send(:push, object)
           object.instance_variable_set(:"@#{inversion}", self)
           self
