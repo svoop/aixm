@@ -94,7 +94,19 @@ describe AIXM::Feature::Unit do
           <valFreqRec>124.1</valFreqRec>
           <uomFreq>MHZ</uomFreq>
           <Ftt>
-            <codeWorkHr>H24</codeWorkHr>
+            <codeWorkHr>TIMSH</codeWorkHr>
+            <Timsh>
+              <codeTimeRef>UTCW</codeTimeRef>
+              <dateValidWef>01-03</dateValidWef>
+              <dateValidTil>22-03</dateValidTil>
+              <codeDay>TUE</codeDay>
+              <codeDayTil>THU</codeDayTil>
+              <timeWef>09:00</timeWef>
+              <timeTil>21:20</timeTil>
+              <codeEventTil>SS</codeEventTil>
+              <timeRelEventTil>15</timeRelEventTil>
+              <codeCombTil>L</codeCombTil>
+            </Timsh>
           </Ftt>
           <txtRmk>frequency remarks</txtRmk>
           <Cdl>
@@ -157,7 +169,21 @@ describe AIXM::Feature::Unit do
           <valFreqRec>124.1</valFreqRec>
           <uomFreq>MHZ</uomFreq>
           <Ftt>
-            <codeWorkHr>H24</codeWorkHr>
+            <codeWorkHr>TIMSH</codeWorkHr>
+            <Timsh>
+              <codeTimeRef>UTCW</codeTimeRef>
+              <dateValidWef>01-03</dateValidWef>
+              <dateYearValidWef>2022</dateYearValidWef>
+              <dateValidTil>22-03</dateValidTil>
+              <dateYearValidTil>2022</dateYearValidTil>
+              <codeDay>TUE</codeDay>
+              <codeDayTil>THU</codeDayTil>
+              <timeWef>09:00</timeWef>
+              <timeTil>21:20</timeTil>
+              <codeEventTil>SS</codeEventTil>
+              <timeRelEventTil>15</timeRelEventTil>
+              <codeCombTil>L</codeCombTil>
+            </Timsh>
           </Ftt>
           <txtRmk>frequency remarks</txtRmk>
           <Cdl>

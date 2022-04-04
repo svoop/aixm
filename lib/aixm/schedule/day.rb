@@ -1,0 +1,73 @@
+module AIXM
+  module Schedule
+
+    # Days suitable for schedules
+    #
+    # @example
+    #   from = AIXM.day(:monday)           # => :monday
+    #   to = AIXM.day(:thursday)           # => :thursday
+    #   AIXM.day(:tuesday).in?(from..to)   # => true
+    class Day
+      include Comparable
+
+      DAYS = %i(monday tuesday wednesday thursday friday saturday sunday workday day_preceding_workday day_following_workday holiday day_preceding_holiday day_following_holiday any).freeze
+      COMPARABLE_DAYS = DAYS[0, 7]
+
+      # Day of the week or special named day
+      #
+      # @return [Symbol] any from {DAYS}
+      attr_reader :day
+
+      # Set the given day of the week or special named day.
+      #
+      # @param day [Symbol] any from {DAYS}
+      def initialize(day=:any)
+        self.day = day
+      end
+
+      # Human readable rap such as "monday" or "day preceding workday"
+      #
+      # @return [String]
+      def to_s
+        day.to_s.gsub('_', ' ')
+      end
+
+      def inspect
+        %Q(#<#{self.class} #{to_s}>)
+      end
+
+      # Whether this schedule day is comparable others.
+      #
+      # @return [Boolean]
+      def comparable?
+        COMPARABLE_DAYS.include? day
+      end
+
+      # Whether this schedule day falls within the given range of schedule
+      # days.
+      #
+      # @param range [Range<AIXM::Schedule::Day>] range of schedule days
+      # @return [Boolean]
+      def in?(range)
+        fail "not comparable" unless comparable? && range.first.comparable? && range.last.comparable?
+        if range.min
+          range.cover? self
+        else
+          range.first <= self || self <= range.last
+        end
+      end
+
+      private
+
+      def day=(value)
+        @day = value.to_s.to_sym
+        fail ArgumentError unless DAYS.include? @day
+      end
+
+      def <=>(other)
+        DAYS.index(day) <=> DAYS.index(other.day)
+      end
+    end
+
+  end
+end

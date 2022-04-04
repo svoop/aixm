@@ -25,27 +25,102 @@ describe AIXM::Component::Timetable do
   end
 
   describe :to_xml do
-    it "builds correct complete AIXM" do
-      _(subject.to_xml).must_equal <<~END
-        <Timetable>
-          <codeWorkHr>HJ</codeWorkHr>
-          <txtRmkWorkHr>timetable remarks</txtRmkWorkHr>
-        </Timetable>
-      END
+    context "predefined code" do
+      it "builds correct complete AIXM" do
+        _(subject.to_xml).must_equal <<~END
+          <Timetable>
+            <codeWorkHr>HJ</codeWorkHr>
+            <txtRmkWorkHr>timetable remarks</txtRmkWorkHr>
+          </Timetable>
+        END
+      end
+
+      it "builds correct minimal AIXM" do
+        subject.remarks = nil
+        _(subject.to_xml).must_equal <<~END
+          <Timetable>
+            <codeWorkHr>HJ</codeWorkHr>
+          </Timetable>
+        END
+      end
+
+      it "builds with arbitrary tag" do
+        _(subject.to_xml).must_match(/<Timetable>/)
+        _(subject.to_xml(as: :FooBar)).must_match(/<FooBar>/)
+      end
     end
 
-    it "builds correct minimal AIXM" do
-      subject.remarks = nil
-      _(subject.to_xml).must_equal <<~END
-        <Timetable>
-          <codeWorkHr>HJ</codeWorkHr>
-        </Timetable>
-      END
+    context "one timesheet" do
+      subject do
+        AIXM::Factory.timetable_with_timesheet
+      end
+
+      it "builds correct OFMX" do
+        AIXM.ofmx!
+        _(subject.to_xml).must_equal <<~END
+          <Timetable>
+            <codeWorkHr>TIMSH</codeWorkHr>
+            <Timsh>
+              <codeTimeRef>UTCW</codeTimeRef>
+              <dateValidWef>01-03</dateValidWef>
+              <dateYearValidWef>2022</dateYearValidWef>
+              <dateValidTil>22-03</dateValidTil>
+              <dateYearValidTil>2022</dateYearValidTil>
+              <codeDay>TUE</codeDay>
+              <codeDayTil>THU</codeDayTil>
+              <timeWef>09:00</timeWef>
+              <timeTil>21:20</timeTil>
+              <codeEventTil>SS</codeEventTil>
+              <timeRelEventTil>15</timeRelEventTil>
+              <codeCombTil>L</codeCombTil>
+            </Timsh>
+          </Timetable>
+        END
+      end
     end
 
-    it "builds with arbitrary tag" do
-      _(subject.to_xml).must_match(/<Timetable>/)
-      _(subject.to_xml(as: :FooBar)).must_match(/<FooBar>/)
+    context "multiple timesheets" do
+      subject do
+        AIXM::Factory.timetable_with_timesheet
+      end
+
+      it "builds correct OFMX" do
+        subject.add_timesheet(AIXM::Factory.timesheet)
+        AIXM.ofmx!
+        _(subject.to_xml).must_equal <<~END
+          <Timetable>
+            <codeWorkHr>TIMSH</codeWorkHr>
+            <Timsh>
+              <codeTimeRef>UTCW</codeTimeRef>
+              <dateValidWef>01-03</dateValidWef>
+              <dateYearValidWef>2022</dateYearValidWef>
+              <dateValidTil>22-03</dateValidTil>
+              <dateYearValidTil>2022</dateYearValidTil>
+              <codeDay>TUE</codeDay>
+              <codeDayTil>THU</codeDayTil>
+              <timeWef>09:00</timeWef>
+              <timeTil>21:20</timeTil>
+              <codeEventTil>SS</codeEventTil>
+              <timeRelEventTil>15</timeRelEventTil>
+              <codeCombTil>L</codeCombTil>
+            </Timsh>
+            <Timsh>
+              <codeTimeRef>UTCW</codeTimeRef>
+              <dateValidWef>01-03</dateValidWef>
+              <dateYearValidWef>2022</dateYearValidWef>
+              <dateValidTil>22-03</dateValidTil>
+              <dateYearValidTil>2022</dateYearValidTil>
+              <codeDay>TUE</codeDay>
+              <codeDayTil>THU</codeDayTil>
+              <timeWef>09:00</timeWef>
+              <timeTil>21:20</timeTil>
+              <codeEventTil>SS</codeEventTil>
+              <timeRelEventTil>15</timeRelEventTil>
+              <codeCombTil>L</codeCombTil>
+            </Timsh>
+          </Timetable>
+        END
+      end
     end
   end
 end

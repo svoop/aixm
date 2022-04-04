@@ -1,6 +1,9 @@
 ## Main
 
-### Fixes
+#### Additions
+* `Timesheet` to add custom schedules to `Timetable`
+
+#### Fixes
 * Fix typo in `GUESSED_UNIT_TYPES_MAP`
 
 ## 1.1.0

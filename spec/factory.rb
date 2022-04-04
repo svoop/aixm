@@ -36,6 +36,38 @@ module AIXM
         AIXM.p(0.5, :mpa)
       end
 
+      def date
+        AIXM.date('2002-02-20')
+      end
+
+      def yearless_date
+        AIXM.date('02-20')
+      end
+
+      def day
+        AIXM.day(:monday)
+      end
+
+      def special_day
+        AIXM.day(:day_preceding_holiday)
+      end
+
+      def time
+        AIXM.time('09:00')
+      end
+
+      def time_with_event
+        AIXM.time('21:20', or: :sunset)
+      end
+
+      def time_with_delta
+        AIXM.time('21:20', or: :sunset, plus: 15)
+      end
+
+      def time_with_precedence
+        AIXM.time('21:20', or: :sunset, plus: 15, whichever_comes: :last)
+      end
+
       # Components
 
       def address
@@ -86,6 +118,20 @@ module AIXM
           code: :sunrise_to_sunset
         ).tap do |timetable|
           timetable.remarks = "timetable remarks"
+        end
+      end
+
+      def timetable_with_timesheet
+        AIXM.timetable.add_timesheet(timesheet)
+      end
+
+      def timesheet
+        AIXM.timesheet(
+          adjust_to_dst: true,
+          dates: (AIXM.date('2022-03-01')..AIXM.date('2022-03-22')),
+          days: (AIXM.day(:tuesday)..AIXM.day(:thursday))
+        ).tap do |timesheet|
+          timesheet.times = (time..time_with_precedence)
         end
       end
 
@@ -362,7 +408,7 @@ module AIXM
         ).tap do |frequency|
           frequency.type = :standard
           frequency.reception_f = AIXM.f(124.1, :mhz)
-          frequency.timetable = AIXM::H24
+          frequency.timetable = timetable_with_timesheet
           frequency.remarks = "frequency remarks"
         end
       end

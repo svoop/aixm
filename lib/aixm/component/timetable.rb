@@ -5,12 +5,11 @@ module AIXM
 
     # Timetables define activity time windows.
     #
-    # @note As of now, only predefined timetables (see {CODES}) are imlemented.
-    #
     # ===Cheat Sheat in Pseudo Code:
     #   timetable = AIXM.timetable(
-    #     code: String or Symbol
+    #     code: String or Symbol (default: :timesheet)
     #   )
+    #   timetable.add_timesheet(AIXM.timesheet)
     #   timetable.remarks = String or nil
     #
     # ===Shortcuts:
@@ -19,7 +18,10 @@ module AIXM
     #
     # @see https://gitlab.com/openflightmaps/ofmx/wikis/Timetable#predefined-timetable
     class Timetable < Component
+      include AIXM::Association
+
       CODES = {
+        TIMSH: :timesheet,          # attached timesheet
         H24: :continuous,           # all day and all night
         HJ: :sunrise_to_sunset,     # all day
         HN: :sunset_to_sunrise,     # all night
@@ -29,19 +31,42 @@ module AIXM
         OTHER: :other               # specify in remarks
       }.freeze
 
-      # @return [Symbol] predefined timetable code (see {CODES})
-      attr_reader :code
+      # @!method timesheets
+      #   @return [Array<AIXM::Component::Timesheet>] timesheets attached to
+      #     this timetable
+      #
+      # @!method add_timesheet(timesheet)
+      #   @note The {#code} is forced to +:timesheet+ once at least one timesheet
+      #     has been added.
+      #   @param timesheet [AIXM::Component::Timesheet]
+      has_many :timesheets
 
-      # @return [String, nil] free text remarks
+      # Free text remarks
+      #
+      # @return [String, nil]
+      # @overload remarks
+      # @overload remarks=(value)
+      #   @param value [String, nil]
       attr_reader :remarks
 
-      def initialize(code:)
+      def initialize(code: :timesheet)
         self.code = code
       end
 
       # @return [String]
       def inspect
         %Q(#<#{self.class} code=#{code.inspect}>)
+      end
+
+      # Timetable code
+      #
+      # @!attribute code
+      # @overload code
+      #   @return [Symbol] any of {CODES}
+      # @overload code=(value)
+      #   @param value [Symbol] any of {CODES}
+      def code
+        timesheets.any? ? :timesheet : @code
       end
 
       def code=(value)
@@ -59,6 +84,9 @@ module AIXM
         builder = Builder::XmlMarkup.new(indent: 2)
         builder.tag!(as) do |tag|
           tag.codeWorkHr(CODES.key(code).to_s)
+          timesheets.each do |timesheet|
+           tag << timesheet.to_xml.indent(2)
+          end
           tag.txtRmkWorkHr(remarks) if remarks
         end
       end

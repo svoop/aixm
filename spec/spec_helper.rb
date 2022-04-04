@@ -1,5 +1,6 @@
 gem 'minitest'
 
+require 'debug'
 require 'pathname'
 
 require 'minitest/autorun'

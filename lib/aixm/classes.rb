@@ -11,6 +11,9 @@ module AIXM
     a: 'AIXM::A',
     w: 'AIXM::W',
     p: 'AIXM::P',
+    date: 'AIXM::Schedule::Date',
+    day: 'AIXM::Schedule::Day',
+    time: 'AIXM::Schedule::Time',
     address: 'AIXM::Component::Address',
     approach_lighting: 'AIXM::Component::ApproachLighting',
     organisation: 'AIXM::Feature::Organisation',
@@ -41,6 +44,7 @@ module AIXM
     obstacle: 'AIXM::Feature::Obstacle',
     obstacle_group: 'AIXM::Feature::ObstacleGroup',
     timetable: 'AIXM::Component::Timetable',
+    timesheet: 'AIXM::Component::Timesheet',
     vasis: 'AIXM::Component::VASIS'
   }.freeze
 
