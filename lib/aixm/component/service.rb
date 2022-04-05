@@ -17,6 +17,7 @@ module AIXM
     class Service < Component
       include AIXM::Association
       include AIXM::Memoize
+      include AIXM::Concerns::Timetable
       include AIXM::Concerns::Remarks
 
       TYPES = {
@@ -154,9 +155,6 @@ module AIXM
       # @return [Symbol] type of service (see {TYPES})
       attr_reader :type
 
-      # @return [AIXM::Component::Timetable, nil] operating hours
-      attr_reader :timetable
-
       # See the {cheat sheet}[AIXM::Component::Service] for examples on how to
       # create instances of this class.
       def initialize(type:)
@@ -171,11 +169,6 @@ module AIXM
 
       def type=(value)
         @type = TYPES.lookup(value&.to_s&.to_sym, nil) || fail(ArgumentError, "invalid type")
-      end
-
-      def timetable=(value)
-        fail(ArgumentError, "invalid timetable") unless value.nil? || value.is_a?(AIXM::Component::Timetable)
-        @timetable = value
       end
 
       # Guess the unit type for this service

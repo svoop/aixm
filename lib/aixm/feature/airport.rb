@@ -38,6 +38,7 @@ module AIXM
     class Airport < Feature
       include AIXM::Association
       include AIXM::Memoize
+      include AIXM::Concerns::Timetable
       include AIXM::Concerns::Remarks
 
       public_class_method :new
@@ -150,9 +151,6 @@ module AIXM
       # @return [AIXM::Z, nil] transition altitude in +:qnh+
       attr_reader :transition_z
 
-      # @return [AIXM::Component::Timetable, nil] operating hours
-      attr_reader :timetable
-
       # @return [String, nil] operator of the airport
       attr_reader :operator
 
@@ -226,11 +224,6 @@ module AIXM
       def transition_z=(value)
         fail(ArgumentError, "invalid transition_z") unless value.nil? || (value.is_a?(AIXM::Z) && value.qnh?)
         @transition_z = value
-      end
-
-      def timetable=(value)
-        fail(ArgumentError, "invalid timetable") unless value.nil? || value.is_a?(AIXM::Component::Timetable)
-        @timetable = value
       end
 
       def operator=(value)
@@ -346,6 +339,7 @@ module AIXM
       # @see https://gitlab.com/openflightmaps/ofmx/wikis/Airport#ahu-airport-usage
       class UsageLimitation
         include AIXM::Association
+        include AIXM::Concerns::Timetable
         include AIXM::Concerns::Remarks
 
         TYPES = {
@@ -370,9 +364,6 @@ module AIXM
         # @return [Symbol] type of limitation
         attr_reader :type
 
-        # @return [AIXM::Component::Timetable, nil] limitation application hours
-        attr_reader :timetable
-
         # See the {cheat sheet}[AIXM::Feature::Airport::UsageLimitation] for
         #   examples on how to create instances of this class.
         def initialize(type:)
@@ -386,11 +377,6 @@ module AIXM
 
         def type=(value)
           @type = TYPES.lookup(value&.to_s&.to_sym, nil) || fail(ArgumentError, "invalid type")
-        end
-
-        def timetable=(value)
-          fail(ArgumentError, "invalid timetable") unless value.nil? || value.is_a?(AIXM::Component::Timetable)
-          @timetable = value
         end
 
         # @return [String] AIXM or OFMX markup

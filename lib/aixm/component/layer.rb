@@ -21,6 +21,7 @@ module AIXM
     # @see https://gitlab.com/openflightmaps/ofmx/wikis/Airspace
     class Layer < Component
       include AIXM::Association
+      include AIXM::Concerns::Timetable
       include AIXM::Concerns::Remarks
 
       CLASSES = (:A..:G).freeze
@@ -113,9 +114,6 @@ module AIXM
       # @return [String, nil] primary activity (e.g. "GLIDER")
       attr_reader :activity
 
-      # @return [AIXM::Component::Timetable, nil] activation hours
-      attr_reader :timetable
-
       # See the {cheat sheet}[AIXM::Component::Layer] for examples on how to
       # create instances of this class.
       def initialize(class: nil, location_indicator: nil, vertical_limit:)
@@ -147,11 +145,6 @@ module AIXM
 
       def activity=(value)
         @activity = value.nil? ? nil : ACTIVITIES.lookup(value.to_s.to_sym, nil) || fail(ArgumentError, "invalid activity")
-      end
-
-      def timetable=(value)
-        fail(ArgumentError, "invalid timetable") unless value.nil? || value.is_a?(AIXM::Component::Timetable)
-        @timetable = value
       end
 
       # @!attribute [w] selective

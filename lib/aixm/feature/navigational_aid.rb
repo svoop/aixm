@@ -6,6 +6,7 @@ module AIXM
     # @abstract
     class NavigationalAid < Feature
       include AIXM::Association
+      include AIXM::Concerns::Timetable
       include AIXM::Concerns::Remarks
 
       private_class_method :new
@@ -25,9 +26,6 @@ module AIXM
 
       # @return [AIXM::Z, nil] elevation in +:qnh+
       attr_reader :z
-
-      # @return [AIXM::Component::Timetable, nil] operating hours
-      attr_reader :timetable
 
       def initialize(source: nil, region: nil, organisation:, id:, name: nil, xy:, z: nil)
         super(source: source, region: region)
@@ -57,11 +55,6 @@ module AIXM
       def z=(value)
         fail(ArgumentError, "invalid z") unless value.nil? || (value.is_a?(AIXM::Z) && value.qnh?)
         @z = value
-      end
-
-      def timetable=(value)
-        fail(ArgumentError, "invalid timetable") unless value.nil? || value.is_a?(AIXM::Component::Timetable)
-        @timetable = value
       end
 
       # @return [String] fully descriptive combination of {#class} and {#type} key

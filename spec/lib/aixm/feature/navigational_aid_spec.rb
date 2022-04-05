@@ -45,6 +45,10 @@ describe AIXM::Feature::NavigationalAid do
     end
   end
 
+  describe :timetable= do
+    macro :timetable
+  end
+
   describe :remarks= do
     macro :remarks
   end
