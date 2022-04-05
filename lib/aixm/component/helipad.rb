@@ -25,6 +25,7 @@ module AIXM
     class Helipad < Component
       include AIXM::Association
       include AIXM::Memoize
+      include AIXM::Concerns::Marking
       include AIXM::Concerns::Remarks
 
       PERFORMANCE_CLASSES = {
@@ -81,9 +82,6 @@ module AIXM
       # @return [AIXM::R, nil] dimensions
       attr_reader :dimensions
 
-      # @return [String, nil] markings
-      attr_reader :marking
-
       # @return [Integer, Symbol, nil] suitable performance class
       attr_reader :performance_class
 
@@ -120,10 +118,6 @@ module AIXM
       def dimensions=(value)
         fail(ArgumentError, "invalid dimensions") unless value.nil? || value.is_a?(AIXM::R)
         @dimensions = value
-      end
-
-      def marking=(value)
-        @marking = value&.to_s
       end
 
       def performance_class=(value)

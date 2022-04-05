@@ -30,6 +30,7 @@ module AIXM
     class FATO < Component
       include AIXM::Association
       include AIXM::Memoize
+      include AIXM::Concerns::Marking
       include AIXM::Concerns::Remarks
 
       STATUSES = {
@@ -70,9 +71,6 @@ module AIXM
       # @return [AIXM::R, nil] dimensions
       attr_reader :dimensions
 
-      # @return [String, nil] markings
-      attr_reader :marking
-
       # @return [String, nil] profile description
       attr_reader :profile
 
@@ -99,10 +97,6 @@ module AIXM
       def dimensions=(value)
         fail(ArgumentError, "invalid dimensions") unless value.nil? || value.is_a?(AIXM::R)
         @dimensions = value
-      end
-
-      def marking=(value)
-        @marking = value&.to_s
       end
 
       def profile=(value)

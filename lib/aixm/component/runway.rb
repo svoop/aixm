@@ -51,6 +51,7 @@ module AIXM
     class Runway < Component
       include AIXM::Association
       include AIXM::Memoize
+      include AIXM::Concerns::Marking
       include AIXM::Concerns::Remarks
 
       STATUSES = {
@@ -93,9 +94,6 @@ module AIXM
       # @return [AIXM::R, nil] dimensions
       attr_reader :dimensions
 
-      # @return [String, nil] markings
-      attr_reader :marking
-
       # @return [Symbol, nil] status of the runway (see {STATUSES}) or +nil+ for normal operation
       attr_reader :status
 
@@ -124,10 +122,6 @@ module AIXM
       def dimensions=(value)
         fail(ArgumentError, "invalid dimensions") unless value.nil? || value.is_a?(AIXM::R)
         @dimensions = value
-      end
-
-      def marking=(value)
-        @marking = value&.to_s
       end
 
       def status=(value)
