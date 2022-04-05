@@ -37,6 +37,7 @@ module AIXM
     # @return [Symbol, nil] one-letter suffix
     attr_reader :suffix
 
+    # See the {overview}[AIXM::A] for examples.
     def initialize(value)
       case value
       when String

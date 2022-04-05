@@ -118,6 +118,8 @@ module AIXM
       # @return [String, nil] free text remarks
       attr_reader :remarks
 
+      # See the {cheat sheet}[AIXM::Component::Layer] for examples on how to
+      # create instances of this class.
       def initialize(class: nil, location_indicator: nil, vertical_limit:)
         self.class = binding.local_variable_get(:class)
         self.location_indicator, self.vertical_limit = location_indicator, vertical_limit

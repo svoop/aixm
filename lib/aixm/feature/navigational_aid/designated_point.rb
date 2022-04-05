@@ -44,6 +44,8 @@ module AIXM
         # @return [Symbol] type of designated point
         attr_reader :type
 
+        # See the {cheat sheet}[AIXM::Feature::NavigationalAid::DesignatedPoint]
+        # for examples on how to create instances of this class.
         def initialize(type:, **arguments)
           super(organisation: nil, z: nil, **arguments)
           self.type = type

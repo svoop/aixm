@@ -15,6 +15,7 @@ module AIXM
     # @return [AIXM::D] rectangle width
     attr_reader :width
 
+    # See the {overview}[AIXM::R] for examples.
     def initialize(length, width=nil)
       self.length, self.width = length, (width || length)
     end

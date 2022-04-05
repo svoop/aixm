@@ -1,17 +1,17 @@
 module AIXM
   module Schedule
 
-  # Dates suitable for schedules
-  #
-  # This class implements the bare minimum of stdlib +Date+ and adds some
-  # extensions:
-  # * yearless dates
-  # * {in?} to check whether (yearless) date falls within (yearless) date range
-  #
-  # @example
-  #   date = AIXM.date('2022-04-20')        # => 2022-04-20
-  #   from = AIXM.date('03-20')             # => XXXX-03-20
-  #   date.in?(from..AIXM.date('05-20'))    # => true
+    # Dates suitable for schedules
+    #
+    # This class implements the bare minimum of stdlib +Date+ and adds some
+    # extensions:
+    # * yearless dates
+    # * {in?} to check whether (yearless) date falls within (yearless) date range
+    #
+    # @example
+    #   date = AIXM.date('2022-04-20')        # => 2022-04-20
+    #   from = AIXM.date('03-20')             # => XXXX-03-20
+    #   date.in?(from..AIXM.date('05-20'))    # => true
     class Date
       include Comparable
       extend Forwardable

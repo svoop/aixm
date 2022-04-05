@@ -27,6 +27,7 @@ module AIXM
     # @return [Symbol] unit (see {UNITS})
     attr_reader :unit
 
+    # See the {overview}[AIXM::W] for examples.
     def initialize(wgt, unit)
       self.wgt, self.unit = wgt, unit
     end

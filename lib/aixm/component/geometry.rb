@@ -49,6 +49,8 @@ module AIXM
       #   @return [AIXM::Feature::Airspace] airspace the geometry defines
       belongs_to :airspace
 
+      # See the {cheat sheet}[AIXM::Component::Geometry] for examples on how to
+      # create instances of this class.
       def initialize(*segments)
         segments.each { add_segment(_1) }
       end

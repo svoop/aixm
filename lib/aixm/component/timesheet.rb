@@ -82,7 +82,8 @@ module AIXM
       #   @param value [Range<AIXM::Schedule::Time>, nil] range of schedule times
       attr_reader :times
 
-      # @see AIXM::Component::Timesheet cheat sheet in pseudo code
+      # See the {cheat sheet}[AIXM::Component::Timesheet] for examples on how to
+      # create instances of this class.
       def initialize(adjust_to_dst:, dates:, days: nil, day: AIXM.day(:any))
         self.adjust_to_dst, self.dates = adjust_to_dst, dates
         if days

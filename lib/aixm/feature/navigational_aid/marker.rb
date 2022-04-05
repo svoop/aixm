@@ -42,10 +42,12 @@ module AIXM
         # @return [Symbol] type of marker (see {TYPES})
         attr_reader :type
 
-        # TODO: Marker require an associated ILS (not yet implemented)
+        # See the {cheat sheet}[AIXM::Feature::NavigationalAid::Marker] for
+        # examples on how to create instances of this class.
         def initialize(type:, **arguments)
           super(**arguments)
           self.type = type
+          # TODO: Marker require an associated ILS (not yet implemented)
           warn("WARNING: Marker is not fully implemented yet due to the lack of ILS")
         end
 

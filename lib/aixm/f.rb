@@ -21,6 +21,7 @@ module AIXM
     # @return [Symbol] unit (see {UNITS})
     attr_reader :unit
 
+    # See the {overview}[AIXM::F] for examples.
     def initialize(freq, unit)
       self.freq, self.unit = freq, unit
     end

@@ -101,6 +101,8 @@ module AIXM
       # @return [String, nil] free text remarks
       attr_reader :remarks
 
+      # See the {cheat sheet}[AIXM::Component::Runway] for examples on how to
+      # create instances of this class.
       def initialize(name:)
         self.name = name
         @name.split("/").tap do |forth_name, back_name|
@@ -234,6 +236,8 @@ module AIXM
         # @return [String, nil] free text remarks
         attr_reader :remarks
 
+        # See the {cheat sheet}[AIXM::Component::Runway] for examples on how to
+        #   create instances of this class.
         def initialize(name:)
           self.name = name
           self.vasis = AIXM.vasis

@@ -28,6 +28,7 @@ module AIXM
     # @return [Symbol] unit (see {UNITS})
     attr_reader :unit
 
+    # See the {overview}[AIXM::P] for examples.
     def initialize(pres, unit)
       self.pres, self.unit = pres, unit
     end

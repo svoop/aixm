@@ -26,6 +26,8 @@ module AIXM
         # @return [AIXM::D] circle radius
         attr_reader :radius
 
+        # See the {cheat sheet}[AIXM::Component::Geometry::Circle] for examples
+        # on how to create instances of this class.
         def initialize(center_xy:, radius:)
           self.center_xy, self.radius = center_xy, radius
         end

@@ -62,6 +62,8 @@ module AIXM
       # @return [String, nil] free text remarks
       attr_reader :remarks
 
+      # See the {cheat sheet}[AIXM::Component::Frequency] for examples on how to
+      # create instances of this class.
       def initialize(transmission_f:, callsigns:)
         self.transmission_f, self.callsigns = transmission_f, callsigns
         self.reception_f = transmission_f

@@ -20,6 +20,8 @@ module AIXM
         # @return [String] name of the border
         attr_reader :name
 
+        # See the {cheat sheet}[AIXM::Component::Geometry::Border] for examples
+        # on how to create instances of this class.
         def initialize(xy:, name:)
           super(xy: xy)
           self.name = name

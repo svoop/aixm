@@ -49,6 +49,8 @@ module AIXM
       #   @param value [String, nil]
       attr_reader :remarks
 
+      # See the {cheat sheet}[AIXM::Component::Timetable] for examples on how to
+      # create instances of this class.
       def initialize(code: :timesheet)
         self.code = code
       end

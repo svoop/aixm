@@ -31,6 +31,7 @@ module AIXM
   class XY
     EARTH_RADIUS = 6_371_008.8
 
+    # See the {overview}[AIXM::XY] for examples.
     def initialize(lat:, long:)
       self.lat, self.long = lat, long
     end

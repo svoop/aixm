@@ -27,6 +27,7 @@ module AIXM
     # @return [Symbol] Q code - either +:qfe+ (height in feet), +:qnh+ (altitude in feet or +:qne+ (altitude as flight level)
     attr_reader :code
 
+    # See the {overview}[AIXM::Z] for examples.
     def initialize(alt, code)
       self.alt, self.code = alt, code
     end

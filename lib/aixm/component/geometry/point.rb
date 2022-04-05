@@ -23,6 +23,8 @@ module AIXM
         # @return [AIXM::XY] (starting) point
         attr_reader :xy
 
+        # See the {cheat sheet}[AIXM::Component::Geometry::Point] for examples
+        # on how to create instances of this class.
         def initialize(xy:)
           self.xy = xy
         end

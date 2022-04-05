@@ -37,6 +37,8 @@ module AIXM
     # @return [Time] effective after date and time (default: {#created_at} or now)
     attr_reader :effective_at
 
+    # See the {cheat sheet}[AIXM::Document] for examples on how to create
+    # instances of this class.
     def initialize(namespace: nil, created_at: nil, effective_at: nil)
       self.namespace, self.created_at, self.effective_at = namespace, created_at, effective_at
     end

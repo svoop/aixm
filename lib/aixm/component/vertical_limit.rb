@@ -50,6 +50,8 @@ module AIXM
       # @return [AIXM::Z] alternative lower limit ("whichever is lower")
       attr_reader :min_z
 
+      # See the {cheat sheet}[AIXM::Component::VerticalLimit] for examples on
+      # how to create instances of this class.
       def initialize(upper_z:, max_z: nil, lower_z:, min_z: nil)
         self.upper_z, self.max_z, self.lower_z, self.min_z = upper_z, max_z, lower_z, min_z
       end

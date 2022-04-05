@@ -25,7 +25,7 @@ module AIXM
       # @see https://gitlab.com/openflightmaps/ofmx/wikis/Navigational-aid#ndb-ndb
       class NDB < NavigationalAid
         include AIXM::Memoize
-        
+
         public_class_method :new
 
         TYPES = {
@@ -41,6 +41,8 @@ module AIXM
         # @return [AIXM::F] radio frequency
         attr_reader :f
 
+        # See the {cheat sheet}[AIXM::Feature::NavigationalAid::NDB] for examples
+        # on how to create instances of this class.
         def initialize(type:, f:, **arguments)
           super(**arguments)
           self.type, self.f = type, f

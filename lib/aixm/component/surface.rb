@@ -80,6 +80,8 @@ module AIXM
       # @return [String, nil] free text remarks
       attr_reader :remarks
 
+      # See the {cheat sheet}[AIXM::Component::Surface] for examples on how to
+      # create instances of this class.
       def initialize
         @pcn = {}
       end

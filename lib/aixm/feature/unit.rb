@@ -104,6 +104,8 @@ module AIXM
       # @return [String, nil] free text remarks
       attr_reader :remarks
 
+      # See the {cheat sheet}[AIXM::Feature::Unit] for examples on how to create
+      # instances of this class.
       def initialize(source: nil, region: nil, organisation:, name:, type:, class:)
         super(source: source, region: region)
         self.organisation, self.name, self.type = organisation, name, type

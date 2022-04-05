@@ -16,9 +16,12 @@ module AIXM
       #
       # @see https://gitlab.com/openflightmaps/ofmx/wikis/Airspace#arc
       class Arc < Point
+
         # @return [AIXM::XY] center point
         attr_reader :center_xy
 
+        # See the {cheat sheet}[AIXM::Component::Geometry::Arc] for examples on
+        # how to create instances of this class.
         def initialize(xy:, center_xy:, clockwise:)
           super(xy: xy)
           self.center_xy, self.clockwise = center_xy, clockwise

@@ -92,6 +92,8 @@ module AIXM
       # @return [String, nil] free text remarks
       attr_reader :remarks
 
+      # See the {cheat sheet}[AIXM::Component::Helipad] for examples on how to
+      # create instances of this class.
       def initialize(name:, xy:)
         self.name, self.xy = name, xy
         self.surface = AIXM.surface

@@ -16,7 +16,8 @@ module AIXM
   class PayloadHash
     IGNORED_ATTRIBUTES = %w(mid source).freeze
 
-    # @param fragment [Nokogiri::XML::DocumentFragment, Nokogiri::XML::Element, String] XML fragment
+    # @param fragment [Nokogiri::XML::DocumentFragment, Nokogiri::XML::Element,
+    #   String] XML fragment
     def initialize(fragment)
       @fragment = case fragment
         when Nokogiri::XML::DocumentFragment then fragment

@@ -46,6 +46,8 @@ module AIXM
         # @return [String] radio channel
         attr_reader :channel
 
+        # See the {cheat sheet}[AIXM::Feature::NavigationalAid::DME] for examples
+        # on how to create instances of this class.
         def initialize(channel: nil, ghost_f: nil, **arguments)
           super(**arguments)
           case

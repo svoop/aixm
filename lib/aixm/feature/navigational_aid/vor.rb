@@ -68,6 +68,8 @@ module AIXM
         # @return [Symbol] north indication (see {NORTHS})
         attr_reader :north
 
+        # See the {cheat sheet}[AIXM::Feature::VOR] for examples on how to
+        # create instances of this class.
         def initialize(type:, f:, north:, **arguments)
           super(**arguments)
           self.type, self.f, self.north = type, f, north

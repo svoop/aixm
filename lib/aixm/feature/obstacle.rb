@@ -124,6 +124,8 @@ module AIXM
       # @return [Symbol, nil] type of physical link between this and another obstacle
       attr_reader :link_type
 
+      # See the {cheat sheet}[AIXM::Feature::Obstacle] for examples on how to
+      # create instances of this class.
       def initialize(source: nil, region: nil, name: nil, type:, xy:, z:, radius: nil)
         super(source: source, region: region)
         self.name, self.type, self.xy, self.z, self.radius = name, type, xy, z, radius

@@ -109,6 +109,8 @@ module AIXM
       # @return [String, nil] full name (e.g. "LF P 81 CHERBOURG")
       attr_reader :name
 
+      # See the {cheat sheet}[AIXM::Feature::Airspace] for examples on how to
+      # create instances of this class.
       def initialize(source: nil, region: nil, id: nil, type:, local_type: nil, name: nil)
         super(source: source, region: region)
         self.type, self.local_type, self.name = type, local_type, name

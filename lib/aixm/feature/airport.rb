@@ -158,6 +158,8 @@ module AIXM
       # @return [String, nil] free text remarks
       attr_reader :remarks
 
+      # See the {cheat sheet}[AIXM::Feature::Airport] for examples on how to
+      # create instances of this class.
       def initialize(source: nil, region: nil, organisation:, id: nil, name:, xy:)
         super(source: source, region: region)
         self.organisation, self.name, self.id, self.xy = organisation, name, id, xy   # name must be set before id
@@ -379,6 +381,8 @@ module AIXM
         # @return [String, nil] free text remarks
         attr_reader :remarks
 
+        # See the {cheat sheet}[AIXM::Feature::Airport::UsageLimitation] for
+        #   examples on how to create instances of this class.
         def initialize(type:)
           self.type = type
         end
