@@ -30,6 +30,7 @@ module AIXM
     class FATO < Component
       include AIXM::Association
       include AIXM::Memoize
+      include AIXM::Concerns::Remarks
 
       STATUSES = {
         CLSD: :closed,
@@ -78,9 +79,6 @@ module AIXM
       # @return [Symbol, nil] status of the FATO (see {STATUSES}) or +nil+ for normal operation
       attr_reader :status
 
-      # @return [String, nil] free text remarks
-      attr_reader :remarks
-
       # See the {cheat sheet}[AIXM::Component::FATO] for examples on how to
       # create instances of this class.
       def initialize(name:)
@@ -113,10 +111,6 @@ module AIXM
 
       def status=(value)
         @status = value.nil? ? nil : (STATUSES.lookup(value.to_s.to_sym, nil) || fail(ArgumentError, "invalid status"))
-      end
-
-      def remarks=(value)
-        @remarks = value&.to_s
       end
 
       # @return [String] UID markup
@@ -159,6 +153,7 @@ module AIXM
       class Direction
         include AIXM::Association
         include AIXM::Memoize
+        include AIXM::Concerns::Remarks
 
         # @!method lightings
         #   @return [Array<AIXM::Component::Lighting>] installed lighting systems
@@ -189,9 +184,6 @@ module AIXM
         #   system
         attr_reader :vasis
 
-        # @return [String, nil] free text remarks
-        attr_reader :remarks
-
         # See the {cheat sheet}[AIXM::Component::FATO] for examples on how to
         #   create instances of this class.
         def initialize(name:)
@@ -213,10 +205,6 @@ module AIXM
           return @geographic_bearing = nil if value.nil?
           fail(ArgumentError, "invalid geographic bearing") unless value.is_a? AIXM::A
           @geographic_bearing = value
-        end
-
-        def remarks=(value)
-          @remarks = value&.to_s
         end
 
         # @return [AIXM::A] magnetic bearing in degrees

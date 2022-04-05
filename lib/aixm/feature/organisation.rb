@@ -20,6 +20,7 @@ module AIXM
     class Organisation < Feature
       include AIXM::Association
       include AIXM::Memoize
+      include AIXM::Concerns::Remarks
 
       public_class_method :new
 
@@ -56,9 +57,6 @@ module AIXM
       # @return [String, nil] code of the organisation (e.g. "LF")
       attr_reader :id
 
-      # @return [String, nil] free text remarks
-      attr_reader :remarks
-
       # See the {cheat sheet}[AIXM::Feature::Organisation] for examples on how to
       # create instances of this class.
       def initialize(source: nil, region: nil, name:, type:)
@@ -83,10 +81,6 @@ module AIXM
       def id=(value)
         fail(ArgumentError, "invalid id") unless value.nil? || value.is_a?(String)
         @id = value&.upcase
-      end
-
-      def remarks=(value)
-        @remarks = value&.to_s
       end
 
       # @return [String] UID markup

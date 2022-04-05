@@ -25,6 +25,7 @@ module AIXM
     class Helipad < Component
       include AIXM::Association
       include AIXM::Memoize
+      include AIXM::Concerns::Remarks
 
       PERFORMANCE_CLASSES = {
         '1': :'1',
@@ -89,9 +90,6 @@ module AIXM
       # @return [Symbol, nil] status of the helipad (see {STATUSES}) or +nil+ for normal operation
       attr_reader :status
 
-      # @return [String, nil] free text remarks
-      attr_reader :remarks
-
       # See the {cheat sheet}[AIXM::Component::Helipad] for examples on how to
       # create instances of this class.
       def initialize(name:, xy:)
@@ -134,10 +132,6 @@ module AIXM
 
       def status=(value)
         @status = value.nil? ? nil : (STATUSES.lookup(value.to_s.to_sym, nil) || fail(ArgumentError, "invalid status"))
-      end
-
-      def remarks=(value)
-        @remarks = value&.to_s
       end
 
       # @return [String] UID markup

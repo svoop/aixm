@@ -21,6 +21,7 @@ module AIXM
     # @see https://gitlab.com/openflightmaps/ofmx/wikis/Airspace
     class Layer < Component
       include AIXM::Association
+      include AIXM::Concerns::Remarks
 
       CLASSES = (:A..:G).freeze
 
@@ -115,9 +116,6 @@ module AIXM
       # @return [AIXM::Component::Timetable, nil] activation hours
       attr_reader :timetable
 
-      # @return [String, nil] free text remarks
-      attr_reader :remarks
-
       # See the {cheat sheet}[AIXM::Component::Layer] for examples on how to
       # create instances of this class.
       def initialize(class: nil, location_indicator: nil, vertical_limit:)
@@ -165,10 +163,6 @@ module AIXM
       def selective=(value)
         fail(ArgumentError, "invalid selective") unless [true, false].include? value
         @selective = value
-      end
-
-      def remarks=(value)
-        @remarks = value&.to_s
       end
 
       # @return [String] AIXM or OFMX markup

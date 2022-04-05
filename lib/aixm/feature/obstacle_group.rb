@@ -40,6 +40,7 @@ module AIXM
     class ObstacleGroup < Feature
       include AIXM::Association
       include AIXM::Memoize
+      include AIXM::Concerns::Remarks
 
       public_class_method :new
 
@@ -78,9 +79,6 @@ module AIXM
         end
       end
 
-      # @return [String, nil] free text remarks
-      attr_reader :remarks
-
       # See the {cheat sheet}[AIXM::Feature::ObstacleGroup] for examples on how
       # to create instances of this class.
       def initialize(source: nil, region: nil, name: nil)
@@ -106,10 +104,6 @@ module AIXM
       def z_accuracy=(value)
         fail(ArgumentError, "invalid z accuracy") unless value.nil? || value.is_a?(AIXM::D)
         @z_accuracy = value
-      end
-
-      def remarks=(value)
-        @remarks = value&.to_s
       end
 
       # @return [String] UID markup

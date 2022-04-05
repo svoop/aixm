@@ -19,6 +19,7 @@ module AIXM
     class ApproachLighting < Component
       include AIXM::Association
       include AIXM::Memoize
+      include AIXM::Concerns::Remarks
 
       TYPES = {
         A: :cat_1,
@@ -67,9 +68,6 @@ module AIXM
       # @return [String, nil] description of the flash sequence
       attr_reader :flash_description
 
-      # @return [String, nil] free text remarks
-      attr_reader :remarks
-
       # See the {cheat sheet}[AIXM::Component::ApproachLighting] for examples on
       # how to create instances of this class.
       def initialize(type:)
@@ -101,10 +99,6 @@ module AIXM
 
       def flash_description=(value)
         @flash_description = value&.to_s
-      end
-
-      def remarks=(value)
-        @remarks = value&.to_s
       end
 
       # @return [String] UID markup

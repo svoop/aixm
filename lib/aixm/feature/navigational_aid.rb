@@ -6,6 +6,7 @@ module AIXM
     # @abstract
     class NavigationalAid < Feature
       include AIXM::Association
+      include AIXM::Concerns::Remarks
 
       private_class_method :new
 
@@ -27,9 +28,6 @@ module AIXM
 
       # @return [AIXM::Component::Timetable, nil] operating hours
       attr_reader :timetable
-
-      # @return [String, nil] free text remarks
-      attr_reader :remarks
 
       def initialize(source: nil, region: nil, organisation:, id:, name: nil, xy:, z: nil)
         super(source: source, region: region)
@@ -64,10 +62,6 @@ module AIXM
       def timetable=(value)
         fail(ArgumentError, "invalid timetable") unless value.nil? || value.is_a?(AIXM::Component::Timetable)
         @timetable = value
-      end
-
-      def remarks=(value)
-        @remarks = value&.to_s
       end
 
       # @return [String] fully descriptive combination of {#class} and {#type} key

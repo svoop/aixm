@@ -38,6 +38,7 @@ module AIXM
     class Airport < Feature
       include AIXM::Association
       include AIXM::Memoize
+      include AIXM::Concerns::Remarks
 
       public_class_method :new
 
@@ -155,9 +156,6 @@ module AIXM
       # @return [String, nil] operator of the airport
       attr_reader :operator
 
-      # @return [String, nil] free text remarks
-      attr_reader :remarks
-
       # See the {cheat sheet}[AIXM::Feature::Airport] for examples on how to
       # create instances of this class.
       def initialize(source: nil, region: nil, organisation:, id: nil, name:, xy:)
@@ -238,10 +236,6 @@ module AIXM
       def operator=(value)
         fail(ArgumentError, "invalid name") unless value.nil? || value.is_a?(String)
         @operator = value&.uptrans
-      end
-
-      def remarks=(value)
-        @remarks = value&.to_s
       end
 
       # @return [String] UID markup
@@ -352,6 +346,7 @@ module AIXM
       # @see https://gitlab.com/openflightmaps/ofmx/wikis/Airport#ahu-airport-usage
       class UsageLimitation
         include AIXM::Association
+        include AIXM::Concerns::Remarks
 
         TYPES = {
           PERMIT: :permitted,
@@ -378,9 +373,6 @@ module AIXM
         # @return [AIXM::Component::Timetable, nil] limitation application hours
         attr_reader :timetable
 
-        # @return [String, nil] free text remarks
-        attr_reader :remarks
-
         # See the {cheat sheet}[AIXM::Feature::Airport::UsageLimitation] for
         #   examples on how to create instances of this class.
         def initialize(type:)
@@ -399,10 +391,6 @@ module AIXM
         def timetable=(value)
           fail(ArgumentError, "invalid timetable") unless value.nil? || value.is_a?(AIXM::Component::Timetable)
           @timetable = value
-        end
-
-        def remarks=(value)
-          @remarks = value&.to_s
         end
 
         # @return [String] AIXM or OFMX markup

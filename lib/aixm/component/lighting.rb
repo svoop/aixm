@@ -20,6 +20,7 @@ module AIXM
     class Lighting < Component
       include AIXM::Association
       include AIXM::Memoize
+      include AIXM::Concerns::Remarks
 
       POSITIONS = {
         TDZ: :touch_down_zone,
@@ -73,9 +74,6 @@ module AIXM
       # @return [Symbol, nil] color of lights (see {COLORS})
       attr_reader :color
 
-      # @return [String, nil] free text remarks
-      attr_reader :remarks
-
       # See the {cheat sheet}[AIXM::Component::Lighting] for examples on how to
       # create instances of this class.
       def initialize(position:)
@@ -101,10 +99,6 @@ module AIXM
 
       def color=(value)
         @color = value.nil? ? nil : COLORS.lookup(value.to_s.to_sym, nil) || fail(ArgumentError, "invalid color")
-      end
-
-      def remarks=(value)
-        @remarks = value&.to_s
       end
 
       # @return [String] UID markup

@@ -23,6 +23,7 @@ module AIXM
     class Unit < Feature
       include AIXM::Association
       include AIXM::Memoize
+      include AIXM::Concerns::Remarks
 
       public_class_method :new
 
@@ -101,9 +102,6 @@ module AIXM
       # @return [Symbol] type of unit (see {TYPES})
       attr_reader :type
 
-      # @return [String, nil] free text remarks
-      attr_reader :remarks
-
       # See the {cheat sheet}[AIXM::Feature::Unit] for examples on how to create
       # instances of this class.
       def initialize(source: nil, region: nil, organisation:, name:, type:, class:)
@@ -135,10 +133,6 @@ module AIXM
 
       def class=(value)
         @klass = CLASSES.lookup(value&.to_s&.to_sym, nil) || fail(ArgumentError, "invalid class")
-      end
-
-      def remarks=(value)
-        @remarks = value&.to_s
       end
 
       # @return [String] UID markup

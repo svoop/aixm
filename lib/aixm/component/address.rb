@@ -16,6 +16,7 @@ module AIXM
     class Address < Component
       include AIXM::Association
       include AIXM::Memoize
+      include AIXM::Concerns::Remarks
 
       public_class_method :new
 
@@ -45,9 +46,6 @@ module AIXM
       # @return [String] postal address, phone number, radio frequency etc
       attr_reader :address
 
-      # @return [String, nil] free text remarks
-      attr_reader :remarks
-
       # See the {cheat sheet}[AIXM::Component::Address] for examples on how to
       # create instances of this class.
       def initialize(type:, address:)
@@ -72,10 +70,6 @@ module AIXM
           fail(ArgumentError, "invalid address") unless value
           @address = value.to_s
         end
-      end
-
-      def remarks=(value)
-        @remarks = value&.to_s
       end
 
       # @return [String] UID markup

@@ -24,6 +24,7 @@ module AIXM
     class Frequency < Component
       include AIXM::Association
       include AIXM::Memoize
+      include AIXM::Concerns::Remarks
 
       TYPES = {
         STD: :standard,
@@ -59,9 +60,6 @@ module AIXM
       # @return [AIXM::Component::Timetable, nil] operating hours
       attr_reader :timetable
 
-      # @return [String, nil] free text remarks
-      attr_reader :remarks
-
       # See the {cheat sheet}[AIXM::Component::Frequency] for examples on how to
       # create instances of this class.
       def initialize(transmission_f:, callsigns:)
@@ -96,10 +94,6 @@ module AIXM
       def timetable=(value)
         fail(ArgumentError, "invalid timetable") unless value.nil? || value.is_a?(AIXM::Component::Timetable)
         @timetable = value
-      end
-
-      def remarks=(value)
-        @remarks = value&.to_s
       end
 
       # @return [String] UID markup

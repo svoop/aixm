@@ -19,6 +19,7 @@ module AIXM
     # @see https://gitlab.com/openflightmaps/ofmx/wikis/Timetable#predefined-timetable
     class Timetable < Component
       include AIXM::Association
+      include AIXM::Concerns::Remarks
 
       CODES = {
         TIMSH: :timesheet,          # attached timesheet
@@ -40,14 +41,6 @@ module AIXM
       #     has been added.
       #   @param timesheet [AIXM::Component::Timesheet]
       has_many :timesheets
-
-      # Free text remarks
-      #
-      # @return [String, nil]
-      # @overload remarks
-      # @overload remarks=(value)
-      #   @param value [String, nil]
-      attr_reader :remarks
 
       # See the {cheat sheet}[AIXM::Component::Timetable] for examples on how to
       # create instances of this class.
@@ -75,10 +68,6 @@ module AIXM
         @code = if value
           CODES.lookup(value&.to_s&.to_sym, nil) || fail(ArgumentError, "invalid code")
         end
-      end
-
-      def remarks=(value)
-        @remarks = value&.to_s
       end
 
       # @return [String] AIXM or OFMX markup

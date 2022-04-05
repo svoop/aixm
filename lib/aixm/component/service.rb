@@ -17,6 +17,7 @@ module AIXM
     class Service < Component
       include AIXM::Association
       include AIXM::Memoize
+      include AIXM::Concerns::Remarks
 
       TYPES = {
         ACS: :area_control_service,
@@ -156,9 +157,6 @@ module AIXM
       # @return [AIXM::Component::Timetable, nil] operating hours
       attr_reader :timetable
 
-      # @return [String, nil] free text remarks
-      attr_reader :remarks
-
       # See the {cheat sheet}[AIXM::Component::Service] for examples on how to
       # create instances of this class.
       def initialize(type:)
@@ -178,10 +176,6 @@ module AIXM
       def timetable=(value)
         fail(ArgumentError, "invalid timetable") unless value.nil? || value.is_a?(AIXM::Component::Timetable)
         @timetable = value
-      end
-
-      def remarks=(value)
-        @remarks = value&.to_s
       end
 
       # Guess the unit type for this service

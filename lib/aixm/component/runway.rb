@@ -51,6 +51,7 @@ module AIXM
     class Runway < Component
       include AIXM::Association
       include AIXM::Memoize
+      include AIXM::Concerns::Remarks
 
       STATUSES = {
         CLSD: :closed,
@@ -98,9 +99,6 @@ module AIXM
       # @return [Symbol, nil] status of the runway (see {STATUSES}) or +nil+ for normal operation
       attr_reader :status
 
-      # @return [String, nil] free text remarks
-      attr_reader :remarks
-
       # See the {cheat sheet}[AIXM::Component::Runway] for examples on how to
       # create instances of this class.
       def initialize(name:)
@@ -134,10 +132,6 @@ module AIXM
 
       def status=(value)
         @status = value.nil? ? nil : (STATUSES.lookup(value.to_s.to_sym, nil) || fail(ArgumentError, "invalid status"))
-      end
-
-      def remarks=(value)
-        @remarks = value&.to_s
       end
 
       # @return [String] UID markup
@@ -182,6 +176,7 @@ module AIXM
       class Direction
         include AIXM::Association
         include AIXM::Memoize
+        include AIXM::Concerns::Remarks
 
         VFR_PATTERNS = {
           L: :left,
@@ -232,9 +227,6 @@ module AIXM
 
         # @return [Symbol, nil] direction of the VFR flight pattern (see {VFR_PATTERNS})
         attr_reader :vfr_pattern
-
-        # @return [String, nil] free text remarks
-        attr_reader :remarks
 
         # See the {cheat sheet}[AIXM::Component::Runway] for examples on how to
         #   create instances of this class.
@@ -290,10 +282,6 @@ module AIXM
 
         def vfr_pattern=(value)
           @vfr_pattern = value.nil? ? nil : (VFR_PATTERNS.lookup(value.to_s.to_sym, nil) || fail(ArgumentError, "invalid VFR pattern"))
-        end
-
-        def remarks=(value)
-          @remarks = value&.to_s
         end
 
         # @return [AIXM::A] magnetic bearing in degrees

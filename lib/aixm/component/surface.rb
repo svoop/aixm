@@ -23,6 +23,8 @@ module AIXM
     # @see https://gitlab.com/openflightmaps/ofmx/wikis/Airport#tla-helipad-tlof
     # @see https://gitlab.com/openflightmaps/ofmx/wikis/Airport#fto-fato
     class Surface < Component
+      include AIXM::Concerns::Remarks
+
       COMPOSITIONS = {
         ASPH: :asphalt,
         BITUM: :bitumen,        # dug up, bound and rolled ground
@@ -77,9 +79,6 @@ module AIXM
       # @return [AIXM::W, nil] all-up wheel weight
       attr_reader :auw_weight
 
-      # @return [String, nil] free text remarks
-      attr_reader :remarks
-
       # See the {cheat sheet}[AIXM::Component::Surface] for examples on how to
       # create instances of this class.
       def initialize
@@ -127,10 +126,6 @@ module AIXM
       def auw_weight=(value)
         fail(ArgumentError, "invalid auw_weight") unless value.nil? || value.is_a?(AIXM::W)
         @auw_weight = value
-      end
-
-      def remarks=(value)
-        @remarks = value&.to_s
       end
 
       # @return [String] AIXM or OFMX markup

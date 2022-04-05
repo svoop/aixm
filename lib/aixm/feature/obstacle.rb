@@ -43,6 +43,7 @@ module AIXM
     class Obstacle < Feature
       include AIXM::Association
       include AIXM::Memoize
+      include AIXM::Concerns::Remarks
 
       public_class_method :new
 
@@ -114,9 +115,6 @@ module AIXM
 
       # @return [Time, Date, String, nil] effective until this point in time
       attr_reader :valid_until
-
-      # @return [String, nil] free text remarks
-      attr_reader :remarks
 
       # @return [Symbol, nil] another obstacle to which a physical link exists
       attr_reader :linked_to
@@ -205,10 +203,6 @@ module AIXM
 
       def valid_until=(value)
         @valid_until = value&.to_time
-      end
-
-      def remarks=(value)
-        @remarks = value&.to_s
       end
 
       def linked_to=(value)
