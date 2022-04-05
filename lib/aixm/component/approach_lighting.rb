@@ -19,6 +19,7 @@ module AIXM
     class ApproachLighting < Component
       include AIXM::Association
       include AIXM::Memoize
+      include AIXM::Concerns::Intensity
       include AIXM::Concerns::Remarks
 
       TYPES = {
@@ -42,13 +43,6 @@ module AIXM
         OTHER: :other   # specify in remarks
       }.freeze
 
-      INTENSITIES = {
-        LIL: :low,
-        LIM: :medium,
-        LIH: :high,
-        OTHER: :other   # specify in remarks
-      }.freeze
-
       # @!method approach_lightable
       #   @return [AIXM::Component::Runway::Direction, AIXM::Component::FATO::Direction] approach lighted entity
       belongs_to :approach_lightable
@@ -58,9 +52,6 @@ module AIXM
 
       # @return [AIXM::D, nil] length
       attr_reader :length
-
-      # @return [Symbol, nil] intensity of lights (see {INTENSITIES})
-      attr_reader :intensity
 
       # @return [Boolean, nil] whether sequenced flash is available
       attr_reader :sequenced_flash
@@ -86,10 +77,6 @@ module AIXM
       def length=(value)
         fail(ArgumentError, "invalid length") unless value.nil? || value.is_a?(AIXM::D)
         @length = value
-      end
-
-      def intensity=(value)
-        @intensity = value.nil? ? nil : INTENSITIES.lookup(value.to_s.to_sym, nil) || fail(ArgumentError, "invalid intensity")
       end
 
       def sequenced_flash=(value)

@@ -26,6 +26,7 @@ require_relative 'aixm/association'
 require_relative 'aixm/payload_hash'
 
 require_relative 'aixm/concerns/timetable'
+require_relative 'aixm/concerns/intensity'
 require_relative 'aixm/concerns/remarks'
 
 require_relative 'aixm/document'

@@ -20,6 +20,7 @@ module AIXM
     class Lighting < Component
       include AIXM::Association
       include AIXM::Memoize
+      include AIXM::Concerns::Intensity
       include AIXM::Concerns::Remarks
 
       POSITIONS = {
@@ -38,13 +39,6 @@ module AIXM
         TWYINT: :taxiway_intersection,
         HOLDBAY: :taxyway_hold_bay,
         RTWYINT: :rapid_taxiway_intersection,
-        OTHER: :other   # specify in remarks
-      }.freeze
-
-      INTENSITIES = {
-        LIL: :low,
-        LIM: :medium,
-        LIH: :high,
         OTHER: :other   # specify in remarks
       }.freeze
 
@@ -68,9 +62,6 @@ module AIXM
       # @return [String, nil] detailed description
       attr_reader :description
 
-      # @return [Symbol, nil] intensity of lights (see {INTENSITIES})
-      attr_reader :intensity
-
       # @return [Symbol, nil] color of lights (see {COLORS})
       attr_reader :color
 
@@ -91,10 +82,6 @@ module AIXM
 
       def description=(value)
         @description = value&.to_s
-      end
-
-      def intensity=(value)
-        @intensity = value.nil? ? nil : INTENSITIES.lookup(value.to_s.to_sym, nil) || fail(ArgumentError, "invalid intensity")
       end
 
       def color=(value)
