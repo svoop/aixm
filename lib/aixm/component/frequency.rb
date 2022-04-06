@@ -41,21 +41,44 @@ module AIXM
       #   @return [AIXM::Component::Service] service the frequency belongs to
       belongs_to :service
 
-      # @return [AIXM::F] frequency for transmission (outgoing)
+      # Frequency for transmission (outgoing)
+      #
+      # @overload transmission_f
+      #   @return [AIXM::F]
+      # @overload transmission_f=(value)
+      #   @param value [AIXM::F]
       attr_reader :transmission_f
 
+
+      # Map from languages (ISO 639-1) to callsigns
+      #
       # @example
       #   { en: "STRASBOURG CONTROL", fr: "STRASBOURG CONTROLE" }
       #
-      # @return [Hash] map from languages (ISO 639-1) to callsigns
+      # @overload callsigns
+      #   @return [Hash]
+      # @overload callsigns=(value)
+      #   @param value [Hash]
       attr_reader :callsigns
 
+
+      # Frequency for reception (incoming)
+      #
       # @note One-way services such as ATIS should set this to +nil+ and simplex
-      #  (aka: non-duplex) communication should set this to {#transmission_f}.
-      # @return [AIXM::F, nil] frequency for reception (incoming)
+      #   (aka: non-duplex) communication should set this to {#transmission_f}.
+      #
+      # @overload reception_f
+      #   @return [AIXM::F, nil]
+      # @overload reception_f=(value)
+      #   @param value [AIXM::F, nil]
       attr_reader :reception_f
 
-      # @return [Symbol, nil] type of frequency (see {TYPES})
+      # Type of frequency
+      #
+      # @overload type
+      #   @return [Symbol, nil] any of {TYPES}
+      # @overload type=(value)
+      #   @param value [Symbol, nil] any of {TYPES}
       attr_reader :type
 
       # See the {cheat sheet}[AIXM::Component::Frequency] for examples on how to

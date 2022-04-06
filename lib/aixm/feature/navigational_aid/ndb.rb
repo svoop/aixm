@@ -35,10 +35,20 @@ module AIXM
           OTHER: :other   # specify in remarks
         }.freeze
 
-        # @return [Symbol, nil] type of NDB (see {TYPES})
+        # Type of NDB
+        #
+        # @overload type
+        #   @return [Symbol, nil] any of {TYPES}
+        # @overload type=(value)
+        #   @param value [Symbol, nil] any of {TYPES}
         attr_reader :type
 
-        # @return [AIXM::F] radio frequency
+        # Radio frequency
+        #
+        # @overload f
+        #   @return [AIXM::F]
+        # @overload f=(value)
+        #   @param value [AIXM::F]
         attr_reader :f
 
         # See the {cheat sheet}[AIXM::Feature::NavigationalAid::NDB] for examples

@@ -6,13 +6,25 @@ module AIXM
 
     private_class_method :new
 
-    # @return [Object] freely usable e.g. to find_by foreign keys
+    # Freely usable e.g. to find_by foreign keys.
+    #
+    # @return [Object]
     attr_accessor :meta
 
-    # @return [String] reference to source of the feature data
+    # Reference to source of the feature data.
+    #
+    # @overload source
+    #   @return [String]
+    # @overload source=(value)
+    #   @param value [String]
     attr_reader :source
 
-    # @return [String] OFMX region all features in this document belong to
+    # OFMX region all features in this document belong to.
+    #
+    # @overload region
+    #   @return [String]
+    # @overload region=(value)
+    #   @param value [String]
     attr_reader :region
 
     def initialize(source: nil, region: nil)

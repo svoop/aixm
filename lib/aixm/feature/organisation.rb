@@ -37,24 +37,37 @@ module AIXM
       }.freeze
 
       # @!method members
-      #   @return [Array<AIXM::Feature::Airport,
-      #     AIXM::Feature::Unit,
+      #   @return [Array<AIXM::Feature::Airport, AIXM::Feature::Unit,
       #     AIXM::Feature::NavigationalAid>] aiports, units or navigational aids
       #
       # @!method add_member(member)
-      #   @param member [AIXM::Feature::Airport,
-      #     AIXM::Feature::Unit,
+      #   @param member [AIXM::Feature::Airport, AIXM::Feature::Unit,
       #     AIXM::Feature::NavigationalAid]
       #   @return [self]
       has_many :members, accept: [:airport, :unit, 'AIXM::Feature::NavigationalAid']
 
-      # @return [String] name of organisation (e.g. "FRANCE")
+      # Name of organisation (e.g. "FRANCE")
+      #
+      # @overload name
+      #   @return [String]
+      # @overload name=(value)
+      #   @param value [String]
       attr_reader :name
 
-      # @return [Symbol] type of organisation (see {TYPES})
+      # Type of organisation
+      #
+      # @overload type
+      #   @return [Symbol] any of {TYPES}
+      # @overload type=(value)
+      #   @param value [Symbol] any of {TYPES}
       attr_reader :type
 
-      # @return [String, nil] code of the organisation (e.g. "LF")
+      # Code of the organisation (e.g. "LF")
+      #
+      # @overload id
+      #   @return [String, nil]
+      # @overload id=(value)
+      #   @param value [String, nil]
       attr_reader :id
 
       # See the {cheat sheet}[AIXM::Feature::Organisation] for examples on how to

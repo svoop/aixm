@@ -61,22 +61,52 @@ module AIXM
         OTHER: :other
       }.freeze
 
-      # @return [Symbol, nil] composition of the surface (see {COMPOSITIONS})
+      # Composition of the surface.
+      #
+      # @overload composition
+      #   @return [Symbol, nil] any of {COMPOSITIONS}
+      # @overload composition=(value)
+      #   @param value [Symbol, nil] any of {COMPOSITIONS}
       attr_reader :composition
 
-      # @return [Symbol, nil] preparation of the surface (see {PREPARATIONS})
+      # Preparation of the surface.
+      #
+      # @overload preparation
+      #   @return [Symbol, nil] any of {PREPARATIONS}
+      # @overload preparation=(value)
+      #   @param value [Symbol, nil] any of {PREPARATIONS}
       attr_reader :preparation
 
-      # @return [Symbol, nil] condition of the surface (see {CONDITIONS})
+      # Condition of the surface.
+      #
+      # @overload condition
+      #   @return [Symbol, nil] any of {CONDITIONS}
+      # @overload condition=(value)
+      #   @param value [Symbol, nil] any of {CONDITIONS}
       attr_reader :condition
 
-      # @return [AIXM::W, nil] single isolated wheel load weight
+      # Single isolated wheel load weight
+      #
+      # @overload siwl_weight
+      #   @return [AIXM::W, nil]
+      # @overload siwl_weight=(value)
+      #   @param value [AIXM::W, nil]
       attr_reader :siwl_weight
 
-      # @return [AIXM::P, nil] single isolated wheel load tire pressure
+      # Single isolated wheel load tire pressure
+      #
+      # @overload siwl_tire_pressure
+      #   @return [AIXM::P, nil]
+      # @overload siwl_tire_pressure=(value)
+      #   @param value [AIXM::P, nil]
       attr_reader :siwl_tire_pressure
 
-      # @return [AIXM::W, nil] all-up wheel weight
+      # All-up wheel weight
+      #
+      # @overload auw_weight
+      #   @return [AIXM::W, nil]
+      # @overload auw_weight=(value)
+      #   @param value [AIXM::W, nil]
       attr_reader :auw_weight
 
       # See the {cheat sheet}[AIXM::Component::Surface] for examples on how to
@@ -102,7 +132,13 @@ module AIXM
         @condition = value.nil? ? nil : CONDITIONS.lookup(value.to_s.to_sym, nil) || fail(ArgumentError, "invalid condition")
       end
 
-      # @return [String, nil] pavement classification number (e.g. "59/F/A/W/T")
+      # Pavement classification number (e.g. "59/F/A/W/T")
+      #
+      # @!attribute pcn
+      # @overload pcn
+      #   @return [String, nil]
+      # @overload pcn=(value)
+      #   @param value [String, nil]
       def pcn
         @pcn.none? ? nil : @pcn.values.join("/".freeze)
       end

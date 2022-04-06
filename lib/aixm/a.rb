@@ -31,10 +31,20 @@ module AIXM
 
     RUNWAY_RE = /\A(0[1-9]|[12]\d|3[0-6])([A-Z])?\z/
 
-    # @return [Integer] angle in the range of -360 < angle < 360
+    # Angle in the range of -360 < angle < 360.
+    #
+    # @overload deg
+    #   @return [Integer]
+    # @overload deg=(value)
+    #   @param value [Integer]
     attr_reader :deg
 
-    # @return [Symbol, nil] one-letter suffix
+    # One-letter suffix.
+    #
+    # @overload suffix
+    #   @return [Symbol, nil]
+    # @overload suffix=(value)
+    #   @param value [Symbol, nil]
     attr_reader :suffix
 
     # See the {overview}[AIXM::A] for examples.
@@ -55,12 +65,16 @@ module AIXM
       %Q(#<#{self.class} #{to_s} #{to_s(:runway).inspect}>)
     end
 
-    # @return [Integer] within 0..359
+    # Degrees in the range of 0..359
+    #
+    # @return [Integer]
     def to_i
       (deg.round + 360) % 360
     end
 
-    # @return [Float] within 0.0..359.9~
+    # Degrees in the range of 0.0...360.0
+    #
+    # @return [Float]
     def to_f
       ((deg + 360) % 360).to_f
     end
@@ -97,20 +111,20 @@ module AIXM
       @suffix = value&.to_s&.to_sym
     end
 
-    # Invert an angle by 180 degrees
+    # Invert an angle by 180 degrees.
     #
     # @example
     #   AIXM.a(120).invert     # (300°)
     #   AIXM.a("34L").invert   # (160° suffix "R")
     #
-    # @return [AIXM::A] inverted angle
+    # @return [AIXM::A]
     def invert
       self.class.new(deg.negative? ? deg - 180 : deg + 180).tap do |angle|
         angle.suffix = SUFFIX_INVERSIONS.fetch(suffix, suffix)
       end
     end
 
-    # Check whether +other+ angle is the inverse
+    # Whether other angle is the inverse.
     #
     # @example
     #   AIXM.a(120).inverse_of? AIXM.a(300)       # => true
@@ -118,19 +132,19 @@ module AIXM
     #   AIXM.a("33X").inverse_of? AIXM.a("33X")   # => true
     #   AIXM.a("16R").inverse_of? AIXM.a("16L")   # => false
     #
-    # @return [Boolean] whether the inverted angle or not
+    # @return [Boolean]
     def inverse_of?(other)
       invert == other
     end
 
-    # Negate degrees
+    # Negate degrees.
     #
     # @return [AIXM::A]
     def -@
       deg.zero? ? self : self.class.new(-deg).tap { _1.suffix = suffix }
     end
 
-    # Add degrees
+    # Add degrees.
     #
     # @param value [Numeric, AIXM::A]
     # @return [AIXM::A]
@@ -145,7 +159,7 @@ module AIXM
       end
     end
 
-    # Subtract degrees
+    # Subtract degrees.
     #
     # @param value [Numeric, AIXM::A]
     # @return [AIXM::A]

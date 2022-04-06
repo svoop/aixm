@@ -17,14 +17,26 @@ module AIXM
       nm: { ft: 6076.11548554, km: 1.852, m: 1852 }
     }.freeze
 
+    # Whether dimension is zero.
+    #
     # @!method zero?
-    #   @return [Boolean] whether dimension is zero
+    # @return [Boolean]
     def_delegator :@dim, :zero?
 
-    # @return [Float] dimension
+    # Dimension
+    #
+    # @overload dim
+    #   @return [Float]
+    # @overload dim=(value)
+    #   @param value [Float]
     attr_reader :dim
 
-    # @return [Symbol] unit (see {UNITS})
+    # Unit
+    #
+    # @overload unit
+    #   @return [Symbol] any of {UNITS}
+    # @overload unit=(value)
+    #   @param value [Symbol] any of {UNITS}
     attr_reader :unit
 
     # See the {overview}[AIXM::D] for examples.
@@ -53,12 +65,13 @@ module AIXM
       fail(ArgumentError, "invalid unit") unless UNITS.has_key? @unit
     end
 
+    # Convert dimension
+    #
     # @!method to_ft
     # @!method to_km
     # @!method to_m
     # @!method to_nm
-    #
-    # @return [AIXM::D] convert dimension
+    # @return [AIXM::D] converted dimension
     UNITS.each_key do |target_unit|
       define_method "to_#{target_unit}" do
         return self if unit == target_unit

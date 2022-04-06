@@ -17,7 +17,12 @@ module AIXM
       class Border < Point
         include AIXM::Memoize
 
-        # @return [String] name of the border
+        # Name of the border
+        #
+        # @overload name
+        #   @return [String]
+        # @overload name=(value)
+        #   @param value [String]
         attr_reader :name
 
         # See the {cheat sheet}[AIXM::Component::Geometry::Border] for examples

@@ -40,10 +40,20 @@ module AIXM
       #   @return [AIXM::Feature] addressable feature
       belongs_to :addressable
 
-      # @return [Symbol] type of address (see {TYPES})
+      # Type of address
+      #
+      # @overload type
+      #   @return [Symbol] any of {TYPES}
+      # @overload type=(value)
+      #   @param value [Symbol] any of {TYPES}
       attr_reader :type
 
-      # @return [String] postal address, phone number, radio frequency etc
+      # Postal address, phone number, radio frequency etc
+      #
+      # @overload address
+      #   @return [String]
+      # @overload address=(value)
+      #   @param value [String]
       attr_reader :address
 
       # See the {cheat sheet}[AIXM::Component::Address] for examples on how to

@@ -47,16 +47,36 @@ module AIXM
       #   @return [AIXM::Component::Runway::Direction, AIXM::Component::FATO::Direction] approach lighted entity
       belongs_to :approach_lightable
 
-      # @return [Symbol, nil] type of the approach lighting system (see {TYPES})
+      # Type of the approach lighting system
+      #
+      # @overload type
+      #   @return [Symbol] any of {TYPES}
+      # @overload type=(value)
+      #   @param value [Symbol] any of {TYPES}
       attr_reader :type
 
-      # @return [AIXM::D, nil] length
+      # Length
+      #
+      # @overload length
+      #   @return [AIXM::D, nil]
+      # @overload length=(value)
+      #   @param value [AIXM::D, nil]
       attr_reader :length
 
-      # @return [Boolean, nil] whether sequenced flash is available
+      # Whether sequenced flash is available
+      #
+      # @overload sequenced_flash
+      #   @return [Boolean, nil] +nil+ means unknown
+      # @overload sequenced_flash=(value)
+      #   @param value [Boolean, nil] +nil+ means unknown
       attr_reader :sequenced_flash
 
-      # @return [String, nil] description of the flash sequence
+      # Description of the flash sequence
+      #
+      # @overload flash_description
+      #   @return [String, nil]
+      # @overload flash_description=(value)
+      #   @param value [String, nil]
       attr_reader :flash_description
 
       # See the {cheat sheet}[AIXM::Component::ApproachLighting] for examples on

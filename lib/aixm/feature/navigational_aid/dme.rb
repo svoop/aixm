@@ -43,7 +43,16 @@ module AIXM
         #   @return [AIXM::Feature::NavigationalAid::VOR, nil] associated VOR
         belongs_to :vor, readonly: true
 
-        # @return [String] radio channel
+        # Radio channel
+        #
+        # @overload channel
+        #   @return [String]
+        # @overload channel=(value)
+        #   @param value [String]
+        # @overload ghost_f
+        #   @return [AIXM::F] ghost frequency matching the {#channel}
+        # @overload ghost_f=(value)
+        #   @param value [AIXM::F] ghost frequency matching the {#channel}
         attr_reader :channel
 
         # See the {cheat sheet}[AIXM::Feature::NavigationalAid::DME] for examples
@@ -74,7 +83,6 @@ module AIXM
           self.channel = "#{number}#{letter}"
         end
 
-        # @return [AIXM::F] ghost frequency matching the channel
         def ghost_f
           if channel
             number, letter = channel.split(/(?=[XY])/)

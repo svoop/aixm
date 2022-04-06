@@ -88,13 +88,29 @@ module AIXM
       #   @return [AIXM::Feature::Airport] airport the runway belongs to
       belongs_to :airport
 
-      # @return [String] full name of runway (e.g. "12/30" or "16L/34R")
+      # Full name of runway (e.g. "12/30" or "16L/34R")
+      #
+      # @overload name
+      #   @return [String]
+      # @overload name=(value)
+      #   @param value [String]
       attr_reader :name
 
-      # @return [AIXM::R, nil] dimensions
+      # Dimensions
+      #
+      # @overload dimensions
+      #   @return [AIXM::R, nil]
+      # @overload dimensions=(value)
+      #   @param value [AIXM::R, nil]
       attr_reader :dimensions
 
-      # @return [Symbol, nil] status of the runway (see {STATUSES}) or +nil+ for normal operation
+      # Status of the runway
+      #
+      # @overload status
+      #   @return [Symbol, nil] any of {STATUSES} or +nil+ for normal operation
+      # @overload status=(value)
+      #   @param value [Symbol, nil] any of {STATUSES} or +nil+ for normal
+      #     operation
       attr_reader :status
 
       # See the {cheat sheet}[AIXM::Component::Runway] for examples on how to
@@ -198,7 +214,12 @@ module AIXM
         #   @return [AIXM::Component::Runway] runway the runway direction is further describing
         belongs_to :runway, readonly: true
 
-        # @return [AIXM::A] partial name of runway (e.g. "12" or "16L")
+        # Partial name of runway (e.g. "12" or "16L")
+        #
+        # @overload name
+        #   @return [AIXM::A]
+        # @overload name=(value)
+        #   @param value [AIXM::A]
         attr_reader :name
 
         # @return [AIXM::A, nil] (true) geographic bearing in degrees

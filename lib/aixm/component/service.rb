@@ -152,7 +152,12 @@ module AIXM
       #   @return [AIXM::Component::Layer] airspace layer this service is provided within
       belongs_to :layer
 
-      # @return [Symbol] type of service (see {TYPES})
+      # Type of service
+      #
+      # @overload type
+      #   @return [Symbol] any of {TYPES}
+      # @overload type=(value)
+      #   @param value [Symbol] any of {TYPES}
       attr_reader :type
 
       # See the {cheat sheet}[AIXM::Component::Service] for examples on how to

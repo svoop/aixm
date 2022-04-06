@@ -20,10 +20,20 @@ module AIXM
         #   @return [AIXM::Component::Geometry] geometry this segment belongs to
         belongs_to :geometry, as: :segment
 
-        # @return [AIXM::XY] center point
+        # Center point
+        #
+        # @overload center_xy
+        #   @return [AIXM::XY]
+        # @overload center_xy=(value)
+        #   @param value [AIXM::XY]
         attr_reader :center_xy
 
-        # @return [AIXM::D] circle radius
+        # Circle radius
+        #
+        # @overload radius
+        #   @return [AIXM::D]
+        # @overload radius=(value)
+        #   @param value [AIXM::D]
         attr_reader :radius
 
         # See the {cheat sheet}[AIXM::Component::Geometry::Circle] for examples

@@ -20,7 +20,12 @@ module AIXM
         #   @return [AIXM::Component::Geometry] geometry this segment belongs to
         belongs_to :geometry, as: :segment
 
-        # @return [AIXM::XY] (starting) point
+        # (Starting) point
+        #
+        # @overload xy
+        #   @return [AIXM::XY]
+        # @overload xy=(value)
+        #   @param value [AIXM::XY]
         attr_reader :xy
 
         # See the {cheat sheet}[AIXM::Component::Geometry::RhumbLine] for

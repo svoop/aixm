@@ -60,35 +60,43 @@ module AIXM
         %Q(#<#{self.class} segments=#{segments.count.inspect}>)
       end
 
-      # @return [Boolean] whether the geometry is closed
+      # Whether the geometry is closed
+      #
+      # @return [Boolean]
       def closed?
         point? || circle? || polygon?
+      end
+
+      # Whether a single point geometry
+      #
+      # @return [Boolean]
+      def point?
+        segments.size == 1 &&
+          segments.first.is_a?(AIXM::Component::Geometry::Point)
+      end
+
+      # Whether a circle shaped geometry
+      #
+      # @return [Boolean]
+      def circle?
+        segments.size == 1 &&
+          segments.first.is_a?(AIXM::Component::Geometry::Circle)
+      end
+
+      # Whether a polygon shaped geometry
+      #
+      # @return [Boolean]
+      def polygon?
+        segments.size >= 3 &&
+          !segments.any? { _1.is_a?(AIXM::Component::Geometry::Circle) } &&
+          segments.last.is_a?(AIXM::Component::Geometry::Point) &&
+          segments.first.xy == segments.last.xy
       end
 
       # @return [String] AIXM or OFMX markup
       def to_xml
         fail(GeometryError.new("geometry is not closed", self)) unless closed?
         segments.map { _1.to_xml }.join
-      end
-
-      # @return [Boolean] Single point geometry?
-      def point?
-        segments.size == 1 &&
-          segments.first.is_a?(AIXM::Component::Geometry::Point)
-      end
-
-      # @return [Boolean] Circle shaped geometry?
-      def circle?
-        segments.size == 1 &&
-          segments.first.is_a?(AIXM::Component::Geometry::Circle)
-      end
-
-      # @return [Boolean] Polygon shaped geometry?
-      def polygon?
-        segments.size >= 3 &&
-          !segments.any? { _1.is_a?(AIXM::Component::Geometry::Circle) } &&
-          segments.last.is_a?(AIXM::Component::Geometry::Point) &&
-          segments.first.xy == segments.last.xy
       end
     end
 

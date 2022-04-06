@@ -92,21 +92,42 @@ module AIXM
       #   @param layer [AIXM::Compoment::Layer]
       has_many :layers
 
+      # Published identifier (e.g. "LFP81").
+      #
       # @note When assigning +nil+, a 4 byte hex derived from {#type}, {#name}
       #   and {#local_type} is written instead.
       #
-      # @return [String] published identifier (e.g. "LFP81")
+      # @overload id
+      #   @return [String]
+      # @overload id=(value)
+      #   @param value [String]
       attr_reader :id
 
-      # @return [Symbol] type of airspace (see {TYPES})
+      # Type of airspace (see {TYPES})
+      #
+      # @overload type
+      #   @return [Symbol] any of {TYPES}
+      # @overload type=(value)
+      #   @param value [Symbol] any of {TYPES}
       attr_reader :type
 
-      # Some regions define additional types. They are usually specified with
+      # Local type.
       #
-      # @return [String, nil] local type (e.g. "RMZ" or "TMZ")
+      # Some regions define additional local types such as "RMZ" or "TMZ". They
+      # are often further specifying type +:regulated_airspace+.
+      #
+      # @overload local_type
+      #   @return [String, nil]
+      # @overload local_type=(value)
+      #   @param value [String, nil]
       attr_reader :local_type
 
-      # @return [String, nil] full name (e.g. "LF P 81 CHERBOURG")
+      # Full name (e.g. "LF P 81 CHERBOURG")
+      #
+      # @overload name
+      #   @return [String, nil]
+      # @overload name=(value)
+      #   @param value [String, nil]
       attr_reader :name
 
       # See the {cheat sheet}[AIXM::Feature::Airspace] for examples on how to

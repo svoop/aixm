@@ -70,22 +70,53 @@ module AIXM
       #   @return [AIXM::Feature::Airport] airport this helipad belongs to
       belongs_to :airport
 
-      # @return [String] full name (e.g. "H1")
+      # Full name (e.g. "H1")
+      #
+      # @overload name
+      #   @return [String]
+      # @overload name=(value)
+      #   @param value [String]
       attr_reader :name
 
-      # @return [AIXM::XY] center point
+      # Center point
+      #
+      # @overload center_xy
+      #   @return [AIXM::XY]
+      # @overload center_xy=(value)
+      #   @param value [AIXM::XY]
       attr_reader :xy
 
-      # @return [AIXM::Z, nil] elevation in +:qnh+
+      # Elevation in +:qnh+
+      #
+      # @overload z
+      #   @return [AIXM::Z, nil]
+      # @overload z=(value)
+      #   @param value [AIXM::Z, nil]
       attr_reader :z
 
-      # @return [AIXM::R, nil] dimensions
+      # Dimensions
+      #
+      # @overload dimensions
+      #   @return [AIXM::R, nil]
+      # @overload dimensions=(value)
+      #   @param value [AIXM::R, nil]
       attr_reader :dimensions
 
-      # @return [Integer, Symbol, nil] suitable performance class
+      # Suitable performance class
+      #
+      # @overload performance_class
+      #   @return [Integer, Symbol, nil]
+      # @overload performance_class=(value)
+      #   @param value [Integer, Symbol, nil]
       attr_reader :performance_class
 
-      # @return [Symbol, nil] status of the helipad (see {STATUSES}) or +nil+ for normal operation
+      # Status of the helipad
+      #
+      # @overload status
+      #   @return [Symbol, nil] any of {STATUSES} or +nil+ for normal operation
+      # @overload status=(value)
+      #   @param value [Symbol, nil] any of {STATUSES} or +nil+ for normal
+      #     operation
       attr_reader :status
 
       # See the {cheat sheet}[AIXM::Component::Helipad] for examples on how to

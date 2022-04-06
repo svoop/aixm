@@ -46,14 +46,14 @@ module AIXM
       [lat(:ofmx), long(:ofmx)].join(' '.freeze)
     end
 
+    # Latitude
+    #
     # @!attribute lat
-    def lat=(value)
-      @lat = float_for value
-      fail(ArgumentError, "invalid lat") unless (-90..90).include? @lat
-    end
-
-    # @param schema [Symbol, nil] either nil, +:aixm+ or +:ofmx+
-    # @return [String, Float] latitude
+    # @overload lat
+    #   @param schema [Symbol, nil] either +:aixm+ or +:ofmx+ or +nil+
+    #   @return [String, Float]
+    # @overload lat=(value)
+    #   @param value [String, Numeric]
     def lat(schema=nil)
       case schema
         when :ofmx then ("%011.8f" % @lat.abs.round(8)) + (@lat.negative? ? 'S' : 'N')
@@ -62,14 +62,19 @@ module AIXM
       end
     end
 
-    # @!attribute long
-    def long=(value)
-      @long = float_for value
-      fail(ArgumentError, "invalid long") unless (-180..180).include? @long
+    def lat=(value)
+      @lat = float_for value
+      fail(ArgumentError, "invalid lat") unless (-90..90).include? @lat
     end
 
-    # @param schema [Symbol, nil] either nil, +:aixm+ or +:ofmx+
-    # @return [Float, String] longitude
+    # Longitude
+    #
+    # @!attribute long
+    # @overload long
+    #   @param schema [Symbol, nil] either +:aixm+ or +:ofmx+ or +nil+
+    #   @return [String, Float]
+    # @overload long=(value)
+    #   @param value [String, Numeric]
     def long(schema=nil)
       case schema
         when :ofmx then ("%012.8f" % @long.abs.round(8)) + (@long.negative? ? 'W' : 'E')
@@ -78,18 +83,29 @@ module AIXM
       end
     end
 
-    # @return [Boolean] +false+ if both longitude and latitude have zero DMS
-    #   seconds which may indicate rounded or estimated coordinates
+    def long=(value)
+      @long = float_for value
+      fail(ArgumentError, "invalid long") unless (-180..180).include? @long
+    end
+
+    # Whether both longitude and latitude have zero DMS seconds (which may
+    # indicate rounded or estimated coordinates).
+    #
+    # @return [Boolean]
     def seconds?
       !(long.to_dms[-6,5].to_f.zero? && lat.to_dms[-6,5].to_f.zero?)
     end
 
-    # @return [AIXM::Component::Geometry::Point] convert to point
+    # Convert to point
+    #
+    # @return [AIXM::Component::Geometry::Point]
     def to_point
       AIXM.point(xy: self)
     end
 
-    # @return [AIXM::D] distance as calculated by use of the Haversine formula
+    # Distance as calculated by the Haversine formula
+    #
+    # @return [AIXM::D]
     def distance(other)
       if self == other
         AIXM.d(0, :m)

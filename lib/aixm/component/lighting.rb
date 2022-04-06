@@ -56,13 +56,28 @@ module AIXM
       #   @return [AIXM::Component::Runway::Direction, AIXM::Component::FATO::Direction, AIXM::Component::Helipad] lighted entity
       belongs_to :lightable
 
-      # @return [Symbol, nil] position of the lighting system (see {POSITIONS})
+      # Position of the lighting system
+      #
+      # @overload position
+      #   @return [Symbol, nil] any of {POSITIONS}
+      # @overload position=(value)
+      #   @param value [Symbol, nil] any of {POSITIONS}
       attr_reader :position
 
-      # @return [String, nil] detailed description
+      # Detailed description
+      #
+      # @overload description
+      #   @return [String, nil]
+      # @overload description=(value)
+      #   @param value [String, nil]
       attr_reader :description
 
-      # @return [Symbol, nil] color of lights (see {COLORS})
+      # Color of lights
+      #
+      # @overload color
+      #   @return [Symbol, nil] any of {COLORS}
+      # @overload color=(value)
+      #   @param value [Symbol, nil] any of {COLORS}
       attr_reader :color
 
       # See the {cheat sheet}[AIXM::Component::Lighting] for examples on how to

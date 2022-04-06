@@ -39,7 +39,12 @@ module AIXM
           OTHER: :other     # specify in remarks
         }
 
-        # @return [Symbol] type of marker (see {TYPES})
+        # Type of marker
+        #
+        # @overload type
+        #   @return [Symbol, nil] any of {TYPES}
+        # @overload type=(value)
+        #   @param value [Symbol, nil] any of {TYPES}
         attr_reader :type
 
         # See the {cheat sheet}[AIXM::Feature::NavigationalAid::Marker] for

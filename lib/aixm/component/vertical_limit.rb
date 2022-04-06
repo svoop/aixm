@@ -38,16 +38,36 @@ module AIXM
       #   @return [AIXM::Component::Layer] layer to which this vertical limit applies
       belongs_to :layer
 
-      # @return [AIXM::Z] upper limit
+      # Upper limit
+      #
+      # @overload upper_z
+      #   @return [AIXM::Z]
+      # @overload upper_z=(value)
+      #   @param value [AIXM::Z]
       attr_reader :upper_z
 
-      # @return [AIXM::Z] lower limit
+      # Lower limit
+      #
+      # @overload lower_z
+      #   @return [AIXM::Z]
+      # @overload lower_z=(value)
+      #   @param value [AIXM::Z]
       attr_reader :lower_z
 
-      # @return [AIXM::Z] alternative upper limit ("whichever is higher")
+      # Alternative upper limit ("whichever is higher")
+      #
+      # @overload max_z
+      #   @return [AIXM::Z, nil]
+      # @overload max_z=(value)
+      #   @param value [AIXM::Z, nil]
       attr_reader :max_z
 
-      # @return [AIXM::Z] alternative lower limit ("whichever is lower")
+      # Alternative lower limit ("whichever is lower")
+      #
+      # @overload min_z
+      #   @return [AIXM::Z, nil]
+      # @overload min_z=(value)
+      #   @param value [AIXM::Z, nil]
       attr_reader :min_z
 
       # See the {cheat sheet}[AIXM::Component::VerticalLimit] for examples on

@@ -96,10 +96,20 @@ module AIXM
       #   @return [AIXM::Feature::Airport, nil] airport
       belongs_to :airport
 
-      # @return [String] name of unit (e.g. "MARSEILLE ACS")
+      # Name of unit (e.g. "MARSEILLE ACS")
+      #
+      # @overload name
+      #   @return [String]
+      # @overload name=(value)
+      #   @param value [String]
       attr_reader :name
 
-      # @return [Symbol] type of unit (see {TYPES})
+      # Type of unit
+      #
+      # @overload type
+      #   @return [Symbol] any of {TYPES}
+      # @overload type=(value)
+      #   @param value [Symbol] any of {TYPES}
       attr_reader :type
 
       # See the {cheat sheet}[AIXM::Feature::Unit] for examples on how to create
@@ -124,9 +134,15 @@ module AIXM
         @type = TYPES.lookup(value&.to_s&.to_sym, nil) || fail(ArgumentError, "invalid type")
       end
 
-      # @!attribute class
+      # Class of unit.
+      #
       # @note Use +Object#__class__+ alias to query the Ruby object class.
-      # @return [Symbol] class of unit (see {CLASSES})
+      #
+      # @!attribute class
+      # @overload class
+      #   @return [Symbol] any of {CLASSES}
+      # @overload class=(value)
+      #   @param value [Symbol] any of {CLASSES}
       def class
         @klass
       end

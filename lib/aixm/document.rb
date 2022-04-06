@@ -28,13 +28,28 @@ module AIXM
     #   @return [self]
     has_many :features, accept: ['AIXM::Feature']
 
-    # @return [String] UUID to namespace the data contained in this document
+    # UUID to namespace the data contained in this document
+    #
+    # @overload namespace
+    #   @return [String]
+    # @overload namespace=(value)
+    #   @param value [String]
     attr_reader :namespace
 
-    # @return [Time] creation date and time (default: {#effective_at} or now)
+    # Creation date and time
+    #
+    # @overload created_at
+    #   @return [Time]
+    # @overload created_at=(value)
+    #   @param value [Time] default: {#effective_at} or now
     attr_reader :created_at
 
-    # @return [Time] effective after date and time (default: {#created_at} or now)
+    # Effective after date and time
+    #
+    # @overload effective_at
+    #   @return [Time]
+    # @overload effective_at=(value)
+    #   @param value [Time] default: {#created_at} or now
     attr_reader :effective_at
 
     # See the {cheat sheet}[AIXM::Document] for examples on how to create
@@ -95,14 +110,14 @@ module AIXM
       end.count
     end
 
-    # Validate the generated AIXM or OFMX atainst it's XSD.
+    # Validate the generated AIXM or OFMX against its XSD.
     #
     # @return [Boolean] whether valid or not
     def valid?
       errors.none?
     end
 
-    # Validate the generated AIXM or OFMX atainst it's XSD and return the
+    # Validate the generated AIXM or OFMX against its XSD and return the
     # errors found.
     #
     # @return [Array<String>] validation errors

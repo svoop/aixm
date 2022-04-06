@@ -41,7 +41,12 @@ module AIXM
         #   associated with
         belongs_to :airport
 
-        # @return [Symbol] type of designated point
+        # Type of designated point
+        #
+        # @overload type
+        #   @return [Symbol] any of {TYPES}
+        # @overload type=(value)
+        #   @param value [Symbol] any of {TYPES}
         attr_reader :type
 
         # See the {cheat sheet}[AIXM::Feature::NavigationalAid::DesignatedPoint]

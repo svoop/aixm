@@ -65,16 +65,37 @@ module AIXM
       #   @return [AIXM::Component::Helipad] helipad situated on this FATO
       belongs_to :helipad
 
-      # @return [String] full name (e.g. "H1")
+      # Full name (e.g. "H1")
+      #
+      # @overload name
+      #   @return [String]
+      # @overload name=(value)
+      #   @param value [String]
       attr_reader :name
 
-      # @return [AIXM::R, nil] dimensions
+      # Dimensions
+      #
+      # @overload dimensions
+      #   @return [AIXM::R, nil]
+      # @overload dimensions=(value)
+      #   @param value [AIXM::R, nil]
       attr_reader :dimensions
 
-      # @return [String, nil] profile description
+      # Profile description
+      #
+      # @overload profile
+      #   @return [String, nil]
+      # @overload profile=(value)
+      #   @param value [String, nil]
       attr_reader :profile
 
-      # @return [Symbol, nil] status of the FATO (see {STATUSES}) or +nil+ for normal operation
+      # Status of the FATO
+      #
+      # @overload status
+      #   @return [Symbol, nil] any of {STATUSES} or +nil+ for normal operation
+      # @overload status=(value)
+      #   @param value [Symbol, nil] any of {STATUSES} or +nil+ for normal
+      #     operation
       attr_reader :status
 
       # See the {cheat sheet}[AIXM::Component::FATO] for examples on how to
@@ -168,7 +189,12 @@ module AIXM
         #   @return [AIXM::Component::FATO] FATO the FATO direction is further describing
         belongs_to :fato
 
-        # @return [AIXM::A] name of the FATO direction (e.g. "12" or "16L")
+        # Name of the FATO direction (e.g. "12" or "16L")
+        #
+        # @overload name
+        #   @return [AIXM::A]
+        # @overload name=(value)
+        #   @param value [AIXM::A]
         attr_reader :name
 
         # @return [AIXM::A, nil] (true) geographic bearing in degrees

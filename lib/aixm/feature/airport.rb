@@ -114,7 +114,7 @@ module AIXM
       #   @return [AIXM::Feature::Organisation] superior organisation
       belongs_to :organisation, as: :member
 
-      # ICAO indicator, IATA indicator or generated indicator
+      # ICAO, IATA or generated airport indicator.
       #
       # * four letter ICAO indicator (e.g. "LFMV")
       # * three letter IATA indicator (e.g. "AVN")
@@ -122,19 +122,42 @@ module AIXM
       # * two letter ICAO country code + at least four letters/digits (e.g.
       #   "LFFOOBAR123" or "LF" + GPS code)
       #
-      # @return [String] airport indicator
+      # @overload id
+      #   @return [String]
+      # @overload id=(value)
+      #   @param value [String]
       attr_reader :id
 
-      # @return [String] full name
+      # Full name
+      #
+      # @overload name
+      #   @return [String]
+      # @overload name=(value)
+      #   @param value [String]
       attr_reader :name
 
-      # @return [AIXM::XY] reference point
+      # Reference point
+      #
+      # @overload xy
+      #   @return [AIXM::XY]
+      # @overload xy=(value)
+      #   @param value [AIXM::XY]
       attr_reader :xy
 
-      # @return [String, nil] GPS code
+      # GPS code
+      #
+      # @overload gps
+      #   @return [String, nil]
+      # @overload gps=(value)
+      #   @param value [String, nil]
       attr_reader :gps
 
-      # @return [AIXM::Z, nil] elevation in +:qnh+
+      # Elevation in +:qnh+
+      #
+      # @overload z
+      #   @return [AIXM::Z, nil]
+      # @overload z=(value)
+      #   @param value [AIXM::Z, nil]
       attr_reader :z
 
       # When looking towards the geographic (aka: true) north, a positive
@@ -148,10 +171,20 @@ module AIXM
       # @return [Float, nil] magnetic declination in degrees
       attr_reader :declination
 
-      # @return [AIXM::Z, nil] transition altitude in +:qnh+
+      # Transition altitude in +:qnh+
+      #
+      # @overload transition_z
+      #   @return [AIXM::Z, nil]
+      # @overload transition_z=(value)
+      #   @param value [AIXM::Z, nil]
       attr_reader :transition_z
 
-      # @return [String, nil] operator of the airport
+      # Operator of the airport
+      #
+      # @overload operator
+      #   @return [String, nil]
+      # @overload operator=(value)
+      #   @param value [String, nil]
       attr_reader :operator
 
       # See the {cheat sheet}[AIXM::Feature::Airport] for examples on how to
@@ -184,12 +217,17 @@ module AIXM
         @gps = value&.upcase
       end
 
+      # Type of airport.
+      #
       # The type is usually derived from the presence of runways and helipads,
       # however, this may be overridden by setting an alternative value, most
       # notably +:landing_site+.
       #
       # @!attribute type
-      # @return [Symbol] type of airport (see {TYPES})
+      # @overload type
+      #   @return [Symbol] any of {TYPES}
+      # @overload type=(value)
+      #   @param value [Symbol] any of {TYPES}
       def type
         @type = case
           when @type then @type
@@ -361,7 +399,12 @@ module AIXM
         #   @return [AIXM::Feature::Airport] airport this usage limitation is assigned to
         belongs_to :airport
 
-        # @return [Symbol] type of limitation
+        # Type of limitation
+        #
+        # @overload type
+        #   @return [Symbol] any of {TYPES}
+        # @overload type=(value)
+        #   @param value [Symbol] any of {TYPES}
         attr_reader :type
 
         # See the {cheat sheet}[AIXM::Feature::Airport::UsageLimitation] for
@@ -449,19 +492,44 @@ module AIXM
           #   @return [AIXM::Feature::Airport::UsageLimitation] usage limitation the condition belongs to
           belongs_to :usage_limitation
 
-          # @return [Symbol, nil] kind of aircraft (see {AIRCRAFT})
+          # Kind of aircraft.
+          #
+          # @overload aircraft
+          #   @return [Symbol, nil] any of {AIRCRAFT}
+          # @overload aircraft=(value)
+          #   @param value [Symbol, nil] any of {AIRCRAFT}
           attr_reader :aircraft
 
-          # @return [String, nil] flight rule (see {RULES})
+          # Flight rule.
+          #
+          # @overload rule
+          #   @return [Symbol, nil] any of {RULES}
+          # @overload rule=(value)
+          #   @param value [Symbol, nil] any of {RULES}
           attr_reader :rule
 
-          # @return [String, nil] whether military or civil (see {REALMS})
+          # Military, civil etc.
+          #
+          # @overload realm
+          #   @return [Symbol, nil] any of {REALMS}
+          # @overload realm=(value)
+          #   @param value [Symbol, nil] any of {REALMS}
           attr_reader :realm
 
-          # @return [String, nil] geographic origin of the flight (see {ORIGINS})
+          # Geographic origin of the flight.
+          #
+          # @overload origin
+          #   @return [Symbol, nil] any of {ORIGINS}
+          # @overload origin=(value)
+          #   @param value [Symbol, nil] any of {ORIGINS}
           attr_reader :origin
 
-          # @return [String, nil] purpose of the flight (see {PURPOSES})
+          # Purpose of the flight.
+          #
+          # @overload purpose
+          #   @return [Symbol, nil] any of {PURPOSES}
+          # @overload purpose=(value)
+          #   @param value [Symbol, nil] any of {PURPOSES}
           attr_reader :purpose
 
           # @return [String]

@@ -26,7 +26,9 @@ module AIXM
       end
     end
 
-    # @return [String] UUIDv3
+    # UUIDv3
+    #
+    # @return [String]
     def to_uuid
       uuid_for payload_array
     end

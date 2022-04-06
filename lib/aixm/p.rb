@@ -18,14 +18,26 @@ module AIXM
       torr: { p: 133.322, mpa: 0.000133322, psi: 0.019336721305636, bar: 0.00133322 }
     }.freeze
 
+    # Whether pressure is zero.
+    #
     # @!method zero?
-    #   @return [Boolean] whether pressure is zero
+    # @return [Boolean]
     def_delegator :@pres, :zero?
 
-    # @return [Float] pressure
+    # Pressure
+    #
+    # @overload pres
+    #   @return [Float]
+    # @overload pres=(value)
+    #   @param value [Float]
     attr_reader :pres
 
-    # @return [Symbol] unit (see {UNITS})
+    # Unit
+    #
+    # @overload unit
+    #   @return [Symbol] any of {UNITS}
+    # @overload unit=(value)
+    #   @param value [Symbol] any of {UNITS}
     attr_reader :unit
 
     # See the {overview}[AIXM::P] for examples.
@@ -54,13 +66,14 @@ module AIXM
       fail(ArgumentError, "invalid unit") unless UNITS.has_key? @unit
     end
 
+    # Convert pressure
+    #
     # @!method to_p
     # @!method to_mpa
     # @!method to_psi
     # @!method to_bar
     # @!method to_torr
-    #
-    # @return [AIXM::P] convert pressure
+    # @return [AIXM::P] converted pressure
     UNITS.each_key do |target_unit|
       define_method "to_#{target_unit}" do
         return self if unit == target_unit

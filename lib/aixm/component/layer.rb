@@ -108,10 +108,20 @@ module AIXM
       #   @return [AIXM::Feature::Airspace] airspace the layer defines
       belongs_to :airspace
 
-      # @return [String, nil] four letter location identifier as published in the ICAO DOC 7910
+      # Four letter location identifier as published in the ICAO DOC 7910
+      #
+      # @overload location_indicator
+      #   @return [String, nil]
+      # @overload location_indicator=(value)
+      #   @param value [String, nil]
       attr_reader :location_indicator
 
-      # @return [String, nil] primary activity (e.g. "GLIDER")
+      # Primary activity
+      #
+      # @overload activity
+      #   @return [Symbol, nil] any of {ACTIVITIES}
+      # @overload activity=(value)
+      #   @param value [Symbol, nil] any of {ACTIVITIES}
       attr_reader :activity
 
       # See the {cheat sheet}[AIXM::Component::Layer] for examples on how to
@@ -127,8 +137,15 @@ module AIXM
         %Q(#<#{__class__} class=#{@klass.inspect}>)
       end
 
+      # Class of layer.
+      #
+      # @note Use +Object#__class__+ alias to query the Ruby object class.
+      #
       # @!attribute class
-      # @return [Symbol] class of layer (see {CLASSES})
+      # @overload class
+      #   @return [Symbol] any of {CLASSES}
+      # @overload class=(value)
+      #   @param value [Symbol] any of {CLASSES}
       def class
         @klass
       end
@@ -147,8 +164,13 @@ module AIXM
         @activity = value.nil? ? nil : ACTIVITIES.lookup(value.to_s.to_sym, nil) || fail(ArgumentError, "invalid activity")
       end
 
-      # @!attribute [w] selective
-      # @return [Boolean] whether the layer may be activated selectively
+      # Whether the layer may be activated selectively.
+      #
+      # @!attribute selective
+      # @overload selective?
+      #   @return [Boolean]
+      # @overload selective=(value)
+      #   @param value [Boolean]
       def selective?
         @selective
       end

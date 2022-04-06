@@ -59,13 +59,28 @@ module AIXM
         #   @param tacan [AIXM::Feature::NavigationalAid::TACAN, nil]
         has_one :tacan, allow_nil: true
 
-        # @return [Symbol] type of VOR (see {TYPES})
+        # Type of VOR
+        #
+        # @overload type
+        #   @return [Symbol] any of {TYPES}
+        # @overload type=(value)
+        #   @param value [Symbol] any of {TYPES}
         attr_reader :type
 
-        # @return [AIXM::F] radio requency
+        # Radio requency
+        #
+        # @overload f
+        #   @return [AIXM::F]
+        # @overload f=(value)
+        #   @param value [AIXM::F]
         attr_reader :f
 
-        # @return [Symbol] north indication (see {NORTHS})
+        # North indication
+        #
+        # @overload north
+        #   @return [Symbol] any of {NORTHS}
+        # @overload north=(value)
+        #   @param value [Symbol] any of {NORTHS}
         attr_reader :north
 
         # See the {cheat sheet}[AIXM::Feature::VOR] for examples on how to

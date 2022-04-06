@@ -15,16 +15,36 @@ module AIXM
       #   @return [AIXM::Feature::Organisation] superior organisation
       belongs_to :organisation, as: :member
 
-      # @return [String] published identifier
+      # Published identifier
+      #
+      # @overload id
+      #   @return [String]
+      # @overload id=(value)
+      #   @param value [String]
       attr_reader :id
 
-      # @return [String, nil] name of the navigational aid
+      # Name of the navigational aid.
+      #
+      # @overload name
+      #   @return [String, nil]
+      # @overload name=(value)
+      #   @param value [String, nil]
       attr_reader :name
 
-      # @return [AIXM::XY] geographic position
+      # Geographic position.
+      #
+      # @overload xy
+      #   @return [AIXM::XY]
+      # @overload xy=(value)
+      #   @param value [AIXM::XY]
       attr_reader :xy
 
-      # @return [AIXM::Z, nil] elevation in +:qnh+
+      # Elevation in +:qnh+.
+      #
+      # @overload z
+      #   @return [AIXM::Z, nil]
+      # @overload z=(value)
+      #   @param value [AIXM::Z, nil]
       attr_reader :z
 
       def initialize(source: nil, region: nil, organisation:, id:, name: nil, xy:, z: nil)
@@ -57,7 +77,9 @@ module AIXM
         @z = value
       end
 
-      # @return [String] fully descriptive combination of {#class} and {#type} key
+      # Fully descriptive combination of {#class} and {#type} key.
+      #
+      # @return [String]
       def kind
         [self.class.name.split('::').last, type_key].compact.join(':'.freeze)
       end

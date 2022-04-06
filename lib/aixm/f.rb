@@ -15,10 +15,20 @@ module AIXM
     #   @return [Boolean] whether frequency is zero
     def_delegator :@freq, :zero?
 
-    # @return [Float] frequency
+    # Frequency
+    #
+    # @overload freq
+    #   @return [Float]
+    # @overload freq=(value)
+    #   @param value [Float]
     attr_reader :freq
 
-    # @return [Symbol] unit (see {UNITS})
+    # Unit
+    #
+    # @overload unit
+    #   @return [Symbol] any of {UNITS}
+    # @overload unit=(value)
+    #   @param value [Symbol] any of {UNITS}
     attr_reader :unit
 
     # See the {overview}[AIXM::F] for examples.
@@ -47,7 +57,9 @@ module AIXM
       fail(ArgumentError, "invalid unit") unless UNITS.include? @unit
     end
 
-    # @return [Boolean] whether this frequency is part of a frequency band
+    # Whether this frequency is part of a frequency band.
+    #
+    # @return [Boolean]
     def between?(lower_freq, upper_freq, unit)
       freq.between?(lower_freq, upper_freq) && self.unit == unit
     end
@@ -65,8 +77,10 @@ module AIXM
       to_s.hash
     end
 
-    # @return [Boolean] whether this frequency is part of the voice airband
-    #   for civil aviation using `AIXM.config.voice_channel_separation`
+    # Whether this frequency is part of the voice airband for civil aviation
+    # using +AIXM.config.voice_channel_separation+.
+    #
+    # @return [Boolean]
     def voice?
       return false unless unit == :mhz
       case AIXM.config.voice_channel_separation
@@ -79,15 +93,19 @@ module AIXM
 
     private
 
-    # @return [Boolean] whether this frequency is part of the voice airband
-    #   for civil aviation using 25 kHz channel separation
+    # Whether this frequency is part of the voice airband for civil aviation
+    # using 25 kHz channel separation.
+    #
+    # @return [Boolean]
     def voice_25?
       return false unless unit == :mhz && freq == freq.round(3) && freq.between?(118, 136.975)
       ((freq * 1000).round % 25).zero?
     end
 
-    # @return [Boolean] whether this frequency is part of the voice airband
-    #   for civil aviation using 8.33 kHz channel separation
+    # Whether this frequency is part of the voice airband for civil aviation
+    # using 8.33 kHz channel separation.
+    #
+    # @return [Boolean]
     def voice_833?
       return false unless unit == :mhz && freq == freq.round(3) && freq.between?(118, 136.99)
       [0.005, 0.01, 0.015].any? { |d| (((freq - d) * 1000).round % 25).zero? }

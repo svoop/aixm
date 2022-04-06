@@ -17,7 +17,12 @@ module AIXM
       # @see https://gitlab.com/openflightmaps/ofmx/wikis/Airspace#arc
       class Arc < Point
 
-        # @return [AIXM::XY] center point
+        # Center point
+        #
+        # @overload center_xy
+        #   @return [AIXM::XY]
+        # @overload center_xy=(value)
+        #   @param value [AIXM::XY]
         attr_reader :center_xy
 
         # See the {cheat sheet}[AIXM::Component::Geometry::Arc] for examples on
@@ -37,8 +42,13 @@ module AIXM
           @center_xy = value
         end
 
-        # @!attribute [w] clockwise
-        # @return [Boolean] wheter the arc is going clockwise (true) or not (false)
+        # Whether the arc is going clockwise
+        #
+        # @!attribute clockwise
+        # @overload clockwise?
+        #   @return [Boolean] clockwise (true) or counterclockwise (false)
+        # @overload clockwise=(value)
+        #   @param value [Boolean] clockwise (true) or counterclockwise (false)
         def clockwise?
           @clockwise
         end

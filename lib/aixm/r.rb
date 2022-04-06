@@ -9,10 +9,20 @@ module AIXM
   #   AIXM.r(AIXM.d(25, :m))                   # square
   class R
 
-    # @return [AIXM::D] rectangle length
+    # Rectangle length
+    #
+    # @overload length
+    #   @return [AIXM::D]
+    # @overload length=(value)
+    #   @param value [AIXM::D]
     attr_reader :length
 
-    # @return [AIXM::D] rectangle width
+    # Rectangle width
+    #
+    # @overload width
+    #   @return [AIXM::D]
+    # @overload width=(value)
+    #   @param value [AIXM::D]
     attr_reader :width
 
     # See the {overview}[AIXM::R] for examples.
@@ -38,7 +48,7 @@ module AIXM
       end
     end
 
-    # Calculate the surface in square meters
+    # Calculate the surface in square meters.
     #
     # @return [Float]
     def surface

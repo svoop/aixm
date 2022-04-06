@@ -35,22 +35,52 @@ module AIXM
         OTHER: :other   # specify in remarks
       }.freeze
 
-      # @return [Symbol, nil] type of VASIS (see {TYPES})
+      # Type of VASIS.
+      #
+      # @overload type
+      #   @return [Symbol, nil] any of {TYPES}
+      # @overload type=(value)
+      #   @param value [Symbol, nil] any of {TYPES}
       attr_reader :type
 
-      # @return [Symbol, nil] position relative to the runway (see {POSITIONS})
+      # Position relative to the runway.
+      #
+      # @overload position
+      #   @return [Symbol, nil] any of {POSITIONS}
+      # @overload position=(value)
+      #   @param value [Symbol, nil] any of {POSITIONS}
       attr_reader :position
 
-      # @return [Integer, nil] number of boxes
+      # Number of boxes.
+      #
+      # @overload boxes
+      #   @return [Integer, nil]
+      # @overload boxes=(value)
+      #   @param value [Integer, nil]
       attr_reader :boxes
 
-      # @return [Boolean, nil] whether the VASIS is portable
+      # Whether the VASIS is portable.
+      #
+      # @overload portable
+      #   @return [Boolean, nil] +nil+ means unknown
+      # @overload portable=(value)
+      #   @param value [Boolean, nil] +nil+ means unknown
       attr_reader :portable
 
-      # @return [AIXM::A, nil] appropriate approach slope angle
+      # Appropriate approach slope angle.
+      #
+      # @overload slope_angle
+      #   @return [AIXM::A, nil]
+      # @overload slope_angle=(value)
+      #   @param value [AIXM::A, nil]
       attr_reader :slope_angle
 
-      # @return [AIXM::Z, nil] minimum eye height over threshold (MEHT)
+      # Minimum eye height over threshold.
+      #
+      # @overload meht
+      #   @return [AIXM::Z, nil]
+      # @overload meht=(value)
+      #   @param value [AIXM::Z, nil]
       attr_reader :meht
 
       # @return [String]

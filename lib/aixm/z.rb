@@ -17,14 +17,28 @@ module AIXM
 
     CODES = %i(qfe qnh qne).freeze
 
+    # Whether height, elevation or altitude is zero.
+
     # @!method zero?
-    #   @return [Boolean] whether height, elevation or altitude is zero
+    # @return [Boolean]
     def_delegator :@alt, :zero?
 
-    # @return [Integer] altitude or elevation value
+    # Altitude or elevation value.
+    #
+    # @overload alt
+    #   @return [Integer]
+    # @overload alt=(value)
+    #   @param value [Integer]
     attr_reader :alt
 
-    # @return [Symbol] Q code - either +:qfe+ (height in feet), +:qnh+ (altitude in feet or +:qne+ (altitude as flight level)
+    # Q code
+    #
+    # @overload code
+    #   @return [Symbol] either +:qfe+ (height in feet), +:qnh+ (altitude in
+    #     feet or +:qne+ (altitude as flight level)
+    # @overload code=(value)
+    #   @param value [Symbol] either +:qfe+ (height in feet), +:qnh+ (altitude
+    #     in feet or +:qne+ (altitude as flight level)
     attr_reader :code
 
     # See the {overview}[AIXM::Z] for examples.
@@ -53,26 +67,30 @@ module AIXM
       fail(ArgumentError, "invalid code") unless CODES.include? @code
     end
 
-    # @!method qfe?
-    # @!method qnh?
-    # @!method qne?
+    # Whether QFE, QNH or QNE.
     #
     # @example
     #   z = AIXM.z(123, :qnh)
     #   z.qnh?   # => true
     #   z.qfe?   # => false
     #
+    # @!method qfe?
+    # @!method qnh?
+    # @!method qne?
     # @return [Boolean]
     CODES.each do |code|
       define_method(:"#{code}?") { @code == code }
     end
 
-    # @return [Boolean] whether ground level or not
+    # Whether ground level
+    #
+    # @return [Boolean]
     def ground?
       qfe? && @alt == 0
     end
 
-    # @return [Symbol] unit - either +:fl+ (flight level) or +:ft+ (feet)
+    # Unit
+    # @return [Symbol] either +:fl+ (flight level) or +:ft+ (feet)
     def unit
       qne? ? :fl : :ft
     end

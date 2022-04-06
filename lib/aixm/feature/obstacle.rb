@@ -68,58 +68,134 @@ module AIXM
       #   @return [AIXM::Feature::ObstacleGroup] group this obstacle belongs to
       belongs_to :obstacle_group
 
-      # @return [String] full name
+      # Full name.
+      #
+      # @overload name
+      #   @return [String]
+      # @overload name=(value)
+      #   @param value [String]
       attr_reader :name
 
-      # @return [Symbol] type of obstacle
+      # Type of obstacle.
+      #
+      # @overload type
+      #   @return [Symbol] any of {TYPES}
+      # @overload type=(value)
+      #   @param value [Symbol] any of {TYPES}
       attr_reader :type
 
-      # @return [AIXM::XY] circular base center point
+      # Circular base center point.
+      #
+      # @overload xy
+      #   @return [AIXM::XY]
+      # @overload xy=(value)
+      #   @param value [AIXM::XY]
       attr_reader :xy
 
-      # @return [AIXM::D] circular base radius
+      # Circular base radius.
+      #
+      # @overload radius
+      #   @return [AIXM::D]
+      # @overload radius=(value)
+      #   @param value [AIXM::D]
       attr_reader :radius
 
-      # @return [AIXM::Z] elevation of the top point in +:qnh+
+      # Elevation of the top point in +:qnh+.
+      #
+      # @overload z
+      #   @return [AIXM::Z]
+      # @overload z=(value)
+      #   @param value [AIXM::Z]
       attr_reader :z
 
-      # @return [Boolean, nil] lighting (e.g. strobes)
-      #   true => lighting present, false => no lighting, nil => unknown
+      # Presence of lighting (e.g. strobes).
+      #
+      # @overload lighting
+      #   @return [Boolean, nil] +nil+ means unknown
+      # @overload lighting=(value)
+      #   @param value [Boolean, nil] +nil+ means unknown
       attr_reader :lighting
 
-      # @return [String, nil] detailed description of the lighting
+      # Detailed description of the lighting.
+      #
+      # @overload lighting_remarks
+      #   @return [String, nil]
+      # @overload lighting_remarks=(value)
+      #   @param value [String, nil]
       attr_reader :lighting_remarks
 
-      # @return [Boolean, nil] marking (e.g. red/white paint)
-      #  true => marking present, false => no marking, nil => unknown
+      # Presence of marking (e.g. red/white paint).
+      #
+      # @overload marking
+      #   @return [Boolean, nil] +nil+ means unknown
+      # @overload marking=(value)
+      #   @param value [Boolean, nil] +nil+ means unknown
       attr_reader :marking
 
-      # @return [String, nil] detailed description of the marking
+      # Detailed description of the marking.
+      #
+      # @overload marking_remarks
+      #   @return [String nil]
+      # @overload marking_remarks=(value)
+      #   @param value [String, nil]
       attr_reader :marking_remarks
 
-      # @return [AIXM::D, nil] height from ground to top point
+      # Height from ground to top point.
+      #
+      # @overload height
+      #   @return [AIXM::D, nil]
+      # @overload height=(value)
+      #   @param value [AIXM::D, nil]
       attr_reader :height
 
-      # @return [Boolean, nil] height accuracy
-      #   true => height measured, false => height estimated, nil => unknown
+      # Height accuracy.
+      #
+      # @overload height_accurate
+      #   @return [Boolean, nil] +nil+ means unknown
+      # @overload height_accurate=(value)
+      #   @param value [Boolean, nil] +nil+ means unknown
       attr_reader :height_accurate
 
-      # @return [AIXM::D, nil] margin of error for circular base center point
+      # Margin of error for circular base center point.
+      #
+      # @overload xy_accuracy
+      #   @return [AIXM::D, nil]
+      # @overload xy_accuracy=(value)
+      #   @param value [AIXM::D, nil]
       attr_reader :xy_accuracy
 
-      # @return [AIXM::D, nil] margin of error for top point
+      # Margin of error for top point.
+      #
+      # @overload z_accuracy
+      #   @return [AIXM::D, nil]
+      # @overload z_accuracy=(value)
+      #   @param value [AIXM::D, nil]
       attr_reader :z_accuracy
 
-      # @return [Time, Date, String, nil] effective after this point in time
+      # Effective after this point in time.
+      #
+      # @overload valid_from
+      #   @return [Time, Date, String, nil]
+      # @overload valid_from=(value)
+      #   @param value [Time, Date, String, nil]
       attr_reader :valid_from
 
-      # @return [Time, Date, String, nil] effective until this point in time
+      # Effective until this point in time.
+      #
+      # @overload valid_until
+      #   @return [Time, Date, String, nil]
+      # @overload valid_until=(value)
+      #   @param value [Time, Date, String, nil]
       attr_reader :valid_until
 
-      # @return [Symbol, nil] another obstacle to which a physical link exists
+      # Another obstacle to which a physical link exists.
+      #
+      # @return [AIXM::Feature::Obstacle, nil]
       attr_reader :linked_to
 
-      # @return [Symbol, nil] type of physical link between this and another obstacle
+      # Type of physical link between this and another obstacle.
+      #
+      # @return [Symbol, nil] any of {LINK_TYPES}
       attr_reader :link_type
 
       # See the {cheat sheet}[AIXM::Feature::Obstacle] for examples on how to
@@ -216,12 +292,16 @@ module AIXM
       end
       private :link_type=
 
-      # @return [Boolean] whether part of an obstacle group
+      # Whether part of an obstacle group.
+      #
+      # @return [Boolean]
       def grouped?
         obstacle_group && obstacle_group.obstacles.count > 1
       end
 
-      # @return [Boolean] whether obstacle is linked to another one
+      # Whether obstacle is linked to another one.
+      #
+      # @return [Boolean]
       def linked?
         !!linked_to
       end
