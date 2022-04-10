@@ -69,7 +69,7 @@ describe AIXM::Schedule::Date do
 
     describe :to_yearless do
       it "returns yearless duplicate" do
-        _(subject.to_yearless.to_date).must_equal Date.parse('-8888-02-20')
+        _(subject.to_yearless.to_date).must_equal Date.parse('0000-02-20')
       end
     end
 
@@ -155,7 +155,7 @@ describe AIXM::Schedule::Date do
 
     describe :initialize, :to_date do
       it "parses valid MM-DD string" do
-        _(subject.to_date).must_equal Date.parse('-8888-02-20')
+        _(subject.to_date).must_equal Date.parse('0000-02-20')
       end
 
       it "fails on invalid string" do

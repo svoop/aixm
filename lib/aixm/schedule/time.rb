@@ -3,11 +3,12 @@ module AIXM
 
     # Times suitable for schedules
     #
-    # This class implements the bare minimum of stdlib +DateTime+ and adds some
+    # This class implements the bare minimum of stdlib +Time+ and adds some
     # extensions:
+    #
     # * converts to UTC
     # * date, seconds and milliseconds are ignored
-    # * {in?} to check whether schedule time falls within range of schedule times
+    # * {in?} to check whether schedule time falls within range of times
     #
     # @example
     #   time = AIXM.time('21:30')                          # => 21:30
@@ -17,12 +18,17 @@ module AIXM
 
       EVENTS = %i(sunrise sunset).freeze
       PRECEDENCES = %i(first last).freeze
-      DATELESS_DATE = '8888-08-08'
+      DATELESS_DATE = '0000-01-01'.freeze
 
-      # Event alternative to the time
+      # Event or alternative to time
       #
       # @return [Symbol, nil] any from {EVENTS}
       attr_reader :event
+
+      # Minutes added or subtracted from event
+      #
+      # @return [Integer, nil]
+      attr_reader :delta
 
       # Precedence of time vs. event
       #
@@ -33,42 +39,41 @@ module AIXM
       #
       # @example
       #   AIXM.time('08:00')
+      #   AIXM.time(:sunrise)
+      #   AIXM.time(:sunrise, plus: 30)
       #   AIXM.time('08:00', or: :sunrise)
       #   AIXM.time('08:00', or: :sunrise, plus: 30)
       #   AIXM.time('08:00', or: :sunrise, minus: 15)
       #   AIXM.time('08:00', or: :sunrise, whichever_comes: :last)
       #
-      # @param time [DateTime, Time, String] either stdlib DateTime, stdlib Time,
-      #   "HH:MM" (implicitly UTC), "HH:MM [+-]0000" or "HH:MM ZZZ"
+      # @param time_or_event [Time, DateTime, String, Symbol] either time as
+      #   stdlib Time or DateTime, "HH:MM" (implicitly UTC), "HH:MM [+-]00:00",
+      #   "HH:MM UTC" or event from {EVENTS} as Symbol
       # @param or [Symbol] alternative event from {EVENTS}
       # @param plus [Integer] minutes added to event
       # @param minus [Integer] minutes subtracted from event
       # @param whichever_comes [Symbol] precedence from {PRECEDENCES}
-      def initialize(time, or: nil, plus: 0, minus: 0, whichever_comes: :first)
-        if self.event = binding.local_variable_get(:or)
-          @delta = plus - minus
-          self.precedence = whichever_comes or fail ArgumentError
-        end
-        @datetime = case time.to_s
-        when /\A\d{2}:\d{2}\z/
-          DateTime.strptime("#{DATELESS_DATE} #{time} +0000", '%F %R %z')
-        when /\A\d{2}:\d{2} [+-]\d{4}\z/
-          DateTime.strptime("#{DATELESS_DATE} #{time}", '%F %R %z')
-        when /\A\d{2}:\d{2} \w+\z/
-          DateTime.strptime("#{DATELESS_DATE} #{time}", '%F %R %Z')
-        when /\A\d{4}-\d{2}-\d{2}[T ]\d{2}:\d{2}:\d{2} ?[+-]\d{2}:?\d{2}\z/
-          DateTime.strptime("#{DATELESS_DATE} #{time.strftime('%R %z')}", '%F %R %z')
+      def initialize(time_or_event, or: nil, plus: 0, minus: 0, whichever_comes: :first)
+        alternative_event = binding.local_variable_get(:or)   # necessary since "or" is a keyword
+        @time = @event = @precedence = nil
+        case time_or_event
+        when Symbol
+          self.event = time_or_event
+        when ::Time, DateTime
+          time_or_event = time_or_event.to_time
+          set_time(time_or_event.hour, time_or_event.min, time_or_event.utc_offset)
+        when /\A(\d{2}):?(\d{2}) ?([+-]\d{2}:?\d{2}|UTC)?\z/
+          set_time($1, $2, $3)
         else
-          fail ArgumentError
-        end.new_offset
-      end
-
-      # Stdlib DateTime equivalent using the value of {DATELESS_DATE} to represent
-      # the ignored date part
-      #
-      # @return [DateTime]
-      def to_datetime
-        @datetime
+          fail(ArgumentError, "time or event not recognized")
+        end
+        fail(ArgumentError, "only one event allowed") if event && alternative_event
+        self.event ||= alternative_event
+        @delta = event ? plus - minus : 0
+        if @time && event
+          self.precedence = whichever_comes
+          fail(ArgumentError, "mandatory precedence missing") unless precedence
+        end
       end
 
       # Human readable rap like "08:00 UTC or sunrise-15min whichever comes first"
@@ -77,10 +82,11 @@ module AIXM
       #   are supported. Additionally +%E+ is replaced with the human readable
       #   event part e.g. "or sunrise-15min whichever comes first".
       #
-      # @param format [String] see
+      # @param format [String] see {strftime}[https://www.rubydoc.info/stdlib/date/DateTime#strftime-instance_method]
       # @return [String]
       def to_s(format='%R UTC %E')
-        @datetime.strftime(
+        return event.to_s unless @time
+        @time.strftime(
           format.sub('%E') do
             ''.tap do |string|
               string << "or #{event}" if event
@@ -95,18 +101,19 @@ module AIXM
         %Q(#<#{self.class} #{to_s}>)
       end
 
+      # Stdlib Time equivalent using the value of {DATELESS_DATE} to represent a
+      # time only.
+      #
+      # @return [Time]
+      def to_time
+        @time
+      end
+
       # @!method hour
       #   @return [Integer]
-      # @!method minute
+      # @!method min
       #   @return [Integer]
-      def_delegators :to_datetime, :hour, :minute
-
-      # Minutes added or subtracted from event
-      #
-      # @return [Integer]
-      def delta
-        @delta || 0
-      end
+      def_delegators :@time, :hour, :min
 
       # Whether this schedule time is comparable to others.
       #
@@ -131,6 +138,17 @@ module AIXM
 
       private
 
+      # Set the +@time+ instance variable.
+      #
+      # @param hour [Integer, String]
+      # @param min [Integer, String]
+      # @param offset [Integer, String] either UTC offset in seconds
+      #   (default: 0) or 'UTC'
+      # @return [Time]
+      def set_time(hour, min, offset)
+        @time = ::Time.new(DATELESS_DATE[0, 4], DATELESS_DATE[5, 2], DATELESS_DATE[8, 2], hour, min, 0, offset || 0).utc
+      end
+
       def event=(value)
         fail ArgumentError if value && !EVENTS.include?(value)
         @event = value
@@ -142,7 +160,7 @@ module AIXM
       end
 
       def <=>(other)
-        @datetime <=> other.to_datetime
+        to_time <=> other.to_time
       end
     end
 

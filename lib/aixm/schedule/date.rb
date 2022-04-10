@@ -5,6 +5,7 @@ module AIXM
     #
     # This class implements the bare minimum of stdlib +Date+ and adds some
     # extensions:
+    #
     # * yearless dates
     # * {in?} to check whether (yearless) date falls within (yearless) date range
     #
@@ -16,7 +17,7 @@ module AIXM
       include Comparable
       extend Forwardable
 
-      YEARLESS_YEAR = -8888
+      YEARLESS_YEAR = 0
 
       # Parse the given representation of (yearless) date.
       #
@@ -35,14 +36,6 @@ module AIXM
         raise ArgumentError
       end
 
-      # Stdlib Date equivalent using the value of {YEARLESS_YEAR} to represent a
-      # yearless date.
-      #
-      # @return [Date]
-      def to_date
-        @date
-      end
-
       # Human readable rap such as "2002-05-19" or "XXXX-05-19".
       #
       # @param format [String] see {strftime}[https://www.rubydoc.info/stdlib/date/DateTime#strftime-instance_method]
@@ -53,6 +46,14 @@ module AIXM
 
       def inspect
         %Q(#<#{self.class} #{to_s}>)
+      end
+
+      # Stdlib Date equivalent using the value of {YEARLESS_YEAR} to represent a
+      # yearless date.
+      #
+      # @return [Date]
+      def to_date
+        @date
       end
 
       # Whether the other schedule date can be compared to this one.

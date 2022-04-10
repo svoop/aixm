@@ -56,15 +56,11 @@ module AIXM
         AIXM.time('09:00')
       end
 
+      def event
+        AIXM.time(:sunrise)
+      end
+
       def time_with_event
-        AIXM.time('21:20', or: :sunset)
-      end
-
-      def time_with_delta
-        AIXM.time('21:20', or: :sunset, plus: 15)
-      end
-
-      def time_with_precedence
         AIXM.time('21:20', or: :sunset, plus: 15, whichever_comes: :last)
       end
 
@@ -131,7 +127,7 @@ module AIXM
           dates: (AIXM.date('2022-03-01')..AIXM.date('2022-03-22')),
           days: (AIXM.day(:tuesday)..AIXM.day(:thursday))
         ).tap do |timesheet|
-          timesheet.times = (time..time_with_precedence)
+          timesheet.times = (time..time_with_event)
         end
       end
 

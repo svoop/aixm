@@ -68,7 +68,7 @@ describe AIXM::Component::Timesheet do
       values = [
         nil,
         (AIXM::Factory.time..AIXM::Factory.time),
-        (AIXM::Factory.time_with_precedence..AIXM::Factory.time_with_precedence)
+        (AIXM::Factory.time_with_event..AIXM::Factory.time_with_event)
       ]
       _(values).must_be_written_to subject, :times
     end
