@@ -31,16 +31,26 @@ describe AIXM::Schedule::Day do
     end
   end
 
-  describe :comparable? do
-    it "returns true for comparable days" do
-      AIXM::Schedule::Day::COMPARABLE_DAYS.each do |day|
-        _(AIXM.day(day)).must_be :comparable?
+  describe :== do
+    it "returns true for equal days" do
+      _(AIXM.day(:monday)).must_equal AIXM.day(:monday)
+    end
+
+    it "returns false for different days" do
+      _(AIXM.day(:monday)).wont_equal AIXM.day(:tuesday)
+    end
+  end
+
+  describe :sortable? do
+    it "returns true for sortable days" do
+      AIXM::Schedule::Day::SORTABLE_DAYS.each do |day|
+        _(AIXM.day(day)).must_be :sortable?
       end
     end
 
     it "returns false for other days" do
-      (AIXM::Schedule::Day::DAYS - AIXM::Schedule::Day::COMPARABLE_DAYS).each do |day|
-        _(AIXM.day(day)).wont_be :comparable?
+      (AIXM::Schedule::Day::DAYS - AIXM::Schedule::Day::SORTABLE_DAYS).each do |day|
+        _(AIXM.day(day)).wont_be :sortable?
       end
     end
   end

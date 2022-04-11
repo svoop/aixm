@@ -147,13 +147,27 @@ describe AIXM::Schedule::Time do
     end
   end
 
-  describe :comparable? do
+  describe :== do
+    it "returns true for equal times" do
+      _(AIXM.time('05:05')).must_equal AIXM.time('05:05')
+      _(AIXM.time(:sunset)).must_equal AIXM.time(:sunset)
+      _(AIXM.time('05:05', or: :sunset)).must_equal AIXM.time('05:05', or: :sunset)
+    end
+
+    it "returns false for different times" do
+      _(AIXM.time('05:05')).wont_equal AIXM.time('15:15')
+      _(AIXM.time(:sunset)).wont_equal AIXM.time('15:15')
+      _(AIXM.time('05:05', or: :sunset)).wont_equal AIXM.time('05:05', or: :sunset, plus: 15)
+    end
+  end
+
+  describe :sortable? do
     it "returns true for times without event" do
-      _(AIXM::Factory.time).must_be :comparable?
+      _(AIXM::Factory.time).must_be :sortable?
     end
 
     it "returns false for times with event" do
-      _(AIXM::Factory.time_with_event).wont_be :comparable?
+      _(AIXM::Factory.time_with_event).wont_be :sortable?
     end
   end
 

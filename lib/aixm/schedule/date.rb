@@ -92,7 +92,7 @@ module AIXM
       #   @return [Integer]
       # @!method day
       #   @return [Integer] day of month
-      def_delegators :to_date, :month, :day
+      def_delegators :@date, :month, :day
 
       # Whether this schedule date falls within the given range of schedule dates
       #

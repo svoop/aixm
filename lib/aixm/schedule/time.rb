@@ -115,10 +115,17 @@ module AIXM
       #   @return [Integer]
       def_delegators :@time, :hour, :min
 
-      # Whether this schedule time is comparable to others.
+      # Whether two times are equal.
       #
       # @return [Boolean]
-      def comparable?
+      def ==(other)
+        to_s == other.to_s
+      end
+
+      # Whether this schedule time is sortable.
+      #
+      # @return [Boolean]
+      def sortable?
         !event
       end
 
@@ -128,7 +135,7 @@ module AIXM
       # @param range [Range<AIXM::Schedule::Time>] range of schedule times
       # @return [Boolean]
       def in?(range)
-        fail "not comparable" unless comparable? && range.first.comparable? && range.last.comparable?
+        fail "not sortable" unless sortable? && range.first.sortable? && range.last.sortable?
         if range.min
           range.first.to_s <= self.to_s && self.to_s <= range.last.to_s
         else

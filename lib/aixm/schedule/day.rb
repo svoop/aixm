@@ -11,7 +11,7 @@ module AIXM
       include Comparable
 
       DAYS = %i(monday tuesday wednesday thursday friday saturday sunday workday day_preceding_workday day_following_workday holiday day_preceding_holiday day_following_holiday any).freeze
-      COMPARABLE_DAYS = DAYS[0, 7]
+      SORTABLE_DAYS = DAYS[0, 7]
 
       # Day of the week or special named day
       #
@@ -36,11 +36,18 @@ module AIXM
         %Q(#<#{self.class} #{to_s}>)
       end
 
-      # Whether this schedule day is comparable others.
+      # Whether two days are equal.
       #
       # @return [Boolean]
-      def comparable?
-        COMPARABLE_DAYS.include? day
+      def ==(other)
+        day == other.day
+      end
+
+      # Whether this schedule day sortable.
+      #
+      # @return [Boolean]
+      def sortable?
+        SORTABLE_DAYS.include? day
       end
 
       # Whether this schedule day falls within the given range of schedule
@@ -49,7 +56,7 @@ module AIXM
       # @param range [Range<AIXM::Schedule::Day>] range of schedule days
       # @return [Boolean]
       def in?(range)
-        fail "not comparable" unless comparable? && range.first.comparable? && range.last.comparable?
+        fail "not sortable" unless sortable? && range.first.sortable? && range.last.sortable?
         if range.min
           range.cover? self
         else

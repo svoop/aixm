@@ -275,6 +275,7 @@ ckmid --help
 ### AIXM
 * [AIXM](http://aixm.aero)
 * [AICM 4.5 documentation](https://openflightmaps.gitlab.io/ofmx/aixm/4.5/manual/aicm/)
+* [AICM 4.5 manual](https://www.aixm.aero/sites/aixm.aero/files/imce/library/aicm_manual_4-5.pdf)
 * [AIXM 4.5 specification](http://aixm.aero/document/aixm-45-specification)
 
 ### OFMX
