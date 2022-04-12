@@ -172,11 +172,6 @@ describe AIXM::Schedule::Time do
   end
 
   describe :in? do
-    it "fails if subject or range are incomparable" do
-      _{ AIXM::Factory.time_with_event.in?(AIXM.time('10:00')..AIXM.time('15:00')) }.must_raise RuntimeError
-      _{ AIXM::Factory.time.in?(AIXM.time('10:00', or: :sunrise)..AIXM.time('15:00')) }.must_raise RuntimeError
-    end
-
     context "range of times" do
       subject do
         (AIXM.time('10:00')..AIXM.time('15:00'))
@@ -210,6 +205,22 @@ describe AIXM::Schedule::Time do
         %w(10:01 12:12 14:59).each do |string|
           _(AIXM.time(string).in?(subject)).must_equal false
         end
+      end
+    end
+
+    context "unsortable ranges with events" do
+      it "accepts time and event in range" do
+        _((AIXM.time('09:00')..AIXM.time(:sunset)))
+        _((AIXM.time(:sunrise)..AIXM.time('21:00')))
+        _((AIXM.time(:sunrise)..AIXM.time(:sunset)))
+      end
+
+      it "fails if subject is unsortable" do
+        _{ AIXM::Factory.time_with_event.in?(AIXM.time('10:00')..AIXM.time('15:00')) }.must_raise RuntimeError
+      end
+
+      it "fails if range contains unsortable" do
+        _{ AIXM::Factory.time.in?(AIXM.time('10:00', or: :sunrise)..AIXM.time('15:00')) }.must_raise RuntimeError
       end
     end
   end

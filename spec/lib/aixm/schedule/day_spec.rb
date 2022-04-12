@@ -56,11 +56,6 @@ describe AIXM::Schedule::Day do
   end
 
   describe :in? do
-    it "fails if subject or range are incomparable" do
-      _{ AIXM::Factory.special_day.in?(AIXM.day(:monday)..AIXM.day(:thursday)) }.must_raise RuntimeError
-      _{ AIXM::Factory.day.in?(AIXM.day(:workday)..AIXM.day(:thursday)) }.must_raise RuntimeError
-    end
-
     context "range of days" do
       subject do
         (AIXM.day(:monday)..AIXM.day(:thursday))
@@ -94,6 +89,22 @@ describe AIXM::Schedule::Day do
         %i(tuesday wednesday).each do |day|
           _(AIXM.day(day).in?(subject)).must_equal false
         end
+      end
+    end
+
+    context "unsortable ranges with non-weekdays" do
+      it "accepts non-weekdays in range" do
+        _((AIXM.day(:monday)..AIXM.day(:holiday)))
+        _((AIXM.day(:holiday)..AIXM.day(:monday)))
+        _((AIXM.day(:holiday)..AIXM.day(:day_following_workday)))
+      end
+
+      it "fails if subject is unsortable" do
+        _{ AIXM.day(:holiday).in?((AIXM.day(:monday)..AIXM.day(:friday))) }.must_raise RuntimeError
+      end
+
+      it "fails if range contains unsortable" do
+        _{ AIXM.day(:monday).in?((AIXM.day(:holiday)..AIXM.day(:friday))) }.must_raise RuntimeError
       end
     end
   end

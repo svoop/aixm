@@ -133,9 +133,11 @@ module AIXM
       # times.
       #
       # @param range [Range<AIXM::Schedule::Time>] range of schedule times
+      # @raise RuntimeError if either self is or the range contains an
+      #   unsortable time with event
       # @return [Boolean]
       def in?(range)
-        fail "not sortable" unless sortable? && range.first.sortable? && range.last.sortable?
+        fail "includes unsortables" unless sortable? && range.first.sortable? && range.last.sortable?
         if range.min
           range.first.to_s <= self.to_s && self.to_s <= range.last.to_s
         else
@@ -166,8 +168,9 @@ module AIXM
         @precedence = value
       end
 
+      # @note Necessary to use this class in Range.
       def <=>(other)
-        to_time <=> other.to_time
+        to_time <=> other.to_time || to_s <=> other.to_s
       end
     end
 

@@ -53,10 +53,15 @@ module AIXM
       # Whether this schedule day falls within the given range of schedule
       # days.
       #
+      # @note Only weekdays are sortable, therefore, this method returns +nil+
+      #   if either self or the range contain a non-weekday.
+      #
       # @param range [Range<AIXM::Schedule::Day>] range of schedule days
+      # @raise RuntimeError if either self is or the range includes an
+      #   unsortable non-workday
       # @return [Boolean]
       def in?(range)
-        fail "not sortable" unless sortable? && range.first.sortable? && range.last.sortable?
+        fail "includes unsortables" unless sortable? && range.first.sortable? && range.last.sortable?
         if range.min
           range.cover? self
         else
@@ -71,8 +76,9 @@ module AIXM
         fail ArgumentError unless DAYS.include? @day
       end
 
+      # @note Necessary to use this class in Range.
       def <=>(other)
-        DAYS.index(day) <=> DAYS.index(other.day)
+        DAYS.index(day) <=> DAYS.index(other.day) || day.to_s <=> other.to_s
       end
     end
 
