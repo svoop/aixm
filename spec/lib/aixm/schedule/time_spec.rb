@@ -127,12 +127,22 @@ describe AIXM::Schedule::Time do
   end
 
   describe :to_s do
-    it "returns human readable time only" do
-      _(AIXM::Factory.time.to_s).must_equal '09:00 UTC'
+    it "returns human readable time" do
+      _(AIXM.time('09:12').to_s).must_equal '09:12 UTC'
     end
 
-    it "returns human readable event only" do
-      _(AIXM::Factory.event.to_s).must_equal 'sunrise'
+    it "returns human readable time at beginning of day" do
+      _(AIXM.time('00:00').to_s).must_equal '00:00 UTC'
+    end
+
+    it "returns human readable time at end of day" do
+      _(AIXM.time('24:00').to_s).must_equal '24:00 UTC'
+    end
+
+    it "returns human readable event" do
+      _(AIXM.time(:sunset).to_s).must_equal 'sunset'
+      _(AIXM.time(:sunset, plus: 15).to_s).must_equal "sunset+15min"
+      _(AIXM.time(:sunset, minus: 30).to_s).must_equal "sunset-30min"
     end
 
     it "returns human readable time and event" do
@@ -142,8 +152,22 @@ describe AIXM::Schedule::Time do
       _(AIXM.time('21:20', or: :sunset, plus: 15, whichever_comes: :last).to_s).must_equal "21:20 UTC or sunset+15min whichever comes last"
     end
 
-    it "applies given format" do
-      _(AIXM::Factory.time.to_s('%H')).must_equal '09'
+    it "returns other formats and collapses spaces" do
+      _(AIXM.time('21:30', or: :sunset).to_s(" at  %E no later than %RZ")).must_equal 'at sunset no later than 21:30Z'
+    end
+  end
+
+  describe :hour do
+    it "returns the hour" do
+      _(AIXM.time('11:15').hour).must_equal 11
+    end
+
+    it "returns 0 for the beginning of day" do
+      _(AIXM.time('00:00').hour).must_equal 0
+    end
+
+    it "returns 24 for the end of day" do
+      _(AIXM.time('24:00').hour).must_equal 24
     end
   end
 

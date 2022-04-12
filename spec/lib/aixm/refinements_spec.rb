@@ -196,6 +196,16 @@ describe AIXM::Refinements do
       end
     end
 
+    describe :compact do
+      it "strips the string" do
+        _("\n foobar\n\n".compact).must_equal 'foobar'
+      end
+
+      it "collapses whitespace to one space but leavs newlines untouched" do
+        _("foo\n\nbar  baz".compact).must_equal "foo\n\nbar baz"
+      end
+    end
+
     describe :indent do
       it "must indent single line string" do
         _('foobar'.indent(2)).must_equal '  foobar'

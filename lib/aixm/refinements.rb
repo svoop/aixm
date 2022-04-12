@@ -178,6 +178,21 @@ module AIXM
       end
     end
 
+    # @!method compact
+    #   Collapse whitespace to one space, but leave +\n+ untouched, then strip
+    #   what's left.
+    #
+    #   @example
+    #     "  foo\n\nbar  baz \r".compact   # => "foo\n\nbar baz"
+    #
+    #   @note This is a refinement for +String+
+    #   @return [String] compacted string
+    refine String do
+      def compact
+        split("\n").map { _1.gsub(/\s+/, ' ') }.join("\n").strip
+      end
+    end
+
     # @!method indent(number)
     #   Indent every line of a string with +number+ spaces.
     #

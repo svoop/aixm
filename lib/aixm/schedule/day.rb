@@ -25,7 +25,7 @@ module AIXM
         self.day = day
       end
 
-      # Human readable rap such as "monday" or "day preceding workday"
+      # Human readable representation such as "monday" or "day preceding workday"
       #
       # @return [String]
       def to_s

@@ -36,12 +36,16 @@ module AIXM
         raise ArgumentError
       end
 
-      # Human readable rap such as "2002-05-19" or "XXXX-05-19".
+      # Human readable representation such as "2002-05-19" or "XXXX-05-19"
       #
-      # @param format [String] see {strftime}[https://www.rubydoc.info/stdlib/date/DateTime#strftime-instance_method]
+      # All formats from {strftime}[https://www.rubydoc.info/stdlib/date/Date#strftime-instance_method]
+      # are supported, however, +%Y+ is replaced with "XXXX" for yearless dates.
+      # Any other formats containing the year won't do so and should be avoided!
+      #
+      # @param format [String] see {strftime}[https://www.rubydoc.info/stdlib/date/Date#strftime-instance_method]
       # @return [String]
       def to_s(format='%Y-%m-%d')
-        @date.strftime(yearless? ? format.sub('%Y', 'XXXX') : format)
+        @date.strftime(yearless? ? format.gsub('%Y', 'XXXX') : format)
       end
 
       def inspect

@@ -1,3 +1,5 @@
+using AIXM::Refinements
+
 module AIXM
   module Schedule
 
@@ -10,6 +12,10 @@ module AIXM
     # * date, seconds and milliseconds are ignored
     # * {in?} to check whether schedule time falls within range of times
     #
+    # @note The {DATELESS_DATE} is used to mark the date of the internal +Time"
+    #   object irrelevant. However, Ruby does not persist end of days as 24:00,
+    #   therefore {DATELESS_DATE} + 1 marks this case.
+    #
     # @example
     #   time = AIXM.time('21:30')                          # => 21:30
     #   time.in?(AIXM.time('20:00')..AIXM.time('02:00'))   # => true
@@ -18,7 +24,7 @@ module AIXM
 
       EVENTS = %i(sunrise sunset).freeze
       PRECEDENCES = %i(first last).freeze
-      DATELESS_DATE = '0000-01-01'.freeze
+      DATELESS_DATE = ::Date.parse('0000-01-01').freeze
 
       # Event or alternative to time
       #
@@ -76,25 +82,25 @@ module AIXM
         end
       end
 
-      # Human readable rap like "08:00 UTC or sunrise-15min whichever comes first"
+      # Human readable representation
       #
-      # @note All formats from {strftime}[https://www.rubydoc.info/stdlib/date/DateTime#strftime-instance_method]
-      #   are supported. Additionally +%E+ is replaced with the human readable
-      #   event part e.g. "or sunrise-15min whichever comes first".
+      # The format recognises does the following interpolations:
+      # * +%R+ - "HH:MM" in UTC if time is present, "" otherwise
+      # * +%z+ - "UTC" if time is present, "" otherwise
+      # * +%o+ - "or" if both time and event are present, "" otherwise
+      # * +%E+ - "sunrise-15min" if no event is present, "" otherwise
+      # * +%P+ - "whichever comes first" if precedence is present, "" otherwise
       #
-      # @param format [String] see {strftime}[https://www.rubydoc.info/stdlib/date/DateTime#strftime-instance_method]
+      # @param format [String]
       # @return [String]
-      def to_s(format='%R UTC %E')
-        return event.to_s unless @time
-        @time.strftime(
-          format.sub('%E') do
-            ''.tap do |string|
-              string << "or #{event}" if event
-              string << sprintf("%+dmin", delta) unless delta.zero?
-              string << " whichever comes #{precedence}" if precedence
-            end
-          end
-        ).strip
+      def to_s(format='%R %z %o %E %P')
+        format.gsub(/%[RzoEP]/,
+          '%R' => (sprintf("%02d:%02d", hour, min) if @time),
+          '%z' => ('UTC' if @time),
+          '%o' => ('or' if @time && event),
+          '%E' => "#{event}#{sprintf("%+dmin", delta) unless delta.zero?}",
+          '%P' => ("whichever comes #{precedence}" if precedence)
+        ).compact
       end
 
       def inspect
@@ -109,11 +115,16 @@ module AIXM
         @time
       end
 
-      # @!method hour
-      #   @return [Integer]
+      # Hour from 0 (beginning of day) to 24 (end of day)
+      #
+      # @return [Integer]
+      def hour
+        @time.hour + (end_of_day? ? 24 : 0)
+      end
+
       # @!method min
       #   @return [Integer]
-      def_delegators :@time, :hour, :min
+      def_delegators :@time, :min
 
       # Whether two times are equal.
       #
@@ -155,7 +166,7 @@ module AIXM
       #   (default: 0) or 'UTC'
       # @return [Time]
       def set_time(hour, min, offset)
-        @time = ::Time.new(DATELESS_DATE[0, 4], DATELESS_DATE[5, 2], DATELESS_DATE[8, 2], hour, min, 0, offset || 0).utc
+        @time = ::Time.new(DATELESS_DATE.year, DATELESS_DATE.month, DATELESS_DATE.day, hour, min, 0, offset || 0).utc
       end
 
       def event=(value)
@@ -166,6 +177,10 @@ module AIXM
       def precedence=(value)
         fail ArgumentError if value && !PRECEDENCES.include?(value)
         @precedence = value
+      end
+
+      def end_of_day?
+        @time.day > DATELESS_DATE.day
       end
 
       # @note Necessary to use this class in Range.
