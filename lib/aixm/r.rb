@@ -8,6 +8,7 @@ module AIXM
   #   AIXM.r(AIXM.d(25, :m), AIXM.d(20, :m))   # rectangle
   #   AIXM.r(AIXM.d(25, :m))                   # square
   class R
+    include AIXM::Concerns::HashEquality
 
     # Rectangle length
     #
@@ -56,18 +57,9 @@ module AIXM
     end
 
     # @see Object#==
-    # @return [Boolean]
     def ==(other)
       self.class === other && length == other.length && width == other.width
     end
-    alias_method :eql?, :==
-
-    # @see Object#hash
-    # @return [Integer]
-    def hash
-      to_s.hash
-    end
 
   end
-
 end

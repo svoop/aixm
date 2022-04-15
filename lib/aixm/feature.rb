@@ -2,6 +2,8 @@ module AIXM
 
   # @abstract
   class Feature
+    include AIXM::Concerns::HashEquality
+
     REGION_RE = /\A[A-Z]{2}\z/.freeze
 
     private_class_method :new
@@ -42,9 +44,14 @@ module AIXM
       @region = value&.upcase
     end
 
-    # @return [Boolean]
+    # @see Object#==
     def ==(other)
       self.__class__ === other && self.to_uid == other.to_uid
+    end
+
+    # @see Object#eql?
+    def hash
+      [self.__class__, to_uid].hash
     end
   end
 

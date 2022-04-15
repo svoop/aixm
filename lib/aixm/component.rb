@@ -2,6 +2,7 @@ module AIXM
 
   # @abstract
   class Component
+    include AIXM::Concerns::HashEquality
 
     # Freely usable e.g. to +find_by+ foreign keys
     #

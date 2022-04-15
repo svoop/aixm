@@ -7,6 +7,7 @@ module AIXM
   # @example
   #   AIXM.d(14, :bar)
   class P
+    include AIXM::Concerns::HashEquality
     include Comparable
     extend Forwardable
 
@@ -82,22 +83,13 @@ module AIXM
     end
 
     # @see Object#<=>
-    # @return [Integer]
     def <=>(other)
       pres <=> other.send(:"to_#{unit}").pres
     end
 
     # @see Object#==
-    # @return [Boolean]
     def ==(other)
       self.class === other  && (self <=> other).zero?
-    end
-    alias_method :eql?, :==
-
-    # @see Object#hash
-    # @return [Integer]
-    def hash
-      to_s.hash
     end
   end
 end

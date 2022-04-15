@@ -14,6 +14,7 @@ module AIXM
     #   from = AIXM.date('03-20')             # => XXXX-03-20
     #   date.in?(from..AIXM.date('05-20'))    # => true
     class Date
+      include AIXM::Concerns::HashEquality
       include Comparable
       extend Forwardable
 
@@ -71,6 +72,11 @@ module AIXM
       def <=>(other)
         fail "not comparable" unless comparable_to? other
         @date.jd <=> other.to_date.jd
+      end
+
+      # @see Object#hash
+      def hash
+         [self.class, @date.jd].hash
       end
 
       # Whether this schedule date is yearless or not.

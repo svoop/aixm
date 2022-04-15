@@ -13,6 +13,7 @@ module AIXM
   # * +AIXM::GROUND+ - surface expressed as "0 ft QFE"
   # * +AIXM::UNLIMITED+ - no upper limit expressed as "FL 999"
   class Z
+    include AIXM::Concerns::HashEquality
     extend Forwardable
 
     CODES = %i(qfe qnh qne).freeze
@@ -90,24 +91,16 @@ module AIXM
     end
 
     # Unit
+    #
     # @return [Symbol] either +:fl+ (flight level) or +:ft+ (feet)
     def unit
       qne? ? :fl : :ft
     end
 
     # @see Object#==
-    # @return [Boolean]
     def ==(other)
       self.class === other && alt == other.alt && code == other.code
     end
-    alias_method :eql?, :==
-
-    # @see Object#hash
-    # @return [Integer]
-    def hash
-      to_s.hash
-    end
 
   end
-
 end

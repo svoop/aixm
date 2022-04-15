@@ -20,6 +20,7 @@ module AIXM
     #   time = AIXM.time('21:30')                          # => 21:30
     #   time.in?(AIXM.time('20:00')..AIXM.time('02:00'))   # => true
     class Time
+      include AIXM::Concerns::HashEquality
       extend Forwardable
 
       EVENTS = %i(sunrise sunset).freeze

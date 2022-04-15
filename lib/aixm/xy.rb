@@ -29,6 +29,8 @@ module AIXM
   #
   # @see https://gitlab.com/openflightmaps/ofmx/wikis/Coordinates
   class XY
+    include AIXM::Concerns::HashEquality
+
     EARTH_RADIUS = 6_371_008.8
 
     # See the {overview}[AIXM::XY] for examples.
@@ -122,16 +124,8 @@ module AIXM
     end
 
     # @see Object#==
-    # @return [Boolean]
     def ==(other)
       self.class === other && lat == other.lat && long == other.long
-    end
-    alias_method :eql?, :==
-
-    # @see Object#hash
-    # @return [Integer]
-    def hash
-      to_s.hash
     end
 
     private

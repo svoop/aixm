@@ -7,6 +7,7 @@ module AIXM
   # @example
   #   AIXM.f(123.35, :mhz)
   class F
+    include AIXM::Concerns::HashEquality
     extend Forwardable
 
     UNITS = %i(ghz mhz khz).freeze
@@ -65,16 +66,8 @@ module AIXM
     end
 
     # @see Object#==
-    # @return [Boolean]
     def ==(other)
       self.class === other && freq == other.freq && unit == other.unit
-    end
-    alias_method :eql?, :==
-
-    # @see Object#hash
-    # @return [Integer]
-    def hash
-      to_s.hash
     end
 
     # Whether this frequency is part of the voice airband for civil aviation

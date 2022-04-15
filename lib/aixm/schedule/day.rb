@@ -8,6 +8,7 @@ module AIXM
     #   to = AIXM.day(:thursday)           # => :thursday
     #   AIXM.day(:tuesday).in?(from..to)   # => true
     class Day
+      include AIXM::Concerns::HashEquality
       include Comparable
 
       DAYS = %i(monday tuesday wednesday thursday friday saturday sunday workday day_preceding_workday day_following_workday holiday day_preceding_holiday day_following_holiday any).freeze
@@ -41,6 +42,11 @@ module AIXM
       # @return [Boolean]
       def ==(other)
         day == other.day
+      end
+
+      # @see Object#hash
+      def hash
+        [self.class, day].hash
       end
 
       # Whether this schedule day sortable.

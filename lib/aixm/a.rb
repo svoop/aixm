@@ -24,6 +24,8 @@ module AIXM
   #   a.invert             # => #<AIXM::A -137.8° "22R">
   #   a.to_s(:runway)      # => "22R"
   class A
+    include AIXM::Concerns::HashEquality
+
     SUFFIX_INVERSIONS = {
       R: :L,
       L: :R
@@ -168,16 +170,13 @@ module AIXM
     end
 
     # @see Object#==
-    # @return [Boolean]
     def ==(other)
       self.class === other  && deg == other.deg && suffix == other.suffix
     end
-    alias_method :eql?, :==
 
     # @see Object#hash
-    # @return [Integer]
     def hash
-      [deg, suffix].join.hash
+      [self.class, deg, suffix].join.hash
     end
   end
 
