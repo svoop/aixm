@@ -5,13 +5,13 @@ module AIXM
     #
     # @example
     #   from = AIXM.day(:monday)           # => :monday
-    #   to = AIXM.day(:thursday)           # => :thursday
+    #   to = AIXM.day(4)                   # => :thursday
     #   AIXM.day(:tuesday).in?(from..to)   # => true
     class Day
       include AIXM::Concerns::HashEquality
       include Comparable
 
-      DAYS = %i(monday tuesday wednesday thursday friday saturday sunday workday day_preceding_workday day_following_workday holiday day_preceding_holiday day_following_holiday any).freeze
+      DAYS = %i(sunday monday tuesday wednesday thursday friday saturday workday day_preceding_workday day_following_workday holiday day_preceding_holiday day_following_holiday any).freeze
       SORTABLE_DAYS = DAYS[0, 7]
 
       # Day of the week or special named day
@@ -21,9 +21,18 @@ module AIXM
 
       # Set the given day of the week or special named day.
       #
-      # @param day [Symbol] any from {DAYS}
+      # @param day [Symbol, String, Integer] any from {DAYS} or 0=Monday to
+      #   6=Sunday
       def initialize(day=:any)
-        self.day = day
+        case day
+        when Symbol, String
+          self.day = day
+        when Integer
+          fail ArgumentError unless day.between?(0, 6)
+          self.day = SORTABLE_DAYS[day]
+        else
+          fail ArgumentError
+        end
       end
 
       # Human readable representation such as "monday" or "day preceding workday"

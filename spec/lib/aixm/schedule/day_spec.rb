@@ -13,12 +13,18 @@ describe AIXM::Schedule::Day do
       end
     end
 
+    it "accepts a valid day as Integer" do
+      { 0 => :sunday, 1 => :monday, 2 => :tuesday, 3 => :wednesday, 4 => :thursday, 5 => :friday, 6 => :saturday }.each do |index, day|
+        _(AIXM.day(index).day).must_equal day
+      end
+    end
+
     it "uses :any as default" do
       _(AIXM.day.day).must_equal :any
     end
 
     it "fails on anything else" do
-      [123, nil].each do |day|
+      [-1, 7, 123, nil].each do |day|
         _{ AIXM.day(day) }.must_raise ArgumentError
       end
     end
