@@ -20,16 +20,20 @@ module AIXM
 
       YEARLESS_YEAR = 0
 
+      # @api private
+      attr_accessor :date
+
       # Parse the given representation of (yearless) date.
       #
-      # @param date [Date, String] either stdlib Date, "YYYY-MM-DD" or "MM-DD"
+      # @param date [Date, String] either stdlib Date, "YYYY-MM-DD", "XXXX-MM-DD"
+      #   or "MM-DD"
       #   (yearless date)
       def initialize(date)
         @date = case date.to_s
         when /\A\d{4}-\d{2}-\d{2}\z/
           ::Date.strptime(date.to_s)
-        when /\A\d{2}-\d{2}\z/
-          ::Date.strptime("#{YEARLESS_YEAR}-#{date}")
+        when /\A(?:XXXX-)?(\d{2}-\d{2})\z/
+          ::Date.strptime("#{YEARLESS_YEAR}-#{$1}")
         else
           fail ArgumentError
         end
@@ -53,12 +57,43 @@ module AIXM
         %Q(#<#{self.class} #{to_s}>)
       end
 
+      # Creates a new date with the given parts altered.
+      #
+      # @example
+      #   date = AIXM.date('2000-12-22')
+      #   date.at(month: 4)               # => 2000-04-22
+      #   date.at(year: 2020, day: 5)     # => 2020-12-05
+      #   date.at(month: 1)               # => 2020-01-22
+      #   date.at(month: 1, wrap: true)   # => 2021-01-22 (year incremented)
+      #
+      # @param year [Integer] new year
+      # @param month [Integer] new month
+      # @param day [Integer] new day
+      # @param wrap [Boolean] whether to increment month when crossing month
+      #   boundary and year when crossing year boundary
+      # @return [AIXM::Schedule::Date]
+      def at(year: nil, month: nil, day: nil, wrap: false)
+        return self unless year || month || day
+        wrap_month, wrap_year = day&.<(date.day), month&.<(date.month)
+        date = ::Date.new(year || self.year || YEARLESS_YEAR, month || self.month, day || self.day)
+        date = date.next_month if wrap && wrap_month && !month
+        date = date.next_year if wrap && wrap_year && !year
+        self.class.new(date.strftime(yearless? ? '%m-%d' : '%F'))
+      end
+
       # Stdlib Date equivalent using the value of {YEARLESS_YEAR} to represent a
       # yearless date.
       #
       # @return [Date]
       def to_date
         @date
+      end
+
+      # Create new date one day after this one.
+      #
+      # @return [AIXM::Schedule::Date]
+      def succ
+        self.class.new(date.next_day).at(year: (YEARLESS_YEAR if yearless?))
       end
 
       # Whether the other schedule date can be compared to this one.

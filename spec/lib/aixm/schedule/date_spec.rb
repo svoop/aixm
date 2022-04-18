@@ -8,7 +8,7 @@ describe AIXM::Schedule::Date do
     end
 
     describe :initialize, :to_date do
-      it "parses valid YYY-MM-DD string" do
+      it "parses valid YYYY-MM-DD string" do
         _(subject.to_date).must_equal Date.parse('2002-02-20')
       end
 
@@ -29,6 +29,59 @@ describe AIXM::Schedule::Date do
 
       it "applies given format" do
         _(subject.to_s('%Y')).must_equal '2002'
+      end
+    end
+
+    describe :at do
+      subject do
+        AIXM.date('2000-12-22')
+      end
+
+      it "returns self if nothing changed" do
+        _(subject.at).must_be_same_as subject
+      end
+
+      it "must replace the year part" do
+        _(subject.at(year: 2020).to_date).must_equal Date.parse('2020-12-22')
+      end
+
+      it "must replace the month part" do
+        _(subject.at(month: 11).to_date).must_equal Date.parse('2000-11-22')
+      end
+
+      it "must replace the day part" do
+        _(subject.at(day: 21).to_date).must_equal Date.parse('2000-12-21')
+      end
+
+      it "must replace the month part and wrap" do
+        _(subject.at(month: 1).to_date).must_equal Date.parse('2000-01-22')
+        _(subject.at(month: 1, wrap: true).to_date).must_equal Date.parse('2001-01-22')
+      end
+
+      it "must replace the day part and wrap" do
+        _(subject.at(day: 1).to_date).must_equal Date.parse('2000-12-01')
+        _(subject.at(day: 1, wrap: true).to_date).must_equal Date.parse('2001-01-01')
+      end
+
+      it "must replace the month and day part and wrap" do
+        _(subject.at(day: 1).to_date).must_equal Date.parse('2000-12-01')
+        _(subject.at(month: 1, day: 1, wrap: true).to_date).must_equal Date.parse('2001-01-01')
+      end
+    end
+
+    describe :succ do
+      it "returns a new object of the following day" do
+        date = AIXM.date('2000-06-07')
+        succ = date.succ
+        _(succ.object_id).wont_equal date.object_id
+        _(succ).must_equal AIXM.date('2000-06-08')
+      end
+
+      it "returns a new object of the following day across year boundaries" do
+        date = AIXM.date('2000-12-31')
+        succ = date.succ
+        _(succ.object_id).wont_equal date.object_id
+        _(succ).must_equal AIXM.date('2001-01-01')
       end
     end
 
@@ -158,6 +211,10 @@ describe AIXM::Schedule::Date do
         _(subject.to_date).must_equal Date.parse('0000-02-20')
       end
 
+      it "parses valid XXXX-MM-DD string" do
+        _(AIXM.date('XXXX-03-30').to_date).must_equal Date.parse('0000-03-30')
+      end
+
       it "fails on invalid string" do
         _{ AIXM.date('14-20') }.must_raise ArgumentError
       end
@@ -166,6 +223,58 @@ describe AIXM::Schedule::Date do
     describe :to_s do
       it "returns XXXX-MM-DD" do
         _(subject.to_s).must_equal 'XXXX-02-20'
+      end
+    end
+
+    describe :at do
+      subject do
+        AIXM.date('12-22')
+      end
+
+      it "returns self if nothing changed" do
+        _(subject.at).must_be_same_as subject
+      end
+
+      it "must replace the year part to zero" do
+        _(subject.at(year: 0).to_date).must_equal Date.parse('0000-12-22')
+      end
+
+      it "ignores the year part" do
+        _(subject.at(year: 2020).to_date).must_equal Date.parse('0000-12-22')
+      end
+
+      it "must replace the month part" do
+        _(subject.at(month: 11).to_date).must_equal Date.parse('0000-11-22')
+      end
+
+      it "must replace the day part" do
+        _(subject.at(day: 21).to_date).must_equal Date.parse('0000-12-21')
+      end
+
+      it "must replace the day part and wrap" do
+        _(subject.at(day: 1).to_date).must_equal Date.parse('0000-12-01')
+        _(subject.at(day: 1, wrap: true).to_date).must_equal Date.parse('0000-01-01')
+      end
+
+      it "must replace the month and day part and wrap" do
+        _(subject.at(day: 1).to_date).must_equal Date.parse('0000-12-01')
+        _(subject.at(month: 1, day: 1, wrap: true).to_date).must_equal Date.parse('0000-01-01')
+      end
+    end
+
+    describe :succ do
+      it "returns a new object of the following day" do
+        date = AIXM.date('06-07')
+        succ = date.succ
+        _(succ.object_id).wont_equal date.object_id
+        _(succ).must_equal AIXM.date('06-08')
+      end
+
+      it "returns a new object of the following day across year boundaries" do
+        date = AIXM.date('12-31')
+        succ = date.succ
+        _(succ.object_id).wont_equal date.object_id
+        _(succ).must_equal AIXM.date('01-01')
       end
     end
 

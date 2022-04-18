@@ -27,6 +27,9 @@ module AIXM
       PRECEDENCES = %i(first last).freeze
       DATELESS_DATE = ::Date.parse('0000-01-01').freeze
 
+      # @api private
+      attr_accessor :time
+
       # Event or alternative to time
       #
       # @return [Symbol, nil] any from {EVENTS}
@@ -106,6 +109,26 @@ module AIXM
 
       def inspect
         %Q(#<#{self.class} #{to_s}>)
+      end
+
+      # Creates a new time with the given parts altered.
+      #
+      # @example
+      #   time = AIXM.time('22:12')
+      #   time.at(min: 0)               # => 22:00
+      #   time.at(min: 0 wrap: true)   # => 2021-01-22 (year incremented)
+      #
+      # @param hour [Integer] new hour
+      # @param min [Integer] new minutes
+      # @param wrap [Boolean] whether to increment hour when crossing minutes
+      #   boundary
+      # @return [AIXM::Schedule::Date]
+      def at(hour: nil, min: nil, wrap: false)
+        return self unless hour || min
+        min ||= time.min
+        hour ||= time.hour
+        hour = (hour + 1) % 24 if wrap && min < time.min
+        self.class.new("%02d:%02d" % [hour, min])
       end
 
       # Stdlib Time equivalent using the value of {DATELESS_DATE} to represent a

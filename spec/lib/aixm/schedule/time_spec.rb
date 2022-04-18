@@ -157,6 +157,28 @@ describe AIXM::Schedule::Time do
     end
   end
 
+  describe :at do
+    subject do
+      AIXM.time('23:50')
+    end
+
+    it "returns self if nothing changed" do
+      _(subject.at).must_be_same_as subject
+    end
+
+    it "must replace the hour part" do
+      _(subject.at(hour: 12).to_s).must_equal '12:50 UTC'
+    end
+
+    it "must replace the min part" do
+      _(subject.at(min: 0).to_s).must_equal '23:00 UTC'
+    end
+
+    it "must replace the min part and wrap" do
+      _(subject.at(min: 0, wrap: true).to_s).must_equal '00:00 UTC'
+    end
+  end
+
   describe :hour do
     it "returns the hour" do
       _(AIXM.time('11:15').hour).must_equal 11
