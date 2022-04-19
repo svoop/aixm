@@ -24,7 +24,7 @@ module AIXM
       extend Forwardable
 
       EVENTS = %i(sunrise sunset).freeze
-      PRECEDENCES = %i(first last).freeze
+      PRECEDENCES = { first: :min, last: :max }.freeze
       DATELESS_DATE = ::Date.parse('0000-01-01').freeze
 
       # @api private
@@ -42,7 +42,7 @@ module AIXM
 
       # Precedence of time vs. event
       #
-      # @return [Symbol, nil] any of {PRECEDENCES}
+      # @return [Symbol, nil] any key of {PRECEDENCES}
       attr_reader :precedence
 
       # Parse the given representation of time.
@@ -62,7 +62,7 @@ module AIXM
       # @param or [Symbol] alternative event from {EVENTS}
       # @param plus [Integer] minutes added to event
       # @param minus [Integer] minutes subtracted from event
-      # @param whichever_comes [Symbol] precedence from {PRECEDENCES}
+      # @param whichever_comes [Symbol] any key from {PRECEDENCES}
       def initialize(time_or_event, or: nil, plus: 0, minus: 0, whichever_comes: :first)
         alternative_event = binding.local_variable_get(:or)   # necessary since "or" is a keyword
         @time = @event = @precedence = nil
@@ -129,6 +129,33 @@ module AIXM
         hour ||= time.hour
         hour = (hour + 1) % 24 if wrap && min < time.min
         self.class.new("%02d:%02d" % [hour, min])
+      end
+
+      # Resolve event to simple time
+      #
+      # * If +self+ doesn't have any event, +self+ is returned.
+      # * Otherwise a new time is created with the event resolved for the
+      #   given date and geographical location.
+      #
+      # @example
+      #   time = AIXM.time('21:00', or: :sunset, minus: 30, whichever_cones: first)
+      #   time.resolve_event(on: AIXM.date('2000-08-01'), at: AIXM.xy(lat: 48.8584, long: 2.2945))
+      #   # => 20:50
+      #
+      # @param on [AIXM::Date] defaults to today
+      # @param xy [AIXM::XY]
+      # @return [AIXM::Schedule::Time, self]
+      def resolve_event(on:, xy:)
+        if event
+          sun_time = self.class.new(Sun.send(event, on.to_date, xy.lat, xy.long).utc + (delta * 60))
+          if time
+            self.class.new([sun_time.time, self.time].send(PRECEDENCES.fetch(precedence)))
+          else
+            sun_time
+          end
+        else
+          self
+        end
       end
 
       # Stdlib Time equivalent using the value of {DATELESS_DATE} to represent a
@@ -203,7 +230,7 @@ module AIXM
       end
 
       def precedence=(value)
-        fail ArgumentError if value && !PRECEDENCES.include?(value)
+        fail ArgumentError if value && !PRECEDENCES.has_key?(value)
         @precedence = value
       end
 

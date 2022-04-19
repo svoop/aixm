@@ -179,6 +179,27 @@ describe AIXM::Schedule::Time do
     end
   end
 
+  # See https://aiphub.tower.zone/LF/AIP/GEN-2.7 for official sunrise and sunset
+  # tables in UTC. The coordinates are LFPG on latitude 49°N. You have to
+  # subtract 10 minutes to compensate for longitude 2.5°E.
+  describe :resolve_event do
+    it "returns self if no event is present" do
+      subject = AIXM.time('19:00')
+      _(subject.resolve_event(on: AIXM.date('2025-07-01'), xy: AIXM.xy(lat: 49.01614, long: 2.54423))).must_be_same_as subject
+    end
+
+    it "calculates event if no time is present" do
+      subject = AIXM.time(:sunset, minus: 30)
+      _(subject.resolve_event(on: AIXM.date('2025-07-01'), xy: AIXM.xy(lat: 49.01614, long: 2.54423))).must_equal AIXM.time('19:27')
+    end
+
+    it "calculates event and compares it with time" do
+      subject = AIXM.time('19:00', or: :sunset, minus: 30, whichever_comes: :first)
+      _(subject.resolve_event(on: AIXM.date('2025-07-01'), xy: AIXM.xy(lat: 49.01614, long: 2.54423))).must_equal AIXM.time('19:00')
+      _(subject.resolve_event(on: AIXM.date('2025-01-01'), xy: AIXM.xy(lat: 49.01614, long: 2.54423))).must_equal AIXM.time('15:32')
+    end
+  end
+
   describe :hour do
     it "returns the hour" do
       _(AIXM.time('11:15').hour).must_equal 11

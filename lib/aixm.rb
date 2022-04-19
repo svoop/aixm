@@ -11,6 +11,7 @@ require 'optparse'
 require 'builder'
 require 'nokogiri'
 require 'dry/inflector'
+require 'sun'
 
 require_relative 'aixm/object'
 
