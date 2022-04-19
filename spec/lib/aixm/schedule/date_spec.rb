@@ -16,6 +16,10 @@ describe AIXM::Schedule::Date do
         _(AIXM.date(Date.parse('2003-03-30')).to_date).must_equal Date.parse('2003-03-30')
       end
 
+      it "accepts a stdlib Time" do
+        _(AIXM.date(Time.new(2004, 4, 14)).to_date).must_equal Date.parse('2004-04-14')
+      end
+
       it "fails on invalid string" do
         _{ AIXM.date('2002-14-20') }.must_raise ArgumentError
       end

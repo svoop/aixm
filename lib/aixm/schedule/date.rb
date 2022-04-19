@@ -28,11 +28,10 @@ module AIXM
 
       # Parse the given representation of (yearless) date.
       #
-      # @param date [Date, String] either stdlib Date, "YYYY-MM-DD", "XXXX-MM-DD"
-      #   or "MM-DD"
-      #   (yearless date)
+      # @param date [Date, Time, String] either stdlib Date/Time, "YYYY-MM-DD",
+      #   "XXXX-MM-DD" or "MM-DD" (yearless date)
       def initialize(date)
-        @date = case date.to_s
+        @date = case date.to_s[0, 10]
         when /\A\d{4}-\d{2}-\d{2}\z/
           ::Date.strptime(date.to_s)
         when /\A(?:XXXX-)?(\d{2}-\d{2})\z/
