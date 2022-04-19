@@ -85,6 +85,12 @@ describe AIXM::Schedule::Date do
       end
     end
 
+    describe :to_day do
+      it "returns the day object for the corresponding weekday" do
+        _(AIXM.date('2000-12-28').to_day).must_equal AIXM.day(:thursday)
+      end
+    end
+
     describe :comparable_to? do
       it "returns true when compared to date with year" do
         _(subject.comparable_to?(AIXM::Factory.date)).must_equal true
@@ -144,7 +150,7 @@ describe AIXM::Schedule::Date do
       end
     end
 
-    describe :in? do
+    describe :covered_by? do
       context "range of dates with year" do
         subject do
           (AIXM.date('2002-02-02')..AIXM.date('2004-04-04'))
@@ -152,13 +158,13 @@ describe AIXM::Schedule::Date do
 
         it "returns true if wthin range" do
           %w(2002-02-02 2003-03-03 2004-04-04).each do |string|
-            _(AIXM.date(string).in?(subject)).must_equal true
+            _(AIXM.date(string).covered_by?(subject)).must_equal true
           end
         end
 
         it "returns false if out of range" do
           %w(2002-02-01 2004-04-05).each do |string|
-            _(AIXM.date(string).in?(subject)).must_equal false
+            _(AIXM.date(string).covered_by?(subject)).must_equal false
           end
         end
       end
@@ -170,13 +176,13 @@ describe AIXM::Schedule::Date do
 
         it "returns true if wthin range" do
           %w(2002-02-02 2003-03-03 2004-04-04).each do |string|
-            _(AIXM.date(string).in?(subject)).must_equal true
+            _(AIXM.date(string).covered_by?(subject)).must_equal true
           end
         end
 
         it "returns false if out of range" do
           %w(2002-02-01 2004-04-05).each do |string|
-            _(AIXM.date(string).in?(subject)).must_equal false
+            _(AIXM.date(string).covered_by?(subject)).must_equal false
           end
         end
       end
@@ -188,13 +194,13 @@ describe AIXM::Schedule::Date do
 
         it "returns true if wthin range" do
           %w(2004-04-04 2008-08-08 2002-02-02).each do |string|
-            _(AIXM.date(string).in?(subject)).must_equal true
+            _(AIXM.date(string).covered_by?(subject)).must_equal true
           end
         end
 
         it "returns false if out of range" do
           %w(2004-04-03 2002-02-03).each do |string|
-            _(AIXM.date(string).in?(subject)).must_equal false
+            _(AIXM.date(string).covered_by?(subject)).must_equal false
           end
         end
       end
@@ -278,6 +284,12 @@ describe AIXM::Schedule::Date do
       end
     end
 
+    describe :to_day do
+      it "fails as yearless dates cannot be computed" do
+        _{ AIXM.date('12-28').to_day }.must_raise RuntimeError
+      end
+    end
+
     describe :comparable_to? do
       it "returns true when compared to yearless date" do
         _(subject.comparable_to?(AIXM::Factory.yearless_date)).must_equal true
@@ -337,7 +349,49 @@ describe AIXM::Schedule::Date do
       end
     end
 
-    describe :in? do
+    describe :covered_by? do
+      context "single date with year" do
+        subject do
+          AIXM.date('2002-03-04')
+        end
+
+        it "returns true if equal" do
+          _(AIXM.date('2002-03-04').covered_by?(subject)).must_equal true
+        end
+
+        it "returns false unless" do
+          _(AIXM.date('2022-02-03').covered_by?(subject)).must_equal false
+        end
+      end
+
+      context "single yearless date" do
+        subject do
+          AIXM.date('03-04')
+        end
+
+        it "returns true if equal" do
+          _(AIXM.date('03-04').covered_by?(subject)).must_equal true
+        end
+
+        it "returns false unless equal" do
+          _(AIXM.date('02-03').covered_by?(subject)).must_equal false
+        end
+      end
+
+      context "single day" do
+        subject do
+          AIXM.day(:monday)
+        end
+
+        it "returns true if day is equal" do
+          _(AIXM.date('2000-03-06').covered_by?(subject)).must_equal true
+        end
+
+        it "returns false unless day is equal" do
+          _(AIXM.date('2000-03-07').covered_by?(subject)).must_equal false
+        end
+      end
+
       context "range of dates with year" do
         subject do
           (AIXM.date('2002-02-02')..AIXM.date('2004-04-04'))
@@ -345,13 +399,13 @@ describe AIXM::Schedule::Date do
 
         it "returns true if wthin range" do
           %w(02-02 03-03 04-04).each do |string|
-            _(AIXM.date(string).in?(subject)).must_equal true
+            _(AIXM.date(string).covered_by?(subject)).must_equal true
           end
         end
 
         it "returns false if out of range" do
           %w(02-01 04-05).each do |string|
-            _(AIXM.date(string).in?(subject)).must_equal false
+            _(AIXM.date(string).covered_by?(subject)).must_equal false
           end
         end
       end
@@ -363,13 +417,13 @@ describe AIXM::Schedule::Date do
 
         it "returns true if wthin range" do
           %w(02-02 03-03 04-04).each do |string|
-            _(AIXM.date(string).in?(subject)).must_equal true
+            _(AIXM.date(string).covered_by?(subject)).must_equal true
           end
         end
 
         it "returns false if out of range" do
           %w(02-01 04-05).each do |string|
-            _(AIXM.date(string).in?(subject)).must_equal false
+            _(AIXM.date(string).covered_by?(subject)).must_equal false
           end
         end
       end
@@ -381,13 +435,61 @@ describe AIXM::Schedule::Date do
 
         it "returns true if wthin range" do
           %w(04-04 08-08 02-02).each do |string|
-            _(AIXM.date(string).in?(subject)).must_equal true
+            _(AIXM.date(string).covered_by?(subject)).must_equal true
           end
         end
 
         it "returns false if out of range" do
           %w(04-03 02-03).each do |string|
-            _(AIXM.date(string).in?(subject)).must_equal false
+            _(AIXM.date(string).covered_by?(subject)).must_equal false
+          end
+        end
+      end
+
+      context "range of days" do
+        subject do
+          (AIXM.day(:monday)..AIXM.day(:wednesday))
+        end
+
+        it "returns true if wthin day range" do
+          %w(2000-03-06 2000-03-07 2000-03-08).each do |string|
+            _(AIXM.date(string).covered_by?(subject)).must_equal true
+          end
+        end
+
+        it "returns false if out of day range" do
+          %w(2000-03-05 2000-03-09).each do |string|
+            _(AIXM.date(string).covered_by?(subject)).must_equal false
+          end
+        end
+      end
+
+      context "range of days across end of week boundary" do
+        subject do
+          (AIXM.day(:saturday)..AIXM.day(:monday))
+        end
+
+        it "returns true if wthin day range" do
+          %w(2000-03-04 2000-03-05 2000-03-06).each do |string|
+            _(AIXM.date(string).covered_by?(subject)).must_equal true
+          end
+        end
+
+        it "returns false if out of day range" do
+          %w(2000-03-03 2000-03-07).each do |string|
+            _(AIXM.date(string).covered_by?(subject)).must_equal false
+          end
+        end
+      end
+
+      context "any day" do
+        subject do
+          AIXM::ANY_DAY
+        end
+
+        it "returns always true" do
+          10.times do
+            _(AIXM.date(Time.at(rand(4_000_000_000)).to_date).covered_by?(subject)).must_equal true
           end
         end
       end

@@ -1,12 +1,14 @@
+using AIXM::Refinements
+
 module AIXM
   module Schedule
 
     # Days suitable for schedules
     #
     # @example
-    #   from = AIXM.day(:monday)           # => :monday
-    #   to = AIXM.day(4)                   # => :thursday
-    #   AIXM.day(:tuesday).in?(from..to)   # => true
+    #   from = AIXM.day(:monday)                   # => :monday
+    #   to = AIXM.day(4)                           # => :thursday
+    #   AIXM.day(:tuesday).covered_by?(from..to)   # => true
     class Day
       include AIXM::Concerns::HashEquality
       include Comparable
@@ -58,6 +60,13 @@ module AIXM
         [self.class, day].hash
       end
 
+      # Whether the day is set to :any
+      #
+      # @return [Boolean]
+      def any?
+        day == :any
+      end
+
       # Whether this schedule day sortable.
       #
       # @return [Boolean]
@@ -68,16 +77,20 @@ module AIXM
       # Whether this schedule day falls within the given range of schedule
       # days.
       #
-      # @note Only weekdays are sortable, therefore, this method returns +nil+
-      #   if either self or the range contain a non-weekday.
+      # @note Only weekdays and +:any+ can be computed!
       #
-      # @param range [Range<AIXM::Schedule::Day>] range of schedule days
-      # @raise RuntimeError if either self is or the range includes an
-      #   unsortable non-workday
+      # @param other [AIXM::Schedule::Day, Range<AIXM::Schedule::Day>] single
+      #   schedule day or range of schedule days
+      # @raise RuntimeError if anything but workdays or +:any+ are involved
       # @return [Boolean]
-      def in?(range)
-        fail "includes unsortables" unless sortable? && range.first.sortable? && range.last.sortable?
-        if range.min
+      def covered_by?(other)
+        range = Range.from other
+        case
+        when any? || range.first.any? || range.last.any?
+          true
+        when !sortable? || !range.first.sortable? || !range.last.sortable?
+          fail "includes unsortables"
+        when range.min
           range.cover? self
         else
           range.first <= self || self <= range.last

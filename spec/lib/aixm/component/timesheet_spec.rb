@@ -118,7 +118,7 @@ describe AIXM::Component::Timesheet do
 
     it "builds correct minimal AIXM" do
       subject.adjust_to_dst = false
-      subject.day = AIXM.day(:any)
+      subject.day = AIXM::ANY_DAY
       subject.times = nil
       _(subject.to_xml).must_equal <<~END
         <Timsh>

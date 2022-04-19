@@ -101,7 +101,7 @@ describe AIXM::Schedule::Time do
       end
 
       it "accepts any valid precedence" do
-        AIXM::Schedule::Time::PRECEDENCES.each do |precedence|
+        AIXM::Schedule::Time::PRECEDENCES.each_key do |precedence|
           _(AIXM.time('08:00', or: :sunrise, whichever_comes: precedence).precedence).must_equal precedence
         end
       end
@@ -217,7 +217,21 @@ describe AIXM::Schedule::Time do
     end
   end
 
-  describe :in? do
+  describe :covered_by? do
+    context "single time" do
+      subject do
+        AIXM.time('10:00')
+      end
+
+      it "returns true if equal" do
+        _(AIXM.time('10:00').covered_by?(subject)).must_equal true
+      end
+
+      it "returns false unless equal" do
+        _(AIXM.time('20:00').covered_by?(subject)).must_equal false
+      end
+    end
+
     context "range of times" do
       subject do
         (AIXM.time('10:00')..AIXM.time('15:00'))
@@ -225,13 +239,13 @@ describe AIXM::Schedule::Time do
 
       it "returns true if wthin range" do
         %w(10:00 12:12 15:00).each do |string|
-          _(AIXM.time(string).in?(subject)).must_equal true
+          _(AIXM.time(string).covered_by?(subject)).must_equal true
         end
       end
 
       it "returns false if out of range" do
         %w(15:01 20:20 24:00 00:00 09:59).each do |string|
-          _(AIXM.time(string).in?(subject)).must_equal false
+          _(AIXM.time(string).covered_by?(subject)).must_equal false
         end
       end
     end
@@ -243,13 +257,13 @@ describe AIXM::Schedule::Time do
 
       it "returns true if wthin range" do
         %w(15:00 20:20 24:00 00:00 10:00).each do |string|
-          _(AIXM.time(string).in?(subject)).must_equal true
+          _(AIXM.time(string).covered_by?(subject)).must_equal true
         end
       end
 
       it "returns false if out of range" do
         %w(10:01 12:12 14:59).each do |string|
-          _(AIXM.time(string).in?(subject)).must_equal false
+          _(AIXM.time(string).covered_by?(subject)).must_equal false
         end
       end
     end
@@ -262,11 +276,11 @@ describe AIXM::Schedule::Time do
       end
 
       it "fails if subject is unsortable" do
-        _{ AIXM::Factory.time_with_event.in?(AIXM.time('10:00')..AIXM.time('15:00')) }.must_raise RuntimeError
+        _{ AIXM::Factory.time_with_event.covered_by?(AIXM.time('10:00')..AIXM.time('15:00')) }.must_raise RuntimeError
       end
 
       it "fails if range contains unsortable" do
-        _{ AIXM::Factory.time.in?(AIXM.time('10:00', or: :sunrise)..AIXM.time('15:00')) }.must_raise RuntimeError
+        _{ AIXM::Factory.time.covered_by?(AIXM.time('10:00', or: :sunrise)..AIXM.time('15:00')) }.must_raise RuntimeError
       end
     end
   end

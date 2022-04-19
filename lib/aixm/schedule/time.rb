@@ -10,15 +10,15 @@ module AIXM
     #
     # * converts to UTC
     # * date, seconds and milliseconds are ignored
-    # * {in?} to check whether schedule time falls within range of times
+    # * {covered_by?} to check whether schedule time falls within range of times
     #
     # @note The {DATELESS_DATE} is used to mark the date of the internal +Time"
     #   object irrelevant. However, Ruby does not persist end of days as 24:00,
     #   therefore {DATELESS_DATE} + 1 marks this case.
     #
     # @example
-    #   time = AIXM.time('21:30')                          # => 21:30
-    #   time.in?(AIXM.time('20:00')..AIXM.time('02:00'))   # => true
+    #   time = AIXM.time('21:30')                                  # => 21:30
+    #   time.covered_by?(AIXM.time('20:00')..AIXM.time('02:00'))   # => true
     class Time
       include AIXM::Concerns::HashEquality
       extend Forwardable
@@ -167,13 +167,17 @@ module AIXM
       # Whether this schedule time falls within the given range of schedule
       # times.
       #
-      # @param range [Range<AIXM::Schedule::Time>] range of schedule times
+      # @param other [AIXM::Schedule::Time, Range<AIXM::Schedule::Time>] single
+      #   schedule time or range of schedule times
       # @raise RuntimeError if either self is or the range contains an
       #   unsortable time with event
       # @return [Boolean]
-      def in?(range)
-        fail "includes unsortables" unless sortable? && range.first.sortable? && range.last.sortable?
-        if range.min
+      def covered_by?(other)
+        range = Range.from(other)
+        case
+        when !sortable? || !range.first.sortable? || !range.last.sortable?
+          fail "includes unsortables"
+        when range.min
           range.first.to_s <= self.to_s && self.to_s <= range.last.to_s
         else
           range.first.to_s <= self.to_s || self.to_s <= range.last.to_s

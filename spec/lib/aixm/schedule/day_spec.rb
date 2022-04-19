@@ -47,6 +47,18 @@ describe AIXM::Schedule::Day do
     end
   end
 
+  describe :any? do
+    it "returns true if day is set to :any" do
+      _(AIXM::ANY_DAY).must_be :any?
+    end
+
+    it "returns false if day is set to anything but :any" do
+      (AIXM::Schedule::Day::DAYS - [:any]).each do |day|
+        _(AIXM.day(day)).wont_be :any?
+      end
+    end
+  end
+
   describe :sortable? do
     it "returns true for sortable days" do
       AIXM::Schedule::Day::SORTABLE_DAYS.each do |day|
@@ -61,7 +73,35 @@ describe AIXM::Schedule::Day do
     end
   end
 
-  describe :in? do
+  describe :covered_by? do
+    context "any day" do
+      subject do
+        AIXM::ANY_DAY
+      end
+
+      it "returns true for any weekday or :any" do
+        %i(monday tuesday wednesday thursday friday saturday sunday any).each do |day|
+          _(AIXM.day(day).covered_by?(subject)).must_equal true
+        end
+      end
+    end
+
+    context "single day" do
+      subject do
+        AIXM.day(:monday)
+      end
+
+      it "returns true if equal" do
+        _(AIXM.day(:monday).covered_by?(subject)).must_equal true
+      end
+
+      it "returns false unless equal" do
+        %i(tuesday wednesday thursday friday saturday sunday).each do |day|
+          _(AIXM.day(day).covered_by?(subject)).wont_equal true
+        end
+      end
+    end
+
     context "range of days" do
       subject do
         (AIXM.day(:monday)..AIXM.day(:thursday))
@@ -69,13 +109,13 @@ describe AIXM::Schedule::Day do
 
       it "returns true if wthin range" do
         %i(monday tuesday wednesday thursday).each do |day|
-          _(AIXM.day(day).in?(subject)).must_equal true
+          _(AIXM.day(day).covered_by?(subject)).must_equal true
         end
       end
 
       it "returns false if out of range" do
         %i(friday saturday sunday).each do |day|
-          _(AIXM.day(day).in?(subject)).must_equal false
+          _(AIXM.day(day).covered_by?(subject)).must_equal false
         end
       end
     end
@@ -87,13 +127,13 @@ describe AIXM::Schedule::Day do
 
       it "returns true if wthin range" do
         %i(thursday friday saturday sunday monday).each do |day|
-          _(AIXM.day(day).in?(subject)).must_equal true
+          _(AIXM.day(day).covered_by?(subject)).must_equal true
         end
       end
 
       it "returns false if out of range" do
         %i(tuesday wednesday).each do |day|
-          _(AIXM.day(day).in?(subject)).must_equal false
+          _(AIXM.day(day).covered_by?(subject)).must_equal false
         end
       end
     end
@@ -106,11 +146,11 @@ describe AIXM::Schedule::Day do
       end
 
       it "fails if subject is unsortable" do
-        _{ AIXM.day(:holiday).in?((AIXM.day(:monday)..AIXM.day(:friday))) }.must_raise RuntimeError
+        _{ AIXM.day(:holiday).covered_by?((AIXM.day(:monday)..AIXM.day(:friday))) }.must_raise RuntimeError
       end
 
       it "fails if range contains unsortable" do
-        _{ AIXM.day(:monday).in?((AIXM.day(:holiday)..AIXM.day(:friday))) }.must_raise RuntimeError
+        _{ AIXM.day(:monday).covered_by?((AIXM.day(:holiday)..AIXM.day(:friday))) }.must_raise RuntimeError
       end
     end
   end

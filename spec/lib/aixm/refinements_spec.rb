@@ -141,6 +141,18 @@ describe AIXM::Refinements do
     end
   end
 
+  context Range do
+    describe :from do
+      it "must return argument if argument is a Range" do
+        _(Range.from(1..3)).must_equal (1..3)
+      end
+
+      it "must return (argument..argument) if argument is not a Range" do
+        _(Range.from(5)).must_equal (5..5)
+      end
+    end
+  end
+
   context Regexp do
     describe :decapture do
       it "should replace capture groups with non-capture groups" do

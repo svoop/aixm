@@ -1,3 +1,5 @@
+using AIXM::Refinements
+
 module AIXM
   module Schedule
 
@@ -7,12 +9,13 @@ module AIXM
     # extensions:
     #
     # * yearless dates
-    # * {in?} to check whether (yearless) date falls within (yearless) date range
+    # * {covered_by?} to check whether (yearless) date falls within (yearless)
+    #   date range
     #
     # @example
-    #   date = AIXM.date('2022-04-20')        # => 2022-04-20
-    #   from = AIXM.date('03-20')             # => XXXX-03-20
-    #   date.in?(from..AIXM.date('05-20'))    # => true
+    #   date = AIXM.date('2022-04-20')               # => 2022-04-20
+    #   from = AIXM.date('03-20')                    # => XXXX-03-20
+    #   date.covered_by?(from..AIXM.date('05-20'))   # => true
     class Date
       include AIXM::Concerns::HashEquality
       include Comparable
@@ -81,19 +84,28 @@ module AIXM
         self.class.new(date.strftime(yearless? ? '%m-%d' : '%F'))
       end
 
+      # Create new date one day after this one.
+      #
+      # @return [AIXM::Schedule::Date]
+      def succ
+        self.class.new(date.next_day).at(year: (YEARLESS_YEAR if yearless?))
+      end
+
+      # Convert date to day
+      #
+      # @raise [RuntimeError] if date is yearless
+      # @return [AIXM::Schedule::Day]
+      def to_day
+        fail "cannot convert yearless date" if yearless?
+        AIXM.day(date.wday)
+      end
+
       # Stdlib Date equivalent using the value of {YEARLESS_YEAR} to represent a
       # yearless date.
       #
       # @return [Date]
       def to_date
         @date
-      end
-
-      # Create new date one day after this one.
-      #
-      # @return [AIXM::Schedule::Date]
-      def succ
-        self.class.new(date.next_day).at(year: (YEARLESS_YEAR if yearless?))
       end
 
       # Whether the other schedule date can be compared to this one.
@@ -141,22 +153,27 @@ module AIXM
 
       # Whether this schedule date falls within the given range of schedule dates
       #
-      # @note It is possible to compare dates and ranges which may or may not
-      # have years.
+      # @note It is possible to compare dates as well as days.
       #
-      # @param range [Range<AIXM::Schedule::Date>] range of schedule dates
+      # @param other [AIXM::Schedule::Date, Range<AIXM::Schedule::Date>,
+      #   AIXM::Schedule::Day, Range<AIXM::Schedule::Day>] single schedule
+      #   date/day or range of schedule dates/days
       # @return [Boolean]
-      def in?(range)
-        if range.first.yearless?
-          yearless? ? in_yearless?(range) : to_yearless.in?(range)
+      def covered_by?(other)
+        range = Range.from(other)
+        case
+        when range.first.instance_of?(AIXM::Schedule::Day)
+          range.first.any? || to_day.covered_by?(range)
+        when range.first.yearless?
+          yearless? ? covered_by_yearless_date?(range) : to_yearless.covered_by?(range)
         else
-          yearless? ? in_yearless?(range.first.to_yearless..range.last.to_yearless) : range.cover?(self)
+          yearless? ? covered_by_yearless_date?(range.first.to_yearless..range.last.to_yearless) : range.cover?(self)
         end
       end
 
       private
 
-      def in_yearless?(range)
+      def covered_by_yearless_date?(range)
         range.min ? range.cover?(self) : range.first <= self || self <= range.last
       end
     end

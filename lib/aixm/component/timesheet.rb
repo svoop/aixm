@@ -84,7 +84,7 @@ module AIXM
 
       # See the {cheat sheet}[AIXM::Component::Timesheet] for examples on how to
       # create instances of this class.
-      def initialize(adjust_to_dst:, dates:, days: nil, day: AIXM.day(:any))
+      def initialize(adjust_to_dst:, dates:, days: nil, day: AIXM::ANY_DAY)
         self.adjust_to_dst, self.dates = adjust_to_dst, dates
         if days
           self.days = days

@@ -133,6 +133,28 @@ module AIXM
       end
     end
 
+    # @!method Range.from
+    #   Returns a Range covering the given object.
+    #
+    #   To ease coverage tests in mixed arrays of single objects and object
+    #   ranges, this method assures you're always dealing with objects. It
+    #   returns self if it is already a Range, otherwise builds one with the
+    #   given single object as both beginning and end.
+    #
+    #   @example
+    #     Range.from(5)      # => (5..5)
+    #     Range.from(1..3)   # => (1..3)
+    #
+    #   @note This is a refinement for +Range+
+    #   @param object [Object]
+    #   @return [Range]
+    #refine Range do
+    refine Range.singleton_class do
+      def from(object)
+        object.is_a?(Range) ? object : (object..object)
+      end
+    end
+
     # @!method decapture
     #   Replace all groups with non-caputuring groups
     #
@@ -140,6 +162,7 @@ module AIXM
     #     /^(foo)(?<name>bar)/.decapture   # => /^(?:foo)(?:bar)/
     #
     #   @note This is a refinement for +Regexp+
+    #   @return [Regexp]
     refine Regexp do
       def decapture
         Regexp.new(to_s.gsub(/\(\?<\w+>|(?<![^\\]\\)\((?!\?)/, '(?:'))
@@ -154,6 +177,7 @@ module AIXM
     #     # => AIXM::Feature::NavigationalAid
     #
     #   @note This is a refinement for +String+
+    #   @return [Class]
     refine String do
       def to_class
         Object.const_get(self)
@@ -170,6 +194,7 @@ module AIXM
     #
     #   @see https://www.rubydoc.info/gems/dry-inflector
     #   @note This is a refinement for +String+
+    #   @return [String]
     refine String do
       def inflect(*inflections)
         inflections.inject(self) do |memo, inflection|

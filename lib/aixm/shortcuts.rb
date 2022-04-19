@@ -18,4 +18,7 @@ module AIXM
   # Timetable used to signal "always active"
   H24 = timetable(code: :H24).freeze
 
+  # Day to signal "whatever date or day"
+  ANY_DAY = AIXM.day(:any).freeze
+
 end
