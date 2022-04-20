@@ -139,23 +139,30 @@ module AIXM
       #
       # @example
       #   time = AIXM.time('21:00', or: :sunset, minus: 30, whichever_cones: first)
-      #   time.resolve_event(on: AIXM.date('2000-08-01'), at: AIXM.xy(lat: 48.8584, long: 2.2945))
+      #   time.resolve(on: AIXM.date('2000-08-01'), at: AIXM.xy(lat: 48.8584, long: 2.2945))
       #   # => 20:50
       #
       # @param on [AIXM::Date] defaults to today
       # @param xy [AIXM::XY]
       # @return [AIXM::Schedule::Time, self]
-      def resolve_event(on:, xy:)
-        if event
+      def resolve(on:, xy:)
+        if resolved?
+          self
+        else
           sun_time = self.class.new(Sun.send(event, on.to_date, xy.lat, xy.long).utc + (delta * 60))
           if time
             self.class.new([sun_time.time, self.time].send(PRECEDENCES.fetch(precedence)))
           else
             sun_time
           end
-        else
-          self
         end
+      end
+
+      # Whether this time is resolved and doesn't contain an event (anymore).
+      #
+      # @return [Boolean]
+      def resolved?
+        !event
       end
 
       # Stdlib Time equivalent using the value of {DATELESS_DATE} to represent a
