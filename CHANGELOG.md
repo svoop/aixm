@@ -1,5 +1,9 @@
 ## Main
 
+Nothing so far
+
+## 1.2.0
+
 #### Additions
 * `Timesheet` to add custom schedules to `Timetable`
 * `AIXM::Schedule::(Date|Day|Time)` for custom timetables
