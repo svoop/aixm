@@ -3,7 +3,7 @@
 #### Additions
 * `Timesheet` to add custom schedules to `Timetable`
 * `AIXM::Schedule::(Date|Day|Time)` for custom timetables
-* Implement interface to allow most class instances as Hash keys
+* Interface to allow most class instances as Hash keys
 
 #### Fixes
 * Fix typo in `GUESSED_UNIT_TYPES_MAP`
