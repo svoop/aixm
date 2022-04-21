@@ -79,8 +79,8 @@ module AIXM
         @cache = {}
       end
 
-      def method(method, &)
-        send(:"call_with#{:out if cached?(method)}_cache", method, &)
+      def method(method, &block)   # TODO: [ruby-3.1] use anonymous block "&" on this and next line
+        send(:"call_with#{:out if cached?(method)}_cache", method, &block)
       end
 
       private
@@ -99,7 +99,7 @@ module AIXM
       ensure
         cache.delete(method)
       end
-
     end
+
   end
 end

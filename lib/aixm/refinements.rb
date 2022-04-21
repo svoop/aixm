@@ -128,8 +128,8 @@ module AIXM
     #   @note This is a refinement for +Object+
     #   @return [Object]
     refine Object do
-      def then_if(condition, &)
-        condition ? self.then(&) : self
+      def then_if(condition, &block)   # TODO: [ruby-3.1] use anonymous block "&" on this and next line
+        condition ? self.then(&block) : self
       end
     end
 
