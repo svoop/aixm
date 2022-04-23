@@ -23,7 +23,7 @@ module AIXM
       include AIXM::Concerns::HashEquality
       extend Forwardable
 
-      EVENTS = %i(sunrise sunset).freeze
+      EVENTS = { sunrise: :up, sunset: :down }.freeze
       PRECEDENCES = { first: :min, last: :max }.freeze
       DATELESS_DATE = ::Date.parse('0000-01-01').freeze
 
@@ -32,7 +32,7 @@ module AIXM
 
       # Event or alternative to time
       #
-      # @return [Symbol, nil] any from {EVENTS}
+      # @return [Symbol, nil] any key from {EVENTS}
       attr_reader :event
 
       # Minutes added or subtracted from event
@@ -47,6 +47,10 @@ module AIXM
 
       # Parse the given representation of time.
       #
+      # @note Unlike its twin from the stdlib, this class differs between
+      #   +AIXM.time('00:00')+ (beginning of day) and +AIXM.time('24:00')+
+      #   (end of day).
+      #
       # @example
       #   AIXM.time('08:00')
       #   AIXM.time(:sunrise)
@@ -58,8 +62,8 @@ module AIXM
       #
       # @param time_or_event [Time, DateTime, String, Symbol] either time as
       #   stdlib Time or DateTime, "HH:MM" (implicitly UTC), "HH:MM [+-]00:00",
-      #   "HH:MM UTC" or event from {EVENTS} as Symbol
-      # @param or [Symbol] alternative event from {EVENTS}
+      #   "HH:MM UTC" or any key from {EVENTS}
+      # @param or [Symbol] alternative event, any key from {EVENTS}
       # @param plus [Integer] minutes added to event
       # @param minus [Integer] minutes subtracted from event
       # @param whichever_comes [Symbol] any key from {PRECEDENCES}
@@ -127,7 +131,8 @@ module AIXM
         return self unless hour || min
         min ||= time.min
         hour ||= time.hour
-        hour = (hour + 1) % 24 if wrap && min < time.min
+        hour = hour + 1 if wrap && min < time.min
+        hour = hour % 24 unless min.zero?
         self.class.new("%02d:%02d" % [hour, min])
       end
 
@@ -144,17 +149,17 @@ module AIXM
       #
       # @param on [AIXM::Date] defaults to today
       # @param xy [AIXM::XY]
+      # @param round [Integer, nil] round up (sunrise) or down (sunset) to the
+      #   given minutes or +nil+ in order not to round round
       # @return [AIXM::Schedule::Time, self]
-      def resolve(on:, xy:)
+      def resolve(on:, xy:, round: nil)
         if resolved?
           self
         else
           sun_time = self.class.new(Sun.send(event, on.to_date, xy.lat, xy.long).utc + (delta * 60))
-          if time
-            self.class.new([sun_time.time, self.time].send(PRECEDENCES.fetch(precedence)))
-          else
-            sun_time
-          end
+          sun_time = self.class.new([sun_time.time, self.time].send(PRECEDENCES.fetch(precedence))) if time
+          sun_time = sun_time.round(EVENTS.fetch(event) => round) if round
+          sun_time
         end
       end
 
@@ -163,6 +168,22 @@ module AIXM
       # @return [Boolean]
       def resolved?
         !event
+      end
+
+      # Round this time up or down.
+      #
+      # @param up [Integer, nil] round up to the next given minutes
+      # @param down [Integer, nil] round down to the next given minutes
+      # @return [AIXM::Schedule::Time, self]
+      def round(up: nil, down: nil)
+        step = up || down || fail(ArgumentError, "either up or down is mandatory")
+        rounded_min = min / step * step
+        if rounded_min == min
+          self
+        else
+          rounded_min = (rounded_min + step) % 60 if up
+          at(min: rounded_min, wrap: !!up)
+        end
       end
 
       # Stdlib Time equivalent using the value of {DATELESS_DATE} to represent a
@@ -232,7 +253,7 @@ module AIXM
       end
 
       def event=(value)
-        fail ArgumentError if value && !EVENTS.include?(value)
+        fail ArgumentError if value && !EVENTS.has_key?(value)
         @event = value
       end
 

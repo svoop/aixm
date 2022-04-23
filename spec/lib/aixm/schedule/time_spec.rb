@@ -65,7 +65,7 @@ describe AIXM::Schedule::Time do
       end
 
       it "accepts any valid event" do
-        AIXM::Schedule::Time::EVENTS.each do |event|
+        AIXM::Schedule::Time::EVENTS.each_key do |event|
           _(AIXM.time(event).event).must_equal event
         end
       end
@@ -95,7 +95,7 @@ describe AIXM::Schedule::Time do
       end
 
       it "accepts any valid alternative event" do
-        AIXM::Schedule::Time::EVENTS.each do |event|
+        AIXM::Schedule::Time::EVENTS.each_key do |event|
           _(AIXM.time('08:30', or: event).event).must_equal event
         end
       end
@@ -159,7 +159,7 @@ describe AIXM::Schedule::Time do
 
   describe :at do
     subject do
-      AIXM.time('23:50')
+      AIXM.time('22:50')
     end
 
     it "returns self if nothing changed" do
@@ -171,11 +171,16 @@ describe AIXM::Schedule::Time do
     end
 
     it "must replace the min part" do
-      _(subject.at(min: 0).to_s).must_equal '23:00 UTC'
+      _(subject.at(min: 0).to_s).must_equal '22:00 UTC'
     end
 
     it "must replace the min part and wrap" do
-      _(subject.at(min: 0, wrap: true).to_s).must_equal '00:00 UTC'
+      _(subject.at(min: 0, wrap: true).to_s).must_equal '23:00 UTC'
+    end
+
+    it "must replace the min part and wrap to 24:00" do
+      subject = AIXM.time('23:50')
+      _(subject.at(min: 0, wrap: true).to_s).must_equal '24:00 UTC'
     end
   end
 
@@ -198,6 +203,11 @@ describe AIXM::Schedule::Time do
       _(subject.resolve(on: AIXM.date('2025-07-01'), xy: AIXM.xy(lat: 49.01614, long: 2.54423))).must_equal AIXM.time('19:00')
       _(subject.resolve(on: AIXM.date('2025-01-01'), xy: AIXM.xy(lat: 49.01614, long: 2.54423))).must_equal AIXM.time('15:32')
     end
+
+    it "rounds the time" do
+      subject = AIXM.time(:sunset, minus: 28)
+      _(subject.resolve(on: AIXM.date('2025-07-01'), xy: AIXM.xy(lat: 49.01614, long: 2.54423), round: 5)).must_equal AIXM.time('19:25')
+    end
   end
 
   describe :resolved? do
@@ -208,6 +218,33 @@ describe AIXM::Schedule::Time do
     it "returns false if events are present" do
       _(AIXM.time(:sunset)).wont_be :resolved?
       _(AIXM.time('19:00', or: :sunset)).wont_be :resolved?
+    end
+  end
+
+  describe :round do
+    it "returns new time rounded up" do
+      subject = AIXM.time('13:13')
+      _(subject.round(up: 5).to_s).must_equal '13:15 UTC'
+    end
+
+    it "returns new time rounded up to 24:00" do
+      subject = AIXM.time('23:50')
+      _(subject.round(up: 15).to_s).must_equal '24:00 UTC'
+    end
+
+    it "returns new time rounded down" do
+      subject = AIXM.time('13:13')
+      _(subject.round(down: 5).to_s).must_equal '13:10 UTC'
+    end
+
+    it "returns new time rounded down to 00:00" do
+      subject = AIXM.time('00:09')
+      _(subject.round(down: 15).to_s).must_equal '00:00 UTC'
+    end
+
+    it "returns self if there's nothing to round" do
+      subject = AIXM.time('13:10')
+      _(subject.round(down: 5)).must_be_same_as subject
     end
   end
 
