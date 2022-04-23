@@ -1,5 +1,9 @@
 ## Main
 
+Nothing so far
+
+## 1.2.1
+
 #### Additions
 * Rounding of `AIXM::Schedule::Time`
 
