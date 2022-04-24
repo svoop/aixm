@@ -23,6 +23,7 @@ module AIXM
     #   airport.timetable = AIXM.timetable or nil
     #   airport.operator = String or nil
     #   airport.remarks = String or nil
+    #   airport.comment = Object or nil
     #   airport.add_runway(AIXM.runway)
     #   airport.add_fato(AIXM.fato)
     #   airport.add_helipad(AIXM.helipad)
@@ -291,6 +292,7 @@ module AIXM
         builder = Builder::XmlMarkup.new(indent: 2)
         builder.comment! "Airport: #{id} #{name}"
         builder.Ahp({ source: (source if AIXM.ofmx?) }.compact) do |ahp|
+          ahp.comment!(indented_comment) if comment
           ahp << to_uid.indent(2)
           ahp << organisation.to_uid.indent(2)
           ahp.txtName(name)

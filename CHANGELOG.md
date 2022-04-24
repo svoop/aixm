@@ -1,6 +1,7 @@
 ## Main
 
-Nothing so far
+#### Additions
+* XML comments on features (e.g. to include raw NOTAM)
 
 ## 1.2.1
 

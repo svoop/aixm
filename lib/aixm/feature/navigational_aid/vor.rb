@@ -23,6 +23,7 @@ module AIXM
       #   )
       #   vor.timetable = AIXM.timetable or nil
       #   vor.remarks = String or nil
+      #   vor.comment = Object or nil
       #   vor.associate_dme     # turns the VOR into a VOR/DME
       #   vor.associate_tacan   # turns the VOR into a VORTAC
       #
@@ -147,6 +148,7 @@ module AIXM
         def to_xml
           builder = to_builder
           builder.Vor({ source: (source if AIXM.ofmx?) }.compact) do |vor|
+            vor.comment!(indented_comment) if comment
             vor << to_uid.indent(2)
             vor << organisation.to_uid.indent(2)
             vor.txtName(name) if name

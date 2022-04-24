@@ -23,6 +23,7 @@ module AIXM
       #   )
       #   dme.timetable = AIXM.timetable or nil
       #   dme.remarks = String or nil
+      #   dme.comment = Object or nil
       #
       # @see https://gitlab.com/openflightmaps/ofmx/wikis/Navigational-aid#dme-dme
       class DME < NavigationalAid
@@ -108,6 +109,7 @@ module AIXM
         def to_xml
           builder = to_builder
           builder.Dme({ source: (source if AIXM.ofmx?) }.compact) do |dme|
+            dme.comment!(indented_comment) if comment
             dme << to_uid.indent(2)
             dme << organisation.to_uid.indent(2)
             dme << vor.to_uid.indent(2) if vor

@@ -27,6 +27,7 @@ module AIXM
     #   obstacle.valid_from = Time or Date or String or nil
     #   obstacle.valid_until = Time or Date or String or nil
     #   obstacle.remarks = String or nil
+    #   obstacle.comment = Object or nil
     #   obstacle.link_to   # => AIXM.obstacle or nil
     #   obstacle.link_type   # => LINK_TYPE or nil
     #
@@ -325,6 +326,7 @@ module AIXM
         builder = Builder::XmlMarkup.new(indent: 2)
         builder.comment! "Obstacle: [#{type}] #{xy.to_s} #{name}".strip
         builder.Obs({ source: (source if AIXM.ofmx?) }.compact) do |obs|
+          obs.comment!(indented_comment) if comment
           obs << to_uid.indent(2)
           obs.txtName(name) if name
           if AIXM.ofmx?

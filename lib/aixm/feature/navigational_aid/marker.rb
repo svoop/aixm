@@ -21,6 +21,7 @@ module AIXM
       #   )
       #   marker.timetable = AIXM.timetable or nil
       #   marker.remarks = String or nil
+      #   marker.comment = Object or nil
       #
       # @note Marker are not fully implemented because they usually have to be
       #   associated with an ILS which are not implemented as of now.
@@ -75,6 +76,7 @@ module AIXM
         def to_xml
           builder = to_builder
           builder.Mkr({ source: (source if AIXM.ofmx?) }.compact) do |mkr|
+            mkr.comment!(indented_comment) if comment
             mkr << to_uid.indent(2)
             mkr << organisation.to_uid.indent(2)
             mkr.codePsnIls(type_key.to_s) if type_key

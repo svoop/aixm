@@ -15,6 +15,7 @@ module AIXM
     #   )
     #   organisation.id = String or nil
     #   organisation.remarks = String or nil
+    #   organisation.comment = Object or nil
     #
     # @see https://gitlab.com/openflightmaps/ofmx/wikis/Organisation#org-organisation
     class Organisation < Feature
@@ -110,6 +111,7 @@ module AIXM
         builder = Builder::XmlMarkup.new(indent: 2)
         builder.comment! "Organisation: #{name}"
         builder.Org({ source: (source if AIXM.ofmx?) }.compact) do |org|
+          org.comment!(indented_comment) if comment
           org << to_uid.indent(2)
           org.codeId(id) if id
           org.codeType(TYPES.key(type).to_s)

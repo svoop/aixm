@@ -21,6 +21,7 @@ module AIXM
       #   )
       #   ndb.timetable = AIXM.timetable or nil
       #   ndb.remarks = String or nil
+      #   ndb.comment = Object or nil
       #
       # @see https://gitlab.com/openflightmaps/ofmx/wikis/Navigational-aid#ndb-ndb
       class NDB < NavigationalAid
@@ -82,6 +83,7 @@ module AIXM
         def to_xml
           builder = to_builder
           builder.Ndb({ source: (source if AIXM.ofmx?) }.compact) do |ndb|
+            ndb.comment!(indented_comment) if comment
             ndb << to_uid.indent(2)
             ndb << organisation.to_uid.indent(2)
             ndb.txtName(name) if name

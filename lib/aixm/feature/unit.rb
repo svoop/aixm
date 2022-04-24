@@ -17,6 +17,7 @@ module AIXM
     #   )
     #   unit.airport = AIXM.airport or nil
     #   unit.remarks = String or nil
+    #   unit.comment = Object or nil
     #   unit.add_service(AIXM.service)
     #
     # @see https://gitlab.com/openflightmaps/ofmx/wikis/Organisation#uni-unit
@@ -166,6 +167,7 @@ module AIXM
         builder = Builder::XmlMarkup.new(indent: 2)
         builder.comment! "Unit: #{name_with_type}"
         builder.Uni({ source: (source if AIXM.ofmx?) }.compact) do |uni|
+          uni.comment!(indented_comment) if comment
           uni << to_uid.indent(2)
           uni << organisation.to_uid.indent(2)
           uni << airport.to_uid.indent(2) if airport

@@ -20,8 +20,9 @@ module AIXM
       #     channel: String   # either set channel directly
       #     ghost_f: AIXM.f   # or set channel via VOR ghost frequency
       #   )
-      # tacan.timetable = AIXM.timetable or nil
-      # tacan.remarks = String or nil
+      #   tacan.timetable = AIXM.timetable or nil
+      #   tacan.remarks = String or nil
+      #   tacan.comment = Object or nil
       #
       # @see https://gitlab.com/openflightmaps/ofmx/wikis/Navigational-aid#tcn-tacan
       class TACAN < DME
@@ -44,6 +45,7 @@ module AIXM
         def to_xml
           builder = to_builder
           builder.Tcn({ source: (source if AIXM.ofmx?) }.compact) do |tcn|
+            tcn.comment!(indented_comment) if comment
             tcn << to_uid.indent(2)
             tcn << organisation.to_uid.indent(2)
             tcn << vor.to_uid.indent(2) if vor

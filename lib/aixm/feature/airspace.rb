@@ -14,6 +14,7 @@ module AIXM
     #     local_type: String or nil
     #     name: String or nil
     #   )
+    #   airspace.comment = Object or nil
     #   airspace.add_layer(AIXM.layer)
     #   airspace.geometry.add_segment(AIXM.point or AIXM.arc or AIXM.border or AIXM.circle)
     #
@@ -192,6 +193,7 @@ module AIXM
         builder = Builder::XmlMarkup.new(indent: 2)
         builder.comment! "Airspace: [#{TYPES.key(type)}] #{name || :UNNAMED}"
         builder.Ase({ source: (source if AIXM.ofmx?) }.compact) do |ase|
+          ase.comment!(indented_comment) if comment
           ase << to_uid.indent(2)
           ase.txtLocalType(local_type) if AIXM.aixm? && local_type && local_type != name
           ase.txtName(name) if name

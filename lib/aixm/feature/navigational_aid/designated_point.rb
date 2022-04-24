@@ -18,6 +18,7 @@ module AIXM
       #   )
       #   designated_point.airport = AIXM.airport or nil
       #   designated_point.remarks = String or nil
+      #   designated_point.comment = Object or nil
       #
       # @see https://gitlab.com/openflightmaps/ofmx/wikis/Navigational-aid#dpn-designated-point
       class DesignatedPoint < NavigationalAid
@@ -75,6 +76,7 @@ module AIXM
         def to_xml
           builder = to_builder
           builder.Dpn({ source: (source if AIXM.ofmx?) }.compact) do |dpn|
+            dpn.comment!(indented_comment) if comment
             dpn << to_uid.indent(2)
             dpn << airport.to_uid(as: :AhpUidAssoc).indent(2) if airport
             dpn.codeDatum('WGE')

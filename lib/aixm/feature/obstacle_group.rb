@@ -11,11 +11,11 @@ module AIXM
     #     source: String or nil        # see remarks below
     #     region: String or nil
     #     name: String or nil
-    #   ).tap do |obstacle_group|
-    #     obstacle_group.xy_accuracy = AIXM.d or nil
-    #     obstacle_group.z_accuracy = AIXM.d or nil
-    #     obstacle_group.remarks = String or nil
-    #   end
+    #   )
+    #   obstacle_group.xy_accuracy = AIXM.d or nil
+    #   obstacle_group.z_accuracy = AIXM.d or nil
+    #   obstacle_group.remarks = String or nil
+    #   obstacle_group.comment = Object or nil
     #   obstacle_group.add_obstacle(   # add an obstacle to the group
     #     AIXM.obstacle
     #   )
@@ -123,6 +123,7 @@ module AIXM
         if AIXM.ofmx?
           builder.comment! "Obstacle group: #{name}".strip
           builder.Ogr({ source: (source if AIXM.ofmx?) }.compact) do |ogr|
+            ogr.comment!(indented_comment) if comment
             ogr << to_uid.indent(2)
             ogr.codeDatum('WGE')
             if xy_accuracy

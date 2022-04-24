@@ -230,6 +230,33 @@ Equally on `has_many` associations, use `duplicates` to find identical or equal 
 document.features.duplicates   # => [#<AIXM::Feature::Unit>, #<AIXM::Component::Service>, ...]
 ```
 
+## XML Comments
+
+All features implement the `comment` attribute which accepts any object and converts it `#to_s`. When set, an XML comment is inserted right after the opening tag of the feature. This comes in handy e.g. in case you want to include source data facsimile such as NOTAM. Oneline and multiline comments are inserted differently:
+
+```xml
+<Ase>
+  <!--
+    B0330/22 NOTAMR B1756/21
+    Q) LSAS/QAFLT/V/NBO/E/000/050/4734N00841E005
+    A) LSAS B) 2203170746 C) 2206242359 EST
+  -->
+  <AseUid>
+    <codeType>RAS</codeType>
+    <codeId>B0330/22</codeId>
+  </AseUid>
+  (...)
+</Ase>
+
+<Org>
+  <!-- Generic organisation -->
+  <OrgUid>
+    <txtName>FRANCE</txtName>
+  </OrgUid>
+  (...)
+</Org>
+```
+
 ## Payload Hash
 
 OFMX defines a [payload hash function](https://gitlab.com/openflightmaps/ofmx/wikis/Functions) used to facilitate association and modification tracking. It is used internally, but you can also use it in your own code:

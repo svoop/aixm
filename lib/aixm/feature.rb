@@ -1,3 +1,5 @@
+using AIXM::Refinements
+
 module AIXM
 
   # @abstract
@@ -7,6 +9,14 @@ module AIXM
     REGION_RE = /\A[A-Z]{2}\z/.freeze
 
     private_class_method :new
+
+    # Freely usable XML comment e.g. to include raw source data
+    #
+    # @overload comment
+    #   @return [String]
+    # @overload comment=(value)
+    #   @param value [Object]
+    attr_reader :comment
 
     # Freely usable e.g. to find_by foreign keys.
     #
@@ -34,6 +44,10 @@ module AIXM
       self.region = region || AIXM.config.region
     end
 
+    def comment=(value)
+      @comment = value.to_s.strip
+    end
+
     def source=(value)
       fail(ArgumentError, "invalid source") unless value.nil? || value.is_a?(String)
       @source = value
@@ -52,6 +66,17 @@ module AIXM
     # @see Object#eql?
     def hash
       [self.__class__, to_uid].hash
+    end
+
+    protected
+
+    # @return [String]
+    def indented_comment
+      if comment.include?("\n")
+        [nil, comment.indent(4), ' '].join("\n")
+      else
+        comment
+      end
     end
   end
 
