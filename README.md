@@ -28,7 +28,7 @@ gem cert --add <(curl -Ls https://raw.github.com/svoop/aixm/main/certs/svoop.pem
 Add the following to the <tt>Gemfile</tt> or <tt>gems.rb</tt> of your [Bundler](https://bundler.io) powered Ruby project:
 
 ```ruby
-gem aixm
+gem 'aixm'
 ```
 
 And then install the bundle:
