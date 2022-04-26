@@ -635,8 +635,9 @@ module AIXM
       def document
         AIXM.document(
           namespace: '00000000-0000-0000-0000-000000000000',
-          created_at: (time = Time.parse('2018-01-01 12:00:00 +0100')),
-          effective_at: time
+          created_at: (time = Time.utc(2022, 4, 21)),
+          effective_at: time,
+          expiration_at: time + 2419199
         ).tap do |document|
           document.add_feature organisation
           document.add_feature unit

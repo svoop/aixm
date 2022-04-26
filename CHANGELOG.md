@@ -1,7 +1,11 @@
 ## Main
 
+#### Breaking Changes
+* `Document#created_at` no longer falls back to `Document#effective_at`
+
 #### Additions
 * XML comments on features (e.g. to include raw NOTAM)
+* `Document#expiration_at` for OFMX
 
 ## 1.2.1
 

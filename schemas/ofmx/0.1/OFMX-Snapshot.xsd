@@ -215,7 +215,12 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
       </xsd:attribute>
       <xsd:attribute name="effective" type="xsd:dateTime" use="required">
         <xsd:annotation>
-          <xsd:documentation>The date and time used as criteria to select valid versions included in the message</xsd:documentation>
+          <xsd:documentation>The beginning date and time used as criteria to select valid versions included in the message</xsd:documentation>
+        </xsd:annotation>
+      </xsd:attribute>
+      <xsd:attribute name="expiration" type="xsd:dateTime">
+        <xsd:annotation>
+          <xsd:documentation>The optional end date and time used as criteria to select valid versions included in the message</xsd:documentation>
         </xsd:annotation>
       </xsd:attribute>
     </xsd:complexType>

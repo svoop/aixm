@@ -10,6 +10,7 @@ module AIXM
   #     namespace: String (UUID)
   #     created_at: Time or Date or String
   #     effective_at: Time or Date or String
+  #     expiration_at: Time or Date or String or nil
   #   )
   #   document.add_feature(AIXM::Feature)
   #
@@ -36,7 +37,7 @@ module AIXM
     #   @param value [String]
     attr_reader :namespace
 
-    # Creation date and time
+    # Creation date and UTC time
     #
     # @overload created_at
     #   @return [Time]
@@ -44,7 +45,7 @@ module AIXM
     #   @param value [Time] default: {#effective_at} or now
     attr_reader :created_at
 
-    # Effective after date and time
+    # Effective after date and UTC time
     #
     # @overload effective_at
     #   @return [Time]
@@ -52,10 +53,19 @@ module AIXM
     #   @param value [Time] default: {#created_at} or now
     attr_reader :effective_at
 
+    # Expiration after date and UTC time
+    #
+    # @overload expiration_at
+    #   @return [Time, nil]
+    # @overload expiration_at=(value)
+    #   @param value [Time, nil]
+    attr_reader :expiration_at
+
     # See the {cheat sheet}[AIXM::Document] for examples on how to create
     # instances of this class.
-    def initialize(namespace: nil, created_at: nil, effective_at: nil)
-      self.namespace, self.created_at, self.effective_at = namespace, created_at, effective_at
+    def initialize(namespace: nil, created_at: nil, effective_at: nil, expiration_at: nil)
+      self.namespace = namespace
+      self.created_at, self.effective_at, self.expiration_at = created_at, effective_at, expiration_at
     end
 
     # @return [String]
@@ -69,11 +79,29 @@ module AIXM
     end
 
     def created_at=(value)
-      @created_at = value&.to_time || effective_at || Time.now
+      @created_at = if time = value&.to_time
+        fail(ArgumentError, "must be UTC") unless time.utc_offset.zero?
+        time.round
+      else
+        Time.now.utc.round
+      end
     end
 
     def effective_at=(value)
-      @effective_at = value&.to_time || created_at || Time.now
+      @effective_at = if time = value&.to_time
+        fail(ArgumentError, "must be UTC") unless time.utc_offset.zero?
+        time.round
+      else
+        created_at || Time.now.utc.round
+      end
+    end
+
+    def expiration_at=(value)
+      @expiration_at = value&.to_time
+      @expiration_at = if time = value&.to_time
+        fail(ArgumentError, "must be UTC") unless time.utc_offset.zero?
+        time.round
+      end
     end
 
     # Regions used throughout this document.
@@ -137,7 +165,8 @@ module AIXM
         namespace: (namespace if AIXM.ofmx?),
         regions: (regions.join(' '.freeze) if AIXM.ofmx?),
         created: @created_at.xmlschema,
-        effective: @effective_at.xmlschema
+        effective: @effective_at.xmlschema,
+        expiration: (@expiration_at&.xmlschema if AIXM.ofmx?)
       }.compact
       builder = Builder::XmlMarkup.new(indent: 2)
       builder.instruct!

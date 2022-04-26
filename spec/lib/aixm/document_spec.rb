@@ -21,45 +21,54 @@ describe AIXM::Document do
 
   describe :created_at= do
     it "fails on invalid values" do
-      _(['foobar', '2018-01-77']).wont_be_written_to subject, :created_at
+      _(['foobar', '2018-01-77', Time.parse('2018-01-01 12:00:00 +0100')]).wont_be_written_to subject, :created_at
     end
 
     it "parses dates and times" do
-      string = '2018-01-01 12:00:00 +0100'
+      string = '2018-01-01 12:00:00 +0000'
       _(subject.tap { _1.created_at = string }.created_at).must_equal Time.parse(string)
     end
 
     it "falls back to effective_at first" do
-      subject.effective_at = Time.now
+      subject.effective_at = Time.now.utc
       subject.created_at = nil
       _(subject.created_at).must_equal subject.effective_at
     end
 
     it "falls back to now second" do
       subject.created_at = nil
-      _(subject.created_at).must_be_close_to Time.now
+      _(subject.created_at).must_be_close_to(Time.now.utc, 1)
     end
   end
 
   describe :effective_at= do
     it "fails on invalid values" do
-      _(['foobar', '2018-01-77']).wont_be_written_to subject, :effective_at
+      _(['foobar', '2018-01-77', Time.parse('2018-01-01 12:00:00 +0100')]).wont_be_written_to subject, :effective_at
     end
 
     it "parses dates and times" do
-      string = '2018-01-01 12:00:00 +0100'
+      string = '2018-01-01 12:00:00 +0000'
       _(subject.tap { _1.effective_at = string }.effective_at).must_equal Time.parse(string)
     end
 
-    it "falls back to created_at first" do
-      subject.effective_at = Time.now
+    it "falls back to now" do
       subject.effective_at = nil
-      _(subject.effective_at).must_equal subject.created_at
+      _(subject.effective_at).must_be_close_to(Time.now.utc, 1)
+    end
+  end
+
+  describe :expiration_at= do
+    it "accepts nil" do
+      _([nil]).must_be_written_to subject, :expiration_at
     end
 
-    it "falls back to now second" do
-      subject.effective_at = nil
-      _(subject.effective_at).must_be_close_to Time.now
+    it "fails on invalid values" do
+      _(['foobar', '2018-01-77', Time.parse('2018-01-01 12:00:00 +0100')]).wont_be_written_to subject, :expiration_at
+    end
+
+    it "parses dates and times" do
+      string = '2018-01-01 12:00:00 +0000'
+      _(subject.tap { _1.expiration_at = string }.expiration_at).must_equal Time.parse(string)
     end
   end
 
@@ -132,7 +141,7 @@ describe AIXM::Document do
     it "builds correct AIXM" do
       _(subject.to_xml).must_equal <<~"END"
         <?xml version="1.0" encoding="UTF-8"?>
-        <AIXM-Snapshot xmlns:xsi="http://www.aixm.aero/schema/4.5/AIXM-Snapshot.xsd" version="4.5" origin="rubygem aixm-#{AIXM::VERSION}" created="2018-01-01T12:00:00+01:00" effective="2018-01-01T12:00:00+01:00">
+        <AIXM-Snapshot xmlns:xsi="http://www.aixm.aero/schema/4.5/AIXM-Snapshot.xsd" version="4.5" origin="rubygem aixm-#{AIXM::VERSION}" created="2022-04-21T00:00:00Z" effective="2022-04-21T00:00:00Z">
           <!-- Organisation: FRANCE -->
           <Org>
             <OrgUid>
@@ -1082,7 +1091,7 @@ describe AIXM::Document do
     it "builds correct OFMX" do
       _(subject.to_xml).must_equal <<~"END"
         <?xml version="1.0" encoding="UTF-8"?>
-        <OFMX-Snapshot xmlns:xsi="http://schema.openflightmaps.org/0.1/OFMX-Snapshot.xsd" version="0" origin="rubygem aixm-#{AIXM::VERSION}" namespace="00000000-0000-0000-0000-000000000000" regions="EG LF" created="2018-01-01T12:00:00+01:00" effective="2018-01-01T12:00:00+01:00">
+        <OFMX-Snapshot xmlns:xsi="http://schema.openflightmaps.org/0.1/OFMX-Snapshot.xsd" version="0" origin="rubygem aixm-#{AIXM::VERSION}" namespace="00000000-0000-0000-0000-000000000000" regions="EG LF" created="2022-04-21T00:00:00Z" effective="2022-04-21T00:00:00Z" expiration="2022-05-18T23:59:59Z">
           <!-- Organisation: FRANCE -->
           <Org source="LF|GEN|0.0 FACTORY|0|0">
             <OrgUid region="LF">
@@ -2120,7 +2129,7 @@ describe AIXM::Document do
       AIXM.config.mid = true
       _(subject.to_xml).must_equal <<~"END"
         <?xml version="1.0" encoding="UTF-8"?>
-        <OFMX-Snapshot xmlns:xsi="http://schema.openflightmaps.org/0.1/OFMX-Snapshot.xsd" version="0" origin="rubygem aixm-#{AIXM::VERSION}" namespace="00000000-0000-0000-0000-000000000000" regions="EG LF" created="2018-01-01T12:00:00+01:00" effective="2018-01-01T12:00:00+01:00">
+        <OFMX-Snapshot xmlns:xsi="http://schema.openflightmaps.org/0.1/OFMX-Snapshot.xsd" version="0" origin="rubygem aixm-#{AIXM::VERSION}" namespace="00000000-0000-0000-0000-000000000000" regions="EG LF" created="2022-04-21T00:00:00Z" effective="2022-04-21T00:00:00Z" expiration="2022-05-18T23:59:59Z">
           <!-- Organisation: FRANCE -->
           <Org source="LF|GEN|0.0 FACTORY|0|0">
             <OrgUid region="LF" mid="971ba0a9-3714-12d5-d139-d26d5f1d6f25">
