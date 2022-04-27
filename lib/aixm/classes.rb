@@ -45,7 +45,8 @@ module AIXM
     obstacle_group: 'AIXM::Feature::ObstacleGroup',
     timetable: 'AIXM::Component::Timetable',
     timesheet: 'AIXM::Component::Timesheet',
-    vasis: 'AIXM::Component::VASIS'
+    vasis: 'AIXM::Component::VASIS',
+    generic: 'AIXM::Feature::Generic'
   }.freeze
 
 end

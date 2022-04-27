@@ -163,6 +163,7 @@ AIXM.config.ignored_errors = /invalid date/i
 * [Organisation](https://www.rubydoc.info/gems/aixm/AIXM/Feature/Organisation.html)
 * [Service](https://www.rubydoc.info/gems/aixm/AIXM/Component/Service.html)
 * [Unit](https://www.rubydoc.info/gems/aixm/AIXM/Feature/Unit.html)
+* [Generic](https://www.rubydoc.info/gems/aixm/AIXM/Feature/Generic.html)
 
 ### Components
 

@@ -630,6 +630,24 @@ module AIXM
         end
       end
 
+      def generic
+        xml = <<~END
+          <Org>
+            <OrgUid>
+              <txtName>EUROPE</txtName>
+            </OrgUid>
+            <codeType>GS</codeType>
+          </Org>
+          <Org>
+            <OrgUid>
+              <txtName>AMERICA</txtName>
+            </OrgUid>
+            <codeType>GS</codeType>
+          </Org>
+        END
+        AIXM.generic(fragment: xml)
+      end
+
       # Document
 
       def document

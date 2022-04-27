@@ -6,6 +6,7 @@
 #### Additions
 * XML comments on features (e.g. to include raw NOTAM)
 * `Document#expiration_at` for OFMX
+* Generic features as raw XML (e.g. extracted from another AIXM/OFMX file)
 
 ## 1.2.1
 

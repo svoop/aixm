@@ -82,6 +82,7 @@ require_relative 'aixm/feature/obstacle'
 require_relative 'aixm/feature/obstacle_group'
 require_relative 'aixm/feature/organisation'
 require_relative 'aixm/feature/unit'
+require_relative 'aixm/feature/generic'
 
 require_relative 'aixm/shortcuts'
 require_relative 'aixm/executables'
