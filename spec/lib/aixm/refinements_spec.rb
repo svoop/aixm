@@ -125,6 +125,35 @@ describe AIXM::Refinements do
     end
   end
 
+  context Nokogiri::XML::Document do
+    describe :pretty do
+      subject do
+        xml = <<~END
+          <xml><aaa> AAA </aaa>
+            <bbb/>
+            <ccc   foo="bar"  >
+              CCC
+            </ccc>
+          </xml>
+        END
+        Nokogiri.XML(xml)
+      end
+
+      it "transforms the XML document to print pretty" do
+        _(subject.pretty.to_xml).must_equal <<~END
+          <?xml version=\"1.0\" encoding=\"UTF-8\"?>
+          <xml>
+            <aaa> AAA </aaa>
+            <bbb/>
+            <ccc foo="bar">
+              CCC
+            </ccc>
+          </xml>
+        END
+      end
+    end
+  end
+
   context Object do
     describe :then_if do
       subject do

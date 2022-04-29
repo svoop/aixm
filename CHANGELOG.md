@@ -4,6 +4,7 @@
 * `Document#created_at` no longer falls back to `Document#effective_at`
 
 #### Additions
+* Refinement to pretty print Nokogiri XML documents
 * XML comments on features (e.g. to include raw NOTAM)
 * `Document#expiration_at` for OFMX
 * Generic features as raw XML (e.g. extracted from another AIXM/OFMX file)

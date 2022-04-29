@@ -15,6 +15,16 @@ module AIXM
       "Ø" => "Oe"
     }.freeze
 
+    PRETTY_XSLT = <<~END.then { Nokogiri::XSLT(_1) }
+      <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+        <xsl:output method="xml" encoding="UTF-8" indent="yes"/>
+        <xsl:strip-space elements="*"/>
+        <xsl:template match="/">
+          <xsl:copy-of select="."/>
+        </xsl:template>
+      </xsl:stylesheet>
+    END
+
     # @!method to_digest
     #   Builds a 4 byte hex digest from the Array payload.
     #
@@ -108,6 +118,7 @@ module AIXM
     #   @note This is a refinement for +Hash+
     #   @param key_or_value [Object] key or value of the hash
     #   @param fallback [Object] fallback value
+    #   @return [Object]
     #   @raise [KeyError] if neither a matching hash key nor hash value are
     #     found and no fallback value has been passed
     refine Hash do
@@ -115,6 +126,36 @@ module AIXM
         self[key_or_value] ||
           (key_or_value if has_value?(key_or_value)) ||
           (omitted ? fail(KeyError, "key or value `#{key_or_value}' not found") : fallback)
+      end
+    end
+
+    # @!method pretty
+    #   Transform the XML document to be pretty when sending +to_xml+
+    #
+    #   @example
+    #     xml = <<~END
+    #       <xml><aaa> AAA </aaa>
+    #         <bbb/>
+    #         <ccc   foo="bar"  >
+    #           CCC
+    #         </ccc>
+    #       </xml>
+    #     END
+    #     Nokogiri.XML(xml).pretty.to_xml
+    #     # => <?xml version=\"1.0\" encoding=\"UTF-8\"?>
+    #          <xml>
+    #            <aaa> AAA </aaa>
+    #            <bbb/>
+    #            <ccc foo="bar">
+    #              CCC
+    #            </ccc>
+    #          </xml>
+    #
+    #   @note This is a refinement for +Nokogiri::XML::Document+
+    #   @return [Nokogiri::XML::Document]
+    refine Nokogiri::XML::Document do
+      def pretty
+        PRETTY_XSLT.transform(self)
       end
     end
 
