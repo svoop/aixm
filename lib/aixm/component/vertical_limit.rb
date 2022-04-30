@@ -102,15 +102,15 @@ module AIXM
         @min_z = value
       end
 
-      # @return [String] AIXM or OFMX markup
-      def to_xml
-        TAGS.keys.each_with_object(Builder::XmlMarkup.new(indent: 2)) do |limit, builder|
+      # @!visibility private
+      def add_to(builder)
+        TAGS.each_key do |limit|
           if z = send(limit)
-            builder.tag!(:"codeDistVer#{TAGS[limit]}", CODES[z.code].to_s)
-            builder.tag!(:"valDistVer#{TAGS[limit]}", z.alt.to_s)
-            builder.tag!(:"uomDistVer#{TAGS[limit]}", z.unit.upcase.to_s)
+            builder.send(:"codeDistVer#{TAGS[limit]}", CODES[z.code])
+            builder.send(:"valDistVer#{TAGS[limit]}", z.alt)
+            builder.send(:"uomDistVer#{TAGS[limit]}", z.unit.upcase)
           end
-        end.target!
+        end
       end
     end
 

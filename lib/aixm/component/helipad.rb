@@ -24,7 +24,6 @@ module AIXM
     # @see https://gitlab.com/openflightmaps/ofmx/wikis/Airport#tla-helipad-tlof
     class Helipad < Component
       include AIXM::Association
-      include AIXM::Memoize
       include AIXM::Concerns::Marking
       include AIXM::Concerns::Remarks
 
@@ -159,46 +158,40 @@ module AIXM
         @status = value.nil? ? nil : (STATUSES.lookup(value.to_s.to_sym, nil) || fail(ArgumentError, "invalid status"))
       end
 
-      # @return [String] UID markup
-      def to_uid
-        builder = Builder::XmlMarkup.new(indent: 2)
+      # @!visibility private
+      def add_uid_to(builder)
         builder.TlaUid do |tla_uid|
-          tla_uid << airport.to_uid.indent(2)
+          airport.add_uid_to(tla_uid)
           tla_uid.txtDesig(name)
         end
       end
-      memoize :to_uid
 
-      # @return [String] AIXM or OFMX markup
-      def to_xml
-        builder = Builder::XmlMarkup.new(indent: 2)
+      # @!visibility private
+      def add_to(builder)
         builder.Tla do |tla|
-          tla << to_uid.indent(2)
-          tla << fato.to_uid.indent(2) if fato
+          add_uid_to(tla)
+          fato.add_uid_to(tla) if fato
           tla.geoLat(xy.lat(AIXM.schema))
           tla.geoLong(xy.long(AIXM.schema))
           tla.codeDatum('WGE')
           if z
             tla.valElev(z.alt)
-            tla.uomDistVer(z.unit.upcase.to_s)
+            tla.uomDistVer(z.unit.upcase)
           end
           if dimensions
             tla.valLen(dimensions.length.to_m.dim.trim)
             tla.valWid(dimensions.width.to_m.dim.trim)
             tla.uomDim('M')
           end
-          unless  (xml = surface.to_xml).empty?
-            tla << xml.indent(2)
-          end
-          tla.codeClassHel(PERFORMANCE_CLASSES.key(performance_class).to_s) if performance_class
+          surface.add_to(tla) if surface
+          tla.codeClassHel(PERFORMANCE_CLASSES.key(performance_class)) if performance_class
           tla.txtMarking(marking) if marking
-          tla.codeSts(STATUSES.key(status).to_s) if status
+          tla.codeSts(STATUSES.key(status)) if status
           tla.txtRmk(remarks) if remarks
         end
         lightings.each do |lighting|
-          builder << lighting.to_xml(as: :Tls)
+          lighting.add_to(builder, as: :Tls)
         end
-        builder.target!
       end
     end
   end

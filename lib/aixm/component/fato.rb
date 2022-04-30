@@ -29,7 +29,6 @@ module AIXM
     # @see https://gitlab.com/openflightmaps/ofmx/wikis/Airport#fto-fato
     class FATO < Component
       include AIXM::Association
-      include AIXM::Memoize
       include AIXM::Concerns::Marking
       include AIXM::Concerns::Remarks
 
@@ -128,38 +127,32 @@ module AIXM
         @status = value.nil? ? nil : (STATUSES.lookup(value.to_s.to_sym, nil) || fail(ArgumentError, "invalid status"))
       end
 
-      # @return [String] UID markup
-      def to_uid
-        builder = Builder::XmlMarkup.new(indent: 2)
+      # @!visibility private
+      def add_uid_to(builder)
         builder.FtoUid do |fto_uid|
-          fto_uid << airport.to_uid.indent(2)
+          airport.add_uid_to(fto_uid)
           fto_uid.txtDesig(name)
         end
       end
-      memoize :to_uid
 
-      # @return [String] AIXM or OFMX markup
-      def to_xml
-        builder = Builder::XmlMarkup.new(indent: 2)
+      # @!visibility private
+      def add_to(builder)
         builder.Fto do |fto|
-          fto << to_uid.indent(2)
+          add_uid_to(fto)
           if dimensions
             fto.valLen(dimensions.length.to_m.dim.trim)
             fto.valWid(dimensions.width.to_m.dim.trim)
             fto.uomDim('M')
           end
-          unless  (xml = surface.to_xml).empty?
-            fto << xml.indent(2)
-          end
+          surface.add_to(fto) if surface
           fto.txtProfile(profile) if profile
           fto.txtMarking(marking) if marking
-          fto.codeSts(STATUSES.key(status).to_s) if status
+          fto.codeSts(STATUSES.key(status)) if status
           fto.txtRmk(remarks) if remarks
         end
         directions.each do |direction|
-          builder << direction.to_xml
+          direction.add_to(builder)
         end
-        builder.target!
       end
 
       # FATO directions further describe each direction to and from the FATO.
@@ -168,6 +161,7 @@ module AIXM
       class Direction
         include AIXM::Association
         include AIXM::Memoize
+        include AIXM::Concerns::XMLBuilder
         include AIXM::Concerns::Remarks
 
         # @!method lightings
@@ -239,35 +233,29 @@ module AIXM
           @vasis = value
         end
 
-        # @return [String] UID markup
-        def to_uid
-          builder = Builder::XmlMarkup.new(indent: 2)
+        # @!visibility private
+        def add_uid_to(builder)
           builder.FdnUid do |fdn_uid|
-            fdn_uid << fato.to_uid.indent(2)
+            fato.add_uid_to(fdn_uid)
             fdn_uid.txtDesig(name.to_s(:runway))
           end
         end
-        memoize :to_uid
 
-        # @return [String] AIXM or OFMX markup
-        def to_xml
-          builder = Builder::XmlMarkup.new(indent: 2)
+        # @!visibility private
+        def add_to(builder)
           builder.Fdn do |fdn|
-            fdn << to_uid.indent(2)
+            add_uid_to(fdn)
             fdn.valTrueBrg(geographic_bearing.to_s(:bearing)) if geographic_bearing
             fdn.valMagBrg(magnetic_bearing.to_s(:bearing)) if magnetic_bearing
-            if vasis
-              fdn << vasis.to_xml.indent(2)
-            end
+            vasis.add_to(fdn) if vasis
             fdn.txtRmk(remarks) if remarks
           end
           lightings.each do |lighting|
-            builder << lighting.to_xml(as: :Fls)
+            lighting.add_to(builder, as: :Fls)
           end
           approach_lightings.each do |approach_lighting|
-            builder << approach_lighting.to_xml(as: :Fda)
+            approach_lighting.add_to(builder, as: :Fda)
           end
-          builder.target!
         end
       end
     end

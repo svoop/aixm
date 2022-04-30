@@ -638,14 +638,8 @@ module AIXM
             </OrgUid>
             <codeType>GS</codeType>
           </Org>
-          <Org>
-            <OrgUid>
-              <txtName>AMERICA</txtName>
-            </OrgUid>
-            <codeType>GS</codeType>
-          </Org>
         END
-        AIXM.generic(fragment: xml)
+        AIXM.generic(xml: xml)
       end
 
       # Document

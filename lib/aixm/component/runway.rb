@@ -50,7 +50,6 @@ module AIXM
     # @see https://gitlab.com/openflightmaps/ofmx/wikis/Airport#rwy-runway
     class Runway < Component
       include AIXM::Association
-      include AIXM::Memoize
       include AIXM::Concerns::Marking
       include AIXM::Concerns::Remarks
 
@@ -144,39 +143,33 @@ module AIXM
         @status = value.nil? ? nil : (STATUSES.lookup(value.to_s.to_sym, nil) || fail(ArgumentError, "invalid status"))
       end
 
-      # @return [String] UID markup
-      def to_uid
-        builder = Builder::XmlMarkup.new(indent: 2)
+      # @!visibility private
+      def add_uid_to(builder)
         builder.RwyUid do |rwy_uid|
-          rwy_uid << airport.to_uid.indent(2)
+          airport.add_uid_to(rwy_uid)
           rwy_uid.txtDesig(name)
         end
       end
-      memoize :to_uid
 
-      # @return [String] AIXM or OFMX markup
-      def to_xml
-        builder = Builder::XmlMarkup.new(indent: 2)
+      # @!visibility private
+      def add_to(builder)
         builder.Rwy do |rwy|
-          rwy << to_uid.indent(2)
+          add_uid_to(rwy)
           if dimensions
             rwy.valLen(dimensions.length.to_m.dim.trim)
             rwy.valWid(dimensions.width.to_m.dim.trim)
             rwy.uomDimRwy('M')
           end
-          unless  (xml = surface.to_xml).empty?
-            rwy << xml.indent(2)
-          end
-          rwy.codeSts(STATUSES.key(status).to_s) if status
+          surface.add_to(rwy) if surface
+          rwy.codeSts(STATUSES.key(status)) if status
           rwy.txtMarking(marking) if marking
           rwy.txtRmk(remarks) if remarks
         end
         %i(@forth @back).each do |direction|
           if direction = instance_variable_get(direction)
-            builder << direction.to_xml
+            direction.add_to(builder)
           end
         end
-        builder.target!
       end
 
       # Runway directions further describe each direction {#forth} and {#back}
@@ -186,6 +179,7 @@ module AIXM
       class Direction
         include AIXM::Association
         include AIXM::Memoize
+        include AIXM::Concerns::XMLBuilder
         include AIXM::Concerns::Remarks
 
         VFR_PATTERNS = {
@@ -306,54 +300,48 @@ module AIXM
           end
         end
 
-        # @return [String] UID markup
-        def to_uid
-          builder = Builder::XmlMarkup.new(indent: 2)
+        # @!visibility private
+        def add_uid_to(builder)
           builder.RdnUid do |rdn_uid|
-            rdn_uid << runway.to_uid.indent(2)
+            runway.add_uid_to(rdn_uid)
             rdn_uid.txtDesig(name.to_s(:runway))
           end
         end
-        memoize :to_uid
 
-        # @return [String] AIXM or OFMX markup
-        def to_xml
-          builder = Builder::XmlMarkup.new(indent: 2)
+        # @!visibility private
+        def add_to(builder)
           builder.Rdn do |rdn|
-            rdn << to_uid.indent(2)
+            add_uid_to(rdn)
             rdn.geoLat(xy.lat(AIXM.schema))
             rdn.geoLong(xy.long(AIXM.schema))
             rdn.valTrueBrg(geographic_bearing.to_s(:bearing)) if geographic_bearing
             rdn.valMagBrg(magnetic_bearing.to_s(:bearing)) if magnetic_bearing
             if z
               rdn.valElevTdz(z.alt)
-              rdn.uomElevTdz(z.unit.upcase.to_s)
+              rdn.uomElevTdz(z.unit.upcase)
             end
-            if vasis
-              rdn << vasis.to_xml.indent(2)
-            end
-            rdn.codeVfrPattern(VFR_PATTERNS.key(vfr_pattern).to_s) if vfr_pattern
+            vasis.add_to(rdn) if vasis
+            rdn.codeVfrPattern(VFR_PATTERNS.key(vfr_pattern)) if vfr_pattern
             rdn.txtRmk(remarks) if remarks
           end
           if displaced_threshold
             builder.Rdd do |rdd|
               rdd.RddUid do |rdd_uid|
-                rdd_uid << to_uid.indent(4)
+                add_uid_to(rdd_uid)
                 rdd_uid.codeType('DPLM')
                 rdd_uid.codeDayPeriod('A')
               end
               rdd.valDist(displaced_threshold.dim.trim)
-              rdd.uomDist(displaced_threshold.unit.to_s.upcase)
+              rdd.uomDist(displaced_threshold.unit.upcase)
               rdd.txtRmk(remarks) if remarks
             end
           end
           lightings.each do |lighting|
-            builder << lighting.to_xml(as: :Rls)
+            lighting.add_to(builder, as: :Rls)
           end
           approach_lightings.each do |approach_lighting|
-            builder << approach_lighting.to_xml(as: :Rda)
+            approach_lighting.add_to(builder, as: :Rda)
           end
-          builder.target!
         end
       end
     end

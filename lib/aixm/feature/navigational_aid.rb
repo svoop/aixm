@@ -84,16 +84,16 @@ module AIXM
         [self.class.name.split('::').last, type_key].compact.join(':'.freeze)
       end
 
+      # @!visibility private
+      def add_to(builder)
+        builder.comment "NavigationalAid: [#{kind}] #{[id, name].compact.join(' / ')}".dress
+        builder.text "\n"
+      end
+
       private
 
       def type_key
         nil
-      end
-
-      def to_builder
-        builder = Builder::XmlMarkup.new(indent: 2)
-        builder.comment! "NavigationalAid: [#{kind}] #{[id, name].compact.join(' / ')}"
-        builder
       end
     end
 

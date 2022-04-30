@@ -19,7 +19,6 @@ module AIXM
     # @see https://gitlab.com/openflightmaps/ofmx/wikis/Airport#tls-helipad-tlof-lighting
     class Lighting < Component
       include AIXM::Association
-      include AIXM::Memoize
       include AIXM::Concerns::Intensity
       include AIXM::Concerns::Remarks
 
@@ -103,27 +102,23 @@ module AIXM
         @color = value.nil? ? nil : COLORS.lookup(value.to_s.to_sym, nil) || fail(ArgumentError, "invalid color")
       end
 
-      # @return [String] UID markup
-      def to_uid(as:)
-        builder = Builder::XmlMarkup.new(indent: 2)
-        builder.tag!(as) do |tag|
-          tag << lightable.to_uid.indent(2)
-          tag.codePsn(POSITIONS.key(position).to_s)
+      # @!visibility private
+      def add_uid_to(builder, as:)
+        builder.send(as) do |tag|
+          lightable.add_uid_to(tag)
+          tag.codePsn(POSITIONS.key(position))
         end
       end
-      memoize :to_uid
 
-      # @return [String] AIXM or OFMX markup
-      def to_xml(as:)
-        builder = Builder::XmlMarkup.new(indent: 2)
-        builder.tag!(as) do |tag|
-          tag << to_uid(as: "#{as}Uid").indent(2)
+      # @!visibility private
+      def add_to(builder, as:)
+        builder.send(as) do |tag|
+          add_uid_to(tag, as: "#{as}Uid")
           tag.txtDescr(description) if description
-          tag.codeIntst(INTENSITIES.key(intensity).to_s) if intensity
-          tag.codeColour(COLORS.key(color).to_s) if color
+          tag.codeIntst(INTENSITIES.key(intensity)) if intensity
+          tag.codeColour(COLORS.key(color)) if color
           tag.txtRmk(remarks) if remarks
         end
-        builder.target!
       end
     end
   end

@@ -25,8 +25,6 @@ module AIXM
       #
       # @see https://gitlab.com/openflightmaps/ofmx/wikis/Navigational-aid#ndb-ndb
       class NDB < NavigationalAid
-        include AIXM::Memoize
-
         public_class_method :new
 
         TYPES = {
@@ -68,36 +66,33 @@ module AIXM
           @f = value
         end
 
-        # @return [String] UID markup
-        def to_uid
-          builder = Builder::XmlMarkup.new(indent: 2)
+        # @!visibility private
+        def add_uid_to(builder)
           builder.NdbUid({ region: (region if AIXM.ofmx?) }.compact) do |ndb_uid|
             ndb_uid.codeId(id)
             ndb_uid.geoLat(xy.lat(AIXM.schema))
             ndb_uid.geoLong(xy.long(AIXM.schema))
           end
         end
-        memoize :to_uid
 
-        # @return [String] AIXM or OFMX markup
-        def to_xml
-          builder = to_builder
+        # @!visibility private
+        def add_to(builder)
+          super
           builder.Ndb({ source: (source if AIXM.ofmx?) }.compact) do |ndb|
-            ndb.comment!(indented_comment) if comment
-            ndb << to_uid.indent(2)
-            ndb << organisation.to_uid.indent(2)
+            ndb.comment(indented_comment) if comment
+            add_uid_to(ndb)
+            organisation.add_uid_to(ndb)
             ndb.txtName(name) if name
             ndb.valFreq(f.freq.trim)
-            ndb.uomFreq(f.unit.upcase.to_s)
-            ndb.codeClass(type_key.to_s) if type
+            ndb.uomFreq(f.unit.upcase)
+            ndb.codeClass(type_key) if type
             ndb.codeDatum('WGE')
             if z
               ndb.valElev(z.alt)
-              ndb.uomDistVer(z.unit.upcase.to_s)
+              ndb.uomDistVer(z.unit.upcase)
             end
-            ndb << timetable.to_xml(as: :Ntt).indent(2) if timetable
+            timetable.add_to(ndb, as: :Ntt) if timetable
             ndb.txtRmk(remarks) if remarks
-            ndb.target!
           end
         end
 

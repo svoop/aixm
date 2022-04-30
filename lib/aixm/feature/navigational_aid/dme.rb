@@ -27,8 +27,6 @@ module AIXM
       #
       # @see https://gitlab.com/openflightmaps/ofmx/wikis/Navigational-aid#dme-dme
       class DME < NavigationalAid
-        include AIXM::Memoize
-
         public_class_method :new
 
         CHANNEL_RE = /\A([1-9]|[1-9]\d|1[0-1]\d|12[0-6])[XY]\z/.freeze
@@ -94,25 +92,23 @@ module AIXM
           end
         end
 
-        # @return [String] UID markup
-        def to_uid
-          builder = Builder::XmlMarkup.new(indent: 2)
+        # @!visibility private
+        def add_uid_to(builder)
           builder.DmeUid({ region: (region if AIXM.ofmx?) }.compact) do |dme_uid|
             dme_uid.codeId(id)
             dme_uid.geoLat(xy.lat(AIXM.schema))
             dme_uid.geoLong(xy.long(AIXM.schema))
           end
         end
-        memoize :to_uid
 
-        # @return [String] AIXM or OFMX markup
-        def to_xml
-          builder = to_builder
+        # @!visibility private
+        def add_to(builder)
+          super
           builder.Dme({ source: (source if AIXM.ofmx?) }.compact) do |dme|
-            dme.comment!(indented_comment) if comment
-            dme << to_uid.indent(2)
-            dme << organisation.to_uid.indent(2)
-            dme << vor.to_uid.indent(2) if vor
+            dme.comment(indented_comment) if comment
+            add_uid_to(dme)
+            organisation.add_uid_to(dme)
+            vor.add_uid_to(dme) if vor
             dme.txtName(name) if name
             dme.codeChannel(channel)
             unless vor
@@ -122,11 +118,10 @@ module AIXM
             dme.codeDatum('WGE')
             if z
               dme.valElev(z.alt)
-              dme.uomDistVer(z.unit.upcase.to_s)
+              dme.uomDistVer(z.unit.upcase)
             end
-            dme << timetable.to_xml(as: :Dtt).indent(2) if timetable
+            timetable.add_to(dme, as: :Dtt) if timetable
             dme.txtRmk(remarks) if remarks
-            dme.target!
           end
         end
       end

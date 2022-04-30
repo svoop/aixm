@@ -5,9 +5,9 @@ describe AIXM::Feature::Generic do
     AIXM::Factory.generic
   end
 
-  describe :fragment= do
+  describe :xml= do
     it "accepts any values" do
-      _(subject.tap { _1.fragment = '<foo/>' }.to_xml).must_equal <<~END
+      _(subject.tap { _1.xml = '<foo/>' }.to_xml).must_equal <<~END
         <!-- Generic -->
         <foo/>
       END
@@ -21,12 +21,6 @@ describe AIXM::Feature::Generic do
         <Org>
           <OrgUid>
             <txtName>EUROPE</txtName>
-          </OrgUid>
-          <codeType>GS</codeType>
-        </Org>
-        <Org>
-          <OrgUid>
-            <txtName>AMERICA</txtName>
           </OrgUid>
           <codeType>GS</codeType>
         </Org>

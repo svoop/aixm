@@ -24,11 +24,11 @@ describe AIXM::Feature do
 
     it "is included as oneline XML comment" do
       subject = AIXM::Factory.organisation
-      subject.comment = "Generic"
+      subject.comment = "Unofficial"
       _(subject.to_xml.gsub(/\s+$/, '')).must_equal <<~END.strip
         <!-- Organisation: FRANCE -->
         <Org>
-          <!-- Generic -->
+          <!-- Unofficial -->
           <OrgUid>
             <txtName>FRANCE</txtName>
           </OrgUid>

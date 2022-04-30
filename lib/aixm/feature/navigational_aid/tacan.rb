@@ -26,29 +26,26 @@ module AIXM
       #
       # @see https://gitlab.com/openflightmaps/ofmx/wikis/Navigational-aid#tcn-tacan
       class TACAN < DME
-        include AIXM::Memoize
-
         public_class_method :new
 
-        # @return [String] UID markup
-        def to_uid
-          builder = Builder::XmlMarkup.new(indent: 2)
+        # @!visibility private
+        def add_uid_to(builder)
           builder.TcnUid({ region: (region if AIXM.ofmx?) }.compact) do |tcn_uid|
             tcn_uid.codeId(id)
             tcn_uid.geoLat(xy.lat(AIXM.schema))
             tcn_uid.geoLong(xy.long(AIXM.schema))
           end
         end
-        memoize :to_uid
 
-        # @return [String] AIXM or OFMX markup
-        def to_xml
-          builder = to_builder
+        # @!visibility private
+        def add_to(builder)
+          builder.comment "NavigationalAid: [#{kind}] #{[id, name].compact.join(' / ')}".dress
+          builder.text "\n"
           builder.Tcn({ source: (source if AIXM.ofmx?) }.compact) do |tcn|
-            tcn.comment!(indented_comment) if comment
-            tcn << to_uid.indent(2)
-            tcn << organisation.to_uid.indent(2)
-            tcn << vor.to_uid.indent(2) if vor
+            tcn.comment(indented_comment) if comment
+            add_uid_to(tcn)
+            organisation.add_uid_to(tcn)
+            vor.add_uid_to(tcn) if vor
             tcn.txtName(name) if name
             tcn.codeChannel(channel)
             if !vor && AIXM.ofmx?
@@ -58,11 +55,10 @@ module AIXM
             tcn.codeDatum('WGE')
             if z
               tcn.valElev(z.alt)
-              tcn.uomDistVer(z.unit.upcase.to_s)
+              tcn.uomDistVer(z.unit.upcase)
             end
-            tcn << timetable.to_xml(as: :Ttt).indent(2) if timetable
+            timetable.add_to(tcn, as: :Ttt) if timetable
             tcn.txtRmk(remarks) if remarks
-            tcn.target!
           end
         end
       end

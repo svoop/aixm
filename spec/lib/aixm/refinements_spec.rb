@@ -209,6 +209,16 @@ describe AIXM::Refinements do
   end
 
   context String do
+    describe :dress do
+      it "strips and pads with one space by default" do
+        _("     foobar\n\n".dress).must_equal " foobar "
+      end
+
+      it "strips and pads with any padding" do
+        _("     foobar\n\n".dress("\n")).must_equal "\nfoobar\n"
+      end
+    end
+
     describe :to_class do
       it "must resolve class name to class" do
         _("String".to_class).must_equal String

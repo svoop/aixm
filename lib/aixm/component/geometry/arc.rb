@@ -58,9 +58,8 @@ module AIXM
           @clockwise = value
         end
 
-        # @return [String] AIXM or OFMX markup
-        def to_xml
-          builder = Builder::XmlMarkup.new(indent: 2)
+        # @!visibility private
+        def add_to(builder)
           builder.Avx do |avx|
             avx.codeType(clockwise? ? 'CWA' : 'CCA')
             avx.geoLat(xy.lat(AIXM.schema))

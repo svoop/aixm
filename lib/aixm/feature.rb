@@ -3,8 +3,7 @@ using AIXM::Refinements
 module AIXM
 
   # @abstract
-  class Feature
-    include AIXM::Concerns::HashEquality
+  class Feature < Component
 
     REGION_RE = /\A[A-Z]{2}\z/.freeze
 
@@ -17,11 +16,6 @@ module AIXM
     # @overload comment=(value)
     #   @param value [Object]
     attr_reader :comment
-
-    # Freely usable e.g. to find_by foreign keys.
-    #
-    # @return [Object]
-    attr_accessor :meta
 
     # Reference to source of the feature data.
     #
@@ -60,12 +54,12 @@ module AIXM
 
     # @see Object#==
     def ==(other)
-      self.__class__ === other && self.to_uid == other.to_uid
+      self.__class__ === other && self.to_uid.to_s == other.to_uid.to_s
     end
 
     # @see Object#eql?
     def hash
-      [self.__class__, to_uid].hash
+      [self.__class__, to_uid.to_s].hash
     end
 
     protected
@@ -73,9 +67,9 @@ module AIXM
     # @return [String]
     def indented_comment
       if comment.include?("\n")
-        [nil, comment.indent(4), ' '].join("\n")
+        [nil, comment.indent(4), '  '].join("\n")
       else
-        comment
+        comment.dress
       end
     end
   end

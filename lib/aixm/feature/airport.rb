@@ -38,7 +38,6 @@ module AIXM
     # @see https://gitlab.com/openflightmaps/ofmx/wikis/Airport#ahp-airport
     class Airport < Feature
       include AIXM::Association
-      include AIXM::Memoize
       include AIXM::Concerns::Timetable
       include AIXM::Concerns::Remarks
 
@@ -270,82 +269,78 @@ module AIXM
         @operator = value&.uptrans
       end
 
-      # @return [String] UID markup
-      def to_uid(as: :AhpUid)
-        builder = Builder::XmlMarkup.new(indent: 2)
-        builder.tag!(as, ({ region: (region if AIXM.ofmx?) }.compact)) do |tag|
+      # @!visibility private
+      def add_uid_to(builder, as: :AhpUid)
+        builder.send(as, { region: (region if AIXM.ofmx?) }.compact) do |tag|
           tag.codeId(id)
         end
       end
-      memoize :to_uid
 
-      # @return [String] UID markup
-      def to_wrapped_uid(as: :AhpUid, with:)
-        builder = Builder::XmlMarkup.new(indent: 2)
-        builder.tag!(with) do |tag|
-          tag << to_uid(as: as).indent(2)
+      # @!visibility private
+      def add_wrapped_uid_to(builder, as: :AhpUid, with:)
+        builder.send(with) do |tag|
+          add_uid_to(builder, as: as)
         end
       end
 
-      # @return [String] AIXM or OFMX markup
-      def to_xml
-        builder = Builder::XmlMarkup.new(indent: 2)
-        builder.comment! "Airport: #{id} #{name}"
+      # @!visibility private
+      def add_to(builder)
+        builder.comment "Airport: #{id} #{name}".dress
+        builder.text "\n"
         builder.Ahp({ source: (source if AIXM.ofmx?) }.compact) do |ahp|
-          ahp.comment!(indented_comment) if comment
-          ahp << to_uid.indent(2)
-          ahp << organisation.to_uid.indent(2)
+          ahp.comment(indented_comment) if comment
+          add_uid_to(ahp)
+          organisation.add_uid_to(ahp)
           ahp.txtName(name)
           ahp.codeIcao(id) if id.length == 4
           ahp.codeIata(id) if id.length == 3
           ahp.codeGps(gps) if AIXM.ofmx? && gps
-          ahp.codeType(TYPES.key(type).to_s) if type
+          ahp.codeType(TYPES.key(type)) if type
           ahp.geoLat(xy.lat(AIXM.schema))
           ahp.geoLong(xy.long(AIXM.schema))
           ahp.codeDatum('WGE')
           if z
             ahp.valElev(z.alt)
-            ahp.uomDistVer(z.unit.upcase.to_s)
+            ahp.uomDistVer(z.unit.upcase)
           end
           ahp.valMagVar(declination) if declination
           ahp.txtNameAdmin(operator) if operator
           if transition_z
             ahp.valTransitionAlt(transition_z.alt)
-            ahp.uomTransitionAlt(transition_z.unit.upcase.to_s)
+            ahp.uomTransitionAlt(transition_z.unit.upcase)
           end
-          ahp << timetable.to_xml(as: :Aht).indent(2) if timetable
+          timetable.add_to(ahp, as: :Aht) if timetable
           ahp.txtRmk(remarks) if remarks
         end
         runways.each do |runway|
-          builder << runway.to_xml
+          runway.add_to(builder)
         end
         fatos.each do |fato|
-          builder << fato.to_xml
+          fato.add_to(builder)
         end
         helipads.each do |helipad|
-          builder << helipad.to_xml
+          helipad.add_to(builder)
         end
         if usage_limitations.any?
           builder.Ahu do |ahu|
-            ahu << to_wrapped_uid(with: :AhuUid).indent(2)
+            add_wrapped_uid_to(ahu, with: :AhuUid)
             usage_limitations.each do |usage_limitation|
-              ahu << usage_limitation.to_xml.indent(2)
+              usage_limitation.add_to(ahu)
             end
           end
         end
         addresses.each.with_object({}) do |address, sequences|
           sequences[address.type] = (sequences[address.type] || 0) + 1
-          builder << address.to_xml(as: :Aha, sequence: sequences[address.type])
+          address.add_to(builder, as: :Aha, sequence: sequences[address.type])
         end
         services.each do |service|
           builder.Sah do |sah|
             sah.SahUid do |sah_uid|
-              sah_uid << to_uid.indent(4)
-              sah_uid << service.to_uid.indent(4)
+              add_uid_to(sah_uid)
+              service.add_uid_to(sah_uid)
             end
           end
         end
-        builder.target!
       end
 
       # Limitations concerning the availability of an airport for certain flight
@@ -379,6 +374,7 @@ module AIXM
       # @see https://gitlab.com/openflightmaps/ofmx/wikis/Airport#ahu-airport-usage
       class UsageLimitation
         include AIXM::Association
+        include AIXM::Concerns::XMLBuilder
         include AIXM::Concerns::Timetable
         include AIXM::Concerns::Remarks
 
@@ -424,15 +420,14 @@ module AIXM
           @type = TYPES.lookup(value&.to_s&.to_sym, nil) || fail(ArgumentError, "invalid type")
         end
 
-        # @return [String] AIXM or OFMX markup
-        def to_xml
-          builder = Builder::XmlMarkup.new(indent: 2)
+        # @!visibility private
+        def add_to(builder)
           builder.UsageLimitation do |usage_limitation|
-            usage_limitation.codeUsageLimitation(TYPES.key(type).to_s)
+            usage_limitation.codeUsageLimitation(TYPES.key(type))
             conditions.each do |condition|
-              usage_limitation << condition.to_xml.indent(2)
+              condition.add_to(usage_limitation)
             end
-            usage_limitation << timetable.to_xml(as: :Timetable).indent(2) if timetable
+            timetable.add_to(usage_limitation, as: :Timetable) if timetable
             usage_limitation.txtRmk(remarks) if remarks
           end
         end
@@ -444,6 +439,7 @@ module AIXM
         # @see https://gitlab.com/openflightmaps/ofmx/wikis/Airport#ahu-airport-usage
         class Condition
           include AIXM::Association
+          include AIXM::Concerns::XMLBuilder
 
           AIRCRAFT = {
             L: :landplane,
@@ -559,21 +555,20 @@ module AIXM
             @purpose = value.nil? ? nil : PURPOSES.lookup(value.to_s.to_sym, nil) || fail(ArgumentError, "invalid purpose")
           end
 
-          # @return [String] AIXM or OFMX markup
-          def to_xml
-            builder = Builder::XmlMarkup.new(indent: 2)
+          # @!visibility private
+          def add_to(builder)
             builder.UsageCondition do |usage_condition|
               if aircraft
                 usage_condition.AircraftClass do |aircraft_class|
-                  aircraft_class.codeType(AIRCRAFT.key(aircraft).to_s)
+                  aircraft_class.codeType(AIRCRAFT.key(aircraft))
                 end
               end
               if rule || realm || origin || purpose
                 usage_condition.FlightClass do |flight_class|
-                  flight_class.codeRule(RULES.key(rule).to_s) if rule
-                  flight_class.codeMil(REALMS.key(realm).to_s) if realm
-                  flight_class.codeOrigin(ORIGINS.key(origin).to_s) if origin
-                  flight_class.codePurpose(PURPOSES.key(purpose).to_s) if purpose
+                  flight_class.codeRule(RULES.key(rule)) if rule
+                  flight_class.codeMil(REALMS.key(realm)) if realm
+                  flight_class.codeOrigin(ORIGINS.key(origin)) if origin
+                  flight_class.codePurpose(PURPOSES.key(purpose)) if purpose
                 end
               end
             end

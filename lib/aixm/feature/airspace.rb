@@ -32,7 +32,6 @@ module AIXM
     # @see https://gitlab.com/openflightmaps/ofmx/wikis/Airspace#ase-airspace
     class Airspace < Feature
       include AIXM::Association
-      include AIXM::Memoize
 
       public_class_method :new
 
@@ -166,62 +165,55 @@ module AIXM
         @name = value&.uptrans
       end
 
-      # @return [String] UID markup
-      def to_uid(as: :AseUid)
-        builder = Builder::XmlMarkup.new(indent: 2)
-        builder.tag!(as, ({ region: (region if AIXM.ofmx?) }.compact)) do |tag|
-          tag.codeType(TYPES.key(type).to_s)
+      # @!visibility private
+      def add_uid_to(builder, as: :AseUid)
+        builder.send(as, ({ region: (region if AIXM.ofmx?) }.compact)) do |tag|
+          tag.codeType(TYPES.key(type))
           tag.codeId(id)
           tag.txtLocalType(local_type) if AIXM.ofmx? && local_type && local_type != name
         end
       end
-      memoize :to_uid
 
-      # @return [String] UID markup
-      def to_wrapped_uid(as: :AseUid, with:)
-        builder = Builder::XmlMarkup.new(indent: 2)
-        builder.tag!(with) do |tag|
-          tag << to_uid(as: as).indent(2)
+      # @!visibility private
+      def add_wrapped_uid_to(builder, as: :AseUid, with:)
+        builder.send(with) do |tag|
+          add_uid_to(tag, as: as)
         end
       end
 
-      # @raise [AIXM::GeometryError] if the geometry is not closed
-      # @raise [AIXM::LayerError] if no layers are defined
-      # @return [String] AIXM or OFMX markup
-      def to_xml
+      # @!visibility private
+      def add_to(builder)
         fail(LayerError.new("no layers defined", self)) unless layers.any?
-        builder = Builder::XmlMarkup.new(indent: 2)
-        builder.comment! "Airspace: [#{TYPES.key(type)}] #{name || :UNNAMED}"
+        builder.comment "Airspace: [#{TYPES.key(type)}] #{name || :UNNAMED}".dress
+        builder.text "\n"
         builder.Ase({ source: (source if AIXM.ofmx?) }.compact) do |ase|
-          ase.comment!(indented_comment) if comment
-          ase << to_uid.indent(2)
+          ase.comment(indented_comment) if comment
+          add_uid_to(ase)
           ase.txtLocalType(local_type) if AIXM.aixm? && local_type && local_type != name
           ase.txtName(name) if name
-          unless layered?
-            ase << layers.first.to_xml.indent(2)
-          end
+          layers.first.add_to(ase) unless layered?
         end
         builder.Abd do |abd|
-          abd << to_wrapped_uid(with: :AbdUid).indent(2)
-          abd << geometry.to_xml.indent(2)
+          add_wrapped_uid_to(abd, with: :AbdUid)
+          geometry.add_to(abd)
         end
         if layered?
           layers.each.with_index do |layer, index|
             layer_airspace = AIXM.airspace(region: region, type: 'CLASS', name: "#{name} LAYER #{index + 1}")
             builder.Ase do |ase|
-              ase << layer_airspace.to_uid.indent(2)
+              layer_airspace.add_uid_to(ase)
               ase.txtName(layer_airspace.name)
-              ase << layers[index].to_xml.indent(2)
+              layers[index].add_to(ase)
             end
             builder.Adg do |adg|
-              adg << layer_airspace.to_wrapped_uid(with: :AdgUid).indent(2)
-              adg << to_uid(as: :AseUidSameExtent).indent(2)
+              layer_airspace.add_wrapped_uid_to(adg, with: :AdgUid)
+              add_uid_to(adg, as: :AseUidSameExtent)
             end
             layer.services.each do |service|
               builder.Sae do |sae|
                 sae.SaeUid do |sae_uid|
-                  sae_uid << service.to_uid.indent(4)
-                  sae_uid << layer_airspace.to_uid.indent(4)
+                  service.add_uid_to(sae_uid)
+                  layer_airspace.add_uid_to(sae_uid)
                 end
               end
             end
@@ -230,13 +222,12 @@ module AIXM
           layers.first.services.each do |service|
             builder.Sae do |sae|
               sae.SaeUid do |sae_uid|
-                sae_uid << service.to_uid.indent(4)
-                sae_uid << to_uid.indent(4)
+                service.add_uid_to(sae_uid)
+                add_uid_to(sae_uid)
               end
             end
           end
         end
-        builder.target!
       end
 
       private

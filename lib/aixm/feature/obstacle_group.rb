@@ -39,7 +39,6 @@ module AIXM
     # @see https://gitlab.com/openflightmaps/ofmx/wikis/Obstacle
     class ObstacleGroup < Feature
       include AIXM::Association
-      include AIXM::Memoize
       include AIXM::Concerns::Remarks
 
       public_class_method :new
@@ -88,7 +87,7 @@ module AIXM
 
       # @return [String]
       def inspect
-        %Q(#<#{self.class} #{@obstacles.count} obstacle(s)>)
+        %Q(#<#{self.class} #{obstacles.count} obstacle(s)>)
       end
 
       def name=(value)
@@ -106,29 +105,27 @@ module AIXM
         @z_accuracy = value
       end
 
-      # @return [String] UID markup
-      def to_uid
-        builder = Builder::XmlMarkup.new(indent: 2)
+      # @!visibility private
+      def add_uid_to(builder)
         builder.OgrUid({ region: (region if AIXM.ofmx?) }.compact) do |ogr_uid|
           ogr_uid.txtName(name)
           ogr_uid.geoLat(obstacles.first.xy.lat(AIXM.schema))
           ogr_uid.geoLong(obstacles.first.xy.long(AIXM.schema))
         end
       end
-      memoize :to_uid
 
-      # @return [String] AIXM or OFMX markup
-      def to_xml
-        builder = Builder::XmlMarkup.new(indent: 2)
+      # @!visibility private
+      def add_to(builder)
         if AIXM.ofmx?
-          builder.comment! "Obstacle group: #{name}".strip
+          builder.comment "Obstacle group: #{name}".dress
+          builder.text "\n"
           builder.Ogr({ source: (source if AIXM.ofmx?) }.compact) do |ogr|
-            ogr.comment!(indented_comment) if comment
-            ogr << to_uid.indent(2)
+            ogr.comment(indented_comment) if comment
+            add_uid_to(ogr)
             ogr.codeDatum('WGE')
             if xy_accuracy
               ogr.valGeoAccuracy(xy_accuracy.dim.trim)
-              ogr.uomGeoAccuracy(xy_accuracy.unit.upcase.to_s)
+              ogr.uomGeoAccuracy(xy_accuracy.unit.upcase)
             end
             if z_accuracy
               ogr.valElevAccuracy(z_accuracy.to_ft.dim.round)
@@ -137,8 +134,9 @@ module AIXM
             ogr.txtRmk(remarks) if remarks
           end
         end
-        obstacles.each { builder << _1.to_xml(delegate: false) }
-        builder.target!
+        obstacles.each do |obstacle|
+          obstacle.add_to(builder, delegate: false)
+        end
       end
     end
 

@@ -15,7 +15,6 @@ module AIXM
     # @see https://gitlab.com/openflightmaps/ofmx/wikis/Airport#aha-airport-address
     class Address < Component
       include AIXM::Association
-      include AIXM::Memoize
       include AIXM::Concerns::Remarks
 
       public_class_method :new
@@ -82,26 +81,24 @@ module AIXM
         end
       end
 
-      # @return [String] UID markup
-      def to_uid(as:, sequence:)
-        builder = Builder::XmlMarkup.new(indent: 2)
-        builder.tag!(as) do |tag|
-          tag << addressable.to_uid.indent(2) if addressable
+      # @!visibility private
+      def add_uid_to(builder, as:, sequence:)
+        builder.send(as) do |tag|
+          addressable.add_uid_to(tag) if addressable
           tag.codeType(TYPES.key(type).to_s.then_if(AIXM.aixm?) { _1.sub(/-\w+$/, '') })
           tag.noSeq(sequence)
         end
       end
-      memoize :to_uid
 
-      # @return [String] AIXM or OFMX markup
-      def to_xml(as:, sequence:)
-        builder = Builder::XmlMarkup.new(indent: 2)
-        builder.comment! ["Address: #{TYPES.key(type)}", addressable&.id].compact.join(' for ')
-        builder.tag!(as) do |tag|
-          tag << to_uid(as: :"#{as}Uid", sequence: sequence).indent(2)
+      # @!visibility private
+      def add_to(builder, as:, sequence:)
+        builder.comment ["Address: #{TYPES.key(type)}", addressable&.id].compact.join(' for ').dress
+        builder.text "\n"
+        builder.send(as) do |tag|
+          add_uid_to(tag, as: :"#{as}Uid", sequence: sequence)
           case type
           when :radio_frequency
-            tag.txtAddress(address.freq.to_s)
+            tag.txtAddress(address.freq)
           else
             tag.txtAddress(address)
           end

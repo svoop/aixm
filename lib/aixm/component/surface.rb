@@ -164,12 +164,11 @@ module AIXM
         @auw_weight = value
       end
 
-      # @return [String] AIXM or OFMX markup
-      def to_xml
-        builder = Builder::XmlMarkup.new(indent: true)
-        builder.codeComposition(COMPOSITIONS.key(composition).to_s) if composition
-        builder.codePreparation(PREPARATIONS.key(preparation).to_s) if preparation
-        builder.codeCondSfc(CONDITIONS.key(condition).to_s) if condition
+      # @!visibility private
+      def add_to(builder)
+        builder.codeComposition(COMPOSITIONS.key(composition)) if composition
+        builder.codePreparation(PREPARATIONS.key(preparation)) if preparation
+        builder.codeCondSfc(CONDITIONS.key(condition)) if condition
         if pcn
           builder.valPcnClass(@pcn['capacity'])
           builder.codePcnPavementType(@pcn['type'])
@@ -180,17 +179,16 @@ module AIXM
         builder.txtPcnNote(@remarks) if remarks
         if siwl_weight
           builder.valSiwlWeight(siwl_weight.wgt.trim)
-          builder.uomSiwlWeight(siwl_weight.unit.to_s.upcase)
+          builder.uomSiwlWeight(siwl_weight.unit.upcase)
         end
         if siwl_tire_pressure
           builder.valSiwlTirePressure(siwl_tire_pressure.pres.trim)
-          builder.uomSiwlTirePressure(siwl_tire_pressure.unit.to_s.upcase)
+          builder.uomSiwlTirePressure(siwl_tire_pressure.unit.upcase)
         end
         if auw_weight
           builder.valAuwWeight(auw_weight.wgt.trim)
-          builder.uomAuwWeight(auw_weight.unit.to_s.upcase)
+          builder.uomAuwWeight(auw_weight.unit.upcase)
         end
-        builder.target!
       end
     end
   end

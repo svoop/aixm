@@ -116,19 +116,17 @@ module AIXM
         @meht = value
       end
 
-      # @return [String] AIXM or OFMX markup
-      def to_xml
-        builder = Builder::XmlMarkup.new(indent: true)
-        builder.codeTypeVasis(TYPES.key(type).to_s) if type
-        builder.codePsnVasis(POSITIONS.key(position).to_s) if position
-        builder.noBoxVasis(boxes.to_s) if boxes
+      # @!visibility private
+      def add_to(builder)
+        builder.codeTypeVasis(TYPES.key(type)) if type
+        builder.codePsnVasis(POSITIONS.key(position)) if position
+        builder.noBoxVasis(boxes) if boxes
         builder.codePortableVasis(portable ? 'Y' : 'N') unless portable.nil?
         builder.valSlopeAngleGpVasis(slope_angle.to_f) if slope_angle
         if meht
-          builder.valMeht(meht.alt.to_s)
+          builder.valMeht(meht.alt)
           builder.uomMeht('FT')
         end
-        builder.target!
       end
     end
   end

@@ -156,8 +156,8 @@ module AIXM
       end
     end
 
-    # @return [String] AIXM or OFMX markup
-    def to_xml
+    # @return [Nokogiri::XML::Document] Nokogiri AIXM or OFMX document
+    def document
       meta = {
         'xmlns:xsi': AIXM.schema(:namespace),
         version: AIXM.schema(:version),
@@ -168,19 +168,21 @@ module AIXM
         effective: @effective_at.xmlschema,
         expiration: (@expiration_at&.xmlschema if AIXM.ofmx?)
       }.compact
-      builder = Builder::XmlMarkup.new(indent: 2)
-      builder.instruct!
-      builder.tag!(AIXM.schema(:root), meta) do |root|
-        AIXM::Memoize.method :to_uid do
-          root << features.map(&:to_xml).join.indent(2)
+      Nokogiri::XML::Builder.new do |builder|
+        builder.send(AIXM.schema(:root), meta) do |root|
+          AIXM::Memoize.method :to_uid do
+            features.each { _1.add_to(root) }
+          end
+          if AIXM.ofmx? && AIXM.config.mid
+            AIXM::PayloadHash::Mid.new(builder.doc).insert_mid
+          end
         end
-      end
-      if AIXM.ofmx? && AIXM.config.mid
-        AIXM::PayloadHash::Mid.new(builder.target!).insert_mid.to_xml
-      else
-        builder.target!
-      end
+      end.doc
     end
 
+    # @return [String] AIXM or OFMX markup
+    def to_xml
+      document.pretty.to_xml
+    end
   end
 end

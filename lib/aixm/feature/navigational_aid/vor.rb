@@ -29,8 +29,6 @@ module AIXM
       #
       # @see https://gitlab.com/openflightmaps/ofmx/wikis/Navigational-aid#vor-vor
       class VOR < NavigationalAid
-        include AIXM::Memoize
-
         public_class_method :new
 
         TYPES = {
@@ -133,40 +131,37 @@ module AIXM
           end
         end
 
-        # @return [String] UID markup
-        def to_uid
-          builder = Builder::XmlMarkup.new(indent: 2)
+        # @!visibility private
+        def add_uid_to(builder)
           builder.VorUid({ region: (region if AIXM.ofmx?) }.compact) do |vor_uid|
             vor_uid.codeId(id)
             vor_uid.geoLat(xy.lat(AIXM.schema))
             vor_uid.geoLong(xy.long(AIXM.schema))
           end
         end
-        memoize :to_uid
 
-        # @return [String] AIXM or OFMX markup
-        def to_xml
-          builder = to_builder
+        # @!visibility private
+        def add_to(builder)
+          super
           builder.Vor({ source: (source if AIXM.ofmx?) }.compact) do |vor|
-            vor.comment!(indented_comment) if comment
-            vor << to_uid.indent(2)
-            vor << organisation.to_uid.indent(2)
+            vor.comment(indented_comment) if comment
+            add_uid_to(vor)
+            organisation.add_uid_to(vor)
             vor.txtName(name) if name
-            vor.codeType(type_key.to_s)
+            vor.codeType(type_key)
             vor.valFreq(f.freq.trim)
-            vor.uomFreq(f.unit.upcase.to_s)
-            vor.codeTypeNorth(north_key.to_s)
+            vor.uomFreq(f.unit.upcase)
+            vor.codeTypeNorth(north_key)
             vor.codeDatum('WGE')
             if z
               vor.valElev(z.alt)
-              vor.uomDistVer(z.unit.upcase.to_s)
+              vor.uomDistVer(z.unit.upcase)
             end
-            vor << timetable.to_xml(as: :Vtt).indent(2) if timetable
+            timetable.add_to(vor, as: :Vtt) if timetable
             vor.txtRmk(remarks) if remarks
           end
-          builder << @dme.to_xml if @dme
-          builder << @tacan.to_xml if @tacan
-          builder.target!
+          @dme.add_to(builder) if @dme
+          @tacan.add_to(builder) if @tacan
         end
 
         # @api private

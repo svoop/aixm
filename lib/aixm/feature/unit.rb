@@ -23,7 +23,6 @@ module AIXM
     # @see https://gitlab.com/openflightmaps/ofmx/wikis/Organisation#uni-unit
     class Unit < Feature
       include AIXM::Association
-      include AIXM::Memoize
       include AIXM::Concerns::Remarks
 
       public_class_method :new
@@ -152,33 +151,30 @@ module AIXM
         @klass = CLASSES.lookup(value&.to_s&.to_sym, nil) || fail(ArgumentError, "invalid class")
       end
 
-      # @return [String] UID markup
-      def to_uid
-        builder = Builder::XmlMarkup.new(indent: 2)
+      # @!visibility private
+      def add_uid_to(builder)
         builder.UniUid({ region: (region if AIXM.ofmx?) }.compact) do |uni_uid|
           uni_uid.txtName(name)
-          uni_uid.codeType(TYPES.key(type).to_s) if AIXM.ofmx?
+          uni_uid.codeType(TYPES.key(type)) if AIXM.ofmx?
         end
       end
-      memoize :to_uid
 
-      # @return [String] AIXM or OFMX markup
-      def to_xml
-        builder = Builder::XmlMarkup.new(indent: 2)
-        builder.comment! "Unit: #{name_with_type}"
+      # @!visibility private
+      def add_to(builder)
+        builder.comment "Unit: #{name_with_type}".dress
+        builder.text "\n"
         builder.Uni({ source: (source if AIXM.ofmx?) }.compact) do |uni|
-          uni.comment!(indented_comment) if comment
-          uni << to_uid.indent(2)
-          uni << organisation.to_uid.indent(2)
-          uni << airport.to_uid.indent(2) if airport
-          uni.codeType(TYPES.key(type).to_s) unless AIXM.ofmx?
-          uni.codeClass(CLASSES.key(self.class).to_s)
+          uni.comment(indented_comment) if comment
+          add_uid_to(uni)
+          organisation.add_uid_to(uni)
+          airport.add_uid_to(uni) if airport
+          uni.codeType(TYPES.key(type)) unless AIXM.ofmx?
+          uni.codeClass(CLASSES.key(self.class))
           uni.txtRmk(remarks) if remarks
         end
         services.sort { |a, b| a.type <=> b.type }.each do |service|
-          builder << service.to_xml
+          service.add_to(builder)
         end
-        builder.target!
       end
 
       private

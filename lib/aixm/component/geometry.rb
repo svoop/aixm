@@ -93,10 +93,10 @@ module AIXM
           segments.first.xy == segments.last.xy
       end
 
-      # @return [String] AIXM or OFMX markup
-      def to_xml
+      # @!visibility private
+      def add_to(builder)
         fail(GeometryError.new("geometry is not closed", self)) unless closed?
-        segments.map { _1.to_xml }.join
+        segments.each { _1.add_to(builder) }
       end
     end
 

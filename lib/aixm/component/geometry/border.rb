@@ -15,7 +15,6 @@ module AIXM
       #
       # @see https://gitlab.com/openflightmaps/ofmx/wikis/Airspace#frontier
       class Border < Point
-        include AIXM::Memoize
 
         # Name of the border
         #
@@ -42,20 +41,17 @@ module AIXM
           @name = value
         end
 
-        # @return [String] UID markup
-        def to_uid(as: :GbrUid)
-          builder = Builder::XmlMarkup.new(indent: 2)
-          builder.tag!(as) do |tag|
+        # @!visibility private
+        def add_uid_to(builder, as: :GbrUid)
+          builder.send(as) do |tag|
             tag.txtName(name.to_s)
           end
         end
-        memoize :to_uid
 
-        # @return [String] AIXM or OFMX markup
-        def to_xml
-          builder = Builder::XmlMarkup.new(indent: 2)
+        # @!visibility private
+        def add_to(builder)
           builder.Avx do |avx|
-            avx << to_uid.indent(2)
+            add_uid_to(avx)
             avx.codeType('FNT')
             avx.geoLat(xy.lat(AIXM.schema))
             avx.geoLong(xy.long(AIXM.schema))

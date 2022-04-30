@@ -70,13 +70,12 @@ module AIXM
         end
       end
 
-      # @return [String] AIXM or OFMX markup
-      def to_xml(as: :Timetable)
-        builder = Builder::XmlMarkup.new(indent: 2)
-        builder.tag!(as) do |tag|
-          tag.codeWorkHr(CODES.key(code).to_s)
+      # @!visibility private
+      def add_to(builder, as: :Timetable)
+        builder.send(as) do |tag|
+          tag.codeWorkHr(CODES.key(code))
           timesheets.each do |timesheet|
-           tag << timesheet.to_xml.indent(2)
+            timesheet.add_to(tag)
           end
           tag.txtRmkWorkHr(remarks) if remarks
         end

@@ -15,6 +15,7 @@ module AIXM
       # @see https://gitlab.com/openflightmaps/ofmx/wikis/Airspace#rhumb-line
       class RhumbLine
         include AIXM::Association
+        include AIXM::Concerns::XMLBuilder
 
         # @!method geometry
         #   @return [AIXM::Component::Geometry] geometry this segment belongs to
@@ -44,9 +45,8 @@ module AIXM
           @xy = value
         end
 
-        # @return [String] AIXM or OFMX markup
-        def to_xml
-          builder = Builder::XmlMarkup.new(indent: 2)
+        # @!visibility private
+        def add_to(builder)
           builder.Avx do |avx|
             avx.codeType('RHL')
             avx.geoLat(xy.lat(AIXM.schema))

@@ -23,7 +23,6 @@ module AIXM
     # @see https://gitlab.com/openflightmaps/ofmx/wikis/Organisation#fqy-frequency
     class Frequency < Component
       include AIXM::Association
-      include AIXM::Memoize
       include AIXM::Concerns::Timetable
       include AIXM::Concerns::Remarks
 
@@ -112,32 +111,28 @@ module AIXM
         @type = value.nil? ? nil : TYPES.lookup(value.to_s.to_sym, nil) || fail(ArgumentError, "invalid type")
       end
 
-      # @return [String] UID markup
-      def to_uid
-        builder = Builder::XmlMarkup.new(indent: 2)
+      # @!visibility private
+      def add_uid_to(builder)
         builder.FqyUid do |fqy_uid|
-          fqy_uid << service.to_uid.indent(2)
+          service.add_uid_to(fqy_uid)
           fqy_uid.valFreqTrans(transmission_f.freq)
         end
       end
-      memoize :to_uid
 
-      # @return [String] AIXM or OFMX markup
-      def to_xml
-        builder = Builder::XmlMarkup.new(indent: 2)
+      # @!visibility private
+      def add_to(builder)
         builder.Fqy do |fqy|
-          fqy << to_uid.indent(2)
+          add_uid_to(fqy)
           fqy.valFreqRec(reception_f.freq) if reception_f
-          fqy.uomFreq(transmission_f.unit.upcase.to_s)
-          fqy << timetable.to_xml(as: :Ftt).indent(2) if timetable
+          fqy.uomFreq(transmission_f.unit.upcase)
+          timetable.add_to(fqy, as: :Ftt) if timetable
           fqy.txtRmk(remarks) if remarks
           callsigns.each do |language, callsign|
             fqy.Cdl do |cdl|
               cdl.txtCallSign(callsign)
-              cdl.codeLang(language.upcase.to_s)
+              cdl.codeLang(language.upcase)
             end
           end
-          fqy.target!
         end
       end
     end

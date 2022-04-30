@@ -23,7 +23,6 @@ module AIXM
       # @see https://gitlab.com/openflightmaps/ofmx/wikis/Navigational-aid#dpn-designated-point
       class DesignatedPoint < NavigationalAid
         include AIXM::Association
-        include AIXM::Memoize
 
         public_class_method :new
 
@@ -61,29 +60,26 @@ module AIXM
           @type = TYPES.lookup(value&.to_s&.to_sym, nil) || fail(ArgumentError, "invalid type")
         end
 
-        # @return [String] UID markup
-        def to_uid
-          builder = Builder::XmlMarkup.new(indent: 2)
+        # @!visibility private
+        def add_uid_to(builder)
           builder.DpnUid({ region: (region if AIXM.ofmx?) }.compact) do |dpn_uid|
             dpn_uid.codeId(id)
             dpn_uid.geoLat(xy.lat(AIXM.schema))
             dpn_uid.geoLong(xy.long(AIXM.schema))
           end
         end
-        memoize :to_uid
 
-        # @return [String] AIXM or OFMX markup
-        def to_xml
-          builder = to_builder
+        # @!visibility private
+        def add_to(builder)
+          super
           builder.Dpn({ source: (source if AIXM.ofmx?) }.compact) do |dpn|
-            dpn.comment!(indented_comment) if comment
-            dpn << to_uid.indent(2)
-            dpn << airport.to_uid(as: :AhpUidAssoc).indent(2) if airport
+            dpn.comment(indented_comment) if comment
+            add_uid_to(dpn)
+            airport.add_uid_to(dpn, as: :AhpUidAssoc) if airport
             dpn.codeDatum('WGE')
-            dpn.codeType(AIXM.aixm? && type_key =~ /^VFR/ ? 'OTHER' : type_key.to_s)
+            dpn.codeType(AIXM.aixm? && type_key =~ /^VFR/ ? 'OTHER' : type_key)
             dpn.txtName(name) if name
             dpn.txtRmk(remarks) if remarks
-            dpn.target!
           end
         end
 

@@ -1,3 +1,5 @@
+using AIXM::Refinements
+
 module AIXM
   class Feature
 
@@ -5,53 +7,52 @@ module AIXM
     #
     # ===Cheat Sheet in Pseudo Code:
     #   generic = AIXM.generic(
-    #     fragment: String
+    #     xml: Object
     #   )
     class Generic < Feature
-      include AIXM::Memoize
-
       public_class_method :new
 
-      # XML document fragment
+      # Raw XML source
       #
-      # @note Any object is accepted and will receive +to_s+ before being
-      #   parsed into an XML fragment.
+      # @note Any object is accepted, it will be converted to String using
+      #   +to_s+.
       #
-      # @overload fragment
-      #   @return [Nokogiri::XML::DocumentFragment]
-      # @overload fragment=(value)
+      # @overload xml
+      #   @return [String]
+      # @overload xml=(value)
       #   @param value [Object] raw XML source
-      attr_reader :fragment
+      attr_reader :xml
 
       # See the {cheat sheet}[AIXM::Feature::Generic] for examples on how to
       # create instances of this class.
-      def initialize(source: nil, region: nil, fragment:)
+      def initialize(source: nil, region: nil, xml:)
         super(source: source, region: region)
-        self.fragment = fragment
+        self.xml = xml
       end
 
       # @return [String]
       def inspect
-        '#<' + [self.class, fragment.first_element_child&.name].join(' ') + '>'
+        %Q(#<#{self.class} "#{xml.lines.first}…">)
       end
 
-      def fragment=(value)
-        @fragment = Nokogiri::XML::DocumentFragment.parse(value.to_s, &:noblanks)
+      def xml=(value)
+        @xml = value.to_s
       end
 
-      # @return [String] hashed XML as pseudo UID
+      # @return [Integer] pseudo UID fragment
       def to_uid
-        to_xml.hash
+        xml.hash
       end
-      memoize :to_uid
 
-      # @return [String] AIXM or OFMX markup
-      def to_xml
-        fragment.children
-          .map { _1.to_xml(indent: 2) }
-          .prepend("<!-- Generic -->")
-          .join("\n")
-          .concat("\n")
+      # @!visibility private
+      def add_to(builder)
+        builder.comment "Generic".dress
+        builder.text "\n"
+        if comment
+          builder.comment(indented_comment)
+          builder.text "\n"
+        end
+        builder << xml
       end
     end
 

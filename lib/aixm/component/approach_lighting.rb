@@ -18,7 +18,6 @@ module AIXM
     # @see https://gitlab.com/openflightmaps/ofmx/wikis/Airport#rda-runway-direction-approach-lighting
     class ApproachLighting < Component
       include AIXM::Association
-      include AIXM::Memoize
       include AIXM::Concerns::Intensity
       include AIXM::Concerns::Remarks
 
@@ -108,31 +107,27 @@ module AIXM
         @flash_description = value&.to_s
       end
 
-      # @return [String] UID markup
-      def to_uid(as:)
-        builder = Builder::XmlMarkup.new(indent: 2)
-        builder.tag!(as) do |tag|
-          tag << approach_lightable.to_uid.indent(2)
-          tag.codeType(TYPES.key(type).to_s)
+      # @!visibility private
+      def add_uid_to(builder, as:)
+        builder.send(as) do |tag|
+          approach_lightable.add_uid_to(tag)
+          tag.codeType(TYPES.key(type))
         end
       end
-      memoize :to_uid
 
-      # @return [String] AIXM or OFMX markup
-      def to_xml(as:)
-        builder = Builder::XmlMarkup.new(indent: 2)
-        builder.tag!(as) do |tag|
-          tag << to_uid(as: "#{as}Uid").indent(2)
+      # @!visibility private
+      def add_to(builder, as:)
+        builder.send(as) do |tag|
+          add_uid_to(tag, as: "#{as}Uid")
           if length
             tag.valLen(length.dim.round)
             tag.uomLen(length.unit.to_s.upcase)
           end
-          tag.codeIntst(INTENSITIES.key(intensity).to_s) if intensity
+          tag.codeIntst(INTENSITIES.key(intensity)) if intensity
           tag.codeSequencedFlash(sequenced_flash ? 'Y' : 'N') unless sequenced_flash.nil?
           tag.txtDescrFlash(flash_description) if flash_description
           tag.txtRmk(remarks) if remarks
         end
-        builder.target!
       end
     end
   end

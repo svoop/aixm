@@ -141,9 +141,8 @@ module AIXM
         @days = value
       end
 
-      # @return [String] AIXM or OFMX markup
-      def to_xml
-        builder = Builder::XmlMarkup.new(indent: 2)
+      # @!visibility private
+      def add_to(builder)
         builder.Timsh do |timsh|
           timsh.codeTimeRef(adjust_to_dst? ? 'UTCW' : 'UTC')
           timsh.dateValidWef(dates.begin.to_s('%d-%m'))
@@ -151,23 +150,23 @@ module AIXM
           timsh.dateValidTil(dates.end.to_s('%d-%m'))
           timsh.dateYearValidTil(dates.end.year) if AIXM.ofmx? && !dates.end.yearless?
           if days.instance_of? Range
-            timsh.codeDay(DAYS.key(days.begin.day).to_s)
-            timsh.codeDayTil(DAYS.key(days.end.day).to_s)
+            timsh.codeDay(DAYS.key(days.begin.day))
+            timsh.codeDayTil(DAYS.key(days.end.day))
           else
-            timsh.codeDay(DAYS.key(days.day).to_s)
+            timsh.codeDay(DAYS.key(days.day))
           end
           if times
             if times.begin
               timsh.timeWef(times.begin.to_s('%R'))
-              timsh.codeEventWef(EVENTS.key(times.begin.event).to_s) if times.begin.event
+              timsh.codeEventWef(EVENTS.key(times.begin.event)) if times.begin.event
               timsh.timeRelEventWef(times.begin.delta) unless times.begin.delta.zero?
-              timsh.codeCombWef(PRECEDENCES.key(times.begin.precedence).to_s) if times.begin.precedence
+              timsh.codeCombWef(PRECEDENCES.key(times.begin.precedence)) if times.begin.precedence
             end
             if times.end
               timsh.timeTil(times.end.to_s('%R'))
-              timsh.codeEventTil(EVENTS.key(times.end.event).to_s) if times.end.event
+              timsh.codeEventTil(EVENTS.key(times.end.event)) if times.end.event
               timsh.timeRelEventTil(times.end.delta) unless times.end.delta.zero?
-              timsh.codeCombTil(PRECEDENCES.key(times.end.precedence).to_s) if times.end.precedence
+              timsh.codeCombTil(PRECEDENCES.key(times.end.precedence)) if times.end.precedence
             end
           end
         end

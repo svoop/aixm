@@ -180,19 +180,17 @@ module AIXM
         @selective = value
       end
 
-      # @return [String] AIXM or OFMX markup
-      def to_xml
-        builder = Builder::XmlMarkup.new(indent: 2)
-        builder.codeClass(self.class.to_s) if self.class
+      # @!visibility private
+      def add_to(builder)
+        builder.codeClass(self.class) if self.class
         builder.codeLocInd(location_indicator) if location_indicator
         if activity
           builder.codeActivity(ACTIVITIES.key(activity).to_s.then_if(AIXM.aixm?) { { 'AIRMODEL' => 'UAV', 'WINCH' => 'GLIDER' }[_1] || _1 })
         end
-        builder << vertical_limit.to_xml
-        builder << timetable.to_xml(as: :Att) if timetable
+        vertical_limit.add_to(builder)
+        timetable.add_to(builder, as: :Att) if timetable
         builder.codeSelAvbl(selective? ? 'Y' : 'N') if AIXM.ofmx?
         builder.txtRmk(remarks) if remarks
-        builder.target!
       end
     end
 

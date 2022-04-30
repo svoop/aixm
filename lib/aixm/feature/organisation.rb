@@ -20,7 +20,6 @@ module AIXM
     # @see https://gitlab.com/openflightmaps/ofmx/wikis/Organisation#org-organisation
     class Organisation < Feature
       include AIXM::Association
-      include AIXM::Memoize
       include AIXM::Concerns::Remarks
 
       public_class_method :new
@@ -97,24 +96,22 @@ module AIXM
         @id = value&.upcase
       end
 
-      # @return [String] UID markup
-      def to_uid
-        builder = Builder::XmlMarkup.new(indent: 2)
+      # @!visibility private
+      def add_uid_to(builder)
         builder.OrgUid({ region: (region if AIXM.ofmx?) }.compact) do |org_uid|
           org_uid.txtName(name)
         end
       end
-      memoize :to_uid
 
-      # @return [String] AIXM or OFMX markup
-      def to_xml
-        builder = Builder::XmlMarkup.new(indent: 2)
-        builder.comment! "Organisation: #{name}"
+      # @!visibility private
+      def add_to(builder)
+        builder.comment "Organisation: #{name}".dress
+        builder.text "\n"
         builder.Org({ source: (source if AIXM.ofmx?) }.compact) do |org|
-          org.comment!(indented_comment) if comment
-          org << to_uid.indent(2)
+          org.comment(indented_comment) if comment
+          add_uid_to(org)
           org.codeId(id) if id
-          org.codeType(TYPES.key(type).to_s)
+          org.codeType(TYPES.key(type))
           org.txtRmk(remarks) if remarks
         end
       end

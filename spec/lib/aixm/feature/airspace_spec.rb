@@ -69,8 +69,8 @@ describe AIXM::Feature::Airspace do
 
     describe :to_uid do
       it "builds with arbitrary tag" do
-        _(subject.to_uid).must_match(/<AseUid>/)
-        _(subject.to_uid(as: :FooBar)).must_match(/<FooBar>/)
+        _(subject.to_uid.to_s).must_match(/<AseUid>/)
+        _(subject.to_uid(as: :FooBar).to_s).must_match(/<FooBar>/)
       end
     end
 

@@ -16,7 +16,6 @@ module AIXM
     # @see https://gitlab.com/openflightmaps/ofmx/wikis/Organisation#ser-service
     class Service < Component
       include AIXM::Association
-      include AIXM::Memoize
       include AIXM::Concerns::Timetable
       include AIXM::Concerns::Remarks
 
@@ -183,31 +182,28 @@ module AIXM
         GUESSED_UNIT_TYPES_MAP[type]
       end
 
-      # @return [String] UID markup
-      def to_uid
+      # @!visibility private
+      def add_uid_to(builder)
         resequence!
-        builder = Builder::XmlMarkup.new(indent: 2)
         builder.SerUid do |ser_uid|
-          ser_uid << unit.to_uid.indent(2)
-          ser_uid.codeType(TYPES.key(type).to_s)
+          unit.add_uid_to(ser_uid)
+          ser_uid.codeType(TYPES.key(type))
           ser_uid.noSeq(@sequence)
         end
       end
-      memoize :to_uid
 
-      # @return [String] AIXM or OFMX markup
-      def to_xml
-        builder = Builder::XmlMarkup.new(indent: 2)
-        builder.comment! ["Service: #{TYPES.key(type)}", unit&.send(:name_with_type)].compact.join(' by ')
+      # @!visibility private
+      def add_to(builder)
+        builder.comment ["Service: #{TYPES.key(type)}", unit&.send(:name_with_type)].compact.join(' by ').dress
+        builder.text "\n"
         builder.Ser do |ser|
-          ser << to_uid.indent(2)
-          ser << timetable.to_xml(as: :Stt).indent(2) if timetable
+          add_uid_to(ser)
+          timetable.add_to(ser, as: :Stt) if timetable
           ser.txtRmk(remarks) if remarks
         end
         frequencies.each do |frequency|
-          builder << frequency.to_xml
+          frequency.add_to(builder)
         end
-        builder.target!
       end
 
       private

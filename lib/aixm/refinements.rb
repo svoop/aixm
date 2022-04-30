@@ -210,6 +210,22 @@ module AIXM
       end
     end
 
+    # @!method dress
+    #   Prepends and appends the given +string+ after stripping +self+. Quite
+    #   the contrary of +strip+, hence the name.
+    #
+    #   @example
+    #     "     foobar\n\n".dress   # => " foobar "
+    #
+    #   @note This is a refinement for +String+
+    #   @param padding [String] string to prepend and append
+    #   @return [String]
+    refine String do
+      def dress(padding=' ')
+        [padding, strip, padding].join
+      end
+    end
+
     # @!method to_class
     #   Convert string to class
     #

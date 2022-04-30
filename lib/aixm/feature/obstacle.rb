@@ -43,7 +43,6 @@ module AIXM
     # @see https://gitlab.com/openflightmaps/ofmx/wikis/Obstacle
     class Obstacle < Feature
       include AIXM::Association
-      include AIXM::Memoize
       include AIXM::Concerns::Remarks
 
       public_class_method :new
@@ -209,7 +208,7 @@ module AIXM
 
       # @return [String]
       def inspect
-        %Q(#<#{self.class} xy="#{xy.to_s}" type=#{type.inspect} name=#{name.inspect}>)
+        %Q(#<#{self.class} xy="#{xy}" type=#{type.inspect} name=#{name.inspect}>)
       end
 
       def name=(value)
@@ -307,32 +306,30 @@ module AIXM
         !!linked_to
       end
 
-      # @return [String] UID markup
-      def to_uid(as: :ObsUid)
+      # @!visibility private
+      def add_uid_to(builder, as: :ObsUid)
         obstacle_group = self.obstacle_group || singleton_obstacle_group
-        builder = Builder::XmlMarkup.new(indent: 2)
-        builder.tag!(as) do |tag|
-          tag << obstacle_group.to_uid.indent(2) if AIXM.ofmx?
+        builder.send(as) do |tag|
+          obstacle_group.add_uid_to(tag) if AIXM.ofmx?
           tag.geoLat((xy.lat(AIXM.schema)))
           tag.geoLong((xy.long(AIXM.schema)))
         end
       end
-      memoize :to_uid
 
-      # @return [String] AIXM or OFMX markup
-      def to_xml(delegate: true)
+      # @!visibility private
+      def add_to(builder, delegate: true)
         obstacle_group = self.obstacle_group || singleton_obstacle_group
-        return obstacle_group.to_xml if delegate && AIXM.ofmx?
-        builder = Builder::XmlMarkup.new(indent: 2)
-        builder.comment! "Obstacle: [#{type}] #{xy.to_s} #{name}".strip
+        return obstacle_group.add_to(builder) if delegate && AIXM.ofmx?
+        builder.comment "Obstacle: [#{type}] #{xy.to_s} #{name}".dress
+        builder.text "\n"
         builder.Obs({ source: (source if AIXM.ofmx?) }.compact) do |obs|
-          obs.comment!(indented_comment) if comment
-          obs << to_uid.indent(2)
+          obs.comment(indented_comment) if comment
+          add_uid_to(obs)
           obs.txtName(name) if name
           if AIXM.ofmx?
-            obs.codeType(TYPES.key(type).to_s)
+            obs.codeType(TYPES.key(type))
           else
-            obs.txtDescrType(TYPES.key(type).to_s)
+            obs.txtDescrType(TYPES.key(type))
           end
           obs.codeGroup(grouped? ? 'Y' : 'N')
           if AIXM.ofmx?
@@ -346,7 +343,7 @@ module AIXM
           obs.codeDatum('WGE')
           if AIXM.aixm? && obstacle_group.xy_accuracy
             obs.valGeoAccuracy(obstacle_group.xy_accuracy.dim.trim)
-            obs.uomGeoAccuracy(obstacle_group.xy_accuracy.unit.upcase.to_s)
+            obs.uomGeoAccuracy(obstacle_group.xy_accuracy.unit.upcase)
           end
           obs.valElev(z.alt)
           if AIXM.aixm? && obstacle_group.z_accuracy
@@ -360,11 +357,11 @@ module AIXM
           if AIXM.ofmx?
             if radius
               obs.valRadius(radius.dim.trim)
-              obs.uomRadius(radius.unit.upcase.to_s)
+              obs.uomRadius(radius.unit.upcase)
             end
             if grouped? && linked?
-              obs << linked_to.to_uid(as: :ObsUidLink).indent(2)
-              obs.codeLinkType(LINK_TYPES.key(link_type).to_s)
+              linked_to.add_uid_to(obs, as: :ObsUidLink)
+              obs.codeLinkType(LINK_TYPES.key(link_type))
             end
             obs.datetimeValidWef(valid_from.xmlschema) if valid_from
             obs.datetimeValidTil(valid_until.xmlschema) if valid_until

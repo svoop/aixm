@@ -370,7 +370,7 @@ module AIXM
       # @return [Array<Array<AIXM::Feature>>]
       def duplicates
         AIXM::Memoize.method :to_uid do
-          group_by(&:to_uid).select { |_, a| a.count > 1 }.map(&:last)
+          group_by { _1.to_uid.to_s }.select { |_, a| a.count > 1 }.map(&:last)
         end
       end
     end

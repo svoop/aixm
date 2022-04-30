@@ -28,8 +28,6 @@ module AIXM
       #
       # @see https://gitlab.com/openflightmaps/ofmx/wikis/Navigational-aid#mkr-marker-beacon
       class Marker < NavigationalAid
-        include AIXM::Memoize
-
         public_class_method :new
 
         TYPES = {
@@ -61,36 +59,33 @@ module AIXM
           @type = value.nil? ? nil : TYPES.lookup(value.to_s.to_sym, nil) || fail(ArgumentError, "invalid type")
         end
 
-        # @return [String] UID markup
-        def to_uid
-          builder = Builder::XmlMarkup.new(indent: 2)
+        # @!visibility private
+        def add_uid_to(builder)
           builder.MkrUid({ region: (region if AIXM.ofmx?) }.compact) do |mkr_uid|
             mkr_uid.codeId(id)
             mkr_uid.geoLat(xy.lat(AIXM.schema))
             mkr_uid.geoLong(xy.long(AIXM.schema))
           end
         end
-        memoize :to_uid
 
-        # @return [String] AIXM or OFMX markup
-        def to_xml
-          builder = to_builder
+        # @!visibility private
+        def add_to(builder)
+          super
           builder.Mkr({ source: (source if AIXM.ofmx?) }.compact) do |mkr|
-            mkr.comment!(indented_comment) if comment
-            mkr << to_uid.indent(2)
-            mkr << organisation.to_uid.indent(2)
-            mkr.codePsnIls(type_key.to_s) if type_key
+            mkr.comment(indented_comment) if comment
+            add_uid_to(mkr)
+            organisation.add_uid_to(mkr)
+            mkr.codePsnIls(type_key) if type_key
             mkr.valFreq(75)
             mkr.uomFreq('MHZ')
             mkr.txtName(name) if name
             mkr.codeDatum('WGE')
             if z
               mkr.valElev(z.alt)
-              mkr.uomDistVer(z.unit.upcase.to_s)
+              mkr.uomDistVer(z.unit.upcase)
             end
-            mkr << timetable.to_xml(as: :Mtt).indent(2) if timetable
+            timetable.add_to(mkr, as: :Mtt) if timetable
             mkr.txtRmk(remarks) if remarks
-            mkr.target!
           end
         end
 
