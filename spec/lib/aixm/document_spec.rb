@@ -1073,6 +1073,13 @@ describe AIXM::Document do
             <valHgt>700</valHgt>
             <uomDistVer>FT</uomDistVer>
           </Obs>
+          <!-- Generic -->
+          <Org>
+            <OrgUid>
+              <txtName>EUROPE</txtName>
+            </OrgUid>
+            <codeType>GS</codeType>
+          </Org>
         </AIXM-Snapshot>
       END
     end
@@ -2121,6 +2128,13 @@ describe AIXM::Document do
             </ObsUidLink>
             <codeLinkType>CABLE</codeLinkType>
           </Obs>
+          <!-- Generic -->
+          <Org>
+            <OrgUid region="LF">
+              <txtName>EUROPE</txtName>
+            </OrgUid>
+            <codeType>GS</codeType>
+          </Org>
         </OFMX-Snapshot>
       END
     end
@@ -3159,6 +3173,13 @@ describe AIXM::Document do
             </ObsUidLink>
             <codeLinkType>CABLE</codeLinkType>
           </Obs>
+          <!-- Generic -->
+          <Org>
+            <OrgUid region="LF" mid="3422686a-8a82-4dfb-f8e8-0646734fd58a">
+              <txtName>EUROPE</txtName>
+            </OrgUid>
+            <codeType>GS</codeType>
+          </Org>
         </OFMX-Snapshot>
       END
     end

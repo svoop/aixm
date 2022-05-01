@@ -639,7 +639,11 @@ module AIXM
             <codeType>GS</codeType>
           </Org>
         END
-        AIXM.generic(fragment: fragment_xml)
+        AIXM.generic(
+          source: "LF|GEN|0.0 FACTORY|0|0",
+          region: 'LF',
+          fragment: fragment_xml
+        )
       end
 
       # Document
@@ -667,6 +671,7 @@ module AIXM
           document.add_feature obstacle
           document.add_feature unlinked_obstacle_group
           document.add_feature linked_obstacle_group
+          document.add_feature generic
         end
       end
 

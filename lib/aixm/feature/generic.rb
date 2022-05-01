@@ -53,7 +53,13 @@ module AIXM
           builder.comment(indented_comment)
           builder.text "\n"
         end
-        builder << fragment
+        decorated_fragment = fragment.dup
+        if AIXM.ofmx?
+          decorated_fragment.css('*').each do |element|
+            element['region'] ||= region if element.name.match?(/Uid$/)
+          end
+        end
+        builder << decorated_fragment.to_xml
       end
     end
 
