@@ -3,45 +3,46 @@ using AIXM::Refinements
 module AIXM
   class Feature
 
-    # Generic feature represented as fragment (raw XML source code).
+    # Generic feature represented as XML document fragment.
     #
     # ===Cheat Sheet in Pseudo Code:
     #   generic = AIXM.generic(
-    #     xml: Object
+    #     fragment: Nokogiri::XML::DocumentFragment or String
     #   )
     class Generic < Feature
       public_class_method :new
 
-      # Raw XML source
+      # XML document fragment
       #
-      # @note Any object is accepted, it will be converted to String using
-      #   +to_s+.
-      #
-      # @overload xml
-      #   @return [String]
-      # @overload xml=(value)
-      #   @param value [Object] raw XML source
-      attr_reader :xml
+      # @overload fragment
+      #   @return [Nokogiri::XML::DocumentFragment]
+      # @overload fragment=(value)
+      #   @param value [Nokogiri::XML::DocumentFragment, Object] XML document
+      #     fragment or object which is converted to string and then parsed
+      attr_reader :fragment
 
       # See the {cheat sheet}[AIXM::Feature::Generic] for examples on how to
       # create instances of this class.
-      def initialize(source: nil, region: nil, xml:)
+      def initialize(source: nil, region: nil, fragment:)
         super(source: source, region: region)
-        self.xml = xml
+        self.fragment = fragment
       end
 
       # @return [String]
       def inspect
-        %Q(#<#{self.class} "#{xml.lines.first}…">)
+        %Q(#<#{self.class} #{fragment.elements.first.name}>)
       end
 
-      def xml=(value)
-        @xml = value.to_s
+      def fragment=(value)
+        @fragment = case value
+          when Nokogiri::XML::DocumentFragment then value
+          else Nokogiri::XML::DocumentFragment.parse(value.to_s)
+        end
       end
 
       # @return [Integer] pseudo UID fragment
       def to_uid
-        xml.hash
+        fragment.to_xml.hash
       end
 
       # @!visibility private
@@ -52,7 +53,7 @@ module AIXM
           builder.comment(indented_comment)
           builder.text "\n"
         end
-        builder << xml
+        builder << fragment
       end
     end
 

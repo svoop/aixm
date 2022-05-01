@@ -631,7 +631,7 @@ module AIXM
       end
 
       def generic
-        xml = <<~END
+        fragment_xml = <<~END
           <Org>
             <OrgUid>
               <txtName>EUROPE</txtName>
@@ -639,7 +639,7 @@ module AIXM
             <codeType>GS</codeType>
           </Org>
         END
-        AIXM.generic(xml: xml)
+        AIXM.generic(fragment: fragment_xml)
       end
 
       # Document
