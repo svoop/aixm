@@ -21,10 +21,10 @@ require_relative 'aixm/errors'
 
 require_relative 'aixm/classes'
 require_relative 'aixm/constants'
-require_relative 'aixm/memoize'
-require_relative 'aixm/association'
 require_relative 'aixm/payload_hash'
 
+require_relative 'aixm/concerns/memoize'
+require_relative 'aixm/concerns/association'
 require_relative 'aixm/concerns/xml_builder'
 require_relative 'aixm/concerns/hash_equality'
 require_relative 'aixm/concerns/timetable'

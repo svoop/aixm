@@ -31,7 +31,7 @@ module AIXM
     #
     # @see https://gitlab.com/openflightmaps/ofmx/wikis/Airspace#ase-airspace
     class Airspace < Feature
-      include AIXM::Association
+      include AIXM::Concerns::Association
 
       public_class_method :new
 

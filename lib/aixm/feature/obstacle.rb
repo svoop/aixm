@@ -42,7 +42,7 @@ module AIXM
     #
     # @see https://gitlab.com/openflightmaps/ofmx/wikis/Obstacle
     class Obstacle < Feature
-      include AIXM::Association
+      include AIXM::Concerns::Association
       include AIXM::Concerns::Remarks
 
       public_class_method :new

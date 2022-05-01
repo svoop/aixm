@@ -16,7 +16,7 @@ module AIXM
   #
   # @see https://gitlab.com/openflightmaps/ofmx/wikis/Snapshot
   class Document
-    include AIXM::Association
+    include AIXM::Concerns::Association
 
     NAMESPACE_RE = /\A[a-f\d]{8}-[a-f\d]{4}-[a-f\d]{4}-[a-f\d]{4}-[a-f\d]{12}\z/.freeze
 
@@ -170,7 +170,7 @@ module AIXM
       }.compact
       Nokogiri::XML::Builder.new do |builder|
         builder.send(AIXM.schema(:root), meta) do |root|
-          AIXM::Memoize.method :to_uid do
+          AIXM::Concerns::Memoize.method :to_uid do
             features.each { _1.add_to(root) }
           end
           if AIXM.ofmx? && AIXM.config.mid

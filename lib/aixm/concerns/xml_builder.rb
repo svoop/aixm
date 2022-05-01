@@ -3,7 +3,7 @@ module AIXM
 
     # Adds the XML builder wrapped to generate a document fragment.
     module XMLBuilder
-      include AIXM::Memoize
+      include AIXM::Concerns::Memoize
 
       # Build a XML document fragment.
       #

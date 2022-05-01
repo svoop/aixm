@@ -22,7 +22,7 @@ module AIXM
     #
     # @see https://gitlab.com/openflightmaps/ofmx/wikis/Organisation#fqy-frequency
     class Frequency < Component
-      include AIXM::Association
+      include AIXM::Concerns::Association
       include AIXM::Concerns::Timetable
       include AIXM::Concerns::Remarks
 

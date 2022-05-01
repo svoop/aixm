@@ -22,7 +22,7 @@ module AIXM
       #
       # @see https://gitlab.com/openflightmaps/ofmx/wikis/Navigational-aid#dpn-designated-point
       class DesignatedPoint < NavigationalAid
-        include AIXM::Association
+        include AIXM::Concerns::Association
 
         public_class_method :new
 

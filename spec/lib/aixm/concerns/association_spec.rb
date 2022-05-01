@@ -1,7 +1,7 @@
-require_relative '../../spec_helper'
+require_relative '../../../spec_helper'
 
-describe AIXM::Association do
-  describe AIXM::Association::ClassMethods do
+describe AIXM::Concerns::Association do
+  describe AIXM::Concerns::Association::ClassMethods do
     before do
       $aixm_classes ||= AIXM::CLASSES
     end
@@ -22,15 +22,15 @@ describe AIXM::Association do
             CLASSES = { blog: 'Blog', post: 'Post', picture: 'Picture' }
           end
           class Blog
-            include AIXM::Association
+            include AIXM::Concerns::Association
             has_many :posts
           end
           class Post
-            include AIXM::Association
+            include AIXM::Concerns::Association
             belongs_to :blog
           end
           class Picture
-            include AIXM::Association
+            include AIXM::Concerns::Association
             belongs_to :blog   # no inverse has_many is defined
           end
         end
@@ -113,11 +113,11 @@ describe AIXM::Association do
             CLASSES = { blog: 'Blog', post: 'Post' }
           end
           class Blog
-            include AIXM::Association
+            include AIXM::Concerns::Association
             has_many :posts
           end
           class Post
-            include AIXM::Association
+            include AIXM::Concerns::Association
             belongs_to :blog, readonly: true
           end
         end
@@ -137,15 +137,15 @@ describe AIXM::Association do
             CLASSES = { blog: 'Blog', post: 'Post', picture: 'Picture' }
           end
           class Blog
-            include AIXM::Association
+            include AIXM::Concerns::Association
             has_many :posts, accept: 'Picture'
           end
           class Post
-            include AIXM::Association
+            include AIXM::Concerns::Association
             belongs_to :blog   # no inverse has_many is defined
           end
           class Picture
-            include AIXM::Association
+            include AIXM::Concerns::Association
             belongs_to :blog
           end
         end
@@ -176,15 +176,15 @@ describe AIXM::Association do
             CLASSES = { blog: 'Blog', feed: 'Feed', post: 'Post' }
           end
           class Blog
-            include AIXM::Association
+            include AIXM::Concerns::Association
             has_many :posts, as: :postable
           end
           class Feed
-            include AIXM::Association
+            include AIXM::Concerns::Association
             has_many :posts, as: :postable
           end
           class Post
-            include AIXM::Association
+            include AIXM::Concerns::Association
             belongs_to :postable
           end
         end
@@ -240,15 +240,15 @@ describe AIXM::Association do
             CLASSES = { blog: 'Blog', post: 'Post', picture: 'Picture' }
           end
           class Blog
-            include AIXM::Association
+            include AIXM::Concerns::Association
             has_many :items, accept: ['Post', :picture]
           end
           class Post
-            include AIXM::Association
+            include AIXM::Concerns::Association
             belongs_to :blog, as: :item
           end
           class Picture
-            include AIXM::Association
+            include AIXM::Concerns::Association
             belongs_to :blog, as: :item
           end
         end
@@ -309,13 +309,13 @@ describe AIXM::Association do
             CLASSES = { blog: 'Blog', post: 'Post' }
           end
           class Blog
-            include AIXM::Association
+            include AIXM::Concerns::Association
             has_many :posts do |post, related_to: nil|
               post.related_to = related_to || posts.last
             end
           end
           class Post
-            include AIXM::Association
+            include AIXM::Concerns::Association
             belongs_to :blog
             attr_accessor :related_to
           end
@@ -343,11 +343,11 @@ describe AIXM::Association do
             CLASSES = { blog: 'Blog', post: 'Post' }
           end
           class Blog
-            include AIXM::Association
+            include AIXM::Concerns::Association
             has_many :posts do |post, title:| end
           end
           class Post
-            include AIXM::Association
+            include AIXM::Concerns::Association
             belongs_to :blog
             attr_accessor :title, :text
             def initialize(title:);
@@ -384,15 +384,15 @@ describe AIXM::Association do
             CLASSES = { blog: 'Blog', post: 'Post', picture: 'Picture' }
           end
           class Blog
-            include AIXM::Association
+            include AIXM::Concerns::Association
             has_one :post
           end
           class Post
-            include AIXM::Association
+            include AIXM::Concerns::Association
             belongs_to :blog
           end
           class Picture
-            include AIXM::Association
+            include AIXM::Concerns::Association
             belongs_to :blog   # no inverse has_many is defined
           end
         end
@@ -466,11 +466,11 @@ describe AIXM::Association do
             CLASSES = { blog: 'Blog', post: 'Post' }
           end
           class Blog
-            include AIXM::Association
+            include AIXM::Concerns::Association
             has_one :post, allow_nil: true
           end
           class Post
-            include AIXM::Association
+            include AIXM::Concerns::Association
             belongs_to :blog
           end
         end
@@ -500,11 +500,11 @@ describe AIXM::Association do
             CLASSES = { blog: 'Blog', post: 'Post' }
           end
           class Blog
-            include AIXM::Association
+            include AIXM::Concerns::Association
             has_one :posts
           end
           class Post
-            include AIXM::Association
+            include AIXM::Concerns::Association
             belongs_to :blog, readonly: true
           end
         end
@@ -524,15 +524,15 @@ describe AIXM::Association do
             CLASSES = { blog: 'Blog', post: 'Post', picture: 'Picture' }
           end
           class Blog
-            include AIXM::Association
+            include AIXM::Concerns::Association
             has_one :post, accept: 'Picture'
           end
           class Post
-            include AIXM::Association
+            include AIXM::Concerns::Association
             belongs_to :blog   # no inverse has_many is defined
           end
           class Picture
-            include AIXM::Association
+            include AIXM::Concerns::Association
             belongs_to :blog
           end
         end
@@ -563,15 +563,15 @@ describe AIXM::Association do
             CLASSES = { blog: 'Blog', feed: 'Feed', post: 'Post' }
           end
           class Blog
-            include AIXM::Association
+            include AIXM::Concerns::Association
             has_one :post, as: :postable
           end
           class Feed
-            include AIXM::Association
+            include AIXM::Concerns::Association
             has_one :post, as: :postable
           end
           class Post
-            include AIXM::Association
+            include AIXM::Concerns::Association
             belongs_to :postable
           end
         end
@@ -608,15 +608,15 @@ describe AIXM::Association do
             CLASSES = { blog: 'Blog', post: 'Post', picture: 'Picture' }
           end
           class Blog
-            include AIXM::Association
+            include AIXM::Concerns::Association
             has_one :item, accept: ['Post', :picture]
           end
           class Post
-            include AIXM::Association
+            include AIXM::Concerns::Association
             belongs_to :blog, as: :item
           end
           class Picture
-            include AIXM::Association
+            include AIXM::Concerns::Association
             belongs_to :blog, as: :item
           end
         end
@@ -650,7 +650,7 @@ describe AIXM::Association do
     end
   end
 
-  describe AIXM::Association::Array do
+  describe AIXM::Concerns::Association::Array do
     subject do
       AIXM::Factory.document
     end
@@ -658,28 +658,28 @@ describe AIXM::Association do
     describe :find_by do
       it "returns array of elements by class shortcut" do
         subject.features.find_by(:airport).then do |result|
-          _(result).must_be_instance_of AIXM::Association::Array
+          _(result).must_be_instance_of AIXM::Concerns::Association::Array
           _(result.map(&:id)).must_equal %w(LFNT)
         end
       end
 
       it "returns array of elements by class" do
         subject.features.find_by(AIXM::Feature::Airport).then do |result|
-          _(result).must_be_instance_of AIXM::Association::Array
+          _(result).must_be_instance_of AIXM::Concerns::Association::Array
           _(result.map(&:id)).must_equal %w(LFNT)
         end
       end
 
       it "returns array of elements by class and attributes" do
         subject.features.find_by(:airport, id: "LFNT").then do |result|
-          _(result).must_be_instance_of AIXM::Association::Array
+          _(result).must_be_instance_of AIXM::Concerns::Association::Array
           _(result.map(&:id)).must_equal %w(LFNT)
         end
       end
 
       it "returns empty array if nothing matches" do
         subject.features.find_by(:airport, id: "FAKE").then do |result|
-          _(result).must_be_instance_of AIXM::Association::Array
+          _(result).must_be_instance_of AIXM::Concerns::Association::Array
           _(result).must_be :empty?
         end
       end

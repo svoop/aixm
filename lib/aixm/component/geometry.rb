@@ -27,7 +27,7 @@ module AIXM
     #
     # @see https://gitlab.com/openflightmaps/ofmx/wikis/Airspace#avx-border-vertex
     class Geometry < Component
-      include AIXM::Association
+      include AIXM::Concerns::Association
 
       # @!method segments
       #   @return [Array<AIXM::Component::Geometry::Point,

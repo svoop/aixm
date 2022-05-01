@@ -23,7 +23,7 @@ module AIXM
     #
     # @see https://gitlab.com/openflightmaps/ofmx/wikis/Airport#tla-helipad-tlof
     class Helipad < Component
-      include AIXM::Association
+      include AIXM::Concerns::Association
       include AIXM::Concerns::Marking
       include AIXM::Concerns::Remarks
 

@@ -5,7 +5,7 @@ module AIXM
 
     # @abstract
     class NavigationalAid < Feature
-      include AIXM::Association
+      include AIXM::Concerns::Association
       include AIXM::Concerns::Timetable
       include AIXM::Concerns::Remarks
 

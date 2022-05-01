@@ -37,7 +37,7 @@ module AIXM
     #
     # @see https://gitlab.com/openflightmaps/ofmx/wikis/Airport#ahp-airport
     class Airport < Feature
-      include AIXM::Association
+      include AIXM::Concerns::Association
       include AIXM::Concerns::Timetable
       include AIXM::Concerns::Remarks
 
@@ -373,7 +373,7 @@ module AIXM
       # @see AIXM::Feature::Airport#add_usage_limitation
       # @see https://gitlab.com/openflightmaps/ofmx/wikis/Airport#ahu-airport-usage
       class UsageLimitation
-        include AIXM::Association
+        include AIXM::Concerns::Association
         include AIXM::Concerns::XMLBuilder
         include AIXM::Concerns::Timetable
         include AIXM::Concerns::Remarks
@@ -438,7 +438,7 @@ module AIXM
         # @see AIXM::Feature::Airport#add_usage_limitation
         # @see https://gitlab.com/openflightmaps/ofmx/wikis/Airport#ahu-airport-usage
         class Condition
-          include AIXM::Association
+          include AIXM::Concerns::Association
           include AIXM::Concerns::XMLBuilder
 
           AIRCRAFT = {

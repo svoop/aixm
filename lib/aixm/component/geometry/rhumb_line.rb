@@ -14,7 +14,7 @@ module AIXM
       #
       # @see https://gitlab.com/openflightmaps/ofmx/wikis/Airspace#rhumb-line
       class RhumbLine
-        include AIXM::Association
+        include AIXM::Concerns::Association
         include AIXM::Concerns::XMLBuilder
 
         # @!method geometry

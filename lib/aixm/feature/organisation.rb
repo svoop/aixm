@@ -19,7 +19,7 @@ module AIXM
     #
     # @see https://gitlab.com/openflightmaps/ofmx/wikis/Organisation#org-organisation
     class Organisation < Feature
-      include AIXM::Association
+      include AIXM::Concerns::Association
       include AIXM::Concerns::Remarks
 
       public_class_method :new

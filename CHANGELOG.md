@@ -27,7 +27,7 @@
 ## 1.1.0
 
 #### Breaking Changes
-* `AIXM::Association:Array#duplicates` now returns an array of arrays which
+* `AIXM::Concerns::Association:Array#duplicates` now returns an array of arrays which
   group all duplicates together.
 * `VOR#associate_dme` and `VOR#associate_tacan` no longer take the channel
   as argument but calculate it from the (ghost) frequency of the VOR.
@@ -81,10 +81,10 @@
 
 #### Additions
 * Proper `has_many` and `has_one` associations
-* `AIXM::Association:Array#find_by|find|duplicates` on `has_many` associations
+* `AIXM::Concerns::Association:Array#find_by|find|duplicates` on `has_many` associations
 * `AIXM.config.mid` now defines whether `mid` attributes are inserted or not
   provided the selected schema is OFMX
-* `AIXM::Memoize` module
+* `AIXM::Concerns::Memoize` module
 * `AIXM::PayloadHash` class
 * `mkmid` executable to insert `mid` attributes into valid OFMX file
 * `ckmid` executable to check `mid` attributes in an OFMX file

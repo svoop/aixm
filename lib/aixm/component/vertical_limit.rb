@@ -26,7 +26,7 @@ module AIXM
     #
     # @see https://gitlab.com/openflightmaps/ofmx/wikis/Airspace#ase-airspace
     class VerticalLimit < Component
-      include AIXM::Association
+      include AIXM::Concerns::Association
 
       # @api private
       TAGS = { upper_z: :Upper, lower_z: :Lower, max_z: :Max, min_z: :Mnm }.freeze

@@ -18,7 +18,7 @@ module AIXM
     # @see https://gitlab.com/openflightmaps/ofmx/wikis/Airport#fls-fato-direction-lighting
     # @see https://gitlab.com/openflightmaps/ofmx/wikis/Airport#tls-helipad-tlof-lighting
     class Lighting < Component
-      include AIXM::Association
+      include AIXM::Concerns::Association
       include AIXM::Concerns::Intensity
       include AIXM::Concerns::Remarks
 

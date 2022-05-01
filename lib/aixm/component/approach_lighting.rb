@@ -17,7 +17,7 @@ module AIXM
     #
     # @see https://gitlab.com/openflightmaps/ofmx/wikis/Airport#rda-runway-direction-approach-lighting
     class ApproachLighting < Component
-      include AIXM::Association
+      include AIXM::Concerns::Association
       include AIXM::Concerns::Intensity
       include AIXM::Concerns::Remarks
 

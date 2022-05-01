@@ -22,7 +22,7 @@ module AIXM
     #
     # @see https://gitlab.com/openflightmaps/ofmx/wikis/Organisation#uni-unit
     class Unit < Feature
-      include AIXM::Association
+      include AIXM::Concerns::Association
       include AIXM::Concerns::Remarks
 
       public_class_method :new

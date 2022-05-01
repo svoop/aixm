@@ -18,7 +18,7 @@ module AIXM
     #
     # @see https://gitlab.com/openflightmaps/ofmx/wikis/Timetable#predefined-timetable
     class Timetable < Component
-      include AIXM::Association
+      include AIXM::Concerns::Association
       include AIXM::Concerns::Remarks
 
       CODES = {

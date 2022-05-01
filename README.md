@@ -191,7 +191,7 @@ AIXM.config.ignored_errors = /invalid date/i
 
 The different models are interwoven with [`has_many` and `has_one` associations](https://www.rubydoc.info/gems/aixm/AIXM/Association).
 
-Please note that `has_many` associations are instances `AIXM::Association::Array` which mostly behave like normal arrays. However, you must not add or remove elements on the array directly but use the corresponding method on the associating model instead:
+Please note that `has_many` associations are instances `AIXM::Concerns::Association::Array` which mostly behave like normal arrays. However, you must not add or remove elements on the array directly but use the corresponding method on the associating model instead:
 
 ```ruby
 document.features << airport   # => NoMethodError

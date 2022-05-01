@@ -28,7 +28,7 @@ module AIXM
     #
     # @see https://gitlab.com/openflightmaps/ofmx/wikis/Airport#fto-fato
     class FATO < Component
-      include AIXM::Association
+      include AIXM::Concerns::Association
       include AIXM::Concerns::Marking
       include AIXM::Concerns::Remarks
 
@@ -159,8 +159,8 @@ module AIXM
       #
       # @see https://gitlab.com/openflightmaps/ofmx/wikis/Airport#fdn-fato-direction
       class Direction
-        include AIXM::Association
-        include AIXM::Memoize
+        include AIXM::Concerns::Association
+        include AIXM::Concerns::Memoize
         include AIXM::Concerns::XMLBuilder
         include AIXM::Concerns::Remarks
 

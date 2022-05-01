@@ -15,7 +15,7 @@ module AIXM
     #
     # @see https://gitlab.com/openflightmaps/ofmx/wikis/Organisation#ser-service
     class Service < Component
-      include AIXM::Association
+      include AIXM::Concerns::Association
       include AIXM::Concerns::Timetable
       include AIXM::Concerns::Remarks
 

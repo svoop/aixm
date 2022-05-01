@@ -14,7 +14,7 @@ module AIXM
     #
     # @see https://gitlab.com/openflightmaps/ofmx/wikis/Airport#aha-airport-address
     class Address < Component
-      include AIXM::Association
+      include AIXM::Concerns::Association
       include AIXM::Concerns::Remarks
 
       public_class_method :new
