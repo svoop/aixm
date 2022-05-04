@@ -1,5 +1,9 @@
 ## Main
 
+Nothing so far
+
+## 1.3.0
+
 #### Breaking Changes
 * `Document#created_at` no longer falls back to `Document#effective_at`
 
