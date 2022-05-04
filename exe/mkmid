@@ -1,11 +1,5 @@
 #!/usr/bin/env ruby
 
-require 'bundler/inline'
-
-gemfile do
-  source 'https://rubygems.org'
-  ruby '>= 3.0'
-  gem 'aixm', '~> 0'
-end
+require 'aixm'
 
 AIXM::Executables::Mkmid.new.run
