@@ -18,6 +18,8 @@ module AIXM
     #   airspace.add_layer(AIXM.layer)
     #   airspace.geometry.add_segment(AIXM.point or AIXM.arc or AIXM.border or AIXM.circle)
     #
+    # Timetables and remarks have to be set on the layer!
+    #
     # The +id+ is mandatory, however, you may omit it when initializing a new
     # airspace or assign +nil+ to an existing airspace which will generate a 8
     # character digest from +type+, +local_type+ and +name+.
