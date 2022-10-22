@@ -73,7 +73,7 @@ module AIXM
         case time_or_event
         when Symbol
           self.event = time_or_event
-        when ::Time, DateTime
+        when ::Time, ::DateTime
           time_or_event = time_or_event.to_time
           set_time(time_or_event.hour, time_or_event.min, time_or_event.utc_offset)
         when /\A(\d{2}):?(\d{2}) ?([+-]\d{2}:?\d{2}|UTC)?\z/

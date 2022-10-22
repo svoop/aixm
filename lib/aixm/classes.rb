@@ -14,6 +14,7 @@ module AIXM
     date: 'AIXM::Schedule::Date',
     day: 'AIXM::Schedule::Day',
     time: 'AIXM::Schedule::Time',
+    datetime: 'AIXM::Schedule::DateTime',
     address: 'AIXM::Component::Address',
     approach_lighting: 'AIXM::Component::ApproachLighting',
     organisation: 'AIXM::Feature::Organisation',

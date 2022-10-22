@@ -12,6 +12,7 @@ Nothing so far
 * XML comments on features (e.g. to include raw NOTAM)
 * `Document#expiration_at` for OFMX
 * Generic features as raw XML (e.g. extracted from another AIXM/OFMX file)
+* Convenience combinator `AIXM::Schedule::DateTime`
 
 ## 1.2.1
 

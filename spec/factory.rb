@@ -64,6 +64,10 @@ module AIXM
         AIXM.time('21:20', or: :sunset, plus: 15, whichever_comes: :last)
       end
 
+      def datetime
+        AIXM.datetime(date, time)
+      end
+
       # Components
 
       def address

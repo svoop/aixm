@@ -192,6 +192,8 @@ AIXM.config.ignored_errors = /invalid date/i
 * [Date](https://www.rubydoc.info/gems/aixm/AIXM/Schedule/Date.html)
 * [Day](https://www.rubydoc.info/gems/aixm/AIXM/Schedule/Day.html)
 * [Time](https://www.rubydoc.info/gems/aixm/AIXM/Schedule/Time.html)
+* [DateTime](https://www.rubydoc.info/gems/aixm/AIXM/Schedule/DateTime.html)
+
 ## Associations
 
 The different models are interwoven with [`has_many` and `has_one` associations](https://www.rubydoc.info/gems/aixm/AIXM/Association).

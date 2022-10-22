@@ -45,6 +45,7 @@ require_relative 'aixm/p'
 require_relative 'aixm/schedule/date'
 require_relative 'aixm/schedule/day'
 require_relative 'aixm/schedule/time'
+require_relative 'aixm/schedule/date_time'
 
 require_relative 'aixm/component'
 require_relative 'aixm/component/address'
