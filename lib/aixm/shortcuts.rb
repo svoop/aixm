@@ -15,10 +15,16 @@ module AIXM
   # Max flight level used to signal "no upper limit"
   UNLIMITED = z(999, :qne).freeze
 
+  # Day to signal "whatever date or day"
+  ANY_DAY = AIXM.day(:any).freeze
+
   # Timetable used to signal "always active"
   H24 = timetable(code: :H24).freeze
 
-  # Day to signal "whatever date or day"
-  ANY_DAY = AIXM.day(:any).freeze
+  # Time which marks midnight at beginning of the day
+  BEGINNING_OF_DAY = AIXM.time('00:00').freeze
+
+  # Time which marks midnight at end of the day
+  END_OF_DAY = AIXM.time('24:00').freeze
 
 end

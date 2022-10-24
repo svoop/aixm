@@ -19,6 +19,10 @@ module AIXM
     # @example
     #   time = AIXM.time('21:30')                                  # => 21:30
     #   time.covered_by?(AIXM.time('20:00')..AIXM.time('02:00'))   # => true
+    #
+    # ===Shortcuts:
+    # * +AIXM::BEGINNING_OF_DAY+ - midnight expressed as "00:00"
+    # * +AIXM::END_OF_DAY+ - midnight expressed as "24:00"
     class Time
       include AIXM::Concerns::HashEquality
       extend Forwardable
