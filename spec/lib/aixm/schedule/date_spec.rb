@@ -73,19 +73,35 @@ describe AIXM::Schedule::Date do
       end
     end
 
-    describe :succ do
+    describe :prev do
+      it "returns a new object of the preceding day" do
+        date = AIXM.date('2000-06-07')
+        subject = date.prev
+        _(subject.object_id).wont_equal date.object_id
+        _(subject).must_equal AIXM.date('2000-06-06')
+      end
+
+      it "returns a new object of the preceding day across year boundaries" do
+        date = AIXM.date('2001-01-01')
+        subject = date.prev
+        _(subject.object_id).wont_equal date.object_id
+        _(subject).must_equal AIXM.date('2000-12-31')
+      end
+    end
+
+    describe :next do
       it "returns a new object of the following day" do
         date = AIXM.date('2000-06-07')
-        succ = date.succ
-        _(succ.object_id).wont_equal date.object_id
-        _(succ).must_equal AIXM.date('2000-06-08')
+        subject = date.next
+        _(subject.object_id).wont_equal date.object_id
+        _(subject).must_equal AIXM.date('2000-06-08')
       end
 
       it "returns a new object of the following day across year boundaries" do
         date = AIXM.date('2000-12-31')
-        succ = date.succ
-        _(succ.object_id).wont_equal date.object_id
-        _(succ).must_equal AIXM.date('2001-01-01')
+        subject = date.next
+        _(subject.object_id).wont_equal date.object_id
+        _(subject).must_equal AIXM.date('2001-01-01')
       end
     end
 
@@ -272,19 +288,35 @@ describe AIXM::Schedule::Date do
       end
     end
 
-    describe :succ do
+    describe :prev do
+      it "returns a new object of the preceding day" do
+        date = AIXM.date('06-07')
+        subject = date.prev
+        _(subject.object_id).wont_equal date.object_id
+        _(subject).must_equal AIXM.date('06-06')
+      end
+
+      it "returns a new object of the preceding day across year boundaries" do
+        date = AIXM.date('01-01')
+        subject = date.prev
+        _(subject.object_id).wont_equal date.object_id
+        _(subject).must_equal AIXM.date('12-31')
+      end
+    end
+
+    describe :next do
       it "returns a new object of the following day" do
         date = AIXM.date('06-07')
-        succ = date.succ
-        _(succ.object_id).wont_equal date.object_id
-        _(succ).must_equal AIXM.date('06-08')
+        subject = date.next
+        _(subject.object_id).wont_equal date.object_id
+        _(subject).must_equal AIXM.date('06-08')
       end
 
       it "returns a new object of the following day across year boundaries" do
         date = AIXM.date('12-31')
-        succ = date.succ
-        _(succ.object_id).wont_equal date.object_id
-        _(succ).must_equal AIXM.date('01-01')
+        subject = date.next
+        _(subject.object_id).wont_equal date.object_id
+        _(subject).must_equal AIXM.date('01-01')
       end
     end
 

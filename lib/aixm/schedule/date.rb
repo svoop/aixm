@@ -83,10 +83,15 @@ module AIXM
         self.class.new(date.strftime(yearless? ? '%m-%d' : '%F'))
       end
 
+      # Create new date one day prior to this one.
+      def prev
+        self.class.new(date.prev_day.to_s.sub(/^-/, '')).at(year: (YEARLESS_YEAR if yearless?))
+      end
+
       # Create new date one day after this one.
       #
       # @return [AIXM::Schedule::Date]
-      def succ
+      def next
         self.class.new(date.next_day).at(year: (YEARLESS_YEAR if yearless?))
       end
 

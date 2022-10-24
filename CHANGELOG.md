@@ -6,6 +6,7 @@ Nothing so far
 
 #### Breaking Changes
 * `Document#created_at` no longer falls back to `Document#effective_at`
+* Renamed `AIXM::Date#succ` to `AIXM::Date#next`
 
 #### Additions
 * Refinement to pretty print Nokogiri XML documents
@@ -14,6 +15,7 @@ Nothing so far
 * Generic features as raw XML (e.g. extracted from another AIXM/OFMX file)
 * Convenience combinator `AIXM::Schedule::DateTime`
 * Shortcuts `AIXM::BEGINNING_OF_DAY` and `AIXM::END_OF_DAY`
+* `AIXM::Date#next`
 
 ## 1.2.1
 
