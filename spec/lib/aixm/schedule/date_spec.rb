@@ -105,6 +105,16 @@ describe AIXM::Schedule::Date do
       end
     end
 
+    describe :- do
+      it "returns the difference in days between two dates" do
+        _(AIXM.date('2000-06-11') - AIXM.date('2000-06-07')).must_equal 4
+      end
+
+      it "returns the difference in days between two dates across year boundaries" do
+        _(AIXM.date('2001-01-01') - AIXM.date('2000-12-31')).must_equal 1
+      end
+    end
+
     describe :to_day do
       it "returns the day object for the corresponding weekday" do
         _(AIXM.date('2000-12-28').to_day).must_equal AIXM.day(:thursday)
@@ -317,6 +327,16 @@ describe AIXM::Schedule::Date do
         subject = date.next
         _(subject.object_id).wont_equal date.object_id
         _(subject).must_equal AIXM.date('01-01')
+      end
+    end
+
+    describe :- do
+      it "returns the difference in days between two dates" do
+        _(AIXM.date('06-11') - AIXM.date('06-07')).must_equal 4
+      end
+
+      it "returns the difference in days between two dates across year boundaries" do
+        _(AIXM.date('01-01') - AIXM.date('12-31')).must_equal -365
       end
     end
 

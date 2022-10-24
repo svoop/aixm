@@ -15,7 +15,7 @@ Nothing so far
 * Generic features as raw XML (e.g. extracted from another AIXM/OFMX file)
 * Convenience combinator `AIXM::Schedule::DateTime`
 * Shortcuts `AIXM::BEGINNING_OF_DAY` and `AIXM::END_OF_DAY`
-* `AIXM::Date#next`
+* `AIXM::Date#next` and `AIXM::Date#-`
 
 ## 1.2.1
 

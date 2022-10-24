@@ -95,6 +95,13 @@ module AIXM
         self.class.new(date.next_day).at(year: (YEARLESS_YEAR if yearless?))
       end
 
+      # Calculate difference in days between two dates.
+      #
+      # @return [Integer]
+      def -(date)
+        (self.date - date.date).to_i
+      end
+
       # Convert date to day
       #
       # @raise [RuntimeError] if date is yearless
