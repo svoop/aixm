@@ -2,6 +2,11 @@
 
 Nothing so far
 
+## 1.3.1
+
+#### Changes
+* Update certificate
+
 ## 1.3.0
 
 #### Breaking Changes
