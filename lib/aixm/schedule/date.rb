@@ -84,16 +84,20 @@ module AIXM
       end
 
       # Create new date one day prior to this one.
-      def prev
+      #
+      # @return [AIXM::Schedule::Date]
+      def pred
         self.class.new(date.prev_day.to_s.sub(/^-/, '')).at(year: (YEARLESS_YEAR if yearless?))
       end
+      alias_method :prev, :pred
 
       # Create new date one day after this one.
       #
       # @return [AIXM::Schedule::Date]
-      def next
+      def succ
         self.class.new(date.next_day).at(year: (YEARLESS_YEAR if yearless?))
       end
+      alias_method :next, :succ
 
       # Calculate difference in days between two dates.
       #

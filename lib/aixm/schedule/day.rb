@@ -13,8 +13,8 @@ module AIXM
       include AIXM::Concerns::HashEquality
       include Comparable
 
-      DAYS = %i(sunday monday tuesday wednesday thursday friday saturday workday day_preceding_workday day_following_workday holiday day_preceding_holiday day_following_holiday any).freeze
-      SORTABLE_DAYS = DAYS[0, 7]
+      WEEKDAYS = %i(sunday monday tuesday wednesday thursday friday saturday).freeze
+      DAYS =  (WEEKDAYS + %i(workday day_preceding_workday day_following_workday holiday day_preceding_holiday day_following_holiday any)).freeze
 
       # Day of the week or special named day
       #
@@ -31,7 +31,7 @@ module AIXM
           self.day = day
         when Integer
           fail ArgumentError unless day.between?(0, 6)
-          self.day = SORTABLE_DAYS[day]
+          self.day = WEEKDAYS[day]
         else
           fail ArgumentError
         end
@@ -44,9 +44,36 @@ module AIXM
         day.to_s.gsub('_', ' ')
       end
 
+      # Symbol used to initialize this day
+      #
+      # @return [Symbol]
+      def to_sym
+        day.to_s.to_sym
+      end
+
       def inspect
         %Q(#<#{self.class} #{to_s}>)
       end
+
+      # Create new day one day prior to this one.
+      #
+      # @return [AIXM::Schedule::Day]
+      def pred
+        return self if any?
+        fail(TypeError, "can't iterate from #{day}") unless wday
+        self.class.new(WEEKDAYS[wday.pred % 7])
+      end
+      alias_method :prev, :pred
+
+      # Create new day one day after this one.
+      #
+      # @return [AIXM::Schedule::Day]
+      def succ
+        return self if any?
+        fail(TypeError, "can't iterate from #{day}") unless wday
+        self.class.new(WEEKDAYS[wday.succ % 7])
+      end
+      alias_method :next, :succ
 
       # Whether two days are equal.
       #
@@ -71,7 +98,7 @@ module AIXM
       #
       # @return [Boolean]
       def sortable?
-        SORTABLE_DAYS.include? day
+        WEEKDAYS.include? day
       end
 
       # Whether this schedule day falls within the given range of schedule
@@ -102,6 +129,10 @@ module AIXM
       def day=(value)
         @day = value.to_s.to_sym
         fail ArgumentError unless DAYS.include? @day
+      end
+
+      def wday
+        WEEKDAYS.index(day.to_sym)
       end
 
       # @note Necessary to use this class in Range.

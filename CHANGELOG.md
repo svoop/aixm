@@ -1,6 +1,8 @@
 ## Main
 
-Nothing so far
+#### Changes
+* Add `#pred` (aliased `#prev`) and `#succ` (alias `#next`) to both
+  `AIXM::Date` and `AIXM::Day` in order to use them for iterations
 
 ## 1.3.1
 

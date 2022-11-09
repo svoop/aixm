@@ -31,9 +31,56 @@ describe AIXM::Schedule::Day do
   end
 
   describe :to_s do
-    it "day String without underscores" do
+    it "returns day string without underscores" do
       _(subject.to_s).must_equal 'monday'
       _(AIXM::Factory.special_day.to_s).must_equal 'day preceding holiday'
+    end
+  end
+
+  describe :to_sym do
+    it "returns day symbol with underscores" do
+      _(subject.to_sym).must_equal :monday
+      _(AIXM::Factory.special_day.to_sym).must_equal :day_preceding_holiday
+    end
+  end
+
+  describe :pred do
+    it "returns a new object of the preceding weekday for :monday thru :sunday" do
+      day = AIXM.day(:friday)
+      subject = day.pred
+      _(subject.object_id).wont_equal day.object_id
+      _(subject).must_equal AIXM.day(:thursday)
+    end
+
+    it "returns :any for :any" do
+      day = AIXM.day(:any)
+      subject = day.pred
+      _(subject).must_equal day
+    end
+
+    it "fails for anything else" do
+      day = AIXM.day(:holiday)
+      _{ day.pred }.must_raise TypeError
+    end
+  end
+
+  describe :succ do
+    it "returns a new object of the following weekday for :monday thru :sunday" do
+      day = AIXM.day(:saturday)
+      subject = day.succ
+      _(subject.object_id).wont_equal day.object_id
+      _(subject).must_equal AIXM.day(:sunday)
+    end
+
+    it "returns :any for :any" do
+      day = AIXM.day(:any)
+      subject = day.succ
+      _(subject).must_equal day
+    end
+
+    it "fails for anything else" do
+      day = AIXM.day(:holiday)
+      _{ day.succ }.must_raise TypeError
     end
   end
 
@@ -61,13 +108,13 @@ describe AIXM::Schedule::Day do
 
   describe :sortable? do
     it "returns true for sortable days" do
-      AIXM::Schedule::Day::SORTABLE_DAYS.each do |day|
+      AIXM::Schedule::Day::WEEKDAYS.each do |day|
         _(AIXM.day(day)).must_be :sortable?
       end
     end
 
     it "returns false for other days" do
-      (AIXM::Schedule::Day::DAYS - AIXM::Schedule::Day::SORTABLE_DAYS).each do |day|
+      (AIXM::Schedule::Day::DAYS - AIXM::Schedule::Day::WEEKDAYS).each do |day|
         _(AIXM.day(day)).wont_be :sortable?
       end
     end
