@@ -129,33 +129,32 @@ module AIXM
       end
     end
 
-    # @!method pretty
-    #   Transform the XML document to be pretty when sending +to_xml+
+    # @!method to_pretty_xml
+    #   Pretty printing alternative of +to_xml+
     #
     #   @example
     #     xml = <<~END
-    #       <xml><aaa> AAA </aaa>
+    #       <aaa></aaa>
     #         <bbb/>
-    #         <ccc   foo="bar"  >
-    #           CCC
-    #         </ccc>
-    #       </xml>
+    #       <ccc   foo="bar"  >
+    #         <ddd>
+    #       </ddd>
+    #       </ccc>
     #     END
-    #     Nokogiri.XML(xml).pretty.to_xml
-    #     # => <?xml version=\"1.0\" encoding=\"UTF-8\"?>
-    #          <xml>
-    #            <aaa> AAA </aaa>
-    #            <bbb/>
-    #            <ccc foo="bar">
-    #              CCC
-    #            </ccc>
-    #          </xml>
+    #     Nokogiri::XML::DocumentFragment.parse(xml).to_pretty_xml
+    #     # => <aaa/>
+    #          <bbb/>
+    #          <ccc foo="bar">
+    #            <ddd/>
+    #          </ccc>
     #
-    #   @note This is a refinement for +Nokogiri::XML::Document+
-    #   @return [Nokogiri::XML::Document]
-    refine Nokogiri::XML::Document do
-      def pretty
-        PRETTY_XSLT.transform(self)
+    #   @note This is a refinement for +Nokogiri::XML::DocumentFragment+
+    #   @return [String]
+    refine Nokogiri::XML::DocumentFragment do
+      def to_pretty_xml
+        builder = Nokogiri::XML::Builder.new
+        builder.DocumentFragment { _1 << self.to_html }
+        AIXM::Refinements::PRETTY_XSLT.transform(builder.doc).at_css('DocumentFragment').children.map(&:to_xml).join("\n")
       end
     end
 

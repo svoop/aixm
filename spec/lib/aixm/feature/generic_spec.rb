@@ -1,11 +1,11 @@
 require_relative '../../../spec_helper'
 
 describe AIXM::Feature::Generic do
-  subject do
-    AIXM::Factory.generic
-  end
-
   describe :fragment= do
+    subject do
+      AIXM::Factory.generic
+    end
+
     it "accepts document fragment" do
       _(subject.tap { _1.fragment = Nokogiri::XML::DocumentFragment.parse('<foo/>') }.to_xml).must_equal <<~END
         <!-- Generic -->
@@ -22,8 +22,20 @@ describe AIXM::Feature::Generic do
   end
 
   describe :to_xml do
-    it "builds correct AIXM" do
-      _(subject.to_xml).must_equal <<~END
+    it "builds correct AIXM from pretty XML" do
+      _(AIXM::Factory.generic(pretty: true).to_xml).must_equal <<~END
+        <!-- Generic -->
+        <Org>
+          <OrgUid>
+            <txtName>EUROPE</txtName>
+          </OrgUid>
+          <codeType>GS</codeType>
+        </Org>
+      END
+    end
+
+    it "builds correct AIXM from pretty XML" do
+      _(AIXM::Factory.generic(pretty: false).to_xml).must_equal <<~END
         <!-- Generic -->
         <Org>
           <OrgUid>

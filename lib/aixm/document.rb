@@ -168,10 +168,13 @@ module AIXM
         effective: @effective_at.xmlschema,
         expiration: (@expiration_at&.xmlschema if AIXM.ofmx?)
       }.compact
-      Nokogiri::XML::Builder.new do |builder|
+      Nokogiri::XML::Builder.new(encoding: 'UTF-8') do |builder|
         builder.send(AIXM.schema(:root), meta) do |root|
+          root.text("\n")
           AIXM::Concerns::Memoize.method :to_uid do
-            features.each { _1.add_to(root) }
+            # TODO: indent is lost if added directly to the builder
+            # features.each { _1.add_to(root) }
+            features.each { root << _1.to_xml.indent(2) }
           end
           if AIXM.ofmx? && AIXM.config.mid
             AIXM::PayloadHash::Mid.new(builder.doc).insert_mid
@@ -182,7 +185,7 @@ module AIXM
 
     # @return [String] AIXM or OFMX markup
     def to_xml
-      document.pretty.to_xml
+      document.to_xml
     end
   end
 end

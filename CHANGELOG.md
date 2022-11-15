@@ -3,6 +3,7 @@
 #### Changes
 * Add `#pred` (aliased `#prev`) and `#succ` (alias `#next`) to both
   `AIXM::Date` and `AIXM::Day` in order to use them for iterations
+* Pretty print generic features only to prevent segfaults on large documents
 
 ## 1.3.1
 

@@ -128,27 +128,24 @@ describe AIXM::Refinements do
   context Nokogiri::XML::Document do
     describe :pretty do
       subject do
-        xml = <<~END
-          <xml><aaa> AAA </aaa>
+        xml = <<~END.strip
+          <aaa></aaa>
             <bbb/>
-            <ccc   foo="bar"  >
-              CCC
-            </ccc>
-          </xml>
+          <ccc   foo="bar"  >
+            <ddd>
+          </ddd>
+          </ccc>
         END
-        Nokogiri.XML(xml)
+        Nokogiri::XML::DocumentFragment.parse(xml)
       end
 
-      it "transforms the XML document to print pretty" do
-        _(subject.pretty.to_xml).must_equal <<~END
-          <?xml version=\"1.0\" encoding=\"UTF-8\"?>
-          <xml>
-            <aaa> AAA </aaa>
-            <bbb/>
-            <ccc foo="bar">
-              CCC
-            </ccc>
-          </xml>
+      it "generates pretty printed XML" do
+        _(subject.to_pretty_xml).must_equal <<~END.strip
+          <aaa/>
+          <bbb/>
+          <ccc foo="bar">
+            <ddd/>
+          </ccc>
         END
       end
     end

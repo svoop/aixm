@@ -634,7 +634,7 @@ module AIXM
         end
       end
 
-      def generic
+      def generic(pretty: true)
         fragment_xml = <<~END
           <Org>
             <OrgUid>
@@ -646,7 +646,7 @@ module AIXM
         AIXM.generic(
           source: "LF|GEN|0.0 FACTORY|0|0",
           region: 'LF',
-          fragment: fragment_xml
+          fragment: (pretty ? fragment_xml : fragment_xml.gsub(/\s/, ''))
         )
       end
 

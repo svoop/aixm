@@ -10,11 +10,11 @@ module AIXM
       # @yield [Nokogiri::XML::Builder]
       # @return [Nokogiri::XML::DocumentFragment]
       def build_fragment
-        Nokogiri::XML::DocumentFragment.parse('').tap do |document|
-          Nokogiri::XML::Builder.with(document) do |fragment|
-            yield fragment
+        Nokogiri::XML::DocumentFragment.parse('').tap do |fragment|
+          Nokogiri::XML::Builder.with(fragment) do |builder|
+            yield builder
           end
-          document.elements.each { _1.add_next_sibling("\n") }   # add newline between tags on top level
+          fragment.elements.each { _1.add_next_sibling("\n") }   # add newline between tags on top level
         end
       end
 

@@ -59,7 +59,7 @@ module AIXM
             element['region'] ||= region if element.name.match?(/Uid$/)
           end
         end
-        builder << decorated_fragment.to_xml
+        builder << decorated_fragment.to_pretty_xml
       end
     end
 
