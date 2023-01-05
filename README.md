@@ -291,7 +291,7 @@ By `using AIXM::Refinements` you get a few handy [extensions to Ruby core classe
 
 ### mkmid
 
-The `mkmid` executable reads an OFMX file, adds [OFMX-compliant `mid` values](https://gitlab.com/openflightmaps/ofmx/wikis/Features#mid) into all `*Uid` elements and validates the result against the schema.
+The `mkmid` executable reads OFMX files, adds [OFMX-compliant `mid` values](https://gitlab.com/openflightmaps/ofmx/wikis/Features#mid) into all `*Uid` elements and validates the result against the schema.
 
 ```
 mkmid --help
@@ -299,7 +299,7 @@ mkmid --help
 
 ### ckmid
 
-The `chmid` executable reads an OFMX file, validates it against the schema and checks all `mid` attributes for [OFMX-compliance](https://gitlab.com/openflightmaps/ofmx/wikis/Features#mid).
+The `chmid` executable reads OFMX files, validates them against the schema and checks all `mid` attributes for [OFMX-compliance](https://gitlab.com/openflightmaps/ofmx/wikis/Features#mid).
 
 ```
 ckmid --help

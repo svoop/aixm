@@ -1,6 +1,7 @@
 ## Main
 
-Nothing so far
+#### Changes
+* Extend `ckmid` and `mkmid` to accept multiple files and globbing.
 
 ## 1.3.2
 
