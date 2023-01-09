@@ -363,8 +363,8 @@ module AIXM
               linked_to.add_uid_to(obs, as: :ObsUidLink)
               obs.codeLinkType(LINK_TYPES.key(link_type))
             end
-            obs.datetimeValidWef(valid_from.xmlschema) if valid_from
-            obs.datetimeValidTil(valid_until.xmlschema) if valid_until
+            obs.datetimeValidWef(valid_from.utc.xmlschema) if valid_from
+            obs.datetimeValidTil(valid_until.utc.xmlschema) if valid_until
           end
           obs.txtRmk(remarks) if remarks
         end

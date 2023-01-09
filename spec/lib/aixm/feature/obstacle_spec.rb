@@ -268,8 +268,8 @@ describe AIXM::Feature::Obstacle do
           <codeHgtAccuracy>Y</codeHgtAccuracy>
           <valRadius>88</valRadius>
           <uomRadius>M</uomRadius>
-          <datetimeValidWef>2018-01-01T12:00:00+01:00</datetimeValidWef>
-          <datetimeValidTil>2019-01-01T12:00:00+01:00</datetimeValidTil>
+          <datetimeValidWef>2018-01-01T11:00:00Z</datetimeValidWef>
+          <datetimeValidTil>2019-01-01T11:00:00Z</datetimeValidTil>
           <txtRmk>Temporary light installations (white strobes, gyro light etc)</txtRmk>
         </Obs>
       END
