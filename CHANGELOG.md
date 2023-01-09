@@ -1,6 +1,7 @@
 ## Main
 
-Nothing so far
+#### Additions
+* `Airspace#alternative_name` (OFMX only)
 
 ## 1.3.4
 

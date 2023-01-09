@@ -203,6 +203,7 @@ module AIXM
           local_type: 'POLYGON',
           name: 'POLYGON AIRSPACE'
         ).tap do |airspace|
+          airspace.alternative_name = 'POLY AS'
           airspace.add_layer(layer)
           airspace.geometry = polygon_geometry
         end
@@ -217,6 +218,7 @@ module AIXM
           local_type: 'CIRCLE',
           name: 'CIRCLE AIRSPACE'
         ).tap do |airspace|
+          airspace.alternative_name = 'CIR AS'
           airspace.add_layer(layer)
           airspace.geometry = circle_geometry
         end

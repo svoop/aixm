@@ -8,7 +8,7 @@ This is a fork of AIXM 4.5 to accomodate extensions and backports for
 open flightmaps.
 
 AIXM: copyright (c) 2006, EUROCONTROL (BSD license)
-OFMX: https://openflightmaps.org/live/downloads/20150306-GUL.pdf
+OFMX: copyright (c) 2018, open flightmaps (BSD license)
 
 Redistribution and use in source and binary forms, with or without modification,
 are permitted provided that the following conditions are met:
@@ -18,9 +18,9 @@ are permitted provided that the following conditions are met:
 * Redistributions in binary form must reproduce the above copyright notice,
   this list of conditions and the following disclaimer in the documentation
   and/or other materials provided with the distribution.
-* Neither the name of EUROCONTROL nor the names of its contributors  may be
-  used to endorse or promote products derived from this software without
-  specific prior written permission.
+* Neither the name of EUROCONTROL, open flightmaps nor the names of its
+  contributors  may be used to endorse or promote products derived from this
+  software without specific prior written permission.
 
 THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
 AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
@@ -208,17 +208,17 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
           <xsd:documentation>Regions used throughout this document</xsd:documentation>
         </xsd:annotation>
       </xsd:attribute>
-      <xsd:attribute name="created" type="xsd:dateTime" use="required">
+      <xsd:attribute name="created" type="dateTimeZulu" use="required">
         <xsd:annotation>
           <xsd:documentation>The date and time when the message was created</xsd:documentation>
         </xsd:annotation>
       </xsd:attribute>
-      <xsd:attribute name="effective" type="xsd:dateTime" use="required">
+      <xsd:attribute name="effective" type="dateTimeZulu" use="required">
         <xsd:annotation>
           <xsd:documentation>The beginning date and time used as criteria to select valid versions included in the message</xsd:documentation>
         </xsd:annotation>
       </xsd:attribute>
-      <xsd:attribute name="expiration" type="xsd:dateTime">
+      <xsd:attribute name="expiration" type="dateTimeZulu">
         <xsd:annotation>
           <xsd:documentation>The optional end date and time used as criteria to select valid versions included in the message</xsd:documentation>
         </xsd:annotation>

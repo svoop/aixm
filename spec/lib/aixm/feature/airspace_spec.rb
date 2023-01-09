@@ -67,6 +67,20 @@ describe AIXM::Feature::Airspace do
       end
     end
 
+    describe :alternative_name= do
+      it "fails on invalid values" do
+        _([:foobar, 123]).wont_be_written_to subject, :alternative_name
+      end
+
+      it "accepts nil value" do
+        _([nil]).must_be_written_to subject, :alternative_name
+      end
+
+      it "upcases value" do
+        _(subject.tap { _1.alternative_name = 'löl' }.alternative_name).must_equal 'LOEL'
+      end
+    end
+
     describe :to_uid do
       it "builds with arbitrary tag" do
         _(subject.to_uid.to_s).must_match(/<AseUid>/)
@@ -132,6 +146,7 @@ describe AIXM::Feature::Airspace do
               <txtLocalType>POLYGON</txtLocalType>
             </AseUid>
             <txtName>POLYGON AIRSPACE</txtName>
+            <txtNameAlt>POLY AS</txtNameAlt>
             <codeClass>C</codeClass>
             <codeLocInd>XXXX</codeLocInd>
             <codeActivity>TFC-AD</codeActivity>
@@ -224,7 +239,7 @@ describe AIXM::Feature::Airspace do
 
       it "builds correct minimal OFMX" do
         AIXM.ofmx!
-        subject.local_type = subject.name = nil
+        subject.local_type = subject.name = subject.alternative_name = nil
         _(subject.to_xml).must_equal <<~"END"
           <!-- Airspace: [D] UNNAMED -->
           <Ase source="LF|GEN|0.0 FACTORY|0|0">
@@ -350,6 +365,7 @@ describe AIXM::Feature::Airspace do
               <txtLocalType>POLYGON</txtLocalType>
             </AseUid>
             <txtName>POLYGON AIRSPACE</txtName>
+            <txtNameAlt>POLY AS</txtNameAlt>
           </Ase>
           <Abd>
             <AbdUid>

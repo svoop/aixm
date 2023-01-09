@@ -14,6 +14,7 @@ module AIXM
     #     local_type: String or nil
     #     name: String or nil
     #   )
+    #   airspace.alternative_name = String (OFMX only)
     #   airspace.comment = Object or nil
     #   airspace.add_layer(AIXM.layer)
     #   airspace.geometry.add_segment(AIXM.point or AIXM.arc or AIXM.border or AIXM.circle)
@@ -132,6 +133,14 @@ module AIXM
       #   @param value [String, nil]
       attr_reader :name
 
+      # Alternative name (e.g. "LF P 81")
+      #
+      # @overload alternative_name
+      #   @return [String, nil]
+      # @overload alternative_name=(value)
+      #   @param value [String, nil]
+      attr_reader :alternative_name
+
       # See the {cheat sheet}[AIXM::Feature::Airspace] for examples on how to
       # create instances of this class.
       def initialize(source: nil, region: nil, id: nil, type:, local_type: nil, name: nil)
@@ -167,6 +176,11 @@ module AIXM
         @name = value&.uptrans
       end
 
+      def alternative_name=(value)
+        fail(ArgumentError, "invalid alternative name") unless value.nil? || value.is_a?(String)
+        @alternative_name = value&.uptrans
+      end
+
       # @!visibility private
       def add_uid_to(builder, as: :AseUid)
         builder.send(as, ({ region: (region if AIXM.ofmx?) }.compact)) do |tag|
@@ -193,6 +207,7 @@ module AIXM
           add_uid_to(ase)
           ase.txtLocalType(local_type) if AIXM.aixm? && local_type && local_type != name
           ase.txtName(name) if name
+          ase.txtNameAlt(alternative_name) if AIXM.ofmx? && alternative_name
           layers.first.add_to(ase) unless layered?
         end
         builder.Abd do |abd|
