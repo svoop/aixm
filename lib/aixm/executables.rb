@@ -44,11 +44,13 @@ module AIXM
 
     class Ckmid
       def initialize(**options)
+        @options = options
         OptionParser.new do |o|
           o.banner = <<~END
             Check mid attributes of OFMX files.
             Usage: #{File.basename($0)} files
           END
+          o.on('-s', '--[no-]skip-validation', 'skip XML schema validation (default: false)') { @options[:skip_validation] = _1 }
           o.on('-A', '--about', 'show author/license information and exit') { AIXM::Executables.about }
           o.on('-V', '--version', 'show version and exit') { AIXM::Executables.version }
         end.parse!
@@ -62,7 +64,10 @@ module AIXM
             fail "#{file} is not OFMX" unless file.match?(/\.ofmx$/)
             AIXM.ofmx!
             document = File.open(file) { Nokogiri::XML(_1) }
-            errors = Nokogiri::XML::Schema(File.open(AIXM.schema(:xsd))).validate(document)
+            errors = []
+            unless @options[:skip_validation]
+              errors += Nokogiri::XML::Schema(File.open(AIXM.schema(:xsd))).validate(document)
+            end
             errors += AIXM::PayloadHash::Mid.new(document).check_mid
             fail (["#{file} is not valid..."] + errors).join("\n") if errors.any?
             success && true

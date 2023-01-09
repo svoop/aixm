@@ -1,6 +1,7 @@
 ## Main
 
-Nothing so far
+#### Additions
+* `ckmid` skips XML schema validation if `-s` argument is set.
 
 ## 1.3.3
 
