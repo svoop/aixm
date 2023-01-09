@@ -80,7 +80,6 @@ module AIXM
 
     def created_at=(value)
       @created_at = if time = value&.to_time
-        fail(ArgumentError, "must be UTC") unless time.utc_offset.zero?
         time.round
       else
         Time.now.utc.round
@@ -89,7 +88,6 @@ module AIXM
 
     def effective_at=(value)
       @effective_at = if time = value&.to_time
-        fail(ArgumentError, "must be UTC") unless time.utc_offset.zero?
         time.round
       else
         created_at || Time.now.utc.round
@@ -99,7 +97,6 @@ module AIXM
     def expiration_at=(value)
       @expiration_at = value&.to_time
       @expiration_at = if time = value&.to_time
-        fail(ArgumentError, "must be UTC") unless time.utc_offset.zero?
         time.round
       end
     end
@@ -164,9 +161,9 @@ module AIXM
         origin: "rubygem aixm-#{AIXM::VERSION}",
         namespace: (namespace if AIXM.ofmx?),
         regions: (regions.join(' '.freeze) if AIXM.ofmx?),
-        created: @created_at.xmlschema,
-        effective: @effective_at.xmlschema,
-        expiration: (@expiration_at&.xmlschema if AIXM.ofmx?)
+        created: @created_at.utc.xmlschema,
+        effective: @effective_at.utc.xmlschema,
+        expiration: (@expiration_at&.utc&.xmlschema if AIXM.ofmx?)
       }.compact
       Nokogiri::XML::Builder.new(encoding: 'UTF-8') do |builder|
         builder.send(AIXM.schema(:root), meta) do |root|

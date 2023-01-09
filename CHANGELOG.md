@@ -3,6 +3,10 @@
 #### Additions
 * `Airspace#alternative_name` (OFMX only)
 
+#### Changes
+* `Document#created_at` and similar accept local times and convert them to UTC
+  when the XML is generated.
+
 ## 1.3.4
 
 #### Additions

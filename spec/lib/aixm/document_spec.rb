@@ -21,7 +21,7 @@ describe AIXM::Document do
 
   describe :created_at= do
     it "fails on invalid values" do
-      _(['foobar', '2018-01-77', Time.parse('2018-01-01 12:00:00 +0100')]).wont_be_written_to subject, :created_at
+      _(['foobar', '2018-01-77']).wont_be_written_to subject, :created_at
     end
 
     it "parses dates and times" do
@@ -43,7 +43,7 @@ describe AIXM::Document do
 
   describe :effective_at= do
     it "fails on invalid values" do
-      _(['foobar', '2018-01-77', Time.parse('2018-01-01 12:00:00 +0100')]).wont_be_written_to subject, :effective_at
+      _(['foobar', '2018-01-77']).wont_be_written_to subject, :effective_at
     end
 
     it "parses dates and times" do
@@ -63,7 +63,7 @@ describe AIXM::Document do
     end
 
     it "fails on invalid values" do
-      _(['foobar', '2018-01-77', Time.parse('2018-01-01 12:00:00 +0100')]).wont_be_written_to subject, :expiration_at
+      _(['foobar', '2018-01-77']).wont_be_written_to subject, :expiration_at
     end
 
     it "parses dates and times" do
