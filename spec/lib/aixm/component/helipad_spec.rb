@@ -15,6 +15,12 @@ describe AIXM::Component::Helipad do
     end
   end
 
+  describe :geographic_bearing= do
+    it "fails on invalid values" do
+      _([:foobar, -1, 10]).wont_be_written_to subject, :geographic_bearing
+    end
+  end
+
   describe :xy= do
     macro :xy
 
@@ -95,6 +101,7 @@ describe AIXM::Component::Helipad do
           <geoLat>43.99915000N</geoLat>
           <geoLong>004.75154444E</geoLong>
           <codeDatum>WGE</codeDatum>
+          <valTrueBrg>038.3000</valTrueBrg>
           <valElev>141</valElev>
           <uomDistVer>FT</uomDistVer>
           <valLen>20</valLen>
@@ -140,7 +147,7 @@ describe AIXM::Component::Helipad do
 
     it "builds correct minimal OFMX" do
       AIXM.ofmx!
-      %i(z dimensions performance_class marking status remarks).each { subject.send(:"#{_1}=", nil) }
+      %i(geographic_bearing z dimensions performance_class marking status remarks).each { subject.send(:"#{_1}=", nil) }
       %i(composition preparation condition pcn siwl_weight siwl_tire_pressure auw_weight remarks).each { subject.surface.send(:"#{_1}=", nil) }
       subject.instance_eval do
         @lightings.clear

@@ -317,54 +317,6 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
           <xsd:documentation>Type</xsd:documentation>
         </xsd:annotation>
       </xsd:element>
-      <xsd:element name="codeTypeMilOps" type="codeTypeMilOps" minOccurs="0">
-        <xsd:annotation>
-          <xsd:documentation>[Deprecated] Operation code</xsd:documentation>
-          <xsd:appinfo>DEPRECATED-4.0</xsd:appinfo>
-        </xsd:annotation>
-      </xsd:element>
-      <xsd:element name="codeNationalTfc" type="codeYesNo" minOccurs="0">
-        <xsd:annotation>
-          <xsd:documentation>[Deprecated] National traffic</xsd:documentation>
-          <xsd:appinfo>DEPRECATED-4.0</xsd:appinfo>
-        </xsd:annotation>
-      </xsd:element>
-      <xsd:element name="codeIntlTfc" type="codeYesNo" minOccurs="0">
-        <xsd:annotation>
-          <xsd:documentation>[Deprecated] International traffic</xsd:documentation>
-          <xsd:appinfo>DEPRECATED-4.0</xsd:appinfo>
-        </xsd:annotation>
-      </xsd:element>
-      <xsd:element name="codeSked" type="codeYesNo" minOccurs="0">
-        <xsd:annotation>
-          <xsd:documentation>[Deprecated] Scheduled flight</xsd:documentation>
-          <xsd:appinfo>DEPRECATED-4.0</xsd:appinfo>
-        </xsd:annotation>
-      </xsd:element>
-      <xsd:element name="codeNonSked" type="codeYesNo" minOccurs="0">
-        <xsd:annotation>
-          <xsd:documentation>[Deprecated] Non scheduled flight</xsd:documentation>
-          <xsd:appinfo>DEPRECATED-4.0</xsd:appinfo>
-        </xsd:annotation>
-      </xsd:element>
-      <xsd:element name="codePriv" type="codeYesNo" minOccurs="0">
-        <xsd:annotation>
-          <xsd:documentation>[Deprecated] Private flight</xsd:documentation>
-          <xsd:appinfo>DEPRECATED-4.0</xsd:appinfo>
-        </xsd:annotation>
-      </xsd:element>
-      <xsd:element name="codeVfr" type="codeYesNo" minOccurs="0">
-        <xsd:annotation>
-          <xsd:documentation>[Deprecated] Observe VFR</xsd:documentation>
-          <xsd:appinfo>DEPRECATED-4.0</xsd:appinfo>
-        </xsd:annotation>
-      </xsd:element>
-      <xsd:element name="codeIfr" type="codeYesNo" minOccurs="0">
-        <xsd:annotation>
-          <xsd:documentation>[Deprecated] Observe IFR</xsd:documentation>
-          <xsd:appinfo>DEPRECATED-4.0</xsd:appinfo>
-        </xsd:annotation>
-      </xsd:element>
       <xsd:element name="txtDescrRefPt" type="txtDescr" minOccurs="0">
         <xsd:annotation>
           <xsd:documentation>Reference point description</xsd:documentation>
@@ -737,59 +689,6 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
       <xsd:element name="codeType" type="codeTypeRelAs">
         <xsd:annotation>
           <xsd:documentation>Association type {TIME-DIST}</xsd:documentation>
-        </xsd:annotation>
-      </xsd:element>
-    </xsd:sequence>
-    <xsd:attribute ref="mid"/>
-  </xsd:complexType>
-  <xsd:complexType name="AirspaceAssocType">
-    <xsd:annotation>
-      <xsd:appinfo>DEPRECATED-4.0</xsd:appinfo>
-      <xsd:documentation>[Deprecated] Airspace association</xsd:documentation>
-    </xsd:annotation>
-    <xsd:sequence>
-      <xsd:element name="AacUid" type="AirspaceAssocUidType">
-        <xsd:annotation>
-          <xsd:documentation>a version of Airspace association</xsd:documentation>
-        </xsd:annotation>
-      </xsd:element>
-      <xsd:element name="codeType" type="codeTypeAssocAs">
-        <xsd:annotation>
-          <xsd:documentation>Association type</xsd:documentation>
-        </xsd:annotation>
-      </xsd:element>
-      <xsd:element name="codeOpr" type="codeOpr" minOccurs="0">
-        <xsd:annotation>
-          <xsd:documentation>Association operation</xsd:documentation>
-        </xsd:annotation>
-      </xsd:element>
-      <xsd:element name="noSeqOpr" type="noSeq" minOccurs="0">
-        <xsd:annotation>
-          <xsd:documentation>Association operation order</xsd:documentation>
-        </xsd:annotation>
-      </xsd:element>
-      <xsd:element name="txtRmk" type="txtRmk" minOccurs="0">
-        <xsd:annotation>
-          <xsd:documentation>Remark</xsd:documentation>
-        </xsd:annotation>
-      </xsd:element>
-    </xsd:sequence>
-    <xsd:attribute ref="source"/>
-  </xsd:complexType>
-  <xsd:complexType name="AirspaceAssocUidType">
-    <xsd:annotation>
-      <xsd:appinfo>DEPRECATED-4.0</xsd:appinfo>
-      <xsd:documentation>[Deprecated] Airspace association - UID</xsd:documentation>
-    </xsd:annotation>
-    <xsd:sequence>
-      <xsd:element name="AseUidChi" type="AirspaceUidType">
-        <xsd:annotation>
-          <xsd:documentation>Airspace association is having as child Airspace</xsd:documentation>
-        </xsd:annotation>
-      </xsd:element>
-      <xsd:element name="AseUidPar" type="AirspaceUidType">
-        <xsd:annotation>
-          <xsd:documentation>Airspace association is having as parent Airspace</xsd:documentation>
         </xsd:annotation>
       </xsd:element>
     </xsd:sequence>
@@ -1608,18 +1507,6 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
         </xsd:annotation>
       </xsd:element>
       <xsd:group ref="SurfaceCharacteristics"/>
-      <xsd:element name="codeStrength" type="codeStrengthSfc" minOccurs="0">
-        <xsd:annotation>
-          <xsd:documentation>[Deprecated] Surface strength method</xsd:documentation>
-          <xsd:appinfo>DEPRECATED-4.5</xsd:appinfo>
-        </xsd:annotation>
-      </xsd:element>
-      <xsd:element name="txtDescrStrength" type="txtDescr" minOccurs="0">
-        <xsd:annotation>
-          <xsd:documentation>[Deprecated] Surface strength</xsd:documentation>
-          <xsd:appinfo>DEPRECATED-4.5</xsd:appinfo>
-        </xsd:annotation>
-      </xsd:element>
       <xsd:element name="codeSts" type="codeStsSfc" minOccurs="0">
         <xsd:annotation>
           <xsd:documentation>Operational status</xsd:documentation>
@@ -1628,12 +1515,6 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
       <xsd:element name="txtMarking" type="txtDescr" minOccurs="0">
         <xsd:annotation>
           <xsd:documentation>Marking system description</xsd:documentation>
-        </xsd:annotation>
-      </xsd:element>
-      <xsd:element name="txtLgt" type="txtDescr" minOccurs="0">
-        <xsd:annotation>
-          <xsd:documentation>[Deprecated] Lighting system description</xsd:documentation>
-          <xsd:appinfo>DEPRECATED-4.5</xsd:appinfo>
         </xsd:annotation>
       </xsd:element>
       <xsd:element name="txtRmk" type="txtRmk" minOccurs="0">
@@ -1976,104 +1857,6 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
       </xsd:element>
     </xsd:sequence>
   </xsd:complexType>
-  <xsd:complexType name="DmeLimitationType">
-    <xsd:annotation>
-      <xsd:appinfo>DEPRECATED-4.0</xsd:appinfo>
-      <xsd:documentation>[Deprecated] DME - Limitation</xsd:documentation>
-    </xsd:annotation>
-    <xsd:sequence>
-      <xsd:element name="DlnUid" type="DmeLimitationUidType">
-        <xsd:annotation>
-          <xsd:documentation>a version of DME - Limitation</xsd:documentation>
-        </xsd:annotation>
-      </xsd:element>
-      <xsd:element name="valDistOuter" type="valDistHorz" minOccurs="0">
-        <xsd:annotation>
-          <xsd:documentation>Angle sector volume outer limit</xsd:documentation>
-        </xsd:annotation>
-      </xsd:element>
-      <xsd:element name="uomDistHorz" type="uomDistHorz">
-        <xsd:annotation>
-          <xsd:documentation>Unit of measurement [horizontal distance]</xsd:documentation>
-        </xsd:annotation>
-      </xsd:element>
-      <xsd:element name="valDistVerUpper" type="valDistVer" minOccurs="0">
-        <xsd:annotation>
-          <xsd:documentation>Upper limit</xsd:documentation>
-        </xsd:annotation>
-      </xsd:element>
-      <xsd:element name="uomDistVerUpper" type="uomDistVer" minOccurs="0">
-        <xsd:annotation>
-          <xsd:documentation>Unit of measurement [upper limit]</xsd:documentation>
-        </xsd:annotation>
-      </xsd:element>
-      <xsd:element name="codeDistVerUpper" type="codeDistVer" minOccurs="0">
-        <xsd:annotation>
-          <xsd:documentation>Reference for upper limit</xsd:documentation>
-        </xsd:annotation>
-      </xsd:element>
-      <xsd:element name="uomDistVerLower" type="uomDistVer">
-        <xsd:annotation>
-          <xsd:documentation>Unit of measurement [lower limit]</xsd:documentation>
-        </xsd:annotation>
-      </xsd:element>
-      <xsd:element name="codeDistVerLower" type="codeDistVer">
-        <xsd:annotation>
-          <xsd:documentation>Reference for lower limit</xsd:documentation>
-        </xsd:annotation>
-      </xsd:element>
-      <xsd:element name="valAngleScallop" type="valAngle" minOccurs="0">
-        <xsd:annotation>
-          <xsd:documentation>Scalloping angle</xsd:documentation>
-        </xsd:annotation>
-      </xsd:element>
-      <xsd:element name="txtRmk" type="txtRmk" minOccurs="0">
-        <xsd:annotation>
-          <xsd:documentation>Remark</xsd:documentation>
-        </xsd:annotation>
-      </xsd:element>
-    </xsd:sequence>
-    <xsd:attribute ref="source"/>
-  </xsd:complexType>
-  <xsd:complexType name="DmeLimitationUidType">
-    <xsd:annotation>
-      <xsd:appinfo>DEPRECATED-4.0</xsd:appinfo>
-      <xsd:documentation>[Deprecated] DME - Limitation - UID</xsd:documentation>
-    </xsd:annotation>
-    <xsd:sequence>
-      <xsd:element name="DmeUid" type="DmeUidType">
-        <xsd:annotation>
-          <xsd:documentation>DME - Limitation is limiting Distance measuring equipment [DME]</xsd:documentation>
-        </xsd:annotation>
-      </xsd:element>
-      <xsd:element name="codeType" type="codeTypeNavAidLimit">
-        <xsd:annotation>
-          <xsd:documentation>Type</xsd:documentation>
-        </xsd:annotation>
-      </xsd:element>
-      <xsd:element name="valAngleFm" type="valAngleBrg">
-        <xsd:annotation>
-          <xsd:documentation>Beginning of angle</xsd:documentation>
-        </xsd:annotation>
-      </xsd:element>
-      <xsd:element name="valAngleTo" type="valAngleBrg">
-        <xsd:annotation>
-          <xsd:documentation>Ending of angle</xsd:documentation>
-        </xsd:annotation>
-      </xsd:element>
-      <xsd:element name="valDistInner" type="valDistHorz">
-        <xsd:annotation>
-          <xsd:documentation>Angle sector volume inner limit</xsd:documentation>
-        </xsd:annotation>
-      </xsd:element>
-      <xsd:element name="valDistVerLower" type="valDistVer">
-        <xsd:annotation>
-          <xsd:documentation>Lower limit</xsd:documentation>
-        </xsd:annotation>
-      </xsd:element>
-    </xsd:sequence>
-    <xsd:attribute ref="mid"/>
-  </xsd:complexType>
   <xsd:complexType name="DmeType">
     <xsd:annotation>
       <xsd:documentation>DME</xsd:documentation>
@@ -2358,12 +2141,6 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
     </xsd:annotation>
     <xsd:sequence>
       <xsd:choice>
-        <xsd:element name="FaoUid" type="FatoOldUidType">
-          <xsd:annotation>
-            <xsd:documentation>[Deprecated]</xsd:documentation>
-            <xsd:appinfo>DEPRECATED-4.0</xsd:appinfo>
-          </xsd:annotation>
-        </xsd:element>
         <xsd:element name="FtoUid" type="FatoUidType">
           <xsd:annotation>
             <xsd:documentation>FATO - centre line position is on the centre line of Final approach and take-off area [FATO]</xsd:documentation>
@@ -2652,12 +2429,6 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
           <xsd:documentation>Portable VASIS</xsd:documentation>
         </xsd:annotation>
       </xsd:element>
-      <xsd:element name="txtDescrPsnVasis" type="txtDescr" minOccurs="0">
-        <xsd:annotation>
-          <xsd:documentation>[Deprecated] VASIS position description</xsd:documentation>
-          <xsd:appinfo>DEPRECATED-4.5</xsd:appinfo>
-        </xsd:annotation>
-      </xsd:element>
       <xsd:element name="valSlopeAngleGpVasis" type="valAngle" minOccurs="0">
         <xsd:annotation>
           <xsd:documentation>VASIS slope angle</xsd:documentation>
@@ -2713,14 +2484,49 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
           <xsd:documentation>Unit of measurement [initial approach point altitude]</xsd:documentation>
         </xsd:annotation>
       </xsd:element>
+      <xsd:element name="valMaxSectorLen" type="valDistHorz" minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation>Non-standard maximum sector length</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="uomMaxSectorLen" type="uomDistHorz" minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation>Unit of measurement [non-standard maximum sector length]</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="valSlopeAngle" type="valAngle" minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation>Non-standard slope angle</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="valOpeningAngle" type="valAngle" minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation>Non-standard opening angle</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
       <xsd:element name="bezierSectorExtent" type="bezierCurve" minOccurs="0">
         <xsd:annotation>
-          <xsd:documentation>Longitude</xsd:documentation>
+          <xsd:documentation>Bezier curve describing the sector</xsd:documentation>
         </xsd:annotation>
       </xsd:element>
       <xsd:element name="bezierSectorCentreLine" type="bezierCurve" minOccurs="0">
         <xsd:annotation>
-          <xsd:documentation>Longitude</xsd:documentation>
+          <xsd:documentation>Bezier centre line describing the sector</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="valDistVerLandingDecision" type="valDistVer" minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation>Vertical distance above helipad surface for approach decision</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="valDistVerTakeOffDecision" type="valDistVer" minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation>Vertical distance above helipad surface for approach decision</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="uomDistVer" type="uomDistVer" minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation>Unit of measurement [vertical distance for approach decision]</xsd:documentation>
         </xsd:annotation>
       </xsd:element>
       <xsd:element name="txtRmk" type="txtRmk" minOccurs="0">
@@ -2737,12 +2543,6 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
     </xsd:annotation>
     <xsd:sequence>
       <xsd:choice>
-        <xsd:element name="FaoUid" type="FatoOldUidType">
-          <xsd:annotation>
-            <xsd:documentation>[Deprecated]</xsd:documentation>
-            <xsd:appinfo>DEPRECATED-4.0</xsd:appinfo>
-          </xsd:annotation>
-        </xsd:element>
         <xsd:element name="FtoUid" type="FatoUidType">
           <xsd:annotation>
             <xsd:documentation>FATO - centre line position is on the centre line of Final approach and take-off area [FATO]</xsd:documentation>
@@ -2813,87 +2613,6 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
       <xsd:element name="codePsn" type="codePsnRwy">
         <xsd:annotation>
           <xsd:documentation>Part</xsd:documentation>
-        </xsd:annotation>
-      </xsd:element>
-    </xsd:sequence>
-    <xsd:attribute ref="mid"/>
-  </xsd:complexType>
-  <xsd:complexType name="FatoOldType">
-    <xsd:annotation>
-      <xsd:appinfo>DEPRECATED-4.5</xsd:appinfo>
-      <xsd:documentation>FATO</xsd:documentation>
-    </xsd:annotation>
-    <xsd:sequence>
-      <xsd:element name="FaoUid" type="FatoOldUidType">
-        <xsd:annotation>
-          <xsd:documentation>a version of Final approach and take-off area [FATO]</xsd:documentation>
-        </xsd:annotation>
-      </xsd:element>
-      <xsd:element name="txtName" type="txtName" minOccurs="0">
-        <xsd:annotation>
-          <xsd:documentation>Name</xsd:documentation>
-        </xsd:annotation>
-      </xsd:element>
-      <xsd:element name="valLen" type="valDistHorz" minOccurs="0">
-        <xsd:annotation>
-          <xsd:documentation>Length</xsd:documentation>
-        </xsd:annotation>
-      </xsd:element>
-      <xsd:element name="valWid" type="valDistHorz" minOccurs="0">
-        <xsd:annotation>
-          <xsd:documentation>Width</xsd:documentation>
-        </xsd:annotation>
-      </xsd:element>
-      <xsd:element name="uomDim" type="uomDistHorz" minOccurs="0">
-        <xsd:annotation>
-          <xsd:documentation>Unit of measurement [horizontal dimension]</xsd:documentation>
-        </xsd:annotation>
-      </xsd:element>
-      <xsd:group ref="SurfaceCharacteristics"/>
-      <xsd:element name="codeStrength" type="codeStrengthSfc" minOccurs="0">
-        <xsd:annotation>
-          <xsd:documentation>[Deprecated] Surface strength method</xsd:documentation>
-          <xsd:appinfo>DEPRECATED-4.5</xsd:appinfo>
-        </xsd:annotation>
-      </xsd:element>
-      <xsd:element name="txtDescrStrength" type="txtDescr" minOccurs="0">
-        <xsd:annotation>
-          <xsd:documentation>[Deprecated] Surface strength</xsd:documentation>
-          <xsd:appinfo>DEPRECATED-4.5</xsd:appinfo>
-        </xsd:annotation>
-      </xsd:element>
-      <xsd:element name="txtProfile" type="txtDescr" minOccurs="0">
-        <xsd:annotation>
-          <xsd:documentation>Profile description</xsd:documentation>
-        </xsd:annotation>
-      </xsd:element>
-      <xsd:element name="txtMarking" type="txtDescr" minOccurs="0">
-        <xsd:annotation>
-          <xsd:documentation>Marking</xsd:documentation>
-        </xsd:annotation>
-      </xsd:element>
-      <xsd:element name="codeSts" type="codeStsSfc" minOccurs="0">
-        <xsd:annotation>
-          <xsd:documentation>Operational status</xsd:documentation>
-        </xsd:annotation>
-      </xsd:element>
-      <xsd:element name="txtRmk" type="txtRmk" minOccurs="0">
-        <xsd:annotation>
-          <xsd:documentation>Remark</xsd:documentation>
-        </xsd:annotation>
-      </xsd:element>
-    </xsd:sequence>
-    <xsd:attribute ref="source"/>
-  </xsd:complexType>
-  <xsd:complexType name="FatoOldUidType">
-    <xsd:annotation>
-      <xsd:appinfo>DEPRECATED-4.5</xsd:appinfo>
-      <xsd:documentation>Final approach and take-off area [FATO] - UID</xsd:documentation>
-    </xsd:annotation>
-    <xsd:sequence>
-      <xsd:element name="TlaUid" type="TlofUidType">
-        <xsd:annotation>
-          <xsd:documentation>Final approach and take-off area [FATO] is having Touch down and lift off area [TLOF]</xsd:documentation>
         </xsd:annotation>
       </xsd:element>
     </xsd:sequence>
@@ -3075,12 +2794,6 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
           <xsd:documentation>FATO is a version of final approach and take-off area [FATO]</xsd:documentation>
         </xsd:annotation>
       </xsd:element>
-      <xsd:element name="txtName" type="txtName" minOccurs="0">
-        <xsd:annotation>
-          <xsd:documentation>[Deprecated] Name</xsd:documentation>
-          <xsd:appinfo>DEPRECATED-4.5</xsd:appinfo>
-        </xsd:annotation>
-      </xsd:element>
       <xsd:element name="valLen" type="valDistHorz" minOccurs="0">
         <xsd:annotation>
           <xsd:documentation>Length</xsd:documentation>
@@ -3102,18 +2815,6 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
         </xsd:annotation>
       </xsd:element>
       <xsd:group ref="SurfaceCharacteristics"/>
-      <xsd:element name="codeStrength" type="codeStrengthSfc" minOccurs="0">
-        <xsd:annotation>
-          <xsd:documentation>[Deprecated] Surface strength method</xsd:documentation>
-          <xsd:appinfo>DEPRECATED-4.5</xsd:appinfo>
-        </xsd:annotation>
-      </xsd:element>
-      <xsd:element name="txtDescrStrength" type="txtDescr" minOccurs="0">
-        <xsd:annotation>
-          <xsd:documentation>[Deprecated] Surface strength</xsd:documentation>
-          <xsd:appinfo>DEPRECATED-4.5</xsd:appinfo>
-        </xsd:annotation>
-      </xsd:element>
       <xsd:element name="txtProfile" type="txtDescr" minOccurs="0">
         <xsd:annotation>
           <xsd:documentation>Profile description</xsd:documentation>
@@ -5169,104 +4870,6 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
     </xsd:sequence>
     <xsd:attributeGroup ref="Changes"/>
   </xsd:complexType>
-  <xsd:complexType name="NdbLimitationType">
-    <xsd:annotation>
-      <xsd:appinfo>DEPRECATED-4.0</xsd:appinfo>
-      <xsd:documentation>[Deprecated] NDB limitation</xsd:documentation>
-    </xsd:annotation>
-    <xsd:sequence>
-      <xsd:element name="NlnUid" type="NdbLimitationUidType">
-        <xsd:annotation>
-          <xsd:documentation>a version of NDB limitation</xsd:documentation>
-        </xsd:annotation>
-      </xsd:element>
-      <xsd:element name="valDistOuter" type="valDistHorz" minOccurs="0">
-        <xsd:annotation>
-          <xsd:documentation>Angle sector volume outer limit</xsd:documentation>
-        </xsd:annotation>
-      </xsd:element>
-      <xsd:element name="uomDistHorz" type="uomDistHorz">
-        <xsd:annotation>
-          <xsd:documentation>Unit of measurement [horizontal distance]</xsd:documentation>
-        </xsd:annotation>
-      </xsd:element>
-      <xsd:element name="valDistVerUpper" type="valDistVer" minOccurs="0">
-        <xsd:annotation>
-          <xsd:documentation>Upper limit</xsd:documentation>
-        </xsd:annotation>
-      </xsd:element>
-      <xsd:element name="uomDistVerUpper" type="uomDistVer" minOccurs="0">
-        <xsd:annotation>
-          <xsd:documentation>Unit of measurement [upper limit]</xsd:documentation>
-        </xsd:annotation>
-      </xsd:element>
-      <xsd:element name="codeDistVerUpper" type="codeDistVer" minOccurs="0">
-        <xsd:annotation>
-          <xsd:documentation>Reference for upper limit</xsd:documentation>
-        </xsd:annotation>
-      </xsd:element>
-      <xsd:element name="uomDistVerLower" type="uomDistVer">
-        <xsd:annotation>
-          <xsd:documentation>Unit of measurement [lower limit]</xsd:documentation>
-        </xsd:annotation>
-      </xsd:element>
-      <xsd:element name="codeDistVerLower" type="codeDistVer">
-        <xsd:annotation>
-          <xsd:documentation>Reference for lower limit</xsd:documentation>
-        </xsd:annotation>
-      </xsd:element>
-      <xsd:element name="valAngleScallop" type="valAngle" minOccurs="0">
-        <xsd:annotation>
-          <xsd:documentation>Scalloping angle</xsd:documentation>
-        </xsd:annotation>
-      </xsd:element>
-      <xsd:element name="txtRmk" type="txtRmk" minOccurs="0">
-        <xsd:annotation>
-          <xsd:documentation>Remark</xsd:documentation>
-        </xsd:annotation>
-      </xsd:element>
-    </xsd:sequence>
-    <xsd:attribute ref="source"/>
-  </xsd:complexType>
-  <xsd:complexType name="NdbLimitationUidType">
-    <xsd:annotation>
-      <xsd:appinfo>DEPRECATED-4.0</xsd:appinfo>
-      <xsd:documentation>[Deprecated] NDB limitation - UID</xsd:documentation>
-    </xsd:annotation>
-    <xsd:sequence>
-      <xsd:element name="NdbUid" type="NdbUidType">
-        <xsd:annotation>
-          <xsd:documentation>NDB limitation is limiting Non-directional radio beacon [NDB]</xsd:documentation>
-        </xsd:annotation>
-      </xsd:element>
-      <xsd:element name="codeType" type="codeTypeNavAidLimit">
-        <xsd:annotation>
-          <xsd:documentation>Type</xsd:documentation>
-        </xsd:annotation>
-      </xsd:element>
-      <xsd:element name="valAngleFm" type="valAngleBrg">
-        <xsd:annotation>
-          <xsd:documentation>Beginning of angle</xsd:documentation>
-        </xsd:annotation>
-      </xsd:element>
-      <xsd:element name="valAngleTo" type="valAngleBrg">
-        <xsd:annotation>
-          <xsd:documentation>Ending of angle</xsd:documentation>
-        </xsd:annotation>
-      </xsd:element>
-      <xsd:element name="valDistInner" type="valDistHorz">
-        <xsd:annotation>
-          <xsd:documentation>Angle sector volume inner limit</xsd:documentation>
-        </xsd:annotation>
-      </xsd:element>
-      <xsd:element name="valDistVerLower" type="valDistVer">
-        <xsd:annotation>
-          <xsd:documentation>Lower limit</xsd:documentation>
-        </xsd:annotation>
-      </xsd:element>
-    </xsd:sequence>
-    <xsd:attribute ref="mid"/>
-  </xsd:complexType>
   <xsd:complexType name="NdbType">
     <xsd:annotation>
       <xsd:documentation>NDB</xsd:documentation>
@@ -6974,12 +6577,6 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
           <xsd:documentation>Portable VASIS</xsd:documentation>
         </xsd:annotation>
       </xsd:element>
-      <xsd:element name="txtDescrPsnVasis" type="txtDescr" minOccurs="0">
-        <xsd:annotation>
-          <xsd:documentation>[Deprecated] VASIS position description</xsd:documentation>
-          <xsd:appinfo>DEPRECATED-4.5</xsd:appinfo>
-        </xsd:annotation>
-      </xsd:element>
       <xsd:element name="valSlopeAngleGpVasis" type="valAngle" minOccurs="0">
         <xsd:annotation>
           <xsd:documentation>Approach slope angle</xsd:documentation>
@@ -7228,18 +6825,6 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
         </xsd:annotation>
       </xsd:element>
       <xsd:group ref="SurfaceCharacteristics"/>
-      <xsd:element name="codeStrength" type="codeStrengthSfc" minOccurs="0">
-        <xsd:annotation>
-          <xsd:documentation>[Deprecated] Surface strength method</xsd:documentation>
-          <xsd:appinfo>DEPRECATED-4.5</xsd:appinfo>
-        </xsd:annotation>
-      </xsd:element>
-      <xsd:element name="txtDescrStrength" type="txtDescr" minOccurs="0">
-        <xsd:annotation>
-          <xsd:documentation>[Deprecated] Surface strength</xsd:documentation>
-          <xsd:appinfo>DEPRECATED-4.5</xsd:appinfo>
-        </xsd:annotation>
-      </xsd:element>
       <xsd:element name="valLenStrip" type="valDistHorz" minOccurs="0">
         <xsd:annotation>
           <xsd:documentation>Physical length of the strip</xsd:documentation>
@@ -8035,18 +7620,6 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
         </xsd:annotation>
       </xsd:element>
       <xsd:group ref="SurfaceCharacteristics"/>
-      <xsd:element name="codeStrength" type="codeStrengthSfc" minOccurs="0">
-        <xsd:annotation>
-          <xsd:documentation>[Deprecated] Surface strength method</xsd:documentation>
-          <xsd:appinfo>DEPRECATED-4.5</xsd:appinfo>
-        </xsd:annotation>
-      </xsd:element>
-      <xsd:element name="txtDescrStrength" type="txtDescr" minOccurs="0">
-        <xsd:annotation>
-          <xsd:documentation>[Deprecated] Surface strength</xsd:documentation>
-          <xsd:appinfo>DEPRECATED-4.5</xsd:appinfo>
-        </xsd:annotation>
-      </xsd:element>
       <xsd:element name="codeSts" type="codeStsSfc" minOccurs="0">
         <xsd:annotation>
           <xsd:documentation>Operational status</xsd:documentation>
@@ -8078,109 +7651,6 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
       <xsd:element name="RdnUid" type="RunwayDirectionUidType">
         <xsd:annotation>
           <xsd:documentation>Stopway [SWY] is designed for RWY direction</xsd:documentation>
-        </xsd:annotation>
-      </xsd:element>
-    </xsd:sequence>
-    <xsd:attribute ref="mid"/>
-  </xsd:complexType>
-  <xsd:complexType name="TacanLimitationType">
-    <xsd:annotation>
-      <xsd:appinfo>DEPRECATED-4.0</xsd:appinfo>
-      <xsd:documentation>[Deprecated] TACAN - Limitation</xsd:documentation>
-    </xsd:annotation>
-    <xsd:sequence>
-      <xsd:element name="TlnUid" type="TacanLimitationUidType">
-        <xsd:annotation>
-          <xsd:documentation>a version of TACAN - Limitation</xsd:documentation>
-        </xsd:annotation>
-      </xsd:element>
-      <xsd:element name="valDistOuter" type="valDistHorz" minOccurs="0">
-        <xsd:annotation>
-          <xsd:documentation>Angle sector volume outer limit</xsd:documentation>
-        </xsd:annotation>
-      </xsd:element>
-      <xsd:element name="uomDistHorz" type="uomDistHorz">
-        <xsd:annotation>
-          <xsd:documentation>Unit of measurement [horizontal distance]</xsd:documentation>
-        </xsd:annotation>
-      </xsd:element>
-      <xsd:element name="valDistVerUpper" type="valDistVer" minOccurs="0">
-        <xsd:annotation>
-          <xsd:documentation>Upper limit</xsd:documentation>
-        </xsd:annotation>
-      </xsd:element>
-      <xsd:element name="uomDistVerUpper" type="uomDistVer" minOccurs="0">
-        <xsd:annotation>
-          <xsd:documentation>Unit of measurement [upper limit]</xsd:documentation>
-        </xsd:annotation>
-      </xsd:element>
-      <xsd:element name="codeDistVerUpper" type="codeDistVer" minOccurs="0">
-        <xsd:annotation>
-          <xsd:documentation>Reference for upper limit</xsd:documentation>
-        </xsd:annotation>
-      </xsd:element>
-      <xsd:element name="uomDistVerLower" type="uomDistVer">
-        <xsd:annotation>
-          <xsd:documentation>Unit of measurement [lower limit]</xsd:documentation>
-        </xsd:annotation>
-      </xsd:element>
-      <xsd:element name="codeDistVerLower" type="codeDistVer">
-        <xsd:annotation>
-          <xsd:documentation>Reference for lower limit</xsd:documentation>
-        </xsd:annotation>
-      </xsd:element>
-      <xsd:element name="valAngleScallop" type="valAngle" minOccurs="0">
-        <xsd:annotation>
-          <xsd:documentation>Scalloping angle</xsd:documentation>
-        </xsd:annotation>
-      </xsd:element>
-      <xsd:element name="txtRmk" type="txtRmk" minOccurs="0">
-        <xsd:annotation>
-          <xsd:documentation>Remark</xsd:documentation>
-        </xsd:annotation>
-      </xsd:element>
-    </xsd:sequence>
-    <xsd:attribute ref="source"/>
-  </xsd:complexType>
-  <xsd:complexType name="TacanLimitationUidType">
-    <xsd:annotation>
-      <xsd:appinfo>DEPRECATED-4.0</xsd:appinfo>
-      <xsd:documentation>[Deprecated] TACAN - Limitation - UID</xsd:documentation>
-    </xsd:annotation>
-    <xsd:sequence>
-      <xsd:element name="TcnUid" type="TacanUidType">
-        <xsd:annotation>
-          <xsd:documentation>TACAN - Limitation is limiting Tactical air navigation beacon [TACAN]</xsd:documentation>
-        </xsd:annotation>
-      </xsd:element>
-      <xsd:element name="codeComponent" type="codeComponentTacan">
-        <xsd:annotation>
-          <xsd:documentation>Component</xsd:documentation>
-        </xsd:annotation>
-      </xsd:element>
-      <xsd:element name="codeType" type="codeTypeNavAidLimit">
-        <xsd:annotation>
-          <xsd:documentation>Type</xsd:documentation>
-        </xsd:annotation>
-      </xsd:element>
-      <xsd:element name="valAngleFm" type="valAngleBrg">
-        <xsd:annotation>
-          <xsd:documentation>Beginning of angle</xsd:documentation>
-        </xsd:annotation>
-      </xsd:element>
-      <xsd:element name="valAngleTo" type="valAngleBrg">
-        <xsd:annotation>
-          <xsd:documentation>Ending of angle</xsd:documentation>
-        </xsd:annotation>
-      </xsd:element>
-      <xsd:element name="valDistInner" type="valDistHorz">
-        <xsd:annotation>
-          <xsd:documentation>Angle sector volume inner limit</xsd:documentation>
-        </xsd:annotation>
-      </xsd:element>
-      <xsd:element name="valDistVerLower" type="valDistVer">
-        <xsd:annotation>
-          <xsd:documentation>Lower limit</xsd:documentation>
         </xsd:annotation>
       </xsd:element>
     </xsd:sequence>
@@ -8589,18 +8059,6 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
         </xsd:annotation>
       </xsd:element>
       <xsd:group ref="SurfaceCharacteristics"/>
-      <xsd:element name="codeStrength" type="codeStrengthSfc" minOccurs="0">
-        <xsd:annotation>
-          <xsd:documentation>[Deprecated] Surface strength method</xsd:documentation>
-          <xsd:appinfo>DEPRECATED-4.5</xsd:appinfo>
-        </xsd:annotation>
-      </xsd:element>
-      <xsd:element name="txtDescrStrength" type="txtDescr" minOccurs="0">
-        <xsd:annotation>
-          <xsd:documentation>[Deprecated] Surface strength</xsd:documentation>
-          <xsd:appinfo>DEPRECATED-4.5</xsd:appinfo>
-        </xsd:annotation>
-      </xsd:element>
       <xsd:element name="codeSts" type="codeStsSfc" minOccurs="0">
         <xsd:annotation>
           <xsd:documentation>Operational status</xsd:documentation>
@@ -9212,6 +8670,11 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
           <xsd:documentation>Unit of measurement [geographical accuracy]</xsd:documentation>
         </xsd:annotation>
       </xsd:element>
+      <xsd:element name="valTrueBrg" type="valAngleBrg" minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation>True bearing of the H-marking</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
       <xsd:element name="valElev" type="valDistVer" minOccurs="0">
         <xsd:annotation>
           <xsd:documentation>Elevation</xsd:documentation>
@@ -9263,18 +8726,6 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
         </xsd:annotation>
       </xsd:element>
       <xsd:group ref="SurfaceCharacteristics"/>
-      <xsd:element name="codeStrength" type="codeStrengthSfc" minOccurs="0">
-        <xsd:annotation>
-          <xsd:documentation>[Deprecated] Surface strength method</xsd:documentation>
-          <xsd:appinfo>DEPRECATED-4.5</xsd:appinfo>
-        </xsd:annotation>
-      </xsd:element>
-      <xsd:element name="txtDescrStrength" type="txtDescr" minOccurs="0">
-        <xsd:annotation>
-          <xsd:documentation>[Deprecated] Surface strength</xsd:documentation>
-          <xsd:appinfo>DEPRECATED-4.5</xsd:appinfo>
-        </xsd:annotation>
-      </xsd:element>
       <xsd:element name="codeClassHel" type="codeClassHel" minOccurs="0">
         <xsd:annotation>
           <xsd:documentation>Class of helicopter</xsd:documentation>
@@ -9540,104 +8991,6 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
     </xsd:sequence>
     <xsd:attribute ref="mid"/>
     <xsd:attribute ref="region" use="required"/>
-  </xsd:complexType>
-  <xsd:complexType name="VorLimitationType">
-    <xsd:annotation>
-      <xsd:appinfo>DEPRECATED-4.0</xsd:appinfo>
-      <xsd:documentation>[Deprecated] VOR limitation</xsd:documentation>
-    </xsd:annotation>
-    <xsd:sequence>
-      <xsd:element name="VlnUid" type="VorLimitationUidType">
-        <xsd:annotation>
-          <xsd:documentation>a version of VOR limitation</xsd:documentation>
-        </xsd:annotation>
-      </xsd:element>
-      <xsd:element name="valDistOuter" type="valDistHorz" minOccurs="0">
-        <xsd:annotation>
-          <xsd:documentation>Angle sector volume outer limit</xsd:documentation>
-        </xsd:annotation>
-      </xsd:element>
-      <xsd:element name="uomDistHorz" type="uomDistHorz">
-        <xsd:annotation>
-          <xsd:documentation>Unit of measurement [horizontal distance]</xsd:documentation>
-        </xsd:annotation>
-      </xsd:element>
-      <xsd:element name="valDistVerUpper" type="valDistVer" minOccurs="0">
-        <xsd:annotation>
-          <xsd:documentation>Upper limit</xsd:documentation>
-        </xsd:annotation>
-      </xsd:element>
-      <xsd:element name="uomDistVerUpper" type="uomDistVer" minOccurs="0">
-        <xsd:annotation>
-          <xsd:documentation>Unit of measurement [upper limit]</xsd:documentation>
-        </xsd:annotation>
-      </xsd:element>
-      <xsd:element name="codeDistVerUpper" type="codeDistVer" minOccurs="0">
-        <xsd:annotation>
-          <xsd:documentation>Reference for upper limit</xsd:documentation>
-        </xsd:annotation>
-      </xsd:element>
-      <xsd:element name="uomDistVerLower" type="uomDistVer">
-        <xsd:annotation>
-          <xsd:documentation>Unit of measurement [lower limit]</xsd:documentation>
-        </xsd:annotation>
-      </xsd:element>
-      <xsd:element name="codeDistVerLower" type="codeDistVer">
-        <xsd:annotation>
-          <xsd:documentation>Reference for lower limit</xsd:documentation>
-        </xsd:annotation>
-      </xsd:element>
-      <xsd:element name="valAngleScallop" type="valAngle" minOccurs="0">
-        <xsd:annotation>
-          <xsd:documentation>Scalloping angle</xsd:documentation>
-        </xsd:annotation>
-      </xsd:element>
-      <xsd:element name="txtRmk" type="txtRmk" minOccurs="0">
-        <xsd:annotation>
-          <xsd:documentation>Remark</xsd:documentation>
-        </xsd:annotation>
-      </xsd:element>
-    </xsd:sequence>
-    <xsd:attribute ref="source"/>
-  </xsd:complexType>
-  <xsd:complexType name="VorLimitationUidType">
-    <xsd:annotation>
-      <xsd:appinfo>DEPRECATED-4.0</xsd:appinfo>
-      <xsd:documentation>[Deprecated] VOR limitation - UID</xsd:documentation>
-    </xsd:annotation>
-    <xsd:sequence>
-      <xsd:element name="VorUid" type="VorUidType">
-        <xsd:annotation>
-          <xsd:documentation>VOR limitation is limiting VHF omnidirectional radio range beacon [VOR]</xsd:documentation>
-        </xsd:annotation>
-      </xsd:element>
-      <xsd:element name="codeType" type="codeTypeNavAidLimit">
-        <xsd:annotation>
-          <xsd:documentation>Type</xsd:documentation>
-        </xsd:annotation>
-      </xsd:element>
-      <xsd:element name="valAngleFm" type="valAngleBrg">
-        <xsd:annotation>
-          <xsd:documentation>Beginning of angle</xsd:documentation>
-        </xsd:annotation>
-      </xsd:element>
-      <xsd:element name="valAngleTo" type="valAngleBrg">
-        <xsd:annotation>
-          <xsd:documentation>Ending of angle</xsd:documentation>
-        </xsd:annotation>
-      </xsd:element>
-      <xsd:element name="valDistInner" type="valDistHorz">
-        <xsd:annotation>
-          <xsd:documentation>Angle sector volume inner limit</xsd:documentation>
-        </xsd:annotation>
-      </xsd:element>
-      <xsd:element name="valDistVerLower" type="valDistVer">
-        <xsd:annotation>
-          <xsd:documentation>Lower limit</xsd:documentation>
-        </xsd:annotation>
-      </xsd:element>
-    </xsd:sequence>
-    <xsd:attribute ref="mid"/>
   </xsd:complexType>
   <xsd:complexType name="VorType">
     <xsd:annotation>

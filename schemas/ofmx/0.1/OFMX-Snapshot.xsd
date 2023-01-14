@@ -66,12 +66,6 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
         <xsd:element name="Dli" type="DmeUsageLimitationType"/>
         <xsd:element name="Dme" type="DmeType"/>
         <xsd:element name="Dpn" type="DesignatedPointType"/>
-        <xsd:element name="Fao" type="FatoOldType">
-          <xsd:annotation>
-            <xsd:appinfo>DEPRECATED-4.5</xsd:appinfo>
-            <xsd:documentation>[Deprecated]</xsd:documentation>
-          </xsd:annotation>
-        </xsd:element>
         <xsd:element name="Fto" type="FatoType"/>
         <xsd:element name="Fcp" type="FatoCentreLinePositionType"/>
         <xsd:element name="Fda" type="FatoDirectionApproachLightingType"/>
@@ -157,36 +151,6 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
         <xsd:element name="Vli" type="VorUsageLimitationType"/>
         <xsd:element name="Vor" type="VorType"/>
         <xsd:element name="Lbm" type="LabelMarkerType"/>
-        <xsd:element name="Aac" type="AirspaceAssocType">
-          <xsd:annotation>
-            <xsd:appinfo>DEPRECATED-4.0</xsd:appinfo>
-            <xsd:documentation>[Deprecated]</xsd:documentation>
-          </xsd:annotation>
-        </xsd:element>
-        <xsd:element name="Dln" type="DmeLimitationType">
-          <xsd:annotation>
-            <xsd:appinfo>DEPRECATED-4.0</xsd:appinfo>
-            <xsd:documentation>[Deprecated]</xsd:documentation>
-          </xsd:annotation>
-        </xsd:element>
-        <xsd:element name="Nln" type="NdbLimitationType">
-          <xsd:annotation>
-            <xsd:appinfo>DEPRECATED-4.0</xsd:appinfo>
-            <xsd:documentation>[Deprecated]</xsd:documentation>
-          </xsd:annotation>
-        </xsd:element>
-        <xsd:element name="Tln" type="TacanLimitationType">
-          <xsd:annotation>
-            <xsd:appinfo>DEPRECATED-4.0</xsd:appinfo>
-            <xsd:documentation>[Deprecated]</xsd:documentation>
-          </xsd:annotation>
-        </xsd:element>
-        <xsd:element name="Vln" type="VorLimitationType">
-          <xsd:annotation>
-            <xsd:appinfo>DEPRECATED-4.0</xsd:appinfo>
-            <xsd:documentation>[Deprecated]</xsd:documentation>
-          </xsd:annotation>
-        </xsd:element>
       </xsd:choice>
       <xsd:attribute name="version" type="xsd:string" use="required">
         <xsd:annotation>

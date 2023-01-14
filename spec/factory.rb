@@ -518,6 +518,7 @@ module AIXM
           name: 'H1',
           xy: AIXM.xy(lat: %q(43°59'56.94"N), long: %q(004°45'05.56"E))
         ).tap do |helipad|
+          helipad.geographic_bearing = AIXM.a(38.3)
           helipad.z = AIXM.z(141, :qnh)
           helipad.dimensions = AIXM.r(AIXM.d(20, :m))
           helipad.surface.composition = :concrete

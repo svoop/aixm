@@ -11,6 +11,7 @@ module AIXM
     #     name: String
     #     xy: AIXM.xy
     #   )
+    #   helipad.geographic_bearing = AIXM.a or nil (OFMX only)
     #   helipad.z = AIXM.z or nil
     #   helipad.dimensions = AIXM.r or nil
     #   helipad.surface = AIXM.surface
@@ -77,6 +78,9 @@ module AIXM
       #   @param value [String]
       attr_reader :name
 
+      # @return [AIXM::A, nil] (true) geographic bearing of H-marking in degrees
+      attr_reader :geographic_bearing
+
       # Center point
       #
       # @overload center_xy
@@ -135,6 +139,12 @@ module AIXM
         @name = value.uptrans
       end
 
+      def geographic_bearing=(value)
+        return @geographic_bearing = nil if value.nil?
+        fail(ArgumentError, "invalid geographic bearing") unless value.is_a? AIXM::A
+        @geographic_bearing = value
+      end
+
       def xy=(value)
         fail(ArgumentError, "invalid xy") unless value.is_a? AIXM::XY
         @xy = value
@@ -174,6 +184,7 @@ module AIXM
           tla.geoLat(xy.lat(AIXM.schema))
           tla.geoLong(xy.long(AIXM.schema))
           tla.codeDatum('WGE')
+          tla.valTrueBrg(geographic_bearing.to_s(:bearing)) if AIXM.ofmx? && geographic_bearing
           if z
             tla.valElev(z.alt)
             tla.uomDistVer(z.unit.upcase)

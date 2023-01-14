@@ -480,6 +480,7 @@ describe AIXM::Feature::Airport do
           <geoLat>43.99915000N</geoLat>
           <geoLong>004.75154444E</geoLong>
           <codeDatum>WGE</codeDatum>
+          <valTrueBrg>038.3000</valTrueBrg>
           <valElev>141</valElev>
           <uomDistVer>FT</uomDistVer>
           <valLen>20</valLen>

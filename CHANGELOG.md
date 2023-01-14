@@ -2,6 +2,7 @@
 
 #### Additions
 * `Airspace#alternative_name` (OFMX only)
+* `Helipad#geographic_bearing` (OFMX only)
 
 #### Changes
 * `Document#created_at` and similar accept local times and convert them to UTC

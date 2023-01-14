@@ -331,11 +331,6 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
   </xsd:complexType>
   <xsd:simpleType name="codeCatOilBase">
     <xsd:restriction base="xsd:string">
-      <xsd:enumeration value="AVIA">
-        <xsd:annotation>
-          <xsd:appinfo>DEPRECATED-4.5</xsd:appinfo>
-        </xsd:annotation>
-      </xsd:enumeration>
       <xsd:enumeration value="PISTON"/>
       <xsd:enumeration value="TURBO"/>
       <xsd:enumeration value="HYD"/>
@@ -1609,11 +1604,6 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
       <xsd:enumeration value="FRI"/>
       <xsd:enumeration value="SAT"/>
       <xsd:enumeration value="SUN"/>
-      <xsd:enumeration value="MOFRI">
-        <xsd:annotation>
-          <xsd:appinfo>DEPRECATED-4.0</xsd:appinfo>
-        </xsd:annotation>
-      </xsd:enumeration>
       <xsd:enumeration value="WD"/>
       <xsd:enumeration value="PWD"/>
       <xsd:enumeration value="AWD"/>
@@ -2217,28 +2207,6 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
       </xsd:extension>
     </xsd:simpleContent>
   </xsd:complexType>
-  <xsd:simpleType name="codeOprBase">
-    <xsd:annotation>
-      <xsd:appinfo>DEPRECATED-4.0</xsd:appinfo>
-    </xsd:annotation>
-    <xsd:restriction base="xsd:string">
-      <xsd:enumeration value="BASE"/>
-      <xsd:enumeration value="UNION"/>
-      <xsd:enumeration value="INTERS"/>
-      <xsd:enumeration value="SUBTR"/>
-    </xsd:restriction>
-  </xsd:simpleType>
-  <xsd:complexType name="codeOpr">
-    <xsd:annotation>
-      <xsd:appinfo>DEPRECATED-4.0</xsd:appinfo>
-      <xsd:documentation>An &apos;operator&apos; in coded form according to which two &apos;operants&apos; will be &apos;associated&apos; in order to produce a result.</xsd:documentation>
-    </xsd:annotation>
-    <xsd:simpleContent>
-      <xsd:extension base="codeOprBase">
-        <xsd:attributeGroup ref="Changes"/>
-      </xsd:extension>
-    </xsd:simpleContent>
-  </xsd:complexType>
   <xsd:simpleType name="codeOprAsBase">
     <xsd:restriction base="xsd:string">
       <xsd:enumeration value="UNION"/>
@@ -2693,27 +2661,6 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
       </xsd:extension>
     </xsd:simpleContent>
   </xsd:complexType>
-  <xsd:simpleType name="codeStrengthSfcBase">
-    <xsd:annotation>
-      <xsd:appinfo>DEPRECATED-4.0</xsd:appinfo>
-    </xsd:annotation>
-    <xsd:restriction base="xsd:string">
-      <xsd:enumeration value="SIWL"/>
-      <xsd:enumeration value="PCN"/>
-      <xsd:enumeration value="LCN"/>
-    </xsd:restriction>
-  </xsd:simpleType>
-  <xsd:complexType name="codeStrengthSfc">
-    <xsd:annotation>
-      <xsd:documentation>[Deprecated] A code indicating the convention used to measure the strength of a surface. Eg: PCN, SIWL, etc..</xsd:documentation>
-      <xsd:appinfo>DEPRECATED-4.5</xsd:appinfo>
-    </xsd:annotation>
-    <xsd:simpleContent>
-      <xsd:extension base="codeStrengthSfcBase">
-        <xsd:attributeGroup ref="Changes"/>
-      </xsd:extension>
-    </xsd:simpleContent>
-  </xsd:complexType>
   <xsd:simpleType name="codeStsSfcBase">
     <xsd:restriction base="xsd:string">
       <xsd:enumeration value="WIP"/>
@@ -2921,11 +2868,6 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
   <xsd:simpleType name="codeTypeAirspaceVertexBase">
     <xsd:restriction base="xsd:string">
       <xsd:enumeration value="ABE"/>
-      <xsd:enumeration value="CIR">
-        <xsd:annotation>
-          <xsd:appinfo>DEPRECATED-4.0</xsd:appinfo>
-        </xsd:annotation>
-      </xsd:enumeration>
       <xsd:enumeration value="GRC"/>
       <xsd:enumeration value="RHL"/>
       <xsd:enumeration value="CCA"/>
@@ -3051,37 +2993,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
   </xsd:complexType>
   <xsd:simpleType name="codeTypeAsBase">
     <xsd:restriction base="xsd:string">
-      <xsd:enumeration value="ICAO">
-        <xsd:annotation>
-          <xsd:appinfo>DEPRECATED-4.0</xsd:appinfo>
-        </xsd:annotation>
-      </xsd:enumeration>
-      <xsd:enumeration value="ECAC">
-        <xsd:annotation>
-          <xsd:appinfo>DEPRECATED-4.0</xsd:appinfo>
-        </xsd:annotation>
-      </xsd:enumeration>
-      <xsd:enumeration value="CFMU">
-        <xsd:annotation>
-          <xsd:appinfo>DEPRECATED-4.0</xsd:appinfo>
-        </xsd:annotation>
-      </xsd:enumeration>
-      <xsd:enumeration value="IFPS">
-        <xsd:annotation>
-          <xsd:appinfo>DEPRECATED-4.0</xsd:appinfo>
-        </xsd:annotation>
-      </xsd:enumeration>
-      <xsd:enumeration value="TACT">
-        <xsd:annotation>
-          <xsd:appinfo>DEPRECATED-4.0</xsd:appinfo>
-        </xsd:annotation>
-      </xsd:enumeration>
       <xsd:enumeration value="NAS"/>
-      <xsd:enumeration value="NAS-P">
-        <xsd:annotation>
-          <xsd:appinfo>DEPRECATED-4.0</xsd:appinfo>
-        </xsd:annotation>
-      </xsd:enumeration>
       <xsd:enumeration value="FIR"/>
       <xsd:enumeration value="FIR-P"/>
       <xsd:enumeration value="UIR"/>
@@ -3096,26 +3008,6 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
       <xsd:enumeration value="TMA-P"/>
       <xsd:enumeration value="CTR"/>
       <xsd:enumeration value="CTR-P"/>
-      <xsd:enumeration value="ATZ">
-        <xsd:annotation>
-          <xsd:appinfo>DEPRECATED-4.0</xsd:appinfo>
-        </xsd:annotation>
-      </xsd:enumeration>
-      <xsd:enumeration value="ATZ-P">
-        <xsd:annotation>
-          <xsd:appinfo>DEPRECATED-4.0</xsd:appinfo>
-        </xsd:annotation>
-      </xsd:enumeration>
-      <xsd:enumeration value="MNPSA">
-        <xsd:annotation>
-          <xsd:appinfo>DEPRECATED-4.0</xsd:appinfo>
-        </xsd:annotation>
-      </xsd:enumeration>
-      <xsd:enumeration value="MNPSA-P">
-        <xsd:annotation>
-          <xsd:appinfo>DEPRECATED-4.0</xsd:appinfo>
-        </xsd:annotation>
-      </xsd:enumeration>
       <xsd:enumeration value="OTA"/>
       <xsd:enumeration value="SECTOR"/>
       <xsd:enumeration value="SECTOR-C"/>
@@ -3123,53 +3015,13 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
       <xsd:enumeration value="CBA"/>
       <xsd:enumeration value="RCA"/>
       <xsd:enumeration value="RAS"/>
-      <xsd:enumeration value="CDA">
-        <xsd:annotation>
-          <xsd:appinfo>DEPRECATED-4.0</xsd:appinfo>
-        </xsd:annotation>
-      </xsd:enumeration>
       <xsd:enumeration value="AWY"/>
-      <xsd:enumeration value="RTECL">
-        <xsd:annotation>
-          <xsd:appinfo>DEPRECATED-4.0</xsd:appinfo>
-        </xsd:annotation>
-      </xsd:enumeration>
       <xsd:enumeration value="P"/>
       <xsd:enumeration value="R"/>
       <xsd:enumeration value="D"/>
       <xsd:enumeration value="R-AMC"/>
       <xsd:enumeration value="D-AMC"/>
-      <xsd:enumeration value="MIL">
-        <xsd:annotation>
-          <xsd:appinfo>DEPRECATED-4.0</xsd:appinfo>
-        </xsd:annotation>
-      </xsd:enumeration>
       <xsd:enumeration value="ADIZ"/>
-      <xsd:enumeration value="HTZ">
-        <xsd:annotation>
-          <xsd:appinfo>DEPRECATED-4.0</xsd:appinfo>
-        </xsd:annotation>
-      </xsd:enumeration>
-      <xsd:enumeration value="OIL">
-        <xsd:annotation>
-          <xsd:appinfo>DEPRECATED-4.0</xsd:appinfo>
-        </xsd:annotation>
-      </xsd:enumeration>
-      <xsd:enumeration value="BIRD">
-        <xsd:annotation>
-          <xsd:appinfo>DEPRECATED-4.0</xsd:appinfo>
-        </xsd:annotation>
-      </xsd:enumeration>
-      <xsd:enumeration value="SPORT">
-        <xsd:annotation>
-          <xsd:appinfo>DEPRECATED-4.0</xsd:appinfo>
-        </xsd:annotation>
-      </xsd:enumeration>
-      <xsd:enumeration value="LMA">
-        <xsd:annotation>
-          <xsd:appinfo>DEPRECATED-4.0</xsd:appinfo>
-        </xsd:annotation>
-      </xsd:enumeration>
       <xsd:enumeration value="NO-FIR"/>
       <xsd:enumeration value="PART"/>
       <xsd:enumeration value="CLASS"/>
@@ -3189,27 +3041,6 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
     </xsd:annotation>
     <xsd:simpleContent>
       <xsd:extension base="codeTypeAsBase">
-        <xsd:attributeGroup ref="Changes"/>
-      </xsd:extension>
-    </xsd:simpleContent>
-  </xsd:complexType>
-  <xsd:simpleType name="codeTypeAssocAsBase">
-    <xsd:annotation>
-      <xsd:appinfo>DEPRECATED-4.0</xsd:appinfo>
-    </xsd:annotation>
-    <xsd:restriction base="xsd:string">
-      <xsd:enumeration value="BOM"/>
-      <xsd:enumeration value="ABOVE-BELOW"/>
-      <xsd:enumeration value="TIME-DIST"/>
-    </xsd:restriction>
-  </xsd:simpleType>
-  <xsd:complexType name="codeTypeAssocAs">
-    <xsd:annotation>
-      <xsd:appinfo>DEPRECATED-4.0</xsd:appinfo>
-      <xsd:documentation>The values indicating the type of association between two airspaces.</xsd:documentation>
-    </xsd:annotation>
-    <xsd:simpleContent>
-      <xsd:extension base="codeTypeAssocAsBase">
         <xsd:attributeGroup ref="Changes"/>
       </xsd:extension>
     </xsd:simpleContent>
@@ -3582,28 +3413,6 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
     </xsd:annotation>
     <xsd:simpleContent>
       <xsd:extension base="codeTypeLightBase">
-        <xsd:attributeGroup ref="Changes"/>
-      </xsd:extension>
-    </xsd:simpleContent>
-  </xsd:complexType>
-  <xsd:simpleType name="codeTypeMilOpsBase">
-    <xsd:annotation>
-      <xsd:appinfo>DEPRECATED-4.0</xsd:appinfo>
-    </xsd:annotation>
-    <xsd:restriction base="xsd:string">
-      <xsd:enumeration value="CIV"/>
-      <xsd:enumeration value="JOINT"/>
-      <xsd:enumeration value="MILEXT"/>
-      <xsd:enumeration value="MIL"/>
-    </xsd:restriction>
-  </xsd:simpleType>
-  <xsd:complexType name="codeTypeMilOps">
-    <xsd:annotation>
-      <xsd:documentation>A code indicating if a facility is to be used for military, civil or both types of operations.</xsd:documentation>
-      <xsd:appinfo>DEPRECATED-4.0</xsd:appinfo>
-    </xsd:annotation>
-    <xsd:simpleContent>
-      <xsd:extension base="codeTypeMilOpsBase">
         <xsd:attributeGroup ref="Changes"/>
       </xsd:extension>
     </xsd:simpleContent>
