@@ -31,7 +31,7 @@ module AIXM
   class XY
     include AIXM::Concerns::HashEquality
 
-    EARTH_RADIUS = 6_371_008.8
+    EARTH_RADIUS = 6_371_008.8   # meters
 
     # See the {overview}[AIXM::XY] for examples.
     def initialize(lat:, long:)
@@ -105,7 +105,7 @@ module AIXM
       AIXM.point(xy: self)
     end
 
-    # Distance as calculated by the Haversine formula
+    # Distance to another point as calculated by the Haversine formula
     #
     # @return [AIXM::D]
     def distance(other)
@@ -121,6 +121,38 @@ module AIXM
         )
         AIXM.d(value.round, :m)
       end
+    end
+
+    # Bearing to another point
+    #
+    # @return [AIXM::A]
+    def bearing(other)
+      fail "cannot calculate bearing to identical point" if self == other
+      delta_long = other.long.to_rad - long.to_rad
+      AIXM.a(
+        Math.atan2(
+          Math.cos(other.lat.to_rad) * Math.sin(delta_long),
+          Math.cos(lat.to_rad) * Math.sin(other.lat.to_rad) -
+            Math.sin(lat.to_rad) * Math.cos(other.lat.to_rad) *
+            Math.cos(delta_long)
+        ).to_deg
+      )
+    end
+
+    # Calculate a new point by adding the distance in the given bearing
+    #
+    # @return [AIXM::XY]
+    def add_distance(distance, bearing)
+      angular_dist = distance.to_m.dim / EARTH_RADIUS
+      dest_lat = Math.asin(
+        Math.sin(lat.to_rad) * Math.cos(angular_dist) +
+        Math.cos(lat.to_rad) * Math.sin(angular_dist) * Math.cos(bearing.to_f.to_rad)
+      )
+      dest_long = long.to_rad + Math.atan2(
+        Math.sin(bearing.to_f.to_rad) * Math.sin(angular_dist) * Math.cos(lat.to_rad),
+        Math.cos(angular_dist) - Math.sin(lat.to_rad) * Math.sin(dest_lat)
+      )
+      AIXM.xy(lat: dest_lat.to_deg, long: dest_long.to_deg)
     end
 
     # @see Object#==

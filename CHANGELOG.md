@@ -3,10 +3,13 @@
 #### Additions
 * `Airspace#alternative_name` (OFMX only)
 * `Helipad#geographic_bearing` (OFMX only)
+* Refinement `Numeric#to_deg`
+* `AIXM::XY#bearing` and `AIXM::XY@add_distance`
 
 #### Changes
 * `Document#created_at` and similar accept local times and convert them to UTC
   when the XML is generated.
+* Moved refinements `Float#to_dms` and `Float#to_rad` to `Numeric`
 
 ## 1.3.4
 

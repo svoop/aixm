@@ -132,18 +132,41 @@ describe AIXM::XY do
     end
   end
 
-  describe :distance do
-    subject do
+  context "distances and bearings" do
+    let :a do
       AIXM.xy(lat: %q(44°00'07.63"N), long: %q(004°45'07.81"E))
     end
 
-    it "calculates the distance between the same point as zero" do
-      _(subject.distance(subject)).must_equal AIXM.d(0, :m)
+    let :b do
+      AIXM.xy(lat: %q(43°59'25.31"N), long: %q(004°45'23.24"E))
     end
 
-    it "calculates the distance between two points correctly" do
-      other = AIXM.xy(lat: %q(43°59'25.31"N), long: %q(004°45'23.24"E))
-      _(subject.distance(other)).must_equal AIXM.d(1351, :m)
+    describe :distance do
+      it "calculates the distance between two points correctly" do
+        _(a.distance(b)).must_equal AIXM.d(1351, :m)
+      end
+
+      it "calculates the distance between the same point as zero" do
+        _(a.distance(a)).must_equal AIXM.d(0, :m)
+      end
+    end
+
+    describe :bearing do
+      it "calculates the bearing to another point" do
+        _(a.bearing(b).deg).must_be_close_to 165.3014
+      end
+
+      it "fails to calculate the bearing between two identical points" do
+        _{ a.bearing(a) }.must_raise RuntimeError
+      end
+    end
+
+    describe :add_distance do
+      it "calculates the desination point" do
+        dest = a.add_distance(AIXM.d(1351, :m), AIXM.a(165.3014))
+        _(dest.lat).must_be_close_to(b.lat, 0.00001)
+        _(dest.long).must_be_close_to(b.long, 0.00001)
+      end
     end
   end
 

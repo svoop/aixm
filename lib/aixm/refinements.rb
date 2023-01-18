@@ -53,7 +53,7 @@ module AIXM
     #   @note This is a refinement for +Float+
     #   @param padding [Integer] number of digits for the degree part
     #   @return [String] angle in DMS notation +{-}D°MM'SS.SS"+
-    refine Float do
+    refine Numeric do
       def to_dms(padding=3)
         degrees = self.abs.floor
         minutes = ((self.abs - degrees) * 60).floor
@@ -69,6 +69,21 @@ module AIXM
       end
     end
 
+    # @!method to_deg
+    #   Convert an angle from radian to degrees.
+    #
+    #   @example
+    #     0.5.to_rad
+    #     # => 28.6478897565
+    #
+    #   @note This is a refinement for +Float+
+    #   @return [Float] angle in degrees
+    refine Numeric do
+      def to_deg
+        180 * self / Math::PI
+      end
+    end
+
     # @!method to_rad
     #   Convert an angle from degree to radian.
     #
@@ -77,8 +92,8 @@ module AIXM
     #     # => 0.7853981633974483
     #
     #   @note This is a refinement for +Float+
-    #   @return [Float] radian angle
-    refine Float do
+    #   @return [Float] angle in radian
+    refine Numeric do
       def to_rad
         self * Math::PI / 180
       end

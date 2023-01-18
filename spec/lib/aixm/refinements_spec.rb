@@ -87,6 +87,14 @@ describe AIXM::Refinements do
       end
     end
 
+    describe :to_deg do
+      it "must convert correctly" do
+        _(0.0.to_deg).must_equal 0
+        _(0.5.to_deg).must_equal 28.64788975654116
+        _(-1.0.to_deg).must_equal(-57.29577951308232)
+      end
+    end
+
     describe :to_rad do
       it "must convert correctly" do
         _(0.0.to_rad).must_equal 0
