@@ -3,6 +3,7 @@
 #### Additions
 * `Airspace#alternative_name` (OFMX only)
 * `Helipad#geographic_bearing` (OFMX only)
+* `AIXM::L` for lines with optional elevation profile
 * Refinement `Numeric#to_deg`
 * `AIXM::XY#bearing` and `AIXM::XY@add_distance`
 

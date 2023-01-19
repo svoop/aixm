@@ -16,6 +16,13 @@ module AIXM
         AIXM.d(123, :m)
       end
 
+      def l
+        AIXM.l.tap do |line|
+          line.add_line_point(xy: AIXM.xy(lat: 1, long: 1), z: AIXM.z(1000, :qnh))
+          line.add_line_point(xy: AIXM.xy(lat: 2, long: 2), z: AIXM.z(2000, :qnh))
+        end
+      end
+
       def r
         AIXM.r(AIXM.d(25, :m), AIXM.d(20, :m))
       end
