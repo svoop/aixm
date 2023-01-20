@@ -308,8 +308,8 @@ describe AIXM::Document do
             </RdnUid>
             <geoLat>435948.47N</geoLat>
             <geoLong>0044530.62E</geoLong>
-            <valTrueBrg>165.0000</valTrueBrg>
-            <valMagBrg>163.9200</valMagBrg>
+            <valTrueBrg>165.3790</valTrueBrg>
+            <valMagBrg>164.2990</valMagBrg>
             <valElevTdz>145</valElevTdz>
             <uomElevTdz>FT</uomElevTdz>
             <codeTypeVasis>PAPI</codeTypeVasis>
@@ -390,8 +390,8 @@ describe AIXM::Document do
             </RdnUid>
             <geoLat>435940.88N</geoLat>
             <geoLong>0044533.37E</geoLong>
-            <valTrueBrg>345.0000</valTrueBrg>
-            <valMagBrg>343.9200</valMagBrg>
+            <valTrueBrg>345.3790</valTrueBrg>
+            <valMagBrg>344.2990</valMagBrg>
             <valElevTdz>147</valElevTdz>
             <uomElevTdz>FT</uomElevTdz>
             <codeTypeVasis>PAPI</codeTypeVasis>
@@ -1300,8 +1300,8 @@ describe AIXM::Document do
             </RdnUid>
             <geoLat>43.99679722N</geoLat>
             <geoLong>004.75850556E</geoLong>
-            <valTrueBrg>165.0000</valTrueBrg>
-            <valMagBrg>163.9200</valMagBrg>
+            <valTrueBrg>165.3790</valTrueBrg>
+            <valMagBrg>164.2990</valMagBrg>
             <valElevTdz>145</valElevTdz>
             <uomElevTdz>FT</uomElevTdz>
             <codeTypeVasis>PAPI</codeTypeVasis>
@@ -1382,8 +1382,8 @@ describe AIXM::Document do
             </RdnUid>
             <geoLat>43.99468889N</geoLat>
             <geoLong>004.75926944E</geoLong>
-            <valTrueBrg>345.0000</valTrueBrg>
-            <valMagBrg>343.9200</valMagBrg>
+            <valTrueBrg>345.3790</valTrueBrg>
+            <valMagBrg>344.2990</valMagBrg>
             <valElevTdz>147</valElevTdz>
             <uomElevTdz>FT</uomElevTdz>
             <codeTypeVasis>PAPI</codeTypeVasis>
@@ -2378,8 +2378,8 @@ describe AIXM::Document do
             </RdnUid>
             <geoLat>43.99679722N</geoLat>
             <geoLong>004.75850556E</geoLong>
-            <valTrueBrg>165.0000</valTrueBrg>
-            <valMagBrg>163.9200</valMagBrg>
+            <valTrueBrg>165.3790</valTrueBrg>
+            <valMagBrg>164.2990</valMagBrg>
             <valElevTdz>145</valElevTdz>
             <uomElevTdz>FT</uomElevTdz>
             <codeTypeVasis>PAPI</codeTypeVasis>
@@ -2460,8 +2460,8 @@ describe AIXM::Document do
             </RdnUid>
             <geoLat>43.99468889N</geoLat>
             <geoLong>004.75926944E</geoLong>
-            <valTrueBrg>345.0000</valTrueBrg>
-            <valMagBrg>343.9200</valMagBrg>
+            <valTrueBrg>345.3790</valTrueBrg>
+            <valMagBrg>344.2990</valMagBrg>
             <valElevTdz>147</valElevTdz>
             <uomElevTdz>FT</uomElevTdz>
             <codeTypeVasis>PAPI</codeTypeVasis>

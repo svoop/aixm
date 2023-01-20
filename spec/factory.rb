@@ -479,7 +479,7 @@ module AIXM
           runway.forth.touch_down_zone_z = AIXM.z(145, :qnh)
           runway.forth.displaced_threshold_xy = AIXM.xy(lat: %q(43°59'48.47"N), long: %q(004°45'30.62"E))
           runway.forth.vasis = vasis
-          runway.forth.geographic_bearing = AIXM.a(165)
+          runway.forth.geographic_bearing = AIXM.a(165.378987)
           runway.forth.vfr_pattern = :left_or_right
           runway.forth.remarks = "forth remarks"
           runway.forth.add_lighting(lighting)
@@ -489,7 +489,7 @@ module AIXM
           runway.back.touch_down_zone_z = AIXM.z(147, :qnh)
           runway.back.displaced_threshold_xy = AIXM.xy(lat: %q(43°59'40.88"N), long: %q(004°45'33.37"E))
           runway.back.vasis = vasis
-          runway.back.geographic_bearing = AIXM.a(345)
+          runway.back.geographic_bearing = AIXM.a(345.378987)
           runway.back.vfr_pattern = :left
           runway.back.remarks = "back remarks"
           runway.back.add_lighting(lighting)

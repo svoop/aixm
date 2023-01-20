@@ -95,8 +95,8 @@ describe AIXM::Component::Runway do
 
       it "describes the calculated center line back edge" do
         exact = AIXM.xy(lat: %q(43°59'34.33"N), long: %q(004°45'35.74"E))
-        _(subject.center_line.line_points.last.xy.lat).must_be_close_to(exact.lat, 0.00006)     # approx 8m tolerance
-        _(subject.center_line.line_points.last.xy.long).must_be_close_to(exact.long, 0.00006)   # approx 8m tolerance
+        _(subject.center_line.line_points.last.xy.lat).must_be_close_to(exact.lat, 0.00001)     # approx 1m tolerance
+        _(subject.center_line.line_points.last.xy.long).must_be_close_to(exact.long, 0.00001)   # approx 1m tolerance
       end
     end
 
@@ -186,8 +186,8 @@ describe AIXM::Component::Runway do
           </RdnUid>
           <geoLat>43.99679722N</geoLat>
           <geoLong>004.75850556E</geoLong>
-          <valTrueBrg>165.0000</valTrueBrg>
-          <valMagBrg>163.9200</valMagBrg>
+          <valTrueBrg>165.3790</valTrueBrg>
+          <valMagBrg>164.2990</valMagBrg>
           <valElevTdz>145</valElevTdz>
           <uomElevTdz>FT</uomElevTdz>
           <codeTypeVasis>PAPI</codeTypeVasis>
@@ -268,8 +268,8 @@ describe AIXM::Component::Runway do
           </RdnUid>
           <geoLat>43.99468889N</geoLat>
           <geoLong>004.75926944E</geoLong>
-          <valTrueBrg>345.0000</valTrueBrg>
-          <valMagBrg>343.9200</valMagBrg>
+          <valTrueBrg>345.3790</valTrueBrg>
+          <valMagBrg>344.2990</valMagBrg>
           <valElevTdz>147</valElevTdz>
           <uomElevTdz>FT</uomElevTdz>
           <codeTypeVasis>PAPI</codeTypeVasis>
@@ -402,8 +402,8 @@ describe AIXM::Component::Runway do
           </RdnUid>
           <geoLat>43.99679722N</geoLat>
           <geoLong>004.75850556E</geoLong>
-          <valTrueBrg>165.0000</valTrueBrg>
-          <valMagBrg>163.9200</valMagBrg>
+          <valTrueBrg>165.3790</valTrueBrg>
+          <valMagBrg>164.2990</valMagBrg>
           <valElevTdz>145</valElevTdz>
           <uomElevTdz>FT</uomElevTdz>
           <codeTypeVasis>PAPI</codeTypeVasis>
@@ -446,8 +446,8 @@ describe AIXM::Component::Runway do
           </RdnUid>
           <geoLat>43.99468889N</geoLat>
           <geoLong>004.75926944E</geoLong>
-          <valTrueBrg>345.0000</valTrueBrg>
-          <valMagBrg>343.9200</valMagBrg>
+          <valTrueBrg>345.3790</valTrueBrg>
+          <valMagBrg>344.2990</valMagBrg>
           <valElevTdz>147</valElevTdz>
           <uomElevTdz>FT</uomElevTdz>
           <codeTypeVasis>PAPI</codeTypeVasis>
@@ -539,8 +539,8 @@ describe AIXM::Component::Runway::Direction do
       it "accepts distance and converts it to coordinates" do
         subject.displaced_threshold = distance
         _(subject.displaced_threshold).must_equal distance
-        _(subject.displaced_threshold_xy.lat).must_be_close_to(coordinates.lat, 0.000015)     # approx 2m tolerance
-        _(subject.displaced_threshold_xy.long).must_be_close_to(coordinates.long, 0.000015)   # approx 2m tolerance
+        _(subject.displaced_threshold_xy.lat).must_be_close_to(coordinates.lat, 0.00001)     # approx 1m tolerance
+        _(subject.displaced_threshold_xy.long).must_be_close_to(coordinates.long, 0.00001)   # approx 1m tolerance
       end
 
       it "fails if xy is not set" do
@@ -625,8 +625,8 @@ describe AIXM::Component::Runway::Direction do
           </RdnUid>
           <geoLat>43.99679722N</geoLat>
           <geoLong>004.75850556E</geoLong>
-          <valTrueBrg>165.0000</valTrueBrg>
-          <valMagBrg>163.9200</valMagBrg>
+          <valTrueBrg>165.3790</valTrueBrg>
+          <valMagBrg>164.2990</valMagBrg>
           <valElevTdz>145</valElevTdz>
           <uomElevTdz>FT</uomElevTdz>
           <codeTypeVasis>PAPI</codeTypeVasis>
