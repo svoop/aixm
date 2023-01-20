@@ -211,6 +211,36 @@ describe AIXM::Feature::Airport do
           <txtMarking>Standard marking</txtMarking>
           <txtRmk>Markings eroded</txtRmk>
         </Rwy>
+        <Rcp>
+          <RcpUid>
+            <RwyUid>
+              <AhpUid region="LF">
+                <codeId>LFNT</codeId>
+              </AhpUid>
+              <txtDesig>16L/34R</txtDesig>
+            </RwyUid>
+            <geoLat>43.99853056N</geoLat>
+            <geoLong>004.75787500E</geoLong>
+          </RcpUid>
+          <codeDatum>WGE</codeDatum>
+          <valElev>144</valElev>
+          <uomDistVer>FT</uomDistVer>
+        </Rcp>
+        <Rcp>
+          <RcpUid>
+            <RwyUid>
+              <AhpUid region="LF">
+                <codeId>LFNT</codeId>
+              </AhpUid>
+              <txtDesig>16L/34R</txtDesig>
+            </RwyUid>
+            <geoLat>43.99286944N</geoLat>
+            <geoLong>004.75992778E</geoLong>
+          </RcpUid>
+          <codeDatum>WGE</codeDatum>
+          <valElev>148</valElev>
+          <uomDistVer>FT</uomDistVer>
+        </Rcp>
         <Rdn>
           <RdnUid>
             <RwyUid>
@@ -221,8 +251,8 @@ describe AIXM::Feature::Airport do
             </RwyUid>
             <txtDesig>16L</txtDesig>
           </RdnUid>
-          <geoLat>44.00211944N</geoLat>
-          <geoLong>004.75216944E</geoLong>
+          <geoLat>43.99679722N</geoLat>
+          <geoLong>004.75850556E</geoLong>
           <valTrueBrg>165.0000</valTrueBrg>
           <valMagBrg>163.9200</valMagBrg>
           <valElevTdz>145</valElevTdz>
@@ -251,7 +281,7 @@ describe AIXM::Feature::Airport do
             <codeType>DPLM</codeType>
             <codeDayPeriod>A</codeDayPeriod>
           </RddUid>
-          <valDist>131</valDist>
+          <valDist>199</valDist>
           <uomDist>M</uomDist>
           <txtRmk>forth remarks</txtRmk>
         </Rdd>
@@ -303,8 +333,8 @@ describe AIXM::Feature::Airport do
             </RwyUid>
             <txtDesig>34R</txtDesig>
           </RdnUid>
-          <geoLat>43.99036389N</geoLat>
-          <geoLong>004.75645556E</geoLong>
+          <geoLat>43.99468889N</geoLat>
+          <geoLong>004.75926944E</geoLong>
           <valTrueBrg>345.0000</valTrueBrg>
           <valMagBrg>343.9200</valMagBrg>
           <valElevTdz>147</valElevTdz>

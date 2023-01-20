@@ -164,8 +164,8 @@ describe AIXM::XY do
     describe :add_distance do
       it "calculates the desination point" do
         dest = a.add_distance(AIXM.d(1351, :m), AIXM.a(165.3014))
-        _(dest.lat).must_be_close_to(b.lat, 0.00001)
-        _(dest.long).must_be_close_to(b.long, 0.00001)
+        _(dest.lat).must_be_close_to(b.lat, 0.00001)     # approx 1m tolerance
+        _(dest.long).must_be_close_to(b.long, 0.00001)   # approx 1m tolerance
       end
     end
   end

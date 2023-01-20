@@ -474,18 +474,20 @@ module AIXM
           runway.marking = "Standard marking"
           runway.status = :closed
           runway.remarks = "Markings eroded"
-          runway.forth.xy = AIXM.xy(lat: %q(44°00'07.63"N), long: %q(004°45'07.81"E))
-          runway.forth.z = AIXM.z(145, :qnh)
-          runway.forth.displaced_threshold = AIXM.xy(lat: %q(44°00'03.54"N), long: %q(004°45'09.30"E))
+          runway.forth.xy = AIXM.xy(lat: %q(43°59'54.71"N), long: %q(004°45'28.35"E))
+          runway.forth.z = AIXM.z(144, :qnh)
+          runway.forth.touch_down_zone_z = AIXM.z(145, :qnh)
+          runway.forth.displaced_threshold_xy = AIXM.xy(lat: %q(43°59'48.47"N), long: %q(004°45'30.62"E))
           runway.forth.vasis = vasis
           runway.forth.geographic_bearing = AIXM.a(165)
           runway.forth.vfr_pattern = :left_or_right
           runway.forth.remarks = "forth remarks"
           runway.forth.add_lighting(lighting)
           runway.forth.add_approach_lighting(approach_lighting)
-          runway.back.xy = AIXM.xy(lat: %q(43°59'25.31"N), long: %q(004°45'23.24"E))
-          runway.back.z = AIXM.z(147, :qnh)
-          runway.back.displaced_threshold = AIXM.xy(lat: %q(43°59'31.84"N), long: %q(004°45'20.85"E))
+          runway.back.xy = AIXM.xy(lat: %q(43°59'34.33"N), long: %q(004°45'35.74"E))
+          runway.back.z = AIXM.z(148, :qnh)
+          runway.back.touch_down_zone_z = AIXM.z(147, :qnh)
+          runway.back.displaced_threshold_xy = AIXM.xy(lat: %q(43°59'40.88"N), long: %q(004°45'33.37"E))
           runway.back.vasis = vasis
           runway.back.geographic_bearing = AIXM.a(345)
           runway.back.vfr_pattern = :left

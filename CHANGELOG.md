@@ -1,11 +1,21 @@
 ## Main
 
 #### Additions
+* Runways include the center line from edge to edge as two `Rcp` features if
+  the center line is known (bidirectional runway) or can be calculated
+  (unidirectional runway with known dimensions).
 * `Airspace#alternative_name` (OFMX only)
 * `Helipad#geographic_bearing` (OFMX only)
 * `AIXM::L` for lines with optional elevation profile
 * Refinement `Numeric#to_deg`
 * `AIXM::XY#bearing` and `AIXM::XY@add_distance`
+
+#### Breaking Changes
+* Up until now, `Rdn->geoLat` and `Rdn->geoLong` were set to the THR. This
+  change sets them to the DTHR if any.
+* `Runway::Direction#displaced_threshold=` fails when set as distance unless
+  `Runway::Direction#xy` and `Runway::Direction#bearing` are known.
+* `Runway::Direction#displaced_threshold` always returns coordinates.
 
 #### Changes
 * `Document#created_at` and similar accept local times and convert them to UTC

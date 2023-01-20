@@ -23,9 +23,11 @@ module AIXM
     #   runway.remarks = String or nil
     #   runway.forth.name = AIXM.a   # preset based on the runway name
     #   runway.forth.geographic_bearing = AIXM.a or nil
-    #   runway.forth.xy = AIXM.xy
-    #   runway.forth.z = AIXM.z or nil   # highest point of the TDZ
-    #   runway.forth.displaced_threshold = AIXM.xy or AIXM.d or nil
+    #   runway.forth.xy = AIXM.xy   # center point at beginning edge of runway
+    #   runway.forth.z = AIXM.z or nil   # center point at beginning edge of runway
+    #   runway.forth.touch_down_zone_z = AIXM.z or nil
+    #   runway.forth.displaced_threshold = AIXM.d or nil       # sets displaced_threshold_xy as well
+    #   runway.forth.displaced_threshold_xy = AIXM.xy or nil   # sets displaced_threshold as well
     #   runway.forth.vasis = AIXM.vasis or nil (default: unspecified VASIS)
     #   runway.forth.add_lighting = AIXM.lighting
     #   runway.forth.add_approach_lighting = AIXM.approach_lighting
@@ -143,6 +145,25 @@ module AIXM
         @status = value.nil? ? nil : (STATUSES.lookup(value.to_s.to_sym, nil) || fail(ArgumentError, "invalid status"))
       end
 
+      # Center line of the runway
+      #
+      # The center line of unidirectional runwawys is calculated using the
+      # runway dimensions. If they are unknown, the calculation is not possible
+      # and this method returns +nil+.
+      #
+      # @return [AIXM::L, nil]
+      def center_line
+        if back || dimensions
+          AIXM.l.add_line_point(
+            xy: forth.xy,
+            z: forth.z
+          ).add_line_point(
+            xy: (back&.xy || forth.xy.add_distance(dimensions.length, forth.geographic_bearing)),
+            z: back&.z
+          )
+        end
+      end
+
       # @!visibility private
       def add_uid_to(builder)
         builder.RwyUid do |rwy_uid|
@@ -164,6 +185,20 @@ module AIXM
           rwy.codeSts(STATUSES.key(status)) if status
           rwy.txtMarking(marking) if marking
           rwy.txtRmk(remarks) if remarks
+        end
+        center_line.line_points.each do |line_point|
+          builder.Rcp do |rcp|
+            rcp.RcpUid do |rcp_uid|
+              add_uid_to(rcp)
+              rcp.geoLat(line_point.xy.lat(AIXM.schema))
+              rcp.geoLong(line_point.xy.long(AIXM.schema))
+            end
+            rcp.codeDatum('WGE')
+            if line_point.z
+              rcp.valElev(line_point.z.alt)
+              rcp.uomDistVer(line_point.z.unit.upcase)
+            end
+          end
         end
         %i(@forth @back).each do |direction|
           if direction = instance_variable_get(direction)
@@ -197,7 +232,8 @@ module AIXM
         has_many :lightings, as: :lightable
 
         # @!method approach_lightings
-        #   @return [Array<AIXM::Component::ApproachLighting>] installed approach lighting systems
+        #   @return [Array<AIXM::Component::ApproachLighting>] installed approach
+        #     lighting systems
         #
         # @!method add_approach_lighting(approach_lighting)
         #   @param approach_lighting [AIXM::Component::ApproachLighting]
@@ -205,7 +241,8 @@ module AIXM
         has_many :approach_lightings, as: :approach_lightable
 
         # @!method runway
-        #   @return [AIXM::Component::Runway] runway the runway direction is further describing
+        #   @return [AIXM::Component::Runway] runway the runway direction is
+        #     further describing
         belongs_to :runway, readonly: true
 
         # Partial name of runway (e.g. "12" or "16L")
@@ -219,16 +256,21 @@ module AIXM
         # @return [AIXM::A, nil] (true) geographic bearing in degrees
         attr_reader :geographic_bearing
 
-        # @return [AIXM::XY] beginning point (middle of the runway width)
+        # @return [AIXM::XY] center point at the beginning edge of the runway
         attr_reader :xy
 
-        # @return [AIXM::Z, nil] elevation of the touch down zone in +qnh+
+        # @return [AIXM::Z, nil] elevation of the center point at the beginning
+        #   edge of the runway in +qnh+
         attr_reader :z
 
-        # @return [AIXM::XY, AIXM::D, nil] displaced threshold point either as
-        #   coordinates (AIXM::XY) or distance (AIXM::D) from the beginning
-        #   point
+        # @return [AIXM::Z, nil] elevation of the touch down zone in +qnh+
+        attr_reader :touch_down_zone_z
+
+        # @return [AIXM::D, nil] displaced threshold distance from edge of runway
         attr_reader :displaced_threshold
+
+        # @return [AIXM::XY, nil] displaced threshold point
+        attr_reader :displaced_threshold_xy
 
         # @return [AIXM::Component::VASIS, nil] visual approach slope indicator
         #   system
@@ -270,17 +312,31 @@ module AIXM
           @z = value
         end
 
+        def touch_down_zone_z=(value)
+          fail(ArgumentError, "invalid touch_down_zone_z") unless value.nil? || (value.is_a?(AIXM::Z) && value.qnh?)
+          @touch_down_zone_z = value
+        end
+
         def displaced_threshold=(value)
-          case value
-          when AIXM::XY
-            @displaced_threshold = @xy.distance(value)
-          when AIXM::D
-            fail(ArgumentError, "invalid displaced threshold") unless value.dim > 0
+          if value
+            fail(ArgumentError, "invalid displaced threshold") unless value.is_a?(AIXM::D) && value.dim > 0
+            fail(RuntimeError, "xy required to calculate displaced threshold xy") unless xy
+            fail(RuntimeError, "geographic bearing required to calculate displaced threshold xy") unless geographic_bearing
             @displaced_threshold = value
-          when NilClass
-            @displaced_threshold = nil
+            @displaced_threshold_xy = xy.add_distance(value, geographic_bearing)
           else
-            fail(ArgumentError, "invalid displaced threshold")
+            @displaced_threshold = @displaced_threshold_xy = nil
+          end
+        end
+
+        def displaced_threshold_xy=(value)
+          if value
+            fail(ArgumentError, "invalid displaced threshold xy") unless value.is_a? AIXM::XY
+            fail(RuntimeError, "xy required to calculate displaced threshold") unless xy
+            @displaced_threshold_xy = value
+            @displaced_threshold = xy.distance(value)
+          else
+            @displaced_threshold = @displaced_threshold_xy = nil
           end
         end
 
@@ -300,6 +356,11 @@ module AIXM
           end
         end
 
+        # @return [AIXM::XY] displaced threshold if any or edge of runway otherwise
+        def threshold_xy
+          displaced_threshold_xy || xy
+        end
+
         # @!visibility private
         def add_uid_to(builder)
           builder.RdnUid do |rdn_uid|
@@ -312,13 +373,13 @@ module AIXM
         def add_to(builder)
           builder.Rdn do |rdn|
             add_uid_to(rdn)
-            rdn.geoLat(xy.lat(AIXM.schema))
-            rdn.geoLong(xy.long(AIXM.schema))
+            rdn.geoLat(threshold_xy.lat(AIXM.schema))
+            rdn.geoLong(threshold_xy.long(AIXM.schema))
             rdn.valTrueBrg(geographic_bearing.to_s(:bearing)) if geographic_bearing
             rdn.valMagBrg(magnetic_bearing.to_s(:bearing)) if magnetic_bearing
-            if z
-              rdn.valElevTdz(z.alt)
-              rdn.uomElevTdz(z.unit.upcase)
+            if touch_down_zone_z
+              rdn.valElevTdz(touch_down_zone_z.alt)
+              rdn.uomElevTdz(touch_down_zone_z.unit.upcase)
             end
             vasis.add_to(rdn) if vasis
             rdn.codeVfrPattern(VFR_PATTERNS.key(vfr_pattern)) if vfr_pattern

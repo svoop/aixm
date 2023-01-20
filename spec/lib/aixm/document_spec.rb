@@ -266,6 +266,36 @@ describe AIXM::Document do
             <txtMarking>Standard marking</txtMarking>
             <txtRmk>Markings eroded</txtRmk>
           </Rwy>
+          <Rcp>
+            <RcpUid>
+              <RwyUid>
+                <AhpUid>
+                  <codeId>LFNT</codeId>
+                </AhpUid>
+                <txtDesig>16L/34R</txtDesig>
+              </RwyUid>
+              <geoLat>435954.71N</geoLat>
+              <geoLong>0044528.35E</geoLong>
+            </RcpUid>
+            <codeDatum>WGE</codeDatum>
+            <valElev>144</valElev>
+            <uomDistVer>FT</uomDistVer>
+          </Rcp>
+          <Rcp>
+            <RcpUid>
+              <RwyUid>
+                <AhpUid>
+                  <codeId>LFNT</codeId>
+                </AhpUid>
+                <txtDesig>16L/34R</txtDesig>
+              </RwyUid>
+              <geoLat>435934.33N</geoLat>
+              <geoLong>0044535.74E</geoLong>
+            </RcpUid>
+            <codeDatum>WGE</codeDatum>
+            <valElev>148</valElev>
+            <uomDistVer>FT</uomDistVer>
+          </Rcp>
           <Rdn>
             <RdnUid>
               <RwyUid>
@@ -276,8 +306,8 @@ describe AIXM::Document do
               </RwyUid>
               <txtDesig>16L</txtDesig>
             </RdnUid>
-            <geoLat>440007.63N</geoLat>
-            <geoLong>0044507.81E</geoLong>
+            <geoLat>435948.47N</geoLat>
+            <geoLong>0044530.62E</geoLong>
             <valTrueBrg>165.0000</valTrueBrg>
             <valMagBrg>163.9200</valMagBrg>
             <valElevTdz>145</valElevTdz>
@@ -306,7 +336,7 @@ describe AIXM::Document do
               <codeType>DPLM</codeType>
               <codeDayPeriod>A</codeDayPeriod>
             </RddUid>
-            <valDist>131</valDist>
+            <valDist>199</valDist>
             <uomDist>M</uomDist>
             <txtRmk>forth remarks</txtRmk>
           </Rdd>
@@ -358,8 +388,8 @@ describe AIXM::Document do
               </RwyUid>
               <txtDesig>34R</txtDesig>
             </RdnUid>
-            <geoLat>435925.31N</geoLat>
-            <geoLong>0044523.24E</geoLong>
+            <geoLat>435940.88N</geoLat>
+            <geoLong>0044533.37E</geoLong>
             <valTrueBrg>345.0000</valTrueBrg>
             <valMagBrg>343.9200</valMagBrg>
             <valElevTdz>147</valElevTdz>
@@ -1228,6 +1258,36 @@ describe AIXM::Document do
             <txtMarking>Standard marking</txtMarking>
             <txtRmk>Markings eroded</txtRmk>
           </Rwy>
+          <Rcp>
+            <RcpUid>
+              <RwyUid>
+                <AhpUid region="LF">
+                  <codeId>LFNT</codeId>
+                </AhpUid>
+                <txtDesig>16L/34R</txtDesig>
+              </RwyUid>
+              <geoLat>43.99853056N</geoLat>
+              <geoLong>004.75787500E</geoLong>
+            </RcpUid>
+            <codeDatum>WGE</codeDatum>
+            <valElev>144</valElev>
+            <uomDistVer>FT</uomDistVer>
+          </Rcp>
+          <Rcp>
+            <RcpUid>
+              <RwyUid>
+                <AhpUid region="LF">
+                  <codeId>LFNT</codeId>
+                </AhpUid>
+                <txtDesig>16L/34R</txtDesig>
+              </RwyUid>
+              <geoLat>43.99286944N</geoLat>
+              <geoLong>004.75992778E</geoLong>
+            </RcpUid>
+            <codeDatum>WGE</codeDatum>
+            <valElev>148</valElev>
+            <uomDistVer>FT</uomDistVer>
+          </Rcp>
           <Rdn>
             <RdnUid>
               <RwyUid>
@@ -1238,8 +1298,8 @@ describe AIXM::Document do
               </RwyUid>
               <txtDesig>16L</txtDesig>
             </RdnUid>
-            <geoLat>44.00211944N</geoLat>
-            <geoLong>004.75216944E</geoLong>
+            <geoLat>43.99679722N</geoLat>
+            <geoLong>004.75850556E</geoLong>
             <valTrueBrg>165.0000</valTrueBrg>
             <valMagBrg>163.9200</valMagBrg>
             <valElevTdz>145</valElevTdz>
@@ -1268,7 +1328,7 @@ describe AIXM::Document do
               <codeType>DPLM</codeType>
               <codeDayPeriod>A</codeDayPeriod>
             </RddUid>
-            <valDist>131</valDist>
+            <valDist>199</valDist>
             <uomDist>M</uomDist>
             <txtRmk>forth remarks</txtRmk>
           </Rdd>
@@ -1320,8 +1380,8 @@ describe AIXM::Document do
               </RwyUid>
               <txtDesig>34R</txtDesig>
             </RdnUid>
-            <geoLat>43.99036389N</geoLat>
-            <geoLong>004.75645556E</geoLong>
+            <geoLat>43.99468889N</geoLat>
+            <geoLong>004.75926944E</geoLong>
             <valTrueBrg>345.0000</valTrueBrg>
             <valMagBrg>343.9200</valMagBrg>
             <valElevTdz>147</valElevTdz>
@@ -2276,6 +2336,36 @@ describe AIXM::Document do
             <txtMarking>Standard marking</txtMarking>
             <txtRmk>Markings eroded</txtRmk>
           </Rwy>
+          <Rcp>
+            <RcpUid mid="f5168d0c-7907-da5a-abaa-13c020ce8b3c">
+              <RwyUid mid="b6d88198-7a6a-6e9b-d8ba-eb0aa00623d4">
+                <AhpUid region="LF" mid="af89d7b7-2ec0-902f-02ba-9e470e42d530">
+                  <codeId>LFNT</codeId>
+                </AhpUid>
+                <txtDesig>16L/34R</txtDesig>
+              </RwyUid>
+              <geoLat>43.99853056N</geoLat>
+              <geoLong>004.75787500E</geoLong>
+            </RcpUid>
+            <codeDatum>WGE</codeDatum>
+            <valElev>144</valElev>
+            <uomDistVer>FT</uomDistVer>
+          </Rcp>
+          <Rcp>
+            <RcpUid mid="b6e04fea-944d-82f3-fc2b-8a6219b9437b">
+              <RwyUid mid="b6d88198-7a6a-6e9b-d8ba-eb0aa00623d4">
+                <AhpUid region="LF" mid="af89d7b7-2ec0-902f-02ba-9e470e42d530">
+                  <codeId>LFNT</codeId>
+                </AhpUid>
+                <txtDesig>16L/34R</txtDesig>
+              </RwyUid>
+              <geoLat>43.99286944N</geoLat>
+              <geoLong>004.75992778E</geoLong>
+            </RcpUid>
+            <codeDatum>WGE</codeDatum>
+            <valElev>148</valElev>
+            <uomDistVer>FT</uomDistVer>
+          </Rcp>
           <Rdn>
             <RdnUid mid="2b0a1c24-c855-2ef9-ec1c-06dd9d321f2a">
               <RwyUid mid="b6d88198-7a6a-6e9b-d8ba-eb0aa00623d4">
@@ -2286,8 +2376,8 @@ describe AIXM::Document do
               </RwyUid>
               <txtDesig>16L</txtDesig>
             </RdnUid>
-            <geoLat>44.00211944N</geoLat>
-            <geoLong>004.75216944E</geoLong>
+            <geoLat>43.99679722N</geoLat>
+            <geoLong>004.75850556E</geoLong>
             <valTrueBrg>165.0000</valTrueBrg>
             <valMagBrg>163.9200</valMagBrg>
             <valElevTdz>145</valElevTdz>
@@ -2316,7 +2406,7 @@ describe AIXM::Document do
               <codeType>DPLM</codeType>
               <codeDayPeriod>A</codeDayPeriod>
             </RddUid>
-            <valDist>131</valDist>
+            <valDist>199</valDist>
             <uomDist>M</uomDist>
             <txtRmk>forth remarks</txtRmk>
           </Rdd>
@@ -2368,8 +2458,8 @@ describe AIXM::Document do
               </RwyUid>
               <txtDesig>34R</txtDesig>
             </RdnUid>
-            <geoLat>43.99036389N</geoLat>
-            <geoLong>004.75645556E</geoLong>
+            <geoLat>43.99468889N</geoLat>
+            <geoLong>004.75926944E</geoLong>
             <valTrueBrg>345.0000</valTrueBrg>
             <valMagBrg>343.9200</valMagBrg>
             <valElevTdz>147</valElevTdz>

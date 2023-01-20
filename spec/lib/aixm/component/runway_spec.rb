@@ -65,6 +65,52 @@ describe AIXM::Component::Runway do
     macro :remarks
   end
 
+  describe :center_line do
+    it "returns a line instance" do
+      _(subject.center_line).must_be_instance_of AIXM::L
+    end
+
+    context "bidirectional runway" do
+      subject do
+        AIXM::Factory.runway
+      end
+
+      it "describes the center line forth edge" do
+        _(subject.center_line.line_points.first.xy).must_equal AIXM.xy(lat: %q(43°59'54.71"N), long: %q(004°45'28.35"E))
+      end
+
+      it "describes the center line back edge" do
+        _(subject.center_line.line_points.last.xy).must_equal AIXM.xy(lat: %q(43°59'34.33"N), long: %q(004°45'35.74"E))
+      end
+    end
+
+    context "unidirectional runway with dimensions" do
+      subject do
+        AIXM::Factory.runway.tap { _1.back = nil }
+      end
+
+      it "describes the center line forth edge" do
+        _(subject.center_line.line_points.first.xy).must_equal AIXM.xy(lat: %q(43°59'54.71"N), long: %q(004°45'28.35"E))
+      end
+
+      it "describes the calculated center line back edge" do
+        exact = AIXM.xy(lat: %q(43°59'34.33"N), long: %q(004°45'35.74"E))
+        _(subject.center_line.line_points.last.xy.lat).must_be_close_to(exact.lat, 0.00006)     # approx 8m tolerance
+        _(subject.center_line.line_points.last.xy.long).must_be_close_to(exact.long, 0.00006)   # approx 8m tolerance
+      end
+    end
+
+    context "unidirectional runway without dimensions" do
+      subject do
+        AIXM::Factory.runway.tap { _1.back = _1.dimensions = nil }
+      end
+
+      it "cannot calculate center line and returns nil" do
+        _(subject.center_line).must_be :nil?
+      end
+    end
+  end
+
   describe :to_xml do
     it "builds correct complete OFMX" do
       AIXM.ofmx!
@@ -98,6 +144,36 @@ describe AIXM::Component::Runway do
           <txtMarking>Standard marking</txtMarking>
           <txtRmk>Markings eroded</txtRmk>
         </Rwy>
+        <Rcp>
+          <RcpUid>
+            <RwyUid>
+              <AhpUid region="LF">
+                <codeId>LFNT</codeId>
+              </AhpUid>
+              <txtDesig>16L/34R</txtDesig>
+            </RwyUid>
+            <geoLat>43.99853056N</geoLat>
+            <geoLong>004.75787500E</geoLong>
+          </RcpUid>
+          <codeDatum>WGE</codeDatum>
+          <valElev>144</valElev>
+          <uomDistVer>FT</uomDistVer>
+        </Rcp>
+        <Rcp>
+          <RcpUid>
+            <RwyUid>
+              <AhpUid region="LF">
+                <codeId>LFNT</codeId>
+              </AhpUid>
+              <txtDesig>16L/34R</txtDesig>
+            </RwyUid>
+            <geoLat>43.99286944N</geoLat>
+            <geoLong>004.75992778E</geoLong>
+          </RcpUid>
+          <codeDatum>WGE</codeDatum>
+          <valElev>148</valElev>
+          <uomDistVer>FT</uomDistVer>
+        </Rcp>
         <Rdn>
           <RdnUid>
             <RwyUid>
@@ -108,8 +184,8 @@ describe AIXM::Component::Runway do
             </RwyUid>
             <txtDesig>16L</txtDesig>
           </RdnUid>
-          <geoLat>44.00211944N</geoLat>
-          <geoLong>004.75216944E</geoLong>
+          <geoLat>43.99679722N</geoLat>
+          <geoLong>004.75850556E</geoLong>
           <valTrueBrg>165.0000</valTrueBrg>
           <valMagBrg>163.9200</valMagBrg>
           <valElevTdz>145</valElevTdz>
@@ -138,7 +214,7 @@ describe AIXM::Component::Runway do
             <codeType>DPLM</codeType>
             <codeDayPeriod>A</codeDayPeriod>
           </RddUid>
-          <valDist>131</valDist>
+          <valDist>199</valDist>
           <uomDist>M</uomDist>
           <txtRmk>forth remarks</txtRmk>
         </Rdd>
@@ -190,8 +266,8 @@ describe AIXM::Component::Runway do
             </RwyUid>
             <txtDesig>34R</txtDesig>
           </RdnUid>
-          <geoLat>43.99036389N</geoLat>
-          <geoLong>004.75645556E</geoLong>
+          <geoLat>43.99468889N</geoLat>
+          <geoLong>004.75926944E</geoLong>
           <valTrueBrg>345.0000</valTrueBrg>
           <valMagBrg>343.9200</valMagBrg>
           <valElevTdz>147</valElevTdz>
@@ -284,6 +360,36 @@ describe AIXM::Component::Runway do
             <txtDesig>16L/34R</txtDesig>
           </RwyUid>
         </Rwy>
+        <Rcp>
+          <RcpUid>
+            <RwyUid>
+              <AhpUid region="LF">
+                <codeId>LFNT</codeId>
+              </AhpUid>
+              <txtDesig>16L/34R</txtDesig>
+            </RwyUid>
+            <geoLat>43.99853056N</geoLat>
+            <geoLong>004.75787500E</geoLong>
+          </RcpUid>
+          <codeDatum>WGE</codeDatum>
+          <valElev>144</valElev>
+          <uomDistVer>FT</uomDistVer>
+        </Rcp>
+        <Rcp>
+          <RcpUid>
+            <RwyUid>
+              <AhpUid region="LF">
+                <codeId>LFNT</codeId>
+              </AhpUid>
+              <txtDesig>16L/34R</txtDesig>
+            </RwyUid>
+            <geoLat>43.99286944N</geoLat>
+            <geoLong>004.75992778E</geoLong>
+          </RcpUid>
+          <codeDatum>WGE</codeDatum>
+          <valElev>148</valElev>
+          <uomDistVer>FT</uomDistVer>
+        </Rcp>
         <Rdn>
           <RdnUid>
             <RwyUid>
@@ -294,8 +400,8 @@ describe AIXM::Component::Runway do
             </RwyUid>
             <txtDesig>16L</txtDesig>
           </RdnUid>
-          <geoLat>44.00211944N</geoLat>
-          <geoLong>004.75216944E</geoLong>
+          <geoLat>43.99679722N</geoLat>
+          <geoLong>004.75850556E</geoLong>
           <valTrueBrg>165.0000</valTrueBrg>
           <valMagBrg>163.9200</valMagBrg>
           <valElevTdz>145</valElevTdz>
@@ -324,7 +430,7 @@ describe AIXM::Component::Runway do
             <codeType>DPLM</codeType>
             <codeDayPeriod>A</codeDayPeriod>
           </RddUid>
-          <valDist>131</valDist>
+          <valDist>199</valDist>
           <uomDist>M</uomDist>
           <txtRmk>forth remarks</txtRmk>
         </Rdd>
@@ -338,8 +444,8 @@ describe AIXM::Component::Runway do
             </RwyUid>
             <txtDesig>34R</txtDesig>
           </RdnUid>
-          <geoLat>43.99036389N</geoLat>
-          <geoLong>004.75645556E</geoLong>
+          <geoLat>43.99468889N</geoLat>
+          <geoLong>004.75926944E</geoLong>
           <valTrueBrg>345.0000</valTrueBrg>
           <valMagBrg>343.9200</valMagBrg>
           <valElevTdz>147</valElevTdz>
@@ -416,15 +522,53 @@ describe AIXM::Component::Runway::Direction do
     end
   end
 
-  describe :displaced_threshold= do
-    it "fails on invalid values" do
-      _([:foobar, 1, AIXM.d(0, :m)]).wont_be_written_to subject, :displaced_threshold
+  context "displaced threshold as distance or coordinates" do
+    let :distance do
+      AIXM.d(199, :m)
     end
 
-    it "converts coordinates to distance" do
-      subject.xy = AIXM.xy(lat: %q(43°59'54.71"N), long: %q(004°45'28.35"E))
-      subject.displaced_threshold = AIXM.xy(lat: %q(43°59'48.47"N), long: %q(004°45'30.62"E))
-      _(subject.displaced_threshold).must_equal AIXM.d(199, :m)
+    let :coordinates do
+      AIXM.xy(lat: %q(43°59'48.47"N), long: %q(004°45'30.62"E))
+    end
+
+    describe :displaced_threshold= do
+      it "fails on invalid values" do
+        _([:foobar, 1, AIXM.d(0, :m), AIXM::Factory.xy]).wont_be_written_to subject, :displaced_threshold
+      end
+
+      it "accepts distance and converts it to coordinates" do
+        subject.displaced_threshold = distance
+        _(subject.displaced_threshold).must_equal distance
+        _(subject.displaced_threshold_xy.lat).must_be_close_to(coordinates.lat, 0.000015)     # approx 2m tolerance
+        _(subject.displaced_threshold_xy.long).must_be_close_to(coordinates.long, 0.000015)   # approx 2m tolerance
+      end
+
+      it "fails if xy is not set" do
+        subject.instance_variable_set(:@xy, nil)
+        _{ subject.displaced_threshold = distance }.must_raise RuntimeError
+      end
+
+      it "fails if bearing is not set" do
+        subject.geographic_bearing = nil
+        _{ subject.displaced_threshold = distance }.must_raise RuntimeError
+      end
+    end
+
+    describe :displaced_threshold_xy= do
+      it "fails on invalid values" do
+        _([:foobar, 1, AIXM::Factory.d]).wont_be_written_to subject, :displaced_threshold_xy
+      end
+
+      it "accepts coordinates and converts it to distance" do
+        subject.displaced_threshold_xy = coordinates
+        _(subject.displaced_threshold_xy).must_equal coordinates
+        _(subject.displaced_threshold).must_equal distance
+      end
+
+      it "fails if xy is not set" do
+        subject.instance_variable_set(:@xy, nil)
+        _{ subject.displaced_threshold_xy = coordinates }.must_raise RuntimeError
+      end
     end
   end
 
@@ -479,8 +623,8 @@ describe AIXM::Component::Runway::Direction do
             </RwyUid>
             <txtDesig>16L</txtDesig>
           </RdnUid>
-          <geoLat>44.00211944N</geoLat>
-          <geoLong>004.75216944E</geoLong>
+          <geoLat>43.99679722N</geoLat>
+          <geoLong>004.75850556E</geoLong>
           <valTrueBrg>165.0000</valTrueBrg>
           <valMagBrg>163.9200</valMagBrg>
           <valElevTdz>145</valElevTdz>
@@ -509,7 +653,7 @@ describe AIXM::Component::Runway::Direction do
             <codeType>DPLM</codeType>
             <codeDayPeriod>A</codeDayPeriod>
           </RddUid>
-          <valDist>131</valDist>
+          <valDist>199</valDist>
           <uomDist>M</uomDist>
           <txtRmk>forth remarks</txtRmk>
         </Rdd>
@@ -556,7 +700,7 @@ describe AIXM::Component::Runway::Direction do
 
     it "builds correct minimal OFMX" do
       AIXM.ofmx!
-      %i(geographic_bearing z displaced_threshold vasis vfr_pattern remarks).each { subject.send(:"#{_1}=", nil) }
+      %i(geographic_bearing z touch_down_zone_z displaced_threshold vasis vfr_pattern remarks).each { subject.send(:"#{_1}=", nil) }
       subject.instance_eval do
         @lightings.clear
         @approach_lightings.clear
@@ -572,8 +716,8 @@ describe AIXM::Component::Runway::Direction do
             </RwyUid>
             <txtDesig>16L</txtDesig>
           </RdnUid>
-          <geoLat>44.00211944N</geoLat>
-          <geoLong>004.75216944E</geoLong>
+          <geoLat>43.99853056N</geoLat>
+          <geoLong>004.75787500E</geoLong>
         </Rdn>
       END
     end
