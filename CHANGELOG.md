@@ -2,6 +2,11 @@
 
 Nothing so far
 
+## 1.4.1
+
+#### Changes
+* Update upstream OFMX schema
+
 ## 1.4.0
 
 #### Additions
