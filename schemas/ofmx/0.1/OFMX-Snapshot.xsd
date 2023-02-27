@@ -43,7 +43,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
   <xsd:attributeGroup name="Changes"/>
   <xsd:element name="OFMX-Snapshot">
     <xsd:complexType>
-      <xsd:choice maxOccurs="unbounded">
+      <xsd:choice maxOccurs="unbounded" minOccurs="0">
         <xsd:element name="Aas" type="AirspaceAssociationType"/>
         <xsd:element name="Abd" type="AirspaceBorderType"/>
         <xsd:element name="Acr" type="AirspaceCorridorType"/>
