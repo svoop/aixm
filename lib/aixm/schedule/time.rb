@@ -29,7 +29,7 @@ module AIXM
 
       EVENTS = { sunrise: :up, sunset: :down }.freeze
       PRECEDENCES = { first: :min, last: :max }.freeze
-      DATELESS_DATE = ::Date.parse('0000-01-01').freeze
+      DATELESS_DATE = ::Date.parse('0001-01-01').freeze
 
       # @api private
       attr_accessor :time
@@ -250,10 +250,15 @@ module AIXM
       # @param hour [Integer, String]
       # @param min [Integer, String]
       # @param offset [Integer, String] either UTC offset in seconds
-      #   (default: 0) or 'UTC'
+      #   (default: 0), as '+01:00', '-0300' or 'UTC'
       # @return [Time]
       def set_time(hour, min, offset)
-        @time = ::Time.new(DATELESS_DATE.year, DATELESS_DATE.month, DATELESS_DATE.day, hour, min, 0, offset || 0).utc
+# TODO: Colon-workaround can be removed when support of Ruby 3.0 has ended
+        coloned_offset = offset.is_a?(String) ? offset.sub(/([+-]\d{2})(\d{2})/, '\1:\2') : offset
+        utc = ::Time.new(1, 1, 1, hour, min, 0, coloned_offset || 0).utc
+#       utc = ::Time.new(1, 1, 1, hour, min, 0, offset || 0).utc
+        day_shift = utc.hour.zero? && utc.min.zero? && hour.to_i >= 12 ? 1 : 0
+        @time = ::Time.utc(DATELESS_DATE.year, DATELESS_DATE.month, DATELESS_DATE.day + day_shift, utc.hour, utc.min, 0)
       end
 
       def event=(value)
@@ -267,7 +272,7 @@ module AIXM
       end
 
       def end_of_day?
-        @time.day > DATELESS_DATE.day
+        @time.day != DATELESS_DATE.day
       end
 
       # @note Necessary to use this class in Range.

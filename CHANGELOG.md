@@ -1,6 +1,7 @@
 ## Main
 
-Nothing so far
+#### Changes
+* Fix 00:00 vs. 24:00 calculation for times with time zones
 
 ## 1.4.1
 

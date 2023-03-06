@@ -5,7 +5,7 @@ describe AIXM::Schedule::Time do
     context "time only" do
       it "populates all attributes correctly" do
         subject = AIXM.time('11:11')
-        _(subject.to_time).must_equal Time.new(0, 1, 1, 11, 11, 0, 'UTC')
+        _(subject.to_time).must_equal Time.new(1, 1, 1, 11, 11, 0, 'UTC')
         _(subject.event).must_be :nil?
         _(subject.delta).must_equal 0
         _(subject.precedence).must_be :nil?
@@ -22,31 +22,55 @@ describe AIXM::Schedule::Time do
 
       it "parses valid HH:MM string as UTC" do
         time = AIXM.time('09:00').to_time
-        _(time).must_equal Time.new(0, 1, 1, 9, 0, 0, 'UTC')
+        _(time).must_equal Time.new(1, 1, 1, 9, 0, 0, 'UTC')
         _(time.zone).must_equal 'UTC'
       end
 
       it "parses valid HH:MM [+-]00:00 string to UTC" do
         time = AIXM.time('14:05 +03:00').to_time
-        _(time).must_equal Time.new(0, 1, 1, 11, 5, 0, 'UTC')
+        _(time).must_equal Time.new(1, 1, 1, 11, 5, 0, 'UTC')
         _(time.zone).must_equal 'UTC'
       end
 
       it "parses valid HH:MM UTC string to UTC" do
         time = AIXM.time('14:05 UTC').to_time
-        _(time).must_equal Time.new(0, 1, 1, 14, 5, 0, 'UTC')
+        _(time).must_equal Time.new(1, 1, 1, 14, 5, 0, 'UTC')
+        _(time.zone).must_equal 'UTC'
+      end
+
+      it "parses valid HH:MM [+-]HH:MM" do
+        time = AIXM.time('14:05 +01:00').to_time
+        _(time).must_equal Time.new(1, 1, 1, 13, 5, 0, 'UTC')
+        _(time.zone).must_equal 'UTC'
+      end
+
+      it "parses valid HHMM [+-]HHMM" do
+        time = AIXM.time('1405 +0100').to_time
+        _(time).must_equal Time.new(1, 1, 1, 13, 5, 0, 'UTC')
+        _(time.zone).must_equal 'UTC'
+      end
+
+      it "parses valid HH:MM [+-]HH:MM backward across midnight" do
+        time = AIXM.time('01:00 +01:00').to_time
+        _(time).must_equal Time.new(1, 1, 1, 0, 0, 0, 'UTC')
+        _(time.zone).must_equal 'UTC'
+      end
+
+      it "parses valid HH:MM [+-]HH:MM forward across negative midnight" do
+        time = AIXM.time('23:00 -01:00').to_time
+        _(time).must_equal Time.new(1, 1, 2, 0, 0, 0, 'UTC')
         _(time.zone).must_equal 'UTC'
       end
 
       it "accepts stdlib DateTime as UTC" do
         time = AIXM.time(DateTime.parse('19:15:00 +02:00')).to_time
-        _(time).must_equal Time.new(0, 1, 1, 17, 15, 0, 'UTC')
+        _(time).must_equal Time.new(1, 1, 1, 17, 15, 0, 'UTC')
         _(time.zone).must_equal 'UTC'
       end
 
       it "accepts sdtlib Time as UTC" do
         time = AIXM.time(Time.new(0, 1, 1, 20, 15, 0, '-02:00')).to_time
-        _(time).must_equal Time.new(0, 1, 1, 22, 15, 0, 'UTC')
+        _(time).must_equal Time.new(1, 1, 1, 22, 15, 0, 'UTC')
         _(time.zone).must_equal 'UTC'
       end
     end
@@ -88,7 +112,7 @@ describe AIXM::Schedule::Time do
     context "time and alternative event" do
       it "populates all attributes correctly" do
         subject = AIXM.time('08:30', or: :sunrise)
-        _(subject.to_time).must_equal Time.new(0, 1, 1, 8, 30, 0, 'UTC')
+        _(subject.to_time).must_equal Time.new(1, 1, 1, 8, 30, 0, 'UTC')
         _(subject.event).must_equal :sunrise
         _(subject.delta).must_equal 0
         _(subject.precedence).must_equal :first
