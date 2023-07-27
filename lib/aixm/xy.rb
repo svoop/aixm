@@ -107,6 +107,7 @@ module AIXM
 
     # Distance to another point as calculated by the Haversine formula
     #
+    # @param other [AIXM::XY] other point
     # @return [AIXM::D]
     def distance(other)
       if self == other
@@ -125,6 +126,7 @@ module AIXM
 
     # Bearing to another point
     #
+    # @param other [AIXM::XY] other point
     # @return [AIXM::A]
     def bearing(other)
       fail "cannot calculate bearing to identical point" if self == other
@@ -141,6 +143,8 @@ module AIXM
 
     # Calculate a new point by adding the distance in the given bearing
     #
+    # @param distance [AIXM::D]
+    # @param bearing [AIXM::A]
     # @return [AIXM::XY]
     def add_distance(distance, bearing)
       angular_dist = distance.to_m.dim / EARTH_RADIUS
