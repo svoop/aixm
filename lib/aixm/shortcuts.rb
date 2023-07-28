@@ -27,4 +27,7 @@ module AIXM
   # Time which marks midnight at end of the day
   END_OF_DAY = AIXM.time('24:00').freeze
 
+  # Emergency frequency
+  EMERGENCY = AIXM.f(121.5, :mhz).freeze
+
 end

@@ -84,6 +84,13 @@ module AIXM
       end
     end
 
+    # Whether this frequency is for emergencies only.
+    #
+    # @return [Boolean]
+    def voice_emergency?
+      self == AIXM::EMERGENCY
+    end
+
     private
 
     # Whether this frequency is part of the voice airband for civil aviation

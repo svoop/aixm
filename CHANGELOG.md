@@ -1,6 +1,7 @@
 ## Main
 
-Nothing so far
+### Additions
+* `AIXM::EMERGENCY` shortcut for 121.5 MHz and `AIXM::F#voice_emergency?`
 
 ## 1.4.2
 

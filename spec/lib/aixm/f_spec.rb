@@ -192,4 +192,14 @@ describe AIXM::F do
       end
     end
   end
+
+  describe :voice_emergency? do
+    it "returns true for 121.5 MHz" do
+      _(AIXM.f(121.5, :mhz)).must_be :voice_emergency?
+    end
+
+    it "returns false for any other frequency" do
+      _(AIXM.f(123.35, :mhz)).wont_be :voice_emergency?
+    end
+  end
 end
