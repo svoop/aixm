@@ -6,11 +6,9 @@ require 'pathname'
 require 'minitest/autorun'
 require Pathname(__dir__).join('..', 'lib', 'aixm')
 
-require 'minitest/sound'
-Minitest::Sound.success = Pathname(__dir__).join('sounds', 'success.mp3').to_s
-Minitest::Sound.failure = Pathname(__dir__).join('sounds', 'failure.mp3').to_s
-
+require 'minitest/flash'
 require 'minitest/focus'
+
 require Pathname(__dir__).join('factory')
 
 module AIXM
