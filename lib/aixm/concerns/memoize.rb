@@ -69,6 +69,7 @@ module AIXM
               end
             end
           end
+          method
         end
       end
 
