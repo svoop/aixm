@@ -336,7 +336,7 @@ describe AIXM::Schedule::Date do
       end
 
       it "returns the difference in days between two dates across year boundaries" do
-        _(AIXM.date('01-01') - AIXM.date('12-31')).must_equal -365
+        _(AIXM.date('01-01') - AIXM.date('12-31')).must_equal(-365)
       end
     end
 
