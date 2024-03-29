@@ -43,6 +43,7 @@ Gem::Specification.new do |spec|
 
   spec.required_ruby_version = '>= 3.0.0'
 
+  spec.add_runtime_dependency 'bigdecimal', '~> 3'
   spec.add_runtime_dependency 'nokogiri', '~> 1'
   spec.add_runtime_dependency 'dry-inflector', '~> 0'
   spec.add_runtime_dependency 'sun', '~> 1'
