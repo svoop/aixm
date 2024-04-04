@@ -1128,7 +1128,7 @@ describe AIXM::Document do
     it "builds correct OFMX" do
       _(subject.to_xml).must_equal <<~"END"
         <?xml version="1.0" encoding="UTF-8"?>
-        <OFMX-Snapshot xmlns:xsi="http://schema.openflightmaps.org/0.1/OFMX-Snapshot.xsd" version="0" origin="rubygem aixm-#{AIXM::VERSION}" namespace="00000000-0000-0000-0000-000000000000" regions="EG LF" created="2022-04-21T00:00:00Z" effective="2022-04-21T00:00:00Z" expiration="2022-05-18T23:59:59Z">
+        <OFMX-Snapshot xmlns:xsi="http://schema.openflightmaps.org/0.2/OFMX-Snapshot.xsd" version="0" origin="rubygem aixm-#{AIXM::VERSION}" namespace="00000000-0000-0000-0000-000000000000" regions="EG LF" created="2022-04-21T00:00:00Z" effective="2022-04-21T00:00:00Z" expiration="2022-05-18T23:59:59Z">
           <!-- Organisation: FRANCE -->
           <Org source="LF|GEN|0.0 FACTORY|0|0">
             <OrgUid region="LF">
@@ -2206,7 +2206,7 @@ describe AIXM::Document do
       AIXM.config.mid = true
       _(subject.to_xml).must_equal <<~"END"
         <?xml version="1.0" encoding="UTF-8"?>
-        <OFMX-Snapshot xmlns:xsi="http://schema.openflightmaps.org/0.1/OFMX-Snapshot.xsd" version="0" origin="rubygem aixm-#{AIXM::VERSION}" namespace="00000000-0000-0000-0000-000000000000" regions="EG LF" created="2022-04-21T00:00:00Z" effective="2022-04-21T00:00:00Z" expiration="2022-05-18T23:59:59Z">
+        <OFMX-Snapshot xmlns:xsi="http://schema.openflightmaps.org/0.2/OFMX-Snapshot.xsd" version="0" origin="rubygem aixm-#{AIXM::VERSION}" namespace="00000000-0000-0000-0000-000000000000" regions="EG LF" created="2022-04-21T00:00:00Z" effective="2022-04-21T00:00:00Z" expiration="2022-05-18T23:59:59Z">
           <!-- Organisation: FRANCE -->
           <Org source="LF|GEN|0.0 FACTORY|0|0">
             <OrgUid region="LF" mid="971ba0a9-3714-12d5-d139-d26d5f1d6f25">

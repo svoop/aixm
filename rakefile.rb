@@ -12,7 +12,7 @@ end
 namespace :schema do
   desc "Update OFMX schema"
   task :update do
-    version = '0.1'
+    version = '0.2'
     `rm -rf schemas/ofmx/#{version}/*`
     `wget http://schema.openflightmaps.org/#{version}/OFMX-CSV-Obstacle.json -P schemas/ofmx/#{version}/ -q --show-progress`
  	  `wget http://schema.openflightmaps.org/#{version}/OFMX-CSV.json -P schemas/ofmx/#{version}/ -q --show-progress`

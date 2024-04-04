@@ -9,8 +9,8 @@ module AIXM
     },
     ofmx: {
       version: '0',
-      namespace: 'http://schema.openflightmaps.org/0.1/OFMX-Snapshot.xsd',
-      xsd: Pathname(__dir__).join('..', '..', 'schemas', 'ofmx', '0.1', 'OFMX-Snapshot.xsd'),
+      namespace: 'http://schema.openflightmaps.org/0.2/OFMX-Snapshot.xsd',
+      xsd: Pathname(__dir__).join('..', '..', 'schemas', 'ofmx', '0.2', 'OFMX-Snapshot.xsd'),
       root: 'OFMX-Snapshot'
     }
   }.freeze
