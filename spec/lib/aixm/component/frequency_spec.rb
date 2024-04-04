@@ -23,6 +23,16 @@ describe AIXM::Component::Frequency do
     it "accepts valid values" do
       _([AIXM::Factory.f]).must_be_written_to subject, :transmission_f
     end
+
+    it "assigns emergency type for emergency transmission frequencies" do
+      subject.transmission_f = AIXM::EMERGENCY
+      _(subject.type).must_equal :emergency
+    end
+
+    it "assigns emergency type for emergency reception frequencies" do
+      subject.reception_f = AIXM::EMERGENCY
+      _(subject.type).must_equal :emergency
+    end
   end
 
   describe :callsigns= do

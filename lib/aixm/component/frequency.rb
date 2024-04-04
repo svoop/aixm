@@ -94,6 +94,7 @@ module AIXM
 
       def transmission_f=(value)
         fail(ArgumentError, "invalid transmission_f") unless value.is_a?(AIXM::F) && value.voice?
+        self.type = :emergency if value.voice_emergency?
         @transmission_f = value
       end
 
@@ -104,6 +105,7 @@ module AIXM
 
       def reception_f=(value)
         fail(ArgumentError, "invalid reception_f") unless value.nil? || value.is_a?(AIXM::F) && value.voice?
+        self.type = :emergency if value&.voice_emergency?
         @reception_f = value
       end
 
