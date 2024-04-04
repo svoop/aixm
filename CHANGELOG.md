@@ -1,5 +1,9 @@
 ## Main
 
+Nothing so far
+
+## 1.5.0
+
 ### Changes
 * Bump OFMX schema to 0.2
 
