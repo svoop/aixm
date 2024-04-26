@@ -1,5 +1,9 @@
 ## Main
 
+Nothing so far
+
+## 1.5.1
+
 ### Changes
 * Assigning an emergency transmission or reception frequency sets the type
   to `:emergency` as well
