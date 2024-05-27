@@ -1,6 +1,8 @@
 ## Main
 
-Nothing so far
+### Changes
+* Adopt update of OFMX which added three new airspace types such as
+  `:radio_mandatory_zone`
 
 ## 1.5.1
 

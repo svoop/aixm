@@ -3033,6 +3033,9 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
       <xsd:enumeration value="PROTECT"/>
       <xsd:enumeration value="AMA"/>
       <xsd:enumeration value="ASR"/>
+      <xsd:enumeration value="RMZ"/>
+      <xsd:enumeration value="TMZ"/>
+      <xsd:enumeration value="DRA"/>
     </xsd:restriction>
   </xsd:simpleType>
   <xsd:complexType name="codeTypeAs">

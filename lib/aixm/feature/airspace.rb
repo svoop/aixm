@@ -26,11 +26,14 @@ module AIXM
     # character digest from +type+, +local_type+ and +name+.
     #
     # Some regions define additional airspace types. In LF (France) for
-    # intance, the types RMZ (radio mandatory zone) and TMZ (transponder
-    # mandatory zone) exist. Such airspaces are usually specified together
-    # with a generic type such as +:regulated_airspace+:
+    # instance, the types RMZ (radio mandatory zone) and TMZ (transponder
+    # mandatory zone) exist. These have been added as proper types in OFMX as
+    # per {OFMX_TYPES}, however, AIXM encodes them as +:regulated_airspace+ with
+    # a local type of +RMZ+ or +TMZ+ respectively. In other words: For AIXM, the
+    # following two are identical:
     #
-    #   airspace= AIXM.airspace(type: :regulated_airspace, local_type: "RMZ")
+    #   AIXM.airspace(type: :radio_mandatory_zone)
+    #   AIXM.airspace(type: :regulated_airspace, local_type: "RMZ")
     #
     # @see https://gitlab.com/openflightmaps/ofmx/wikis/Airspace#ase-airspace
     class Airspace < Feature
@@ -38,7 +41,7 @@ module AIXM
 
       public_class_method :new
 
-      TYPES = {
+      COMMON_TYPES = {
         NAS: :national_airspace_system,
         FIR: :flight_information_region,
         'FIR-P': :part_of_flight_information_region,
@@ -81,6 +84,14 @@ module AIXM
         PART: :part_of_airspace
       }.freeze
 
+      OFMX_TYPES = {
+        DRA: :drone_area,
+        RMZ: :radio_mandatory_zone,
+        TMZ: :transponder_mandatory_zone
+      }.freeze
+
+      TYPES = COMMON_TYPES.merge OFMX_TYPES
+
       # @!method geometry
       #   @return [AIXM::Component::Geometry] horizontal geometry shape
       #
@@ -106,18 +117,18 @@ module AIXM
       #   @param value [String]
       attr_reader :id
 
-      # Type of airspace (see {TYPES})
+      # Type of airspace (see {COMMON_TYPES} and {OFMX_TYPES})
       #
       # @overload type
-      #   @return [Symbol] any of {TYPES}
+      #   @return [Symbol] any of {COMMON_TYPES} or {OFMX_TYPES}
       # @overload type=(value)
-      #   @param value [Symbol] any of {TYPES}
+      #   @param value [Symbol] any of {COMMON_TYPES} or {OFMX_TYPES}
       attr_reader :type
 
       # Local type.
       #
-      # Some regions define additional local types such as "RMZ" or "TMZ". They
-      # are often further specifying type +:regulated_airspace+.
+      # Some regions define additional local types. They are usually further
+      # specifying type +:regulated_airspace+.
       #
       # @overload local_type
       #   @return [String, nil]
@@ -184,9 +195,14 @@ module AIXM
       # @!visibility private
       def add_uid_to(builder, as: :AseUid)
         builder.send(as, ({ region: (region if AIXM.ofmx?) }.compact)) do |tag|
-          tag.codeType(TYPES.key(type))
-          tag.codeId(id)
-          tag.txtLocalType(local_type) if AIXM.ofmx? && local_type && local_type != name
+          if AIXM.ofmx?
+            tag.codeType(TYPES.key(type))
+            tag.codeId(id)
+            tag.txtLocalType(local_type) if local_type?
+          else
+            tag.codeType(COMMON_TYPES.key(type) || 'RAS')
+            tag.codeId(id)
+          end
         end
       end
 
@@ -205,7 +221,10 @@ module AIXM
         builder.Ase({ source: (source if AIXM.ofmx?) }.compact) do |ase|
           ase.comment(indented_comment) if comment
           add_uid_to(ase)
-          ase.txtLocalType(local_type) if AIXM.aixm? && local_type && local_type != name
+          if AIXM.aixm?
+            ofmx_type = OFMX_TYPES.key(type)
+            ase.txtLocalType(ofmx_type || local_type) if ofmx_type || local_type?
+          end
           ase.txtName(name) if name
           ase.txtNameAlt(alternative_name) if AIXM.ofmx? && alternative_name
           layers.first.add_to(ase) unless layered?
@@ -248,6 +267,10 @@ module AIXM
       end
 
       private
+
+      def local_type?
+        local_type && local_type != name
+      end
 
       def layered?
         layers.count > 1

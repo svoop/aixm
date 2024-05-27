@@ -564,4 +564,26 @@ describe AIXM::Feature::Airspace do
     end
   end
 
+  context "with OFMX only type" do
+    subject do
+      AIXM::Factory.polygon_airspace.tap do |airspace|
+        airspace.type = :radio_mandatory_zone
+      end
+    end
+
+    describe :to_xml do
+      it "encodes proper type in OFMX" do
+        AIXM.ofmx!
+        _(subject.to_xml).must_match(%r(<codeType>RMZ</codeType>))
+      end
+
+      it "encodes type RAS and local type in AIXM" do
+        AIXM.aixm!
+        xml = subject.to_xml
+        _(xml).must_match(%r(<codeType>RAS</codeType>))
+        _(xml).must_match(%r(<txtLocalType>RMZ</txtLocalType))
+      end
+    end
+  end
+
 end
