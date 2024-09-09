@@ -1,6 +1,7 @@
 ## Main
 
-Nothing so far
+### Additions
+* `Document#sourced_at` to track last update of upstream source data
 
 ## 1.5.2
 

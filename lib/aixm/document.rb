@@ -8,6 +8,7 @@ module AIXM
   # ===Cheat Sheet in Pseudo Code:
   #   document = AIXM.document(
   #     namespace: String (UUID)
+  #     sourced_at: Time or Date or String or nil
   #     created_at: Time or Date or String
   #     effective_at: Time or Date or String
   #     expiration_at: Time or Date or String or nil
@@ -37,6 +38,14 @@ module AIXM
     #   @param value [String]
     attr_reader :namespace
 
+    # Last upstream source data update date and UTC time
+    #
+    # @overload sourced_at
+    #   @return [Time]
+    # @overload sourced_at=(value)
+    #   @param value [Time, nil]
+    attr_reader :sourced_at
+
     # Creation date and UTC time
     #
     # @overload created_at
@@ -63,9 +72,9 @@ module AIXM
 
     # See the {cheat sheet}[AIXM::Document] for examples on how to create
     # instances of this class.
-    def initialize(namespace: nil, created_at: nil, effective_at: nil, expiration_at: nil)
+    def initialize(namespace: nil, sourced_at: nil, created_at: nil, effective_at: nil, expiration_at: nil)
       self.namespace = namespace
-      self.created_at, self.effective_at, self.expiration_at = created_at, effective_at, expiration_at
+      self.sourced_at, self.created_at, self.effective_at, self.expiration_at = sourced_at, created_at, effective_at, expiration_at
     end
 
     # @return [String]
@@ -76,6 +85,10 @@ module AIXM
     def namespace=(value)
       fail(ArgumentError, "invalid namespace") unless value.nil? || value.match?(NAMESPACE_RE)
       @namespace = value || SecureRandom.uuid
+    end
+
+    def sourced_at=(value)
+      @sourced_at = value&.to_time&.round
     end
 
     def created_at=(value)
@@ -161,6 +174,7 @@ module AIXM
         origin: "rubygem aixm-#{AIXM::VERSION}",
         namespace: (namespace if AIXM.ofmx?),
         regions: (regions.join(' '.freeze) if AIXM.ofmx?),
+        sourced: (@sourced_at&.utc&.xmlschema if AIXM.ofmx?),
         created: @created_at.utc.xmlschema,
         effective: @effective_at.utc.xmlschema,
         expiration: (@expiration_at&.utc&.xmlschema if AIXM.ofmx?)

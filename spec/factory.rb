@@ -667,6 +667,7 @@ module AIXM
       def document
         AIXM.document(
           namespace: '00000000-0000-0000-0000-000000000000',
+          sourced_at: Time.utc(2022, 4, 20),
           created_at: (time = Time.utc(2022, 4, 21)),
           effective_at: time,
           expiration_at: time + 2419199
