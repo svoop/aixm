@@ -17,14 +17,6 @@ Thank you for supporting free and open-source software by sponsoring on [GitHub]
 
 ## Install
 
-### Security
-
-This gem is [cryptographically signed](https://guides.rubygems.org/security/#using-gems) in order to assure it hasn't been tampered with. Unless already done, please add the author's public key as a trusted certificate now:
-
-```
-gem cert --add <(curl -Ls https://raw.github.com/svoop/aixm/main/certs/svoop.pem)
-```
-
 ### Bundler
 
 Add the following to the <tt>Gemfile</tt> or <tt>gems.rb</tt> of your [Bundler](https://bundler.io) powered Ruby project:
@@ -36,7 +28,7 @@ gem 'aixm'
 And then install the bundle:
 
 ```
-bundle install --trust-policy MediumSecurity
+bundle install
 ```
 
 ### Standalone
@@ -44,7 +36,7 @@ bundle install --trust-policy MediumSecurity
 If you're only going to use [the executables](#executables), make sure to have the [latest version of Ruby](https://www.ruby-lang.org/en/documentation/installation/) and then install this gem:
 
 ```
-gem install aixm --trust-policy MediumSecurity
+gem install aixm
 ```
 
 ## Usage

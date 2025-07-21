@@ -29,9 +29,6 @@ Gem::Specification.new do |spec|
   spec.bindir        = 'exe'
   spec.executables   = %w(ckmid mkmid)
 
-  spec.cert_chain  = ["certs/svoop.pem"]
-  spec.signing_key = File.expand_path(ENV['GEM_SIGNING_KEY']) if ENV['GEM_SIGNING_KEY']
-
   spec.extra_rdoc_files = Dir['README.md', 'CHANGELOG.md', 'LICENSE.txt']
   spec.rdoc_options    += [
     '--title', 'AIXM/OFMX Builder',
