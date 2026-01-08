@@ -7,9 +7,10 @@ require 'minitest/autorun'
 require Pathname(__dir__).join('..', 'lib', 'aixm')
 
 require 'minitest/flash'
-require 'minitest/focus'
 
 require Pathname(__dir__).join('factory')
+
+Minitest.load_plugins
 
 module AIXM
   def self.root
@@ -44,8 +45,10 @@ module Minitest::Assertions
   end
 end
 
-Array.infect_an_assertion :assert_write, :must_be_written_to, :reverse
-Array.infect_an_assertion :refute_write, :wont_be_written_to, :reverse
+module Minitest::Expectations
+  infect_an_assertion :assert_write, :must_be_written_to, :reverse
+  infect_an_assertion :refute_write, :wont_be_written_to, :reverse
+end
 
 class Minitest::Spec
   before :each do
