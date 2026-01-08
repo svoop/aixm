@@ -1,6 +1,7 @@
 ## Main
 
 ### Changes
+* Make `F#voice_25?` and `F#voice_833?` public
 * Update Ruby to 4.0
 
 ## 1.6.0

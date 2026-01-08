@@ -91,8 +91,6 @@ module AIXM
       self == AIXM::EMERGENCY
     end
 
-    private
-
     # Whether this frequency is part of the voice airband for civil aviation
     # using 25 kHz channel separation.
     #
