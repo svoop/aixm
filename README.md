@@ -5,9 +5,10 @@
 
 # AIXM
 
-Partial implementation of the [Aeronautical Information Exchange Model (AIXM 4.5)](http://aixm.aero) and it's dialect [Open FlightMaps eXchange format (OFMX 0)](https://gitlab.com/openflightmaps/ofmx/wikis) for Ruby.
+Partial implementation of the [Aeronautical Information Exchange Model (AIXM 4.5)](http://aixm.aero) and it's dialect [Open FlightMaps eXchange format (OFMX 0)](https://gitlab.com/openflightmaps/ofmx/wikis) for Ruby. It is only a builder for snapshot files and does not parse them.
 
-For now, only the parts needed to automize the AIP import of [open flightmaps](https://openflightmaps.org) are part of this gem. Most notably, the gem is only a builder for snapshot files and does not parse them.
+> [!IMPORTANT]
+> For personal reasons, I am no longer contributing to Open Flightmaps and therefore this gem is now archived and will not be updated anymore. Feel free to contact me if you want to revive or sponsor it.
 
 * [Homepage](https://github.com/svoop/aixm)
 * [API](https://www.rubydoc.info/gems/aixm)
